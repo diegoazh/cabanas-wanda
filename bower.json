@@ -1,0 +1,33 @@
+{
+  "name": "cabanas-wanda",
+  "description": "App para la gestión de cabañas, librerías utilizadas en el desarrollo front-end",
+  "main": "",
+  "authors": [
+    "Diego A. Zapata Häntsch <diegoazh2003@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "cabañas",
+    "wanda",
+    "cabañas",
+    "hotel",
+    "hotel",
+    "cabañas",
+    "wanda",
+    "wanda",
+    "misiones",
+    "argentina"
+  ],
+  "homepage": "https://github.com/diegoazh/cabanas-wanda",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "moment": "^2.17.1"
+  }
+}
