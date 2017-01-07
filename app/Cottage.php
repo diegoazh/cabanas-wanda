@@ -8,7 +8,7 @@ use App\Rental;
 class Cottage extends Model
 {
   protected $table = 'cottages';
-  protected $fillable = ['number', 'type', 'accommodation', 'description', 'images'];
+  protected $fillable = ['number', 'letter', 'type', 'accommodation', 'description', 'images', 'price'];
   public function rentals()
   {
     return $this->hasMany('Rental');
