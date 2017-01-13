@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name', 40);
             $table->string('lastname', 40);
+            $table->date('date_of_birth');
             $table->integer('country_id')->unsigned();
             $table->bigInteger('dni')->unique();
             $table->string('passport', 20)->unique()->nullable();
@@ -26,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('address', 150)->nullable();
             $table->string('destination', 30)->nullable();
             $table->string('password', 16);
-            $table->enum('type', ['frecuente', 'empleado', 'administrador'])->default('frecuente');
+            $table->enum('type', ['frecuente', 'empleado', 'administrador', 'sysadmin'])->default('frecuente');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

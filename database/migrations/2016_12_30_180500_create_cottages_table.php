@@ -16,12 +16,13 @@ class CreateCottagesTable extends Migration
         Schema::create('cottages', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('number');
-            $table->string('letter', 1);
+            $table->string('name', 10);
             $table->enum('type', ['matrimonial', 'simple']);
             $table->integer('accommodation');
             $table->string('description');
             $table->string('images');
             $table->double('price', 5, 2);
+            $table->string('slug')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

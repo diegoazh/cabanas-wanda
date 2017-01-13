@@ -9,7 +9,8 @@ use App\Passenger;
 class Country extends Model
 {
     protected $table = 'conuntries';
-    protected $fillable = ['country'];
+    protected $fillable = ['abbreviation', 'country'];
+
     public function users()
     {
       return $this->hasMany('User');

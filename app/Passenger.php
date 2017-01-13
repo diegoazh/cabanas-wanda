@@ -10,6 +10,7 @@ class Passenger extends Model
 {
   protected $table = 'passengers';
   protected $fillable = ['name', 'lastname', 'country_id', 'dni', 'passport', 'email', 'address', 'destination'];
+
   public function country()
   {
     return $this->belongsTo('Country');

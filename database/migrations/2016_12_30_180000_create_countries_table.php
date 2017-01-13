@@ -15,7 +15,8 @@ class CreateCountriesTable extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('country', 40);
+            $table->string('abbreviation', 2);
+            $table->string('country', 50);
             $table->timestamps();
             $table->softDeletes();
         });

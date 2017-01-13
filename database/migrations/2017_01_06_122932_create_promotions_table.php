@@ -24,6 +24,7 @@ class CreatePromotionsTable extends Migration
             $table->enum('state', ['pausada', 'vigente', 'finalizada', 'oculta'])->default('oculta');
             $table->string('description_state');
             $table->string('terms_and_conditions');
+            $table->string('slug')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
