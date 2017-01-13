@@ -18,13 +18,12 @@
  *
  */
 Route::get('/', 'FrontendController@getHome')->name('home');
+Route::get('/home', 'HomeController@index');
 
 /**************************************
  * Auth Routes
  **************************************/
-Route::get('/login', 'Auth\LoginController@login')->name('login');
-Route::post('/logon', 'Auth\LoginController@logon')->name('logon');
-
+Auth::routes();
 
 /*---------------------------------------------------------------------------
  * BACKEND ROUTES
@@ -35,9 +34,7 @@ Route::post('/logon', 'Auth\LoginController@logon')->name('logon');
  */
 Route::group(['prefix' => 'admin', 'namespace' => 'Administration'], function () {
 
-  Route::get('/panel', function () {
-      return view('backend.panel');
-  })->name('admin.panel');
+  Route::get('/panel', 'BackendController@panel')->name('admin.panel');
 
   Route::resource('cottages', 'CottagesController');
 
