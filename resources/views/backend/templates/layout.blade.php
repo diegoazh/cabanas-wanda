@@ -14,8 +14,8 @@
       @section('header')
       @show
     </div>
-    <div id="body" class="row">
-      @section('body')
+    <div id="content" class="row">
+      @section('content')
       @show
     </div>
     <div id="footer" class="row">

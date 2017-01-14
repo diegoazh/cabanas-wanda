@@ -4,7 +4,7 @@
 
 @include('backend.headers.main-panel-header')
 
-@section('body')
+@section('content')
   <div class="col-md-2 bg-danger">
     <br>
     <br>

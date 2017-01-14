@@ -11,17 +11,17 @@ class BackendController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    /*public function __construct()
     {
         $this->middleware('auth');
-    }
+    }*/
 
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
-    public function panel()
+    public function showPanel()
     {
         return view('backend.panel');
     }

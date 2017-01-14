@@ -17,13 +17,17 @@
  * Aquí pondremos las rutas del frontend divididas por secciones.
  *
  */
-Route::get('/', 'FrontendController@getHome')->name('home');
-Route::get('/home', 'HomeController@index');
+Route::group(['middleware' => 'web'], function () {
+  /**************************************
+   * Base route app
+   **************************************/
+  Route::get('/', 'FrontendController@showHome')->name('home');
 
-/**************************************
- * Auth Routes
- **************************************/
-Auth::routes();
+  /**************************************
+   * Auth Routes
+   **************************************/
+  Auth::routes();
+});
 
 /*---------------------------------------------------------------------------
  * BACKEND ROUTES
@@ -34,7 +38,7 @@ Auth::routes();
  */
 Route::group(['prefix' => 'admin', 'namespace' => 'Administration'], function () {
 
-  Route::get('/panel', 'BackendController@panel')->name('admin.panel');
+  Route::get('/panel', 'BackendController@showPanel')->name('admin.panel');
 
   Route::resource('cottages', 'CottagesController');
 

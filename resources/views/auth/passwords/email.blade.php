@@ -1,4 +1,6 @@
-@extends('layouts.app')
+@extends('frontend.template.main')
+
+@include('frontend.headers.main-header')
 
 <!-- Main Content -->
 @section('content')
@@ -45,3 +47,5 @@
     </div>
 </div>
 @endsection
+
+@include('frontend.footer.main-footer')
