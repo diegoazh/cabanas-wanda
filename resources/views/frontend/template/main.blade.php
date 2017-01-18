@@ -9,6 +9,7 @@
     <title>{{ config('app.name', 'Cabañas de Wanda') }}</title>
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/frontend/frontend.css') }}">
     <!-- Scripts -->
     <script>
       window.Laravel = <?php echo json_encode([

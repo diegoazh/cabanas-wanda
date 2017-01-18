@@ -37,10 +37,7 @@ Route::group(['middleware' => 'web'], function () {
  *
  */
 Route::group(['prefix' => 'admin', 'namespace' => 'Administration'], function () {
-
   Route::get('/panel', 'BackendController@showPanel')->name('admin.panel');
-
   Route::resource('cottages', 'CottagesController');
-
   Route::resource('promotions', 'PromotionsController');
 });
