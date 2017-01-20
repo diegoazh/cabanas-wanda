@@ -37,4 +37,9 @@ class User extends Authenticatable
   {
     return $this->hasMany('Rental');
   }
+
+  public function isAdmin()
+  {
+    return ($this->type === 'administrador' || $this->type === 'sysadmin');
+  }
 }

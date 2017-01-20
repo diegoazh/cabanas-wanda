@@ -31,9 +31,13 @@ class LoginController extends Controller
     protected function authenticated ()
     {
         $user = Auth::user();
-        if (strtolower($user->type) === 'administrador' || strtolower($user->type) === 'sysadmin') {
+
+        if ($user->isAdmin())
+        {
             return redirect()->route('admin.panel');
-        } else {
+        }
+        else
+        {
             return redirect()->route('home');
         }
     }

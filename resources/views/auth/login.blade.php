@@ -1,6 +1,4 @@
-@extends('frontend.template.main')
-
-@include('frontend.headers.main-header')
+@extends('frontend.templates.main')
 
 @section('content')
 <div class="container">
@@ -68,5 +66,3 @@
     </div>
 </div>
 @endsection
-
-@include('frontend.footer.main-footer')
