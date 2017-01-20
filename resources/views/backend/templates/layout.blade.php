@@ -75,7 +75,7 @@
           <ul class="menu">
               <li class="item"><a href="#" class="cabanas">Caba&ntilde;as <span>10</span></a>
                 <ul>
-                  <li class="subitem"><a href="{{ route('cottages.create') }}">Registrar caba&ntilde;a <span>14</span></a></li>
+                  <li class="subitem"><a href="{{ route('cottages.create') }}">Registrar caba&ntilde;a</a></li>
                   <li class="subitem"><a href="#">Strange “Stuff” <span>6</span></a></li>
                   <li class="subitem"><a href="#">Automatic Fails <span>2</span></a></li>
                 </ul>
@@ -125,5 +125,6 @@
   <script src="{{ asset('lib/jquery/dist/jquery.min.js') }}"></script>
   <script src="{{ asset('lib/bootstrap/dist/js/bootstrap.min.js') }}"></script>
   <script src="{{ asset('js/main-menu-backend.js') }}"></script>
+  <script src="{{ asset('js/backend.js') }}"></script>
 </body>
 </html>
