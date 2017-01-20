@@ -11,7 +11,7 @@ class Cottage extends Model
   use Sluggable;
 
   protected $table = 'cottages';
-  protected $fillable = ['number', 'name', 'type', 'accommodation', 'description', 'images', 'price'];
+  protected $fillable = ['number', 'name', 'type', 'accommodation', 'description', 'images', 'price', 'slug'];
 
   public function Sluggable()
   {

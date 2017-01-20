@@ -15,7 +15,8 @@ class CottagesController extends Controller
      */
     public function index()
     {
-        //
+        $a = public_path();
+        dd($a);
     }
 
     /**
@@ -36,7 +37,35 @@ class CottagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'number' => 'unique:cottages|required|numeric',
+            'name' => 'unique:cottages|required|string|max:10',
+            'type' => 'required|string',
+            'accommodation' => 'required|numeric|min:1|max:6',
+            'description' => 'string|max:255',
+            'price' => 'required|numeric'
+        ]);
+
+        $files = $request->file('images');
+        $names;
+        foreach ($files as $key => $value) {
+            $names[$key] = 'user_' . time() . '_' . $value->getClientOriginalName();
+        }
+        $path = public_path() . '/images/cabanias';
+        for ($i = count($files) - 1; $i >= 0; $i--) {
+            $files[$i]->move($path, $names[$i]);
+        }
+
+        $cottage = new Cottage($request->all());
+        $cottage->images = '';
+        foreach ($names as $name) {
+            $cottage->images .= ($name . '|');
+        }
+        $cottage->save();
+
+        $check = $request->all();
+        $check = (isset($check['create_other'])) ? $check['create_other'] : 0;
+        return (boolval($check)) ? redirect()->route('cottages.create') : redirect()->route('cottages.index');
     }
 
     /**

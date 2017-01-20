@@ -15,7 +15,7 @@ class CreatePromotionsTable extends Migration
     {
         Schema::create('promotions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 100);
+            $table->string('name', 100)->unique();
             $table->double('amount', 5, 2)->nullable();
             $table->integer('percentage')->nullable();
             $table->string('description');

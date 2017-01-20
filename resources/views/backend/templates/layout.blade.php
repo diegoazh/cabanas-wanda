@@ -73,7 +73,7 @@
         <h2 class="tt-menu"><i class="fa fa-tachometer" aria-hidden="true"></i> Administraci&oacute;n</h2>
         <div id="wrapper">
           <ul class="menu">
-              <li class="item"><a href="#">Caba&ntilde;as <span>10</span></a>
+              <li class="item"><a href="#" class="cabanas">Caba&ntilde;as <span>10</span></a>
                 <ul>
                   <li class="subitem"><a href="{{ route('cottages.create') }}">Registrar caba&ntilde;a <span>14</span></a></li>
                   <li class="subitem"><a href="#">Strange “Stuff” <span>6</span></a></li>
