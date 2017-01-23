@@ -15,8 +15,11 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::where('deleted_at', null)->orderBy('created_at', 'desc');
-        return view('backend.users', ['users' => $users]);
+        $users = User::where('deleted_at', null)->orderBy('created_at', 'desc')->paginate(20);
+        $users->each(function ($users) {
+            $users->country;
+        });
+        return view('backend.users')->with('users', $users);
     }
 
     /**

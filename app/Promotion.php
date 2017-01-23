@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use App\Rental;
 
 class Promotion extends Model
 {
@@ -23,6 +22,6 @@ class Promotion extends Model
   }
   public function rentals()
   {
-    return $this->hasMany('Rental');
+    return $this->hasMany('App\Rental');
   }
 }

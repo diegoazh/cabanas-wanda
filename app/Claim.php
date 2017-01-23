@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use App\Rental;
 
 class Claim extends Model
 {
@@ -18,11 +17,11 @@ class Claim extends Model
     return [
       'slug' => [
         'source' => 'title'
-      ];
+      ]
     ];
   }
   public function rental()
   {
-    return $this->belongsTo('Rental');
+    return $this->belongsTo('App\Rental');
   }
 }

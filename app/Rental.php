@@ -3,11 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Cottage;
-use App\User;
-use App\Passenger;
-use App\Promotion;
-use App\Claim;
 
 class Rental extends Model
 {
@@ -16,22 +11,22 @@ class Rental extends Model
 
   public function cottage()
   {
-    return $this->belongsTo('Cottage');
+    return $this->belongsTo('App\Cottage');
   }
   public function user()
   {
-    return $this->belongsTo('User');
+    return $this->belongsTo('App\User');
   }
   public function passenger()
   {
-    return $this->belongsTo('Passenger');
+    return $this->belongsTo('App\Passenger');
   }
   public function promotion()
   {
-    return $this->belongsTo('Promotion');
+    return $this->belongsTo('App\Promotion');
   }
   public function claims()
   {
-    return $this->hasMany('Claim');
+    return $this->hasMany('App\Claim');
   }
 }

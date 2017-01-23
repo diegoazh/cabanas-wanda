@@ -26,6 +26,7 @@ $(document).ready(function(e) {
     activeMenu(/cabañas/);
   } else if (path[1] === 'users') {
     activeMenu(/usuarios/);
+    $('#main_content').removeClass('col-md-4').addClass('col-md-5');
   }
 
   menu_a.click(function(e) {

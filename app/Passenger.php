@@ -3,8 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Country;
-use App\Rental;
 
 class Passenger extends Model
 {
@@ -13,10 +11,10 @@ class Passenger extends Model
 
   public function country()
   {
-    return $this->belongsTo('Country');
+    return $this->belongsTo('App\Country');
   }
   public function rentals()
   {
-    return $this->hasMany('Rental');
+    return $this->hasMany('App\Rental');
   }
 }

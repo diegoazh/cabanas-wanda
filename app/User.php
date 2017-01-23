@@ -4,8 +4,6 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Country;
-use App\Rental;
 
 
 class User extends Authenticatable
@@ -31,11 +29,11 @@ class User extends Authenticatable
 
   public function country()
   {
-    return $this->belongsTo('Country');
+    return $this->belongsTo('App\Country');
   }
   public function rentals()
   {
-    return $this->hasMany('Rental');
+    return $this->hasMany('App\Rental');
   }
 
   public function isAdmin()
