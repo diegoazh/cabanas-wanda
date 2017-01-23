@@ -28,6 +28,8 @@ class CreateUsersTable extends Migration
             $table->string('destination', 30)->nullable();
             $table->string('password');
             $table->enum('type', ['frecuente', 'empleado', 'administrador', 'sysadmin'])->default('frecuente');
+            $table->string('image_profile')->nullable();
+            $table->string('slug')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

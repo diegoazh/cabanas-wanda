@@ -46,12 +46,13 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($slug)
     {
-        //
+        $user = User::where('slug', $slug)->get();
+        dd($user);
     }
 
     /**

@@ -4,11 +4,13 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 
 class User extends Authenticatable
 {
   use Notifiable;
+  use Sluggable;
 
   /**
    * The attributes that are mass assignable.
@@ -16,7 +18,7 @@ class User extends Authenticatable
    * @var array
    */
   protected $table = 'users';
-  protected $fillable = ['name', 'lastname', 'date_of_birth', 'country_id', 'dni', 'passport', 'email', 'address', 'destination', 'password', 'type'];
+  protected $fillable = ['name', 'lastname', 'date_of_birth', 'country_id', 'dni', 'passport', 'email', 'address', 'destination', 'password', 'type', 'image_profile', 'slug'];
 
   /**
    * The attributes that should be hidden for arrays.
@@ -26,6 +28,15 @@ class User extends Authenticatable
   protected $hidden = [
     'password', 'remember_token',
   ];
+
+  public function Sluggable()
+  {
+    return [
+        'slug' => [
+            'source' => ['lastname', 'name']
+        ]
+    ];
+  }
 
   public function country()
   {

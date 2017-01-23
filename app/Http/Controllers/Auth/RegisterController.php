@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -54,6 +53,7 @@ class RegisterController extends Controller
             'dni' => 'required|unique:users',
             'passport' => 'unique:users',
             'email' => 'required|email|max:255|unique:users',
+            'country_id' => 'required',
             'password' => 'required|min:6|confirmed'
         ]);
     }
@@ -72,6 +72,7 @@ class RegisterController extends Controller
             'dni' => $data['dni'],
             'passport' => $data['passport'],
             'email' => $data['email'],
+            'country_id' => $data['country_id'],
             'password' => bcrypt($data['password']),
         ]);
     }

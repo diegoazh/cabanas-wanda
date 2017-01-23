@@ -31,6 +31,9 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                @if(Auth::user()->type === 'administrador' || Auth::user()->type === 'sysadmin')
+                                    <li><a href="{{ route('admin.panel') }}">Administración</a></li>
+                                @endif
                                 <li>
                                     <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         Cerrar sesión

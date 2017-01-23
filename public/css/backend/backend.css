@@ -4,6 +4,10 @@
 }
 body {
   background-color: #FFEFD5;
+  background-image: url('../../images/cabanas2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 body .container-fluid #header nav {
   border-radius: 0px;
@@ -14,7 +18,9 @@ body .container-fluid #content #main_menu .tt-menu {
   text-align: center;
   border-bottom: dotted;
   font-size: 300%;
-  color: #878d95;
+  font-weight: bold;
+  text-shadow: #000000 2px 2px 3px;
+  color: #ffffff;
 }
 body .container-fluid #content #main_menu a {
   text-decoration: none;
@@ -152,25 +158,33 @@ body .container-fluid #content #main_menu .menu > li > ul li:hover a span,
 body .container-fluid #content #main_menu .menu > li > ul li:hover a:before {
   color: #32373D;
 }
-body .container-fluid #content #main_content .panel.form-panel {
+body .container-fluid #content #main_content .panel {
   margin-top: 10%;
+}
+body .container-fluid #content #main_content .panel .tt-users-list {
+  margin-left: 10px;
+}
+body .container-fluid #content #main_content .panel .table-responsive {
+  margin: 7px 10px;
+}
+body .container-fluid #content #main_content .form-panel {
   border: 2px dashed #808080;
 }
-body .container-fluid #content #main_content .panel.form-panel .panel-heading {
+body .container-fluid #content #main_content .form-panel .panel-heading {
   background-image: none;
   background-color: #A0522D;
   color: #ffffff;
   border-bottom: 2px dashed #ffffff;
 }
-body .container-fluid #content #main_content .panel.form-panel .panel-heading h3.tt-cottage-create:before {
+body .container-fluid #content #main_content .form-panel .panel-heading h3.tt-cottage-create:before {
   content: '\f015';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-fluid #content #main_content .panel.form-panel .help-info {
+body .container-fluid #content #main_content .form-panel .help-info {
   display: block;
 }
-body .container-fluid #content #main_content .panel.form-panel .help-info .help-icon {
+body .container-fluid #content #main_content .form-panel .help-info .help-icon {
   position: relative;
   float: right;
   top: -5px;

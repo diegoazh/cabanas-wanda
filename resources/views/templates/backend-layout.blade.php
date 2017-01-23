@@ -21,6 +21,7 @@
         @include('backend.menus.main-menu-backend')
       </div>
       <div id="main_content" class="col-md-offset-1 col-md-4">
+        @include('flash::message')
         @yield('content')
       </div>
     </div>

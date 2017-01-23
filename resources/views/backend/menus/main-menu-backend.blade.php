@@ -31,7 +31,7 @@
         </li>
         <li class="item"><a href="#" class="users">Usuarios <span>{{ (isset($cantUsers)) ? $cantUsers : 0 }}</span></a>
             <ul>
-                <li class="subitem"><a href="{{ route('users.index') }}">Lista de usuarios <span>14</span></a></li>
+                <li class="subitem"><a href="{{ route('users.index') }}">Lista de usuarios <span>{{ (isset($cantUsers)) ? $cantUsers : 0 }}</span></a></li>
                 <li class="subitem"><a href="#">Strange “Stuff” <span>6</span></a></li>
                 <li class="subitem"><a href="#">Automatic Fails <span>2</span></a></li>
             </ul>

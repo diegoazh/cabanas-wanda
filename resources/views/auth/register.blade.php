@@ -7,6 +7,15 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Registrarse</div>
                 <div class="panel-body">
+                    @if(count($errors) > 0)
+                        <div class="alert alert-warning">
+                            <ul>
+                                @foreach($errors as $error)
+                                    <li>$error</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
                         {{ csrf_field() }}
 
@@ -75,6 +84,25 @@
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('country_id') ? ' has-error' : '' }}">
+                            <label for="country_id" class="col-md-4 control-label">País</label>
+
+                            <div class="col-md-6">
+                                <select id="country_id" type="country_id" class="form-control" name="country_id" required>
+                                    <option value="seleccione" disbled selected>Seleccione su país</option>
+                                    @foreach($countries as $country)
+                                        <option value="{{ $country->id }}" @if(old('country') === $country->id) selected @endif>{{ $country->country }}</option>
+                                    @endforeach
+                                </select>
+
+                                @if ($errors->has('country_id'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('country_id') }}</strong>
                                     </span>
                                 @endif
                             </div>
