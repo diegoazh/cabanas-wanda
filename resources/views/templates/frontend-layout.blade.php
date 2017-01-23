@@ -21,7 +21,7 @@
     <div id="app" class="container-fluid">
       <div id="header" class="row">
         @section('header')
-          @include('frontend.headers.header-frontend')
+          @include('templates.headers.main-header')
         @show
       </div>
       <div id="content" class="row">

@@ -164,11 +164,13 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Package Service Providers... DAZH
+         * Package Service Providers...
+         * Added for DAZH
          */
         Collective\Html\HtmlServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
+        App\Providers\AdminMenuServiceProvider::class,
 
         /*
          * Application Service Providers...

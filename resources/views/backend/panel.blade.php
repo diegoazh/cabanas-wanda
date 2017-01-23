@@ -1,4 +1,4 @@
-@extends('backend.templates.layout')
+@extends('templates.backend-layout')
 
 @section('title', 'Panel')
 

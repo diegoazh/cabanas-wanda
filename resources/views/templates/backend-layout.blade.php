@@ -13,11 +13,13 @@
   <div class="container-fluid">
     <div id="header" class="row">
       @section('header')
-        @include('frontend.headers.header-frontend')
+        @include('templates.headers.main-header')
       @show
     </div>
     <div id="content" class="row">
-      @include('backend.menus.main-menu-backend')
+      <div id="main_menu" class="col-md-2">
+        @include('backend.menus.main-menu-backend')
+      </div>
       <div id="main_content" class="col-md-offset-1 col-md-4">
         @yield('content')
       </div>

@@ -1,11 +1,11 @@
-@extends('backend.templates.layout')
+@extends('templates.backend-layout')
 
 @section('title', 'Registrar Cabaña')
 
 @section('content')
-  <div class="panel panel-default">
+  <div class="panel panel-default form-panel">
     <div class="panel-heading">
-      <h3>Registrar Caba&ntilde;a</h3>
+      <h3 class="tt-cottage-create">Registrar Caba&ntilde;a</h3>
     </div>
     <div class="panel-body">
       @include('flash::message')

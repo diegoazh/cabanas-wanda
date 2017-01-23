@@ -87,8 +87,13 @@ body {
         .menu > li > a.active {
           border-bottom: 1px solid #1a638f;
         }
-        .menu > li > a.cabanas:before {
+        .menu > li > a.cottage:before {
           content: '\f015';
+          font-family: 'FontAwesome';
+          margin-right: 5px;
+        }
+        .menu > li > a.users:before {
+          content: '\f0c0';
           font-family: 'FontAwesome';
           margin-right: 5px;
         }
@@ -159,7 +164,7 @@ body {
         }
       }
       #main_content {
-        .panel {
+        .panel.form-panel {
           margin-top: 10%;
           border: 2px dashed #808080;
 
@@ -169,7 +174,7 @@ body {
             color: #ffffff;
             border-bottom: 2px dashed #ffffff;
 
-            h3:before {
+            h3.tt-cottage-create:before {
               content: '\f015';
               font-family: 'FontAwesome';
               margin-right: 5px;

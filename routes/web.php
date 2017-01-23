@@ -37,7 +37,8 @@ Route::group(['middleware' => 'web'], function () {
  *
  */
 Route::group(['prefix' => 'admin', 'namespace' => 'Administration', 'middleware' => ['auth', 'isAdmin']], function () {
-  Route::get('/panel', 'BackendController@showPanel')->name('admin.panel');
+  Route::get('/', 'BackendController@showPanel')->name('admin.panel');
   Route::resource('cottages', 'CottagesController');
-  Route::resource('promotions', 'PromotionsController');
+  //Route::resource('promotions', 'PromotionsController');
+  Route::resource('users', 'UsersController');
 });

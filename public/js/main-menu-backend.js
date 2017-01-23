@@ -8,18 +8,24 @@ $(document).ready(function(e) {
   path = path.split('/');
   path.shift();
 
+  function activeMenu (textFound) {
+      for (var i = menu_a.length - 1; i >= 0; i--) {
+          var a = menu_a[i];
+          var t = menu_a[i].text;
+          if(textFound.test(t.toLowerCase())) {
+              var item = $(a);
+              item.addClass('active');
+              item.next().stop(true,true).slideDown('normal');
+          }
+      }
+  }
+
   menu_ul.hide();
 
   if(path[1] === 'cottages') {
-    for (var i = menu_a.length - 1; i >= 0; i--) {
-      var a = menu_a[i];
-      var t = menu_a[i].text;
-      if(/cabañas/.test(t.toLowerCase())) {
-        var b = $(a);
-        b.addClass('active');
-        b.next().stop(true,true).slideDown('normal');
-      }
-    }
+    activeMenu(/cabañas/);
+  } else if (path[1] === 'users') {
+    activeMenu(/usuarios/);
   }
 
   menu_a.click(function(e) {

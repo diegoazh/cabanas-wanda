@@ -1,4 +1,4 @@
-@extends('frontend.templates.main')
+@extends('templates.frontend-layout')
 
 @section('content')
     <div class="container">

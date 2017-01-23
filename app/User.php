@@ -42,4 +42,9 @@ class User extends Authenticatable
   {
     return ($this->type === 'administrador' || $this->type === 'sysadmin');
   }
+
+  public function displayName()
+  {
+      return $this->lastname . ', ' . $this->name;
+  }
 }
