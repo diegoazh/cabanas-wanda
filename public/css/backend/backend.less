@@ -174,14 +174,24 @@ body {
         .panel {
           margin-top: 10%;
 
-          .tt-users-list{
+          .tt-users, .tt-cottages {
             margin-left: 10px;
+          }
+          .tt-users:before {
+            content: '\f0c0';
+            font-family: 'FontAwesome';
+            margin-right: 5px;
+          }
+          .tt-cottages:before {
+            content: '\f015';
+            font-family: 'FontAwesome';
+            margin-right: 5px;
           }
           .table-responsive {
             margin: 7px 10px;
           }
         }
-        .form-panel {
+        .panel.form-panel {
           border: 2px dashed #808080;
 
           .panel-heading {
@@ -190,7 +200,7 @@ body {
             color: #ffffff;
             border-bottom: 2px dashed #ffffff;
 
-            h3.tt-cottage-create:before {
+            h3.tt-cottages:before {
               content: '\f015';
               font-family: 'FontAwesome';
               margin-right: 5px;

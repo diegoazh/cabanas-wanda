@@ -161,30 +161,41 @@ body .container-fluid #content #main_menu .menu > li > ul li:hover a:before {
 body .container-fluid #content #main_content .panel {
   margin-top: 10%;
 }
-body .container-fluid #content #main_content .panel .tt-users-list {
+body .container-fluid #content #main_content .panel .tt-users,
+body .container-fluid #content #main_content .panel .tt-cottages {
   margin-left: 10px;
+}
+body .container-fluid #content #main_content .panel .tt-users:before {
+  content: '\f0c0';
+  font-family: 'FontAwesome';
+  margin-right: 5px;
+}
+body .container-fluid #content #main_content .panel .tt-cottages:before {
+  content: '\f015';
+  font-family: 'FontAwesome';
+  margin-right: 5px;
 }
 body .container-fluid #content #main_content .panel .table-responsive {
   margin: 7px 10px;
 }
-body .container-fluid #content #main_content .form-panel {
+body .container-fluid #content #main_content .panel.form-panel {
   border: 2px dashed #808080;
 }
-body .container-fluid #content #main_content .form-panel .panel-heading {
+body .container-fluid #content #main_content .panel.form-panel .panel-heading {
   background-image: none;
   background-color: #A0522D;
   color: #ffffff;
   border-bottom: 2px dashed #ffffff;
 }
-body .container-fluid #content #main_content .form-panel .panel-heading h3.tt-cottage-create:before {
+body .container-fluid #content #main_content .panel.form-panel .panel-heading h3.tt-cottages:before {
   content: '\f015';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-fluid #content #main_content .form-panel .help-info {
+body .container-fluid #content #main_content .panel.form-panel .help-info {
   display: block;
 }
-body .container-fluid #content #main_content .form-panel .help-info .help-icon {
+body .container-fluid #content #main_content .panel.form-panel .help-info .help-icon {
   position: relative;
   float: right;
   top: -5px;

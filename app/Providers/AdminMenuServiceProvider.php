@@ -15,7 +15,12 @@ class AdminMenuServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composers([
-            'App\Http\ViewComposers\AdminViewComposer' => ['backend.panel', 'backend.cottage-create', 'backend.users'],
+            'App\Http\ViewComposers\AdminViewComposer' => [
+                'backend.panel',
+                'backend.cottage-create',
+                'backend.users',
+                'backend.cottages'
+            ],
             'App\Http\ViewComposers\RegisterViewComposer' => 'auth.register'
         ]);
     }

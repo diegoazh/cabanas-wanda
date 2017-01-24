@@ -1,24 +1,17 @@
 @extends('templates.backend-layout')
 @section('content')
     <div class="panel">
-        <h1 class="tt-users-list">Usuarios registrados</h1>
-        @if(count($errors) > 0)
-            <ul>
-                @foreach($errors as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        @endif
+        <h1 class="tt-users">Usuarios registrados</h1>
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
-                <tr>
-                    <th scope="col">Nombre completo</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">País</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Acciones</th>
-                </tr>
+                    <tr>
+                        <th scope="col">Nombre completo</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">País</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
                 </thead>
                 <tbody>
                 @foreach($users as $user)
@@ -39,9 +32,9 @@
                 @endforeach
                 </tbody>
                 <tfoot>
-                <tr>
-                    <td colspan="5" class="text-right"><small>Usuarios ordenados por fecha de registro del más reciente al más antiguo.</small></td>
-                </tr>
+                    <tr>
+                        <td colspan="5" class="text-right"><small>Usuarios ordenados por fecha de registro del más reciente al más antiguo.</small></td>
+                    </tr>
                 </tfoot>
             </table>
             <div class="text-center">{{ $users->render() }}</div>

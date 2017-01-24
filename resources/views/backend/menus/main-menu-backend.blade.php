@@ -1,9 +1,9 @@
 <h2 class="tt-menu"><i class="fa fa-tachometer" aria-hidden="true"></i> Administraci&oacute;n</h2>
 <div id="wrapper">
     <ul class="menu">
-        <li class="item"><a href="#" class="cottage">Caba&ntilde;as <span>10</span></a>
+        <li class="item"><a href="#" class="cottage">Caba&ntilde;as <span>{{ (isset($cantCottages)) ? $cantCottages : 0 }}</span></a>
             <ul>
-                <li class="subitem"><a href="#">Listado de caba&ntilde;as<span>6</span></a></li>
+                <li class="subitem"><a href="{{ route('cottages.index') }}">Listado de caba&ntilde;as<span>{{ (isset($cantCottages)) ? $cantCottages : 0 }}</span></a></li>
                 <li class="subitem"><a href="{{ route('cottages.create') }}">Registrar caba&ntilde;a</a></li>
                 <li class="subitem"><a href="#">Automatic Fails <span>2</span></a></li>
             </ul>

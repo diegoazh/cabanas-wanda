@@ -15,8 +15,8 @@ class CottagesController extends Controller
      */
     public function index()
     {
-        $a = public_path();
-        dd($a);
+        $cottages = Cottage::orderBy('number', 'asc')->paginate(10);
+        return view('backend.cottages')->with('cottages', $cottages);
     }
 
     /**
