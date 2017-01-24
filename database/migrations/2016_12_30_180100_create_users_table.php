@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('celphone')->nullable();
             $table->bigInteger('phone')->nullable();
             $table->string('address', 150)->nullable();
-            $table->string('destination', 30)->nullable();
+            $table->string('destination', 150)->nullable();
             $table->string('password');
             $table->enum('type', ['frecuente', 'empleado', 'administrador', 'sysadmin'])->default('frecuente');
             $table->string('image_profile')->nullable();

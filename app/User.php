@@ -4,11 +4,13 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Cviebrock\EloquentSluggable\Sluggable;
 
 
 class User extends Authenticatable
 {
+  use SoftDeletes;
   use Notifiable;
   use Sluggable;
 
@@ -18,6 +20,7 @@ class User extends Authenticatable
    * @var array
    */
   protected $table = 'users';
+  protected $dates = ['deleted_at'];
   protected $fillable = ['name', 'lastname', 'date_of_birth', 'country_id', 'dni', 'passport', 'email', 'address', 'destination', 'password', 'type', 'image_profile', 'slug'];
 
   /**
