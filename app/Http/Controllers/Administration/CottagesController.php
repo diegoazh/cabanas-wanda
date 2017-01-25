@@ -6,6 +6,8 @@ use App\Cottage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth as Auth;
+use Illuminate\Support\Facades\File as File;
+use Illuminate\Support\Facades\Storage as Storage;
 
 class CottagesController extends Controller
 {
@@ -55,7 +57,7 @@ class CottagesController extends Controller
         // $path = public_path() . '/images/cabanias'; // determinamos la ruta donde se guardan, necesario para la primera forma
         for ($i = count($files) - 1; $i >= 0; $i--) {
             // $files[$i]->move($path, $names[$i]); // primera forma con el objeto $file movemos cada imagen al directorio con su nuevo nombre
-            \Storage::disk('cabanias')->put($names[i], \File::get($files[i])); // segunda forma con la clase storage y el filesistem de laravel
+            Storage::disk('cabanias')->put($names[i], File::get($files[i])); // segunda forma con la clase storage y el filesistem de laravel
         }
 
         $cottage = new Cottage($request->all()); // creamos el nuevo objeto cottage
