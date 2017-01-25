@@ -18,19 +18,22 @@
                 @foreach($cottages as $cottage)
                     <tr>
                         <td>
-                            <i class="fa fa-hashtag" aria-hidden="true"></i> {{ $cottage->number }}
+                            <span class="label label-default"><i class="fa fa-hashtag" aria-hidden="true"></i> {{ $cottage->number }}</span>
                         </td>
-                        <td>{{ $cottage->name }}</td>
+                        <td><a class="btn btn-link" href="{{ route('cottages.show', $cottage->slug) }}">{{ strtoupper($cottage->name) }}</a></td>
                         <td>
-                            <span class="label @if($cottage->accommodation < 3) label-default @else label-primary @endif">{{ $cottage->accommodation }}</span>
+                            {{ $cottage->accommodation }} <i class="glyphicon glyphicon-user"></i>
                         </td>
                         <td>
                             <i class="fa fa-usd" aria-hidden="true"></i> {{ $cottage->price }}
                         </td>
                         <td>
-                            <span class="label @if($cottage->type === 'simple') label-info @else label-danger @endif">{{ $cottage->type }}</span>
+                            <span class="label @if($cottage->type === 'simple') label-primary @else label-success @endif">{{ $cottage->type }}</span>
                         </td>
-                        <td></td>
+                        <td>
+                            <a href="{{ route('cottages.edit', $cottage) }}" role="button" class="btn btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                            <a role="button" class="btn btn-danger btn-xs"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>

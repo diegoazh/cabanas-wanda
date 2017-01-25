@@ -5,7 +5,7 @@
 @section('content')
   <div class="panel panel-default form-panel">
     <div class="panel-heading">
-      <h3 class="tt-cottages">Registrar Caba&ntilde;a</h3>
+      <h3 class="tt-cottages">{{ (isset($cottage)) ? 'Editar caba&ntilde;a' : 'Registrar Caba&ntilde;a' }}</h3>
     </div>
     <div class="panel-body">
       @include('flash::message')
@@ -18,12 +18,12 @@
           </ul>
         </div>
       @endif
-      {{ Form::open(['route' => 'cottages.store', 'method' => 'POST', 'files' => true]) }}
+      {{ Form::open(['route' => ((isset($cottage)) ? ['cottages.update', $cottage] : 'cottages.store'), 'method' => ((isset($cottage)) ? 'PUT' : 'POST'), 'files' => true]) }}
         <div class="form-group">
           {{ Form::label('number', 'Numero de cabaña', ['class' => 'sr-only']) }}
           <div class="input-group">
             <div class="input-group-addon">Numero de Caba&ntilde;a</div>
-            {{ Form::number('number', '', ['class' => 'form-control', 'min' => 1, 'max' => 10, 'placeholder' => 'Ingrese el número de la cabaña', 'required']) }}
+            {{ Form::number('number', (isset($cottage)) ? $cottage->number : null, ['class' => 'form-control', 'min' => 1, 'max' => 10, 'placeholder' => 'Ingrese el número de la cabaña', 'required']) }}
           </div>
           <div class="help-info">
             <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
@@ -34,7 +34,7 @@
           {{ Form::label('name', 'Nombre de la cabaña', ['class' => 'sr-only']) }}
           <div class="input-group">
             <div class="input-group-addon">Nombre de la Caba&ntilde;a</div>
-            {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Por ejemplo A o Suit, etc. Máximo 10 caracteres.', 'maxlength' => 10, 'required']) }}
+            {{ Form::text('name', (isset($cottage)) ? $cottage->name : null, ['class' => 'form-control', 'placeholder' => 'Por ejemplo A o Suit, etc. Máximo 10 caracteres.', 'maxlength' => 10, 'required']) }}
           </div>
           <div class="help-info">
             <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
@@ -45,7 +45,7 @@
           {{ Form::label('type', 'Tipo de cabaña', ['class' => 'sr-only']) }}
           <div class="input-group">
             <div class="input-group-addon">Tipo de Caba&ntilde;a</div>
-            {{ Form::select('type', ['simple' => 'Simple', 'matrimonial' => 'Matrimonial'], null, ['placeholder' => 'Seleccione el tipo de cabaña', 'class' => 'form-control'], 'required') }}
+            {{ Form::select('type', ['simple' => 'Simple', 'matrimonial' => 'Matrimonial'], (isset($cottage)) ? $cottage->type : null, ['placeholder' => ((isset($cottage)) ? null : 'Seleccione el tipo de cabaña'), 'class' => 'form-control'], 'required') }}
           </div>
           <div class="help-info">
             <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
@@ -56,7 +56,7 @@
           {{ Form::label('accommodation', 'Capacidad', ['class' => 'sr-only']) }}
           <div class="input-group">
             <div class="input-group-addon">Capacidad</div>
-            {{ Form::number('accommodation', null, ['placeholder' => 'Ingrese la capacidad de la cabaña', 'class' => 'form-control', 'min' => 1, 'max' => 6], 'required') }}
+            {{ Form::number('accommodation', (isset($cottage)) ? $cottage->accommodation : null, ['placeholder' => 'Ingrese la capacidad de la cabaña', 'class' => 'form-control', 'min' => 1, 'max' => 6], 'required') }}
           </div>
           <div class="help-info">
             <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
@@ -67,7 +67,7 @@
           {{ Form::label('description', 'Descripci&oacute;n', ['class' => 'sr-only']) }}
           <div class="input-group">
             <div class="input-group-addon">Descripci&oacute;n</div>
-            {{ Form::textarea('description', null, ['placeholder' => 'Agregue una descripción significativa, por ejemplo: con aire acondicionado, televisión, DirecTv, wifi, etc', 'class' => 'form-control', 'rows' => 9, 'maxlength' => 255], 'required') }}
+            {{ Form::textarea('description', (isset($cottage)) ? $cottage->description : null, ['placeholder' => 'Agregue una descripción significativa, por ejemplo: con aire acondicionado, televisión, DirecTv, wifi, etc', 'class' => 'form-control', 'rows' => 9, 'maxlength' => 255], 'required') }}
           </div>
           <div class="help-info">
             <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
@@ -78,7 +78,7 @@
           {{ Form::label('price', 'Precio $', ['class' => 'sr-only']) }}
           <div class="input-group">
             <div class="input-group-addon">Precio $</div>
-            {{ Form::number('price', null, ['placeholder' => 'Determine el precio de la cabaña', 'class' => 'form-control', 'step' => 0.01], 'required') }}
+            {{ Form::number('price', (isset($cottage)) ? $cottage->price : null, ['placeholder' => 'Determine el precio de la cabaña', 'class' => 'form-control', 'step' => 0.01], 'required') }}
           </div>
           <div class="help-info">
             <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
@@ -96,14 +96,30 @@
             <small class="text-warning help-text">Se pueden agregar varias imagenes a la vez. Para seleccionar diferentes imagenes por separado mantegra presionado <kbd>Ctrl</kbd> + <kbd>clic izq</kbd>. Para seleccionar un conjunto mantenga presionado <kbd>Shift</kbd> + <kbd>clic izq</kbd> en la primera y en la ultima imagen del conjunto.</small>
           </div>
         </div>
-        <div class="form-group">
-          {{ Form::label('create_other', '¿Registrar y crear nuevo?') }}
-          {{ Form::checkbox('create_other', '1') }}
-          <div class="help-info">
-            <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-            <small class="text-warning help-text">Si tilda esta opción volverá a esta página luego de registrar la cabaña.</small>
-          </div>
-        </div>
+        @if(!isset($cottage))
+            <div class="form-group">
+              {{ Form::label('create_other', '¿Registrar y crear nuevo?') }}
+              {{ Form::checkbox('create_other', '1') }}
+              <div class="help-info">
+                  <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
+                  <small class="text-warning help-text">Si tilda esta opción volverá a esta página luego de registrar la cabaña.</small>
+              </div>
+            </div>
+        @endif
+        @if(isset($cottage))
+            @php
+                $images = explode('|', $cottage->images);
+            @endphp
+            <div id="cottage_images" class="row">
+                @for($i = count($images) - 1; $i >= 0; $i--)
+                    @if(!empty($images[$i]))
+                        <div class="col-md-6">
+                            <img src="{{ asset('images/' . $images[$i]) }}" alt="" class="img-responsive img-thumbnail">
+                        </div>
+                    @endif
+                @endfor
+            </div>
+        @endif
         <div class="text-center">
           {{ Form::reset('Limpiar formulario', ['class' => 'btn btn-default']) }}
           {{ Form::submit('Registrar cabaña', ['class' => 'btn btn-primary']) }}

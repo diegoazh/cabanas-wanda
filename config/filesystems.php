@@ -43,6 +43,16 @@ return [
 
     'disks' => [
 
+        'images' => [
+            'driver' => 'local',
+            'root' => public_path() . '/images'
+        ],
+
+        'cabanias' => [
+            'driver' => 'local',
+            'root' => public_path() . '/images/cabanias'
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

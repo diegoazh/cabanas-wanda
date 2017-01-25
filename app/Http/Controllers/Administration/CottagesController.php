@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Administration;
 use App\Cottage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth as Auth;
 
 class CottagesController extends Controller
 {
@@ -46,37 +47,39 @@ class CottagesController extends Controller
             'price' => 'required|numeric'
         ]);
 
-        $files = $request->file('images');
+        $files = $request->file('images'); // seleccionamos las imágenes del request.
         $names;
         foreach ($files as $key => $value) {
-            $names[$key] = 'user_' . time() . '_' . $value->getClientOriginalName();
+            $names[$key] = Auth::user()->slug . '_' . time() . '.' . $value->getClientOriginalExtension(); // creamos un nombre único
         }
-        $path = public_path() . '/images/cabanias';
+        // $path = public_path() . '/images/cabanias'; // determinamos la ruta donde se guardan, necesario para la primera forma
         for ($i = count($files) - 1; $i >= 0; $i--) {
-            $files[$i]->move($path, $names[$i]);
+            // $files[$i]->move($path, $names[$i]); // primera forma con el objeto $file movemos cada imagen al directorio con su nuevo nombre
+            \Storage::disk('cabanias')->put($names[i], \File::get($files[i])); // segunda forma con la clase storage y el filesistem de laravel
         }
 
-        $cottage = new Cottage($request->all());
-        $cottage->images = '';
+        $cottage = new Cottage($request->all()); // creamos el nuevo objeto cottage
+        $cottage->images = ''; // limpiamos la propiedad images que era un array
         foreach ($names as $name) {
-            $cottage->images .= ($name . '|');
+            $cottage->images .= ($name . '|'); // concatenamos los nombres ya que debe ser un string
         }
-        $cottage->save();
+        $cottage->save(); // guardamos el objeto en la DB
 
         $check = $request->all();
-        $check = (isset($check['create_other'])) ? $check['create_other'] : 0;
-        return (boolval($check)) ? redirect()->route('cottages.create') : redirect()->route('cottages.index');
+        $check = (isset($check['create_other'])) ? $check['create_other'] : 0; // chequeamos si desea crear otra cabaña
+        return (boolval($check)) ? redirect()->route('cottages.create') : redirect()->route('cottages.index'); // deacuerdo a su elección lo redirigimos
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cottage  $cottage
+     * @param  string  $cottage
      * @return \Illuminate\Http\Response
      */
-    public function show(Cottage $cottage)
+    public function show($cottage)
     {
-        //
+        $cottage = Cottage::where('slug', $cottage)->first();
+        dd($cottage);
     }
 
     /**
@@ -87,7 +90,7 @@ class CottagesController extends Controller
      */
     public function edit(Cottage $cottage)
     {
-        //
+        return view('backend.cottage-create')->with('cottage', $cottage);
     }
 
     /**
