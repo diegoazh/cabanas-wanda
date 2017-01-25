@@ -1,4 +1,7 @@
 $(document).ready(function(e) {
+  /***************************************
+  *  Info helper in forms
+  * **************************************/
   var icons = $('.help-info > .help-icon');
   var texts = $('.help-info > .help-text');
 
@@ -8,4 +11,12 @@ $(document).ready(function(e) {
     event.preventDefault();
     $(this).next().fadeToggle('slow', 'linear');
   });
+
+  /***************************************
+   *  Info helper in forms
+   * **************************************/
+  $('.img-clickable').click(function (event) {
+      event.preventDefault();
+      $(this).addClass('img-clicked');
+  })
 });

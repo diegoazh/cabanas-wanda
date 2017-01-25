@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Administration;
 use App\Cottage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Support\Facades\File as File;
 use Illuminate\Support\Facades\Storage as Storage;
 
@@ -52,7 +51,7 @@ class CottagesController extends Controller
         $files = $request->file('images'); // seleccionamos las imágenes del request.
         $names;
         foreach ($files as $key => $value) {
-            $names[$key] = Auth::user()->slug . '_' . time() . '.' . $value->getClientOriginalExtension(); // creamos un nombre único
+            $names[$key] = 'cabania' . time() . '.' . $value->getClientOriginalExtension(); // creamos un nombre único
         }
         // $path = public_path() . '/images/cabanias'; // determinamos la ruta donde se guardan, necesario para la primera forma
         for ($i = count($files) - 1; $i >= 0; $i--) {

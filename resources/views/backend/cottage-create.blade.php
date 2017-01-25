@@ -110,15 +110,18 @@
             @php
                 $images = explode('|', $cottage->images);
             @endphp
-            <div id="cottage_images" class="row">
-                @for($i = count($images) - 1; $i >= 0; $i--)
-                    @if(!empty($images[$i]))
-                        <div class="col-md-6">
-                            <img src="{{ asset('images/' . $images[$i]) }}" alt="" class="img-responsive img-thumbnail">
-                        </div>
-                    @endif
-                @endfor
-            </div>
+            @for($i = 0; $i <= count($images) - 1; $i++)
+                <div id="cottage_images" class="row">
+                    @for($j = 1; $j >= 0; $j--)
+                        @if(!empty($images[$i]))
+                            <div class="col-md-6">
+                                <img src="{{ asset('images/' . $images[$i]) }}" alt="{{ $images[$i] }}" role="button" class="img-responsive img-thumbnail img-clickable">
+                            </div>
+                        @endif
+                        @php $i = $i + $j; @endphp
+                    @endfor
+                </div>
+            @endfor
         @endif
         <div class="text-center">
           {{ Form::reset('Limpiar formulario', ['class' => 'btn btn-default']) }}
