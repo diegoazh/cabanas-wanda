@@ -10,7 +10,8 @@
         "fzaninotto/faker": "^1.6",
         "laracasts/flash": "^2.0",
         "laravel/framework": "5.3.*",
-        "laravelcollective/html": "5.3.*"
+        "laravelcollective/html": "5.3.*",
+        "nesbot/carbon": "^1.22"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
