@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Administration;
 
 use App\Cottage;
 use Illuminate\Http\Request;
+use App\Http\Requests\RequestCottage;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File as File;
-use Illuminate\Support\Facades\Storage as Storage;
 
 class CottagesController extends Controller
 {
@@ -34,36 +33,14 @@ class CottagesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\RequestCottage  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RequestCottage $request)
     {
-        $this->validate($request, [
-            'number' => 'unique:cottages|required|numeric',
-            'name' => 'unique:cottages|required|string|max:10',
-            'type' => 'required|string',
-            'accommodation' => 'required|numeric|min:1|max:6',
-            'description' => 'string|max:255',
-            'price' => 'required|numeric'
-        ]);
-
         $files = $request->file('images'); // seleccionamos las imágenes del request.
-        $names;
-        foreach ($files as $key => $value) {
-            $names[$key] = 'cabania' . time() . '.' . $value->getClientOriginalExtension(); // creamos un nombre único
-        }
-        // $path = public_path() . '/images/cabanias'; // determinamos la ruta donde se guardan, necesario para la primera forma
-        for ($i = count($files) - 1; $i >= 0; $i--) {
-            // $files[$i]->move($path, $names[$i]); // primera forma con el objeto $file movemos cada imagen al directorio con su nuevo nombre
-            Storage::disk('cabanias')->put($names[i], File::get($files[i])); // segunda forma con la clase storage y el filesistem de laravel
-        }
-
         $cottage = new Cottage($request->all()); // creamos el nuevo objeto cottage
-        $cottage->images = ''; // limpiamos la propiedad images que era un array
-        foreach ($names as $name) {
-            $cottage->images .= ($name . '|'); // concatenamos los nombres ya que debe ser un string
-        }
+        $cottage->images = $cottage->addOrRemoveImages($files); // Ver el metodo del modelo allí se procesan las imágenes.
         $cottage->save(); // guardamos el objeto en la DB
 
         $check = $request->all();
@@ -103,7 +80,15 @@ class CottagesController extends Controller
      */
     public function update(Request $request, Cottage $cottage)
     {
-        //
+        $attributes = $request->all();
+        $cottage->name = $attributes['name'];
+        $cottage->type = $attributes['type'];
+        $cottage->accommodation = $attributes['accommodation'];
+        $cottage->description = $attributes['description'];
+        $cottage->price = $attributes['price'];
+        $cottage->images = $cottage->addOrRemoveImages($attributes['images'], $attributes['actualImages'], $attributes['removedImages']);
+        $cottage->save();
+        return redirect()->route('cottages.index');
     }
 
     /**

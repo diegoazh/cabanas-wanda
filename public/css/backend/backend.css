@@ -17,7 +17,10 @@
 }
 body {
   background-color: #FFEFD5;
-  background-image: url('../../images/cabanas2.jpg');
+}
+body .container-fluid {
+  min-height: 985px;
+  background-image: url('../../images/cabanias/cabanas2.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

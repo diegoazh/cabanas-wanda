@@ -1,1 +1,10 @@
-body .container-fluid{min-height:985px;background-image:url(../../images/cabanas17.jpg);background-repeat:no-repeat;background-size:cover;background-position:center bottom}
+body {
+  background-color: #ffffff;
+}
+body .container-fluid {
+  min-height: 985px;
+  background-image: url('../../images/cabanias/cabanas17.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom;
+}

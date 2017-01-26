@@ -38,6 +38,19 @@ $(document).ready(function(e) {
     $(this).next().fadeToggle('slow', 'linear');
   });
 
+  if($('#removedImages').val() !== '') {
+    var removed = $('#removedImages').val().split('|');
+    removed.pop();
+    var images = $('.img-clickable');
+    for (var i = images.length - 1; i >= 0; i--) {
+      for (var j = removed.length - 1; j >= 0; j--) {
+        if(images[i] === removed[j]) {
+          images[i].addClass('img-clicked');
+        }
+      }
+    }
+  }
+
   /***************************************
    *  Helper in edits forms for images
    * **************************************/

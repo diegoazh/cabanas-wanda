@@ -23,11 +23,11 @@
           {{ Form::label('number', 'Numero de cabaña', ['class' => 'sr-only']) }}
           <div class="input-group">
             <div class="input-group-addon">Numero de Caba&ntilde;a</div>
-            {{ Form::number('number', (isset($cottage)) ? $cottage->number : null, ['class' => 'form-control', 'min' => 1, 'max' => 10, 'placeholder' => 'Ingrese el número de la cabaña', 'required']) }}
+            {{ Form::number('number', (isset($cottage)) ? $cottage->number : null, ['class' => 'form-control', 'min' => 1, 'max' => 10, 'placeholder' => 'Ingrese el número de la cabaña', (isset($cottage)) ? 'disabled' : 'required']) }}
           </div>
           <div class="help-info">
             <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-            <small class="text-warning help-text">Es el número que tiene asignada la cabaña.</small>
+            <small class="text-warning help-text">Es el número que tiene asignada la cabaña. Tenga en cuenta que una vez creada la cabaña este campo no podrá modificarse.</small>
           </div>
         </div>
         <div class="form-group">
@@ -137,13 +137,16 @@
                         @for($j = 1; $j >= 0; $j--)
                             @if(!empty($images[$i]))
                                 <div class="col-md-6">
-                                    <img src="{{ asset('images/' . $images[$i]) }}" alt="{{ $images[$i] }}" role="button" class="img-responsive img-thumbnail img-clickable">
+                                    <img src="{{ asset('images/cabanias/' . $images[$i]) }}" alt="{{ $images[$i] }}" role="button" class="img-responsive img-thumbnail img-clickable">
                                 </div>
                             @endif
                             @php $i = $i + $j; @endphp
                         @endfor
                     </div>
                 @endfor
+                <div class="text-center">
+                    <small class="text-danger">*Tenga en cuenta que las imágenes se eliminaran de forma física y de manera permanente</small>
+                </div>
             </div>
         </div>
     @endif
