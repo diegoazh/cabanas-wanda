@@ -24,7 +24,6 @@ class RequestCottage extends FormRequest
     public function rules()
     {
         return [
-            'number' => 'unique:cottages|required|numeric',
             'name' => 'unique:cottages|required|string|max:10',
             'type' => 'required|string',
             'accommodation' => 'required|numeric|min:1|max:6',

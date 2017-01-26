@@ -15,8 +15,8 @@ class CreateCottagesTable extends Migration
     {
         Schema::create('cottages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('number')->unique();
-            $table->string('name', 10)->unique();
+            $table->integer('number');
+            $table->string('name', 10);
             $table->enum('type', ['matrimonial', 'simple']);
             $table->integer('accommodation');
             $table->string('description');

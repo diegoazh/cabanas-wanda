@@ -38,8 +38,11 @@ $(document).ready(function(e) {
     $(this).next().fadeToggle('slow', 'linear');
   });
 
-  if($('#removedImages').val() !== '') {
-    var removed = $('#removedImages').val().split('|');
+  if($('#removedImages').val() !== '' && $('#removedImages').val() !== undefined) {
+    var removed = $('#removedImages').val();
+    if(removed !== '') {
+      removed = removed.split('|');
+    }
     removed.pop();
     var images = $('.img-clickable');
     for (var i = images.length - 1; i >= 0; i--) {
@@ -64,4 +67,26 @@ $(document).ready(function(e) {
       removeAddFromInputValue($(this), $('#actualImages'), $('#removedImages'));
     }
   })
+});
+
+/***************************************
+ *  Button delete Cottage
+ * **************************************/
+$('.delete-cottage').click(function (event) {
+    var cottage = $(this).attr('class');
+    cottage = cottage.split(' ').pop();
+    cottage = cottage.split('_');
+    var number = cottage.pop();
+    cottage = cottage[0].split('-').pop();
+    $('.cottage-delete').html('<i class="fa fa-hashtag" aria-hidden="true"></i> ' + number);
+    $('#cottage_id').val(parseInt(number));
+    var form = $('#delete_cottage_form');
+    var action = form.attr('action');
+    action = action.split('admin/cottages/');
+    action[1] = cottage;
+    action = action.join('admin/cottages/');
+    form.attr('action', action);
+    $('#submit_form').click(function () {
+       form.submit();
+    });
 });

@@ -1,5 +1,6 @@
 @extends('templates.backend-layout')
 @section('content')
+    @include('modals.modal-delete-cottage')
     <div class="panel">
         <h1 class="tt-cottages">Lista de Caba&ntilde;as</h1>
         <div class="table-responsive">
@@ -32,7 +33,7 @@
                         </td>
                         <td>
                             <a href="{{ route('cottages.edit', $cottage) }}" role="button" class="btn btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
-                            <a role="button" class="btn btn-danger btn-xs"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                            <a role="button" class="btn btn-danger btn-xs delete-cottage cottage-{{ $cottage->id }}_{{ $cottage->number }}" data-toggle="modal" data-target="#modalDeleteCottage"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
                         </td>
                     </tr>
                 @endforeach

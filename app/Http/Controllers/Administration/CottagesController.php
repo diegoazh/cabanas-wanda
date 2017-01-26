@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Administration;
 
 use App\Cottage;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Requests\RequestCottage;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class CottagesController extends Controller
 {
@@ -38,6 +40,15 @@ class CottagesController extends Controller
      */
     public function store(RequestCottage $request)
     {
+        $v = Validator::make($request->all(), [
+            'number' => [
+                'required',
+                'numeric',
+                Rule::unique('cottages')->where(function ($query) {
+                    $query->where('deleted_at', null);
+                })
+            ]
+        ]);
         $files = $request->file('images'); // seleccionamos las imágenes del request.
         $cottage = new Cottage($request->all()); // creamos el nuevo objeto cottage
         $cottage->images = $cottage->addOrRemoveImages($files); // Ver el metodo del modelo allí se procesan las imágenes.
@@ -80,6 +91,13 @@ class CottagesController extends Controller
      */
     public function update(Request $request, Cottage $cottage)
     {
+        $v = Validator::make($request->all(), [
+            'number' => [
+                'required',
+                'numeric',
+                Rule::unique('cottages')->ignore($cottage->id)
+            ]
+        ]);
         $attributes = $request->all();
         $cottage->name = $attributes['name'];
         $cottage->type = $attributes['type'];
@@ -94,11 +112,13 @@ class CottagesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cottage  $cottage
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cottage $cottage)
+    public function destroy($id)
     {
-        //
+        $cottage = Cottage::find($id);
+        $cottage->delete();
+        return redirect()->route('cottages.index');
     }
 }
