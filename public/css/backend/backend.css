@@ -7,8 +7,11 @@
  ********************************************/
 .img-clicked {
   padding: 0px;
-  border: 4px solid #2b669a;
+  border: 5px solid #2b669a;
 }
+/********************************************
+ * Estilos del sitio
+ ********************************************/
 * {
   font-family: Raleway, sans-serif;
 }
@@ -211,4 +214,13 @@ body .container-fluid #content #main_content .panel.form-panel .help-info .help-
   top: -5px;
   left: 7px;
   z-index: 10;
+}
+body .container-fluid #content #optional_content .panel {
+  margin-top: 10%;
+}
+body .container-fluid #content #optional_content .panel .tt-actual-images span {
+  text-decoration: underline;
+}
+body .container-fluid #content #optional_content .panel .cottage-images div img {
+  margin-bottom: 15px;
 }

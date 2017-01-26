@@ -17,6 +17,28 @@ $(document).ready(function(e) {
    * **************************************/
   $('.img-clickable').click(function (event) {
       event.preventDefault();
-      $(this).addClass('img-clicked');
+      if ($(this).hasClass('img-clicked')) {
+          $(this).removeClass('img-clicked');
+          var name = $(this).attr('alt');
+          var images = $('#actualImages').val();
+          images += (name + '|');
+          $('#actualImages').val(images);
+      } else {
+        $(this).addClass('img-clicked');
+        var name = $(this).attr('alt');
+        var images = $('#actualImages').val();
+        images = images.split('|');
+        images.pop();
+        for (var i = images.length - 1; i >= 0; i--) {
+          if(images[i] === name) {
+            images.splice(i--, 1);
+            break;
+          }
+        }
+        if (images.length > 0) {
+            images = images.join('|') + '|';
+        }
+        $('#actualImages').val(images);
+      }
   })
 });

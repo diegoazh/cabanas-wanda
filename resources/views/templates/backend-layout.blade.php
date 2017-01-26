@@ -24,6 +24,7 @@
         @include('messages_alerts.messagesAlerts')
         @yield('content')
       </div>
+      @yield('optional')
     </div>
     <div id="footer" class="row">
       @section('footers')

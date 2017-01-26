@@ -105,29 +105,45 @@
                   <small class="text-warning help-text">Si tilda esta opción volverá a esta página luego de registrar la cabaña.</small>
               </div>
             </div>
-        @endif
-        @if(isset($cottage))
-            @php
-                $images = explode('|', $cottage->images);
-            @endphp
-            @for($i = 0; $i <= count($images) - 1; $i++)
-                <div id="cottage_images" class="row">
-                    @for($j = 1; $j >= 0; $j--)
-                        @if(!empty($images[$i]))
-                            <div class="col-md-6">
-                                <img src="{{ asset('images/' . $images[$i]) }}" alt="{{ $images[$i] }}" role="button" class="img-responsive img-thumbnail img-clickable">
-                            </div>
-                        @endif
-                        @php $i = $i + $j; @endphp
-                    @endfor
-                </div>
-            @endfor
+        @else
+            {{ Form::hidden('actualImages', $cottage->images, ['id' => 'actualImages']) }}
         @endif
         <div class="text-center">
-          {{ Form::reset('Limpiar formulario', ['class' => 'btn btn-default']) }}
-          {{ Form::submit('Registrar cabaña', ['class' => 'btn btn-primary']) }}
+            @if(isset($cottage))
+              {{ Form::submit('Actualizar cabaña', ['class' => 'btn btn-primary']) }}
+            @else
+              {{ Form::reset('Limpiar formulario', ['class' => 'btn btn-default']) }}
+              {{ Form::submit('Registrar cabaña', ['class' => 'btn btn-primary']) }}
+            @endif
         </div>
       {{ Form::close() }}
     </div>
   </div>
+@endsection
+
+@section('optional')
+    @if(isset($cottage))
+        <div id="optional_content" class="col-md-4">
+            <div class="panel panel-body">
+                <h3 class="text-center tt-actual-images">
+                    <span>Im&aacute;genes actuales</span>
+                    <br>
+                    <small class="text-right text-muted">Seleccione las im&aacute;genes que quiera eliminar.</small>
+                </h3>
+                @php $images = explode('|', $cottage->images); @endphp
+                @for($i = 0; $i <= count($images) - 1; $i++)
+                    <div class="row cottage-images">
+                        @for($j = 1; $j >= 0; $j--)
+                            @if(!empty($images[$i]))
+                                <div class="col-md-6">
+                                    <img src="{{ asset('images/' . $images[$i]) }}" alt="{{ $images[$i] }}" role="button" class="img-responsive img-thumbnail img-clickable">
+                                </div>
+                            @endif
+                            @php $i = $i + $j; @endphp
+                        @endfor
+                    </div>
+                @endfor
+            </div>
+        </div>
+    @endif
 @endsection
