@@ -107,6 +107,7 @@
             </div>
         @else
             {{ Form::hidden('actualImages', $cottage->images, ['id' => 'actualImages']) }}
+            {{ Form::hidden('removedImages', null, ['id' => 'removedImages']) }}
         @endif
         <div class="text-center">
             @if(isset($cottage))
