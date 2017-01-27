@@ -49,6 +49,10 @@ class CottagesController extends Controller
                 })
             ]
         ]);
+        if ($v->fails())
+        {
+            return redirect()->back()->withInput()->withErrors($v->errors());
+        }
         $files = $request->file('images'); // seleccionamos las imágenes del request.
         $cottage = new Cottage($request->all()); // creamos el nuevo objeto cottage
         $cottage->images = $cottage->addOrRemoveImages($files); // Ver el metodo del modelo allí se procesan las imágenes.
@@ -98,6 +102,10 @@ class CottagesController extends Controller
                 Rule::unique('cottages')->ignore($cottage->id)
             ]
         ]);
+        if ($v->fails())
+        {
+            return redirect()->back()->withInput()->withErrors($v->errors());
+        }
         $attributes = $request->all();
         $cottage->name = $attributes['name'];
         $cottage->type = $attributes['type'];

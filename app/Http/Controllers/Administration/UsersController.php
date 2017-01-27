@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Administration;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
@@ -70,12 +72,30 @@ class UsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
+     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $fields = $request->all();
+        $v = Validator::make($request->all(), [
+            'dni' => [
+                'integer',
+                Rule::unique('users')->ignore($user->$id)
+            ],
+            'email' => [
+                'email',
+                Rule::unique('users')->ignore($user->$id)
+            ]
+        ]);
+        if ($v->fails())
+        {
+            return redirect()->back()->withInput()->withErrors($v->errors());
+        }
+        $user->type = $fields['user_type'];
+        $user->save();
+        return redirect()->route('users.index');
     }
 
     /**

@@ -1,6 +1,6 @@
 @extends('templates.backend-layout')
 
-@section('title', 'Panel')
+@section('title', 'Panel de Administración')
 
 @section('content')
 @endsection

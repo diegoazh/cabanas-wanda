@@ -21,8 +21,10 @@
         @include('backend.menus.main-menu-backend')
       </div>
       <div id="main_content" class="col-md-offset-1 col-md-4">
-        @include('messages_alerts.messagesAlerts')
-        @yield('content')
+        <div class="panel">
+          @include('messages_alerts.flashAndErrors')
+          @yield('content')
+        </div>
       </div>
       @yield('optional')
     </div>

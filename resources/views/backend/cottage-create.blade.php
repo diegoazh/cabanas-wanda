@@ -1,23 +1,12 @@
 @extends('templates.backend-layout')
 
-@section('title', 'Registrar Cabaña')
+@section('title', 'Registro de Cabaña')
 
 @section('content')
-  <div class="panel panel-default form-panel">
     <div class="panel-heading">
       <h3 class="tt-cottages">{{ (isset($cottage)) ? 'Editar caba&ntilde;a' : 'Registrar Caba&ntilde;a' }}</h3>
     </div>
-    <div class="panel-body">
-      @include('flash::message')
-      @if(count($errors) > 0)
-        <div class="alert alert-warning" role="alert">
-          <ul>
-            @foreach($errors->all() as $error)
-              <li>{{ $error }}</li>
-            @endforeach
-          </ul>
-        </div>
-      @endif
+    <div class="panel-body form-panel">
       {{ Form::open(['route' => ((isset($cottage)) ? ['cottages.update', $cottage] : 'cottages.store'), 'method' => ((isset($cottage)) ? 'PUT' : 'POST'), 'files' => true]) }}
         <div class="form-group">
           {{ Form::label('number', 'Numero de cabaña', ['class' => 'sr-only']) }}
@@ -119,7 +108,6 @@
         </div>
       {{ Form::close() }}
     </div>
-  </div>
 @endsection
 
 @section('optional')

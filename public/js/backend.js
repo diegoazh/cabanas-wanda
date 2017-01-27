@@ -70,36 +70,51 @@ $(document).ready(function(e) {
 });
 
 /***************************************
+ *  Function to set modals with forms
+ * **************************************/
+function setModalForms($this, method, files, splitAction, modalSize, $formOptional, textsToDisplay) {
+    var classes = $this.attr('class');
+    classes = classes.split(' ').pop();
+    classes = classes.split('-');
+    var id = classes.pop();
+    var inputValue = classes.pop();
+    $('.span-delete').html('<i class="fa fa-hashtag" aria-hidden="true"></i> ' + inputValue);
+    $('#cottage_id').val(inputValue);
+    var $btnSubmit = $('.modal-footer > button.btn-primary');
+    if (method.toUpperCase() === 'DELETE') {
+        $btnSubmit.removeClass('btn-primary').addClass('btn-danger');
+        $btnSubmit.html('<i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar');
+    } else {
+        $btnSubmit.removeClass('btn-primary').addClass('btn-warning');
+        $btnSubmit.html('<i class="fa fa-exchange" aria-hidden="true"></i> Actualizar');
+    }
+    if (modalSize !== '' && modalSize !== undefined && modalSize !== null) {
+        $('.modal-dialog').addClass(modalSize);
+    }
+    var $form;
+    ($formOptional !== '' && $formOptional !== undefined && $formOptional !== null) ? $form = $formOptional : $form = $('#modalForms');
+    $form.attr('mothod', method.toUpperCase());
+    (typeof(files) === "boolean") ? ((files) ? $form.attr('enctype', 'multipart/form-data'): null) : $form.attr('enctype', files);
+    var action = $form.attr('action');
+    action = action.split(splitAction);
+    action[1] = id;
+    action = action.join(splitAction);
+    $form.attr('action', action);
+    $btnSubmit.click(function () {
+        $form.submit();
+    });
+}
+
+/***************************************
  *  Button delete Cottage
  * **************************************/
 $('.delete-cottage').click(function (event) {
-    var cottage = $(this).attr('class');
-    cottage = cottage.split(' ').pop();
-    cottage = cottage.split('_');
-    var number = cottage.pop();
-    cottage = cottage[0].split('-').pop();
-    $('.cottage-delete').html('<i class="fa fa-hashtag" aria-hidden="true"></i> ' + number);
-    $('#cottage_id').val(parseInt(number));
-    $('.modal-footer > button.btn-primary').removeClass('btn-primary').addClass('btn-danger');
-    var form = $('#delete_cottage_form');
-    var action = form.attr('action');
-    action = action.split('admin/cottages/');
-    action[1] = cottage;
-    action = action.join('admin/cottages/');
-    form.attr('action', action);
-    $('#submit_form').click(function () {
-       form.submit();
-    });
+    setModalForms($(this), 'DELETE', false, 'admin/cottages/');
 });
 
 /***************************************
  *  Button edit type User
  * **************************************/
 $('.btn-edit-type').click(function (event) {
-    var type = $(this).attr('class');
-    type = type.split(' ').pop();
-    type = type.split('-').pop();
-    $('#user_type').val(type);
-    $('.modal-dialog').addClass('modal-sm');
-    $('.modal-footer > button.btn-primary').removeClass('btn-primary').addClass('btn-warning');
+    setModalForms($(this), 'PUT', false, 'admin/users/', 'modal-sm');
 });
