@@ -22,8 +22,10 @@
                 {{ Form::close() }}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="submit_form" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" id="submit_form" class="btn btn-primary">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar cabaña
+                </button>
             </div>
         </div>
     </div>

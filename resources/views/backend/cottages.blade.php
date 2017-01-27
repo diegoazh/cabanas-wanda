@@ -1,6 +1,6 @@
 @extends('templates.backend-layout')
 @section('content')
-    @include('modals.modal-delete-cottage')
+    @include('backend.modals.modal-delete-cottage')
     <div class="panel">
         <h1 class="tt-cottages">Lista de Caba&ntilde;as</h1>
         <div class="table-responsive">

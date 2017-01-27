@@ -1,5 +1,6 @@
 @extends('templates.backend-layout')
 @section('content')
+    @include('backend.modals.modal-type-user')
     <div class="panel">
         <h1 class="tt-users">Usuarios registrados</h1>
         <div class="table-responsive">
@@ -21,12 +22,12 @@
                         <td><span class="label @if($user->country->abbreviation === 'AR') label-default @else label-success @endif">{{ $user->country->abbreviation }}</span></td>
                         <td><span class="label @if($user->type === 'administrador' || $user->type === 'sysadmin') label-primary @elseif($user->type === 'frecuente') label-info @elseif($user->type === 'empleado') label-default @endif">{{ strtoupper($user->type) }}</span></td>
                         <td>
-                            <a href="#" class="btn btn-info btn-xs">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar tipo
+                            <a role="button" class="btn btn-warning btn-xs btn-edit-type type-{{$user->type}}" data-toggle="modal" data-target="#modalTypeUser">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar rol
                             </a>
-                            <a href="#" class="btn btn-danger btn-xs" role="button">
+                            <button href="#" class="btn btn-danger btn-xs" role="button">
                                 <i class="fa fa-times" aria-hidden="true"></i> Eliminar
-                            </a>
+                            </button>
                         </td>
                     </tr>
                 @endforeach

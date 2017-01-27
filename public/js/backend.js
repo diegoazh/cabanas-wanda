@@ -80,6 +80,7 @@ $('.delete-cottage').click(function (event) {
     cottage = cottage[0].split('-').pop();
     $('.cottage-delete').html('<i class="fa fa-hashtag" aria-hidden="true"></i> ' + number);
     $('#cottage_id').val(parseInt(number));
+    $('.modal-footer > button.btn-primary').removeClass('btn-primary').addClass('btn-danger');
     var form = $('#delete_cottage_form');
     var action = form.attr('action');
     action = action.split('admin/cottages/');
@@ -89,4 +90,16 @@ $('.delete-cottage').click(function (event) {
     $('#submit_form').click(function () {
        form.submit();
     });
+});
+
+/***************************************
+ *  Button edit type User
+ * **************************************/
+$('.btn-edit-type').click(function (event) {
+    var type = $(this).attr('class');
+    type = type.split(' ').pop();
+    type = type.split('-').pop();
+    $('#user_type').val(type);
+    $('.modal-dialog').addClass('modal-sm');
+    $('.modal-footer > button.btn-primary').removeClass('btn-primary').addClass('btn-warning');
 });
