@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class IsAdmin
+class IsAdminOrEmployed
 {
     /**
      * Handle an incoming request.
@@ -24,15 +24,18 @@ class IsAdmin
     {
         if (!$this->auth->user()->isAdmin())
         {
-            $this->auth->logout();
+            if (!$this->auth->user()->isEmployed())
+            {
+                $this->auth->logout();
 
-            if ($request->ajax())
-            {
-                return response('Unauthorized.', 401);
-            }
-            else
-            {
-                return redirect()->route('login');
+                if ($request->ajax())
+                {
+                    return response('Unauthorized.', 401);
+                }
+                else
+                {
+                    return redirect()->route('login');
+                }
             }
         }
 

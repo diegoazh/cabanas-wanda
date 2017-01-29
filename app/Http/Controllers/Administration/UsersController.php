@@ -72,7 +72,7 @@ class UsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -93,7 +93,7 @@ class UsersController extends Controller
         {
             return redirect()->back()->withInput()->withErrors($v->errors());
         }
-        $user->type = $fields['user_type'];
+        $user->type = $fields['inputFormId'];
         $user->save();
         return redirect()->route('users.index');
     }
@@ -101,11 +101,13 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User  $user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->route('users.index');
     }
 }

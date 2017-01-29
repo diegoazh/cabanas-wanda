@@ -32,7 +32,7 @@ class LoginController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->isAdmin())
+        if ($user->isAdmin() || $user->isEmployed())
         {
             return redirect()->route('admin.panel');
         }

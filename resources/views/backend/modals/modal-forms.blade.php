@@ -11,7 +11,7 @@
                 </h4>
             </div>
             <div class="modal-body">
-                {{ Form::open(['url' => 'admin/cottages/{id}', 'method' => 'DELETE', 'class' => 'form-inline', 'name' => 'modalFormId', 'id' => 'modalFormId']) }}
+                {{ Form::open(['url' => 'admin/subdir/{id}', 'method' => 'DELETE', 'class' => 'form-inline', 'name' => 'modalFormId', 'id' => 'modalFormId']) }}
                     <div class="form-group">
                         {{ Form::label('inputFormId', 'Generic label:', ['class' => 'sr-only']) }}
                         <div class="input-group">

@@ -4,7 +4,9 @@
         <li class="item"><a href="#" class="cottage">Caba&ntilde;as <span>{{ (isset($cantCottages)) ? $cantCottages : 0 }}</span></a>
             <ul>
                 <li class="subitem"><a href="{{ route('cottages.index') }}">Listado de caba&ntilde;as<span>{{ (isset($cantCottages)) ? $cantCottages : 0 }}</span></a></li>
-                <li class="subitem"><a href="{{ route('cottages.create') }}">Registrar caba&ntilde;a</a></li>
+                @if(Auth::user()->type === 'administrador' || Auth::user()->type === 'sysadmin')
+                    <li class="subitem"><a href="{{ route('cottages.create') }}">Registrar caba&ntilde;a</a></li>
+                @endif
                 <li class="subitem"><a href="#">Automatic Fails <span>2</span></a></li>
             </ul>
         </li>

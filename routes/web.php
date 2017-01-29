@@ -36,7 +36,7 @@ Route::group(['middleware' => 'web'], function () {
  * Aquí pondremos las rutas del backend divididas por secciones.
  *
  */
-Route::group(['prefix' => 'admin', 'namespace' => 'Administration', 'middleware' => ['auth', 'isAdmin']], function () {
+Route::group(['prefix' => 'admin', 'namespace' => 'Administration', 'middleware' => ['auth', 'isAdminOrEmployed']], function () {
   Route::get('/', 'BackendController@showPanel')->name('admin.panel');
   Route::resource('cottages', 'CottagesController');
   //Route::resource('promotions', 'PromotionsController');

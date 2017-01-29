@@ -55,6 +55,11 @@ class User extends Authenticatable
     return ($this->type === 'administrador' || $this->type === 'sysadmin');
   }
 
+  public function isEmployed()
+  {
+      return ($this->type === 'empleado');
+  }
+
   public function displayName()
   {
       return $this->lastname . ', ' . $this->name;

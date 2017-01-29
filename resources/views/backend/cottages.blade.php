@@ -14,7 +14,9 @@
                     <th>Capacidad</th>
                     <th>Precio</th>
                     <th>Tipo</th>
-                    <th>Acciones</th>
+                    @if(Auth::user()->type === 'administrador' || Auth::user()->type === 'sysadmin')
+                        <th>Acciones</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -33,16 +35,18 @@
                     <td>
                         <span class="label @if($cottage->type === 'simple') label-primary @else label-success @endif">{{ $cottage->type }}</span>
                     </td>
-                    <td>
-                        <a href="{{ route('cottages.edit', $cottage) }}" role="button" class="btn btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
-                        <a role="button" class="btn btn-danger btn-xs delete-cottage {{ $cottage->id }}-{{ $cottage->number }}" data-toggle="modal" data-target="#modalForms"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
-                    </td>
+                    @if(Auth::user()->type === 'administrador' || Auth::user()->type === 'sysadmin')
+                        <td>
+                            <a href="{{ route('cottages.edit', $cottage) }}" role="button" class="btn btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                            <a role="button" class="btn btn-danger btn-xs delete-cottage {{ $cottage->name }}-{{ $cottage->number }}-{{ $cottage->id }}" data-toggle="modal" data-target="#modalForms"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                        </td>
+                    @endif
                 </tr>
             @endforeach
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="6" class="text-right">
+                    <td colspan="{{ (Auth::user()->type === 'administrador' || Auth::user()->type === 'sysadmin') ? 6 : 5 }}" class="text-right">
                         <small>Las caba&ntilde;as se encuentran ordenadas por número.</small>
                     </td>
                 </tr>
