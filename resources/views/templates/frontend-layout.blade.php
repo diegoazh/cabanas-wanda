@@ -20,9 +20,16 @@
   <body>
     <div id="app" class="container-fluid">
       <div id="header" class="row">
+        <div id="overlay"></div>
         @section('header')
           @include('templates.headers.main-header')
         @show
+        <div class="col-md-8 col-md-offset-2">
+          <h1>
+            Cabañas de Wanda <br>
+            <small>Para dormir como un jaguar</small>
+          </h1>
+        </div>
       </div>
       <div id="content" class="row">
         @yield('content')
@@ -34,5 +41,6 @@
     </div>
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="/js/frontend.js"></script>
   </body>
 </html>

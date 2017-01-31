@@ -1,10 +1,61 @@
+/******************************************************
+* Imports
+*****************************/
+@import url('https://fonts.googleapis.com/css?family=Gravitas+One|Pinyon+Script|Satisfy');
+/******************************************************
+* Colores
+*****************************/
 body {
   background-color: #ffffff;
 }
 body .container-fluid {
-  min-height: 985px;
-  background-image: url('../../images/cabanias/cabanas17.jpg');
+  height: 980px;
+  min-height: 980px;
+}
+body .container-fluid #header {
+  min-height: 63%;
+  max-height: 63%;
+  background-image: url('../../images/cabanas1.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center bottom;
+  background-position: center 55%;
+}
+body .container-fluid #header #overlay {
+  position: absolute;
+  width: 100%;
+  min-height: 63%;
+  max-height: 63%;
+  opacity: 0;
+  background-color: #333333;
+  background-image: url('../../images/jaguar.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left 35%;
+}
+body .container-fluid #header nav.navbar {
+  background-color: #f99418;
+  margin-bottom: 0px;
+}
+body .container-fluid #header nav.navbar .container .navbar-header a {
+  color: #262626;
+}
+body .container-fluid #header nav.navbar .container .navbar-collapse ul li a {
+  color: #262626;
+}
+body .container-fluid #header div.col-md-8 h1 {
+  font-family: 'Gravitas One', cursive;
+  color: #d4dfc4;
+  font-size: 65px;
+  font-weight: normal;
+  text-align: right;
+  text-shadow: 3px 3px 2px #262626;
+}
+body .container-fluid #header div.col-md-8 h1 small {
+  font-family: 'Pinyon Script', cursive;
+  text-shadow: 2px 2px 1px #262626;
+  color: #d4dfc4;
+  font-size: 87%;
+}
+body .container-fluid #content .row #carousel_home .carousel-inner {
+  width: auto;
 }

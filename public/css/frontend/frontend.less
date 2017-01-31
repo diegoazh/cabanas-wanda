@@ -1,11 +1,101 @@
+/******************************************************
+* Imports
+*****************************/
+@import url('https://fonts.googleapis.com/css?family=Gravitas+One|Pinyon+Script|Satisfy');
+//@import url('https://fonts.googleapis.com/css?family=Covered+By+Your+Grace|Erica+One|Merienda+One|Molle:400i&subset=latin-ext');
+//@import url('https://fonts.googleapis.com/css?family=Barrio|Indie+Flower');
+/******************************************************
+* Colores
+*****************************/
+@blanco: #ffffff;
+@negro: #000000;
+@naranja: #fd7500;
+@naranja-amarronado: #f99418;
+@crema-pastel: #f0e7b2;
+@granito-pastel: #d4dfc4;
+@celeste-suave-pastel: #9fd7db;
+
 body {
   background-color: #ffffff;
 
   .container-fluid {
-    min-height: 985px;
-    background-image: url('../../images/cabanias/cabanas17.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center bottom;
+    height: 980px;
+    min-height: 980px;
+
+    #header {
+      min-height: 63%;
+      max-height: 63%;
+      background-image: url('../../images/cabanas1.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center 55%;
+
+      #overlay {
+        position: absolute;
+        width: 100%;
+        min-height: 63%;
+        max-height: 63%;
+        opacity: 0;
+        background-color: #333333;
+        background-image: url('../../images/jaguar.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: left 35%;
+      }
+
+      nav.navbar {
+        background-color: @naranja-amarronado;
+        margin-bottom: 0px;
+
+        .container {
+          .navbar-header {
+            a {
+              color: lighten(@negro, 15%);
+            }
+          }
+          .navbar-collapse {
+            ul {
+              li {
+                a{
+                  color: lighten(@negro, 15%);
+                }
+              }
+            }
+          }
+        }
+      }
+      div.col-md-8 {
+        h1 {
+          font-family: 'Gravitas One', cursive;
+          color: @granito-pastel;
+          font-size: 65px;
+          font-weight: normal;
+          text-align: right;
+          text-shadow: 3px 3px 2px #262626;
+
+          small {
+            font-family: 'Pinyon Script', cursive;
+            text-shadow: 2px 2px 1px #262626;
+            color: @granito-pastel;
+            font-size: 87%;
+          }
+        }
+      }
+    }
+
+    #content {
+      .row {
+        #carousel_home {
+          .carousel-inner {
+            width: auto;
+            .item {
+              img {
+
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
