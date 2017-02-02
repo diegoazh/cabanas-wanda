@@ -49,6 +49,7 @@ body .container-fluid #header div.col-md-8 h1 {
   font-weight: normal;
   text-align: right;
   text-shadow: 3px 3px 2px #262626;
+  margin-top: 5%;
 }
 body .container-fluid #header div.col-md-8 h1 small {
   font-family: 'Pinyon Script', cursive;
@@ -56,6 +57,91 @@ body .container-fluid #header div.col-md-8 h1 small {
   color: #d4dfc4;
   font-size: 87%;
 }
-body .container-fluid #content .row #carousel_home .carousel-inner {
-  width: auto;
+body .container-fluid #content {
+  background-image: url('../../images/tucan.jpg');
+  background-repeat: no-repeat;
+  background-position: 5% 15%;
+  min-height: 50%;
+}
+body .container-fluid #content hr.division {
+  width: 70%;
+  height: 7px;
+  margin: 70px auto;
+  border-top: 1px solid #d4dfc4;
+  border-bottom: 1px solid #d4dfc4;
+}
+body .container-fluid #content hr.division:before {
+  content: "\f313";
+  font-family: 'Dashicons';
+  position: relative;
+  font-size: 8em;
+  left: 45%;
+  top: -0.6em;
+  z-index: 1;
+  background-color: #ffffff;
+}
+body .container-fluid #content .container {
+  position: relative;
+  top: -45px;
+}
+body .container-fluid #content .container .panel {
+  -webkit-box-shadow: 2px 2px 5px #333333;
+  -moz-box-shadow: 2px 2px 5px #333333;
+  box-shadow: 2px 2px 5px #333333;
+}
+body .container-fluid #content section {
+  width: 100%;
+}
+body .container-fluid #content section .description {
+  height: 25em;
+  min-height: 25em;
+}
+body .container-fluid #content section .description hr {
+  position: relative;
+  width: 50%;
+  top: 26%;
+  height: 7px;
+  border-top: 1px dotted #d4dfc4;
+  border-bottom: 1px dotted #d4dfc4;
+}
+body .container-fluid #content section .description img {
+  position: relative;
+  width: 300px;
+  top: -12%;
+  height: auto;
+  left: 37.5%;
+  padding: 5px 15px;
+  background-color: #ffffff;
+  z-index: 2;
+}
+body .container-fluid #content section .description p {
+  text-align: center;
+  margin: 0;
+  padding: 0% 18%;
+}
+body .container-fluid #content section .description-paralel img {
+  display: inline-block;
+  position: relative;
+  left: 25%;
+  top: -12%;
+  width: 50%;
+  height: auto;
+  background-color: #ffffff;
+  margin-bottom: 12px;
+}
+body .container-fluid #content section .description-paralel p {
+  text-align: justify;
+  margin: 0;
+  padding: 0% 2%;
+}
+body .container-fluid #content #testimonies {
+  background-color: #9fd7db;
+}
+body .container-fluid #footer {
+  margin-top: 15px;
+}
+body .container-fluid #footer #footer_rights {
+  background-color: #7a7a7a;
+  color: #d4dfc4;
+  padding: 15px 0px;
 }

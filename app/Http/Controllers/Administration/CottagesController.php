@@ -8,9 +8,15 @@ use Illuminate\Validation\Rule;
 use App\Http\Requests\RequestCottage;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class CottagesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('isEmployed')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *

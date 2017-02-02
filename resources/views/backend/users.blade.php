@@ -31,7 +31,7 @@
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar rol
                             </a>
                             <a role="button" class="btn btn-danger btn-xs btn-delete-user {{ str_replace(' ', '_', str_replace(',', ' ', $user->displayName())) }}-{{ str_replace(' ', '_', str_replace(',', ' ', $user->displayName())) }}-{{ $user->id }}" data-toggle="modal" data-target="#modalForms">
-                                <i class="fa fa-times" aria-hidden="true"></i> Eliminar
+                                <i class="fa fa-user-times" aria-hidden="true"></i> Eliminar
                             </a>
                         </td>
                     @endif

@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('isEmployed')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
