@@ -51,6 +51,18 @@ body {
           .navbar-header {
             a {
               color: lighten(@negro, 15%);
+              padding: 0;
+
+              span#app_name {
+                position: relative;
+                top: -25%;
+              }
+            }
+            a:before {
+              content: url('../../images/logos/logo-cabanas-wanda-45x44.png');
+              width: 50%;
+              height: auto;
+              margin-right: 5px;
             }
           }
           .navbar-collapse {

@@ -38,6 +38,17 @@ body .container-fluid #header nav.navbar {
 }
 body .container-fluid #header nav.navbar .container .navbar-header a {
   color: #262626;
+  padding: 0;
+}
+body .container-fluid #header nav.navbar .container .navbar-header a span#app_name {
+  position: relative;
+  top: -25%;
+}
+body .container-fluid #header nav.navbar .container .navbar-header a:before {
+  content: url('../../images/logos/logo-cabanas-wanda-45x44.png');
+  width: 50%;
+  height: auto;
+  margin-right: 5px;
 }
 body .container-fluid #header nav.navbar .container .navbar-collapse ul li a {
   color: #262626;

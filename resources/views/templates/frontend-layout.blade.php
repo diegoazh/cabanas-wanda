@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Cabañas de Wanda') }}</title>
     <!-- Styles -->
+    <link rel="icon" href="{{ asset('images/logos/logo-cabanas-wanda-45x44.ico') }}">
     <link rel="stylesheet" href="{{ asset('lib/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/dashicons/css/dashicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}">
