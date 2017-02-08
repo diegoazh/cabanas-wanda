@@ -33,8 +33,8 @@ body {
       #overlay {
         position: absolute;
         width: 100%;
-        min-height: 63%;
-        max-height: 63%;
+        min-height: 57.6%;
+        max-height: 57.6%;
         opacity: 0;
         background-color: #333333;
         background-image: url('../../images/jaguar.jpg');
@@ -66,6 +66,29 @@ body {
             }
           }
           .navbar-collapse {
+            ul.navbar-nav {
+              margin-left: 8px;
+              li.dropdown {
+                height: 100%;
+              }
+              li.open {
+                a, ul {
+                  background-color: @naranja;
+                }
+                ul {
+                  li {
+                    a:hover {
+                      background-color: @naranja-amarronado;
+                    }
+                  }
+                }
+              }
+              li {
+                a:hover {
+                  background-color: @naranja;
+                }
+              }
+            }
             ul {
               li {
                 a{
@@ -77,7 +100,12 @@ body {
         }
       }
       div.col-md-8 {
+        text-align: center;
+        height: 309px;
+        min-height: 309%;
+
         h1 {
+          display: inline-block;
           font-family: 'Gravitas One', cursive;
           color: @granito-pastel;
           font-size: 65px;
@@ -94,10 +122,16 @@ body {
           }
         }
       }
+      div.col-md-8:after {
+        content: url("../../images/logos/logo-cabanas-wanda-390x380.png");
+        position: relative;
+        top: 10%;
+        left: 6%;
+      }
     }
 
     #content {
-      background-image: url('../../images/tucan.jpg');
+      background-image: url('../../images/dibujo-tucan.jpg');
       background-repeat: no-repeat;
       background-position: 5% 15%;
       min-height: 50%;
@@ -146,15 +180,14 @@ body {
           }
           img {
             position: relative;
-            width: 300px;
-            top: -12%;
+            width: 330px;
+            top: -16%;
             height: auto;
-            left: 37.5%;
-            padding: 5px 15px;
-            background-color: @blanco;
-            z-index: 2;
+            left: 37%;
           }
           p {
+            position: relative;
+            top: -12%;
             text-align: center;
             margin: 0;
             padding: 0% 18%;
@@ -180,11 +213,58 @@ body {
       }
       #testimonies {
         background-color: @celeste-suave-pastel;
+        margin: 0;
+        margin-top: 25px;
+
+        hr.division:before {
+          background-color: @celeste-suave-pastel;
+        }
+
+        div {
+          text-align: left;
+
+          #carousel-example-generic {
+            .carousel-inner {
+              .item {
+                height: 305px;
+                min-height: 305px;
+                padding: 0 12%;
+
+                img {
+                  position: relative;
+                  display: inline-block;
+                  width: 18%;
+                  top: 15%;
+                }
+                blockquote {
+                  position: relative;
+                  left: 20%;
+                  top: -45%;
+                  width: 80%;
+                  text-align: justify;
+                }
+              }
+            }
+            a.carousel-control {
+              background-image: none;
+            }
+          }
+
+          .overlay-testimony {
+            .testimony {
+              width: auto;
+              height: 400px;
+              overflow: hidden;
+
+              li {
+
+              }
+            }
+          }
+        }
       }
     }
     #footer {
-      margin-top: 15px;
-
       #footer_rights {
         background-color: lighten(@negro, 48%);
         color: @granito-pastel;

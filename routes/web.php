@@ -18,15 +18,17 @@
  *
  */
 Route::group(['middleware' => 'web'], function () {
-  /**************************************
-   * Base route app
-   **************************************/
-  Route::get('/', 'FrontendController@showHome')->name('home');
+    /**************************************
+     * Base route app
+     **************************************/
+    Route::get('/', 'FrontendController@showHome')->name('home');
+    Route::get('/cottages', 'CottagesController@index')->name('home.cottages.index');
+    Route::get('/cottages/{slug}', 'CottagesController@show')->name('home.cottages.show');
 
-  /**************************************
-   * Auth Routes
-   **************************************/
-  Auth::routes();
+    /**************************************
+     * Auth Routes
+     **************************************/
+    Auth::routes();
 });
 
 /*---------------------------------------------------------------------------
@@ -37,8 +39,8 @@ Route::group(['middleware' => 'web'], function () {
  *
  */
 Route::group(['prefix' => 'admin', 'namespace' => 'Administration', 'middleware' => ['auth', 'isAdminOrEmployed']], function () {
-  Route::get('/', 'BackendController@showPanel')->name('admin.panel');
-  Route::resource('cottages', 'CottagesController');
-  //Route::resource('promotions', 'PromotionsController');
-  Route::resource('users', 'UsersController');
+    Route::get('/', 'BackendController@showPanel')->name('admin.panel');
+    Route::resource('cottages', 'CottagesController');
+    //Route::resource('promotions', 'PromotionsController');
+    Route::resource('users', 'UsersController');
 });

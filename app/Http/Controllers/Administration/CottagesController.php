@@ -70,18 +70,6 @@ class CottagesController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  string  $cottage
-     * @return \Illuminate\Http\Response
-     */
-    public function show($cottage)
-    {
-        $cottage = Cottage::where('slug', $cottage)->first();
-        dd($cottage);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Cottage  $cottage

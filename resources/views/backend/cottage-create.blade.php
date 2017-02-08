@@ -120,7 +120,7 @@
                     <small class="text-right text-muted">Seleccione las im&aacute;genes que quiera eliminar.</small>
                 </h3>
                 @php $images = explode('|', $cottage->images); @endphp
-                @for($i = 0; $i <= count($images) - 1; $i++)
+                @for($i = 0; $i <= count($images) - 1;)
                     <div class="row cottage-images">
                         @for($j = 1; $j >= 0; $j--)
                             @if(!empty($images[$i]))
@@ -128,7 +128,7 @@
                                     <img src="{{ asset('images/cabanias/' . $images[$i]) }}" alt="{{ $images[$i] }}" role="button" class="img-responsive img-thumbnail img-clickable">
                                 </div>
                             @endif
-                            @php $i = $i + $j; @endphp
+                            @php $i++ @endphp
                         @endfor
                     </div>
                 @endfor

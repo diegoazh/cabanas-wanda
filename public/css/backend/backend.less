@@ -28,9 +28,28 @@ body {
     background-position: center;
 
     #header {
-      nav {
+      nav.navbar {
         border-radius: 0px;
         margin-bottom: 0px;
+
+        .container {
+          .navbar-header {
+            a {
+              padding: 0;
+
+              span#app_name {
+                position: relative;
+                top: -25%;
+              }
+            }
+            a:before {
+              content: url('../../images/logos/logo-cabanas-wanda-45x44.png');
+              width: 50%;
+              height: auto;
+              margin-right: 5px;
+            }
+          }
+        }
       }
     }
     #content {

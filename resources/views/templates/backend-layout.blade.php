@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{ asset('lib/dashicons/css/dashicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/backend.css') }}">
+    @section('estilos')
+    @endsection
 </head>
 <body>
 <div class="container-fluid">

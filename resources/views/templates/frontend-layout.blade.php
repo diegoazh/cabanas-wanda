@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}">
     <link href="/css/app.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/frontend/frontend.css') }}">
+    @section('estilos')
+    @show
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -24,20 +26,13 @@
 <body>
 <div id="app" class="container-fluid">
     <div id="header" class="row">
-        <div id="overlay"></div>
+        @include('templates.headers.main-header')
         @section('header')
-            @include('templates.headers.main-header')
+            <div id="overlay"></div>
+            <div class="col-md-8 col-md-offset-3"></div>
         @show
-        <div class="col-md-8 col-md-offset-2">
-            <h1>
-                Cabañas de Wanda <br>
-                <small>Para dormir como un jaguar</small>
-            </h1>
-        </div>
     </div>
-    <div id="content" class="row">
-        @yield('content')
-    </div>
+    @include('templates.contents.content')
     <div id="footer" class="row">
         @section('footer')
         @show

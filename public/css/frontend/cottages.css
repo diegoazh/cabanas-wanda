@@ -1,0 +1,112 @@
+/******************************************************
+* Colores
+*****************************/
+body .container-fluid #header {
+  min-height: 30%;
+  max-height: 30%;
+}
+body .container-fluid #header #overlay {
+  position: absolute;
+  width: 100%;
+  min-height: 24.7%;
+  max-height: 24.7%;
+  opacity: 0;
+  background-color: #333333;
+  background-image: url('../../images/jaguar.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left 35%;
+}
+body .container-fluid #header nav.navbar {
+  background-color: #f99418;
+  margin-bottom: 0px;
+}
+body .container-fluid #header nav.navbar .container .navbar-header a {
+  color: #262626;
+  padding: 0;
+}
+body .container-fluid #header nav.navbar .container .navbar-header a span#app_name {
+  position: relative;
+  top: -25%;
+}
+body .container-fluid #header nav.navbar .container .navbar-header a:before {
+  content: url('../../images/logos/logo-cabanas-wanda-45x44.png');
+  width: 50%;
+  height: auto;
+  margin-right: 5px;
+}
+body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-nav {
+  margin-left: 8px;
+}
+body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-nav li.dropdown {
+  height: 100%;
+}
+body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-nav li.open a,
+body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-nav li.open ul {
+  background-color: #fd7500;
+}
+body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-nav li.open ul li a:hover {
+  background-color: #f99418;
+}
+body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-nav li a:hover {
+  background-color: #fd7500;
+}
+body .container-fluid #header nav.navbar .container .navbar-collapse ul li a {
+  color: #262626;
+}
+body .container-fluid #header div.col-md-8 {
+  text-align: center;
+  height: 242px;
+  min-height: 242px;
+}
+body .container-fluid #header div.col-md-8:after {
+  content: url("../../images/logos/logo-cabanas-wanda-190x185.png");
+  position: relative;
+  top: 10%;
+  left: 6%;
+}
+body .container-fluid .content div.col-md-4 .row {
+  min-height: 600px;
+  max-height: 600px;
+  margin: 5px;
+  margin-bottom: 10px;
+  box-shadow: 3px 3px 7px #000000;
+  border: 5px solid #bfbfbf;
+}
+body .container-fluid .content div.col-md-4 .row div.cottage-number {
+  position: absolute;
+  display: inline-block;
+  top: -1%;
+  left: 90%;
+  padding: 5px;
+  padding-top: 13px;
+  width: 57px;
+  height: 57px;
+  border-radius: 50px;
+  background-color: #fd7500;
+  color: #ffffff;
+  z-index: 15;
+  font-weight: bold;
+  font-size: 18px;
+  text-shadow: 2px 2px 2px #2e2e2e;
+  box-shadow: 2px 2px 3px #2e2e2e;
+}
+body .container-fluid .content div.col-md-4 .row div.col-md-12 {
+  height: 250px;
+}
+body .container-fluid .content div.col-md-4 .row div.col-md-12 img {
+  width: 100%;
+  height: 100%;
+}
+body .container-fluid .content div.col-md-4 .row div.col-md-12 table tbody tr td {
+  text-transform: capitalize;
+}
+body .container-fluid .content div.col-md-4 .row div.col-md-12 table tbody tr td i.fa-star {
+  color: #e1cf65;
+}
+body .container-fluid .content div.col-md-4 .row:hover {
+  border: 8px solid #9fd7db;
+}
+body .container-fluid #footer {
+  margin-top: 5px;
+}
