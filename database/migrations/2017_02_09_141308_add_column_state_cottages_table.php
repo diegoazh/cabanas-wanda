@@ -14,7 +14,7 @@ class AddColumnStateCottagesTable extends Migration
     public function up()
     {
         Schema::table('cottages', function (Blueprint $table) {
-            $table->enum('state', ['libre', 'reservada', 'ocupada', 'mantenimiento', 'inhabilitada']);
+            $table->enum('state', ['libre', 'reservada', 'ocupada', 'mantenimiento', 'inhabilitada'])->default('libre');
         });
     }
 
