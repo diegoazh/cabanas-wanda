@@ -75,6 +75,17 @@
           </div>
         </div>
         <div class="form-group">
+            {{ Form::label('state', 'Estado', ['class' => 'sr-only']) }}
+            <div class="input-group">
+                <div class="input-group-addon">Estado</div>
+                {{ Form::select('state', ['libre' => 'Libre', 'reservada' => 'Reservada', 'ocupada' => 'Ocupada', 'mantenimiento' => 'Mantenimiento', 'inhabilitada' => 'Inhabilitada'], (isset($cottage)) ? $cottage->state : 'mantenimiento', ['class' => 'form-control'], 'required') }}
+            </div>
+            <div class="help-info">
+                <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
+                <small class="text-warning help-text">El estado de la cabaña, dependiendo de cual se configure aparecerá como disponible o no. Se configura por defecto en MANTENIMIENTO para evitar problemas con las reservas, dado que de otra forma aparecería automáticamente como disponible para reservarse y no simpre que se da de alta una nueva cabaña en el sistema necesariamente está lista para ser habitada.</small>
+            </div>
+        </div>
+        <div class="form-group">
           {{ Form::label('images[]', 'Fotos', ['class' => 'sr-only']) }}
           <div class="input-group">
             <div class="input-group-addon">Fotos</div>
@@ -100,7 +111,8 @@
         @endif
         <div class="text-center">
             @if(isset($cottage))
-              {{ Form::submit('Actualizar cabaña', ['class' => 'btn btn-primary']) }}
+                {{ Form::submit('Actualizar cabaña', ['class' => 'btn btn-primary']) }}
+                <a href="{{ route('cottages.index') }}" class="btn btn-warning btn-xs">Volver</a>
             @else
               {{ Form::reset('Limpiar formulario', ['class' => 'btn btn-default']) }}
               {{ Form::submit('Registrar cabaña', ['class' => 'btn btn-primary']) }}

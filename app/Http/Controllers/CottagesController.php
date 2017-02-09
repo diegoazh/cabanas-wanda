@@ -22,6 +22,7 @@ class CottagesController extends Controller
     public function show($slug)
     {
         $cottage = Cottage::where('slug', $slug)->first();
-        return view('frontend.cottages-show')->with('cottage', $cottage);
+        $images = explode('|', $cottage->images);
+        return view('frontend.cottages-show')->with(['cottage' => $cottage, 'images' => $images]);
     }
 }

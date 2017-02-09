@@ -12,6 +12,7 @@
                     <th>N&uacute;mero</th>
                     <th>Nombre</th>
                     <th>Capacidad</th>
+                    <th>Estado</th>
                     <th>Precio</th>
                     <th>Tipo</th>
                     @if(Auth::user()->type === 'administrador' || Auth::user()->type === 'sysadmin')
@@ -28,6 +29,9 @@
                     <td><a class="btn btn-link" href="{{ route('cottages.show', $cottage->slug) }}">{{ strtoupper($cottage->name) }}</a></td>
                     <td>
                         {{ $cottage->accommodation }} <i class="glyphicon glyphicon-user"></i>
+                    </td>
+                    <td>
+                        <span class="label @if($cottage->state === 'libre') label-success @elseif($cottage->state === 'reservada') label-warning @elseif($cottage->state === 'ocupada') label-primary @elseif($cottage->state === 'mantenimiento') label-default @else label-danger @endif">{{ $cottage->state }}</span>
                     </td>
                     <td>
                         <i class="fa fa-usd" aria-hidden="true"></i> {{ $cottage->price }}

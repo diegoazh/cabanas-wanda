@@ -33,26 +33,30 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th scope="row"><i class="fa fa-bed" aria-hidden="true"></i></th>
-                                        <td><span class="label @if($cottages[$i]->type === 'simple') label-info @else label-success @endif">{{ $cottages[$i]->type }}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><i class="fa fa-users" aria-hidden="true"></i></th>
-                                        <td><span class="label label-default"><i class="fa fa-hashtag" aria-hidden="true"> {{ $cottages[$i]->accommodation }}</i></span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><i class="fa fa-usd" aria-hidden="true"></i></th>
-                                        <td><span class="label label-danger"><i class="fa fa-dollar" aria-hidden="true"> {{ $cottages[$i]->price }}</i></span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><i class="fa fa-commenting-o" aria-hidden="true"></i></th>
-                                        <td>
-                                            @for($a = 0; $a < 5; $a++)
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                            @endfor
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <th scope="row"><i class="fa fa-bed" aria-hidden="true"></i> Tipo</th>
+                                            <td><span class="label @if($cottages[$i]->type === 'simple') label-info @else label-success @endif">{{ $cottages[$i]->type }}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><i class="fa fa-users" aria-hidden="true"></i> Capacidad</th>
+                                            <td><span class="label label-default"><i class="fa fa-hashtag" aria-hidden="true"> {{ $cottages[$i]->accommodation }}</i></span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><i class="fa fa-usd" aria-hidden="true"></i> Precio</th>
+                                            <td><span class="label label-danger"><i class="fa fa-dollar" aria-hidden="true"> {{ $cottages[$i]->price }}</i></span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Estado</th>
+                                            <td><span class="label @if($cottages[$i]->state === 'libre') label-success @elseif($cottages[$i]->state === 'reservada') label-warning @elseif($cottages[$i]->state === 'ocupada') label-primary @elseif($cottages[$i]->state === 'mantenimiento') label-default @else label-danger @endif">{{ $cottages[$i]->state }}</i></span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><i class="fa fa-commenting-o" aria-hidden="true"></i> Calificación</th>
+                                            <td>
+                                                @for($a = 0; $a < 5; $a++)
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                @endfor
+                                            </td>
+                                        </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr>

@@ -207,6 +207,9 @@ body .container-fluid #content #main_content .panel .tt-cottages:before {
 body .container-fluid #content #main_content .panel .table-responsive {
   margin: 7px 10px;
 }
+body .container-fluid #content #main_content .panel .table-responsive table tbody tr td {
+  text-transform: capitalize;
+}
 body .container-fluid #content #main_content .panel.form-panel {
   border: 2px dashed #808080;
 }
