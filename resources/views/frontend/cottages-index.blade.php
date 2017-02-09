@@ -71,3 +71,6 @@
         </div>        
     @endfor
 @endsection
+@section('scripts')
+    <script src="{{ asset('js/cottages_index.js') }}" type="text/javascript"></script>
+@endsection

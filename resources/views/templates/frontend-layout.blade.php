@@ -46,5 +46,7 @@
 <!-- Scripts -->
 <script src="/js/app.js"></script>
 <script src="/js/frontend.js"></script>
+@section('scripts')
+@show
 </body>
 </html>

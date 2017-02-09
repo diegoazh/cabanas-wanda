@@ -89,7 +89,7 @@ body .container-fluid .content div.col-md-4 .row div.cottage-number {
   font-weight: bold;
   font-size: 18px;
   text-shadow: 2px 2px 2px #2e2e2e;
-  box-shadow: 2px 2px 3px #2e2e2e;
+  box-shadow: 5px 5px 3px #2e2e2e;
 }
 body .container-fluid .content div.col-md-4 .row div.col-md-12 {
   height: 250px;
@@ -106,6 +106,7 @@ body .container-fluid .content div.col-md-4 .row div.col-md-12 table tbody tr td
 }
 body .container-fluid .content div.col-md-4 .row:hover {
   border: 8px solid #9fd7db;
+  box-shadow: 9px 9px 7px #2e2e2e;
 }
 body .container-fluid #footer {
   margin-top: 5px;
