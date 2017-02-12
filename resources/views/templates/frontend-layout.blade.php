@@ -37,7 +37,7 @@
         @section('footer')
         @show
         <div id="footer_rights" class="col-md-12 text-center">
-            <i class="fa fa-registered" aria-hidden="true"></i> Cabañas de Wanda. Copyright <i class="fa fa-copyright" aria-hidden="true"></i> 2010 - {{ (isset($year)) ? $year : 2017 }}. All right reserved.
+            <i class="fa fa-registered" aria-hidden="true"></i> Hotel Cabañas de Wanda. Copyright <i class="fa fa-copyright" aria-hidden="true"></i> 2010 - {{ (isset($year)) ? $year : 2017 }}. All right reserved.
             <br>
             Developed by Diego A. Zapata Häntsch
         </div>

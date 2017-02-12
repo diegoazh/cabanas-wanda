@@ -6,6 +6,9 @@
 
 @section('content')
     <div class="col-md-offset-2 col-md-8">
+        <div class="cottage-number">
+            <i class="fa fa-hashtag" aria-hidden="true"></i> {{ $cottage->number }}
+        </div>
         <h1 class="text-center"><i class="fa fa-home" aria-hidden="true"></i> Caba&ntilde;a <span>{{ $cottage->name }}</span></h1>
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
@@ -38,8 +41,8 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-        <div class="table-responsive">
-            <h2>Informaci&oacute;n de la caba&ntilde;a</h2>
+        <h2 class="title-sections" role="button"><i role="button" class="fa fa-caret-down" aria-hidden="true"></i> Informaci&oacute;n de la caba&ntilde;a</h2>
+        <div id="cottage_description" class="table-responsive element-slide">
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
@@ -61,12 +64,58 @@
                         <td><span class="label label-danger"><i class="fa fa-dollar" aria-hidden="true"> {{ $cottage->price }}</i></span></td>
                     </tr>
                     <tr>
-                        <th scope="row"><i class="fa fa-commenting-o" aria-hidden="true"></i>Calificación</th>
+                        <th scope="row"><i class="fa fa-commenting-o" aria-hidden="true"></i> Calificación</th>
                         <td>
-                            @for($a = 0; $a < 5; $a++)
+                            @for($a = 0; $a < ($cottage->stars / $cottage->voters); $a++)
                                 <i class="fa fa-star" aria-hidden="true"></i>
                             @endfor
                         </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="text-left info">Servicios de la caba&ntilde;a</th>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-thermometer-half" aria-hidden="true"></i></th>
+                        <td>Aire acondicionado frio/calor</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-shower" aria-hidden="true"></i></th>
+                        <td>Agua caliente a trav&eacute;s de ducha el&eacute;ctrica</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-bed" aria-hidden="true"></i></th>
+                        <td>Ropa de cama</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-wifi" aria-hidden="true"></i></th>
+                        <td>WiFi</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-television" aria-hidden="true"></i></th>
+                        <td>TV por cable</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-coffee" aria-hidden="true"></i></th>
+                        <td>Desayuno express</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-cutlery" aria-hidden="true"></i></th>
+                        <td>Restaurante abierto domingo a jueves de 07:00 a 24:00 hs, viernes de 07:00 a 18:00 hs y Sabados de 20:00 a 24:00 hs</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-child" aria-hidden="true"></i></th>
+                        <td>Predio cerrado para seguridad de los ni&ntilde;os</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-car" aria-hidden="true"></i></th>
+                        <td>Estacionamiento cubierto</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="info">Descripci&oacute;n</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-file-text-o" aria-hidden="true"></i></th>
+                        <td>{{ $cottage->description }}</td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -76,7 +125,15 @@
                 </tfoot>
             </table>
         </div>
+        <div class="row reservation-section">
+            <h2 class="title-sections" role="button"><i role="button" class="fa fa-caret-down" aria-hidden="true"></i> Reservas</h2>
+            <div id="calendar" class="col-md-offset-2 col-md-8 element-slide">
+            </div>
+        </div>
     </div>
 @endsection
 @section('scripts')
+    <script src="{{ asset('lib/moment/min/moment-with-locales.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('lib/clndr/clndr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/cottage-show.js') }}" type="text/javascript"></script>
 @endsection

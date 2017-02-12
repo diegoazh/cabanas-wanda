@@ -21,7 +21,7 @@
                                 <i class="fa fa-hashtag" aria-hidden="true"></i> {{ $cottages[$i]->number }}
                             </div>
                             <div class="col-md-12">
-                                <img src="{{ asset('images/cabanias/' . $images[0]) }}" alt="{{ $images[0] }}" class="img-responsive img-rounded">
+                                <img role="button" src="{{ asset('images/cabanias/' . $images[0]) }}" alt="{{ $images[0] }}" class="img-responsive img-rounded">
                             </div>
                             <div class="col-md-12">
                                 <br>
@@ -52,7 +52,7 @@
                                         <tr>
                                             <th scope="row"><i class="fa fa-commenting-o" aria-hidden="true"></i> Calificación</th>
                                             <td>
-                                                @for($a = 0; $a < 5; $a++)
+                                                @for($a = 0; $a < ($cottages[$i]->stars / $cottages[$i]->voters); $a++)
                                                     <i class="fa fa-star" aria-hidden="true"></i>
                                                 @endfor
                                             </td>
@@ -76,5 +76,5 @@
     @endfor
 @endsection
 @section('scripts')
-    <script src="{{ asset('js/cottages_index.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/cottages-index.js') }}" type="text/javascript"></script>
 @endsection
