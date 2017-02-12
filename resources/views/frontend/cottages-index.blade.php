@@ -47,7 +47,7 @@
                                         </tr>
                                         <tr>
                                             <th scope="row"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Estado</th>
-                                            <td><span class="label @if($cottages[$i]->state === 'libre') label-success @elseif($cottages[$i]->state === 'reservada') label-warning @elseif($cottages[$i]->state === 'ocupada') label-primary @elseif($cottages[$i]->state === 'mantenimiento') label-default @else label-danger @endif">{{ $cottages[$i]->state }}</i></span></td>
+                                            <td><span class="label @if($cottages[$i]->state === 'libre') label-success @elseif($cottages[$i]->state === 'reservada') label-warning @elseif($cottages[$i]->state === 'ocupada') label-primary @elseif($cottages[$i]->state === 'mantenimiento') label-default @else label-danger @endif">{{ $cottages[$i]->state }}</span></td>
                                         </tr>
                                         <tr>
                                             <th scope="row"><i class="fa fa-commenting-o" aria-hidden="true"></i> Calificación</th>

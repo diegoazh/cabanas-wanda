@@ -45,9 +45,9 @@
         <div id="cottage_description" class="table-responsive element-slide">
             <table class="table table-striped table-hover">
                 <thead>
-                <tr>
-                    <th scope="col">Categor&iacute;a</th>
-                    <th scope="col">Detalle</th>
+                <tr class="info">
+                    <th scope="col"><i class="fa fa-check-square-o" aria-hidden="true"></i> Categor&iacute;a</th>
+                    <th scope="col"><i class="fa fa-check-square-o" aria-hidden="true"></i> Detalle</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -71,8 +71,8 @@
                             @endfor
                         </td>
                     </tr>
-                    <tr>
-                        <th colspan="2" class="text-left info">Servicios de la caba&ntilde;a</th>
+                    <tr class="text-left info">
+                        <th colspan="2"><i class="fa fa-check-square-o" aria-hidden="true"></i> Servicios de la caba&ntilde;a</th>
                     </tr>
                     <tr>
                         <th><i class="fa fa-thermometer-half" aria-hidden="true"></i></th>
@@ -110,8 +110,8 @@
                         <th><i class="fa fa-car" aria-hidden="true"></i></th>
                         <td>Estacionamiento cubierto</td>
                     </tr>
-                    <tr>
-                        <td colspan="2" class="info">Descripci&oacute;n</td>
+                    <tr class="info">
+                        <td colspan="2"><i class="fa fa-check-square-o" aria-hidden="true"></i> Descripci&oacute;n</td>
                     </tr>
                     <tr>
                         <th><i class="fa fa-file-text-o" aria-hidden="true"></i></th>
