@@ -10,7 +10,7 @@ class CottagesController extends Controller
     {
         $customContent = true;
         $cottages = Cottage::orderBy('number', 'asc')->paginate(10);
-        return view('frontend.cottages-index')->with(['customContent' => $customContent, 'cottages' => $cottages]);
+        return view('frontend.cottages-index')->with(compact('customContent', 'cottages'));
     }
 
     /**
@@ -23,6 +23,6 @@ class CottagesController extends Controller
     {
         $cottage = Cottage::where('slug', $slug)->first();
         $images = explode('|', $cottage->images);
-        return view('frontend.cottages-show')->with(['cottage' => $cottage, 'images' => $images]);
+        return view('frontend.cottages-show')->with(compact('cottage', 'images'));
     }
 }

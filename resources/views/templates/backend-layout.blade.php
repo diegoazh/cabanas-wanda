@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="{{ asset('lib/dashicons/css/dashicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/backend.css') }}">
-    @section('estilos')
-    @endsection
+    @yield('estilos')
 </head>
 <body>
 <div class="container-fluid">
@@ -39,5 +38,6 @@
 <script src="{{ asset('lib/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/main-menu-backend.js') }}"></script>
 <script src="{{ asset('js/backend.js') }}"></script>
+@yield('scripts')
 </body>
 </html>

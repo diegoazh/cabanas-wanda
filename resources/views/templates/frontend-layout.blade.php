@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Cabañas de Wanda') }}</title>
+    <title>@yield('title') | {{ config('app.name', 'Hotel Cabañas de Wanda') }}</title>
     <!-- Styles -->
     <link rel="icon" href="{{ asset('images/logos/logo-cabanas-wanda-45x44.ico') }}">
     <link rel="stylesheet" href="{{ asset('lib/bootstrap/dist/css/bootstrap.min.css') }}">
@@ -14,8 +14,7 @@
     <link rel="stylesheet" href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}">
     <link href="/css/app.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/frontend/frontend.css') }}">
-    @section('estilos')
-    @show
+    @yield('estilos')
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -32,7 +31,7 @@
             <div class="col-md-8 col-md-offset-3"></div>
         @show
     </div>
-    @include('templates.contents.content')
+    @include('templates.contents.frontend-content')
     <div id="footer" class="row">
         @section('footer')
         @show
@@ -46,7 +45,6 @@
 <!-- Scripts -->
 <script src="/js/app.js"></script>
 <script src="/js/frontend.js"></script>
-@section('scripts')
-@show
+@yield('scripts')
 </body>
 </html>
