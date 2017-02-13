@@ -99,6 +99,7 @@ class CottagesController extends Controller
         if ($v->fails())
         {
             return redirect()->back()->withInput()->withErrors($v->errors());
+            flash('Ha ocurrido un error por favor verifique la información enviada.', 'warning');
         }
         $attributes = $request->all();
         $cottage->name = $attributes['name'];
@@ -108,6 +109,7 @@ class CottagesController extends Controller
         $cottage->price = $attributes['price'];
         $cottage->images = $cottage->addOrRemoveImages($attributes['images'], $attributes['actualImages'], $attributes['removedImages']);
         $cottage->save();
+        flash('La cabaña se actualizó correctamente.', 'success');
         return redirect()->route('cottages.index');
     }
 
@@ -117,10 +119,16 @@ class CottagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $cottage = Cottage::find($id);
         $cottage->delete();
+        flash('La cabaña se eliminó correctamente.', 'success');
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => 'La cabaña se eliminó correctamente.'
+            ]);
+        }
         return redirect()->route('cottages.index');
     }
 }

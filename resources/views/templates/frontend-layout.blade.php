@@ -44,7 +44,7 @@
 </div>
 <!-- Scripts -->
 <script src="/js/app.js"></script>
-<script src="/js/frontend.js"></script>
+<script src="/js/frontend/frontend.js"></script>
 @yield('scripts')
 </body>
 </html>

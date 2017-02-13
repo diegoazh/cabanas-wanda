@@ -22,7 +22,7 @@
             </thead>
             <tbody>
             @foreach($cottages as $cottage)
-                <tr>
+                <tr data-object-id="{{ $cottage->id }}">
                     <td>
                         <span class="label label-default"><i class="fa fa-hashtag" aria-hidden="true"></i> {{ $cottage->number }}</span>
                     </td>
@@ -42,7 +42,7 @@
                     @if(Auth::user()->type === 'administrador' || Auth::user()->type === 'sysadmin')
                         <td>
                             <a href="{{ route('cottages.edit', $cottage) }}" role="button" class="btn btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
-                            <a role="button" class="btn btn-danger btn-xs delete-cottage {{ $cottage->name }}-{{ $cottage->number }}-{{ $cottage->id }}" data-toggle="modal" data-target="#modalForms"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                            <a role="button" class="btn btn-danger btn-xs delete-cottage" data-toggle="modal" data-target="#modalForms" data-object-display="{{ $cottage->name }}" data-object-value="{{ $cottage->number }}"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
                         </td>
                     @endif
                 </tr>

@@ -52,7 +52,7 @@ $(document).ready(function(e) {
      *  @param $this Objec jQuery - Boton que llama al modal y del cual se tama la clase.
      *  @param method - string - El metodo del formulario POST, PUT, etc.
      *  @param files - boolean or string - Indica si el form sube archivos, pude contener 'multipart/form-data'
-     *  @param joinAction - string - String con que se unirá el atributo action del form.
+     *  @param replaceInAction - string - String con que se reemplazará el texto subdir en el atributo action del form.
      *  @param textsToDisplay - Object or Array - Debe contener los textos a cargar en el modal.
      *         Con los siguientes indices o atributos:
      *         name - boolean -> indica si se mostrara en el título el nombre del objeto a modificar o el atributo que se modificará.
@@ -72,13 +72,11 @@ $(document).ready(function(e) {
      *  @param $formOptional - Object jQuery or string - Objeto jQuery que contiene el form a configurar o texto que
      *         define el id del form a configurar.
      * ****************************************************************************************************************/
-    function setModalForms($this, method, files, joinAction, textsToDisplay, modalSize, $formOptional) {
-        var classes = $this.attr('class');
-        classes = classes.split(' ').pop();
-        classes = classes.split('-');
-        var id = classes.pop();
-        var inputValue = classes.pop().replace(/__/g, ', ').replace(/_/g, ' ');
-        var name = classes.pop().replace(/__/g, ', ').replace(/_/g, ' ');
+    function setModalForms($this, method, files, replaceInAction, textsToDisplay, modalSize, $formOptional) {
+        var $row = $this.parents('tr');
+        var id = $row.data('objectId');
+        var inputValue = $this.data('objectValue');
+        var name = $this.data('objectDisplay');
         var $btnSubmit = $('#submit_form');
         var $btnClose = $('.modal-footer > button.btn-default');
         var $form = ($formOptional !== '' && $formOptional !== undefined && $formOptional !== null) ? $formOptional : $('#modalFormId');
@@ -103,25 +101,13 @@ $(document).ready(function(e) {
             return;
         }
         if (Object.isObject(textsToDisplay)) {
-            $('.modal-title').html('¿ ' + textsToDisplay.title + ' <span class="span-delete label"></span> ? <br /> <small>' + textsToDisplay.infoText + '</small>');
+            $('.modal-title').html('¿ ' + textsToDisplay.title + ' <span class="span-display label"></span> ? <br /> <small>' + textsToDisplay.infoText + '</small>');
             $('.sr-only, .input-group-addon').text(textsToDisplay.label);
-        }
-        if (method.toUpperCase() === 'DELETE') {
-            $('.span-delete').addClass('label-danger');
-            $('.modal-title > small').addClass('text-danger');
-            $btnSubmit.removeClass('btn-primary').addClass('btn-danger');
-            $btnSubmit.html('<i class="fa fa-trash-o" aria-hidden="true"></i> ' + textsToDisplay.textBtn);
-        } else {
-            $('#inputFormId').removeAttr('disabled');
-            $('.span-delete').addClass('label-warning');
-            $('.modal-title > small').addClass('text-warning');
-            $btnSubmit.removeClass('btn-primary').addClass('btn-warning');
-            $btnSubmit.html('<i class="fa fa-exchange" aria-hidden="true"></i> ' + textsToDisplay.textBtn);
         }
         if (modalSize !== '' && modalSize !== undefined && modalSize !== null) {
             $('.modal-dialog').addClass(modalSize);
         }
-        $('.span-delete').html('<i class="fa fa-hashtag" aria-hidden="true"></i> ' + (textsToDisplay.name) ? name : inputValue);
+        $('.span-display').html('<i class="fa fa-hashtag" aria-hidden="true"></i> ' + (textsToDisplay.name) ? name : inputValue);
         if (textsToDisplay.inputType.toLowerCase() === 'select') {
             $('#inputFormId').remove();
             $('.input-group').append($('<select>').attr('id', 'inputFormId').attr('name', 'inputFormId').addClass('form-control'));
@@ -141,19 +127,36 @@ $(document).ready(function(e) {
             $('.input-group').append($('<input>').attr('id', 'inputFormId').attr('name', 'inputFormId').addClass('form-control'));
             $('#inputFormId').attr('type', textsToDisplay.inputType).val(inputValue);
         }
+        if (method.toUpperCase() === 'DELETE') {
+            $('#inputFormId').attr('disabled', 'disabled');
+            $('.span-display').addClass('label-danger');
+            $('.modal-title > small').addClass('text-danger');
+            $btnSubmit.removeClass('btn-primary').addClass('btn-danger');
+            $btnSubmit.html('<i class="fa fa-trash-o" aria-hidden="true"></i> ' + textsToDisplay.textBtn);
+        } else {
+            $('#inputFormId').removeAttr('disabled');
+            $('.span-display').addClass('label-warning');
+            $('.modal-title > small').addClass('text-warning');
+            $btnSubmit.removeClass('btn-primary').addClass('btn-warning');
+            $btnSubmit.html('<i class="fa fa-exchange" aria-hidden="true"></i> ' + textsToDisplay.textBtn);
+        }
         $('input[name=_method]').val(method.toUpperCase());
         (typeof(files) === "boolean") ? ((files) ? $form.attr('enctype', 'multipart/form-data'): null) : $form.attr('enctype', files);
         var oldAction = $form.attr('action');
-        action = oldAction.split('admin/subdir/');
-        action[1] = id;
-        action = action.join(joinAction);
+        var action = oldAction.replace('subdir', replaceInAction).replace('{id}', id);
         $form.attr('action', action);
         $btnSubmit.click(function () {
+            var data = $form.serialize();
+            var url = $form.attr('action');
+            $('#modalForms').hide();
             if (method.toLowerCase() === 'delete') {
                 $('#inputFormId').removeAttr('disabled');
+                $.post(url, data, function (response) {
+                    $row.fadeOut();
+                });
+            } else {
+                $form.submit();
             }
-            $form.submit();
-            $form.attr('action', oldAction);
         });
         $('#modalForms').on('hide.bs.modal', function (e) {
             $form.attr('action', oldAction);
@@ -227,7 +230,7 @@ $(document).ready(function(e) {
             inputType: 'number',
             options: ''
         };
-        setModalForms($(this), 'DELETE', false, 'admin/cottages/', texts);
+        setModalForms($(this), 'DELETE', false, 'cottages', texts);
     });
 
     /******************************************************************
@@ -248,7 +251,7 @@ $(document).ready(function(e) {
                 {value: 'sysadmin', text: 'Sysadmin'}
             ]
         };
-        setModalForms($(this), 'PUT', false, 'admin/users/', texts);
+        setModalForms($(this), 'PUT', false, 'users', texts);
     });
 
     /******************************************************************
@@ -264,6 +267,6 @@ $(document).ready(function(e) {
             inputType: 'text',
             options: ''
         };
-        setModalForms($(this), 'DELETE', false, 'admin/users/', texts);
+        setModalForms($(this), 'DELETE', false, 'users', texts);
     });
 });

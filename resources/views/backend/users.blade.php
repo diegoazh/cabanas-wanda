@@ -20,17 +20,17 @@
             </thead>
             <tbody>
             @foreach($users as $user)
-                <tr>
+                <tr data-object-id="{{ $user->id }}">
                     <td><a href="{{ route('users.show', $user->slug) }}" class="btn btn-link">{{ $user->displayName() }}</a></td>
                     <td>{{ $user->email }}</td>
                     <td><span class="label @if($user->country->abbreviation === 'AR') label-default @else label-success @endif">{{ $user->country->abbreviation }}</span></td>
                     <td><span class="label @if($user->type === 'administrador' || $user->type === 'sysadmin') label-primary @elseif($user->type === 'frecuente') label-info @elseif($user->type === 'empleado') label-default @endif">{{ strtoupper($user->type) }}</span></td>
                     @if(Auth::user()->type === 'administrador' || Auth::user()->type === 'sysadmin')
                         <td>
-                            <a role="button" class="btn btn-warning btn-xs btn-edit-type {{ str_replace(' ', '_', str_replace(',', ' ', $user->displayName())) }}-{{ $user->type }}-{{ $user->id }}" data-toggle="modal" data-target="#modalForms">
+                            <a role="button" class="btn btn-warning btn-xs btn-edit-type" data-toggle="modal" data-target="#modalForms" data-object-display="{{ $user->displayName() }}" data-object-value="{{ $user->type }}">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar rol
                             </a>
-                            <a role="button" class="btn btn-danger btn-xs btn-delete-user {{ str_replace(' ', '_', str_replace(',', ' ', $user->displayName())) }}-{{ str_replace(' ', '_', str_replace(',', ' ', $user->displayName())) }}-{{ $user->id }}" data-toggle="modal" data-target="#modalForms">
+                            <a role="button" class="btn btn-danger btn-xs btn-delete-user" data-toggle="modal" data-target="#modalForms" data-object-display="{{ $user->displayName() }}" data-object-value="{{ $user->displayName() }}">
                                 <i class="fa fa-user-times" aria-hidden="true"></i> Eliminar
                             </a>
                         </td>

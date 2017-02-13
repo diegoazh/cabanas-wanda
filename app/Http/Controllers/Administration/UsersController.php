@@ -97,9 +97,11 @@ class UsersController extends Controller
         if ($v->fails())
         {
             return redirect()->back()->withInput()->withErrors($v->errors());
+            flash('Ha ocurrido un error, por favor verifique la información enviada.', 'warning');
         }
         $user->type = $fields['inputFormId'];
         $user->save();
+        flash('El usuario se actualizó correctamente.', 'success');
         return redirect()->route('users.index');
     }
 
@@ -109,10 +111,16 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $user = User::find($id);
         $user->delete();
+        flash('El usuario fue eliminado exitosamente.', 'success');
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => 'El usuario fue eliminado exitosamente.'
+            ]);
+        }
         return redirect()->route('users.index');
     }
 }

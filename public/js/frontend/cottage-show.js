@@ -13,15 +13,11 @@ $(document).ready(function (event) {
         }
     });
 
-    function cottageCalendar() {
+    (function cottageCalendar() {
         var $calendar = $('#calendar');
         $calendar.clndr({
             daysOfTheWeek: moment.weekdays(),
         });
-        //$calendar.prepend('');
         var $table = $('.clndr-table');
-        $table.addClass('table table-bordered');
-    }
-
-    cottageCalendar();
+    }());
 });

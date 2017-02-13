@@ -23,7 +23,7 @@
         </div>
         <div id="main_content" class="col-md-offset-1 col-md-4">
             <div class="panel">
-                @include('messages_alerts.flashAndErrors')
+                @include('messages_alerts.flash-and-errors')
                 @yield('content')
             </div>
         </div>
@@ -36,8 +36,8 @@
 </div>
 <script src="{{ asset('lib/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('lib/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/main-menu-backend.js') }}"></script>
-<script src="{{ asset('js/backend.js') }}"></script>
+<script src="{{ asset('js/backend/main-menu-backend.js') }}"></script>
+<script src="{{ asset('js/backend/backend.js') }}"></script>
 @yield('scripts')
 </body>
 </html>
