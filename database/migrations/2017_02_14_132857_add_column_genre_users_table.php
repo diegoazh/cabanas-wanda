@@ -14,7 +14,7 @@ class AddColumnGenreUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('genre', ['M', 'F', 'O']);
+            $table->enum('genre', ['M', 'F', 'O'])->default('M');
         });
     }
 

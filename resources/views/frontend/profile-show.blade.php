@@ -39,6 +39,10 @@
                         <td>{{ $user->date_of_birth }}</td>
                     </tr>
                     <tr>
+                        <th scope="row">Sexo:</th>
+                        <td>@if($user->genre === 'M') Hombre @elseif('F') Mujer @else Otro @endif</td>
+                    </tr>
+                    <tr>
                         <th scope="row">DNI:</th>
                         <td>{{ $user->dni }}</td>
                     </tr>
