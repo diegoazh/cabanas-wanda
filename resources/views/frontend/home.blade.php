@@ -1,5 +1,9 @@
 @extends('templates.frontend-layout')
 
+@section('title')
+    Bienvenido
+@endsection
+
 @section('content')
     <hr class="division">
     <section class="row">

@@ -34,8 +34,18 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 @if(Auth::user()->type === 'administrador' || Auth::user()->type === 'sysadmin')
-                                    <li><a href="{{ route('admin.panel') }}">Administración</a></li>
+                                    <li>
+                                        <a href="{{ route('admin.panel') }}">
+                                            <i class="fa fa-tachometer" aria-hidden="true"></i> Administración
+                                        </a>
+                                    </li>
                                 @endif
+                                <li>
+                                    <a href="{{ route('home.profile.show', Auth::user()->slug) }}">
+                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i> Perfil
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
                                 <li>
                                     <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         Cerrar sesión <i class="fa fa-sign-out" aria-hidden="true"></i>

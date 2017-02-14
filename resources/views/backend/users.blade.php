@@ -1,5 +1,9 @@
 @extends('templates.backend-layout')
 
+@section('title')
+    Usuarios registrados
+@endsection
+
 @section('title', 'Listado de Usuarios')
 
 @section('content')
@@ -21,7 +25,7 @@
             <tbody>
             @foreach($users as $user)
                 <tr data-object="{{ $user->id }}">
-                    <td><a href="{{ route('users.show', $user->slug) }}" class="btn btn-link">{{ $user->displayName() }}</a></td>
+                    <td><a href="{{ route('home.profile.show', $user->slug) }}" class="btn btn-link">{{ $user->displayName() }}</a></td>
                     <td class="email-lower">{{ $user->email }}</td>
                     <td><span class="label @if($user->country->abbreviation === 'AR') label-default @else label-success @endif">{{ $user->country->abbreviation }}</span></td>
                     <td><span class="label @if($user->type === 'administrador' || $user->type === 'sysadmin') label-primary @elseif($user->type === 'frecuente') label-info @elseif($user->type === 'empleado') label-default @endif">{{ strtoupper($user->type) }}</span></td>

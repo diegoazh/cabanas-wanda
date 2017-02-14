@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@yield('title', 'Welcome') | Caba&ntilde;as de Wanda</title>
+    <title>@yield('title', 'Welcome') | {{ config('app.name', 'Hotel Cabañas de Wanda') }}</title>
     <link rel="stylesheet" href="{{ asset('lib/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/dashicons/css/dashicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}">

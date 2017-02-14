@@ -1,5 +1,9 @@
 @extends('templates.backend-layout')
 
+@section('title')
+    {{ (isset($cottage)) ? 'Editar caba&ntilde;a' : 'Registrar Caba&ntilde;a' }}
+@endsection
+
 @section('title', 'Registro de Cabaña')
 
 @section('content')

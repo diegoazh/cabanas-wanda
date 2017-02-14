@@ -1,5 +1,9 @@
 @extends('templates.backend-layout')
 
+@section('title')
+    Lista de caba&ntilde;as
+@endsection
+
 @section('title', 'Listado de Cabañas')
 
 @section('content')

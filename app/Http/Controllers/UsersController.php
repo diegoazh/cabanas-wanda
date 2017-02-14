@@ -1,32 +1,36 @@
 <?php
 
-namespace App\Http\Controllers\Administration;
+namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon as Carbon;
 
 class UsersController extends Controller
 {
-    public function __construct()
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function show($slug)
     {
-        $this->middleware('isEmployed')->except(['index', 'show']);
+        $user = User::where('slug', $slug)->first();
+        return view('frontend.profile-show')->with('user', $user);
     }
 
     /**
-     * Display a listing of the resource.
+     * Show the form for editing the specified resource.
      *
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function edit(User $user)
     {
-        $users = User::where('deleted_at', null)->orderBy('created_at', 'desc')->paginate(10);
-        $users->each(function ($users) {
-            $users->country;
-        });
-        return view('backend.users')->with('users', $users);
+        //
     }
 
     /**

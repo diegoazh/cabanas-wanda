@@ -22,8 +22,12 @@ Route::group(['middleware' => 'web'], function () {
      * Base route app
      **************************************/
     Route::get('/', 'FrontendController@showHome')->name('home');
-    Route::get('/cottages', 'CottagesController@index')->name('home.cottages.index');
-    Route::get('/cottages/{slug}', 'CottagesController@show')->name('home.cottages.show');
+    Route::get('cottages', 'CottagesController@index')->name('home.cottages.index');
+    Route::get('cottages/{slug}', 'CottagesController@show')->name('home.cottages.show');
+    Route::get('profile/{slug}', 'UsersController@show')->name('home.profile.show');
+    Route::get('profile/{slug}/edit', 'UsersController@edit')->name('home.profile.edit');
+    Route::put('profile/{slug}', 'UsersController@update')->name('home.profile.update');
+    Route::put('profile/{slug}', 'UsersController@destroy')->name('home.profile.destroy');
 
     /**************************************
      * Auth Routes
@@ -40,7 +44,9 @@ Route::group(['middleware' => 'web'], function () {
  */
 Route::group(['prefix' => 'admin', 'namespace' => 'Administration', 'middleware' => ['auth', 'isAdminOrEmployed']], function () {
     Route::get('/', 'BackendController@showPanel')->name('admin.panel');
+    Route::get('users', 'UsersController@index')->name('users.index');
+    Route::put('users/{user}', 'UsersController@update')->name('users.update');
+    Route::delete('users/{user}', 'UsersController@destroy')->name('users.destroy');
     Route::resource('cottages', 'CottagesController');
     //Route::resource('promotions', 'PromotionsController');
-    Route::resource('users', 'UsersController');
 });

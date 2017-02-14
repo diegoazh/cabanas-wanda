@@ -1,5 +1,9 @@
 @extends('templates.frontend-layout')
 
+@section('title')
+    Nuestras caba&ntilde;as
+@endsection
+
 @section('estilos')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/frontend/cottages.css') }}">
 @endsection

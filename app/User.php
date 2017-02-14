@@ -6,13 +6,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Cviebrock\EloquentSluggable\Sluggable;
-
+use App\MyTraits\TranslateDates;
 
 class User extends Authenticatable
 {
-  use SoftDeletes;
-  use Notifiable;
-  use Sluggable;
+  use SoftDeletes, Notifiable, Sluggable, TranslateDates;
 
   /**
    * The attributes that are mass assignable.
