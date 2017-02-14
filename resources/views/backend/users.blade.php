@@ -20,9 +20,9 @@
             </thead>
             <tbody>
             @foreach($users as $user)
-                <tr data-object-id="{{ $user->id }}">
+                <tr data-object="{{ $user->id }}">
                     <td><a href="{{ route('users.show', $user->slug) }}" class="btn btn-link">{{ $user->displayName() }}</a></td>
-                    <td>{{ $user->email }}</td>
+                    <td class="email-lower">{{ $user->email }}</td>
                     <td><span class="label @if($user->country->abbreviation === 'AR') label-default @else label-success @endif">{{ $user->country->abbreviation }}</span></td>
                     <td><span class="label @if($user->type === 'administrador' || $user->type === 'sysadmin') label-primary @elseif($user->type === 'frecuente') label-info @elseif($user->type === 'empleado') label-default @endif">{{ strtoupper($user->type) }}</span></td>
                     @if(Auth::user()->type === 'administrador' || Auth::user()->type === 'sysadmin')

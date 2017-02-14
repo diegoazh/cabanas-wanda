@@ -210,6 +210,9 @@ body .container-fluid #content #main_content .panel .table-responsive {
 body .container-fluid #content #main_content .panel .table-responsive table tbody tr td {
   text-transform: capitalize;
 }
+body .container-fluid #content #main_content .panel .table-responsive table tbody tr td.email-lower {
+  text-transform: none;
+}
 body .container-fluid #content #main_content .panel.form-panel {
   border: 2px dashed #808080;
 }

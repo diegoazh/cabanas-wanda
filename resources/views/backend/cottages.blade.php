@@ -22,7 +22,7 @@
             </thead>
             <tbody>
             @foreach($cottages as $cottage)
-                <tr data-object-id="{{ $cottage->id }}">
+                <tr data-object="{{ $cottage->id }}">
                     <td>
                         <span class="label label-default"><i class="fa fa-hashtag" aria-hidden="true"></i> {{ $cottage->number }}</span>
                     </td>

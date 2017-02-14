@@ -74,7 +74,7 @@ $(document).ready(function(e) {
      * ****************************************************************************************************************/
     function setModalForms($this, method, files, replaceInAction, textsToDisplay, modalSize, $formOptional) {
         var $row = $this.parents('tr');
-        var id = $row.data('objectId');
+        var id = $row.data('object');
         var inputValue = $this.data('objectValue');
         var name = $this.data('objectDisplay');
         var $btnSubmit = $('#submit_form');
