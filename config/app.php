@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Cabañas de Wanda',
+    'name' => 'Hotel Caba&ntilde;as de Wanda',
 
     /*
     |--------------------------------------------------------------------------

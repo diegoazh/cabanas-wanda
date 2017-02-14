@@ -65,8 +65,8 @@ body .container-fluid #header {
 body .container-fluid #header #overlay {
   position: absolute;
   width: 100%;
-  min-height: 24.7%;
-  max-height: 24.7%;
+  min-height: 25.2%;
+  max-height: 25.2%;
   opacity: 0;
   background-color: #333333;
   background-image: url('../../images/jaguar.jpg');
@@ -208,9 +208,11 @@ body .container-fluid #content .col-md-8 #cottage_description table {
   font-size: 16px;
   color: #404040;
 }
+body .container-fluid #content .col-md-8 #cottage_description table tbody tr th {
+  width: 40%;
+}
 body .container-fluid #content .col-md-8 #cottage_description table tbody tr td {
-  min-width: 60%;
-  max-width: 70%;
+  width: 60%;
 }
 body .container-fluid #content .col-md-8 #cottage_description table tbody tr td i.fa-star {
   color: #e1cf65;
@@ -6935,6 +6937,11 @@ body .container-fluid #content .col-md-8 div.reservation-section div .clndr .vis
   body .container-fluid #content .col-md-8 div.reservation-section div .clndr .hidden-print {
     display: none !important;
   }
+}
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../../lib/bootstrap/fonts/glyphicons-halflings-regular.eot');
+  src: url('../../lib/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../lib/bootstrap/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../../lib/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../lib/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../lib/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls {
   width: 100%;

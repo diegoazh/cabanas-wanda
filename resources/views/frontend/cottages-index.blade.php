@@ -76,5 +76,5 @@
     @endfor
 @endsection
 @section('scripts')
-    <script src="{{ asset('js/cottages-index.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/frontend/cottages-index.js') }}" type="text/javascript"></script>
 @endsection

@@ -135,5 +135,5 @@
 @section('scripts')
     <script src="{{ asset('lib/moment/min/moment-with-locales.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/clndr/clndr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/cottage-show.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/frontend/cottage-show.js') }}" type="text/javascript"></script>
 @endsection
