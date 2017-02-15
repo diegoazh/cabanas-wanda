@@ -10,9 +10,19 @@
 
 @section('content')
     <div class="col-md-offset-2 col-md-8">
-        <img src="@if(!empty($user->image_profile)) {{ $user->image_profile }} @else {{ asset('images/avatars-icons/chico-jopo.png') }} @endif" alt="{{ $user->displayName() }}" class="img-responsive img-circle img-thumbnail">
+        @if(Auth::check())
+            @if(Auth::user()->type === 'administrador' || Auth::user()->type === 'sysadmin')
+                <div class="text-right">
+                    <a href="{{ route('users.index') }}" class="btn btn-default btn-xs"><i class="fa fa-reply"></i> Volver</a>
+                </div>
+            @endif
+        @endif
+        <img src="@if(!empty($user->image_profile)) {{ $user->image_profile }} @elseif($user->genre === '') {{ asset('images/avatars-icons/chico-jopo.png') }} @endif" alt="{{ $user->displayName() }}" class="img-responsive img-circle img-thumbnail">
         <h2 class="text-right">
             {{ $user->displayName() }}
+            @if(Auth::check() && Auth::user()->dni === $user->dni)
+                <a href="#" class="btn btn-info btn-xs">Editar <i class="fa fa-edit"></i></a>
+            @endif
             <br>
             <small>
                 <span class="label @if($user->type === 'administrador' || $user->type === 'sysadmin') label-primary @elseif($user->type === 'frecuente') label-info @elseif($user->type === 'empleado') label-default @endif">{{ strtoupper($user->type) }}</span>
