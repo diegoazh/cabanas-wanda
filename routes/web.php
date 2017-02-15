@@ -27,7 +27,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('profile/{slug}', 'UsersController@show')->name('home.profile.show');
     Route::get('profile/{slug}/edit', 'UsersController@edit')->name('home.profile.edit');
     Route::put('profile/{slug}', 'UsersController@update')->name('home.profile.update');
-    Route::put('profile/{slug}', 'UsersController@destroy')->name('home.profile.destroy');
+    Route::delete('profile/{slug}', 'UsersController@destroy')->name('home.profile.destroy');
 
     /**************************************
      * Auth Routes

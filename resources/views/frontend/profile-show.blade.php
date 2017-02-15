@@ -17,11 +17,11 @@
                 </div>
             @endif
         @endif
-        <img src="@if(!empty($user->image_profile)) {{ $user->image_profile }} @elseif($user->genre === '') {{ asset('images/avatars-icons/chico-jopo.png') }} @endif" alt="{{ $user->displayName() }}" class="img-responsive img-circle img-thumbnail">
+        <img src="@if(!empty($user->image_profile)) {{ $user->image_profile }} @elseif($user->genre === 'm') {{ asset('images/avatars-icons/chico-jopo.png') }} @else {{ asset('images/avatars-icons/chica-rodete.png') }} @endif" alt="{{ $user->displayName() }}" class="img-responsive img-circle img-thumbnail">
         <h2 class="text-right">
             {{ $user->displayName() }}
             @if(Auth::check() && Auth::user()->dni === $user->dni)
-                <a href="#" class="btn btn-info btn-xs">Editar <i class="fa fa-edit"></i></a>
+                <a href="{{ route('home.profile.edit', $user->slug) }}" class="btn btn-warning btn-xs">Editar <i class="fa fa-edit"></i></a>
             @endif
             <br>
             <small>
@@ -46,11 +46,11 @@
                     </tr>
                     <tr>
                         <th scope="row">Fecha de nacimiento:</th>
-                        <td>{{ $user->date_of_birth }}</td>
+                        <td>{{ $birth->format('d/m/Y') }}</td>
                     </tr>
                     <tr>
                         <th scope="row">Sexo:</th>
-                        <td>@if($user->genre === 'M') Hombre @elseif('F') Mujer @else Otro @endif</td>
+                        <td>@if($user->genre === 'm') Hombre @elseif('f') Mujer @else Otro @endif</td>
                     </tr>
                     <tr>
                         <th scope="row">DNI:</th>

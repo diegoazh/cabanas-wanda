@@ -19,18 +19,21 @@ class UsersController extends Controller
     public function show($slug)
     {
         $user = User::where('slug', $slug)->first();
-        return view('frontend.profile-show')->with('user', $user);
+        $birth = Carbon::createFromFormat('Y-m-d', $user->date_of_birth);
+        return view('frontend.profile-show')->with(compact('user', 'birth'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($slug)
     {
-        //
+        $user = User::where('slug', $slug)->first();
+        $birth = Carbon::createFromFormat('Y-m-d', $user->date_of_birth);
+        return view('frontend.profile-edit')->with(compact('user', 'birth'));
     }
 
     /**
