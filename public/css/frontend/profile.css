@@ -82,6 +82,9 @@ body .container-fluid #content .col-md-8 img {
   position: relative;
   top: 5em;
 }
+body .container-fluid #content .col-md-8 div.table-responsive table tbody tr {
+  font-size: 16px;
+}
 body .container-fluid #content #footer {
   margin-top: 5px;
 }

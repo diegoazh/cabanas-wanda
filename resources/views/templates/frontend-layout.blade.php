@@ -43,10 +43,9 @@
     </div>
 </div>
 <!-- Scripts -->
-<script src="/js/app.js"></script>
 <script src="{{ asset('lib/jquery/dist/jquery.min.js') }}"></script>
-<script src="{{ asset('lib/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/frontend/frontend.js') }}"></script>
+<script src="/js/app.js"></script>
+<script src="/js/frontend/frontend.js"></script>
 @yield('scripts')
 </body>
 </html>

@@ -20,5 +20,10 @@ trait TranslateDates
     {
         return new JDate($date);
     }
+
+    public function getDateOfBirthAttribute($date)
+    {
+        return new JDate($date);
+    }
 }
 

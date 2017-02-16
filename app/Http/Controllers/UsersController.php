@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon as Carbon;
 
 class UsersController extends Controller
 {
@@ -19,8 +19,7 @@ class UsersController extends Controller
     public function show($slug)
     {
         $user = User::where('slug', $slug)->first();
-        $birth = Carbon::createFromFormat('Y-m-d', $user->date_of_birth);
-        return view('frontend.profile-show')->with(compact('user', 'birth'));
+        return view('frontend.profile-show')->with('user', $user);
     }
 
     /**
@@ -31,9 +30,22 @@ class UsersController extends Controller
      */
     public function edit($slug)
     {
-        $user = User::where('slug', $slug)->first();
-        $birth = Carbon::createFromFormat('Y-m-d', $user->date_of_birth);
-        return view('frontend.profile-edit')->with(compact('user', 'birth'));
+        if (Auth::check())
+        {
+            if (Auth::user()->slug === $slug)
+            {
+                $user = User::where('slug', $slug)->first();
+                return view('frontend.profile-edit')->with('user', $user);
+            }
+            else
+            {
+                return redirect()->route('home');
+            }
+        }
+        else
+        {
+            return redirect()->route('login');
+        }
     }
 
     /**
