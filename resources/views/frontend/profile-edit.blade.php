@@ -76,6 +76,20 @@
                     {{ Form::email('email', $user->email, ['class' => 'form-control', 'placeholder' => 'Ingrese su email', 'disabled' => 'disabled']) }}
                 </div>
             </div>
+            <div class="form-group">
+                {{ Form::label('celphone', 'Celular: ', ['class' => 'sr-only']) }}
+                <div class="input-group">
+                    <div class="input-group-addon">Celular:</div>
+                    {{ Form::number('celphone', $user->celphone, ['class' => 'form-control', 'placeholder' => 'Ingrese su nº de celular']) }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ Form::label('phone', 'Teléfono: ', ['class' => 'sr-only']) }}
+                <div class="input-group">
+                    <div class="input-group-addon">Tel&eacute;fono:</div>
+                    {{ Form::number('phone', $user->phone, ['class' => 'form-control', 'placeholder' => 'Ingrese su nº de teléfono']) }}
+                </div>
+            </div>
             {{ Form::close() }}
         </div>
     </div>

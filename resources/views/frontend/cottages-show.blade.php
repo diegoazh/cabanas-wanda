@@ -70,9 +70,13 @@
                     <tr>
                         <th scope="row"><i class="fa fa-commenting-o" aria-hidden="true"></i> Calificación</th>
                         <td>
-                            @for($a = 0; $a < ($cottage->stars / $cottage->voters); $a++)
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            @endfor
+                            @if($cottage->voters)
+                                @for($a = 0; $a < ($cottage->stars / $cottage->voters); $a++)
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                @endfor
+                            @else
+                                Sin calificaci&oacute;n
+                            @endif
                         </td>
                     </tr>
                     <tr class="text-left info">

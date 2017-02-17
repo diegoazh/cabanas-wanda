@@ -19,7 +19,7 @@ class User extends Authenticatable
    */
   protected $table = 'users';
   protected $dates = ['deleted_at'];
-  protected $fillable = ['name', 'lastname', 'date_of_birth', 'country_id', 'dni', 'passport', 'email', 'address', 'destination', 'password', 'type', 'image_profile', 'slug'];
+  protected $fillable = ['name', 'lastname', 'date_of_birth', 'country_id', 'dni', 'passport', 'email', 'celphone', 'phone', 'address', 'destination', 'password', 'type', 'image_profile', 'slug', 'genre'];
 
   /**
    * The attributes that should be hidden for arrays.

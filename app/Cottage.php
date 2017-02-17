@@ -15,7 +15,7 @@ class Cottage extends Model
 
   protected $table = 'cottages';
   protected $dates = ['deleted_at'];
-  protected $fillable = ['number', 'name', 'type', 'accommodation', 'description', 'images', 'price', 'slug'];
+  protected $fillable = ['number', 'name', 'type', 'accommodation', 'description', 'images', 'price', 'slug', 'state', 'stars', 'voters'];
 
   public function Sluggable()
   {

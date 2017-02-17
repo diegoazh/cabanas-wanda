@@ -35,7 +35,7 @@
                         {{ $cottage->accommodation }} <i class="glyphicon glyphicon-user"></i>
                     </td>
                     <td>
-                        <span class="label @if($cottage->state === 'libre') label-success @elseif($cottage->state === 'reservada') label-warning @elseif($cottage->state === 'ocupada') label-primary @elseif($cottage->state === 'mantenimiento') label-default @else label-danger @endif">{{ $cottage->state }}</span>
+                        <span class="label @if($cottage->state === 'enabled') label-success @elseif($cottage->state === 'maintenance') label-warning @elseif($cottage->state === 'disabled') label-danger @endif">@if($cottage->state === 'enabled') Habilitada @elseif($cottage->state === 'disabled') Deshabilitada @else Mantenimiento @endif</span>
                     </td>
                     <td>
                         <i class="fa fa-usd" aria-hidden="true"></i> {{ $cottage->price }}

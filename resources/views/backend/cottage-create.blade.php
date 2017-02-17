@@ -82,7 +82,7 @@
             {{ Form::label('state', 'Estado', ['class' => 'sr-only']) }}
             <div class="input-group">
                 <div class="input-group-addon">Estado</div>
-                {{ Form::select('state', ['libre' => 'Libre', 'reservada' => 'Reservada', 'ocupada' => 'Ocupada', 'mantenimiento' => 'Mantenimiento', 'inhabilitada' => 'Inhabilitada'], (isset($cottage)) ? $cottage->state : 'mantenimiento', ['class' => 'form-control'], 'required') }}
+                {{ Form::select('state', ['enabled' => 'Habilitada', 'maintenance' => 'Mantenimiento', 'disabled' => 'Deshabilitada'], (isset($cottage)) ? $cottage->state : 'disabled', ['class' => 'form-control'], 'required') }}
             </div>
             <div class="help-info">
                 <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
