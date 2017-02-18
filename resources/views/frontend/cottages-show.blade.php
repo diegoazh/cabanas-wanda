@@ -13,7 +13,7 @@
         <div class="cottage-number">
             <i class="fa fa-hashtag" aria-hidden="true"></i> {{ $cottage->number }}
         </div>
-        <h1 class="text-center"><i class="fa fa-home" aria-hidden="true"></i> Caba&ntilde;a <span>{{ $cottage->name }}</span></h1>
+        <h1 class="text-center page-header"><i class="fa fa-home" aria-hidden="true"></i> Caba&ntilde;a <span>{{ $cottage->name }}</span></h1>
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">

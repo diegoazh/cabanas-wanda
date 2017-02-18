@@ -89,6 +89,24 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('genre') ? ' has-error' : '' }}">
+                            <label for="genre" class="col-md-4 control-label">Genero</label>
+
+                            <div class="col-md-6">
+                                <select id="genre" class="form-control" name="genre" value="{{ old('genre') }}" required>
+                                    <option value="m">Masculino</option>
+                                    <option value="f">Femenino</option>
+                                    <option value="o">Otro</option>
+                                </select>
+
+                                @if ($errors->has('genre'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('genre') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('country_id') ? ' has-error' : '' }}">
                             <label for="country_id" class="col-md-4 control-label">País</label>
 

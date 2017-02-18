@@ -40,14 +40,14 @@ class UsersController extends Controller
     {
         $user = User::find($id);
         $fields = $request->all();
-        $v = Validator::make($request->all(), [
+        $v = Validator::make($fields, [
             'dni' => [
                 'integer',
-                Rule::unique('users')->ignore($user->$id)
+                Rule::unique('users')->ignore($user->id)
             ],
             'email' => [
                 'email',
-                Rule::unique('users')->ignore($user->$id)
+                Rule::unique('users')->ignore($user->id)
             ]
         ]);
         if ($v->fails())

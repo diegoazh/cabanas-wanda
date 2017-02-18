@@ -11,7 +11,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <h1 class="text-center"><i class="fa fa-home" aria-hidden="true"></i> Nuestras Caba&ntilde;as</h1>
+            <h1 class="text-center page-header"><i class="fa fa-home" aria-hidden="true"></i> Nuestras Caba&ntilde;as</h1>
         </div>
     </div>
     @for($i = 0; $i < count($cottages);)

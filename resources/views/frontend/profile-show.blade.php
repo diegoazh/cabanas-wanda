@@ -10,15 +10,13 @@
 
 @section('content')
     <div class="col-md-offset-2 col-md-8">
-        @if(Auth::check())
-            @if(Auth::user()->isAdmin())
-                <div class="text-right">
-                    <a href="{{ route('users.index') }}" class="btn btn-default btn-xs"><i class="fa fa-reply"></i> Volver</a>
-                </div>
-            @endif
+        @if(Auth::check() && Auth::user()->isAdmin())
+            <div class="text-right">
+                <a href="{{ route('users.index') }}" class="btn btn-default btn-xs"><i class="fa fa-reply"></i> Volver</a>
+            </div>
         @endif
-        <img src="@if(!empty($user->image_profile)) {{ $user->image_profile }} @elseif($user->genre === 'm') {{ asset('images/avatars-icons/chico-jopo.png') }} @else {{ asset('images/avatars-icons/chica-rodete.png') }} @endif" alt="{{ $user->displayName() }}" class="img-responsive img-circle img-thumbnail">
-        <h2 class="text-right">
+        <img  id="img_user" src="@if(!empty($user->image_profile)) {{ $user->image_profile }} @elseif($user->genre === 'm') {{ asset('images/avatars-icons/chico-jopo.png') }} @else {{ asset('images/avatars-icons/chica-rodete.png') }} @endif" alt="{{ $user->displayName() }}" class="img-responsive img-circle img-thumbnail">
+        <h2 class="text-right page-header">
             {{ $user->displayName() }}
             @if(Auth::check() && Auth::user()->dni === $user->dni)
                 <a href="{{ route('home.profile.edit', $user->slug) }}" class="btn btn-warning btn-xs">Editar <i class="fa fa-edit"></i></a>
@@ -52,7 +50,7 @@
                         <th scope="row">País</th>
                         <td><span class="label @if($user->country->abbreviation === 'AR') label-default @else label-success @endif">{{ $user->country->country }}</span></td>
                     </tr>
-                    @if(Auth::user()->isAdmin())
+                    @if(Auth::check() && Auth::user()->isAdmin())
                         <tr>
                             <th scope="row">Fecha de nacimiento:</th>
                             <td>{{ $user->date_of_birth->diffForHumans() }}</td>
@@ -88,7 +86,7 @@
                     @endif
                     <tr>
                         <th scope="row">Fecha de alta:</th>
-                        <td>{{ ucfirst($user->created_at->format('l\, d')) . ' de ' . ucfirst($user->created_at->format('F')) . ' de ' . $user->created_at->format('Y') }}</td>
+                        <td>{{ ucfirst($user->updated_at->format('l\, d')) . ' de ' . ucfirst($user->updated_at->format('F')) . ' de ' . $user->updated_at->format('Y') }}</td>
                     </tr>
                 </tbody>
                 <tfoot>

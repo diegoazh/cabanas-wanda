@@ -106,6 +106,9 @@ body .container-fluid #header div.col-md-8:after {
   top: 10%;
   left: 6%;
 }
+body .container-fluid .row div .alert {
+  margin-top: 1.5%;
+}
 body .container-fluid #content {
   background-image: url('../../images/dibujo-tucan.jpg');
   background-repeat: no-repeat;

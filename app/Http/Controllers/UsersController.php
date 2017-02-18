@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon as Carbon;
 
 class UsersController extends Controller
 {
@@ -52,21 +53,21 @@ class UsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        $user = User::find($id);
+        $user = User::where('slug', $slug)->first();
         $fields = $request->all();
-        $v = Validator::make($request->all(), [
+        $v = Validator::make($fields, [
             'dni' => [
                 'integer',
-                Rule::unique('users')->ignore($user->$id)
+                Rule::unique('users')->ignore($user->id)
             ],
             'email' => [
                 'email',
-                Rule::unique('users')->ignore($user->$id)
+                Rule::unique('users')->ignore($user->id)
             ]
         ]);
         if ($v->fails())
@@ -74,10 +75,27 @@ class UsersController extends Controller
             return redirect()->back()->withInput()->withErrors($v->errors());
             flash('Ha ocurrido un error, por favor verifique la información enviada.', 'warning');
         }
-        $user->type = $fields['inputFormId'];
+        if (!empty($fields['name']))
+            $user->name = $fields['name'];
+        if (!empty($fields['lastname']))
+            $user->lastname = $fields['lastname'];
+        if (!empty($fields['date_of_birth'])) {
+            $dateOfBirth = Carbon::createFromFormat('d/m/Y', $fields['date_of_birth']);
+            $user->date_of_birth = $dateOfBirth->toDateTimeString();
+        }
+        if (!empty($fields['genre']))
+            $user->genre = $fields['genre'];
+        if (!empty($fields['passport']))
+            $user->passport = $fields['passport'];
+        if (!empty($fields['celphone']))
+            $user->celphone = $fields['celphone'];
+        if (!empty($fields['phone']))
+            $user->phone = $fields['phone'];
+        if (!empty($fields['address']))
+            $user->address = $fields['address'];
         $user->save();
-        flash('El usuario se actualizó correctamente.', 'success');
-        return redirect()->route('users.index');
+        flash('El usuario <strong>' . $user->displayName() . '</strong> se actualizó correctamente.', 'success');
+        return redirect()->route('home.profile.show', $user->slug);
     }
 
     /**
