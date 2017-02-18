@@ -93,6 +93,14 @@ class UsersController extends Controller
             $user->phone = $fields['phone'];
         if (!empty($fields['address']))
             $user->address = $fields['address'];
+        if (isset($fields['image_avatar']) && !empty($fields['image_avatar']))
+        {
+            $user->image_profile = $fields['image_avatar'];
+        }
+        elseif (isset($fields['image_profile']) && !empty($fields['image_profile']))
+        {
+            $user->image_profile = $user->addAndRemoveImageProfile($fields['image_profile'], $user);
+        }
         $user->save();
         flash('El usuario <strong>' . $user->displayName() . '</strong> se actualizó correctamente.', 'success');
         return redirect()->route('home.profile.show', $user->slug);

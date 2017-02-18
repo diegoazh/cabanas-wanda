@@ -16,7 +16,7 @@
                 <a href="{{ route('users.index') }}" class="btn btn-default btn-xs"><i class="fa fa-reply"></i> Volver</a>
             </div>
         @endif
-        <img id="img_user" src="@if(!empty($user->image_profile)) {{ $user->image_profile }} @elseif($user->genre === 'm') {{ asset('images/profiles/chico-jopo.png') }} @else {{ asset('images/profiles/chica-rodete.png') }} @endif" alt="{{ $user->displayName() }}" class="img-responsive img-circle img-thumbnail">
+        <img id="img_user" src="@if(!empty($user->image_profile)) {{ asset('images/profiles/' . $user->image_profile) }} @elseif($user->genre === 'm') {{ asset('images/profiles/chico-jopo.png') }} @else {{ asset('images/profiles/chica-rodete.png') }} @endif" alt="{{ $user->displayName() }}" class="img-responsive img-circle img-thumbnail">
         <h2 class="text-right page-header">
             {{ $user->displayName() }}
             <a href="{{ route('home.profile.show', $user->slug) }}" class="btn btn-success btn-xs">Perfil <i class="fa fa-user-circle" aria-hidden="true"></i></a>

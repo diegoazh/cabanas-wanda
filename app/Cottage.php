@@ -47,7 +47,7 @@ class Cottage extends Model
       }
       // $path = public_path() . '/images/cabanias'; // determinamos la ruta donde se guardan, necesario para la primera forma
       for ($i = count($newImages) - 1; $i >= 0; $i--) {
-          // $files[$i]->move($path, $names[$i]); // primera forma con el objeto $file movemos cada imagen al directorio con su nuevo nombre
+          // $newImages[$i]->move($path, $names[$i]); // primera forma con el objeto $file movemos cada imagen al directorio con su nuevo nombre
           Storage::disk('cabanias')->put($names[$i], File::get($newImages[$i])); // segunda forma con la clase storage y el filesistem de laravel
       }
       if(isset($actualImages)) {

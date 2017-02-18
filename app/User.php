@@ -7,59 +7,69 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Cviebrock\EloquentSluggable\Sluggable;
 use App\MyTraits\TranslateDates;
+use Illuminate\Support\Facades\File as File;
+use Illuminate\Support\Facades\Storage as Storage;
 
 class User extends Authenticatable
 {
-  use SoftDeletes, Notifiable, Sluggable, TranslateDates;
+    use SoftDeletes, Notifiable, Sluggable, TranslateDates;
 
-  /**
-   * The attributes that are mass assignable.
-   *
-   * @var array
-   */
-  protected $table = 'users';
-  protected $dates = ['deleted_at'];
-  protected $fillable = ['name', 'lastname', 'date_of_birth', 'country_id', 'dni', 'passport', 'email', 'celphone', 'phone', 'address', 'destination', 'password', 'type', 'image_profile', 'slug', 'genre'];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $table = 'users';
+    protected $dates = ['deleted_at'];
+    protected $fillable = ['name', 'lastname', 'date_of_birth', 'country_id', 'dni', 'passport', 'email', 'celphone', 'phone', 'address', 'destination', 'password', 'type', 'image_profile', 'slug', 'genre'];
 
-  /**
-   * The attributes that should be hidden for arrays.
-   *
-   * @var array
-   */
-  protected $hidden = [
-    'password', 'remember_token',
-  ];
-
-  public function Sluggable()
-  {
-    return [
-        'slug' => [
-            'source' => ['lastname', 'name']
-        ]
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
     ];
-  }
 
-  public function country()
-  {
-    return $this->belongsTo('App\Country');
-  }
-  public function rentals()
-  {
-    return $this->hasMany('App\Rental');
-  }
+    public function Sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => ['lastname', 'name']
+            ]
+        ];
+    }
 
-  public function isAdmin()
-  {
-    return ($this->type === 'administrador' || $this->type === 'sysadmin');
-  }
+    public function country()
+    {
+        return $this->belongsTo('App\Country');
+    }
+    public function rentals()
+    {
+        return $this->hasMany('App\Rental');
+    }
 
-  public function isEmployed()
-  {
-      return ($this->type === 'empleado');
-  }
+    public function isAdmin()
+    {
+        return ($this->type === 'administrador' || $this->type === 'sysadmin');
+    }
 
-  public function displayName()
-  {
-      return $this->lastname . ', ' . $this->name;
-  }
+    public function isEmployed()
+    {
+        return ($this->type === 'empleado');
+    }
+
+    public function displayName()
+    {
+        return $this->lastname . ', ' . $this->name;
+    }
+
+    public function addAndRemoveImageProfile($newImage, User $user)
+    {
+        $name = $user->name . '-' . $user->lastname . '-' . time() . '.' . $newImage->getClientOriginalExtension();
+        Storage::disk('profiles')->put($name, File::get($newImage));
+        Storage::disk('profiles')->delete($user->image_profile);
+        return $name;
+    }
 }

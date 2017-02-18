@@ -58,6 +58,11 @@ return [
             'root' => public_path() . '/images/cabanias'
         ],
 
+        'profiles' => [
+            'driver' => 'local',
+            'root' => public_path() . '/images/profiles'
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

@@ -79,6 +79,11 @@ body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-n
 body .container-fluid #header nav.navbar .container .navbar-collapse ul li a {
   color: #262626;
 }
+body .container-fluid #header nav.navbar .container .navbar-collapse ul li a img {
+  display: inline-block;
+  width: 20px;
+  height: auto;
+}
 body .container-fluid #header div.col-md-8 {
   text-align: center;
   height: 309px;
