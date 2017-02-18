@@ -9,6 +9,7 @@ $(document).ready(function () {
     $('#upload_image').on('click', function (e) {
         $('.image_profile').slideToggle('slow');
         $('#avatar_profile').slideToggle('slow');
+        $('.avatar-selected').removeClass('avatar-selected');
     });
 
     $('.img-avatar').on('click', function (e) {
