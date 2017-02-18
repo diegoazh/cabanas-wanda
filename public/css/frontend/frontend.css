@@ -25,7 +25,7 @@ body .container-fluid {
 body .container-fluid #header {
   min-height: 63%;
   max-height: 63%;
-  background-image: url('../../images/cabanas1.jpg');
+  background-image: url('../../images/frontend/cabanas1.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center 55%;
@@ -37,7 +37,7 @@ body .container-fluid #header #overlay {
   max-height: 57.6%;
   opacity: 0;
   background-color: #333333;
-  background-image: url('../../images/jaguar.jpg');
+  background-image: url('../../images/frontend/jaguar.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: left 35%;
@@ -110,7 +110,7 @@ body .container-fluid .row div .alert {
   margin-top: 1.5%;
 }
 body .container-fluid #content {
-  background-image: url('../../images/dibujo-tucan.jpg');
+  background-image: url('../../images/frontend/dibujo-tucan.jpg');
   background-repeat: no-repeat;
   background-position: 5% 15%;
   min-height: 50%;
@@ -159,13 +159,13 @@ body .container-fluid #content section .description hr {
 body .container-fluid #content section .description img {
   position: relative;
   width: 330px;
-  top: -16%;
+  top: -14%;
   height: auto;
   left: 37%;
 }
 body .container-fluid #content section .description p {
   position: relative;
-  top: -12%;
+  top: -10%;
   text-align: center;
   margin: 0;
   padding: 0% 18%;

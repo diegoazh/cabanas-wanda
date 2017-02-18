@@ -16,7 +16,7 @@
                 <a href="{{ route('users.index') }}" class="btn btn-default btn-xs"><i class="fa fa-reply"></i> Volver</a>
             </div>
         @endif
-        <img id="img_user" src="@if(!empty($user->image_profile)) {{ $user->image_profile }} @elseif($user->genre === 'm') {{ asset('images/avatars-icons/chico-jopo.png') }} @else {{ asset('images/avatars-icons/chica-rodete.png') }} @endif" alt="{{ $user->displayName() }}" class="img-responsive img-circle img-thumbnail">
+        <img id="img_user" src="@if(!empty($user->image_profile)) {{ $user->image_profile }} @elseif($user->genre === 'm') {{ asset('images/profiles/chico-jopo.png') }} @else {{ asset('images/profiles/chica-rodete.png') }} @endif" alt="{{ $user->displayName() }}" class="img-responsive img-circle img-thumbnail">
         <h2 class="text-right page-header">
             {{ $user->displayName() }}
             <a href="{{ route('home.profile.show', $user->slug) }}" class="btn btn-success btn-xs">Perfil <i class="fa fa-user-circle" aria-hidden="true"></i></a>
@@ -109,41 +109,42 @@
                     <div class="input-group">
                         <div class="input-group-addon">Foto de perfil:</div>
                         {{ Form::file('image_profile', ['class' => 'form-control', 'id' => 'image_profile']) }}
+                        {{ Form::hidden('image_avatar') }}
                     </div>
                 </div>
                 <div id="avatar_profile" class="table-responsive">
                     <table class="table">
                     <tr>
                         <td class="text-center">
-                            <img role="button" data-avatar="chica-carre.png" src="{{ asset('images/avatars-icons/chica-carre.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                            <img role="button" data-avatar="chica-carre.png" src="{{ asset('images/profiles/chica-carre.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
                         </td>
                         <td class="text-center">
-                            <img role="button" data-avatar="chica-hombros.png" src="{{ asset('images/avatars-icons/chica-hombros.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                            <img role="button" data-avatar="chica-hombros.png" src="{{ asset('images/profiles/chica-hombros.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
                         </td>
                         <td class="text-center">
-                            <img role="button" data-avatar="chica-rodete.png" src="{{ asset('images/avatars-icons/chica-rodete.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <img role="button" data-avatar="chico-barba.png" src="{{ asset('images/avatars-icons/chico-barba.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
-                        </td>
-                        <td class="text-center">
-                            <img role="button" data-avatar="chico-jopo.png" src="{{ asset('images/avatars-icons/chico-jopo.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
-                        </td>
-                        <td class="text-center">
-                            <img role="button" data-avatar="hombre-bigote.png" src="{{ asset('images/avatars-icons/hombre-bigote.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                            <img role="button" data-avatar="chica-rodete.png" src="{{ asset('images/profiles/chica-rodete.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
                         </td>
                     </tr>
                     <tr>
                         <td class="text-center">
-                            <img role="button" data-avatar="pelado1.png" src="{{ asset('images/avatars-icons/pelado1.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                            <img role="button" data-avatar="chico-barba.png" src="{{ asset('images/profiles/chico-barba.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
                         </td>
                         <td class="text-center">
-                            <img role="button" data-avatar="pelado2.png" src="{{ asset('images/avatars-icons/pelado2.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                            <img role="button" data-avatar="chico-jopo.png" src="{{ asset('images/profiles/chico-jopo.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
                         </td>
                         <td class="text-center">
-                            <img role="button" data-avatar="rubia.png" src="{{ asset('images/avatars-icons/rubia.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                            <img role="button" data-avatar="hombre-bigote.png" src="{{ asset('images/profiles/hombre-bigote.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">
+                            <img role="button" data-avatar="pelado1.png" src="{{ asset('images/profiles/pelado1.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                        </td>
+                        <td class="text-center">
+                            <img role="button" data-avatar="pelado2.png" src="{{ asset('images/profiles/pelado2.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                        </td>
+                        <td class="text-center">
+                            <img role="button" data-avatar="rubia.png" src="{{ asset('images/profiles/rubia.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
                         </td>
                     </tr>
                 </table>

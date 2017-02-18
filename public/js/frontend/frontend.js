@@ -14,7 +14,7 @@ $(document).ready(function (event) {
         $('#overlay').animate({
             'opacity': 1
         }, 1500, function () {
-            $('#header').css('background-image', 'url("http://homestead.app/images/cabanas'+ continuousNumber(1, 11) +'.jpg")');
+            $('#header').css('background-image', 'url("http://homestead.app/images/frontend/cabanas'+ continuousNumber(1, 11) +'.jpg")');
             $('#overlay').animate({
                 'opacity': 0
             }, 1500);
@@ -24,7 +24,7 @@ $(document).ready(function (event) {
 
     /*******
      *
-     * Fondo de Cataratas en login y register.
+     * Fondo de dibujos en login y register.
      *
      * */
     var path = window.location.pathname;

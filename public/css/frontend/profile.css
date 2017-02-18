@@ -21,7 +21,7 @@ body .container-fluid #header #overlay {
   max-height: 25.2%;
   opacity: 0;
   background-color: #333333;
-  background-image: url('../../images/jaguar.jpg');
+  background-image: url('../../images/frontend/jaguar.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: left 35%;
