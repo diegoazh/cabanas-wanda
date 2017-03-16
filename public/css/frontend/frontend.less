@@ -102,12 +102,20 @@ body {
             }
             ul {
               li {
-                a{
+                a {
+                  color: lighten(@negro, 15%);
+                }
+              }
+            }
+            ul.navbar-right {
+              li {
+                a.img-user-profile{
+                  padding: 5px;
                   color: lighten(@negro, 15%);
 
                   img {
                     display: inline-block;
-                    width: 20px;
+                    width: 40px;
                     height: auto;
                   }
                 }
@@ -257,7 +265,7 @@ body {
                   position: relative;
                   display: inline-block;
                   width: 18%;
-                  top: 15%;
+                  top: 3.5em;
                 }
                 blockquote {
                   position: relative;

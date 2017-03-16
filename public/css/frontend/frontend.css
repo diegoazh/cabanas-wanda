@@ -79,9 +79,13 @@ body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-n
 body .container-fluid #header nav.navbar .container .navbar-collapse ul li a {
   color: #262626;
 }
-body .container-fluid #header nav.navbar .container .navbar-collapse ul li a img {
+body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-right li a.img-user-profile {
+  padding: 5px;
+  color: #262626;
+}
+body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-right li a.img-user-profile img {
   display: inline-block;
-  width: 20px;
+  width: 40px;
   height: auto;
 }
 body .container-fluid #header div.col-md-8 {
@@ -210,7 +214,7 @@ body .container-fluid #content #testimonies div #carousel-example-generic .carou
   position: relative;
   display: inline-block;
   width: 18%;
-  top: 15%;
+  top: 3.5em;
 }
 body .container-fluid #content #testimonies div #carousel-example-generic .carousel-inner .item blockquote {
   position: relative;

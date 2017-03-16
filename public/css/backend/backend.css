@@ -42,6 +42,14 @@ body .container-fluid #header nav.navbar .container .navbar-header a:before {
   height: auto;
   margin-right: 5px;
 }
+body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-right li a.img-user-profile {
+  padding: 5px;
+}
+body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-right li a.img-user-profile img {
+  display: inline-block;
+  width: 40px;
+  height: auto;
+}
 body .container-fluid #content #main_menu .tt-menu {
   display: inline-block;
   text-align: center;
