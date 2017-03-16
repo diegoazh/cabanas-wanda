@@ -68,8 +68,10 @@ class User extends Authenticatable
     public function addAndRemoveImageProfile($newImage, User $user)
     {
         $name = $user->name . '-' . $user->lastname . '-' . time() . '.' . $newImage->getClientOriginalExtension();
+        $pattern = '/(chica-carre)|(chica-hombros)|(chica-rodete)|(rubia)|(chico-barba)|(hombre-bigote)|(pelado1)|(pelado2)|(chico-jopo)/ig';
         Storage::disk('profiles')->put($name, File::get($newImage));
-        Storage::disk('profiles')->delete($user->image_profile);
+        if (preg_match($pattern, $user->image_profile) === 0)
+            Storage::disk('profiles')->delete($user->image_profile);
         return $name;
     }
 }
