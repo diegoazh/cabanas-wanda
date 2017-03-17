@@ -17,6 +17,7 @@ class CreatePassengersTable extends Migration
             $table->increments('id');
             $table->string('name', 40);
             $table->string('lastname', 40);
+            $table->enum('genre', ['m', 'f', 'o'])->default('m');
             $table->integer('countryId')->unsigned();
             $table->bigInteger('dni')->unique();
             $table->string('passport', 20)->unique()->nullable();

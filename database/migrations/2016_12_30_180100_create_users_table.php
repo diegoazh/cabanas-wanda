@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name', 40);
             $table->string('lastname', 40);
+            $table->enum('genre', ['m', 'f', 'o'])->default('m');
             $table->date('dateOfBirth')->nullable();
             $table->integer('countryId')->unsigned()->nullable();
             $table->bigInteger('dni')->unique();

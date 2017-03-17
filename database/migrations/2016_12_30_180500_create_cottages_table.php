@@ -18,10 +18,13 @@ class CreateCottagesTable extends Migration
             $table->integer('number');
             $table->string('name', 10);
             $table->enum('type', ['matrimonial', 'simple']);
+            $table->enum('state', ['enabled', 'maintenance', 'disabled'])->default('disabled');
             $table->integer('accommodation');
             $table->string('description');
             $table->string('images');
             $table->double('price', 5, 2);
+            $table->integer('stars')->nullable();
+            $table->integer('voters')->nullable();
             $table->string('slug')->nullable();
             $table->timestamps();
             $table->softDeletes();
