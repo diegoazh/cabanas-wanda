@@ -19,11 +19,11 @@ class CreatePromotionsTable extends Migration
             $table->double('amount', 5, 2)->nullable();
             $table->integer('percentage')->nullable();
             $table->string('description');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->date('startDate');
+            $table->date('endDate');
             $table->enum('state', ['pausada', 'vigente', 'finalizada', 'oculta'])->default('oculta');
-            $table->string('description_state');
-            $table->string('terms_and_conditions');
+            $table->string('descriptionState');
+            $table->string('termsAndConditions');
             $table->string('slug')->nullable();
             $table->timestamps();
             $table->softDeletes();

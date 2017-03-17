@@ -21,8 +21,8 @@ class UsersTableSeeder extends Seeder
             $user = new User();
             $user->name = $faker->firstName;
             $user->lastname = $faker->lastName;
-            $user->date_of_birth = $faker->date('Y-m-d');
-            $user->country_id = $faker->numberBetween(0, 240);
+            $user->dateOfBirth = $faker->date('Y-m-d');
+            $user->countryId = $faker->numberBetween(0, 240);
             $user->dni = $faker->numberBetween(15000000, 45000000);
             $user->email = $faker->email;
             $user->celphone = $faker->e164PhoneNumber;
@@ -31,7 +31,7 @@ class UsersTableSeeder extends Seeder
             $user->destination = $faker->sentence(5);
             $user->password = \Hash::make('123456789');
             $user->type = $type[rand(0, 3)];
-            $user->image_profile = $faker->imageUrl();
+            $user->imageProfile = $faker->imageUrl();
             $user->save();
         }
     }

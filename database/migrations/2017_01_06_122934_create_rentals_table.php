@@ -15,29 +15,31 @@ class CreateRentalsTable extends Migration
     {
         Schema::create('rentals', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('cottage_id')->unsigned();
+            $table->string('code_reservation', 40);
+            $table->integer('cottageId')->unsigned();
             $table->date('from');
             $table->date('to');
             $table->boolean('own');
             $table->string('description', 200)->nullable();
-            $table->integer('user_id')->unsigned()->nullable();
-            $table->integer('passenger_id')->unsigned()->nullable();
-            $table->integer('promotion_id')->unsigned()->nullable();
-            $table->double('total_amount', 5, 2);
-            $table->double('reservation_payment', 5, 2);
-            $table->datetime('date_reservation_payment');
+            $table->integer('userId')->unsigned()->nullable();
+            $table->integer('passengerId')->unsigned()->nullable();
+            $table->integer('promotionId')->unsigned()->nullable();
+            $table->double('totalAmount', 5, 2);
+            $table->double('reservationPayment', 5, 2);
+            $table->datetime('dateReservationPayment');
             $table->double('deductions', 5, 2)->nullable();
-            $table->string('deductions_description')->nullable();
-            $table->double('final_payment', 5, 2)->nullable();
-            $table->datetime('date_final_payment')->nullable();
+            $table->string('deductionsDescription')->nullable();
+            $table->double('finalPayment', 5, 2)->nullable();
+            $table->datetime('dateFinalPayment')->nullable();
             $table->enum('state', ['pendiente', 'confirmada', 'cancelada'])->default('pendiente');
-            $table->enum('cottage_state', ['reservada', 'ocupada'])->default('reservada');
+            $table->enum('cottageState', ['reservada', 'ocupada'])->default('reservada');
+            $table->boolean('was_rated')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('cottage_id')->references('id')->on('cottages');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('passenger_id')->references('id')->on('passengers');
-            $table->foreign('promotion_id')->references('id')->on('promotions');
+            $table->foreign('cottageId')->references('id')->on('cottages');
+            $table->foreign('userId')->references('id')->on('users');
+            $table->foreign('passengerId')->references('id')->on('passengers');
+            $table->foreign('promotionId')->references('id')->on('promotions');
         });
     }
 

@@ -21,7 +21,7 @@ class User extends Authenticatable
      */
     protected $table = 'users';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['name', 'lastname', 'date_of_birth', 'country_id', 'dni', 'passport', 'email', 'celphone', 'phone', 'address', 'destination', 'password', 'type', 'image_profile', 'slug', 'genre'];
+    protected $fillable = ['name', 'lastname', 'dateOfBirth', 'countryId', 'dni', 'passport', 'email', 'celphone', 'phone', 'address', 'destination', 'password', 'type', 'imageProfile', 'slug', 'genre'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -70,8 +70,8 @@ class User extends Authenticatable
         $name = $user->name . '-' . $user->lastname . '-' . time() . '.' . $newImage->getClientOriginalExtension();
         $pattern = '/(chica-carre)|(chica-hombros)|(chica-rodete)|(rubia)|(chico-barba)|(hombre-bigote)|(pelado1)|(pelado2)|(chico-jopo)/ig';
         Storage::disk('profiles')->put($name, File::get($newImage));
-        if (preg_match($pattern, $user->image_profile) === 0)
-            Storage::disk('profiles')->delete($user->image_profile);
+        if (preg_match($pattern, $user->imageProfile) === 0)
+            Storage::disk('profiles')->delete($user->imageProfile);
         return $name;
     }
 }

@@ -16,7 +16,7 @@
                 <a href="{{ route('users.index') }}" class="btn btn-default btn-xs"><i class="fa fa-reply"></i> Volver</a>
             </div>
         @endif
-        <img id="img_user" src="@if(!empty($user->image_profile)) {{ asset('images/profiles/' . $user->image_profile) }} @elseif($user->genre === 'm') {{ asset('images/profiles/chico-jopo.png') }} @else {{ asset('images/profiles/chica-rodete.png') }} @endif" alt="{{ $user->displayName() }}" class="img-responsive img-circle img-thumbnail">
+        <img id="img_user" src="@if(!empty($user->imageProfile)) {{ asset('images/profiles/' . $user->imageProfile) }} @elseif($user->genre === 'm') {{ asset('images/profiles/chico-jopo.png') }} @else {{ asset('images/profiles/chica-rodete.png') }} @endif" alt="{{ $user->displayName() }}" class="img-responsive img-circle img-thumbnail">
         <h2 class="text-right page-header">
             {{ $user->displayName() }}
             <a href="{{ route('home.profile.show', $user->slug) }}" class="btn btn-success btn-xs">Perfil <i class="fa fa-user-circle" aria-hidden="true"></i></a>
@@ -42,10 +42,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {{ Form::label('date_of_birth', 'Nacimiento: ', ['class' => 'sr-only']) }}
+                    {{ Form::label('dateOfBirth', 'Nacimiento: ', ['class' => 'sr-only']) }}
                     <div class="input-group date">
                         <div class="input-group-addon date-piker"><i class="fa fa-calendar"></i> Nacimiento:</div>
-                        {{ Form::text('date_of_birth', $user->date_of_birth->format('d/m/Y'), ['class' => 'form-control date-picker', 'id' => 'date_of_birth', 'data-provide' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy', 'placeholder' => 'Ingrese la fecha de nacimiento']) }}
+                        {{ Form::text('dateOfBirth', $user->dateOfBirth->format('d/m/Y'), ['class' => 'form-control date-picker', 'id' => 'dateOfBirth', 'data-provide' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy', 'placeholder' => 'Ingrese la fecha de nacimiento']) }}
                     </div>
                 </div>
                 <div class="form-group">
@@ -104,11 +104,11 @@
                         <input id="upload_image" type="checkbox" value="false" role="button"> Subir foto
                     </label>
                 </div>
-                <div class="form-group image_profile">
-                    {{ Form::label('image_profile', 'Foto de perfil: ', ['class' => 'sr-only']) }}
+                <div class="form-group imageProfile">
+                    {{ Form::label('imageProfile', 'Foto de perfil: ', ['class' => 'sr-only']) }}
                     <div class="input-group">
                         <div class="input-group-addon">Foto de perfil:</div>
-                        {{ Form::file('image_profile', ['class' => 'form-control', 'id' => 'image_profile']) }}
+                        {{ Form::file('imageProfile', ['class' => 'form-control', 'id' => 'imageProfile']) }}
                         {{ Form::hidden('image_avatar') }}
                     </div>
                 </div>

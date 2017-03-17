@@ -13,7 +13,7 @@ class Promotion extends Model
 
   protected $table = 'promotions';
   protected $dates = ['deleted_at'];
-  protected $fillable = ['name', 'amount', 'percentage', 'description', 'start_date', 'end_date', 'state', 'description_state', 'terms_and_conditions'];
+  protected $fillable = ['name', 'amount', 'percentage', 'description', 'startDate', 'endDate', 'state', 'descriptionState', 'termsAndConditions'];
 
   public function Sluggable()
   {

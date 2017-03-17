@@ -29,7 +29,7 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle img-user-profile" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <img class="img-responsive img-circle" src="{{ '/images/profiles/' . Auth::user()->image_profile }}" alt="{{ Auth::user()->image_profile }}"> {{ Auth::user()->name }} <span class="caret"></span>
+                                <img class="img-responsive img-circle" src="{{ '/images/profiles/' . Auth::user()->imageProfile }}" alt="{{ Auth::user()->imageProfile }}"> {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">

@@ -15,7 +15,7 @@ class CreateClaimsTable extends Migration
     {
         Schema::create('claims', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('rental_id')->unsigned();
+            $table->integer('rentalId')->unsigned();
             $table->enum('type', ['sugerencia', 'queja', 'reclamo'])->default('sugerencia');
             $table->string('title', 30);
             $table->string('description');
@@ -23,7 +23,7 @@ class CreateClaimsTable extends Migration
             $table->string('slug')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('rental_id')->references('id')->on('rentals');
+            $table->foreign('rentalId')->references('id')->on('rentals');
         });
     }
 

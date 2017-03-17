@@ -13,7 +13,7 @@ class Claim extends Model
 
   protected $table = 'claims';
   protected $dates = ['deleted_at'];
-  protected $fillable = ['rental_id', 'type', 'title', 'description', 'state'];
+  protected $fillable = ['rentalId', 'type', 'title', 'description', 'state'];
 
   public function Sluggable()
   {

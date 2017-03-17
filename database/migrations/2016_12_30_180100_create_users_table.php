@@ -17,8 +17,8 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name', 40);
             $table->string('lastname', 40);
-            $table->date('date_of_birth')->nullable();
-            $table->integer('country_id')->unsigned()->nullable();
+            $table->date('dateOfBirth')->nullable();
+            $table->integer('countryId')->unsigned()->nullable();
             $table->bigInteger('dni')->unique();
             $table->string('passport', 20)->nullable();
             $table->string('email', 50)->unique();
@@ -28,12 +28,12 @@ class CreateUsersTable extends Migration
             $table->string('destination', 150)->nullable();
             $table->string('password');
             $table->enum('type', ['frecuente', 'empleado', 'administrador', 'sysadmin'])->default('frecuente');
-            $table->string('image_profile')->nullable();
+            $table->string('imageProfile')->nullable();
             $table->string('slug')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('country_id')->references('id')->on('countries');
+            $table->foreign('countryId')->references('id')->on('countries');
         });
     }
 

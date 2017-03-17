@@ -79,9 +79,9 @@ class UsersController extends Controller
             $user->name = $fields['name'];
         if (!empty($fields['lastname']))
             $user->lastname = $fields['lastname'];
-        if (!empty($fields['date_of_birth'])) {
-            $dateOfBirth = Carbon::createFromFormat('d/m/Y', $fields['date_of_birth']);
-            $user->date_of_birth = $dateOfBirth->toDateTimeString();
+        if (!empty($fields['dateOfBirth'])) {
+            $dateOfBirth = Carbon::createFromFormat('d/m/Y', $fields['dateOfBirth']);
+            $user->dateOfBirth = $dateOfBirth->toDateTimeString();
         }
         if (!empty($fields['genre']))
             $user->genre = $fields['genre'];
@@ -95,11 +95,11 @@ class UsersController extends Controller
             $user->address = $fields['address'];
         if (isset($fields['image_avatar']) && !empty($fields['image_avatar']))
         {
-            $user->image_profile = $fields['image_avatar'];
+            $user->imageProfile = $fields['image_avatar'];
         }
-        elseif (isset($fields['image_profile']) && !empty($fields['image_profile']))
+        elseif (isset($fields['imageProfile']) && !empty($fields['imageProfile']))
         {
-            $user->image_profile = $user->addAndRemoveImageProfile($fields['image_profile'], $user);
+            $user->imageProfile = $user->addAndRemoveImageProfile($fields['imageProfile'], $user);
         }
         $user->save();
         flash('El usuario <strong>' . $user->displayName() . '</strong> se actualizó correctamente.', 'success');
