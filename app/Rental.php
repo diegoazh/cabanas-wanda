@@ -11,7 +11,7 @@ class Rental extends Model
 
   protected $table = 'rentals';
   protected $dates = ['deleted_at'];
-  protected $fillable = ['cottage_id', 'from', 'to', 'own', 'description', 'user_id', 'passenger_id', 'promotion_id', 'totalAmount', 'reservationPayment', 'dateReservationPayment', 'deductions', 'deductionsDescription', 'finalPayment', 'dateFinalPayment', 'state', 'cottageState'];
+  protected $fillable = ['codeReservation', 'cottage_id', 'from', 'to', 'own', 'description', 'user_id', 'passenger_id', 'promotion_id', 'totalAmount', 'reservationPayment', 'dateReservationPayment', 'deductions', 'deductionsDescription', 'finalPayment', 'dateFinalPayment', 'state', 'cottageState', 'wasRated'];
 
   public function cottage()
   {
@@ -32,5 +32,16 @@ class Rental extends Model
   public function claims()
   {
     return $this->hasMany('App\Claim');
+  }
+
+  public function setCodeReservationAttribute($value)
+  {
+      $this->attributes['codeReservation'] = sha1($value);
+  }
+
+  public function createCodeReservation()
+  {
+      $idUser = (!empty($this->attributes['user_id'])) ? $this->attributes['user_id'] : $this->attributes['passenger_id'];
+      $this->attributes['codeReservation'] = $this->attributes['cottage_id'] . $idUser . time();
   }
 }
