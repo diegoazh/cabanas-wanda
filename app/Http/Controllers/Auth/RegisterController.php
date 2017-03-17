@@ -53,7 +53,7 @@ class RegisterController extends Controller
             'dni' => 'required|unique:users',
             'passport' => 'unique:users',
             'email' => 'required|email|max:255|unique:users',
-            'countryId' => 'required',
+            'country_id' => 'required',
             'password' => 'required|min:6|confirmed'
         ]);
     }
@@ -72,7 +72,7 @@ class RegisterController extends Controller
             'dni' => $data['dni'],
             'passport' => $data['passport'],
             'email' => $data['email'],
-            'countryId' => $data['countryId'],
+            'country_id' => $data['country_id'],
             'password' => bcrypt($data['password']),
         ]);
     }

@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('lastname', 40);
             $table->enum('genre', ['m', 'f', 'o'])->default('m');
             $table->date('dateOfBirth')->nullable();
-            $table->integer('countryId')->unsigned()->nullable();
+            $table->integer('country_id')->unsigned()->nullable();
             $table->bigInteger('dni')->unique();
             $table->string('passport', 20)->nullable();
             $table->string('email', 50)->unique();
@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('countryId')->references('id')->on('countries');
+            $table->foreign('country_id')->references('id')->on('countries');
         });
     }
 

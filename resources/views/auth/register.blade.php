@@ -107,20 +107,20 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('countryId') ? ' has-error' : '' }}">
-                            <label for="countryId" class="col-md-4 control-label">País</label>
+                        <div class="form-group{{ $errors->has('country_id') ? ' has-error' : '' }}">
+                            <label for="country_id" class="col-md-4 control-label">País</label>
 
                             <div class="col-md-6">
-                                <select id="countryId" type="countryId" class="form-control" name="countryId" required>
+                                <select id="country_id" type="country_id" class="form-control" name="country_id" required>
                                     <option value="seleccione" disbled selected>Seleccione su país</option>
                                     @foreach($countries as $country)
                                         <option value="{{ $country->id }}" @if(old('country') === $country->id) selected @endif>{{ $country->country }}</option>
                                     @endforeach
                                 </select>
 
-                                @if ($errors->has('countryId'))
+                                @if ($errors->has('country_id'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('countryId') }}</strong>
+                                        <strong>{{ $errors->first('country_id') }}</strong>
                                     </span>
                                 @endif
                             </div>

@@ -12,7 +12,7 @@ class Passenger extends Model
 
   protected $table = 'passengers';
   protected $dates = ['deleted_at'];
-  protected $fillable = ['name', 'lastname', 'countryId', 'dni', 'passport', 'email', 'celphone', 'phone', 'address', 'destination', 'genre'];
+  protected $fillable = ['name', 'lastname', 'country_id', 'dni', 'passport', 'email', 'celphone', 'phone', 'address', 'destination', 'genre'];
 
   public function country()
   {

@@ -18,7 +18,7 @@ class CreatePassengersTable extends Migration
             $table->string('name', 40);
             $table->string('lastname', 40);
             $table->enum('genre', ['m', 'f', 'o'])->default('m');
-            $table->integer('countryId')->unsigned();
+            $table->integer('country_id')->unsigned();
             $table->bigInteger('dni')->unique();
             $table->string('passport', 20)->unique()->nullable();
             $table->string('email', 50)->unique();
@@ -28,7 +28,7 @@ class CreatePassengersTable extends Migration
             $table->string('destination', 30)->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('countryId')->references('id')->on('countries');
+            $table->foreign('country_id')->references('id')->on('countries');
         });
     }
 
