@@ -4,7 +4,7 @@
     {{ $user->displayName() }}
 @endsection
 
-@section('estilos')
+@section('styles')
     <link rel="stylesheet" href="{{ asset('css/frontend/profile.css') }}">
 @endsection
 

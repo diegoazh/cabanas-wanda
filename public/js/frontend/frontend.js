@@ -29,7 +29,7 @@ $(document).ready(function (event) {
      * */
     var path = window.location.pathname;
     function backgroundLoginRegister(dibujo, repeat, size, position) {
-        $('#content').css('background-image', 'url("http://' + document.domain + '/images/'+ dibujo +'.jpg")')
+        $('#content').css('background-image', 'url("http://' + document.domain + '/images/frontend/'+ dibujo +'.jpg")')
             .css('background-repeat', repeat)
             .css('background-size', size)
             .css('background-position', position);

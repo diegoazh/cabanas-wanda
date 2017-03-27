@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Registrarse</div>
+                <div class="panel-heading">Registrarse como miembro</div>
                 <div class="panel-body">
                     @if(count($errors) > 0)
                         <div class="alert alert-warning">
@@ -94,6 +94,7 @@
 
                             <div class="col-md-6">
                                 <select id="genre" class="form-control" name="genre" value="{{ old('genre') }}" required>
+                                    <option value="" disabled selected>Seleccione una opción</option>
                                     <option value="m">Masculino</option>
                                     <option value="f">Femenino</option>
                                     <option value="o">Otro</option>
@@ -112,7 +113,7 @@
 
                             <div class="col-md-6">
                                 <select id="country_id" type="country_id" class="form-control" name="country_id" required>
-                                    <option value="seleccione" disbled selected>Seleccione su país</option>
+                                    <option value="" disabled selected>Seleccióne un país de la lista</option>
                                     @foreach($countries as $country)
                                         <option value="{{ $country->id }}" @if(old('country') === $country->id) selected @endif>{{ $country->country }}</option>
                                     @endforeach
@@ -161,4 +162,21 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#genre').selectize({
+                create: false,
+                placeholder: 'Seleccione una opción',
+                preload: true
+            });
+            $('#country_id').selectize({
+                create: false,
+                placeholder: 'Seleccióne un país de la lista',
+                preload: true
+            })
+        });
+    </script>
 @endsection

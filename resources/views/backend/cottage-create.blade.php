@@ -6,77 +6,70 @@
 
 @section('title', 'Registro de Cabaña')
 
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('lib/editor.md/css/editormd.css') }}">
+@endsection
+
 @section('content')
     <div class="panel-heading">
-      <h3 class="tt-cottages">{{ (isset($cottage)) ? 'Editar caba&ntilde;a' : 'Registrar Caba&ntilde;a' }}</h3>
+        <h3 class="tt-cottages">{{ (isset($cottage)) ? 'Editar caba&ntilde;a' : 'Registrar Caba&ntilde;a' }}</h3>
     </div>
     <div class="panel-body form-panel">
-      {{ Form::open(['route' => ((isset($cottage)) ? ['cottages.update', $cottage] : 'cottages.store'), 'method' => ((isset($cottage)) ? 'PUT' : 'POST'), 'files' => true]) }}
+        {{ Form::open(['route' => ((isset($cottage)) ? ['cottages.update', $cottage] : 'cottages.store'), 'method' => ((isset($cottage)) ? 'PUT' : 'POST'), 'files' => true]) }}
         <div class="form-group">
-          {{ Form::label('number', 'Numero de cabaña', ['class' => 'sr-only']) }}
-          <div class="input-group">
-            <div class="input-group-addon">Numero de Caba&ntilde;a</div>
-            {{ Form::number('number', (isset($cottage)) ? $cottage->number : null, ['class' => 'form-control', 'min' => 1, 'max' => 10, 'placeholder' => 'Ingrese el número de la cabaña', (isset($cottage)) ? 'disabled' : 'required']) }}
-          </div>
-          <div class="help-info">
-            <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-            <small class="text-warning help-text">Es el número que tiene asignada la cabaña. Tenga en cuenta que una vez creada la cabaña este campo no podrá modificarse.</small>
-          </div>
+            {{ Form::label('number', 'Numero de cabaña', ['class' => 'sr-only']) }}
+            <div class="input-group">
+                <div class="input-group-addon">Numero de Caba&ntilde;a</div>
+                {{ Form::number('number', (isset($cottage)) ? $cottage->number : null, ['class' => 'form-control', 'min' => 1, 'max' => 10, 'placeholder' => 'Ingrese el número de la cabaña', (isset($cottage)) ? 'disabled' : 'required']) }}
+            </div>
+            <div class="help-info">
+                <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
+                <small class="text-warning help-text">Es el número que tiene asignada la cabaña. Tenga en cuenta que una vez creada la cabaña este campo no podrá modificarse.</small>
+            </div>
         </div>
         <div class="form-group">
-          {{ Form::label('name', 'Nombre de la cabaña', ['class' => 'sr-only']) }}
-          <div class="input-group">
-            <div class="input-group-addon">Nombre de la Caba&ntilde;a</div>
-            {{ Form::text('name', (isset($cottage)) ? $cottage->name : null, ['class' => 'form-control', 'placeholder' => 'Por ejemplo A o Suit, etc. Máximo 10 caracteres.', 'maxlength' => 10, 'required']) }}
-          </div>
-          <div class="help-info">
-            <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-            <small class="text-warning help-text">El nombre ayudará en la URL de la cabaña, además ponerle un nombre ayuda en las busquedas por internet y es más intuitivo. Puede tener como máximo 10 caracteres.</small>
-          </div>
+            {{ Form::label('name', 'Nombre de la cabaña', ['class' => 'sr-only']) }}
+            <div class="input-group">
+                <div class="input-group-addon">Nombre de la Caba&ntilde;a</div>
+                {{ Form::text('name', (isset($cottage)) ? $cottage->name : null, ['class' => 'form-control', 'placeholder' => 'Por ejemplo A o Suit, etc. Máximo 10 caracteres.', 'maxlength' => 10, 'required']) }}
+            </div>
+            <div class="help-info">
+                <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
+                <small class="text-warning help-text">El nombre ayudará en la URL de la cabaña, además ponerle un nombre ayuda en las busquedas por internet y es más intuitivo. Puede tener como máximo 10 caracteres.</small>
+            </div>
         </div>
         <div class="form-group">
-          {{ Form::label('type', 'Tipo de cabaña', ['class' => 'sr-only']) }}
-          <div class="input-group">
-            <div class="input-group-addon">Tipo de Caba&ntilde;a</div>
-            {{ Form::select('type', ['simple' => 'Simple', 'matrimonial' => 'Matrimonial'], (isset($cottage)) ? $cottage->type : null, ['placeholder' => ((isset($cottage)) ? null : 'Seleccione el tipo de cabaña'), 'class' => 'form-control'], 'required') }}
-          </div>
-          <div class="help-info">
-            <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-            <small class="text-warning help-text">El tipo de cabaña indica si es con cama matrimonial o todas individuales, no tiene relación con la capacidad de la misma.</small>
-          </div>
+            {{ Form::label('type', 'Tipo de cabaña', ['class' => 'sr-only']) }}
+            <div class="input-group">
+                <div class="input-group-addon">Tipo de Caba&ntilde;a</div>
+                {{ Form::select('type', ['simple' => 'Simple', 'matrimonial' => 'Matrimonial'], (isset($cottage)) ? $cottage->type : null, ['placeholder' => ((isset($cottage)) ? null : 'Seleccione el tipo de cabaña'), 'class' => 'form-control'], 'required') }}
+            </div>
+            <div class="help-info">
+                <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
+                <small class="text-warning help-text">El tipo de cabaña indica si es con cama matrimonial o todas individuales, no tiene relación con la capacidad de la misma.</small>
+            </div>
         </div>
         <div class="form-group">
-          {{ Form::label('accommodation', 'Capacidad', ['class' => 'sr-only']) }}
-          <div class="input-group">
-            <div class="input-group-addon">Capacidad</div>
-            {{ Form::number('accommodation', (isset($cottage)) ? $cottage->accommodation : null, ['placeholder' => 'Ingrese la capacidad de la cabaña', 'class' => 'form-control', 'min' => 1, 'max' => 6], 'required') }}
-          </div>
-          <div class="help-info">
-            <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-            <small class="text-warning help-text">Cantidad de personas que pueden habitar la cabaña. Esta configurado con un máximo de 6 personas.</small>
-          </div>
+            {{ Form::label('accommodation', 'Capacidad', ['class' => 'sr-only']) }}
+            <div class="input-group">
+                <div class="input-group-addon">Capacidad</div>
+                {{ Form::number('accommodation', (isset($cottage)) ? $cottage->accommodation : null, ['placeholder' => 'Ingrese la capacidad de la cabaña', 'class' => 'form-control', 'min' => 1, 'max' => 6], 'required') }}
+            </div>
+            <div class="help-info">
+                <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
+                <small class="text-warning help-text">Cantidad de personas que pueden habitar la cabaña. Esta configurado con un máximo de 6 personas.</small>
+            </div>
         </div>
         <div class="form-group">
-          {{ Form::label('description', 'Descripci&oacute;n', ['class' => 'sr-only']) }}
-          <div class="input-group">
-            <div class="input-group-addon">Descripci&oacute;n</div>
-            {{ Form::textarea('description', (isset($cottage)) ? $cottage->description : null, ['placeholder' => 'Agregue una descripción significativa, por ejemplo: con aire acondicionado, televisión, DirecTv, wifi, etc', 'class' => 'form-control', 'rows' => 9, 'maxlength' => 255], 'required') }}
-          </div>
-          <div class="help-info">
-            <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-            <small class="text-warning help-text">Una buena descripción es fundamental, recordar que como máximo tiene 255 caracteres, por lo cual es necesario ser conciso en la misma.</small>
-          </div>
-        </div>
-        <div class="form-group">
-          {{ Form::label('price', 'Precio $', ['class' => 'sr-only']) }}
-          <div class="input-group">
-            <div class="input-group-addon">Precio $</div>
-            {{ Form::number('price', (isset($cottage)) ? $cottage->price : null, ['placeholder' => 'Determine el precio de la cabaña', 'class' => 'form-control', 'step' => 0.01], 'required') }}
-          </div>
-          <div class="help-info">
-            <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-            <small class="text-warning help-text">El precio de la cabaña es considerado por cabaña no por persona, vg. si se alquila una de 6 se cobra el precio de la cabaña así la habite una sola persona.</small>
-          </div>
+            {{ Form::label('price', 'Precio $', ['class' => 'sr-only']) }}
+            <div class="input-group">
+                <div class="input-group-addon">Precio $</div>
+                {{ Form::number('price', (isset($cottage)) ? $cottage->price : null, ['placeholder' => 'Determine el precio de la cabaña', 'class' => 'form-control', 'step' => 0.01], 'required') }}
+            </div>
+            <div class="help-info">
+                <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
+                <small class="text-warning help-text">El precio de la cabaña es considerado por cabaña no por persona, vg. si se alquila una de 6 se cobra el precio de la cabaña así la habite una sola persona.</small>
+            </div>
         </div>
         <div class="form-group">
             {{ Form::label('state', 'Estado', ['class' => 'sr-only']) }}
@@ -90,24 +83,40 @@
             </div>
         </div>
         <div class="form-group">
-          {{ Form::label('images[]', 'Fotos', ['class' => 'sr-only']) }}
-          <div class="input-group">
-            <div class="input-group-addon">Fotos</div>
-            {{ Form::file('images[]', ['placeholder' => 'Elija las fotos a subir', 'class' => 'form-control', 'multiple', 'required']) }}
-          </div>
-          <div class="help-info">
-            <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-            <small class="text-warning help-text">Se pueden agregar varias imagenes a la vez. Para seleccionar diferentes imagenes por separado mantegra presionado <kbd>Ctrl</kbd> + <kbd>clic izq</kbd>. Para seleccionar un conjunto mantenga presionado <kbd>Shift</kbd> + <kbd>clic izq</kbd> en la primera y en la ultima imagen del conjunto.</small>
-          </div>
+            {{ Form::label('images[]', 'Fotos', ['class' => 'sr-only']) }}
+            <div class="input-group">
+                <div class="input-group-addon">Fotos</div>
+                {{ Form::file('images[]', ['placeholder' => 'Elija las fotos a subir', 'class' => 'form-control', 'multiple', 'required']) }}
+            </div>
+            <div class="help-info">
+                <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
+                <small class="text-warning help-text">Se pueden agregar varias imagenes a la vez. Para seleccionar diferentes imagenes por separado mantegra presionado <kbd>Ctrl</kbd> + <kbd>clic izq</kbd>. Para seleccionar un conjunto mantenga presionado <kbd>Shift</kbd> + <kbd>clic izq</kbd> en la primera y en la ultima imagen del conjunto.</small>
+            </div>
+        </div>
+        <div class="form-group">
+            <button id="modal_description" class="btn btn-info btn-block" data-toggle="modal" data-target="#modalMD">A&ntilde;adir una descripci&oacute;n a la cabaña.</button>
+            <div id="modalMD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editorMarkDown">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Editor Markdown a HTML (Editor.md) <button id="clearTestContent" class="btn btn-default">Eliminar contenido de prueba</button></h4>
+                        </div>
+                        <div id="editormd">
+                            <textarea id="description" name="description" style="display:none;">{{ (isset($cottage)) ? $cottage->description : $contents }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         @if(!isset($cottage))
             <div class="form-group">
-              {{ Form::label('create_other', '¿Registrar y crear nuevo?') }}
-              {{ Form::checkbox('create_other', '1') }}
-              <div class="help-info">
-                  <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-                  <small class="text-warning help-text">Si tilda esta opción volverá a esta página luego de registrar la cabaña.</small>
-              </div>
+                {{ Form::label('create_other', '¿Registrar y crear nuevo?', ['role' => 'button']) }}
+                {{ Form::checkbox('create_other', '1', false) }}
+                <div class="help-info">
+                    <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
+                    <small class="text-warning help-text">Si tilda esta opción volverá a esta página luego de registrar la cabaña.</small>
+                </div>
             </div>
         @else
             {{ Form::hidden('actualImages', $cottage->images, ['id' => 'actualImages']) }}
@@ -118,11 +127,11 @@
                 {{ Form::submit('Actualizar cabaña', ['class' => 'btn btn-primary']) }}
                 <a href="{{ route('cottages.index') }}" class="btn btn-warning btn-xs">Volver</a>
             @else
-              {{ Form::reset('Limpiar formulario', ['class' => 'btn btn-default']) }}
-              {{ Form::submit('Registrar cabaña', ['class' => 'btn btn-primary']) }}
+                {{ Form::reset('Limpiar formulario', ['class' => 'btn btn-default']) }}
+                {{ Form::submit('Registrar cabaña', ['class' => 'btn btn-primary']) }}
             @endif
         </div>
-      {{ Form::close() }}
+        {{ Form::close() }}
     </div>
 @endsection
 
@@ -154,4 +163,52 @@
             </div>
         </div>
     @endif
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('lib/editor.md/editormd.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            var editor;
+            $('input').keypress(function (e) {
+                if(e.keyCode == 13) {
+                    console.log('apreto enter');
+                    $('#modalMD').modal('hide');
+                }
+            });
+            $('#type').selectize({
+                create: false,
+                placeholder: 'Seleccione el tipo de cabaña',
+                preload: true,
+                inputClass: 'form-control selectize-input',
+                dropdownParent: 'body'
+            });
+            $('#state').selectize({
+                create: false,
+                placeholder: 'Seleccione el estado de la cabaña',
+                preload: true,
+                inputClass: 'form-control selectize-input',
+                dropdownParent: 'body'
+            });
+            $('#modal_description').click(function (e) {
+                e.preventDefault();
+                $('.modal-lg').attr('style', 'width: 95%');
+                $('.modal-content #editormd').animate({
+                    height: '850px'
+                }, 1000, 'swing', function () {
+                    editor = editormd({
+                     id      : 'editormd',
+                     width   : "100%",
+                     height  : '800px',
+                     path    : "/lib/editor.md/lib/",
+                     syncScrolling : true,
+                     saveHTMLToTextarea : true
+                     });
+                    $('#clearTestContent').click(function (e) {
+                        editor.clear();
+                    })
+                });
+            });
+        });
+    </script>
 @endsection

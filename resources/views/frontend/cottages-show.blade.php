@@ -4,7 +4,7 @@
     Caba&ntilde;a {{ strtoupper($cottage->name) }}
 @endsection
 
-@section('estilos')
+@section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/frontend/cottages.css') }}">
 @endsection
 

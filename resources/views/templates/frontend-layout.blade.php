@@ -12,9 +12,10 @@
     <link rel="stylesheet" href="{{ asset('lib/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/dashicons/css/dashicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('lib/selectize/dist/css/selectize.bootstrap3.css') }}">
     <link href="/css/app.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/frontend/frontend.css') }}">
-    @yield('estilos')
+    @yield('styles')
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -43,8 +44,9 @@
     </div>
 </div>
 <!-- Scripts -->
-<script src="{{ asset('lib/jquery/dist/jquery.min.js') }}"></script>
 <script src="/js/app.js"></script>
+<script src="{{ asset('lib/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('lib/selectize/dist/js/standalone/selectize.min.js') }}"></script>
 <script src="/js/frontend/frontend.js"></script>
 @yield('scripts')
 </body>

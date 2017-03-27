@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use App\Http\Requests\RequestCottage;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File as File;
 use Illuminate\Support\Facades\Auth;
 
 class CottagesController extends Controller
@@ -35,7 +36,16 @@ class CottagesController extends Controller
      */
     public function create()
     {
-        return view('backend.cottage-create');
+        try
+        {
+            $filename = 'testText.txt';
+            $contents = File::get($filename);
+        }
+        catch (Illuminate\Filesystem\FileNotFoundException $exception)
+        {
+            die("No existe el archivo");
+        }
+        return view('backend.cottage-create')->with('contents', $contents);
     }
 
     /**
@@ -46,6 +56,7 @@ class CottagesController extends Controller
      */
     public function store(RequestCottage $request)
     {
+        dd($request);
         $v = Validator::make($request->all(), [
             'number' => [
                 'required',

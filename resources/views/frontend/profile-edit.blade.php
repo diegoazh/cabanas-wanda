@@ -4,7 +4,7 @@
     Editar: {{ $user->displayName() }}
 @endsection
 
-@section('estilos')
+@section('styles')
     <link rel="stylesheet" href="{{ asset('css/frontend/profile.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('js/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.min.css') }}" type="text/css">
 @endsection

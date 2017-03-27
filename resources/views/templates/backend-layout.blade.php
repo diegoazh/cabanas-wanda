@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="{{ asset('lib/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/dashicons/css/dashicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('lib/selectize/dist/css/selectize.bootstrap3.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/backend.css') }}">
-    @yield('estilos')
+    @yield('styles')
 </head>
 <body>
 <div class="container-fluid">
@@ -36,6 +37,7 @@
 </div>
 <script src="{{ asset('lib/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('lib/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('lib/selectize/dist/js/standalone/selectize.min.js') }}"></script>
 <script src="{{ asset('js/backend/main-menu-backend.js') }}"></script>
 <script src="{{ asset('js/backend/backend.js') }}"></script>
 @yield('scripts')

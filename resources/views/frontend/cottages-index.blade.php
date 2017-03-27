@@ -4,7 +4,7 @@
     Nuestras caba&ntilde;as
 @endsection
 
-@section('estilos')
+@section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/frontend/cottages.css') }}">
 @endsection
 
