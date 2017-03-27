@@ -6,10 +6,6 @@
 
 @section('title', 'Registro de Cabaña')
 
-@section('styles')
-    <link rel="stylesheet" href="{{ asset('lib/editor.md/css/editormd.css') }}">
-@endsection
-
 @section('content')
     <div class="panel-heading">
         <h3 class="tt-cottages">{{ (isset($cottage)) ? 'Editar caba&ntilde;a' : 'Registrar Caba&ntilde;a' }}</h3>
@@ -166,7 +162,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('lib/editor.md/editormd.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             var editor;

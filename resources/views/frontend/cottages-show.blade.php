@@ -5,7 +5,7 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/frontend/cottages.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ elixir('css/cottages.css') }}">
 @endsection
 
 @section('content')
@@ -141,7 +141,4 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('lib/moment/min/moment-with-locales.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('lib/clndr/clndr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/frontend/cottage-show.js') }}" type="text/javascript"></script>
 @endsection

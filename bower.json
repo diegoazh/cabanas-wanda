@@ -27,13 +27,13 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "^3.3.7",
     "moment": "momentjs#^2.17.1",
     "font-awesome": "^4.7.0",
     "dashicons": "^3.9.1",
     "clndr": "^1.4.7",
     "editor.md": "^1.5.0",
     "selectize": "^0.12.4",
-    "chosen": "^1.7.0"
+    "chosen": "^1.7.0",
+    "bootstrap": "^3.3.7"
   }
 }

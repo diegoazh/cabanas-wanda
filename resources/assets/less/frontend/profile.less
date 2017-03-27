@@ -1,0 +1,96 @@
+/******************************************************
+* Colores
+*****************************/
+@blanco: #ffffff;
+@negro: #000000;
+@gris-oscuro : lighten(@negro, 18%);
+@gris-clarito: lighten(@negro, 75%);
+@naranja: #fd7500;
+@naranja-amarronado: #f99418;
+@crema-pastel: #f0e7b2;
+@amarillo: darken(#f0e7b2, 18%);
+@granito-pastel: #d4dfc4;
+@celeste-suave-pastel: #9fd7db;
+@clndr-border: 1px solid #000;
+
+/******************************************************
+* Clases
+*****************************/
+.text-underline {
+  text-decoration: underline;
+}
+
+/******************************************************
+* Estilos
+*****************************/
+body {
+  .container-fluid {
+    #header {
+      min-height: 30%;
+      max-height: 30%;
+
+      #overlay {
+        min-height: 25.2%;
+        max-height: 25.2%;
+
+      }
+      div.col-md-8 {
+        height: 242px;
+        min-height: 242px;
+      }
+      div.col-md-8:after {
+        content: url("/public/images/logos/logo-cabanas-wanda-190x185.png");
+      }
+    }
+
+    #content {
+      .col-md-8 {
+        padding-top: 25px;
+
+        img#img_user{
+          display: inline-block;
+          position: relative;
+          top: 5em;
+        }
+        div.table-responsive {
+          table {
+            tbody {
+              tr {
+                font-size: 16px;
+              }
+            }
+          }
+        }
+        div.col-md-6 {
+          form {
+            border: 3px dotted lighten(@negro, 55%);
+            border-radius: 5%;
+            background-color: @crema-pastel;
+            box-shadow: 0px 0px 15px 10px lighten(@negro, 55%);
+            padding: 3% 5%;
+            margin-bottom: 7%;
+
+            table {
+              tr {
+                td {
+                  img {
+                    width: 50%;
+                    height: auto;
+                  }
+                  img.avatar-selected {
+                    padding: 0;
+                    border: 5px solid #1a638f;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      #footer {
+        margin-top: 5px;
+      }
+    }
+  }
+}

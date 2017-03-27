@@ -5,8 +5,7 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/frontend/profile.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('js/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ elixir('css/profile.css') }}" type="text/css">
 @endsection
 
 @section('content')
@@ -158,6 +157,4 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/frontend/profile-edit.js') }}" type="text/javascript"></script>
 @endsection

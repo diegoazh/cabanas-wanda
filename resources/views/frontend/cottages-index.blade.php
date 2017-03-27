@@ -5,7 +5,7 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/frontend/cottages.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ elixir('css/cottages.css') }}">
 @endsection
 
 @section('content')
@@ -82,7 +82,4 @@
             @endfor
         </div>        
     @endfor
-@endsection
-@section('scripts')
-    <script src="{{ asset('js/frontend/cottages-index.js') }}" type="text/javascript"></script>
 @endsection

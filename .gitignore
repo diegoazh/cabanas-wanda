@@ -1,7 +1,7 @@
 /node_modules
+/bower_components
 /public/storage
 /public/images
-/public/lib
 /storage/*.key
 /vendor
 /.idea

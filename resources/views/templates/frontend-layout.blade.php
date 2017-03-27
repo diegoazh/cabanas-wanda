@@ -8,13 +8,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title') | {{ config('app.name', 'Hotel Cabañas de Wanda') }}</title>
     <!-- Styles -->
-    <link rel="icon" href="{{ asset('images/logos/logo-cabanas-wanda-45x44.ico') }}">
-    <link rel="stylesheet" href="{{ asset('lib/bootstrap/dist/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('lib/dashicons/css/dashicons.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('lib/selectize/dist/css/selectize.bootstrap3.css') }}">
-    <link href="/css/app.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/frontend/frontend.css') }}">
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
+    <link href="{{ elixir('css/app.css') }}s" rel="stylesheet">
+    <link href="{{ elixir('css/frontend.css') }}s" rel="stylesheet">
     @yield('styles')
     <!-- Scripts -->
     <script>
@@ -44,10 +40,8 @@
     </div>
 </div>
 <!-- Scripts -->
-<script src="/js/app.js"></script>
-<script src="{{ asset('lib/jquery/dist/jquery.min.js') }}"></script>
-<script src="{{ asset('lib/selectize/dist/js/standalone/selectize.min.js') }}"></script>
-<script src="/js/frontend/frontend.js"></script>
+<script src="{{ elixir('js/app.js') }}"></script>
+<script src="{{ elixir('js/frontend.js') }}"></script>
 @yield('scripts')
 </body>
 </html>

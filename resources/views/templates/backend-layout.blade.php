@@ -4,11 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@yield('title', 'Welcome') | {{ config('app.name', 'Hotel Cabañas de Wanda') }}</title>
-    <link rel="stylesheet" href="{{ asset('lib/bootstrap/dist/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('lib/dashicons/css/dashicons.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('lib/selectize/dist/css/selectize.bootstrap3.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/backend.css') }}">
+    <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
+    <link rel="stylesheet" href="{{ elixir('css/backend.css') }}">
     @yield('styles')
 </head>
 <body>
@@ -35,11 +32,8 @@
         @show
     </div>
 </div>
-<script src="{{ asset('lib/jquery/dist/jquery.min.js') }}"></script>
-<script src="{{ asset('lib/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('lib/selectize/dist/js/standalone/selectize.min.js') }}"></script>
-<script src="{{ asset('js/backend/main-menu-backend.js') }}"></script>
-<script src="{{ asset('js/backend/backend.js') }}"></script>
+<script src="{{ elixir('js/app.js') }}"></script>
+<script src="{{ elixir('js/backend.js') }}"></script>
 @yield('scripts')
 </body>
 </html>
