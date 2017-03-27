@@ -7,12 +7,12 @@
   "devDependencies": {
     "bootstrap-sass": "^3.3.7",
     "gulp": "^3.9.1",
-    "jquery": "^3.1.1",
+    "jquery": "^3.2.1",
     "laravel-elixir": "^6.0.0-15",
     "laravel-elixir-vue-2": "^0.3.0",
     "laravel-elixir-webpack-official": "^1.0.10",
     "lodash": "^4.17.4",
-    "vue": "^2.1.10",
-    "vue-resource": "^1.0.3"
+    "vue": "^2.2.6",
+    "vue-resource": "^1.2.1"
   }
 }
