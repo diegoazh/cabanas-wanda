@@ -5,7 +5,7 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ elixir('css/profile.css') }}" type="text/css">
+    <link rel="stylesheet" href="css/profile.css" type="text/css">
 @endsection
 
 @section('content')

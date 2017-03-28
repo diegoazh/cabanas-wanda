@@ -18,18 +18,22 @@ elixir((mix) => {
         './bower_components/bootstrap/fonts',
         './bower_components/dashicons/fonts',
         './bower_components/font-awesome/fonts',
-        './bower_components/editor.md/fonts'
+        './bower_components/editor.md/fonts/editormd-logo.eot',
+        './bower_components/editor.md/fonts/editormd-logo.svg',
+        './bower_components/editor.md/fonts/editormd-logo.ttf',
+        './bower_components/editor.md/fonts/editormd-logo.woff'
     ], './public/fonts')
         .styles([
             './bower_components/bootstrap/dist/css/bootstrap.css',
-            './bower_components/dashicons/css/dashicons.css',
             './bower_components/dashicons/css/dashicons.css',
             './bower_components/font-awesome/css/font-awesome.css',
             './bower_components/clndr/demo/css/clndr.css',
             './resources/assets/js/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.standalone.css',
             './bower_components/selectize/dist/css/selectize.bootstrap3.css',
-            './bower_components/editor.md/css/editormd.css',
         ], './public/css/app.css')
+        .styles([
+            './bower_components/editor.md/css/editormd.css',
+        ], './public/css/editormd.css')
         .less([
             'frontend/frontend.less',
         ], './public/css/frontend.css')

@@ -14,7 +14,7 @@ $(document).ready(function (event) {
         $('#overlay').animate({
             'opacity': 1
         }, 1500, function () {
-            $('#header').css('background-image', 'url("http://homestead.app/images/frontend/cabanas'+ continuousNumber(1, 11) +'.jpg")');
+            $('#header').css('background-image', 'url("http://' + window.location.host + '/images/frontend/cabanas' + continuousNumber(1, 11) + '.jpg")');
             $('#overlay').animate({
                 'opacity': 0
             }, 1500);
@@ -29,7 +29,7 @@ $(document).ready(function (event) {
      * */
     var path = window.location.pathname;
     function backgroundLoginRegister(dibujo, repeat, size, position) {
-        $('#content').css('background-image', 'url("http://' + document.domain + '/images/frontend/'+ dibujo +'.jpg")')
+        $('#content').css('background-image', 'url("http://' + window.location.host + '/public/images/frontend/'+ dibujo +'.jpg")')
             .css('background-repeat', repeat)
             .css('background-size', size)
             .css('background-position', position);
@@ -70,11 +70,13 @@ $(document).ready(function (event) {
     });
 
     (function cottageCalendar() {
-        var $calendar = $('#calendar');
-        $calendar.clndr({
-            daysOfTheWeek: moment.weekdays(),
-        });
-        var $table = $('.clndr-table');
+        if ($('#calendar').length) {
+            var $calendar = $('#calendar');
+            $calendar.clndr({
+                daysOfTheWeek: moment.weekdays(),
+            });
+            var $table = $('.clndr-table');
+        }
     }());
 });
 

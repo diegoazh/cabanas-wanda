@@ -1,6 +1,7 @@
 /******************************************************
 * Imports
 *****************************/
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,600');
 @import url('https://fonts.googleapis.com/css?family=Gravitas+One|Pinyon+Script|Satisfy');
 /******************************************************
 * Colores
@@ -25,7 +26,7 @@ body .container-fluid {
 body .container-fluid #header {
   min-height: 63%;
   max-height: 63%;
-  background-image: url('/public/images/frontend/cabanas1.jpg');
+  background-image: url('/images/frontend/cabanas1.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center 55%;
@@ -37,7 +38,7 @@ body .container-fluid #header #overlay {
   max-height: 58.6%;
   opacity: 0;
   background-color: #333333;
-  background-image: url('/public/images/frontend/jaguar.jpg');
+  background-image: url('/images/frontend/jaguar.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: left 35%;
@@ -55,7 +56,7 @@ body .container-fluid #header nav.navbar .container .navbar-header a span#app_na
   top: -25%;
 }
 body .container-fluid #header nav.navbar .container .navbar-header a:before {
-  content: url('/public/images/logos/logo-cabanas-wanda-45x44.png');
+  content: url('/images/logos/logo-cabanas-wanda-45x44.png');
   width: 50%;
   height: auto;
   margin-right: 5px;
@@ -110,7 +111,7 @@ body .container-fluid #header div.col-md-8 h1 small {
   font-size: 87%;
 }
 body .container-fluid #header div.col-md-8:after {
-  content: url("/public/images/logos/logo-cabanas-wanda-390x380.png");
+  content: url("/images/logos/logo-cabanas-wanda-390x380.png");
   position: relative;
   top: 10%;
   left: 6%;
@@ -119,7 +120,7 @@ body .container-fluid .row div .alert {
   margin-top: 1.5%;
 }
 body .container-fluid #content {
-  background-image: url('/public/images/frontend/dibujo-tucan.jpg');
+  background-image: url('/images/frontend/dibujo-tucan.jpg');
   background-repeat: no-repeat;
   background-position: 5% 15%;
   min-height: 50%;

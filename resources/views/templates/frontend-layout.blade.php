@@ -9,8 +9,8 @@
     <title>@yield('title') | {{ config('app.name', 'Hotel Cabañas de Wanda') }}</title>
     <!-- Styles -->
     <link rel="icon" href="{{ asset('favicon.ico') }}">
-    <link href="{{ elixir('css/app.css') }}s" rel="stylesheet">
-    <link href="{{ elixir('css/frontend.css') }}s" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
+    <link href="css/frontend.css" rel="stylesheet">
     @yield('styles')
     <!-- Scripts -->
     <script>
@@ -40,8 +40,8 @@
     </div>
 </div>
 <!-- Scripts -->
-<script src="{{ elixir('js/app.js') }}"></script>
-<script src="{{ elixir('js/frontend.js') }}"></script>
+<script src="js/app.js"></script>
+<script src="js/frontend.js"></script>
 @yield('scripts')
 </body>
 </html>

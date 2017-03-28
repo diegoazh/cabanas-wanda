@@ -14,10 +14,12 @@ $(document).ready(function (event) {
     });
 
     (function cottageCalendar() {
-        var $calendar = $('#calendar');
-        $calendar.clndr({
-            daysOfTheWeek: moment.weekdays(),
-        });
-        var $table = $('.clndr-table');
+        if ($('#calendar').length) {
+            var $calendar = $('#calendar');
+            $calendar.clndr({
+                daysOfTheWeek: moment.weekdays(),
+            });
+            var $table = $('.clndr-table');
+        }
     }());
 });
