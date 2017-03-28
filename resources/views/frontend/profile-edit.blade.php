@@ -5,7 +5,9 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="css/profile.css" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.datetimepicker.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/selectize.bootstrap3.css') }}" type="text/css">
 @endsection
 
 @section('content')
@@ -42,9 +44,9 @@
                 </div>
                 <div class="form-group">
                     {{ Form::label('dateOfBirth', 'Nacimiento: ', ['class' => 'sr-only']) }}
-                    <div class="input-group date">
+                    <div id="birth" class="input-group">
                         <div class="input-group-addon date-piker"><i class="fa fa-calendar"></i> Nacimiento:</div>
-                        {{ Form::text('dateOfBirth', $user->dateOfBirth->format('d/m/Y'), ['class' => 'form-control date-picker', 'id' => 'dateOfBirth', 'data-provide' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy', 'placeholder' => 'Ingrese la fecha de nacimiento']) }}
+                        {{ Form::text('dateOfBirth', $user->dateOfBirth->format('d/m/Y'), ['class' => 'form-control date-picker', 'id' => 'dateOfBirth', 'placeholder' => 'Ingrese la fecha de nacimiento']) }}
                     </div>
                 </div>
                 <div class="form-group">
@@ -95,7 +97,7 @@
                     {{ Form::label('address', 'Direcci&oacute;n: ', ['class' => 'sr-only']) }}
                     <div class="input-group">
                         <div class="input-group-addon">Direcci&oacute;n:</div>
-                        {{ Form::text('address', $user->address, ['class' => 'form-control', 'placeholder' => 'Ingrese su nº de teléfono']) }}
+                        {{ Form::text('address', $user->address, ['class' => 'form-control', 'placeholder' => 'Ingrese su dirección']) }}
                     </div>
                 </div>
                 <div class="form-group">
@@ -115,35 +117,35 @@
                     <table class="table">
                     <tr>
                         <td class="text-center">
-                            <img role="button" data-avatar="chica-carre.png" src="{{ asset('images/profiles/chica-carre.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                            <img id="chica-carre" role="button" data-avatar="chica-carre.png" src="{{ asset('images/profiles/chica-carre.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
                         </td>
                         <td class="text-center">
-                            <img role="button" data-avatar="chica-hombros.png" src="{{ asset('images/profiles/chica-hombros.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                            <img id="chica-hombros" role="button" data-avatar="chica-hombros.png" src="{{ asset('images/profiles/chica-hombros.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
                         </td>
                         <td class="text-center">
-                            <img role="button" data-avatar="chica-rodete.png" src="{{ asset('images/profiles/chica-rodete.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <img role="button" data-avatar="chico-barba.png" src="{{ asset('images/profiles/chico-barba.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
-                        </td>
-                        <td class="text-center">
-                            <img role="button" data-avatar="chico-jopo.png" src="{{ asset('images/profiles/chico-jopo.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
-                        </td>
-                        <td class="text-center">
-                            <img role="button" data-avatar="hombre-bigote.png" src="{{ asset('images/profiles/hombre-bigote.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                            <img id="chica-rodete" role="button" data-avatar="chica-rodete.png" src="{{ asset('images/profiles/chica-rodete.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
                         </td>
                     </tr>
                     <tr>
                         <td class="text-center">
-                            <img role="button" data-avatar="pelado1.png" src="{{ asset('images/profiles/pelado1.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                            <img id="chico-barba" role="button" data-avatar="chico-barba.png" src="{{ asset('images/profiles/chico-barba.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
                         </td>
                         <td class="text-center">
-                            <img role="button" data-avatar="pelado2.png" src="{{ asset('images/profiles/pelado2.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                            <img id="chico-jopo" role="button" data-avatar="chico-jopo.png" src="{{ asset('images/profiles/chico-jopo.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
                         </td>
                         <td class="text-center">
-                            <img role="button" data-avatar="rubia.png" src="{{ asset('images/profiles/rubia.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                            <img id="hombre-bigote" role="button" data-avatar="hombre-bigote.png" src="{{ asset('images/profiles/hombre-bigote.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">
+                            <img id="pelado1" role="button" data-avatar="pelado1.png" src="{{ asset('images/profiles/pelado1.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                        </td>
+                        <td class="text-center">
+                            <img id="pelado2" role="button" data-avatar="pelado2.png" src="{{ asset('images/profiles/pelado2.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
+                        </td>
+                        <td class="text-center">
+                            <img id="rubia" role="button" data-avatar="rubia.png" src="{{ asset('images/profiles/rubia.png') }}" alt="" class="img-responsive img-thumbnail img-circle img-avatar">
                         </td>
                     </tr>
                 </table>
@@ -157,4 +159,24 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $(document).ready(function (e) {
+            var sex = '<?php echo $user->genre ?>';
+            var imgStored = '<?php echo $user->imageProfile ?>';
+            if (!imgStored) {
+                if (sex === 'm') {
+                    $('#chico-jopo').addClass('avatar-selected');
+                } else {
+                    $('#chica-rodete').addClass('avatar-selected');
+                }
+            }
+            $('#genre').selectize({
+                create: false,
+                placeholder: 'Seleccióne una opción de la lista',
+                preload: true,
+                inputClass: 'form-control selectize-input',
+                dropdownParent: 'body'
+            })
+        });
+    </script>
 @endsection

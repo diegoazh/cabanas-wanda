@@ -1,5 +1,9 @@
 @extends('templates.frontend-layout')
 
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/selectize.bootstrap3.css') }}">
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">

@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@yield('title', 'Welcome') | {{ config('app.name', 'Hotel Cabañas de Wanda') }}</title>
-    <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/backend.css">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend.css') }}">
     @yield('styles')
 </head>
 <body>
@@ -32,8 +32,8 @@
         @show
     </div>
 </div>
-<script src="js/app.js"></script>
-<script src="js/backend.js"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/backend.js') }}"></script>
 @yield('scripts')
 </body>
 </html>

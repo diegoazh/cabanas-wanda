@@ -18,22 +18,22 @@ elixir((mix) => {
         './bower_components/bootstrap/fonts',
         './bower_components/dashicons/fonts',
         './bower_components/font-awesome/fonts',
-        './bower_components/editor.md/fonts/editormd-logo.eot',
-        './bower_components/editor.md/fonts/editormd-logo.svg',
-        './bower_components/editor.md/fonts/editormd-logo.ttf',
-        './bower_components/editor.md/fonts/editormd-logo.woff'
     ], './public/fonts')
+        .copy('./bower_components/editor.md', './public/lib/editor.md')
         .styles([
             './bower_components/bootstrap/dist/css/bootstrap.css',
             './bower_components/dashicons/css/dashicons.css',
-            './bower_components/font-awesome/css/font-awesome.css',
-            './bower_components/clndr/demo/css/clndr.css',
-            './resources/assets/js/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.standalone.css',
-            './bower_components/selectize/dist/css/selectize.bootstrap3.css',
+            './bower_components/font-awesome/css/font-awesome.css'
         ], './public/css/app.css')
         .styles([
-            './bower_components/editor.md/css/editormd.css',
-        ], './public/css/editormd.css')
+            './bower_components/clndr/demo/css/clndr.css'
+        ], './public/css/clndr.css')
+        .styles([
+            './bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'
+        ], './public/css/bootstrap.datetimepicker.css')
+        .styles([
+            './bower_components/selectize/dist/css/selectize.bootstrap3.css'
+        ], './public/css/selectize.bootstrap3.css')
         .less([
             'frontend/frontend.less',
         ], './public/css/frontend.css')
@@ -48,12 +48,11 @@ elixir((mix) => {
         ], './public/css/backend.css')
         .combine([
             './bower_components/jquery/dist/jquery.min.js',
-            './bower_components/bootstrap/dist/js/bootstrap.min.js',
             './bower_components/moment/min/moment-with-locales.min.js',
+            './bower_components/bootstrap/dist/js/bootstrap.min.js',
             './bower_components/clndr/clndr.min.js',
-            './resources/assets/js/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js',
+            './bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
             './bower_components/selectize/dist/js/standalone/selectize.min.js',
-            './bower_components/editor.md/editormd.min.js',
         ], './public/js/app.js')
         .scripts([
             'backend/main-menu-backend.js',
@@ -67,6 +66,9 @@ elixir((mix) => {
         ], './public/js/frontend.js')
         .version([
             './public/css/app.css',
+            './public/css/clndr.css',
+            './public/css/bootstrap.datetimepicker.css',
+            './public/css/selectize.bootstrap3.css',
             './public/css/frontend.css',
             './public/css/cottages.css',
             './public/css/profile.css',

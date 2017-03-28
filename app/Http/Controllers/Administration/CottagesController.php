@@ -9,6 +9,7 @@ use App\Http\Requests\RequestCottage;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File as File;
+use Illuminate\Support\Facades\Storage as Storage;
 use Illuminate\Support\Facades\Auth;
 
 class CottagesController extends Controller
@@ -39,7 +40,7 @@ class CottagesController extends Controller
         try
         {
             $filename = 'testText.txt';
-            $contents = File::get($filename);
+            $contents = Storage::disk('public')->get($filename);
         }
         catch (Illuminate\Filesystem\FileNotFoundException $exception)
         {
