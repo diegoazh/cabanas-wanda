@@ -46,6 +46,7 @@ elixir((mix) => {
             'backend/backend.less',
         ], './public/css/backend.css')
         .combine([
+            './node_modules/lodash/lodash.min.js',
             './public/lib/jquery/dist/jquery.min.js',
             './public/lib/moment/min/moment-with-locales.min.js',
             './public/lib/bootstrap/dist/js/bootstrap.min.js',
