@@ -15,24 +15,23 @@ require('laravel-elixir-vue-2');
 
 elixir((mix) => {
     mix.copy([
-        './bower_components/bootstrap/fonts',
-        './bower_components/dashicons/fonts',
-        './bower_components/font-awesome/fonts',
+        './public/lib/bootstrap/fonts',
+        './public/lib/dashicons/fonts',
+        './public/lib/font-awesome/fonts',
     ], './public/fonts')
-        .copy('./bower_components/editor.md', './public/lib/editor.md')
         .styles([
-            './bower_components/bootstrap/dist/css/bootstrap.css',
-            './bower_components/dashicons/css/dashicons.css',
-            './bower_components/font-awesome/css/font-awesome.css'
+            './public/lib/bootstrap/dist/css/bootstrap.css',
+            './public/lib/dashicons/css/dashicons.css',
+            './public/lib/font-awesome/css/font-awesome.css'
         ], './public/css/app.css')
         .styles([
-            './bower_components/clndr/demo/css/clndr.css'
+            './public/lib/clndr/demo/css/clndr.css'
         ], './public/css/clndr.css')
         .styles([
-            './bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'
+            './public/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'
         ], './public/css/bootstrap.datetimepicker.css')
         .styles([
-            './bower_components/selectize/dist/css/selectize.bootstrap3.css'
+            './public/lib/selectize/dist/css/selectize.bootstrap3.css'
         ], './public/css/selectize.bootstrap3.css')
         .less([
             'frontend/frontend.less',
@@ -47,12 +46,12 @@ elixir((mix) => {
             'backend/backend.less',
         ], './public/css/backend.css')
         .combine([
-            './bower_components/jquery/dist/jquery.min.js',
-            './bower_components/moment/min/moment-with-locales.min.js',
-            './bower_components/bootstrap/dist/js/bootstrap.min.js',
-            './bower_components/clndr/clndr.min.js',
-            './bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
-            './bower_components/selectize/dist/js/standalone/selectize.min.js',
+            './public/lib/jquery/dist/jquery.min.js',
+            './public/lib/moment/min/moment-with-locales.min.js',
+            './public/lib/bootstrap/dist/js/bootstrap.min.js',
+            './public/lib/clndr/clndr.min.js',
+            './public/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+            './public/lib/selectize/dist/js/standalone/selectize.min.js',
         ], './public/js/app.js')
         .scripts([
             'backend/main-menu-backend.js',
