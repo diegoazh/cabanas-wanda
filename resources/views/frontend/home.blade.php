@@ -13,7 +13,6 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquet ipsum id ex blandit sodales. Vestibulum id hendrerit lorem. Ut commodo dui ante, nec mollis magna pharetra a. Nullam pellentesque sagittis ullamcorper. Ut sit amet eros eu nisi tempor elementum. Donec sollicitudin aliquam nibh, ac laoreet elit dapibus mollis. Nullam venenatis justo vitae vestibulum lobortis. Duis non nulla a orci aliquet tincidunt vitae ac nisl. Nulla vitae nibh ac ante commodo luctus nec nec eros. Etiam non turpis sed tortor congue sagittis ac quis urna. Vestibulum vel rutrum mauris. </p>
         </div>
     </section>
-    <hr class="division">
     <section class="row">
         <div class="col-md-4 col-md-offset-2 description-paralel">
             <img src="{{ asset('images/frontend/cabanas9.jpg') }}" alt="" class="img-responsive img-rounded img-thumbnail">
@@ -25,7 +24,6 @@
         </div>
     </section>
     <section id="testimonies" class="row">
-        <hr class="division">
         <div class="col-md-offset-2 col-md-8">
             <h2 class="text-center">{{ strtoupper('testimonios') }}</h2>
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">

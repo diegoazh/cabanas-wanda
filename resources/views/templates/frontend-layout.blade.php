@@ -27,6 +27,8 @@
             <div id="overlay"></div>
             <div class="col-md-8 col-md-offset-3"></div>
         @show
+        <div id="arrow_left" class="col-md-6"></div>
+        <div id="arrow_right" class="col-md-6"></div>
     </div>
     @include('templates.contents.frontend-content')
     <div id="footer" class="row">

@@ -29,7 +29,8 @@
 *****************************/
 * {
   font-family: "Raleway", sans-serif;
-  min-font-size: 14px;
+  font-size: 16px;
+  min-font-size: 16px;
   line-height: 1.6;
 }
 body {
@@ -40,8 +41,9 @@ body {
     min-height: 980px;
 
     #header {
-      min-height: 63%;
-      max-height: 63%;
+      height: 606.5px;
+      min-height: 67%;
+      max-height: 67%;
       background-image: url('/images/frontend/cabanas1.jpg');
       background-repeat: no-repeat;
       background-size: cover;
@@ -50,14 +52,27 @@ body {
       #overlay {
         position: absolute;
         width: 100%;
-        min-height: 58.6%;
-        max-height: 58.6%;
+        height: inherit;
         opacity: 0;
         background-color: #333333;
         background-image: url('/images/frontend/jaguar.jpg');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: left 35%;
+      }
+      
+      #arrow_left, #arrow_right {
+        z-index: 100;
+        width: 50%;
+        height: 0;
+        border-bottom: 38px solid #fff;
+        top: -38px;
+      }
+      #arrow_left {
+        border-right: 55px solid transparent;
+      }
+      #arrow_right {
+        border-left: 55px solid transparent;
       }
 
       nav.navbar {
@@ -132,8 +147,7 @@ body {
       }
       div.col-md-8 {
         text-align: center;
-        height: 309px;
-        min-height: 309%;
+        height: inherit;
 
         h1 {
           display: inline-block;
@@ -156,7 +170,7 @@ body {
       div.col-md-8:after {
         content: url("/images/logos/logo-cabanas-wanda-390x380.png");
         position: relative;
-        top: 10%;
+        top: 4%;
         left: 6%;
       }
     }
