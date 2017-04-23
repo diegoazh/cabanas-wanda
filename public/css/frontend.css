@@ -147,7 +147,8 @@ body .container-fluid #content {
 body .container-fluid #content hr.division {
   width: 70%;
   height: 7px;
-  margin: 70px auto;
+  margin: 20px auto;
+  margin-bottom: 100px;
   border-top: 1px solid #d4dfc4;
   border-bottom: 1px solid #d4dfc4;
 }
@@ -155,62 +156,180 @@ body .container-fluid #content hr.division:before {
   content: "\f313";
   font-family: 'Dashicons';
   position: relative;
-  font-size: 8em;
+  font-size: 7em;
   left: 45%;
   top: -0.6em;
   z-index: 1;
   background-color: #ffffff;
 }
-body .container-fluid #content .container {
-  position: relative;
-  top: -45px;
+body .container-fluid #content hr.handicon {
+  width: 50%;
+  height: 0px;
+  margin: 5em auto;
+  border-top: 13px solid #333333;
+  border-bottom: 13px solid #333333;
+  border-right: 20px solid transparent;
+  border-left: 20px solid transparent;
 }
-body .container-fluid #content .container .panel {
-  box-shadow: 2px 2px 5px #333333;
+body .container-fluid #content hr.handicon:before {
+  content: "\f2b5";
+  font-family: 'FontAwesome';
+  position: relative;
+  font-size: 7em;
+  left: 40%;
+  top: -0.78em;
+  z-index: 1;
+  background-color: #ffffff;
 }
 body .container-fluid #content section {
   width: 100%;
 }
-body .container-fluid #content section .description {
-  height: 25em;
-  min-height: 25em;
-}
-body .container-fluid #content section .description hr {
-  position: relative;
-  width: 50%;
-  top: 26%;
-  height: 7px;
-  border-top: 1px dotted #d4dfc4;
-  border-bottom: 1px dotted #d4dfc4;
-}
-body .container-fluid #content section .description img {
-  position: relative;
-  width: 330px;
-  top: -14%;
-  height: auto;
-  left: 37%;
-}
-body .container-fluid #content section .description p {
-  position: relative;
-  top: -10%;
-  text-align: center;
-  margin: 0;
-  padding: 0% 18%;
-}
-body .container-fluid #content section .description-paralel img {
-  display: inline-block;
-  position: relative;
-  left: 25%;
-  top: -12%;
-  width: 50%;
-  height: auto;
-  background-color: #ffffff;
-  margin-bottom: 12px;
-}
-body .container-fluid #content section .description-paralel p {
+body .container-fluid #content section .description #main_message h2,
+body .container-fluid #content section .description #main_message p {
   text-align: justify;
+}
+body .container-fluid #content section .description #main_message p {
+  padding-left: 12px;
+  border-left: 4px solid #666666;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+body .container-fluid #content section .description #main_message div .link-button {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bolder;
+  padding: 15px 19px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  display: inline-block;
+  border: 3px solid #b8b8b8;
+  background-color: #262626;
+}
+body .container-fluid #content section .description #main_message div .link-button a {
+  color: #ffffff;
+  text-decoration: none;
+}
+body .container-fluid #content section .description #main_message div .link-button:hover {
+  color: #000000;
+  border: 3px solid #2e2e2e;
+  background-color: #f2f2f2;
+}
+body .container-fluid #content section .description #main_message div .link-button:hover a {
+  color: #000000;
+}
+body .container-fluid #content section .description #short_messeges {
+  margin-bottom: 30px;
+}
+body .container-fluid #content section .description #short_messeges div #first_slogan {
+  background-color: #9fd7db;
+  border: 3px solid #d4dfc4;
+  box-shadow: 3px 3px 25px 5px #8c8c8c;
+  min-height: 490px;
+}
+body .container-fluid #content section .description #short_messeges div #first_slogan h2,
+body .container-fluid #content section .description #short_messeges div #first_slogan p {
+  padding-left: 9px;
+  padding-right: 9px;
+}
+body .container-fluid #content section .description #short_messeges div #first_slogan h2 {
+  text-align: center;
+}
+body .container-fluid #content section .description #short_messeges div #first_slogan p {
+  text-align: justify;
+}
+body .container-fluid #content section .description #short_messeges div div {
+  margin-bottom: 5px;
+}
+body .container-fluid #content section .description #short_messeges div div #second_slogan,
+body .container-fluid #content section .description #short_messeges div div #third_slogan {
+  min-height: 242px;
+}
+body .container-fluid #content section .description #short_messeges div div #second_slogan h2,
+body .container-fluid #content section .description #short_messeges div div #third_slogan h2,
+body .container-fluid #content section .description #short_messeges div div #second_slogan p,
+body .container-fluid #content section .description #short_messeges div div #third_slogan p {
+  padding: 7px 12px;
   margin: 0;
-  padding: 0% 2%;
+  color: #000000;
+  background-color: rgba(212, 223, 196, 0.15);
+  text-shadow: 2px 2px 2px #666666;
+}
+body .container-fluid #content section .description #short_messeges div div #second_slogan h2,
+body .container-fluid #content section .description #short_messeges div div #third_slogan h2 {
+  text-align: center;
+  text-decoration: underline;
+}
+body .container-fluid #content section .description #short_messeges div div #second_slogan p,
+body .container-fluid #content section .description #short_messeges div div #third_slogan p {
+  font-size: 20px;
+  text-align: justify;
+}
+body .container-fluid #content section .description #short_messeges div div #second_slogan {
+  background-color: #99cbc0;
+  background-image: url('/images/cabanias/cabanas8.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 3px solid #d4dfc4;
+  box-shadow: 3px 3px 25px 5px #8c8c8c;
+}
+body .container-fluid #content section .description #short_messeges div div #third_slogan {
+  background-color: #99cbc0;
+  background-image: url('/images/cabanias/cabanas12.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 3px solid #d4dfc4;
+  box-shadow: 3px 3px 25px 5px #8c8c8c;
+}
+body .container-fluid #content section .description #short_messages_2 {
+  margin-bottom: 30px;
+}
+body .container-fluid #content section .description #short_messages_2 div #fourth_slogan,
+body .container-fluid #content section .description #short_messages_2 div #fifth_slogan,
+body .container-fluid #content section .description #short_messages_2 div #sixth_slogan {
+  background-color: #e0ba79;
+  border: 3px solid #d4dfc4;
+  box-shadow: 3px 3px 25px 5px #8c8c8c;
+}
+body .container-fluid #content section .description #short_messages_2 div #fourth_slogan h2,
+body .container-fluid #content section .description #short_messages_2 div #fifth_slogan h2,
+body .container-fluid #content section .description #short_messages_2 div #sixth_slogan h2,
+body .container-fluid #content section .description #short_messages_2 div #fourth_slogan p,
+body .container-fluid #content section .description #short_messages_2 div #fifth_slogan p,
+body .container-fluid #content section .description #short_messages_2 div #sixth_slogan p {
+  padding-left: 9px;
+  padding-right: 9px;
+}
+body .container-fluid #content section .description #short_messages_2 div #fourth_slogan h2,
+body .container-fluid #content section .description #short_messages_2 div #fifth_slogan h2,
+body .container-fluid #content section .description #short_messages_2 div #sixth_slogan h2 {
+  text-align: center;
+}
+body .container-fluid #content section .description #short_messages_2 div #fourth_slogan p,
+body .container-fluid #content section .description #short_messages_2 div #fifth_slogan p,
+body .container-fluid #content section .description #short_messages_2 div #sixth_slogan p {
+  text-align: justify;
+}
+body .container-fluid #content section .description #short_messages_2 div #fourth_slogan {
+  min-height: 300px;
+  background-image: url('/images/cabanias/cabanas7.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+body .container-fluid #content section .description #short_messages_2 div #fourth_slogan h2,
+body .container-fluid #content section .description #short_messages_2 div #fourth_slogan p {
+  padding: 7px 12px;
+  margin: 0;
+  color: #ffffff;
+  background-color: rgba(212, 223, 196, 0.15);
+  text-shadow: 2px 2px 2px #666666;
+}
+body .container-fluid #content section .description #short_messages_2 div #fourth_slogan h2 {
+  text-decoration: underline;
+}
+body .container-fluid #content section .description #short_messages_2 div #fifth_slogan,
+body .container-fluid #content section .description #short_messages_2 div #sixth_slogan {
+  margin-top: 28px;
+  min-height: 450px;
 }
 body .container-fluid #content #testimonies {
   background-color: #9fd7db;
