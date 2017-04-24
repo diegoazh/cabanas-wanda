@@ -26,4 +26,9 @@ class BackendController extends Controller
     {
         return view('backend.panel');
     }
+
+    public function homePage()
+    {
+        return view('backend.home-page');
+    }
 }

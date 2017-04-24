@@ -19,7 +19,6 @@ $(document).ready(function (event) {
                 'opacity': 0
             }, 1500);
         });
-
     }
 
     /*******
@@ -37,9 +36,14 @@ $(document).ready(function (event) {
 
     if (/register/.test(path)) {
         backgroundLoginRegister('dibujo-coati', 'no-repeat', 'contain', '100% 50%');
+        $('.panel-default').css('box-shadow', '3px 3px 17px 6px #333333');
+        $('.panel-heading').css('background-color', '#fd7500');
     } else if (/login/.test(path)) {
         backgroundLoginRegister('dibujo-yaguarete', 'no-repeat', 'contain', '0% 50%');
-        $('#content').css('background-color', '#f6f6f6');
+        $('#content').css('background-color', '#f9f9f9');
+        $('#arrow_left, #arrow_right').css('border-bottom-color', '#f9f9f9');
+        $('.panel-default').css('box-shadow', '3px 3px 17px 6px #333333');
+        $('.panel-heading').css('background-color', '#fd7500');
     }
 });
 
