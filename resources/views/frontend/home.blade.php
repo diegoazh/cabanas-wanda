@@ -116,4 +116,80 @@
             </div>
         </div>
     </section>
+    <section id="terms_and_conditions" class="row">
+        <div class="col-md-offset-1 col-md-3">
+            <h2><i class="fa fa-info-circle" aria-hidden="true"></i> Información para el usuario</h2>
+            <ul class="fa-ul">
+                <li><a href="#"><i class="fa-li fa fa-check-square-o" aria-hidden="true"></i> Acerca de nosotros</a></li>
+                <li><a href="#"><i class="fa-li fa fa-check-square-o" aria-hidden="true"></i> Cómo llegar</a></li>
+                <li><a href="#"><i class="fa-li fa fa-check-square-o" aria-hidden="true"></i> Atracciónes turísticas de la zona</a></li>
+                <li><a href="#"><i class="fa-li fa fa-check-square-o" aria-hidden="true"></i> Bases y condiciones en promociones</a></li>
+                <li><a href="#"><i class="fa-li fa fa-check-square-o" aria-hidden="true"></i> Política de privacidad</a></li>
+                <li><a href="#"><i class="fa-li fa fa-check-square-o" aria-hidden="true"></i> Términos y condiciones</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h2><i class="fa fa-youtube-square" aria-hidden="true"></i> Nuestro canal</h2>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/GktQFL-jAvs" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="col-md- col-md-3">
+            <h2><i class="fa fa-user-circle" aria-hidden="true"></i> Redes Sociales</h2>
+            <a href="">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x"></i>
+                </span>
+                ¡Dejanos un me gusta en nuestra fan page!
+            </a>
+            <a href="">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x"></i>
+                </span>
+                ¡Siguenos en Twitter!
+            </a>
+            <a href="">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-instagram fa-stack-1x"></i>
+                </span>
+                ¡Siguenos en Instagram!
+            </a>
+            <a href="">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-youtube fa-stack-1x"></i>
+                </span>
+                ¡Suscribete a nuestro canal!
+            </a>
+            <a href="">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-google-plus fa-stack-1x"></i>
+                </span>
+                ¡Dejanos un +1 en Google+!
+            </a>
+            <a href="">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x"></i>
+                </span>
+                ¡Escribenos un e-mail!
+            </a>
+            <a href="">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-phone fa-stack-1x"></i>
+                </span>
+                ¡Contactanos a nuestro fijo (0054) 03757-471272!
+            </a>
+            <a href="">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-whatsapp fa-stack-1x"></i>
+                </span>
+                ¡Envianos un Whatsapp o llama al (+549) 3757-675651!
+            </a>
+        </div>
+    </section>
 @endsection

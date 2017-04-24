@@ -368,6 +368,28 @@ body .container-fluid #content #testimonies div .overlay-testimony .testimony {
   height: 400px;
   overflow: hidden;
 }
+body .container-fluid #terms_and_conditions {
+  margin: 0;
+  background-color: #333333;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  color: #d4dfc4;
+  border-top: 5px solid #d4dfc4;
+  border-bottom: 5px solid #d4dfc4;
+}
+body .container-fluid #terms_and_conditions div ul li a {
+  color: #d4dfc4;
+}
+body .container-fluid #terms_and_conditions div ul li a:hover {
+  color: #f99418;
+}
+body .container-fluid #terms_and_conditions div a {
+  display: block;
+  color: #d4dfc4;
+}
+body .container-fluid #terms_and_conditions div a:hover {
+  color: #f99418;
+}
 body .container-fluid #footer #footer_rights {
   background-color: #7a7a7a;
   color: #d4dfc4;
