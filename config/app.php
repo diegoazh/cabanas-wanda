@@ -170,7 +170,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
-        App\Providers\AdminMenuServiceProvider::class,
+        App\Providers\ViewComposerServiceProvider::class,
         Jenssegers\Date\DateServiceProvider::class,
 
         /*
