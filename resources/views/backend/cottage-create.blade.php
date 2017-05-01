@@ -4,8 +4,6 @@
     {{ (isset($cottage)) ? 'Editar caba&ntilde;a' : 'Registrar Caba&ntilde;a' }}
 @endsection
 
-@section('title', 'Registro de Cabaña')
-
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/selectize.bootstrap3.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/editor.md/css/editormd.css') }}">

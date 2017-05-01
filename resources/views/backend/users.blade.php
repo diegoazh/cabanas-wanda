@@ -1,10 +1,6 @@
 @extends('templates.backend-layout')
 
-@section('title')
-    Usuarios registrados
-@endsection
-
-@section('title', 'Listado de Usuarios')
+@section('title', 'Usuarios registrados')
 
 @section('content')
     @include('backend.modals.modal-forms')
