@@ -8,12 +8,13 @@
     </div>
     <div class="panel-body">
         {{ Form::open(['url' => '']) }}
-        <div class="form-group"><label for="tt-presentation" class="sr-only">Titulo presentación</label>
-            <div class="input-group">
-                <div class="input-group-addon">Título de presentación</div>
-                {{ Form::textarea('tt-presentation', '', ['class' => 'form-control', 'placeholder' => 'Ingrese el titulo de presentación de la página principal...']) }}
+            <div class="form-group"><label for="tt-presentation" class="sr-only">Titulo presentación</label>
+                <div class="input-group">
+                    <div class="input-group-addon">Título de presentación</div>
+                    {{ Form::textarea('tt-presentation', '', ['class' => 'form-control', 'placeholder' => 'Ingrese el titulo de presentación de la página principal...']) }}
+                </div>
             </div>
-        </div>
+
         {{ Form::close() }}
     </div>
 @endsection
