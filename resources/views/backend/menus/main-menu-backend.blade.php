@@ -1,9 +1,9 @@
 <h2 class="tt-menu"><i class="fa fa-tachometer" aria-hidden="true"></i> Administraci&oacute;n</h2>
 <div id="wrapper">
     <ul class="menu">
-        <li class="item"><a href="#" class="home">P&aacute;gina principal</a>
+        <li class="item"><a href="#" class="frontend">P&aacute;gina principal</a>
             <ul>
-                <li class="subitem"><a href="{{ route('admin.homePage') }}">Configuraci&oacute;n</a></li>
+                <li class="subitem"><a href="{{ route('frontend.create') }}">Configuraci&oacute;n</a></li>
             </ul>
         </li>
         <li class="item"><a href="#" class="cottage">Caba&ntilde;as <span>{{ (isset($cantCottages)) ? $cantCottages : 0 }}</span></a>

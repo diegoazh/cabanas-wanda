@@ -11,6 +11,14 @@
   border: 5px solid #2b669a;
 }
 
+.menu-fixed {
+  position:fixed;
+  z-index:1000;
+  top:0;
+  width:100%;
+  box-shadow:0px 4px 3px rgba(0,0,0,.5);
+}
+
 /********************************************
  * Estilos del sitio
  ********************************************/
@@ -143,6 +151,11 @@ body {
         }
         .menu > li > a.active {
           border-bottom: 1px solid #1a638f;
+        }
+        .menu > li > a.frontend:before {
+          content: '\f108';
+          font-family: 'FontAwesome';
+          margin-right: 5px;
         }
         .menu > li > a.cottage:before {
           content: '\f015';

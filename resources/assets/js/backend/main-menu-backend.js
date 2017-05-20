@@ -27,7 +27,7 @@ $(document).ready(function(e) {
     } else if (/users/.test(path)) {
         activeMenu(/usuarios/, menu_a);
         $('#main_content').removeClass('col-md-4').addClass('col-md-6');
-    } else if (/home-page/.test(path)) {
+    } else if (/frontend/.test(path)) {
         activeMenu(/página principal/, menu_a);
         $('#main_content').removeClass('col-md-4').addClass('col-md-6');
     }

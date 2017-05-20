@@ -5,13 +5,20 @@
 @import url('https://fonts.googleapis.com/css?family=Gravitas+One|Pinyon+Script|Satisfy');
 /******************************************************
 * Colores
-*****************************/
+******************************************************/
 /******************************************************
-* Colores
-*****************************/
+* Clases
+*******************************************************/
 .label-email {
   background-color: #a178cd;
   text-shadow: 0px 0px 2px #000000;
+}
+.menu-fixed {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
+  box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.5);
 }
 /******************************************************
 * Estilos
@@ -55,7 +62,7 @@ body .container-fluid #header #arrow_right {
   width: 50%;
   height: 0;
   border-bottom: 38px solid #fff;
-  top: -38px;
+  top: -37px;
 }
 body .container-fluid #header #arrow_left {
   border-right: 55px solid transparent;

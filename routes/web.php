@@ -44,7 +44,7 @@ Route::group(['middleware' => 'web'], function () {
  */
 Route::group(['prefix' => 'admin', 'namespace' => 'Administration', 'middleware' => ['auth', 'isAdminOrEmployed']], function () {
     Route::get('/', 'BackendController@showPanel')->name('admin.panel');
-    Route::get('/home-page', 'BackendController@homePage')->name('admin.homePage');
+    Route::resource('frontend', 'FrontendController');
     Route::get('users', 'UsersController@index')->name('users.index');
     Route::put('users/{user}', 'UsersController@update')->name('users.update');
     Route::delete('users/{user}', 'UsersController@destroy')->name('users.destroy');

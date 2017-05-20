@@ -11,7 +11,7 @@
         <h2>P&aacute;gina principal</h2>
     </div>
     <div class="panel-body">
-        {{ Form::open(['url' => '']) }}
+        {{ Form::open(['route' => 'frontend.store', 'files' => true, 'method' => 'POST']) }}
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#welcome" aria-controls="welcome" role="tab" data-toggle="tab">Presentación</a></li>
@@ -21,12 +21,20 @@
                 <li role="presentation"><a href="#slogan4" aria-controls="slogan4" role="tab" data-toggle="tab">Slogan 4</a></li>
                 <li role="presentation"><a href="#slogan5" aria-controls="slogan5" role="tab" data-toggle="tab">Slogan 5</a></li>
                 <li role="presentation"><a href="#slogan6" aria-controls="slogan6" role="tab" data-toggle="tab">Slogan 6</a></li>
+                <li role="presentation"><a href="#socialsnetworks" aria-controls="socialsnetworks" role="tab" data-toggle="tab">Redes sociales</a></li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="welcome">
                     <br>
+                    <div class="form-group">
+                        <label for="imgs_header" class="sr-only">Imagenes de la cabecera</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Imagenes de la cabecera</div>
+                            {{ Form::file('imgs_header', ['class' => 'form-control', 'id' => 'imgs_header', 'multiple' => true]) }}
+                        </div>
+                    </div>
                     <div class="form-group"><label for="tt_presentation" class="sr-only">Titulo presentación</label>
                         <div class="input-group">
                             <div class="input-group-addon">Título de presentación</div>
@@ -41,7 +49,7 @@
                     </div>
                     <div class="form-group"><label for="txt_btn_presentation" class="sr-only">Texto botón presentación</label>
                         <div class="input-group">
-                            <div class="input-group-addon">exto botón presentación</div>
+                            <div class="input-group-addon">Texto botón presentación</div>
                             {{ Form::text('txt_btn_presentation', '', ['id' => 'txt_btn_presentation', 'class' => 'form-control', 'placeholder' => 'Ingrese el texto del botón de la página principal...']) }}
                         </div>
                     </div>
@@ -58,6 +66,9 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan1">
+                    <div class="text-right">
+                        <span class="label label-warning">Slogan requerido</span>
+                    </div>
                     <br>
                     <div class="form-group"><label for="tt_slogan_one" class="sr-only">Título slogan 1</label>
                         <div class="input-group">
@@ -79,6 +90,9 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan2">
+                    <div class="text-right">
+                        <span class="label label-warning">Slogan requerido</span>
+                    </div>
                     <br>
                     <div class="form-group"><label for="tt_slogan_two" class="sr-only">Título slogan 2</label>
                         <div class="input-group">
@@ -100,6 +114,9 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan3">
+                    <div class="text-right">
+                        <span class="label label-warning">Slogan requerido</span>
+                    </div>
                     <br>
                     <div class="form-group"><label for="tt_slogan_three" class="sr-only">Título slogan 3</label>
                         <div class="input-group">
@@ -121,7 +138,9 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan4">
-                    <br>
+                    <div class="text-right">
+                        <span class="label label-info">Slogan opcional</span>
+                    </div>
                     <div class="form-group">
                         <label for="show_slogan_four" role="button">
                             {{ Form::checkbox('show_slogan_four', true, false, ['id' => 'show_slogan_four']) }} ¿Mostrar slogan 4?
@@ -147,7 +166,9 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan5">
-                    <br>
+                    <div class="text-right">
+                        <span class="label label-info">Slogan opcional</span>
+                    </div>
                     <div class="form-group">
                         <label for="show_slogan_five" role="button">
                             {{ Form::checkbox('show_slogan_five', true, false, ['id' => 'show_slogan_five']) }} ¿Mostrar slogan 5?
@@ -173,7 +194,9 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan6">
-                    <br>
+                    <div class="text-right">
+                        <span class="label label-info">Slogan opcional</span>
+                    </div>
                     <div class="form-group">
                         <label for="show_slogan_six" role="button">
                             {{ Form::checkbox('show_slogan_six', true, false, ['id' => 'show_slogan_six']) }} ¿Mostrar slogan 6?
@@ -198,6 +221,79 @@
                         </div>
                     </div>
                 </div>
+                <div role="tabpanel" class="tab-pane fade" id="socialsnetworks">
+                    <br>
+                    <div class="form-group">
+                        <label for="show_facebook" role="button">
+                            {{ Form::checkbox('show_facebook', true, false) }}
+                            ¿Mostrar link a Facebook?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="facebook" class="sr-only">Facebook</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Facebook</div>
+                            {{ Form::text('facebook', null, ['class' => 'form-control', 'id' => 'facebook', 'placeholder' => 'Ingrese el link de la página de facebook']) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="show_twitter" role="button">
+                            {{ Form::checkbox('show_twitter', true, false) }}
+                            ¿Mostrar link a Twitter?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="twitter" class="sr-only">Twitter</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Twitter</div>
+                            {{ Form::text('twitter', null, ['class' => 'form-control', 'id' => 'twitter', 'placeholder' => 'Ingrese el link de la página de twitter']) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="show_instagram" role="button">
+                            {{ Form::checkbox('show_instagram', true, false) }}
+                            ¿Mostrar link a Instagram?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="instagram" class="sr-only">Instagram</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Instagram</div>
+                            {{ Form::text('instagram', null, ['class' => 'form-control', 'id' => 'instagram', 'placeholder' => 'Ingrese el link de la página de instagram']) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="show_youtube" role="button">
+                            {{ Form::checkbox('show_youtube', true, false) }}
+                            ¿Mostrar link a YouTube?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="youtube" class="sr-only">YouTube</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">YouTube</div>
+                            {{ Form::text('youtube', null, ['class' => 'form-control', 'id' => 'youtube', 'placeholder' => 'Ingrese el link de la página de youtube']) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="show_googleplus" role="button">
+                            {{ Form::checkbox('show_googleplus', true, false) }}
+                            ¿Mostrar link a Google Plus?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="googleplus" class="sr-only">Google Plus</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Google Plus</div>
+                            {{ Form::text('googleplus', null, ['class' => 'form-control', 'id' => 'googleplus', 'placeholder' => 'Ingrese el link de la página de googleplus']) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                {{ Form::reset('Limpiar formulario', ['class' => 'btn btn-warning btn-lg']) }}
+                {{ Form::submit('Guardar', ['class' => 'btn btn-primary btn-lg']) }}
             </div>
         {{ Form::close() }}
     </div>

@@ -15,6 +15,7 @@ class CreateFrontendContent extends Migration
     {
         Schema::create('frontend_contents', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('images_header')->nullable();
             $table->string('tt_presentation');
             $table->string('msg_presentation');
             $table->string('txt_btn_presentation');
@@ -41,6 +42,17 @@ class CreateFrontendContent extends Migration
             $table->string('img_slogan_six')->nullable();
             $table->boolean('show_slogan_six')->default(false);
             $table->boolean('show_testimonies')->default(false);
+            $table->string('link_video')->nullable();
+            $table->string('facebook')->nullable();
+            $table->boolean('show_facebook')->default(false);
+            $table->string('twitter')->nullable();
+            $table->boolean('show_twitter')->default(false);
+            $table->string('instagram')->nullable();
+            $table->boolean('show_instagram')->default(false);
+            $table->string('youtube')->nullable();
+            $table->boolean('show_youtube')->default(false);
+            $table->string('googleplus')->nullable();
+            $table->boolean('show_googleplus')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

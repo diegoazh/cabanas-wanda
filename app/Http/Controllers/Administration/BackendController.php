@@ -27,9 +27,4 @@ class BackendController extends Controller
         return view('backend.panel');
     }
 
-    public function homePage()
-    {
-        $a = '<h1>Hola</h1>';
-        return view('backend.home-page')->with('a', $a);
-    }
 }

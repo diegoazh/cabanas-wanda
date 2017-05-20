@@ -27,7 +27,7 @@ $(document).ready(function(e) {
     } else if (/users/.test(path)) {
         activeMenu(/usuarios/, menu_a);
         $('#main_content').removeClass('col-md-4').addClass('col-md-6');
-    } else if (/home-page/.test(path)) {
+    } else if (/frontend/.test(path)) {
         activeMenu(/página principal/, menu_a);
         $('#main_content').removeClass('col-md-4').addClass('col-md-6');
     }
@@ -315,6 +315,24 @@ $(document).ready(function(e) {
             options: ''
         };
         setModalForms($(this), 'DELETE', false, 'users', texts);
+    });
+
+    /******************************************************************
+     *  Menú pegajoso
+     * *****************************************************************/
+    $(document).ready(function(){
+        var altura = $('.general-menu').offset().top;
+
+        $(window).on('scroll', function(){
+            if ( $(window).scrollTop() > altura ){
+                $('.general-menu').addClass('menu-fixed');
+                $('#main_menu, #main_content').css('margin-top', '50px');
+            } else {
+                $('.general-menu').removeClass('menu-fixed');
+                $('#main_menu, #main_content').removeAttr('style');
+            }
+        });
+
     });
 });
 //# sourceMappingURL=backend.js.map

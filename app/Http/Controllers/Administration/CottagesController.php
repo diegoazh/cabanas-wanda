@@ -57,7 +57,6 @@ class CottagesController extends Controller
      */
     public function store(RequestCottage $request)
     {
-        dd($request);
         $v = Validator::make($request->all(), [
             'number' => [
                 'required',

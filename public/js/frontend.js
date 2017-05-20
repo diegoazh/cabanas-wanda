@@ -1,4 +1,24 @@
 $(document).ready(function (event) {
+    /******************************************************************
+     *  Menú pegajoso
+     * *****************************************************************/
+    $(document).ready(function(){
+        var altura = $('.general-menu').offset().top;
+
+        $(window).on('scroll', function(){
+            if ( $(window).scrollTop() > altura ){
+                $('.general-menu').addClass('menu-fixed');
+                $('#arrow_left, #arrow_right').css('top', '12px').css('margin-bottom', '50px');
+                $('#overlay').css('margin-top', '50px');
+            } else {
+                $('.general-menu').removeClass('menu-fixed');
+                $('#arrow_left, #arrow_right').removeAttr('style');
+                $('#overlay').removeAttr('style');
+            }
+        });
+
+    });
+
     /****
      * Cambia el fondo del header cada 10 segundos.
      * */
