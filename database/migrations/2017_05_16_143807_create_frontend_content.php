@@ -32,15 +32,13 @@ class CreateFrontendContent extends Migration
             $table->string('tt_slogan_four')->nullable();
             $table->string('desc_slogan_four')->nullable();
             $table->string('img_slogan_four')->nullable();
-            $table->boolean('show_slogan_four')->default(false);
             $table->string('tt_slogan_five')->nullable();
             $table->string('desc_slogan_five')->nullable();
             $table->string('img_slogan_five')->nullable();
-            $table->boolean('show_slogan_five')->default(false);
             $table->string('tt_slogan_six')->nullable();
             $table->string('desc_slogan_six')->nullable();
             $table->string('img_slogan_six')->nullable();
-            $table->boolean('show_slogan_six')->default(false);
+            $table->boolean('show_slogans_456')->default(false);
             $table->boolean('show_testimonies')->default(false);
             $table->string('link_video')->nullable();
             $table->string('facebook')->nullable();

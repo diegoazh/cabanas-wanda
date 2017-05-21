@@ -32,8 +32,19 @@
                         <label for="imgs_header" class="sr-only">Imagenes de la cabecera</label>
                         <div class="input-group">
                             <div class="input-group-addon">Imagenes de la cabecera</div>
-                            {{ Form::file('imgs_header', ['class' => 'form-control', 'id' => 'imgs_header', 'multiple' => true]) }}
+                            {{ Form::file('imgs_header[]', ['class' => 'form-control', 'id' => 'imgs_header', 'multiple' => 'multiple']) }}
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="remove_olds_img_headers" role="button">
+                            {{ Form::checkbox('remove_olds_img_headers', true, false, ['id' => 'remove_olds_img_headers']) }} ¿Desea eliminar las imagenes anteriores?
+                        </label>
+                        <small class="text-danger">Esto eliminará las imagenes de forma permanente.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="show_slogans_456" role="button">
+                            {{ Form::checkbox('show_slogans_456', true, false, ['id' => 'show_slogans_456']) }} ¿Mostrar slogans 4, 5 y 6?
+                        </label>
                     </div>
                     <div class="form-group"><label for="tt_presentation" class="sr-only">Titulo presentación</label>
                         <div class="input-group">
@@ -82,11 +93,18 @@
                             {{ Form::textarea('desc_slogan_one', '', ['id' => 'desc_slogan_one', 'class' => 'form-control', 'placeholder' => 'Ingrese la descripción del slogan 1...']) }}
                         </div>
                     </div>
-                    <div class="form-group"><label for="img_slogan_one" class="sr-only">Imagen del slogan 1</label>
+                    <div class="form-group">
+                        <label for="img_slogan_one" class="sr-only">Imagen del slogan 1</label>
                         <div class="input-group">
                             <div class="input-group-addon">Imagen del slogan 1</div>
                             {{ Form::file('img_slogan_one', ['id' => 'img_slogan_one', 'class' => 'form-control', 'placeholder' => 'Ingrese la imágen del slogan 1...']) }}
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="remove_olds_slogan1" role="button">
+                            {{ Form::checkbox('remove_olds_slogan1', true, false, ['id' => 'remove_olds_slogan1']) }} ¿Desea eliminar la im&aacute;gen anterior?
+                        </label>
+                        <small class="text-danger">Esto eliminará la imagen de forma permanente.</small>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan2">
@@ -106,11 +124,18 @@
                             {{ Form::textarea('desc_slogan_two', '', ['id' => 'desc_slogan_two', 'class' => 'form-control', 'placeholder' => 'Ingrese la descripción del slogan 2...']) }}
                         </div>
                     </div>
-                    <div class="form-group"><label for="img_slogan_two" class="sr-only">Imagen del slogan 2</label>
+                    <div class="form-group">
+                        <label for="img_slogan_two" class="sr-only">Imagen del slogan 2</label>
                         <div class="input-group">
                             <div class="input-group-addon">Imagen del slogan 2</div>
                             {{ Form::file('img_slogan_two', ['id' => 'img_slogan_two', 'class' => 'form-control', 'placeholder' => 'Ingrese la imágen del slogan 2...']) }}
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="remove_olds_slogan2" role="button">
+                            {{ Form::checkbox('remove_olds_slogan2', true, false, ['id' => 'remove_olds_slogan2']) }} ¿Desea eliminar la im&aacute;gen anterior?
+                        </label>
+                        <small class="text-danger">Esto eliminará la imagen de forma permanente.</small>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan3">
@@ -136,15 +161,16 @@
                             {{ Form::file('img_slogan_three', ['id' => 'img_slogan_three', 'class' => 'form-control', 'placeholder' => 'Ingrese la imágen del slogan 3...']) }}
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="remove_olds_slogan3" role="button">
+                            {{ Form::checkbox('remove_olds_slogan3', true, false, ['id' => 'remove_olds_slogan3']) }} ¿Desea eliminar la im&aacute;gen anterior?
+                        </label>
+                        <small class="text-danger">Esto eliminará la imagen de forma permanente.</small>
+                    </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan4">
                     <div class="text-right">
                         <span class="label label-info">Slogan opcional</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="show_slogan_four" role="button">
-                            {{ Form::checkbox('show_slogan_four', true, false, ['id' => 'show_slogan_four']) }} ¿Mostrar slogan 4?
-                        </label>
                     </div>
                     <div class="form-group"><label for="tt_slogan_four" class="sr-only">Título slogan 4</label>
                         <div class="input-group">
@@ -158,21 +184,23 @@
                             {{ Form::textarea('desc_slogan_four', '', ['id' => 'desc_slogan_four', 'class' => 'form-control', 'placeholder' => 'Ingrese la descripción del slogan 4...']) }}
                         </div>
                     </div>
-                    <div class="form-group"><label for="img_slogan_four" class="sr-only">Imagen del slogan 4</label>
+                    <div class="form-group">
+                        <label for="img_slogan_four" class="sr-only">Imagen del slogan 4</label>
                         <div class="input-group">
                             <div class="input-group-addon">Imagen del slogan 4</div>
                             {{ Form::file('img_slogan_four', ['id' => 'img_slogan_four', 'class' => 'form-control', 'placeholder' => 'Ingrese la imágen del slogan 4...']) }}
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="remove_olds_slogan4" role="button">
+                            {{ Form::checkbox('remove_olds_slogan4', true, false, ['id' => 'remove_olds_slogan4']) }} ¿Desea eliminar la im&aacute;gen anterior?
+                        </label>
+                        <small class="text-danger">Esto eliminará la imagen de forma permanente.</small>
+                    </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan5">
                     <div class="text-right">
                         <span class="label label-info">Slogan opcional</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="show_slogan_five" role="button">
-                            {{ Form::checkbox('show_slogan_five', true, false, ['id' => 'show_slogan_five']) }} ¿Mostrar slogan 5?
-                        </label>
                     </div>
                     <div class="form-group"><label for="tt_slogan_five" class="sr-only">Título slogan 5</label>
                         <div class="input-group">
@@ -186,21 +214,23 @@
                             {{ Form::textarea('desc_slogan_five', '', ['id' => 'desc_slogan_five', 'class' => 'form-control', 'placeholder' => 'Ingrese la descripción del slogan 5...']) }}
                         </div>
                     </div>
-                    <div class="form-group"><label for="img_slogan_five" class="sr-only">Imagen del slogan 5</label>
+                    <div class="form-group">
+                        <label for="img_slogan_five" class="sr-only">Imagen del slogan 5</label>
                         <div class="input-group">
                             <div class="input-group-addon">Imagen del slogan 5</div>
                             {{ Form::file('img_slogan_five', ['id' => 'img_slogan_five', 'class' => 'form-control', 'placeholder' => 'Ingrese la imágen del slogan 5...']) }}
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="remove_olds_slogan5" role="button">
+                            {{ Form::checkbox('remove_olds_slogan5', true, false, ['id' => 'remove_olds_slogan5']) }} ¿Desea eliminar la im&aacute;gen anterior?
+                        </label>
+                        <small class="text-danger">Esto eliminará la imagen de forma permanente.</small>
+                    </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan6">
                     <div class="text-right">
                         <span class="label label-info">Slogan opcional</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="show_slogan_six" role="button">
-                            {{ Form::checkbox('show_slogan_six', true, false, ['id' => 'show_slogan_six']) }} ¿Mostrar slogan 6?
-                        </label>
                     </div>
                     <div class="form-group"><label for="tt_slogan_six" class="sr-only">Título slogan 6</label>
                         <div class="input-group">
@@ -214,18 +244,25 @@
                             {{ Form::textarea('desc_slogan_six', '', ['id' => 'desc_slogan_six', 'class' => 'form-control', 'placeholder' => 'Ingrese la descripción del slogan 6...']) }}
                         </div>
                     </div>
-                    <div class="form-group"><label for="img_slogan_six" class="sr-only">Imagen del slogan 6</label>
+                    <div class="form-group">
+                        <label for="img_slogan_six" class="sr-only">Imagen del slogan 6</label>
                         <div class="input-group">
                             <div class="input-group-addon">Imagen del slogan 6</div>
                             {{ Form::file('img_slogan_six', ['id' => 'img_slogan_six', 'class' => 'form-control', 'placeholder' => 'Ingrese la imágen del slogan 6...']) }}
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="remove_olds_slogan6" role="button">
+                            {{ Form::checkbox('remove_olds_slogan6', true, false, ['id' => 'remove_olds_slogan6']) }} ¿Desea eliminar la im&aacute;gen anterior?
+                        </label>
+                        <small class="text-danger">Esto eliminará la imagen de forma permanente.</small>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="socialsnetworks">
                     <br>
                     <div class="form-group">
                         <label for="show_facebook" role="button">
-                            {{ Form::checkbox('show_facebook', true, false) }}
+                            {{ Form::checkbox('show_facebook', true, false, ['id' => 'show_facebook']) }}
                             ¿Mostrar link a Facebook?
                         </label>
                     </div>
@@ -238,7 +275,7 @@
                     </div>
                     <div class="form-group">
                         <label for="show_twitter" role="button">
-                            {{ Form::checkbox('show_twitter', true, false) }}
+                            {{ Form::checkbox('show_twitter', true, false, ['id' => 'show_twitter']) }}
                             ¿Mostrar link a Twitter?
                         </label>
                     </div>
@@ -251,7 +288,7 @@
                     </div>
                     <div class="form-group">
                         <label for="show_instagram" role="button">
-                            {{ Form::checkbox('show_instagram', true, false) }}
+                            {{ Form::checkbox('show_instagram', true, false, ['id' => 'show_instagram']) }}
                             ¿Mostrar link a Instagram?
                         </label>
                     </div>
@@ -264,7 +301,7 @@
                     </div>
                     <div class="form-group">
                         <label for="show_youtube" role="button">
-                            {{ Form::checkbox('show_youtube', true, false) }}
+                            {{ Form::checkbox('show_youtube', true, false, ['id' => 'show_youtube']) }}
                             ¿Mostrar link a YouTube?
                         </label>
                     </div>
@@ -277,7 +314,7 @@
                     </div>
                     <div class="form-group">
                         <label for="show_googleplus" role="button">
-                            {{ Form::checkbox('show_googleplus', true, false) }}
+                            {{ Form::checkbox('show_googleplus', true, false, ['id' => 'show_googleplus']) }}
                             ¿Mostrar link a Google Plus?
                         </label>
                     </div>
