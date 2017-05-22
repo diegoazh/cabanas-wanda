@@ -7,7 +7,8 @@ $(document).ready(function (event) {
                 $('.general-menu').addClass('menu-fixed');
                 $('#arrow_left, #arrow_right').css('top', '15px').css('margin-bottom', '50px');
                 $('#overlay').css('margin-top', '50px');
-                $('.container-logo').css('top', '17.5%');
+                if (/cottages/.test(window.location.pathname))
+                    $('.container-logo').css('top', '17.5%');
             } else {
                 $('.general-menu').removeClass('menu-fixed');
                 $('#arrow_left, #arrow_right').removeAttr('style');
