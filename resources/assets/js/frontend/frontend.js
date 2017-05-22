@@ -10,10 +10,12 @@ $(document).ready(function (event) {
                 $('.general-menu').addClass('menu-fixed');
                 $('#arrow_left, #arrow_right').css('top', '12px').css('margin-bottom', '50px');
                 $('#overlay').css('margin-top', '50px');
+                $('.container-logo').css('top', '8%');
             } else {
                 $('.general-menu').removeClass('menu-fixed');
                 $('#arrow_left, #arrow_right').removeAttr('style');
                 $('#overlay').removeAttr('style');
+                $('.container-logo').removeAttr('style');
             }
         });
 
@@ -65,4 +67,46 @@ $(document).ready(function (event) {
         $('.panel-default').css('box-shadow', '3px 3px 17px 6px #333333');
         $('.panel-heading').css('background-color', '#fd7500');
     }
+
+    function setFrontendModal(ttModal, bodyModal) {
+        $('.modal-header').css('background-color', '#333333').css('color', '#ffffff');
+        $('.modal-footer').css('background-color', '#333333');
+        $('.modal-title').text(ttModal);
+        $('.modal-body').html(bodyModal);
+    }
+
+    $('#mail, #phone, #cel').click(function (e) {
+        let lnk = e.target;
+        let body = '';
+        $btn = $(lnk);
+        if(/mail/.test($btn.data('tt-modal'))) {
+            body = `<h2 class="text-center">
+                        <i class="fa fa-envelope-open" aria-hidden="true"></i> ${$btn.data('tt-modal')} a
+                    </h2>
+                    <h3 class="text-center">
+                        <a class="btn btn-danger btn-lg" mailto="${$btn.data('body-modal')}@gmail.com">
+                            <i class="fa fa-envelope-open-o" aria-hidden="true"></i> ${$btn.data('body-modal')}<i class="fa fa-at" aria-hidden="true"></i>gmail.com
+                        </a>
+                    </h3>`;
+        } else if (/fijo/.test($btn.data('tt-modal'))) {
+            body = `<h2 class="text-center">
+                        <i class="fa fa-phone" aria-hidden="true"></i> ${$btn.data('tt-modal')}
+                    </h2>
+                    <h3 class="text-center">
+                        <a href="#" class="btn btn-primary btn-lg">
+                            <i class="fa fa-phone-square" aria-hidden="true"></i> ${$btn.data('body-modal')}
+                        </a>
+                    </h3>`;
+        } else {
+            body = `<h2 class="text-center">
+                        <i class="fa fa-mobile" aria-hidden="true"></i> ${$btn.data('tt-modal')}
+                    </h2>
+                    <h3 class="text-center">
+                        <a href="#" class="btn btn-success btn-lg">
+                            <i class="fa fa-whatsapp" aria-hidden="true"></i> ${$btn.data('body-modal')}
+                        </a>
+                    </h3>`;
+        }
+        setFrontendModal($btn.data('tt-modal'), body);
+    });
 });

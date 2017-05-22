@@ -15,7 +15,14 @@ class Frontend extends Model
     protected $table = "frontend_contents";
     protected $guarded = [];
 
-    public function addRemoveImage(Array $newImages, $removeImage = '', $removeImages = [])
+    /******
+     * @param $newImages - Array of image files
+     * @param $removeImage - String of image to remove
+     * @param $removeImages - Array of strings for remove older images
+     *
+     * @return String
+     * **/
+    public function addRemoveImage($newImages, $removeImage = '', $removeImages = [])
     {
         $name = [];
         $finalImages = '';
@@ -24,7 +31,7 @@ class Frontend extends Model
         {
             if ($newImages[$i])
             {
-                $name[$i] = 'frontend-content-' . time() . '.' . $newImages[$i]->getClientOriginalExtension();
+                $name[$i] = 'frontend-content-' . microtime(true) . '.' . $newImages[$i]->getClientOriginalExtension();
                 Storage::disk('frontend')->put($name[$i], File::get($newImages[$i]));
             }
         }
@@ -33,19 +40,19 @@ class Frontend extends Model
         {
             Storage::disk('frontend')->delete($removeImages);
         }
-        else if (isset($removeImages))
+        else if (count($removeImages) > 0)
         {
             $images = explode('|', $removeImages);
             for ($i = count($images) - 1; $i >= 0; $i--)
             {
-                if (!isEmpty($images[$i]))
+                if (!empty($images[$i]))
                 {
                     Storage::disk('frontend')->delete($images[$i]);
                 }
             }
         }
 
-        for ($i = count($name); $i >= 0; $i--)
+        for ($i = count($name) - 1; $i >= 0; $i--)
         {
             $finalImages .= $name[$i];
             if ($i)
