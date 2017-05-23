@@ -199,9 +199,10 @@
 @section('scripts')
     <script text="text/javascript">
         $(document).ready(function (e) {
-            $('#maintenance > .modal-header')
-                .css('backgroud-color', '#333333');
-            $('#maintenance > .modal-footer')
+            $('#maintenance .modal-header')
+                .css('backgroud-color', '#333333')
+                .css('color', '#ffffff');
+            $('#maintenance .modal-footer')
                 .css('background-color', '#333333');
             $('#maintenance')
                 .modal('show');
