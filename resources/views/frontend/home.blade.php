@@ -199,7 +199,12 @@
 @section('scripts')
     <script text="text/javascript">
         $(document).ready(function (e) {
-            $('#maintenance').modal('show');
+            $('#maintenance > .modal-header')
+                .css('backgroud-color', '#333333');
+            $('#maintenance > .modal-footer')
+                .css('background-color', '#333333');
+            $('#maintenance')
+                .modal('show');
         });
     </script>
 @endsection

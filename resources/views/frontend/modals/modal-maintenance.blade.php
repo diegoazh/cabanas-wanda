@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <h2>¡Hola, bienvenido a Hotel Caba&ntilde;as de Wanda!</h2>
                 <p>Recientemente hemos cambiado nuestro sitio web, para poder ofrecerte una mejor experiencia. <br>
-                Por el momento no encontrarás contenido en el ya que lo estamos subiendo y es posible que nos tome un par de d&iacute;s</p>
+                Por el momento no encontrarás contenido en el ya que lo estamos subiendo y es posible que nos tome un par de d&iacute;as</p>
                 <p>Si deseas contactarnos te pedimos que lo hagas a trav&eacute;s de nuestro tel&eacute;fono fijo, mail o Whatsapp. Encontrar&aacute;s los números correspondientes en el <a href="#terms_and_conditions">pi&eacute; de p&aacute;gina.</a>.</p>
                 <p>Agradecemos tu comprensi&oacute;n y paciencia, y esperamos contarte entre nuestros huespedes.</p>
                 <p>Hasta pronto.</p>
