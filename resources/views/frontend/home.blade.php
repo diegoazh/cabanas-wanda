@@ -193,4 +193,13 @@
         </div>
     </section>
     @include('frontend.modals.modal-frontend')
+    @include('frontend.modals.modal-maintenance')
+@endsection
+
+@section('scripts')
+    <script text="text/javascript">
+        $(document).ready(function (e) {
+            $('#maintenance').modal('show');
+        });
+    </script>
 @endsection
