@@ -115,7 +115,6 @@ class CottagesController extends Controller
     {
         $v = Validator::make($request->all(), [
             'number' => [
-                'required',
                 'numeric',
                 Rule::unique('cottages')->ignore($cottage->id)
             ]
