@@ -85,7 +85,7 @@
             {{ Form::label('images[]', 'Fotos', ['class' => 'sr-only']) }}
             <div class="input-group">
                 <div class="input-group-addon">Fotos</div>
-                {{ Form::file('images[]', ['placeholder' => 'Elija las fotos a subir', 'class' => 'form-control', 'multiple', 'required']) }}
+                {{ Form::file('images[]', ['placeholder' => 'Elija las fotos a subir', 'class' => 'form-control', 'multiple', (!isset($cottage))?'required':'']) }}
             </div>
             <div class="help-info">
                 <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
