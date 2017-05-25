@@ -195,16 +195,17 @@ $(document).ready(function () {
     // Este trozo de código configura el día domingo como primer día de la semana en moment con locale = 'es'
     // lo cual hace que el datetimepicker muestre el día domingo en primer lugar.
     moment.updateLocale('es', {
-        week: { dow: 0 }
+        week: { dow: 0 },
     });
     $('#birth #dateOfBirth').datetimepicker({
+        format: 'DD/MM/YYYY',
         locale: 'es',
         icons: {
             time: "fa fa-clock-o",
             date: "fa fa-calendar",
             up: "fa fa-arrow-up",
             down: "fa fa-arrow-down"
-        }
+        },
     });
 
     /*******

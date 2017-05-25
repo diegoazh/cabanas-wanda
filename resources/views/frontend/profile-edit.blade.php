@@ -176,7 +176,7 @@
                 preload: true,
                 inputClass: 'form-control selectize-input',
                 dropdownParent: 'body'
-            })
+            });
         });
     </script>
 @endsection
