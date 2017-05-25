@@ -14,7 +14,7 @@
         <h3 class="tt-cottages">{{ (isset($cottage)) ? 'Editar caba&ntilde;a' : 'Registrar Caba&ntilde;a' }}</h3>
     </div>
     <div class="panel-body form-panel">
-        {{ Form::open(['route' => ((isset($cottage)) ? ['cottages.update', $cottage] : 'cottages.store'), 'method' => ((isset($cottage)) ? 'PUT' : 'POST'), 'files' => true, ['id' => (isset($cottage) ? 'frmUpdateCottage' : 'frmCreateCottage')]]) }}
+        {{ Form::open(['route' => ((isset($cottage)) ? ['cottages.update', $cottage] : 'cottages.store'), 'method' => ((isset($cottage)) ? 'PUT' : 'POST'), 'files' => true, 'id' => (isset($cottage) ? 'frmUpdateCottage' : 'frmCreateCottage')]) }}
         <div class="form-group">
             {{ Form::label('number', 'Numero de cabaña', ['class' => 'sr-only']) }}
             <div class="input-group">
@@ -41,7 +41,7 @@
             {{ Form::label('type', 'Tipo de cabaña', ['class' => 'sr-only']) }}
             <div class="input-group">
                 <div class="input-group-addon">Tipo de Caba&ntilde;a</div>
-                {{ Form::select('type', ['simple' => 'Simple', 'matrimonial' => 'Matrimonial'], (isset($cottage)) ? $cottage->type : null, ['placeholder' => ((isset($cottage)) ? null : 'Seleccione el tipo de cabaña'), 'class' => 'form-control'], 'required') }}
+                {{ Form::select('type', ['simple' => 'Simple', 'matrimonial' => 'Matrimonial'], (isset($cottage)) ? $cottage->type : null, ['placeholder' => ((isset($cottage)) ? null : 'Seleccione el tipo de cabaña'), 'class' => 'form-control', 'required']) }}
             </div>
             <div class="help-info">
                 <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
@@ -74,7 +74,7 @@
             {{ Form::label('state', 'Estado', ['class' => 'sr-only']) }}
             <div class="input-group">
                 <div class="input-group-addon">Estado</div>
-                {{ Form::select('state', ['enabled' => 'Habilitada', 'maintenance' => 'Mantenimiento', 'disabled' => 'Deshabilitada'], (isset($cottage)) ? $cottage->state : 'disabled', ['class' => 'form-control'], 'required') }}
+                {{ Form::select('state', ['enabled' => 'Habilitada', 'maintenance' => 'Mantenimiento', 'disabled' => 'Deshabilitada'], (isset($cottage)) ? $cottage->state : 'disabled', ['class' => 'form-control', 'required']) }}
             </div>
             <div class="help-info">
                 <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
