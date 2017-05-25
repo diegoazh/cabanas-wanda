@@ -131,7 +131,7 @@ class CottagesController extends Controller
         $cottage->accommodation = $attributes['accommodation'];
         $cottage->description = $attributes['description'];
         $cottage->price = $attributes['price'];
-        $cottage->images = $cottage->addOrRemoveImages($attributes['images'], $attributes['actualImages'], $attributes['removedImages']);
+        $cottage->images = $cottage->addOrRemoveImages((isset($attributes['images'])) ? $attributes['images'] : null, $attributes['actualImages'], $attributes['removedImages']);
         $cottage->save();
         flash('La cabaña se actualizó correctamente.', 'success');
         return redirect()->route('cottages.index');
