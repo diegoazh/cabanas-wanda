@@ -14,12 +14,12 @@
         <h3 class="tt-cottages">{{ (isset($cottage)) ? 'Editar caba&ntilde;a' : 'Registrar Caba&ntilde;a' }}</h3>
     </div>
     <div class="panel-body form-panel">
-        {{ Form::open(['route' => ((isset($cottage)) ? ['cottages.update', $cottage] : 'cottages.store'), 'method' => ((isset($cottage)) ? 'PUT' : 'POST'), 'files' => true]) }}
+        {{ Form::open(['route' => ((isset($cottage)) ? ['cottages.update', $cottage] : 'cottages.store'), 'method' => ((isset($cottage)) ? 'PUT' : 'POST'), 'files' => true, ['id' => (isset($cottage) ? 'frmUpdateCottage' : 'frmCreateCottage')]]) }}
         <div class="form-group">
             {{ Form::label('number', 'Numero de cabaña', ['class' => 'sr-only']) }}
             <div class="input-group">
                 <div class="input-group-addon">Numero de Caba&ntilde;a</div>
-                {{ Form::number('number', (isset($cottage)) ? $cottage->number : null, ['class' => 'form-control', 'min' => 1, 'max' => 10, 'placeholder' => 'Ingrese el número de la cabaña', (isset($cottage)) ? 'disabled' : 'required']) }}
+                {{ Form::number('number', (isset($cottage)) ? $cottage->number : null, ['id' => 'number', 'class' => 'form-control', 'min' => 1, 'max' => 10, 'placeholder' => 'Ingrese el número de la cabaña', (isset($cottage)) ? 'disabled' : 'required']) }}
             </div>
             <div class="help-info">
                 <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
@@ -123,11 +123,11 @@
         @endif
         <div class="text-center">
             @if(isset($cottage))
-                {{ Form::submit('Actualizar cabaña', ['class' => 'btn btn-primary']) }}
+                {{ Form::submit('Actualizar cabaña', ['class' => 'btn btn-primary', 'id' => 'updateCottage']) }}
                 <a href="{{ route('cottages.index') }}" class="btn btn-warning btn-xs">Volver</a>
             @else
                 {{ Form::reset('Limpiar formulario', ['class' => 'btn btn-default']) }}
-                {{ Form::submit('Registrar cabaña', ['class' => 'btn btn-primary']) }}
+                {{ Form::submit('Registrar cabaña', ['class' => 'btn btn-primary', 'id' => 'createCottage']) }}
             @endif
         </div>
         {{ Form::close() }}
@@ -201,6 +201,11 @@
                         editor.clear();
                     })
                 });
+            });
+            $('#updateCottage').click(function (e) {
+                e.preventDefault();
+                $('#number').removeAttr('disabled');
+                $('#frmUpdateCottage').submit();
             });
         });
     </script>
