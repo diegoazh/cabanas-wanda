@@ -198,8 +198,8 @@ $(document).ready(function () {
         week: { dow: 0 },
     });
     $('#birth #dateOfBirth').datetimepicker({
-        format: 'DD/MM/YYYY',
         locale: 'es',
+        format: 'DD/MM/YYYY',
         icons: {
             time: "fa fa-clock-o",
             date: "fa fa-calendar",
