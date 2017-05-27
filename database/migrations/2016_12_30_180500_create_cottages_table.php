@@ -20,7 +20,7 @@ class CreateCottagesTable extends Migration
             $table->enum('type', ['matrimonial', 'simple']);
             $table->enum('state', ['enabled', 'maintenance', 'disabled'])->default('disabled');
             $table->integer('accommodation');
-            $table->string('description');
+            $table->text('description');
             $table->string('images');
             $table->double('price', 5, 2);
             $table->integer('stars')->nullable();
