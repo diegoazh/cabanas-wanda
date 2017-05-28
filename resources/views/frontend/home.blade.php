@@ -29,13 +29,13 @@
                 </div>
                 <div class="col-md-6">
                     <div class="col-md-12">
-                        <div id="second_slogan" @if(isset($content)) style="background-image: {{ asset("images/frontend/" . $content->img_slogan_two) }}" @endif>
+                        <div id="second_slogan" @if(isset($content)) style="background-image: url({{ asset("images/frontend/" . $content->img_slogan_two) }})" @endif>
                             <h2>@if(isset($content)) {{ $content->tt_slogan_two }} @else ed quam nulla, faucibus at velit ac, pretium vestibulum erat.@endif</h2>
                             <p>@if(isset($content)) {{ $content->desc_slogan_two }} @else Cras molestie neque elit, quis gravida elit blandit vel. Fusce leo augue, vehicula vel cursus sed, tristique non massa. Aenean varius laoreet elementum. Nullam suscipit sapien non enim pulvinar rhoncus. Morbi tristique, nunc quis semper dignissim, augue sapien condimentum ante, at interdum tellus massa pretium magna. Cras varius lacus vitae mauris iaculis pretium. @endif</p>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <div id="third_slogan" @if(isset($content)) style="background-image: {{ asset("images/frontend/" . $content->img_slogan_three) }}" @endif>
+                        <div id="third_slogan" @if(isset($content)) style="background-image: url({{ asset("images/frontend/" . $content->img_slogan_three) }})" @endif>
                             <h2>@if(isset($content)) {{ $content->tt_slogan_three }} @else ed quam nulla, faucibus at velit ac, pretium vestibulum erat. @endif</h2>
                             <p>@if(isset($content)) {{ $content->desc_slogan_three }} @else Cras molestie neque elit, quis gravida elit blandit vel. Fusce leo augue, vehicula vel cursus sed, tristique non massa. Aenean varius laoreet elementum. Nullam suscipit sapien non enim pulvinar rhoncus. Morbi tristique, nunc quis semper dignissim, augue sapien condimentum ante, at interdum tellus massa pretium magna. Cras varius lacus vitae mauris iaculis pretium. @endif</p>
                         </div>
@@ -45,7 +45,7 @@
             <hr class="division handicon">
             <div id="short_messages_2" class="row @if(isset($content)) @if(!$content->show_slogans_456) hidden @endif @endif">
                 <div class="col-md-offset-1 col-md-11">
-                    <div id="fourth_slogan" @if(isset($content)) style="background-image: {{ asset("images/frontend/" . $content->img_slogan_four) }} @endif">
+                    <div id="fourth_slogan" @if(isset($content)) style="background-image: url({{ asset("images/frontend/" . $content->img_slogan_four) }}) @endif">
                         <h2>@if(isset($content)) {{ $content->tt_slogan_four }} @else Donec vitae molestie magna. Pellentesque nec odio congue, cursus velit in, lacinia lorem. @endif</h2>
                         <p>@if(isset($content)) {{ $content->desc_slogan_four }} @else Nunc lobortis ut magna tristique consectetur. Ut maximus ultricies ullamcorper. Etiam a risus lorem. Mauris condimentum ex nunc, eu suscipit lacus tristique at. Donec condimentum dui id porttitor pellentesque. Phasellus maximus non ex et eleifend. Pellentesque facilisis scelerisque turpis sed tristique. Praesent viverra egestas mi. Nam efficitur pulvinar arcu quis egestas. Nunc lobortis ut magna tristique consectetur. Ut maximus ultricies ullamcorper. Etiam a risus lorem. Mauris condimentum ex nunc, eu suscipit lacus tristique at. Donec condimentum dui id porttitor pellentesque. Phasellus maximus non ex et eleifend. Pellentesque facilisis scelerisque turpis sed tristique. Praesent viverra egestas mi. Nam efficitur pulvinar arcu quis egestas. Nunc lobortis ut magna tristique consectetur. Ut maximus ultricies ullamcorper. Etiam a risus lorem. Mauris condimentum ex nunc, eu suscipit lacus tristique at. Donec condimentum dui id porttitor pellentesque. Phasellus maximus non ex et eleifend. Pellentesque facilisis scelerisque turpis sed tristique. Praesent viverra egestas mi. Nam efficitur pulvinar arcu quis egestas. @endif</p>
                     </div>
