@@ -44,7 +44,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if(!$request->isXmlHttpRequest() || $exception instanceof TokenMismatchException){
+        if(!$request->isXmlHttpRequest() && $exception instanceof TokenMismatchException){
             return redirect()->route('login')->with('status', 'session expired');
         }
 
