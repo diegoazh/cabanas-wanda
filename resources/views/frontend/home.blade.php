@@ -31,7 +31,7 @@
                     <div class="col-md-12">
                         <div id="second_slogan" @if(isset($content)) style="background-image: {{ asset("images/frontend/" . $content->img_slogan_two) }}" @endif>
                             <h2>@if(isset($content)) {{ $content->tt_slogan_two }} @else ed quam nulla, faucibus at velit ac, pretium vestibulum erat.@endif</h2>
-                            <p>@if(isset($content)) {{ $content->desc_slogan_one }} @else Cras molestie neque elit, quis gravida elit blandit vel. Fusce leo augue, vehicula vel cursus sed, tristique non massa. Aenean varius laoreet elementum. Nullam suscipit sapien non enim pulvinar rhoncus. Morbi tristique, nunc quis semper dignissim, augue sapien condimentum ante, at interdum tellus massa pretium magna. Cras varius lacus vitae mauris iaculis pretium. @endif</p>
+                            <p>@if(isset($content)) {{ $content->desc_slogan_two }} @else Cras molestie neque elit, quis gravida elit blandit vel. Fusce leo augue, vehicula vel cursus sed, tristique non massa. Aenean varius laoreet elementum. Nullam suscipit sapien non enim pulvinar rhoncus. Morbi tristique, nunc quis semper dignissim, augue sapien condimentum ante, at interdum tellus massa pretium magna. Cras varius lacus vitae mauris iaculis pretium. @endif</p>
                         </div>
                     </div>
                     <div class="col-md-12">
