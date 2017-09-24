@@ -16,6 +16,14 @@ class UsersTableSeeder extends Seeder
         $faker = Faker::create();
         $type = ['frecuente', 'empleado', 'administrador', 'sysadmin'];
 
+        $mantenimito = new User();
+        $mantenimito->name = "Mantenimiento";
+        $mantenimito->lastname = "Interno";
+        $mantenimito->dni = $faker->unique()->numberBetween(15000000, 45000000);
+        $mantenimito->email = "mantenimientoInterno@cabaniasdewanda.com.ar";
+        $mantenimito->password = \Hash::make('Mantenimiento@Interno');
+        $mantenimito->save();
+
         for ($i = 0; $i < 60; $i++)
         {
             $user = new User();
