@@ -19,7 +19,6 @@ class CreateRentalsTable extends Migration
             $table->integer('cottage_id')->unsigned();
             $table->date('from');
             $table->date('to');
-            $table->boolean('own');
             $table->string('description', 200)->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('passenger_id')->unsigned()->nullable();
@@ -31,8 +30,7 @@ class CreateRentalsTable extends Migration
             $table->string('deductionsDescription')->nullable();
             $table->double('finalPayment', 5, 2)->nullable();
             $table->datetime('dateFinalPayment')->nullable();
-            $table->enum('state', ['pendiente', 'confirmada', 'cancelada'])->default('pendiente');
-            $table->enum('cottageState', ['reservada', 'ocupada'])->default('reservada');
+            $table->enum('state', ['pendiente', 'confirmada', 'concretada', 'cancelada'])->default('pendiente');
             $table->boolean('wasRated')->nullable();
             $table->timestamps();
             $table->softDeletes();

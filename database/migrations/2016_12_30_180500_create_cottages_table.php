@@ -15,10 +15,10 @@ class CreateCottagesTable extends Migration
     {
         Schema::create('cottages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('number');
+            $table->integer('number')->unique();
             $table->string('name', 10);
             $table->enum('type', ['matrimonial', 'simple']);
-            $table->enum('state', ['enabled', 'maintenance', 'disabled'])->default('disabled');
+            $table->enum('state', ['enabled', 'disabled'])->default('disabled');
             $table->integer('accommodation');
             $table->text('description');
             $table->string('images');
