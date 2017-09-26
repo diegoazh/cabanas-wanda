@@ -14,7 +14,7 @@ class RentalsController extends Controller
      */
     public function index()
     {
-        //
+        return view('frontend.rentals');
     }
 
     /**
@@ -81,5 +81,15 @@ class RentalsController extends Controller
     public function destroy(Rental $rental)
     {
         //
+    }
+
+    public function queryForCapacityAndDate(Request $request)
+    {
+
+    }
+
+    public function  queryForCottageAndDate(Request $request)
+    {
+
     }
 }

@@ -52,8 +52,14 @@ elixir((mix) => {
             './public/lib/bootstrap/dist/js/bootstrap.min.js',
             './public/lib/clndr/clndr.min.js',
             './public/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
-            './public/lib/selectize/dist/js/standalone/selectize.min.js',
+            './public/lib/selectize/dist/js/standalone/selectize.min.js'
         ], './public/js/app.js')
+        .combine([
+            './node_modules/vue/dist/vue.js',
+            './node_modules/vue-resource/dist/vue-resource.js',
+            './node_modules/vue-router/dist/vue-router.js',
+            './node_modules/vuex/dist/vuex.js',
+        ], './public/js/vue-and-all-friends.js')
         .scripts([
             'backend/main-menu-backend.js',
             'backend/backend.js',

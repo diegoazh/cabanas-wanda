@@ -44,6 +44,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof TokenExpiredException) {
+            return Response::json(['error' => 'Token expirado'], $exception->getStatusCode());
+        } elseif ($exception instanceof TokenInvalidException) {
+            return Response::json(['error' => 'Token inválido'], $exception->getStatusCode());
+        } elseif ($exception instanceof JWTException) {
+            return Response::json(['error' => 'Error procesando el token'], $exception->getStatusCode());
+        }
+
         if(!$request->isXmlHttpRequest() && $exception instanceof TokenMismatchException){
             return redirect()->route('login')->with('status', 'session expired');
         }

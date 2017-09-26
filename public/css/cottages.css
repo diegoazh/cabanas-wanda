@@ -104,6 +104,10 @@ body .container-fluid #content .col-md-8 div.cottage-number {
 }
 body .container-fluid #content .col-md-8 h1 span {
   text-transform: capitalize;
+  font-weight: bolder;
+  font-style: italic;
+  font-size: inherit;
+  text-decoration: underline;
 }
 body .container-fluid #content .col-md-8 #carousel-example-generic {
   border: 10px solid #bfbfbf;

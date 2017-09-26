@@ -30,7 +30,7 @@ class CreateRentalsTable extends Migration
             $table->string('deductionsDescription')->nullable();
             $table->double('finalPayment', 5, 2)->nullable();
             $table->datetime('dateFinalPayment')->nullable();
-            $table->enum('state', ['pendiente', 'confirmada', 'concretada', 'cancelada'])->default('pendiente');
+            $table->enum('state', ['pendiente', 'confirmada', 'concretada', 'finalizada', 'cancelada'])->default('pendiente');
             $table->boolean('wasRated')->nullable();
             $table->timestamps();
             $table->softDeletes();

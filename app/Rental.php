@@ -11,7 +11,7 @@ class Rental extends Model
 
   protected $table = 'rentals';
   protected $dates = ['deleted_at'];
-  protected $fillable = ['codeReservation', 'cottage_id', 'from', 'to', 'own', 'description', 'user_id', 'passenger_id', 'promotion_id', 'totalAmount', 'reservationPayment', 'dateReservationPayment', 'deductions', 'deductionsDescription', 'finalPayment', 'dateFinalPayment', 'state', 'cottageState', 'wasRated'];
+  protected $fillable = ['codeReservation', 'cottage_id', 'from', 'to', 'own', 'description', 'user_id', 'passenger_id', 'promotion_id', 'totalAmount', 'reservationPayment', 'dateReservationPayment', 'deductions', 'deductionsDescription', 'finalPayment', 'dateFinalPayment', 'state', 'wasRated'];
 
   public function cottage()
   {
