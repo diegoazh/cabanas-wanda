@@ -36,14 +36,15 @@ body .container-fluid #header div.col-md-8 {
   min-height: 242px;
 }
 body .container-fluid #header div.col-md-8:after {
-  content: url("/images/logos/logo-cabanas-wanda-190x185.png");
+  content: url('/public/images/logos/logo-cabanas-wanda-190x185.png');
 }
 body .container-fluid .content div.col-md-4 .row {
   min-height: 600px;
   max-height: 600px;
   margin: 5px;
   margin-bottom: 10px;
-  box-shadow: 3px 3px 7px #000000;
+  -webkit-box-shadow: 3px 3px 7px #000000;
+          box-shadow: 3px 3px 7px #000000;
   border: 5px solid #bfbfbf;
 }
 body .container-fluid .content div.col-md-4 .row div.cottage-number {
@@ -62,7 +63,8 @@ body .container-fluid .content div.col-md-4 .row div.cottage-number {
   font-weight: bold;
   font-size: 18px;
   text-shadow: 2px 2px 2px #2e2e2e;
-  box-shadow: 5px 5px 3px #2e2e2e;
+  -webkit-box-shadow: 5px 5px 3px #2e2e2e;
+          box-shadow: 5px 5px 3px #2e2e2e;
 }
 body .container-fluid .content div.col-md-4 .row div.col-md-12 {
   height: 250px;
@@ -79,7 +81,8 @@ body .container-fluid .content div.col-md-4 .row div.col-md-12 table tbody tr td
 }
 body .container-fluid .content div.col-md-4 .row:hover {
   border: 8px solid #9fd7db;
-  box-shadow: 9px 9px 7px #2e2e2e;
+  -webkit-box-shadow: 9px 9px 7px #2e2e2e;
+          box-shadow: 9px 9px 7px #2e2e2e;
 }
 body .container-fluid #content .col-md-8 {
   padding-top: 25px;
@@ -100,7 +103,8 @@ body .container-fluid #content .col-md-8 div.cottage-number {
   font-weight: bold;
   font-size: 18px;
   text-shadow: 2px 2px 2px #2e2e2e;
-  box-shadow: 5px 5px 3px #2e2e2e;
+  -webkit-box-shadow: 5px 5px 3px #2e2e2e;
+          box-shadow: 5px 5px 3px #2e2e2e;
 }
 body .container-fluid #content .col-md-8 h1 span {
   text-transform: capitalize;
@@ -160,8 +164,8 @@ body .container-fluid #content .col-md-8 div.reservation-section {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('public/lib/bootstrap/fonts/glyphicons-halflings-regular.eot');
-  src: url('public/lib/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('public/lib/bootstrap/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('public/lib/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('public/lib/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('public/lib/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('/public/lib/bootstrap/fonts/glyphicons-halflings-regular.eot');
+  src: url('/public/lib/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/public/lib/bootstrap/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('/public/lib/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('/public/lib/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('/public/lib/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls {
   width: 100%;
@@ -212,7 +216,8 @@ body .container-fluid #content .col-md-8 div.reservation-section div .clndr .cln
   font-weight: normal;
   text-align: center;
   vertical-align: middle;
-  touch-action: manipulation;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
@@ -252,6 +257,7 @@ body .container-fluid #content .col-md-8 div.reservation-section div .clndr .cln
 body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-next-button.active {
   outline: 0;
   background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-next-button.disabled,
@@ -260,6 +266,7 @@ fieldset[disabled] body .container-fluid #content .col-md-8 div.reservation-sect
   cursor: not-allowed;
   opacity: 0.65;
   filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 abody .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-next-button.disabled,
@@ -319,7 +326,7 @@ body .container-fluid #content .col-md-8 div.reservation-section div .clndr .cln
   background-color: #fff;
 }
 body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-next-button:after {
-  content: '\f138';
+  content: '\F138';
   font-family: 'FontAwesome';
   margin-left: 5px;
 }
@@ -332,7 +339,8 @@ body .container-fluid #content .col-md-8 div.reservation-section div .clndr .cln
   font-weight: normal;
   text-align: center;
   vertical-align: middle;
-  touch-action: manipulation;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
@@ -372,6 +380,7 @@ body .container-fluid #content .col-md-8 div.reservation-section div .clndr .cln
 body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-previous-button.active {
   outline: 0;
   background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-previous-button.disabled,
@@ -380,6 +389,7 @@ fieldset[disabled] body .container-fluid #content .col-md-8 div.reservation-sect
   cursor: not-allowed;
   opacity: 0.65;
   filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 abody .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-previous-button.disabled,
@@ -439,7 +449,7 @@ body .container-fluid #content .col-md-8 div.reservation-section div .clndr .cln
   background-color: #fff;
 }
 body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-previous-button:before {
-  content: '\f137';
+  content: '\F137';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
@@ -450,6 +460,7 @@ body .container-fluid #content .col-md-8 div.reservation-section div .clndr .cln
   table-layout: fixed;
   width: 100%;
   border: 7px solid #bfbfbf;
+  -webkit-box-shadow: 7px 7px 5px #2e2e2e;
   box-shadow: 7px 7px 5px #2e2e2e;
 }
 body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table > thead > tr > th,
@@ -545,7 +556,8 @@ body .container-fluid #content .col-md-8 div.reservation-section div .clndr .cln
   background: #ddd;
 }
 body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day .day-contents {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   padding: 8px;
   font-size: 12px;
   text-align: right;
@@ -585,5 +597,3 @@ body .container-fluid #content .col-md-8 div.reservation-section div .clndr-prev
 body .container-fluid #content #footer {
   margin-top: 5px;
 }
-
-/*# sourceMappingURL=cottages.css.map */

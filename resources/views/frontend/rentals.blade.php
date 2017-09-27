@@ -11,4 +11,5 @@
 @endsection
 
 @section('script')
+    <script type="text/javascript" src=""></script>
 @endsection

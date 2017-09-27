@@ -53,13 +53,7 @@ elixir((mix) => {
             './public/lib/clndr/clndr.min.js',
             './public/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
             './public/lib/selectize/dist/js/standalone/selectize.min.js'
-        ], './public/js/app.js')
-        .combine([
-            './node_modules/vue/dist/vue.js',
-            './node_modules/vue-resource/dist/vue-resource.js',
-            './node_modules/vue-router/dist/vue-router.js',
-            './node_modules/vuex/dist/vuex.js',
-        ], './public/js/vue-and-all-friends.js')
+        ], './public/js/libraries.js')
         .scripts([
             'backend/main-menu-backend.js',
             'backend/backend.js',
@@ -70,6 +64,9 @@ elixir((mix) => {
             'frontend/cottage-show.js',
             'frontend/profile-edit.js',
         ], './public/js/frontend.js')
+        .scripts([
+            'app.js'
+        ], './public/js/app.js')
         .version([
             './public/css/app.css',
             './public/css/clndr.css',
@@ -79,9 +76,10 @@ elixir((mix) => {
             './public/css/cottages.css',
             './public/css/profile.css',
             './public/css/backend.css',
-            './public/js/app.js',
+            './public/js/libraries.js',
             './public/js/backend.js',
             './public/js/frontend.js',
+            './public/js/app.js'
         ])
         .browserSync({
             proxy: 'homestead.app'
