@@ -8,8 +8,11 @@
 @endsection
 
 @section('content')
+    <div id="vue-app">
+        <example></example>
+    </div>
 @endsection
 
-@section('script')
-    <script type="text/javascript" src=""></script>
+@section('scripts')
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 @endsection

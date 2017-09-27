@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+
+// No olvidar hacer pasar las peticiones por el middleware jwt.auth
+
+Route::get('query', 'RentalsController@queryForCapacityAndDate')->name('api.rentals.index');

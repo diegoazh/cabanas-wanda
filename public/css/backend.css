@@ -27,7 +27,7 @@ body {
 }
 body .container-fluid {
   min-height: 985px;
-  background-image: url('/public/images/cabanias/cabanas2.jpg');
+  background-image: url(/images/cabanas2.jpg?ed6c34914de6a04575f4665e7ce28864);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -44,7 +44,7 @@ body .container-fluid #header nav.navbar .container .navbar-header a span#app_na
   top: -25%;
 }
 body .container-fluid #header nav.navbar .container .navbar-header a:before {
-  content: url('/public/images/logos/logo-cabanas-wanda-45x44.png');
+  content: url(/images/logo-cabanas-wanda-45x44.png?320329eca98224e52337c86320d98632);
   width: 50%;
   height: auto;
   margin-right: 5px;

@@ -36,7 +36,7 @@ body .container-fluid #header div.col-md-8 {
   min-height: 242px;
 }
 body .container-fluid #header div.col-md-8:after {
-  content: url('/public/images/logos/logo-cabanas-wanda-190x185.png');
+  content: url(/images/logo-cabanas-wanda-190x185.png?30ec3eadfc1f196ee0822d5d210280d1);
 }
 body .container-fluid .content div.col-md-4 .row {
   min-height: 600px;
@@ -164,8 +164,8 @@ body .container-fluid #content .col-md-8 div.reservation-section {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('/public/lib/bootstrap/fonts/glyphicons-halflings-regular.eot');
-  src: url('/public/lib/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/public/lib/bootstrap/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('/public/lib/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('/public/lib/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('/public/lib/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url(/fonts/glyphicons-halflings-regular.eot?f4769f9bdb7466be65088239c12046d1);
+  src: url(/fonts/glyphicons-halflings-regular.eot?f4769f9bdb7466be65088239c12046d1?#iefix) format('embedded-opentype'), url(/fonts/glyphicons-halflings-regular.woff2?448c34a56d699c29117adc64c43affeb) format('woff2'), url(/fonts/glyphicons-halflings-regular.woff?fa2772327f55d8198301fdb8bcfc8158) format('woff'), url(/fonts/glyphicons-halflings-regular.ttf?e18bbf611f2a2e43afc071aa2f4e1512) format('truetype'), url(/fonts/glyphicons-halflings-regular.svg?89889688147bd7575d6327160d64e760#glyphicons_halflingsregular) format('svg');
 }
 body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls {
   width: 100%;

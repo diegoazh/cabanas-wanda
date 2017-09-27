@@ -35,12 +35,12 @@ mix.copy([
     .less('resources/assets/less/frontend/profile.less', './public/css/profile.css')
     .less('resources/assets/less/backend/backend.less', './public/css/backend.css')
     .combine([
-        './node_modules/lodash/lodash.min.js',
         './public/lib/jquery/dist/jquery.min.js',
+        './node_modules/lodash/lodash.min.js',
         './public/lib/moment/min/moment-with-locales.min.js',
         './public/lib/bootstrap/dist/js/bootstrap.min.js',
-        './public/lib/clndr/clndr.min.js',
         './public/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+        './public/lib/clndr/clndr.min.js',
         './public/lib/selectize/dist/js/standalone/selectize.min.js'
     ], './public/js/libraries.js')
     .js([

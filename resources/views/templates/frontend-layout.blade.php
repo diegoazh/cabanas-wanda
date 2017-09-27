@@ -42,8 +42,7 @@
     </div>
 </div>
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/') }}"></script>
+<script src="{{ asset('js/libraries.js') }}"></script>
 <script src="{{ asset('js/frontend.js') }}"></script>
 @yield('scripts')
 </body>

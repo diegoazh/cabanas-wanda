@@ -85,7 +85,7 @@ class RentalsController extends Controller
 
     public function queryForCapacityAndDate(Request $request)
     {
-
+        return response()->json('Excelente trabajo diego, pero estas atrasado!', 200);
     }
 
     public function  queryForCottageAndDate(Request $request)

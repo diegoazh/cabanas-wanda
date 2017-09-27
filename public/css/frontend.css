@@ -39,7 +39,7 @@ body .container-fluid #header {
   height: 606.5px;
   min-height: 67%;
   max-height: 67%;
-  background-image: url('/public/images/frontend/cabanas1.jpg');
+  background-image: url(/images/cabanas1.jpg?cce046055ca09e61318a08b9368fc97c);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center 55%;
@@ -50,7 +50,7 @@ body .container-fluid #header #overlay {
   height: inherit;
   opacity: 0;
   background-color: #333333;
-  background-image: url('/public/images/frontend/jaguar.jpg');
+  background-image: url(/images/jaguar.jpg?a583257bc6680456672d9b3ea8affb59);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: left 35%;
@@ -82,7 +82,7 @@ body .container-fluid #header nav.navbar .container .navbar-header a span#app_na
   top: -25%;
 }
 body .container-fluid #header nav.navbar .container .navbar-header a:before {
-  content: url('/public/images/logos/logo-cabanas-wanda-45x44.png');
+  content: url(/images/logo-cabanas-wanda-45x44.png?320329eca98224e52337c86320d98632);
   width: 50%;
   height: auto;
   margin-right: 5px;
@@ -136,7 +136,7 @@ body .container-fluid #header div.col-md-8 h1 small {
   font-size: 87%;
 }
 body .container-fluid #header div.col-md-8:after {
-  content: url('/public/images/logos/logo-cabanas-wanda-390x380.png');
+  content: url(/images/logo-cabanas-wanda-390x380.png?4aeb48262d867e2f7d57194bd0a35956);
   position: relative;
   top: 4%;
   left: 6%;
@@ -145,7 +145,7 @@ body .container-fluid .row div .alert {
   margin-top: 1.5%;
 }
 body .container-fluid #content {
-  background-image: url('/public/images/frontend/dibujo-tucan.jpg');
+  background-image: url(/images/dibujo-tucan.jpg?e20d6be01100e58edd0eab913446f14c);
   background-repeat: no-repeat;
   background-position: 5% 15%;
   min-height: 50%;
@@ -157,6 +157,7 @@ body .container-fluid #content hr.division {
   margin-bottom: 100px;
   border-top: 1px solid #d4dfc4;
   border-bottom: 1px solid #d4dfc4;
+  overflow: visible;
 }
 body .container-fluid #content hr.division:before {
   content: "\F313";
@@ -273,7 +274,7 @@ body .container-fluid #content section .description #short_messeges div div #thi
 }
 body .container-fluid #content section .description #short_messeges div div #second_slogan {
   background-color: #99cbc0;
-  background-image: url('/public/images/cabanias/cabanas8.jpg');
+  background-image: url(/images/cabanas8.jpg?5e668287ac3e39e6518b0429fa83d870);
   background-repeat: no-repeat;
   background-size: cover;
   border: 3px solid #d4dfc4;
@@ -282,7 +283,7 @@ body .container-fluid #content section .description #short_messeges div div #sec
 }
 body .container-fluid #content section .description #short_messeges div div #third_slogan {
   background-color: #99cbc0;
-  background-image: url('/public/images/cabanias/cabanas12.jpg');
+  background-image: url(/images/cabanas12.jpg?6baf81e3c3c7e715f2acb393b3b069ff);
   background-repeat: no-repeat;
   background-size: cover;
   border: 3px solid #d4dfc4;
@@ -321,7 +322,7 @@ body .container-fluid #content section .description #short_messages_2 div #sixth
 }
 body .container-fluid #content section .description #short_messages_2 div #fourth_slogan {
   min-height: 300px;
-  background-image: url('/public/images/cabanias/cabanas7.jpg');
+  background-image: url(/images/cabanas7.jpg?7a8e3c1b0af282d550a3f3c0f6ac4e02);
   background-repeat: no-repeat;
   background-size: cover;
 }
