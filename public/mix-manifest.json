@@ -1,6 +1,6 @@
 {
-    "/js/app.js": "/js/app.js?id=43dc71bdb5d830466228",
-    "/js/backend.js": "/js/backend.js?id=34de019d6f3898aee179",
+    "/js/app.js": "/js/app.js?id=79df8180a780c70b7687",
+    "/js/backend.js": "/js/backend.js?id=113a6bce9b2d70716c8f",
     "/css/frontend.css": "/css/frontend.css?id=cc5426329734fbcc5156",
     "/css/cottages.css": "/css/cottages.css?id=b36c182840da8fed4c90",
     "/css/profile.css": "/css/profile.css?id=e6e7021c3d6b51e2a337",
@@ -20,7 +20,7 @@
     "css/profile.css": "css/profile.css?id=e6e7021c3d6b51e2a337",
     "css/backend.css": "css/backend.css?id=a16066cd5e0e4da9ec42",
     "js/libraries.js": "js/libraries.js?id=864302fde6c020cfcc33",
-    "js/backend.js": "js/backend.js?id=34de019d6f3898aee179",
+    "js/backend.js": "js/backend.js?id=113a6bce9b2d70716c8f",
     "js/frontend.js": "js/frontend.js?id=e3e823b046b08b2deab5",
-    "js/app.js": "js/app.js?id=43dc71bdb5d830466228"
+    "js/app.js": "js/app.js?id=79df8180a780c70b7687"
 }

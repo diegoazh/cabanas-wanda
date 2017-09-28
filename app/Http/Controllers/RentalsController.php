@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cottage;
 use App\Rental;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RentalsController extends Controller
 {
@@ -15,7 +16,18 @@ class RentalsController extends Controller
      */
     public function index()
     {
-        return view('frontend.rentals');
+        $administration = 0;
+        $user = 0;
+
+        if (Auth::check()) {
+            if (Auth::user()->isAdmin() || Auth::user()->isEmployed()) {
+                $administration = true;
+            } else {
+                $user = !empty(Auth::user()->dni) ? Auth::user()->dni : (!empty(Auth::user()->passport) ? Auth::user()->passport : Auth::user()->email);
+            }
+        }
+
+        return view('frontend.rentals')->with(compact('administration', 'user'));
     }
 
     /**

@@ -29360,7 +29360,7 @@ var render = function() {
             _vm._l(_vm.quantityOrCottages, function(value) {
               return _c(
                 "option",
-                { domProps: { value: value.id ? value.id : value } },
+                { domProps: { value: value.number ? value.number : value } },
                 [_vm._v(_vm._s(value.name ? value.name : value))]
               )
             })

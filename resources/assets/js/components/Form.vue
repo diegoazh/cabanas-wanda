@@ -6,7 +6,7 @@
                 <div class="input-group">
                     <div class="input-group-addon">¿Cuantas personas son?</div>
                     <select v-model="choice" name="capacidad" id="capacidad" class="form-control">
-                        <option v-for="value in quantityOrCottages" :value="value.id ? value.id : value">{{ value.name ? value.name : value }}</option>
+                        <option v-for="value in quantityOrCottages" :value="value.number ? value.number : value">{{ value.name ? value.name : value }}</option>
                     </select>
                 </div>
             </div>

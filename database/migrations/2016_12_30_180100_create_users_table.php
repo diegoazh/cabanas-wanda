@@ -20,8 +20,8 @@ class CreateUsersTable extends Migration
             $table->enum('genre', ['m', 'f', 'o'])->default('m');
             $table->date('dateOfBirth')->nullable();
             $table->integer('country_id')->unsigned()->nullable();
-            $table->bigInteger('dni')->unique();
-            $table->string('passport', 20)->nullable();
+            $table->bigInteger('dni')->unique()->nullable();
+            $table->string('passport', 20)->unique()->nullable();
             $table->string('email', 50)->unique();
             $table->bigInteger('celphone')->nullable();
             $table->bigInteger('phone')->nullable();

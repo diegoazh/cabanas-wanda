@@ -42,11 +42,11 @@ class CottagesController extends Controller
             $filename = 'testText.txt';
             $contents = Storage::disk('public')->get($filename);
         }
-        catch (Illuminate\Filesystem\FileNotFoundException $exception)
+        catch (\Illuminate\Filesystem\FileNotFoundException $exception)
         {
             die("No existe el archivo");
         }
-        return view('backend.draftCottage-create')->with('contents', $contents);
+        return view('backend.cottage-create')->with('contents', $contents);
     }
 
     /**
@@ -71,7 +71,7 @@ class CottagesController extends Controller
             return redirect()->back()->withInput()->withErrors($v->errors());
         }
         $files = $request->file('images'); // seleccionamos las imágenes del request.
-        $cottage = new Cottage($request->all()); // creamos el nuevo objeto draftCottage
+        $cottage = new Cottage($request->all()); // creamos el nuevo objeto cottage
         $cottage->images = $cottage->addOrRemoveImages($files); // Ver el metodo del modelo allí se procesan las imágenes.
         $cottage->save(); // guardamos el objeto en la DB
 
@@ -101,7 +101,7 @@ class CottagesController extends Controller
      */
     public function edit(Cottage $cottage)
     {
-        return view('backend.draftCottage-create')->with('draftCottage', $cottage);
+        return view('backend.cottage-create')->with('cottage', $cottage);
     }
 
     /**
