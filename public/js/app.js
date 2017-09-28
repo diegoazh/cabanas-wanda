@@ -134,7 +134,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
     },
     mounted: function mounted() {
-        this.dateFrom = this.dateTo = this.defineDate();
+        this.dateFrom = this.defineDate();
+        this.dateTo = this.dateFrom;
     },
     data: function data() {
         return {
@@ -155,14 +156,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         quantityOrCottages: function quantityOrCottages() {
             return this.$store.state.isForCottage ? this.$store.state.cottages : 50;
-        },
-        defineDate: function defineDate() {
-            var verify = setTimeOut(function () {
-                if (window.myInfo) {
-                    return window.myInfo.basicOne ? __WEBPACK_IMPORTED_MODULE_2_moment___default()().format('DD/MM/YYYY') : __WEBPACK_IMPORTED_MODULE_2_moment___default()().add(2, 'd').format('DD/MM/YYYY');
-                    clearTimeOut(verify);
-                }
-            }, 1000);
         }
     },
     methods: {
@@ -174,6 +167,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.draftCottage = this.choice;
                 this.choice = this.drafQuantity;
             }
+        },
+        defineDate: function defineDate() {
+            var verify = window.setTimeout(function () {
+                if (window.myInfo) {
+                    return window.myInfo.basicOne ? __WEBPACK_IMPORTED_MODULE_2_moment___default()().format('DD/MM/YYYY') : __WEBPACK_IMPORTED_MODULE_2_moment___default()().add(2, 'd').format('DD/MM/YYYY');
+                    clearTimeout(verify);
+                }
+            }, 1000);
         }
     }
 });
@@ -299,7 +300,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -41718,13 +41719,14 @@ module.exports = Vue$3;
 
 "use strict";
 /* unused harmony export Store */
+/* unused harmony export install */
 /* unused harmony export mapState */
 /* unused harmony export mapMutations */
 /* unused harmony export mapGetters */
 /* unused harmony export mapActions */
 /* unused harmony export createNamespacedHelpers */
 /**
- * vuex v2.4.0
+ * vuex v2.4.1
  * (c) 2017 Evan You
  * @license MIT
  */
@@ -41830,7 +41832,7 @@ var Module = function Module (rawModule, runtime) {
   this.state = (typeof rawState === 'function' ? rawState() : rawState) || {};
 };
 
-var prototypeAccessors$1 = { namespaced: {} };
+var prototypeAccessors$1 = { namespaced: { configurable: true } };
 
 prototypeAccessors$1.namespaced.get = function () {
   return !!this._rawModule.namespaced
@@ -41998,6 +42000,13 @@ var Store = function Store (options) {
   var this$1 = this;
   if ( options === void 0 ) options = {};
 
+  // Auto install if it is not done yet and `window` has `Vue`.
+  // To allow users to avoid auto-installation in some cases,
+  // this code should be placed here. See #731
+  if (!Vue && typeof window !== 'undefined' && window.Vue) {
+    install(window.Vue);
+  }
+
   if (true) {
     assert(Vue, "must call Vue.use(Vuex) before creating a store instance.");
     assert(typeof Promise !== 'undefined', "vuex requires a Promise polyfill in this browser.");
@@ -42054,7 +42063,7 @@ var Store = function Store (options) {
   }
 };
 
-var prototypeAccessors = { state: {} };
+var prototypeAccessors = { state: { configurable: true } };
 
 prototypeAccessors.state.get = function () {
   return this._vm._data.$$state
@@ -42452,7 +42461,7 @@ function unifyObjectStyle (type, payload, options) {
 }
 
 function install (_Vue) {
-  if (Vue) {
+  if (Vue && _Vue === Vue) {
     if (true) {
       console.error(
         '[vuex] already installed. Vue.use(Vuex) should be called only once.'
@@ -42462,11 +42471,6 @@ function install (_Vue) {
   }
   Vue = _Vue;
   applyMixin(Vue);
-}
-
-// auto install in dist mode
-if (typeof window !== 'undefined' && window.Vue) {
-  install(window.Vue);
 }
 
 var mapState = normalizeNamespace(function (namespace, states) {
@@ -42502,15 +42506,21 @@ var mapMutations = normalizeNamespace(function (namespace, mutations) {
     var key = ref.key;
     var val = ref.val;
 
-    val = namespace + val;
     res[key] = function mappedMutation () {
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
 
-      if (namespace && !getModuleByNamespace(this.$store, 'mapMutations', namespace)) {
-        return
+      var commit = this.$store.commit;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapMutations', namespace);
+        if (!module) {
+          return
+        }
+        commit = module.context.commit;
       }
-      return this.$store.commit.apply(this.$store, [val].concat(args))
+      return typeof val === 'function'
+        ? val.apply(this, [commit].concat(args))
+        : commit.apply(this.$store, [val].concat(args))
     };
   });
   return res
@@ -42545,15 +42555,21 @@ var mapActions = normalizeNamespace(function (namespace, actions) {
     var key = ref.key;
     var val = ref.val;
 
-    val = namespace + val;
     res[key] = function mappedAction () {
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
 
-      if (namespace && !getModuleByNamespace(this.$store, 'mapActions', namespace)) {
-        return
+      var dispatch = this.$store.dispatch;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapActions', namespace);
+        if (!module) {
+          return
+        }
+        dispatch = module.context.dispatch;
       }
-      return this.$store.dispatch.apply(this.$store, [val].concat(args))
+      return typeof val === 'function'
+        ? val.apply(this, [dispatch].concat(args))
+        : dispatch.apply(this.$store, [val].concat(args))
     };
   });
   return res
@@ -42595,13 +42611,14 @@ function getModuleByNamespace (store, helper, namespace) {
 var index_esm = {
   Store: Store,
   install: install,
-  version: '2.4.0',
+  version: '2.4.1',
   mapState: mapState,
   mapMutations: mapMutations,
   mapGetters: mapGetters,
   mapActions: mapActions,
   createNamespacedHelpers: createNamespacedHelpers
 };
+
 
 /* harmony default export */ __webpack_exports__["a"] = (index_esm);
 
@@ -42878,18 +42895,29 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
     state: {
         cottages: [],
         rentals: null,
-        isForCottage: false
+        isForCottage: false,
+        isAdmin: false,
+        user: ''
     },
     mutations: {
-        setRentals: function setRentals(state, rentals) {
+        mRentals: function mRentals(state, rentals) {
             state.rentals = rentals;
         },
-        setCottages: function setCottages(state, cottages) {
+        mCottages: function mCottages(state, cottages) {
             state.cottages = cottages;
         },
-        toggleIsForCottage: function toggleIsForCottage(state, bool) {
+        mIsForCottage: function mIsForCottage(state, bool) {
             state.isForCottage = bool;
+        },
+        mIsAdmin: function mIsAdmin(state, admin) {
+            state.isAdmin = admin;
+        },
+        mUser: function mUser(state, user) {
+            state.user = user;
         }
+    },
+    actions: {
+        setRentals: function setRentals() {}
     }
 }));
 

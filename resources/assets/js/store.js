@@ -7,17 +7,28 @@ export default new Vuex.Store({
     state: {
         cottages: [],
         rentals: null,
-        isForCottage: false
+        isForCottage: false,
+        isAdmin: false,
+        user: ''
     },
     mutations: {
-        setRentals(state, rentals) {
+        mRentals(state, rentals) {
             state.rentals = rentals;
         },
-        setCottages(state, cottages) {
+        mCottages(state, cottages) {
             state.cottages = cottages;
         },
-        toggleIsForCottage(state, bool) {
+        mIsForCottage(state, bool) {
             state.isForCottage = bool;
+        },
+        mIsAdmin(state, admin) {
+            state.isAdmin = admin;
+        },
+        mUser(state, user) {
+          state.user = user;
         }
+    },
+    actions: {
+        setRentals(){}
     }
 });
