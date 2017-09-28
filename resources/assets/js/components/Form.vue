@@ -51,16 +51,21 @@
         created() {
             EventBus.$on('choice-change', () => this.previousChoice());
         },
+        mounted() {
+          this.dateFrom = this.dateTo = this.defineDate();
+        },
         data() {
             return {
                 choice: 1,
                 drafQuantity: 1,
                 draftCottage: 1,
-                dateFrom: moment().add(1, 'd').format('DD/MM/YYYY'),
-                dateTo: moment().add(1, 'd').format('DD/MM/YYYY'),
+                dateFrom: moment().add(2, 'd').format('DD/MM/YYYY'),
+                dateTo: moment().add(2, 'd').format('DD/MM/YYYY'),
                 config: {
                     locale: 'es',
-                    format: 'DD/MM/YYYY'
+                    format: 'DD/MM/YYYY',
+                    minDate: this.date,
+                    maxDate: this.date
                 }
             }
         },
@@ -68,6 +73,14 @@
             quantityOrCottages() {
                 return this.$store.state.isForCottage ? this.$store.state.cottages : 50;
             },
+            defineDate() {
+                const verify = window.setTimeOut(() => {
+                    if (window.myInfo) {
+                        return window.myInfo.basicOne ? moment().format('DD/MM/YYYY') : moment().add(2, 'd').format('DD/MM/YYYY');
+                        clearTimeOut(verify);
+                    }
+                }, 1000);
+            }
         },
         methods: {
             previousChoice() {

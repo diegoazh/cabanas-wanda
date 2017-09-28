@@ -133,16 +133,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return _this.previousChoice();
         });
     },
+    mounted: function mounted() {
+        this.dateFrom = this.dateTo = this.defineDate();
+    },
     data: function data() {
         return {
             choice: 1,
             drafQuantity: 1,
             draftCottage: 1,
-            dateFrom: __WEBPACK_IMPORTED_MODULE_2_moment___default()().add(1, 'd').format('DD/MM/YYYY'),
-            dateTo: __WEBPACK_IMPORTED_MODULE_2_moment___default()().add(1, 'd').format('DD/MM/YYYY'),
+            dateFrom: __WEBPACK_IMPORTED_MODULE_2_moment___default()().add(2, 'd').format('DD/MM/YYYY'),
+            dateTo: __WEBPACK_IMPORTED_MODULE_2_moment___default()().add(2, 'd').format('DD/MM/YYYY'),
             config: {
                 locale: 'es',
-                format: 'DD/MM/YYYY'
+                format: 'DD/MM/YYYY',
+                minDate: this.date,
+                maxDate: this.date
             }
         };
     },
@@ -150,6 +155,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         quantityOrCottages: function quantityOrCottages() {
             return this.$store.state.isForCottage ? this.$store.state.cottages : 50;
+        },
+        defineDate: function defineDate() {
+            var verify = setTimeOut(function () {
+                if (window.myInfo) {
+                    return window.myInfo.basicOne ? __WEBPACK_IMPORTED_MODULE_2_moment___default()().format('DD/MM/YYYY') : __WEBPACK_IMPORTED_MODULE_2_moment___default()().add(2, 'd').format('DD/MM/YYYY');
+                    clearTimeOut(verify);
+                }
+            }, 1000);
         }
     },
     methods: {
@@ -286,7 +299,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
