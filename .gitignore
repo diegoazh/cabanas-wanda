@@ -1,5 +1,5 @@
 /node_modules
-/lib
+/public/lib
 /public/storage
 /public/images
 /storage/*.key
