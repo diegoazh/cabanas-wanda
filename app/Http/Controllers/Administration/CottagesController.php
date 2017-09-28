@@ -46,7 +46,7 @@ class CottagesController extends Controller
         {
             die("No existe el archivo");
         }
-        return view('backend.cottage-create')->with('contents', $contents);
+        return view('backend.draftCottage-create')->with('contents', $contents);
     }
 
     /**
@@ -71,7 +71,7 @@ class CottagesController extends Controller
             return redirect()->back()->withInput()->withErrors($v->errors());
         }
         $files = $request->file('images'); // seleccionamos las imágenes del request.
-        $cottage = new Cottage($request->all()); // creamos el nuevo objeto cottage
+        $cottage = new Cottage($request->all()); // creamos el nuevo objeto draftCottage
         $cottage->images = $cottage->addOrRemoveImages($files); // Ver el metodo del modelo allí se procesan las imágenes.
         $cottage->save(); // guardamos el objeto en la DB
 
@@ -101,7 +101,7 @@ class CottagesController extends Controller
      */
     public function edit(Cottage $cottage)
     {
-        return view('backend.cottage-create')->with('cottage', $cottage);
+        return view('backend.draftCottage-create')->with('draftCottage', $cottage);
     }
 
     /**
@@ -128,6 +128,7 @@ class CottagesController extends Controller
         $attributes = $request->all();
         $cottage->name = $attributes['name'];
         $cottage->type = $attributes['type'];
+        $cottage->state = $attributes['state'];
         $cottage->accommodation = $attributes['accommodation'];
         $cottage->description = $attributes['description'];
         $cottage->price = $attributes['price'];

@@ -6,6 +6,8 @@ import Rentals from './components/Rentals.vue'
 
 Vue.use(VueResource);
 
+window.EventBus = new Vue();
+
 const app = new Vue({
     el: '#vue-app',
     store,
@@ -15,9 +17,9 @@ const app = new Vue({
     },
     methods: {
         prueba() {
-            this.$http.get('http://homestead.app/api/query')
+            this.$http.get('http://homestead.app/api/basic')
                 .then(response => {
-                    this.$store.commit('setRentals', response.body);
+                    this.$store.commit('setCottages', response.body.cottages);
                 });
         }
     }

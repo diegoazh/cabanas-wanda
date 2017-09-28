@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <h1 class="text-center">Reservas</h1>
-                <div class="alert alert-info text-right">
+                <div class="alert alert-info text-center">
                     Esta consultando por: <b>{{ stateButton ? 'Cabaña' : 'Capacidad' }}</b>
                 </div>
             </div>
@@ -15,7 +15,7 @@
             <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
                 <h1>
                     <a id="link-onOff" :class="{'text-muted': !stateButton, 'text-primary': stateButton}" role="button" @click="toggleButton">
-                        <icon-onoff :icon="stateButton ? 'on' : 'off'"></icon-onoff>
+                        <icon-app iconId="iconImage" :iconImage="stateButton ? 'toggle-on' : 'toggle-off'"></icon-app>
                     </a>
                 </h1>
             </div>
@@ -27,12 +27,12 @@
 </template>
 
 <script>
-    import Icon from './IconOnOff.vue'
+    import Icon from './Icon.vue'
     import Form from './Form.vue'
 
     export default {
         components: {
-            'icon-onoff': Icon,
+            'icon-app': Icon,
             'app-form': Form
         },
         data() {
@@ -47,7 +47,9 @@
         },
         methods: {
             toggleButton() {
-              this.stateButton = !this.stateButton;
+              this.$store.commit('toggleIsForCottage', !this.$store.state.isForCottage);
+              this.stateButton = this.$store.state.isForCottage;
+              EventBus.$emit('choice-change');
             }
         }
     }
@@ -63,5 +65,9 @@
     a#link-onOff {
         font-size: inherit;
         font-weight: inherit;
+    }
+    i#iconImage {
+        position: relative;
+        top: -25px;
     }
 </style>

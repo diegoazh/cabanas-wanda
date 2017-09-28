@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cottage;
 use App\Rental;
 use Illuminate\Http\Request;
 
@@ -81,6 +82,13 @@ class RentalsController extends Controller
     public function destroy(Rental $rental)
     {
         //
+    }
+
+    public function basicInformation(Request $request)
+    {
+        $cottages = Cottage::where('state', '!=', 'disabled')->orderBy('number')->get();
+
+        return response()->json(compact('cottages'), 200);
     }
 
     public function queryForCapacityAndDate(Request $request)

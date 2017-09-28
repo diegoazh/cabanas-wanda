@@ -16,4 +16,4 @@ use Illuminate\Http\Request;
 
 // No olvidar hacer pasar las peticiones por el middleware jwt.auth
 
-Route::get('query', 'RentalsController@queryForCapacityAndDate')->name('api.rentals.index');
+Route::get('basic', 'RentalsController@basicInformation')->name('api.rentals.basic');

@@ -61,7 +61,7 @@ elixir((mix) => {
         .scripts([
             'frontend/frontend.js',
             'frontend/cottages-index.js',
-            'frontend/cottage-show.js',
+            'frontend/draftCottage-show.js',
             'frontend/profile-edit.js',
         ], './public/js/frontend.js')
         .scripts([

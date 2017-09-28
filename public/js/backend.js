@@ -275,7 +275,7 @@ $(document).ready(function (e) {
     /******************************************************************
      *  Button delete Cottage
      * *****************************************************************/
-    $('.delete-cottage').click(function (event) {
+    $('.delete-draftCottage').click(function (event) {
         texts = {
             name: false,
             title: 'Esta seguro que desea eliminar la cabaña',

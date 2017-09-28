@@ -19,7 +19,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                 'backend.panel',
                 'backend.home-page',
                 'backend.cottages',
-                'backend.cottage-create',
+                'backend.draftCottage-create',
                 'backend.users'
             ],
             'App\Http\ViewComposers\RegisterViewComposer' => 'auth.register'
