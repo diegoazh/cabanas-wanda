@@ -9,9 +9,7 @@
 @endsection
 
 @section('content')
-    <div id="vue-app">
-        <example></example>
-    </div>
+    <div id="vue-rentals-app"></div>
 @endsection
 
 @section('scripts')

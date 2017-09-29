@@ -65,7 +65,7 @@ elixir((mix) => {
             'frontend/profile-edit.js',
         ], './public/js/frontend.js')
         .scripts([
-            'app.js'
+            'vue-rentals-app/app.js'
         ], './public/js/app.js')
         .version([
             './public/css/app.css',

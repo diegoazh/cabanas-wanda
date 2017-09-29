@@ -29,6 +29,7 @@
 <script>
     import Icon from './Icon.vue'
     import Form from './Form.vue'
+    import { mapActions, mapGetters } from 'vuex'
 
     export default {
         components: {
@@ -41,16 +42,15 @@
           }
         },
         computed: {
-            prueba() {
-                return this.$store.state.rentals;
-            }
+            ...mapGetters(['isForCottage'])
         },
         methods: {
             toggleButton() {
-              this.$store.commit('toggleIsForCottage', !this.$store.state.isForCottage);
-              this.stateButton = this.$store.state.isForCottage;
+              this.setIsForCottage(!this.isForCottage);
+              this.stateButton = this.isForCottage;
               EventBus.$emit('choice-change');
-            }
+            },
+            ...mapActions(['setIsForCottage'])
         }
     }
 </script>

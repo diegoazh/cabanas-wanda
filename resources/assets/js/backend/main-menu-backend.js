@@ -14,7 +14,7 @@ $(document).ready(function(e) {
         }
     }
 
-    path = window.location.pathname;
+    let path = window.location.pathname;
     path = path.split('/');
     path.shift();
 

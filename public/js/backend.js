@@ -68,6 +68,9 @@
 /***/ "./resources/assets/js/backend/backend.js":
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
 $(document).ready(function (e) {
     /***********************************************************************************
     * Funciones útiles para trabajar con JavaScript
@@ -341,7 +344,10 @@ $(document).ready(function (e) {
 /***/ }),
 
 /***/ "./resources/assets/js/backend/main-menu-backend.js":
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 // Fuente: https://webdesign.tutsplus.com/tutorials/orman-clarks-vertical-navigation-menu-the-css3-version--webdesign-5944
 
@@ -359,7 +365,7 @@ $(document).ready(function (e) {
         }
     }
 
-    path = window.location.pathname;
+    var path = window.location.pathname;
     path = path.split('/');
     path.shift();
 

@@ -1,5 +1,5 @@
 <template>
-    <form action="">
+    <form @submit.prevent="selectQuery">
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <div class="form-group">
                 <label for="capacidad"></label>
@@ -16,7 +16,7 @@
                 <label for="dateFrom"></label>
                 <div class="input-group">
                     <div class="input-group-addon date-piker">Desde <app-icon iconImage="calendar"></app-icon></div>
-                    <date-picker :config="config" id="dateFrom" name="dateFrom" v-model="dateFrom"></date-picker>
+                    <date-picker placeholder="Seleccione la fecha..." :config="dtpConfig" id="dateFrom" name="dateFrom" v-model="dateFrom"></date-picker>
                 </div>
             </div>
         </div>
@@ -25,14 +25,14 @@
                 <label for="dateTo"></label>
                 <div class="input-group">
                     <div class="input-group-addon date-piker">Hasta <app-icon iconImage="calendar"></app-icon></div>
-                    <date-picker :config="config" id="dateTo" name="dateTo" v-model="dateTo"></date-picker>
+                    <date-picker placeholder="Seleccione la fecha..." :config="dtpConfig" id="dateTo" name="dateTo" v-model="dateTo"></date-picker>
                 </div>
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
             <br><br>
             <button class="btn btn-primary btn-lg">
-                Consultar disponibilidad <app-icon iconImage="search"></app-icon>
+                Consultar disponibilidad <app-icon :iconImage="btnIconImg" :aditionalClasses="btnClasses"></app-icon>
             </button>
         </div>
     </form>
@@ -42,6 +42,7 @@
     import Icon from './Icon.vue'
     import DatePicker from 'vue-bootstrap-datetimepicker'
     import moment from 'moment'
+    import { mapActions, mapGetters } from 'vuex'
 
     export default {
         components: {
@@ -50,34 +51,36 @@
         },
         created() {
             EventBus.$on('choice-change', () => this.previousChoice());
-        },
-        mounted() {
-            this.dateFrom = this.defineDate();
-            this.dateTo = this.dateFrom;
+            this.defineDate();
         },
         data() {
             return {
                 choice: 1,
                 drafQuantity: 1,
                 draftCottage: 1,
-                dateFrom: moment().add(2, 'd').format('DD/MM/YYYY'),
-                dateTo: moment().add(2, 'd').format('DD/MM/YYYY'),
-                config: {
-                    locale: 'es',
-                    format: 'DD/MM/YYYY',
-                    minDate: this.date,
-                    maxDate: this.date
-                }
+                dateFrom: null,
+                dateTo: null,
+                dtpConfig: {}
             }
         },
         computed: {
+            loader() {
+                return !this.$store.state.xhr.queryFinished;
+            },
             quantityOrCottages() {
-                return this.$store.state.isForCottage ? this.$store.state.cottages : 50;
-            }
+                return this.$store.state.frmCmp.isForCottage ? this.cottages : 50;
+            },
+            btnIconImg() {
+                return this.loader ? 'spinner' : 'search';
+            },
+            btnClasses() {
+                return this.loader ? 'fa-spin fa-fw' : '';
+            },
+            ...mapGetters(['isForCottages', 'cottages', 'toggleConfig', 'queryFinished'])
         },
         methods: {
             previousChoice() {
-                if (this.$store.state.isForCottage) {
+                if (this.$store.state.frmCmp.isForCottage) {
                     this.drafQuantity = this.choice;
                     this.choice = this.draftCottage;
                 } else {
@@ -88,11 +91,23 @@
             defineDate() {
                 const verify = window.setTimeout(() => {
                     if (window.myInfo) {
-                        return window.myInfo.basicOne ? moment().format('DD/MM/YYYY') : moment().add(2, 'd').format('DD/MM/YYYY');
-                        clearTimeout(verify);
+                        this.setBasicInfo(window.myInfo);
+                        delete window.myInfo;
+                        this.dtpConfig = this.toggleConfig;
                     }
                 }, 1000);
-            }
+            },
+            selectQuery() {
+                if (!this.isForCottage) {
+                    this.setQueryFinished(false);
+                    this.queryForCapacity({
+                        choice: this.choice,
+                        dateFrom: moment(this.dateFrom).format('DD/MM/YYYY'),
+                        dateTo: moment(this.dateTo).format('DD/MM/YYYY')
+                    })
+                }
+            },
+            ...mapActions(['setBasicInfo', 'queryForCapacity', 'setQueryFinished'])
         }
     }
 

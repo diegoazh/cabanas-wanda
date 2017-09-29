@@ -66,7 +66,10 @@
 /******/ ({
 
 /***/ "./resources/assets/js/frontend/cottage-show.js":
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 $(document).ready(function (event) {
     moment.locale('es');
@@ -115,7 +118,10 @@ $(document).ready(function (event) {
 /***/ }),
 
 /***/ "./resources/assets/js/frontend/cottages-index.js":
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 $(document).ready(function (event) {
     $(document).ready(function () {
@@ -149,7 +155,10 @@ $(document).ready(function (event) {
 /***/ }),
 
 /***/ "./resources/assets/js/frontend/frontend.js":
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 $(document).ready(function (event) {
     /******************************************************************
@@ -244,7 +253,10 @@ $(document).ready(function (event) {
 /***/ }),
 
 /***/ "./resources/assets/js/frontend/profile-edit.js":
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 $(document).ready(function () {
     /********

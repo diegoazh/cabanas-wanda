@@ -35,8 +35,8 @@ mix.copy([
     .less('resources/assets/less/frontend/profile.less', './public/css/profile.css')
     .less('resources/assets/less/backend/backend.less', './public/css/backend.css')
     .combine([
-        './public/lib/jquery/dist/jquery.min.js',
         './node_modules/lodash/lodash.min.js',
+        './public/lib/jquery/dist/jquery.min.js',
         './public/lib/moment/min/moment-with-locales.min.js',
         './public/lib/bootstrap/dist/js/bootstrap.min.js',
         './public/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
@@ -53,7 +53,7 @@ mix.copy([
         'resources/assets/js/frontend/cottage-show.js',
         'resources/assets/js/frontend/profile-edit.js',
     ], './public/js/frontend.js')
-    .js('resources/assets/js/app.js', 'public/js')
+    .js('resources/assets/js/vue-rentals-app/app.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .version([
         './public/css/app.css',

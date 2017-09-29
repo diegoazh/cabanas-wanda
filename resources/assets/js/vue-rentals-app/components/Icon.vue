@@ -14,10 +14,18 @@
                 type: String,
                 default: '',
                 required: false
+            },
+            aditionalClasses: {
+                type: String,
+                default: '',
+                required: false
             }
         },
         computed: {
             toggleIconClass() {
+                if (this.aditionalClasses) {
+                    return 'fa fa-' + this.iconImage + ' ' + this.aditionalClasses;
+                }
                 return 'fa fa-' + this.iconImage;
             },
             dinamycId() {
