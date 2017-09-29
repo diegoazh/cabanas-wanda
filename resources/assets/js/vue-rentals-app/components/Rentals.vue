@@ -1,5 +1,5 @@
 <template>
-    <div id="reservas-component" class="container jumbotron">
+    <div v-if="!deal" id="reservas-component" class="container jumbotron">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <h1 class="text-center">Reservas</h1>
@@ -21,20 +21,29 @@
             </div>
         </div>
         <div class="row">
-            <app-form></app-form>
+            <form-app></form-app>
         </div>
+        <br><br>
+        <div class="row">
+            <list-group-app></list-group-app>
+        </div>
+    </div>
+    <div v-else id="reservas-component2" class="container jumbotron">
+
     </div>
 </template>
 
 <script>
+    import { mapActions, mapState } from 'vuex'
     import Icon from './Icon.vue'
     import Form from './Form.vue'
-    import { mapActions, mapGetters } from 'vuex'
+    import List from './List-group.vue'
 
     export default {
         components: {
             'icon-app': Icon,
-            'app-form': Form
+            'form-app': Form,
+            'list-group-app': List
         },
         data() {
           return {
@@ -42,7 +51,10 @@
           }
         },
         computed: {
-            ...mapGetters(['isForCottage'])
+            ...mapState({
+                isForCottage: state => state.frmCmp.isForCottage,
+                deal: state => state.data.deal
+            })
         },
         methods: {
             toggleButton() {
@@ -56,7 +68,8 @@
 </script>
 
 <style>
-    #reservas-component {
+    #reservas-component,
+    #reservas-component2 {
         margin-top: 30px;
     }
     #text-onOff {

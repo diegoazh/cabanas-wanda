@@ -23,10 +23,11 @@
         },
         computed: {
             toggleIconClass() {
+                let classes = 'fa fa-' + this.iconImage;
                 if (this.aditionalClasses) {
-                    return 'fa fa-' + this.iconImage + ' ' + this.aditionalClasses;
+                    classes += ' ' + this.aditionalClasses;
                 }
-                return 'fa fa-' + this.iconImage;
+                return classes;
             },
             dinamycId() {
                 return this.iconId;

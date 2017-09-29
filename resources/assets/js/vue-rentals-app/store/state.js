@@ -2,8 +2,15 @@ export default {
     data: {
         isAdmin: false,
         user: '',
+        deal: false,
         cottages: [],
         toRentals: [],
+    },
+    lastQueryData: {
+        query: 0,
+        simple: false,
+        dateFrom: '',
+        dateTo: ''
     },
     xhr: {
         token: '',

@@ -1615,6 +1615,46 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
+var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+    components: {
+        'icon-app': _Icon2.default
+    },
+    props: ['cottage']
+};
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/Form.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1626,6 +1666,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1684,7 +1729,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
     components: {
-        'app-icon': _Icon2.default,
+        'icon-app': _Icon2.default,
         'date-picker': _vueBootstrapDatetimepicker2.default
     },
     created: function created() {
@@ -1698,8 +1743,9 @@ exports.default = {
     data: function data() {
         return {
             choice: 1,
-            drafQuantity: 1,
-            draftCottage: 1,
+            bedSimple: false,
+            drafQuantity: 0,
+            draftCottage: 0,
             dateFrom: null,
             dateTo: null,
             dtpConfig: {}
@@ -1707,22 +1753,38 @@ exports.default = {
     },
 
     computed: _extends({
-        loader: function loader() {
-            return !this.$store.state.xhr.queryFinished;
-        },
         quantityOrCottages: function quantityOrCottages() {
-            return this.$store.state.frmCmp.isForCottage ? this.cottages : 50;
+            return this.isForCottage ? this.cottages : 50;
         },
         btnIconImg: function btnIconImg() {
-            return this.loader ? 'spinner' : 'search';
+            return !this.queryFinished ? 'spinner' : 'search';
         },
         btnClasses: function btnClasses() {
-            return this.loader ? 'fa-spin fa-fw' : '';
+            return !this.queryFinished ? 'fa-spin fa-fw' : '';
+        },
+        checkSimple: function checkSimple() {
+            return this.bedSimple ? 'check-square-o' : 'square-o';
         }
-    }, (0, _vuex.mapGetters)(['isForCottages', 'cottages', 'toggleConfig', 'queryFinished'])),
+    }, (0, _vuex.mapState)({
+        cottages: function cottages(state) {
+            return state.data.cottages;
+        },
+        isForCottage: function isForCottage(state) {
+            return state.frmCmp.isForCottage;
+        },
+        queryFinished: function queryFinished(state) {
+            return state.xhr.queryFinished;
+        }
+    }), (0, _vuex.mapGetters)(['toggleConfig'])),
     methods: _extends({
+        initChoice: function initChoice() {
+            if (!this.draftCottage) {
+                this.draftCottage = this.cottages[0].number;
+            }
+        },
         previousChoice: function previousChoice() {
-            if (this.$store.state.frmCmp.isForCottage) {
+            if (this.isForCottage) {
+                this.initChoice();
                 this.drafQuantity = this.choice;
                 this.choice = this.draftCottage;
             } else {
@@ -1742,16 +1804,27 @@ exports.default = {
             }, 1000);
         },
         selectQuery: function selectQuery() {
-            if (!this.isForCottage) {
-                this.setQueryFinished(false);
+            this.setQueryFinished(false);
+            if (this.$store.state.frmCmp.isForCottage) {
+                this.queryForCottage({
+                    choice: this.choice,
+                    simple: this.bedSimple,
+                    dateFrom: (0, _moment2.default)(this.dateFrom).format('DD/MM/YYYY'),
+                    dateTo: (0, _moment2.default)(this.dateTo).format('DD/MM/YYYY')
+                });
+            } else {
                 this.queryForCapacity({
                     choice: this.choice,
+                    simple: this.bedSimple,
                     dateFrom: (0, _moment2.default)(this.dateFrom).format('DD/MM/YYYY'),
                     dateTo: (0, _moment2.default)(this.dateTo).format('DD/MM/YYYY')
                 });
             }
+        },
+        toggleBedSimple: function toggleBedSimple() {
+            this.bedSimple = !this.bedSimple;
         }
-    }, (0, _vuex.mapActions)(['setBasicInfo', 'queryForCapacity', 'setQueryFinished']))
+    }, (0, _vuex.mapActions)(['setBasicInfo', 'queryForCapacity', 'queryForCottage', 'setQueryFinished']))
 };
 
 
@@ -1799,15 +1872,69 @@ exports.default = {
     },
     computed: {
         toggleIconClass: function toggleIconClass() {
+            var classes = 'fa fa-' + this.iconImage;
             if (this.aditionalClasses) {
-                return 'fa fa-' + this.iconImage + ' ' + this.aditionalClasses;
+                classes += ' ' + this.aditionalClasses;
             }
-            return 'fa fa-' + this.iconImage;
+            return classes;
         },
         dinamycId: function dinamycId() {
             return this.iconId;
         }
     }
+};
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
+var _ButtonListItem = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Button-list-item.vue");
+
+var _ButtonListItem2 = _interopRequireDefault(_ButtonListItem);
+
+var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    components: {
+        'button-item': _ButtonListItem2.default,
+        'icon-app': _Icon2.default
+    },
+    computed: _extends({}, (0, _vuex.mapState)({
+        toRentals: function toRentals(state) {
+            return state.data.toRentals;
+        }
+    }))
 };
 
 /***/ }),
@@ -1850,6 +1977,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
 var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
 
@@ -1859,14 +1995,17 @@ var _Form = __webpack_require__("./resources/assets/js/vue-rentals-app/component
 
 var _Form2 = _interopRequireDefault(_Form);
 
-var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _ListGroup = __webpack_require__("./resources/assets/js/vue-rentals-app/components/List-group.vue");
+
+var _ListGroup2 = _interopRequireDefault(_ListGroup);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
     components: {
         'icon-app': _Icon2.default,
-        'app-form': _Form2.default
+        'form-app': _Form2.default,
+        'list-group-app': _ListGroup2.default
     },
     data: function data() {
         return {
@@ -1874,7 +2013,14 @@ exports.default = {
         };
     },
 
-    computed: _extends({}, (0, _vuex.mapGetters)(['isForCottage'])),
+    computed: _extends({}, (0, _vuex.mapState)({
+        isForCottage: function isForCottage(state) {
+            return state.frmCmp.isForCottage;
+        },
+        deal: function deal(state) {
+            return state.data.deal;
+        }
+    })),
     methods: _extends({
         toggleButton: function toggleButton() {
             this.setIsForCottage(!this.isForCottage);
@@ -1886,6 +2032,21 @@ exports.default = {
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1be0f91a\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")();
+// imports
+
+
+// module
+exports.push([module.i, "\n.img-btn-item {\n    max-width: 20%;\n    display: inline-block;\n    -webkit-box-shadow: inset 2px 3px 3px #333333;\n    -moz-box-shadow: inset 2px 3px 3px #333333;\n    box-shadow: inset 2px 3px 3px #333333;\n    border-color: #333d53;\n}\n.tt-btn-item {\n    display: inline-block;\n    margin-left: 1.5%;\n    font-size: 18px;\n    font-weight: bolder;\n    text-transform: uppercase;\n}\n.capacity-btn-item {\n    display: inline-block;\n    margin-left: 1.5%;\n    font-size: 14px !important;\n}\n.number-btn-item {\n    display: inline-block;\n    margin-left: 1.5%;\n    font-size: 14px !important;\n}\n.icon-btn-item:before {\n    font-size: 220%;\n    position: relative;\n    top: 32px;\n}\n.btn-item {\n    -webkit-box-shadow: 2px 2px 5px #333333;\n    -moz-box-shadow: 2px 2px 5px #333333;\n    box-shadow: 2px 2px 5px #333333;\n}\n.btn-item i:before {\n    color: #5cb85c;\n}\n.btn-item:hover i:before {\n    color: #d9534f;\n    content: '\\F057';\n    font-family: FontAwesome;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-233b7a36\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/Icon.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1894,7 +2055,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -1909,7 +2070,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n#link-simple {\n    text-decoration: none;\n    color: #333333;\n    font-size: 20px;\n    font-weight: bold;\n}\n#link-simple:hover {\n    color: #428bca;\n}\n#icon-check-simple {\n    font-size: 24px;\n    font-weight: bolder;\n    margin-right: 5px;\n}\n", ""]);
 
 // exports
 
@@ -1924,7 +2085,22 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n#reservas-component {\n    margin-top: 30px;\n}\n#text-onOff {\n    margin-top: 35px;\n}\na#link-onOff {\n    font-size: inherit;\n    font-weight: inherit;\n}\ni#iconImage {\n    position: relative;\n    top: -25px;\n}\n", ""]);
+exports.push([module.i, "\n#reservas-component,\n#reservas-component2 {\n    margin-top: 30px;\n}\n#text-onOff {\n    margin-top: 35px;\n}\na#link-onOff {\n    font-size: inherit;\n    font-weight: inherit;\n}\ni#iconImage {\n    position: relative;\n    top: -25px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b43e3f08\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")();
+// imports
+
+
+// module
+exports.push([module.i, "\n#btn-reservas {\n    font-weight: bolder;\n    font-size: 26px;\n    -webkit-border-radius: 25px;\n    -moz-border-radius: 25px;\n    border-radius: 25px;\n    -webkit-box-shadow: 2px 3px 7px #333333;\n    -moz-box-shadow: 2px 3px 7px #333333;\n    box-shadow: 2px 3px 7px #333333;\n    text-shadow: 2px 3px 7px #333333;\n}\n", ""]);
 
 // exports
 
@@ -31138,6 +31314,80 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1be0f91a\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    { staticClass: "list-group-item btn-item", attrs: { type: "button" } },
+    [
+      _c("img", {
+        staticClass: "img-responsive img-thumbnail img-circle img-btn-item",
+        attrs: { src: _vm.cottage.images, alt: "" }
+      }),
+      _vm._v(" "),
+      _c(
+        "h4",
+        { staticClass: "text-capitalize label label-info tt-btn-item" },
+        [_vm._v(_vm._s(_vm.cottage.name))]
+      ),
+      _vm._v(" "),
+      _c("p", { staticClass: "capacity-btn-item" }, [
+        _c("span", { staticClass: "text-info" }, [_vm._v("Capacidad:")]),
+        _vm._v(" "),
+        _c("b", [_vm._v(_vm._s(_vm.cottage.accommodation))])
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "number-btn-item" }, [
+        _c("span", { staticClass: "text-info" }, [_vm._v("Cabaña número:")]),
+        _vm._v(" "),
+        _c("b", [_vm._v(_vm._s(_vm.cottage.number))])
+      ]),
+      _vm._v("\n     \n    "),
+      _c(
+        "span",
+        {
+          class: [
+            "label",
+            {
+              "label-primary": _vm.cottage.type === "simple",
+              "label-success": _vm.cottage.type === "matrimonial"
+            }
+          ]
+        },
+        [
+          _c("b", { staticClass: "text-capitalize" }, [
+            _vm._v(_vm._s(_vm.cottage.type))
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("icon-app", {
+        attrs: {
+          iconImage: "check-square-o",
+          aditionalClasses: "pull-right icon-btn-item"
+        }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-1be0f91a", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-233b7a36\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/Icon.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -31185,9 +31435,15 @@ var render = function() {
           _c("label", { attrs: { for: "capacidad" } }),
           _vm._v(" "),
           _c("div", { staticClass: "input-group" }, [
-            _c("div", { staticClass: "input-group-addon" }, [
-              _vm._v("¿Cuantas personas son?")
-            ]),
+            _c(
+              "div",
+              { staticClass: "input-group-addon" },
+              [
+                _c("icon-app", { attrs: { iconImage: "users" } }),
+                _vm._v(" ¿Cuantas personas son?")
+              ],
+              1
+            ),
             _vm._v(" "),
             _c(
               "select",
@@ -31243,7 +31499,7 @@ var render = function() {
                 { staticClass: "input-group-addon date-piker" },
                 [
                   _vm._v("Desde "),
-                  _c("app-icon", { attrs: { iconImage: "calendar" } })
+                  _c("icon-app", { attrs: { iconImage: "calendar" } })
                 ],
                 1
               ),
@@ -31266,6 +31522,28 @@ var render = function() {
             ],
             1
           )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "a",
+            {
+              attrs: { id: "link-simple", role: "button" },
+              on: { click: _vm.toggleBedSimple }
+            },
+            [
+              _c("icon-app", {
+                attrs: {
+                  iconId: "icon-check-simple",
+                  iconImage: _vm.checkSimple
+                }
+              }),
+              _vm._v(" "),
+              _c("icon-app", { attrs: { iconImage: "bed" } }),
+              _vm._v(" ¿Solo camas simples?\n            ")
+            ],
+            1
+          )
         ])
       ]),
       _vm._v(" "),
@@ -31282,7 +31560,7 @@ var render = function() {
                 { staticClass: "input-group-addon date-piker" },
                 [
                   _vm._v("Hasta "),
-                  _c("app-icon", { attrs: { iconImage: "calendar" } })
+                  _c("icon-app", { attrs: { iconImage: "calendar" } })
                 ],
                 1
               ),
@@ -31320,7 +31598,7 @@ var render = function() {
             { staticClass: "btn btn-primary btn-lg" },
             [
               _vm._v("\n            Consultar disponibilidad "),
-              _c("app-icon", {
+              _c("icon-app", {
                 attrs: {
                   iconImage: _vm.btnIconImg,
                   aditionalClasses: _vm.btnClasses
@@ -31353,53 +31631,78 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container jumbotron", attrs: { id: "reservas-component" } },
-    [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" }, [
-          _c("h1", { staticClass: "text-center" }, [_vm._v("Reservas")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "alert alert-info text-center" }, [
-            _vm._v("\n                Esta consultando por: "),
-            _c("b", [_vm._v(_vm._s(_vm.stateButton ? "Cabaña" : "Capacidad"))])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-1 col-lg-1" }, [
-          _c("h1", [
+  return !_vm.deal
+    ? _c(
+        "div",
+        {
+          staticClass: "container jumbotron",
+          attrs: { id: "reservas-component" }
+        },
+        [
+          _c("div", { staticClass: "row" }, [
             _c(
-              "a",
-              {
-                class: {
-                  "text-muted": !_vm.stateButton,
-                  "text-primary": _vm.stateButton
-                },
-                attrs: { id: "link-onOff", role: "button" },
-                on: { click: _vm.toggleButton }
-              },
+              "div",
+              { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" },
               [
-                _c("icon-app", {
-                  attrs: {
-                    iconId: "iconImage",
-                    iconImage: _vm.stateButton ? "toggle-on" : "toggle-off"
-                  }
-                })
-              ],
-              1
+                _c("h1", { staticClass: "text-center" }, [_vm._v("Reservas")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "alert alert-info text-center" }, [
+                  _vm._v("\n                Esta consultando por: "),
+                  _c("b", [
+                    _vm._v(_vm._s(_vm.stateButton ? "Cabaña" : "Capacidad"))
+                  ])
+                ])
+              ]
             )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [_c("app-form")], 1)
-    ]
-  )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-xs-12 col-sm-12 col-md-1 col-lg-1" },
+              [
+                _c("h1", [
+                  _c(
+                    "a",
+                    {
+                      class: {
+                        "text-muted": !_vm.stateButton,
+                        "text-primary": _vm.stateButton
+                      },
+                      attrs: { id: "link-onOff", role: "button" },
+                      on: { click: _vm.toggleButton }
+                    },
+                    [
+                      _c("icon-app", {
+                        attrs: {
+                          iconId: "iconImage",
+                          iconImage: _vm.stateButton
+                            ? "toggle-on"
+                            : "toggle-off"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [_c("form-app")], 1),
+          _vm._v(" "),
+          _c("br"),
+          _c("br"),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [_c("list-group-app")], 1)
+        ]
+      )
+    : _c("div", {
+        staticClass: "container jumbotron",
+        attrs: { id: "reservas-component2" }
+      })
 }
 var staticRenderFns = [
   function() {
@@ -31433,6 +31736,124 @@ if (false) {
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-75005213", module.exports)
   }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-b43e3f08\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass:
+        "col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-8 col-lg-offset-2"
+    },
+    [
+      _vm.toRentals.length
+        ? _c("h3", { staticClass: "text-center" }, [
+            _vm._v("Cabañas disponibles")
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.toRentals.length
+        ? _c(
+            "div",
+            {
+              class: [
+                "text-center",
+                "alert",
+                {
+                  "alert-danger": _vm.toRentals.length,
+                  "alert-info": _vm.toRentals.length
+                }
+              ]
+            },
+            [
+              _c("icon-app", { attrs: { iconImage: "warning" } }),
+              _vm._v(
+                "\n        " +
+                  _vm._s(
+                    _vm.toRentals.length
+                      ? "Tenga en cuenta que son las cabañas disponibles según las fechas ingresadas"
+                      : "Lamentablemente no tenemos cabañas disponibles."
+                  ) +
+                  "\n    "
+              )
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "list-group" },
+        _vm._l(_vm.toRentals, function(rental) {
+          return _c("button-item", {
+            key: rental.id,
+            attrs: { cottage: rental }
+          })
+        })
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "text-center" }, [
+        _vm.toRentals.length
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-success btn-lg",
+                attrs: { id: "btn-reservas" }
+              },
+              [
+                _vm._v("Reservar "),
+                _c("icon-app", { attrs: { iconImage: "handshake-o" } })
+              ],
+              1
+            )
+          : _vm._e()
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-b43e3f08", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1be0f91a\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1be0f91a\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("7e33607f", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1be0f91a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Button-list-item.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1be0f91a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Button-list-item.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
 }
 
 /***/ }),
@@ -31508,6 +31929,33 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-75005213\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Rentals.vue", function() {
      var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-75005213\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Rentals.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b43e3f08\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b43e3f08\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("ded58c14", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b43e3f08\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./List-group.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b43e3f08\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./List-group.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -43013,6 +43461,57 @@ var http = exports.http = _axios2.default.create({
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-rentals-app/components/Button-list-item.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1be0f91a\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1be0f91a\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue")
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/vue-rentals-app/components/Button-list-item.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Button-list-item.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1be0f91a", Component.options)
+  } else {
+    hotAPI.reload("data-v-1be0f91a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-rentals-app/components/Form.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -43115,6 +43614,57 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-rentals-app/components/List-group.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b43e3f08\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-b43e3f08\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue")
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/vue-rentals-app/components/List-group.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] List-group.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-b43e3f08", Component.options)
+  } else {
+    hotAPI.reload("data-v-b43e3f08", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-rentals-app/components/Rentals.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -43195,23 +43745,31 @@ exports.default = {
 
         commit('setToRentals', toRentals);
     },
-    setQueryFinished: function setQueryFinished(_ref4, bool) {
+    setLastQueryData: function setLastQueryData(_ref4, payload) {
         var commit = _ref4.commit;
+
+        commit('setLastQuery', payload.choice);
+        commit('setLastSimple', payload.simple);
+        commit('setLasDateFrom', payload.dateFrom);
+        commit('setLasDateTo', payload.dateTo);
+    },
+    setQueryFinished: function setQueryFinished(_ref5, bool) {
+        var commit = _ref5.commit;
 
         commit('setQueryFinished', bool);
     },
-    setResponseStatus: function setResponseStatus(_ref5, status) {
-        var commit = _ref5.commit;
+    setResponseStatus: function setResponseStatus(_ref6, status) {
+        var commit = _ref6.commit;
 
         commit('setResponseStatus', status);
     },
-    setResponseError: function setResponseError(_ref6, error) {
-        var commit = _ref6.commit;
+    setResponseError: function setResponseError(_ref7, error) {
+        var commit = _ref7.commit;
 
         commit('setResponseError', error);
     },
-    handlingXhrErrors: function handlingXhrErrors(_ref7, error) {
-        var dispatch = _ref7.dispatch;
+    handlingXhrErrors: function handlingXhrErrors(_ref8, error) {
+        var dispatch = _ref8.dispatch;
 
         if (error.response) {
             // The request was made and the server responded with a status code
@@ -43229,8 +43787,8 @@ exports.default = {
         }
         dispatch('setQueryFinished', true);
     },
-    setCottages: function setCottages(_ref8) {
-        var commit = _ref8.commit;
+    setCottages: function setCottages(_ref9) {
+        var commit = _ref9.commit;
 
         _myAxios.http.get('rentals/basic/').then(function (response) {
             commit('setCottages', response.data.cottages);
@@ -43238,11 +43796,12 @@ exports.default = {
             return dispatch('handlingXhrErrors', err);
         });
     },
-    queryForCapacity: function queryForCapacity(_ref9, payload) {
-        var dispatch = _ref9.dispatch;
+    queryForCapacity: function queryForCapacity(_ref10, payload) {
+        var dispatch = _ref10.dispatch;
 
         _myAxios.http.post('rentals/capacity/', {
-            capacity: payload.choice,
+            query: payload.choice,
+            simple: payload.simple,
             dateFrom: payload.dateFrom,
             dateTo: payload.dateTo
         }).then(function (response) {
@@ -43251,6 +43810,23 @@ exports.default = {
         }).catch(function (err) {
             return dispatch('handlingXhrErrors', err);
         });
+        dispatch('setLastQueryData', payload);
+    },
+    queryForCottage: function queryForCottage(_ref11, payload) {
+        var dispatch = _ref11.dispatch;
+
+        _myAxios.http.post('rentals/cottage/', {
+            query: payload.choice,
+            simple: payload.simple,
+            dateFrom: payload.dateFrom,
+            dateTo: payload.dateTo
+        }).then(function (response) {
+            dispatch('setToRentals', response.data.cottage);
+            dispatch('setQueryFinished', true);
+        }).catch(function (err) {
+            return dispatch('handlingXhrErrors', err);
+        });
+        dispatch('setLastQueryData', payload);
     }
 };
 
@@ -43266,26 +43842,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
-    toRentals: function toRentals(state, getters) {
-        return state.data.toRentals;
-    },
-    isForCottage: function isForCottage(state, getters) {
-        return state.frmCmp.isForCottage;
-    },
-    cottages: function cottages(state, getters) {
-        return state.data.cottages;
-    },
     toggleConfig: function toggleConfig(state, getters) {
         return state.data.isAdmin ? state.frmCmp.configForAdmin : state.frmCmp.configForUser;
-    },
-    responseError: function responseError(state, getters) {
-        return state.xhr.responseError;
-    },
-    responseStatus: function responseStatus(state, getters) {
-        return state.xhr.responseStatus;
-    },
-    queryFinished: function queryFinished(state, getters) {
-        return state.xhr.queryFinished;
     }
 };
 
@@ -43302,10 +43860,18 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
     setToRentals: function setToRentals(state, toRentals) {
-        state.data.toRentals = toRentals;
+        if (Array.isArray(toRentals)) {
+            state.data.toRentals = toRentals;
+        } else {
+            state.data.toRentals = new Array(toRentals);
+        }
     },
     setCottages: function setCottages(state, cottages) {
-        state.data.cottages = cottages;
+        if (Array.isArray(cottages)) {
+            state.data.cottages = cottages;
+        } else {
+            state.data.cottages = new Array(cottages);
+        }
     },
     setIsForCottage: function setIsForCottage(state, bool) {
         state.frmCmp.isForCottage = bool;
@@ -43324,6 +43890,18 @@ exports.default = {
     },
     setQueryFinished: function setQueryFinished(state, bool) {
         state.xhr.queryFinished = bool;
+    },
+    setLastQuery: function setLastQuery(state, number) {
+        state.lastQueryData.query = number;
+    },
+    setLastSimple: function setLastSimple(state, bool) {
+        state.lastQueryData.simple = bool;
+    },
+    setLasDateFrom: function setLasDateFrom(state, date) {
+        state.lastQueryData.dateFrom = date;
+    },
+    setLasDateTo: function setLasDateTo(state, date) {
+        state.lastQueryData.dateTo = date;
     }
 };
 
@@ -43342,8 +43920,15 @@ exports.default = {
     data: {
         isAdmin: false,
         user: '',
+        deal: false,
         cottages: [],
         toRentals: []
+    },
+    lastQueryData: {
+        query: 0,
+        simple: false,
+        dateFrom: '',
+        dateTo: ''
     },
     xhr: {
         token: '',

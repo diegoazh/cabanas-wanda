@@ -113,7 +113,7 @@ class RentalsController extends Controller
         $info['dateFrom'] = Carbon::createFromFormat('d/m/Y', $info['dateFrom'])->toDateString();
         $info['dateTo'] = Carbon::createFromFormat('d/m/Y', $info['dateTo'])->toDateString();
 
-        $cottages = Rental::cottageForCapacity($info['capacity'], $info['dateFrom'], $info['dateTo']);
+        $cottages = Rental::cottageForCapacity($info['query'], $info['simple'], $info['dateFrom'], $info['dateTo']);
 
         if (empty($cottages)) {
             return response()->json(['error' => 'No tenemos cabañas disponibles en esa fecha para la capacidad indicada. Lo sentimos mucho, por favor prueba con otra fecha o varía la capacidad.'], 404);
@@ -130,7 +130,7 @@ class RentalsController extends Controller
         $info['dateFrom'] = Carbon::createFromFormat('d/m/Y', $info['dateFrom'])->toDateString();
         $info['dateTo'] = Carbon::createFromFormat('d/m/Y', $info['dateTo'])->toDateString();
 
-        $cottage = Rental::cottageForNumber($info['capacity'], $info['dateFrom'], $info['dateTo']);
+        $cottage = Rental::cottageForNumber($info['query'], $info['simple'], $info['dateFrom'], $info['dateTo']);
 
         if (empty($cottage)) {
             return response()->json(['error' => 'Lo sentimos la cabaña no está disponible en esa fecha. Por favor intenta con otra cabaña o con una fecha diferente.'], 404);

@@ -4,7 +4,7 @@
             <div class="form-group">
                 <label for="capacidad"></label>
                 <div class="input-group">
-                    <div class="input-group-addon">¿Cuantas personas son?</div>
+                    <div class="input-group-addon"><icon-app iconImage="users"></icon-app> ¿Cuantas personas son?</div>
                     <select v-model="choice" name="capacidad" id="capacidad" class="form-control">
                         <option v-for="value in quantityOrCottages" :value="value.number ? value.number : value">{{ value.name ? value.name : value }}</option>
                     </select>
@@ -15,16 +15,21 @@
             <div class="form-group">
                 <label for="dateFrom"></label>
                 <div class="input-group">
-                    <div class="input-group-addon date-piker">Desde <app-icon iconImage="calendar"></app-icon></div>
+                    <div class="input-group-addon date-piker">Desde <icon-app iconImage="calendar"></icon-app></div>
                     <date-picker placeholder="Seleccione la fecha..." :config="dtpConfig" id="dateFrom" name="dateFrom" v-model="dateFrom"></date-picker>
                 </div>
+            </div>
+            <div class="form-group">
+                <a id="link-simple" @click="toggleBedSimple" role="button">
+                    <icon-app iconId="icon-check-simple" :iconImage="checkSimple"> </icon-app> <icon-app iconImage="bed"></icon-app> ¿Solo camas simples?
+                </a>
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <div class="form-group">
                 <label for="dateTo"></label>
                 <div class="input-group">
-                    <div class="input-group-addon date-piker">Hasta <app-icon iconImage="calendar"></app-icon></div>
+                    <div class="input-group-addon date-piker">Hasta <icon-app iconImage="calendar"></icon-app></div>
                     <date-picker placeholder="Seleccione la fecha..." :config="dtpConfig" id="dateTo" name="dateTo" v-model="dateTo"></date-picker>
                 </div>
             </div>
@@ -32,7 +37,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
             <br><br>
             <button class="btn btn-primary btn-lg">
-                Consultar disponibilidad <app-icon :iconImage="btnIconImg" :aditionalClasses="btnClasses"></app-icon>
+                Consultar disponibilidad <icon-app :iconImage="btnIconImg" :aditionalClasses="btnClasses"></icon-app>
             </button>
         </div>
     </form>
@@ -42,11 +47,11 @@
     import Icon from './Icon.vue'
     import DatePicker from 'vue-bootstrap-datetimepicker'
     import moment from 'moment'
-    import { mapActions, mapGetters } from 'vuex'
+    import { mapActions, mapGetters, mapState } from 'vuex'
 
     export default {
         components: {
-            'app-icon': Icon,
+            'icon-app': Icon,
             'date-picker': DatePicker
         },
         created() {
@@ -56,31 +61,43 @@
         data() {
             return {
                 choice: 1,
-                drafQuantity: 1,
-                draftCottage: 1,
+                bedSimple: false,
+                drafQuantity: 0,
+                draftCottage: 0,
                 dateFrom: null,
                 dateTo: null,
                 dtpConfig: {}
             }
         },
         computed: {
-            loader() {
-                return !this.$store.state.xhr.queryFinished;
-            },
             quantityOrCottages() {
-                return this.$store.state.frmCmp.isForCottage ? this.cottages : 50;
+                return this.isForCottage ? this.cottages : 50;
             },
             btnIconImg() {
-                return this.loader ? 'spinner' : 'search';
+                return !this.queryFinished ? 'spinner' : 'search';
             },
             btnClasses() {
-                return this.loader ? 'fa-spin fa-fw' : '';
+                return !this.queryFinished ? 'fa-spin fa-fw' : '';
             },
-            ...mapGetters(['isForCottages', 'cottages', 'toggleConfig', 'queryFinished'])
+            checkSimple() {
+                return this.bedSimple ? 'check-square-o' : 'square-o';
+            },
+            ...mapState({
+                cottages: state => state.data.cottages,
+                isForCottage: state => state.frmCmp.isForCottage,
+                queryFinished: state => state.xhr.queryFinished,
+            }),
+            ...mapGetters(['toggleConfig'])
         },
         methods: {
+            initChoice() {
+                if (!this.draftCottage) {
+                    this.draftCottage = this.cottages[0].number;
+                }
+            },
             previousChoice() {
-                if (this.$store.state.frmCmp.isForCottage) {
+                if (this.isForCottage) {
+                    this.initChoice();
                     this.drafQuantity = this.choice;
                     this.choice = this.draftCottage;
                 } else {
@@ -98,16 +115,27 @@
                 }, 1000);
             },
             selectQuery() {
-                if (!this.isForCottage) {
-                    this.setQueryFinished(false);
+                this.setQueryFinished(false);
+                if (this.$store.state.frmCmp.isForCottage) {
+                    this.queryForCottage({
+                        choice: this.choice,
+                        simple: this.bedSimple,
+                        dateFrom: moment(this.dateFrom).format('DD/MM/YYYY'),
+                        dateTo: moment(this.dateTo).format('DD/MM/YYYY')
+                    })
+                } else {
                     this.queryForCapacity({
                         choice: this.choice,
+                        simple: this.bedSimple,
                         dateFrom: moment(this.dateFrom).format('DD/MM/YYYY'),
                         dateTo: moment(this.dateTo).format('DD/MM/YYYY')
                     })
                 }
             },
-            ...mapActions(['setBasicInfo', 'queryForCapacity', 'setQueryFinished'])
+            toggleBedSimple() {
+                this.bedSimple = !this.bedSimple;
+            },
+            ...mapActions(['setBasicInfo', 'queryForCapacity', 'queryForCottage', 'setQueryFinished'])
         }
     }
 
@@ -120,4 +148,19 @@
     });
 </script>
 
-<style></style>
+<style>
+    #link-simple {
+        text-decoration: none;
+        color: #333333;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    #link-simple:hover {
+        color: #428bca;
+    }
+    #icon-check-simple {
+        font-size: 24px;
+        font-weight: bolder;
+        margin-right: 5px;
+    }
+</style>

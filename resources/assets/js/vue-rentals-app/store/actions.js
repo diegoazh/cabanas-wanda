@@ -11,6 +11,12 @@ export default {
     setToRentals({commit}, toRentals) {
         commit('setToRentals', toRentals);
     },
+    setLastQueryData({commit}, payload) {
+        commit('setLastQuery', payload.choice);
+        commit('setLastSimple', payload.simple);
+        commit('setLasDateFrom', payload.dateFrom);
+        commit('setLasDateTo', payload.dateTo);
+    },
     setQueryFinished({commit}, bool) {
         commit('setQueryFinished', bool);
     },
@@ -45,7 +51,8 @@ export default {
     },
     queryForCapacity({dispatch}, payload) {
         http.post('rentals/capacity/', {
-            capacity: payload.choice,
+            query: payload.choice,
+            simple: payload.simple,
             dateFrom: payload.dateFrom,
             dateTo: payload.dateTo
         }).then(response => {
@@ -53,5 +60,19 @@ export default {
             dispatch('setQueryFinished', true);
         })
             .catch(err => dispatch('handlingXhrErrors', err));
+        dispatch('setLastQueryData', payload);
+    },
+    queryForCottage({dispatch}, payload) {
+        http.post('rentals/cottage/', {
+            query: payload.choice,
+            simple: payload.simple,
+            dateFrom: payload.dateFrom,
+            dateTo: payload.dateTo
+        }).then(response => {
+            dispatch('setToRentals', response.data.cottage);
+            dispatch('setQueryFinished', true);
+        })
+            .catch(err => dispatch('handlingXhrErrors', err));
+        dispatch('setLastQueryData', payload);
     },
 };
