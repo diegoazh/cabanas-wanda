@@ -67,11 +67,11 @@ class Rental extends Model
         $cottagesFour = Cottage::where('state', 'enabled')->where('accommodation', '<', 5)->where('type', $simple ? '=' : 'like', $simple ? 'simple' : '%')->count(); // verificamos cuantas cabañas de 4 hay
 
         $necesariasFive = (int)($capacity / 5); // obtenemos la cantidad de cabañas necesarias para 5 personas
-        $restante = $capacity % 5; // obtenemos los ocupantes que faltan para una cabaña de 4 personas
+        $restante = ($capacity > 5) ? $capacity % 5 : 0; // obtenemos los ocupantes que faltan para una cabaña de 4 personas
         $necesariasFour = 0;
 
-        if ($necesariasFive > $cottagesFive) {
-            $restante += ($necesariasFive - $cottagesFive) * 5; // determinamos las personas que faltan si no hay cabañas de cinco disponibles para todos
+        if ($necesariasFive > $cottagesFive || !empty($restante)) {
+            $restante += ($necesariasFive - $cottagesFive > 0) ? ($necesariasFive - $cottagesFive) * 5 : 0; // determinamos las personas que faltan si no hay cabañas de cinco disponibles para todos
             $necesariasFour = floor($restante / 4); // determinamos cauntas cabañas de 4 se necesitan
             if ($restante % 4) $necesariasFour++; // determinamos si aun quedan personas y sumamos una cabaña más
         }

@@ -3,19 +3,21 @@
         <h3 v-if="toRentals.length" class="text-center">Cabañas disponibles</h3>
         <div v-if="toRentals.length" :class="['text-center', 'alert', {'alert-danger': toRentals.length, 'alert-info': toRentals.length}]">
             <icon-app iconImage="warning"></icon-app>
-            {{ toRentals.length ? 'Tenga en cuenta que son las cabañas disponibles según las fechas ingresadas' : 'Lamentablemente no tenemos cabañas disponibles.'}}
+            {{ toRentals.length ? 'Cabañas disponibles según los parametros elegidos' : 'Lamentablemente no tenemos cabañas disponibles.'}}
+            <br>
+            <icon-app iconImage="trash"></icon-app> Si desea eliminar alguna de las opciones <b>haga clic en ella</b>
         </div>
         <div class="list-group">
-            <button-item v-for="rental in toRentals" :key="rental.id" :cottage="rental"></button-item>
+            <button-item v-for="(rental, index) in toRentals" :key="rental.id" :cottage="rental" :index="index"></button-item>
         </div>
         <div class="text-center">
-            <button id="btn-reservas" v-if="toRentals.length" class="btn btn-success btn-lg">Reservar <icon-app iconImage="handshake-o"></icon-app></button>
+            <button @click="setDeal(true)" id="btn-reservas" v-if="toRentals.length" class="btn btn-success btn-lg">Reservar <icon-app iconImage="handshake-o"></icon-app></button>
         </div>
     </div>
 </template>
 
 <script>
-    import { mapState } from 'vuex'
+    import { mapState, mapActions } from 'vuex'
     import Item from './Button-list-item.vue'
     import Icon from './Icon.vue'
 
@@ -28,6 +30,9 @@
             ...mapState({
                 toRentals: state => state.data.toRentals
             })
+        },
+        methods: {
+            ...mapActions(['setDeal'])
         }
     }
 </script>

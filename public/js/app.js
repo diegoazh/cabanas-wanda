@@ -1625,6 +1625,19 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
 var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
@@ -1633,24 +1646,12 @@ var _Icon2 = _interopRequireDefault(_Icon);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 exports.default = {
     components: {
         'icon-app': _Icon2.default
     },
-    props: ['cottage']
+    props: ['cottage', 'index'],
+    methods: _extends({}, (0, _vuex.mapActions)(['deleteItemToRentals']))
 };
 
 /***/ }),
@@ -1912,6 +1913,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
@@ -1934,7 +1937,8 @@ exports.default = {
         toRentals: function toRentals(state) {
             return state.data.toRentals;
         }
-    }))
+    })),
+    methods: _extends({}, (0, _vuex.mapActions)(['setDeal']))
 };
 
 /***/ }),
@@ -1950,6 +1954,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
 //
 //
 //
@@ -31323,7 +31331,15 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "button",
-    { staticClass: "list-group-item btn-item", attrs: { type: "button" } },
+    {
+      staticClass: "list-group-item btn-item",
+      attrs: { type: "button" },
+      on: {
+        click: function($event) {
+          _vm.deleteItemToRentals(_vm.index)
+        }
+      }
+    },
     [
       _c("img", {
         staticClass: "img-responsive img-thumbnail img-circle img-btn-item",
@@ -31699,10 +31715,14 @@ var render = function() {
           _c("div", { staticClass: "row" }, [_c("list-group-app")], 1)
         ]
       )
-    : _c("div", {
-        staticClass: "container jumbotron",
-        attrs: { id: "reservas-component2" }
-      })
+    : _c(
+        "div",
+        {
+          staticClass: "container jumbotron",
+          attrs: { id: "reservas-component2" }
+        },
+        [_vm._m(1)]
+      )
 }
 var staticRenderFns = [
   function() {
@@ -31727,6 +31747,16 @@ var staticRenderFns = [
         ])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" }, [
+        _c("h1", { staticClass: "text-center" }, [_vm._v("Reservas")])
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -31779,11 +31809,16 @@ var render = function() {
                 "\n        " +
                   _vm._s(
                     _vm.toRentals.length
-                      ? "Tenga en cuenta que son las cabañas disponibles según las fechas ingresadas"
+                      ? "Cabañas disponibles según los parametros elegidos"
                       : "Lamentablemente no tenemos cabañas disponibles."
                   ) +
-                  "\n    "
-              )
+                  "\n        "
+              ),
+              _c("br"),
+              _vm._v(" "),
+              _c("icon-app", { attrs: { iconImage: "trash" } }),
+              _vm._v(" Si desea eliminar alguna de las opciones "),
+              _c("b", [_vm._v("haga clic en ella")])
             ],
             1
           )
@@ -31792,10 +31827,10 @@ var render = function() {
       _c(
         "div",
         { staticClass: "list-group" },
-        _vm._l(_vm.toRentals, function(rental) {
+        _vm._l(_vm.toRentals, function(rental, index) {
           return _c("button-item", {
             key: rental.id,
-            attrs: { cottage: rental }
+            attrs: { cottage: rental, index: index }
           })
         })
       ),
@@ -31806,7 +31841,12 @@ var render = function() {
               "button",
               {
                 staticClass: "btn btn-success btn-lg",
-                attrs: { id: "btn-reservas" }
+                attrs: { id: "btn-reservas" },
+                on: {
+                  click: function($event) {
+                    _vm.setDeal(true)
+                  }
+                }
               },
               [
                 _vm._v("Reservar "),
@@ -43745,31 +43785,36 @@ exports.default = {
 
         commit('setToRentals', toRentals);
     },
-    setLastQueryData: function setLastQueryData(_ref4, payload) {
+    deleteItemToRentals: function deleteItemToRentals(_ref4, index) {
         var commit = _ref4.commit;
+
+        commit('deleteItemToRentals', index);
+    },
+    setLastQueryData: function setLastQueryData(_ref5, payload) {
+        var commit = _ref5.commit;
 
         commit('setLastQuery', payload.choice);
         commit('setLastSimple', payload.simple);
         commit('setLasDateFrom', payload.dateFrom);
         commit('setLasDateTo', payload.dateTo);
     },
-    setQueryFinished: function setQueryFinished(_ref5, bool) {
-        var commit = _ref5.commit;
+    setQueryFinished: function setQueryFinished(_ref6, bool) {
+        var commit = _ref6.commit;
 
         commit('setQueryFinished', bool);
     },
-    setResponseStatus: function setResponseStatus(_ref6, status) {
-        var commit = _ref6.commit;
+    setResponseStatus: function setResponseStatus(_ref7, status) {
+        var commit = _ref7.commit;
 
         commit('setResponseStatus', status);
     },
-    setResponseError: function setResponseError(_ref7, error) {
-        var commit = _ref7.commit;
+    setResponseError: function setResponseError(_ref8, error) {
+        var commit = _ref8.commit;
 
         commit('setResponseError', error);
     },
-    handlingXhrErrors: function handlingXhrErrors(_ref8, error) {
-        var dispatch = _ref8.dispatch;
+    handlingXhrErrors: function handlingXhrErrors(_ref9, error) {
+        var dispatch = _ref9.dispatch;
 
         if (error.response) {
             // The request was made and the server responded with a status code
@@ -43787,8 +43832,8 @@ exports.default = {
         }
         dispatch('setQueryFinished', true);
     },
-    setCottages: function setCottages(_ref9) {
-        var commit = _ref9.commit;
+    setCottages: function setCottages(_ref10) {
+        var commit = _ref10.commit;
 
         _myAxios.http.get('rentals/basic/').then(function (response) {
             commit('setCottages', response.data.cottages);
@@ -43796,8 +43841,8 @@ exports.default = {
             return dispatch('handlingXhrErrors', err);
         });
     },
-    queryForCapacity: function queryForCapacity(_ref10, payload) {
-        var dispatch = _ref10.dispatch;
+    queryForCapacity: function queryForCapacity(_ref11, payload) {
+        var dispatch = _ref11.dispatch;
 
         _myAxios.http.post('rentals/capacity/', {
             query: payload.choice,
@@ -43812,8 +43857,8 @@ exports.default = {
         });
         dispatch('setLastQueryData', payload);
     },
-    queryForCottage: function queryForCottage(_ref11, payload) {
-        var dispatch = _ref11.dispatch;
+    queryForCottage: function queryForCottage(_ref12, payload) {
+        var dispatch = _ref12.dispatch;
 
         _myAxios.http.post('rentals/cottage/', {
             query: payload.choice,
@@ -43827,7 +43872,19 @@ exports.default = {
             return dispatch('handlingXhrErrors', err);
         });
         dispatch('setLastQueryData', payload);
-    }
+    },
+    setDeal: function setDeal(_ref13, bool) {
+        var commit = _ref13.commit;
+
+        commit('setDeal', bool);
+    },
+    setUserData: function setUserData(_ref14, payload) {
+        var commit = _ref14.commit;
+
+        commit('setIsLogged', payload.isLogged);
+        commit('setUser', payload.user);
+    },
+    getUserData: function getUserData() {}
 };
 
 /***/ }),
@@ -43866,6 +43923,9 @@ exports.default = {
             state.data.toRentals = new Array(toRentals);
         }
     },
+    deleteItemToRentals: function deleteItemToRentals(state, index) {
+        state.data.toRentals.splice(index, 1);
+    },
     setCottages: function setCottages(state, cottages) {
         if (Array.isArray(cottages)) {
             state.data.cottages = cottages;
@@ -43881,6 +43941,12 @@ exports.default = {
     },
     setUser: function setUser(state, user) {
         state.data.user = user;
+    },
+    setDeal: function setDeal(state, bool) {
+        state.data.deal = bool;
+    },
+    setIsLogged: function setIsLogged(state, bool) {
+        state.data.isLogged = bool;
     },
     setResponseError: function setResponseError(state, error) {
         state.xhr.responseError = error;
@@ -43919,10 +43985,11 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     data: {
         isAdmin: false,
-        user: '',
+        user: {},
         deal: false,
         cottages: [],
-        toRentals: []
+        toRentals: [],
+        isLogged: false
     },
     lastQueryData: {
         query: 0,

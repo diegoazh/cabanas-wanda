@@ -11,6 +11,9 @@ export default {
     setToRentals({commit}, toRentals) {
         commit('setToRentals', toRentals);
     },
+    deleteItemToRentals({commit}, index) {
+        commit('deleteItemToRentals', index);
+    },
     setLastQueryData({commit}, payload) {
         commit('setLastQuery', payload.choice);
         commit('setLastSimple', payload.simple);
@@ -75,4 +78,14 @@ export default {
             .catch(err => dispatch('handlingXhrErrors', err));
         dispatch('setLastQueryData', payload);
     },
+    setDeal({commit}, bool) {
+        commit('setDeal', bool);
+    },
+    setUserData({commit}, payload) {
+        commit('setIsLogged', payload.isLogged);
+        commit('setUser', payload.user);
+    },
+    getUserData() {
+
+    }
 };

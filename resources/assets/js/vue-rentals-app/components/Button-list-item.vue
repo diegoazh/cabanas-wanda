@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="list-group-item btn-item">
+    <button type="button" class="list-group-item btn-item" @click="deleteItemToRentals(index)">
         <img :src="cottage.images" alt="" class="img-responsive img-thumbnail img-circle img-btn-item">
         <h4 class="text-capitalize label label-info tt-btn-item">{{ cottage.name }}</h4>
         <p class="capacity-btn-item"><span class="text-info">Capacidad:</span> <b>{{ cottage.accommodation }}</b></p>
@@ -11,14 +11,17 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import { mapActions } from 'vuex'
     import Icon from './Icon.vue'
 
     export default {
         components: {
             'icon-app': Icon
         },
-        props: ['cottage']
+        props: ['cottage', 'index'],
+        methods: {
+            ...mapActions(['deleteItemToRentals'])
+        }
     }
 </script>
 

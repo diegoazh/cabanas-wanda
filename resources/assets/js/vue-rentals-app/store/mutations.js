@@ -6,6 +6,9 @@ export default {
             state.data.toRentals = new Array(toRentals);
         }
     },
+    deleteItemToRentals(state, index) {
+        state.data.toRentals.splice(index, 1);
+    },
     setCottages(state, cottages) {
         if (Array.isArray(cottages)) {
             state.data.cottages = cottages;
@@ -21,6 +24,12 @@ export default {
     },
     setUser(state, user) {
         state.data.user = user;
+    },
+    setDeal(state, bool) {
+        state.data.deal = bool;
+    },
+    setIsLogged(state, bool) {
+        state.data.isLogged = bool;
     },
     setResponseError(state, error) {
         state.xhr.responseError = error;

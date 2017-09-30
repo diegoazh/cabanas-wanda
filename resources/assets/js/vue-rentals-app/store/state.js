@@ -1,10 +1,11 @@
 export default {
     data: {
         isAdmin: false,
-        user: '',
+        user: {},
         deal: false,
         cottages: [],
         toRentals: [],
+        isLogged: false
     },
     lastQueryData: {
         query: 0,
