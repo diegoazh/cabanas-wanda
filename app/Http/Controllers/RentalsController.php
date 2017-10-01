@@ -14,9 +14,6 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 class RentalsController extends Controller
 {
-
-    protected $auth;
-
     /**
      * Display a listing of the resource.
      *
@@ -25,17 +22,17 @@ class RentalsController extends Controller
     public function index()
     {
         $administration = 0;
+        $user = '';
 
         if (Auth::check()) {
-
-            $this->auth = Auth::user();
-
             if (Auth::user()->isAdmin() || Auth::user()->isEmployed()) {
                 $administration = true;
+            } else {
+                $user = Auth::user()->email;
             }
         }
 
-        return view('frontend.rentals')->with(compact('administration'));
+        return view('frontend.rentals')->with(compact('administration', 'user'));
     }
 
     /**
@@ -152,9 +149,11 @@ class RentalsController extends Controller
         $token = '';
 
         if (!$info['isAdmin']) {
-            $user = $this->auth;
-        } else {
-            $user = User::where('dni', $info['dni'])->where('email', $info['email'])->first();
+            if (!empty($info['dni'])) {
+                $user = User::where('dni', $info['dni'])->where('email', $info['email'])->first();
+            } else {
+                $user = User::where('email', $info['email'])->first();
+            }
         }
 
         if ($user) {

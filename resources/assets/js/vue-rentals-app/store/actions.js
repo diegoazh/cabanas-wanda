@@ -3,6 +3,7 @@ import { http } from '../axios/my-axios'
 export default {
     setBasicInfo({commit}, payload) {
         commit('setIsAdmin', payload.basicOne);
+        commit('setUser', payload.basicTwo);
         window.clearTimeout(window.verify);
         delete window.verify;
     },
@@ -89,15 +90,21 @@ export default {
         commit('setToken', token);
     },
     authenticateUser({dispatch}, payload) {
-        http.post('rentals/auth/', {
-            isAdmin: payload.isAdmin,
-            dni: payload.dni,
-            email: payload.email
-        })
-            .then(response => {
-                dispatch('setUserData', response.data.user);
-                dispatch('setToken', response.data.token);
+        return new Promise((resolve, reject) => {
+            http.post('rentals/auth/', {
+                isAdmin: payload.isAdmin,
+                dni: payload.dni,
+                email: payload.email
             })
-            .catch(err => dispatch('handlingXhrErrors', err));
+                .then(response => {
+                    dispatch('setUserData', response.data.user);
+                    dispatch('setToken', response.data.token);
+                    resolve();
+                })
+                .catch(err => {
+                    dispatch('handlingXhrErrors', err);
+                    reject();
+                });
+        });
     }
 };
