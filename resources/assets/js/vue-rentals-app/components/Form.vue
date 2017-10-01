@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-            <div class="form-group">
+            <div :class="['form-group', {'has-error': !dateFrom}]">
                 <label for="dateFrom"></label>
                 <div class="input-group">
                     <div class="input-group-addon date-piker">Desde <icon-app iconImage="calendar"></icon-app></div>
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-            <div class="form-group">
+            <div :class="['form-group', {'has-error': !dateTo}]">
                 <label for="dateTo"></label>
                 <div class="input-group">
                     <div class="input-group-addon date-piker">Hasta <icon-app iconImage="calendar"></icon-app></div>
@@ -36,7 +36,7 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
             <br><br>
-            <button class="btn btn-primary btn-lg">
+            <button class="btn btn-primary btn-lg" :disabled="hasErrors">
                 Consultar disponibilidad <icon-app :iconImage="btnIconImg" :aditionalClasses="btnClasses"></icon-app>
             </button>
         </div>
@@ -58,6 +58,9 @@
             EventBus.$on('choice-change', () => this.previousChoice());
             this.defineDate();
         },
+        updated() {
+            this.hasErrorsInForm();
+        },
         data() {
             return {
                 choice: 1,
@@ -66,7 +69,8 @@
                 draftCottage: 0,
                 dateFrom: null,
                 dateTo: null,
-                dtpConfig: {}
+                dtpConfig: {},
+                hasErrors: true
             }
         },
         computed: {
@@ -106,7 +110,7 @@
                 }
             },
             defineDate() {
-                const verify = window.setTimeout(() => {
+                window.verify = window.setTimeout(() => {
                     if (window.myInfo) {
                         this.setBasicInfo(window.myInfo);
                         delete window.myInfo;
@@ -114,9 +118,15 @@
                     }
                 }, 1000);
             },
+            hasErrorsInForm() {
+                if (this.dateFrom && this.dateTo) {
+                    this.hasErrors = false;
+                }
+            },
             selectQuery() {
+                if (this.hasErrors) return;
                 this.setQueryFinished(false);
-                if (this.$store.state.frmCmp.isForCottage) {
+                if (this.isForCottage) {
                     this.queryForCottage({
                         choice: this.choice,
                         simple: this.bedSimple,

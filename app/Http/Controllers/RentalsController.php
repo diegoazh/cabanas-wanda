@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use JWTAuth;
 use App\Rental;
 use App\Cottage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\RentalRequest;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class RentalsController extends Controller
 {
+
+    protected $auth;
+
     /**
      * Display a listing of the resource.
      *
@@ -18,17 +25,17 @@ class RentalsController extends Controller
     public function index()
     {
         $administration = 0;
-        $user = 0;
 
         if (Auth::check()) {
+
+            $this->auth = Auth::user();
+
             if (Auth::user()->isAdmin() || Auth::user()->isEmployed()) {
                 $administration = true;
-            } else {
-                $user = !empty(Auth::user()->dni) ? Auth::user()->dni : (!empty(Auth::user()->passport) ? Auth::user()->passport : Auth::user()->email);
             }
         }
 
-        return view('frontend.rentals')->with(compact('administration', 'user'));
+        return view('frontend.rentals')->with(compact('administration'));
     }
 
     /**
@@ -138,8 +145,23 @@ class RentalsController extends Controller
         return response()->json(compact('cottage'), 200);
     }
 
-    public function isUserLogged(Request $request)
+    public function authenticate(Request $request)
     {
-        return response()->json(compact('user', 'isLogged'), 200);
+        $info = $request->all();
+        $user = null;
+        $token = '';
+
+        if (!$info['isAdmin']) {
+            $user = $this->auth;
+        } else {
+            $user = User::where('dni', $info['dni'])->where('email', $info['email'])->first();
+        }
+
+        if ($user) {
+            $token = JWTAuth::fromUser($user);
+        }
+
+        // all good so return the token
+        return response()->json(compact('token', 'user'), 200);
     }
 }

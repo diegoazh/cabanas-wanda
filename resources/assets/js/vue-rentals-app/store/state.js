@@ -5,7 +5,6 @@ export default {
         deal: false,
         cottages: [],
         toRentals: [],
-        isLogged: false
     },
     lastQueryData: {
         query: 0,

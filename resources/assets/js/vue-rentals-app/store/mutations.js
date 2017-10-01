@@ -25,11 +25,11 @@ export default {
     setUser(state, user) {
         state.data.user = user;
     },
+    setToken(state, token) {
+        state.xhr.token = token;
+    },
     setDeal(state, bool) {
         state.data.deal = bool;
-    },
-    setIsLogged(state, bool) {
-        state.data.isLogged = bool;
     },
     setResponseError(state, error) {
         state.xhr.responseError = error;

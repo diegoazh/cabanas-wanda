@@ -18,7 +18,6 @@
         (function () {
             window.myInfo = {};
             window.myInfo.basicOne = {{ $administration }};
-            window.myInfo.basicTwo = {{ $user }};
         })();
     </script>
 @endsection

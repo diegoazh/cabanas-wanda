@@ -1,5 +1,5 @@
-<template>
-    <div v-if="!deal" id="reservas-component" class="container jumbotron">
+<template v-if="!deal">
+    <div id="reservas-component" class="container jumbotron">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <h1 class="text-center">Reservas</h1>
@@ -28,7 +28,9 @@
             <list-group-app></list-group-app>
         </div>
     </div>
-    <div v-else id="reservas-component2" class="container jumbotron">
+</template>
+<template v-else>
+    <div id="reservas-component2" class="container jumbotron">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <h1 class="text-center">Reservas</h1>
@@ -78,6 +80,7 @@
     #reservas-component,
     #reservas-component2 {
         margin-top: 30px;
+        background-color: rgba(238,238,238,0.4);
     }
     #text-onOff {
         margin-top: 35px;

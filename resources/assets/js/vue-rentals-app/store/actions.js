@@ -2,8 +2,9 @@ import { http } from '../axios/my-axios'
 
 export default {
     setBasicInfo({commit}, payload) {
-        commit('setIsAdmin', payload.admin);
-        commit('setUser', payload.user);
+        commit('setIsAdmin', payload.basicOne);
+        window.clearTimeout(window.verify);
+        delete window.verify;
     },
     setIsForCottage({commit}, bool) {
         commit('setIsForCottage', bool);
@@ -81,13 +82,22 @@ export default {
     setDeal({commit}, bool) {
         commit('setDeal', bool);
     },
-    setUserData({commit}, payload) {
-        commit('setIsLogged', payload.isLogged);
-        commit('setUser', payload.user);
+    setUserData({commit}, user) {
+        commit('setUser', user);
     },
-    getUserData({dispatch}) {
-        http.get('rentals/auth/')
-            .then(response => dispatch('setUserData', response.data))
+    setToken({commit}, token) {
+        commit('setToken', token);
+    },
+    authenticateUser({dispatch}, payload) {
+        http.post('rentals/auth/', {
+            isAdmin: payload.isAdmin,
+            dni: payload.dni,
+            email: payload.email
+        })
+            .then(response => {
+                dispatch('setUserData', response.data.user);
+                dispatch('setToken', response.data.token);
+            })
             .catch(err => dispatch('handlingXhrErrors', err));
     }
 };

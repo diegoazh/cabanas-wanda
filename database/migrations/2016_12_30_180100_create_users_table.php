@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
             $table->enum('type', ['frecuente', 'empleado', 'administrador', 'sysadmin'])->default('frecuente');
             $table->string('imageProfile')->nullable();
             $table->string('slug')->nullable();
+            $table->boolean('confirmed')->default(false);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
