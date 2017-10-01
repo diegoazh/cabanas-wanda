@@ -19,4 +19,5 @@ Route::prefix('rentals')->group(function () {
     Route::get('basic', 'RentalsController@basicInfo')->name('api.rentals.basic');
     Route::post('capacity', 'RentalsController@forCapacity')->name('api.rentals.capacity');
     Route::post('cottage', 'RentalsController@forCottages')->name('api.rentals.cottage');
+    Route::get('auth', 'RentalsController@isUserLogged')->name('api.rentals.auth');
 });

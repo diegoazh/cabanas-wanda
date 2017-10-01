@@ -85,7 +85,9 @@ export default {
         commit('setIsLogged', payload.isLogged);
         commit('setUser', payload.user);
     },
-    getUserData() {
-
+    getUserData({dispatch}) {
+        http.get('rentals/auth/')
+            .then(response => dispatch('setUserData', response.data))
+            .catch(err => dispatch('handlingXhrErrors', err));
     }
 };

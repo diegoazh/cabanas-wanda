@@ -34,6 +34,7 @@
                 <h1 class="text-center">Reservas</h1>
             </div>
         </div>
+        <deal-app></deal-app>
     </div>
 </template>
 
@@ -42,12 +43,14 @@
     import Icon from './Icon.vue'
     import Form from './Form.vue'
     import List from './List-group.vue'
+    import Deal from './Deal.vue'
 
     export default {
         components: {
             'icon-app': Icon,
             'form-app': Form,
-            'list-group-app': List
+            'list-group-app': List,
+            'deal-app': Deal
         },
         data() {
           return {

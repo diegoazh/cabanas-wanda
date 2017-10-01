@@ -7,16 +7,19 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex'
+    import { mapState, mapActions } from 'vuex'
 
     export default {
         created() {
-
+            this.getUserData();
         },
         cumputed: {
             ...mapState({
                 isAdmin: state => state.data.isLogged
             })
+        },
+        methods: {
+            ...mapActions(['getUserData'])
         }
     }
 </script>

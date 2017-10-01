@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Cottage;
-use App\Http\Requests\RentalRequest;
 use App\Rental;
+use App\Cottage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\RentalRequest;
 
 class RentalsController extends Controller
 {
@@ -137,5 +136,10 @@ class RentalsController extends Controller
         }
 
         return response()->json(compact('cottage'), 200);
+    }
+
+    public function isUserLogged(Request $request)
+    {
+        return response()->json(compact('user', 'isLogged'), 200);
     }
 }
