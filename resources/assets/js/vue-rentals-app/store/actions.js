@@ -13,6 +13,9 @@ export default {
     setToRentals({commit}, toRentals) {
         commit('setToRentals', toRentals);
     },
+    setCountries({commit}, countries) {
+        commit('setCountries', countries);
+    },
     deleteItemToRentals({commit}, index) {
         commit('deleteItemToRentals', index);
     },
@@ -31,6 +34,9 @@ export default {
     setResponseError({commit}, error) {
         commit('setResponseError', error);
     },
+    setResponseMessage({commit}, message) {
+        commit('setResponseMessage', message);
+    },
     handlingXhrErrors({dispatch}, error) {
         if (error.response) {
             // The request was made and the server responded with a status code
@@ -48,7 +54,7 @@ export default {
         }
         dispatch('setQueryFinished', true);
     },
-    setCottages({commit}){
+    setCottages({commit, dispatch}){
         http.get('rentals/basic/')
             .then(response => {
                 commit('setCottages', response.data.cottages);
@@ -99,6 +105,7 @@ export default {
                 .then(response => {
                     dispatch('setUserData', response.data.user);
                     dispatch('setToken', response.data.token);
+                    dispatch('setCountries', response.data.countries);
                     resolve();
                 })
                 .catch(err => {
@@ -106,5 +113,15 @@ export default {
                     reject();
                 });
         });
+    },
+    sendClosedDeal(context, payload) {
+        return new Promise((resolve, reject) => {
+            http.post('rentals/store?token=' + context.state.xhr.token, payload)
+                .then(response => {
+                    context.dispatch('setResponseMessage', response.data.message);
+                    context.commit('setClosedDeal', true);
+                })
+                .catch(err => context.dispatch('handlingXhrErrors', err));
+        })
     }
 };

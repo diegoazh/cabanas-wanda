@@ -1,24 +1,52 @@
 <template>
     <button type="button" class="list-group-item btn-item" @click="deleteItemToRentals(index)">
-        <img :src="cottage.images" alt="" class="img-responsive img-thumbnail img-circle img-btn-item">
-        <h4 class="text-capitalize label label-info tt-btn-item">{{ cottage.name }}</h4>
-        <p class="capacity-btn-item"><span class="text-info">Capacidad:</span> <b>{{ cottage.accommodation }}</b></p>
-        <p class="number-btn-item"><span class="text-info">Cabaña número:</span> <b>{{ cottage.number }}</b></p>
-        &nbsp;
-        <span :class="['label', {'label-primary': cottage.type === 'simple', 'label-success': cottage.type === 'matrimonial'}]"><b class="text-capitalize">{{ cottage.type }}</b></span>
-        <icon-app iconImage="check-square-o" aditionalClasses="pull-right icon-btn-item"></icon-app>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <img :src="cottage.images" alt="" class="img-responsive img-thumbnail img-circle img-btn-item">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <ul>
+                    <li><b>Nombre: </b><h5 class="text-capitalize label label-info tt-btn-item">{{ cottage.name }}</h5></li>
+                    <li><b class="capacity-btn-item">Capacidad: <b>{{ cottage.accommodation }}</b></b></li>
+                    <li><b class="number-btn-item">Número: <b>{{ cottage.number }}</b></b></li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <ul>
+                    <li><span :class="['label', {'label-primary': cottage.type === 'simple', 'label-success': cottage.type === 'matrimonial'}]"><b class="text-capitalize">{{ cottage.type }}</b></span></li>
+                    <li><b>Días: {{ calcularDias }}</b></li>
+                    <li><b>Precio: <span class="label label-primary"><icon-app iconImage="dollar"></icon-app>{{ cottage.price }}</span></b></li>
+                    <li><b>Precio final: <span class="label label-danger"><icon-app iconImage="dollar"></icon-app>{{ calcularDias * cottage.price }}</span></b></li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+                <icon-app iconImage="check-square-o" aditionalClasses="pull-right icon-btn-item"></icon-app>
+            </div>
+        </div>        &nbsp;
     </button>
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+    import { mapActions, mapState } from 'vuex'
     import Icon from './Icon.vue'
+    import moment from 'moment'
 
     export default {
         components: {
             'icon-app': Icon
         },
         props: ['cottage', 'index'],
+        computed: {
+            calcularDias() {
+                const from = moment(this.dateFrom + ' 00:00:00', 'DD/MM/YYYY HH:mm:ss');
+                const to = moment(this.dateTo + ' 10:00:00', 'DD/MM/YYYY HH:mm:ss').add(1, 'day');
+                return to.diff(from, 'days');
+            },
+            ...mapState({
+                dateFrom: state => state.lastQueryData.dateFrom,
+                dateTo: state => state.lastQueryData.dateTo,
+            })
+        },
         methods: {
             ...mapActions(['deleteItemToRentals'])
         }
@@ -27,7 +55,7 @@
 
 <style>
     .img-btn-item {
-        max-width: 20%;
+        max-width: 75%;
         display: inline-block;
         -webkit-box-shadow: inset 2px 3px 3px #333333;
         -moz-box-shadow: inset 2px 3px 3px #333333;
@@ -37,7 +65,7 @@
     .tt-btn-item {
         display: inline-block;
         margin-left: 1.5%;
-        font-size: 18px;
+        font-size: 14px;
         font-weight: bolder;
         text-transform: uppercase;
     }
@@ -61,10 +89,10 @@
         -moz-box-shadow: 2px 2px 5px #333333;
         box-shadow: 2px 2px 5px #333333;
     }
-    .btn-item i:before {
+    .btn-item i.icon-btn-item:before {
         color: #5cb85c;
     }
-    .btn-item:hover i:before {
+    .btn-item:hover i.icon-btn-item:before {
         color: #d9534f;
         content: '\f057';
         font-family: FontAwesome;

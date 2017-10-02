@@ -16,6 +16,13 @@ export default {
             state.data.cottages = new Array(cottages);
         }
     },
+    setCountries(state, countries) {
+        if (Array.isArray(countries)) {
+            state.data.countries = countries;
+        } else {
+            state.data.countries = new Array(countries);
+        }
+    },
     setIsForCottage(state, bool) {
         state.frmCmp.isForCottage = bool;
     },
@@ -30,6 +37,12 @@ export default {
     },
     setDeal(state, bool) {
         state.data.deal = bool;
+    },
+    setClosedDeal(state, bool) {
+        state.data.closedDeal = bool;
+    },
+    setResponseMessage(state, message) {
+        state.xhr.responseMessage = message;
     },
     setResponseError(state, error) {
         state.xhr.responseError = error;

@@ -11,7 +11,7 @@ class Rental extends Model
 
     protected $table = 'rentals';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['codeReservation', 'cottage_id', 'from', 'to', 'own', 'description', 'user_id', 'passenger_id', 'promotion_id', 'totalAmount', 'reservationPayment', 'dateReservationPayment', 'deductions', 'deductionsDescription', 'finalPayment', 'dateFinalPayment', 'state', 'wasRated'];
+    protected $fillable = ['codeReservation', 'cottage_id', 'from', 'to', 'own', 'description', 'user_id', 'passenger_id', 'promotion_id', 'cottage_price', 'total_days', 'dateReservationPayment', 'deductions', 'deductionsDescription', 'finalPayment', 'dateFinalPayment', 'state', 'wasRated'];
 
     /**
      * Relaciones del modelo
@@ -80,7 +80,6 @@ class Rental extends Model
 
         $cottages = null;
         $cottages2 = null;
-        // $otherCottage = null;
 
         if ($cottagesFive) {
 
@@ -112,17 +111,6 @@ class Rental extends Model
 
         }
 
-        /*if ($capacity < 5 || $restante > 0) { // si es menor a 5 o el resto es mayor a uno necesitamos una cabaña más
-
-            $otherCottage = Cottage::whereNotIn('id', function ($query) use ($dateFrom, $dateTo) {
-                $query->select('cottage_id')
-                    ->from(with(new Rental)->getTable())
-                    ->whereBetween('from', [$dateFrom, $dateTo])
-                    ->whereBetween('to', [$dateFrom, $dateTo]);
-            })->where('accommodation', '<', 5)->where('state', 'enabled')->first()->toArray();
-
-        }*/
-
         if (!empty($cottages)) {
 
             if (!empty($cottages2)) {
@@ -140,12 +128,10 @@ class Rental extends Model
 
     public static function cottageForNumber($number, $simple, $dateFrom, $dateTo)
     {
-        $rentals = Rental::whereIn('cottage_id', function ($query) use ($simple, $dateFrom, $dateTo, $number) {
+        $rentals = Rental::whereIn('cottage_id', function ($query) use ($number, $simple, $dateFrom, $dateTo) {
             $query->select('id')->from(with(new Cottage)->getTable())
                 ->where('number', $number);
-        })->whereBetween('from', [$dateFrom, $dateTo])
-            ->whereBetween('to', [$dateFrom, $dateTo])
-            ->get()->toArray();
+        })->whereBetween('from', [$dateFrom, $dateTo])->where('to', 'between', [$dateFrom, $dateTo])->get()->toArray();
 
         $cottage = Cottage::where('number', $number)->where('state', 'enabled')->where('type', $simple ? '=' : 'like', $simple ? 'simple' : '%')->first();
 

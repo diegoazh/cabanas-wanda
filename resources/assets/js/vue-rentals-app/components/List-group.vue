@@ -1,5 +1,5 @@
 <template>
-    <div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-8 col-lg-offset-2">
+    <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-10 col-lg-offset-1">
         <h3 v-if="toRentals.length" class="text-center">Cabañas disponibles</h3>
         <div v-if="toRentals.length" :class="['text-center', 'alert', {'alert-danger': toRentals.length, 'alert-info': toRentals.length}]">
             <icon-app iconImage="warning"></icon-app>

@@ -34,7 +34,8 @@
                 <h1 class="text-center">Reservas</h1>
             </div>
         </div>
-        <deal-app></deal-app>
+        <deal-app v-if="!closedDeal"></deal-app>
+        <closed-deal-app v-else></closed-deal-app>
     </div>
 </template>
 
@@ -44,13 +45,15 @@
     import Form from './Form.vue'
     import List from './List-group.vue'
     import Deal from './Deal.vue'
+    import CloseDeal from './ClosedDeal.vue'
 
     export default {
         components: {
             'icon-app': Icon,
             'form-app': Form,
             'list-group-app': List,
-            'deal-app': Deal
+            'deal-app': Deal,
+            'closed-deal-app': CloseDeal
         },
         data() {
           return {
@@ -60,7 +63,8 @@
         computed: {
             ...mapState({
                 isForCottage: state => state.frmCmp.isForCottage,
-                deal: state => state.data.deal
+                deal: state => state.data.deal,
+                closedDeal: state => state.data.closedDeal
             })
         },
         methods: {

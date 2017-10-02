@@ -3,17 +3,20 @@ export default {
         isAdmin: false,
         user: {},
         deal: false,
+        closedDeal: false,
         cottages: [],
         toRentals: [],
+        countries: []
     },
     lastQueryData: {
         query: 0,
         simple: false,
         dateFrom: '',
-        dateTo: ''
+        dateTo: '',
     },
     xhr: {
         token: '',
+        responseMessage: '',
         responseError: '',
         responseStatus: 0,
         queryFinished: true

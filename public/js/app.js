@@ -1637,6 +1637,83 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
+var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
+var _moment = __webpack_require__("./node_modules/moment/moment.js");
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    components: {
+        'icon-app': _Icon2.default
+    },
+    props: ['cottage', 'index'],
+    computed: _extends({
+        calcularDias: function calcularDias() {
+            var from = (0, _moment2.default)(this.dateFrom + ' 00:00:00', 'DD/MM/YYYY HH:mm:ss');
+            var to = (0, _moment2.default)(this.dateTo + ' 10:00:00', 'DD/MM/YYYY HH:mm:ss').add(1, 'day');
+            return to.diff(from, 'days');
+        }
+    }, (0, _vuex.mapState)({
+        dateFrom: function dateFrom(state) {
+            return state.lastQueryData.dateFrom;
+        },
+        dateTo: function dateTo(state) {
+            return state.lastQueryData.dateTo;
+        }
+    })),
+    methods: _extends({}, (0, _vuex.mapActions)(['deleteItemToRentals']))
+};
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/ClosedDeal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
@@ -1650,8 +1727,11 @@ exports.default = {
     components: {
         'icon-app': _Icon2.default
     },
-    props: ['cottage', 'index'],
-    methods: _extends({}, (0, _vuex.mapActions)(['deleteItemToRentals']))
+    computed: _extends({}, (0, _vuex.mapState)({
+        responseMessage: function responseMessage(state) {
+            return state.xhr.responseMessage;
+        }
+    }))
 };
 
 /***/ }),
@@ -1708,6 +1788,69 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
 
@@ -1722,13 +1865,20 @@ exports.default = {
         'icon-app': _Icon2.default
     },
     mounted: function mounted() {
+        this.email = this.user;
         this.findUser();
     },
     data: function data() {
         return {
-            dni: 0,
+            onOff: false,
+            name: '',
+            lastname: '',
             email: '',
-            hasUser: false
+            document: 0,
+            genre: '',
+            country: '',
+            dataForm: false,
+            userNotFound: false
         };
     },
 
@@ -1736,8 +1886,17 @@ exports.default = {
         toggleIconImage: function toggleIconImage() {
             return !this.queryFinished ? 'spinner' : 'search';
         },
+        toggleIconFinReserva: function toggleIconFinReserva() {
+            return !this.queryFinished ? 'spinner' : 'thumbs-o-up';
+        },
+        onOffBtn: function onOffBtn() {
+            return this.onOff ? 'toggle-on' : 'toggle-off';
+        },
         btnClasses: function btnClasses() {
             return !this.queryFinished ? 'fa-spin fa-fw' : '';
+        },
+        changeToogle: function changeToogle() {
+            return this.onOff ? 'text-primary' : 'text-muted';
         }
     }, (0, _vuex.mapState)({
         token: function token(state) {
@@ -1751,13 +1910,39 @@ exports.default = {
         },
         queryFinished: function queryFinished(state) {
             return state.xhr.queryFinished;
+        },
+        countries: function countries(state) {
+            return state.data.countries;
+        },
+        toRentals: function toRentals(state) {
+            return state.data.toRentals;
+        },
+        isForCottage: function isForCottage(state) {
+            return state.frmCmp.isForCottage;
+        },
+        dateFrom: function dateFrom(state) {
+            return state.lastQueryData.dateFrom;
+        },
+        dateTo: function dateTo(state) {
+            return state.lastQueryData.dateTo;
         }
     })),
     methods: _extends({
         verifyUser: function verifyUser() {
             if (this.token) {
-                this.hasUser = true;
-            }
+                this.name = this.user.name;
+                this.lastname = this.user.lastname;
+                this.email = this.user.email;
+                this.document = this.user.dni ? this.user.dni : this.user.passport;
+                this.genre = this.user.genre;
+                this.country = this.user.country_id;
+            } else {}
+            this.dataForm = true;
+        },
+        onOffImg: function onOffImg() {
+            this.onOff = !this.onOff;
+            this.onOff ? this.document = this.user.passport : this.document = this.user.dni;
+            window.document.querySelector('#document').getAttribute('type') === 'number' ? window.document.querySelector('#document').setAttribute('type', 'text') : window.document.querySelector('#document').setAttribute('type', 'number');
         },
         findUser: function findUser() {
             var _this = this;
@@ -1767,13 +1952,29 @@ exports.default = {
             this.setQueryFinished(!bool);
             this.authenticateUser({
                 isAdmin: this.isAdmin,
-                dni: this.dni,
+                dni: this.document,
                 email: this.user
             }).then(function () {
                 return _this.verifyUser();
             });
+        },
+        closeDeal: function closeDeal() {
+            var deal = {};
+            deal.name = this.name;
+            deal.lastname = this.lastname;
+            deal.email = this.email;
+            deal.document = this.document;
+            deal.genre = this.genre;
+            deal.country = this.country;
+            deal.toRentals = this.toRentals;
+            deal.user = this.user;
+            deal.isDni = !this.onOff;
+            deal.dateFrom = this.dateFrom;
+            deal.dateTo = this.dateTo;
+
+            this.sendClosedDeal(deal);
         }
-    }, (0, _vuex.mapActions)(['authenticateUser', 'setQueryFinished']))
+    }, (0, _vuex.mapActions)(['authenticateUser', 'setQueryFinished', 'sendClosedDeal']))
 };
 
 /***/ }),
@@ -2125,6 +2326,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
@@ -2144,6 +2346,10 @@ var _Deal = __webpack_require__("./resources/assets/js/vue-rentals-app/component
 
 var _Deal2 = _interopRequireDefault(_Deal);
 
+var _ClosedDeal = __webpack_require__("./resources/assets/js/vue-rentals-app/components/ClosedDeal.vue");
+
+var _ClosedDeal2 = _interopRequireDefault(_ClosedDeal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
@@ -2151,7 +2357,8 @@ exports.default = {
         'icon-app': _Icon2.default,
         'form-app': _Form2.default,
         'list-group-app': _ListGroup2.default,
-        'deal-app': _Deal2.default
+        'deal-app': _Deal2.default,
+        'closed-deal-app': _ClosedDeal2.default
     },
     data: function data() {
         return {
@@ -2165,6 +2372,9 @@ exports.default = {
         },
         deal: function deal(state) {
             return state.data.deal;
+        },
+        closedDeal: function closedDeal(state) {
+            return state.data.closedDeal;
         }
     })),
     methods: _extends({
@@ -2186,7 +2396,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.img-btn-item {\n    max-width: 20%;\n    display: inline-block;\n    -webkit-box-shadow: inset 2px 3px 3px #333333;\n    -moz-box-shadow: inset 2px 3px 3px #333333;\n    box-shadow: inset 2px 3px 3px #333333;\n    border-color: #333d53;\n}\n.tt-btn-item {\n    display: inline-block;\n    margin-left: 1.5%;\n    font-size: 18px;\n    font-weight: bolder;\n    text-transform: uppercase;\n}\n.capacity-btn-item {\n    display: inline-block;\n    margin-left: 1.5%;\n    font-size: 14px !important;\n}\n.number-btn-item {\n    display: inline-block;\n    margin-left: 1.5%;\n    font-size: 14px !important;\n}\n.icon-btn-item:before {\n    font-size: 220%;\n    position: relative;\n    top: 32px;\n}\n.btn-item {\n    -webkit-box-shadow: 2px 2px 5px #333333;\n    -moz-box-shadow: 2px 2px 5px #333333;\n    box-shadow: 2px 2px 5px #333333;\n}\n.btn-item i:before {\n    color: #5cb85c;\n}\n.btn-item:hover i:before {\n    color: #d9534f;\n    content: '\\F057';\n    font-family: FontAwesome;\n}\n", ""]);
+exports.push([module.i, "\n.img-btn-item {\n    max-width: 75%;\n    display: inline-block;\n    -webkit-box-shadow: inset 2px 3px 3px #333333;\n    -moz-box-shadow: inset 2px 3px 3px #333333;\n    box-shadow: inset 2px 3px 3px #333333;\n    border-color: #333d53;\n}\n.tt-btn-item {\n    display: inline-block;\n    margin-left: 1.5%;\n    font-size: 14px;\n    font-weight: bolder;\n    text-transform: uppercase;\n}\n.capacity-btn-item {\n    display: inline-block;\n    margin-left: 1.5%;\n    font-size: 14px !important;\n}\n.number-btn-item {\n    display: inline-block;\n    margin-left: 1.5%;\n    font-size: 14px !important;\n}\n.icon-btn-item:before {\n    font-size: 220%;\n    position: relative;\n    top: 32px;\n}\n.btn-item {\n    -webkit-box-shadow: 2px 2px 5px #333333;\n    -moz-box-shadow: 2px 2px 5px #333333;\n    box-shadow: 2px 2px 5px #333333;\n}\n.btn-item i.icon-btn-item:before {\n    color: #5cb85c;\n}\n.btn-item:hover i.icon-btn-item:before {\n    color: #d9534f;\n    content: '\\F057';\n    font-family: FontAwesome;\n}\n", ""]);
 
 // exports
 
@@ -2231,7 +2441,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.text-deleted {\n    text-decoration: line-through;\n}\n", ""]);
 
 // exports
 
@@ -2262,6 +2472,21 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 // module
 exports.push([module.i, "\n#btn-reservas {\n    font-weight: bolder;\n    font-size: 26px;\n    -webkit-border-radius: 25px;\n    -moz-border-radius: 25px;\n    border-radius: 25px;\n    -webkit-box-shadow: 2px 3px 7px #333333;\n    -moz-box-shadow: 2px 3px 7px #333333;\n    box-shadow: 2px 3px 7px #333333;\n    text-shadow: 2px 3px 7px #333333;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-bb2f4838\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/ClosedDeal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")();
+// imports
+
+
+// module
+exports.push([module.i, "\n.mano-grande {\n    font-size: 25em;\n}\n", ""]);
 
 // exports
 
@@ -31494,55 +31719,113 @@ var render = function() {
       }
     },
     [
-      _c("img", {
-        staticClass: "img-responsive img-thumbnail img-circle img-btn-item",
-        attrs: { src: _vm.cottage.images, alt: "" }
-      }),
-      _vm._v(" "),
-      _c(
-        "h4",
-        { staticClass: "text-capitalize label label-info tt-btn-item" },
-        [_vm._v(_vm._s(_vm.cottage.name))]
-      ),
-      _vm._v(" "),
-      _c("p", { staticClass: "capacity-btn-item" }, [
-        _c("span", { staticClass: "text-info" }, [_vm._v("Capacidad:")]),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-3 col-lg-3" }, [
+          _c("img", {
+            staticClass: "img-responsive img-thumbnail img-circle img-btn-item",
+            attrs: { src: _vm.cottage.images, alt: "" }
+          })
+        ]),
         _vm._v(" "),
-        _c("b", [_vm._v(_vm._s(_vm.cottage.accommodation))])
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "number-btn-item" }, [
-        _c("span", { staticClass: "text-info" }, [_vm._v("Cabaña número:")]),
-        _vm._v(" "),
-        _c("b", [_vm._v(_vm._s(_vm.cottage.number))])
-      ]),
-      _vm._v("\n     \n    "),
-      _c(
-        "span",
-        {
-          class: [
-            "label",
-            {
-              "label-primary": _vm.cottage.type === "simple",
-              "label-success": _vm.cottage.type === "matrimonial"
-            }
-          ]
-        },
-        [
-          _c("b", { staticClass: "text-capitalize" }, [
-            _vm._v(_vm._s(_vm.cottage.type))
+        _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4" }, [
+          _c("ul", [
+            _c("li", [
+              _c("b", [_vm._v("Nombre: ")]),
+              _c(
+                "h5",
+                { staticClass: "text-capitalize label label-info tt-btn-item" },
+                [_vm._v(_vm._s(_vm.cottage.name))]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("b", { staticClass: "capacity-btn-item" }, [
+                _vm._v("Capacidad: "),
+                _c("b", [_vm._v(_vm._s(_vm.cottage.accommodation))])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("b", { staticClass: "number-btn-item" }, [
+                _vm._v("Número: "),
+                _c("b", [_vm._v(_vm._s(_vm.cottage.number))])
+              ])
+            ])
           ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("icon-app", {
-        attrs: {
-          iconImage: "check-square-o",
-          aditionalClasses: "pull-right icon-btn-item"
-        }
-      })
-    ],
-    1
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4" }, [
+          _c("ul", [
+            _c("li", [
+              _c(
+                "span",
+                {
+                  class: [
+                    "label",
+                    {
+                      "label-primary": _vm.cottage.type === "simple",
+                      "label-success": _vm.cottage.type === "matrimonial"
+                    }
+                  ]
+                },
+                [
+                  _c("b", { staticClass: "text-capitalize" }, [
+                    _vm._v(_vm._s(_vm.cottage.type))
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [_c("b", [_vm._v("Días: " + _vm._s(_vm.calcularDias))])]),
+            _vm._v(" "),
+            _c("li", [
+              _c("b", [
+                _vm._v("Precio: "),
+                _c(
+                  "span",
+                  { staticClass: "label label-primary" },
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v(_vm._s(_vm.cottage.price))
+                  ],
+                  1
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("b", [
+                _vm._v("Precio final: "),
+                _c(
+                  "span",
+                  { staticClass: "label label-danger" },
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v(_vm._s(_vm.calcularDias * _vm.cottage.price))
+                  ],
+                  1
+                )
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-xs-12 col-sm-12 col-md-1 col-lg-1" },
+          [
+            _c("icon-app", {
+              attrs: {
+                iconImage: "check-square-o",
+                aditionalClasses: "pull-right icon-btn-item"
+              }
+            })
+          ],
+          1
+        )
+      ]),
+      _vm._v("         \n")
+    ]
   )
 }
 var staticRenderFns = []
@@ -31804,7 +32087,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    !_vm.hasUser
+    !_vm.dataForm
       ? _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" }, [
           _vm._m(0),
           _vm._v(" "),
@@ -31823,11 +32106,11 @@ var render = function() {
               [
                 _c(
                   "div",
-                  { class: ["form-group", { "has-error": !_vm.dni }] },
+                  { class: ["form-group", { "has-error": !_vm.document }] },
                   [
                     _c(
                       "label",
-                      { staticClass: "sr-only", attrs: { for: "dni" } },
+                      { staticClass: "sr-only", attrs: { for: "documento" } },
                       [_vm._v("DNI: ")]
                     ),
                     _vm._v(" "),
@@ -31841,19 +32124,23 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.dni,
-                            expression: "dni"
+                            value: _vm.document,
+                            expression: "document"
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "number", id: "dni", name: "dni" },
-                        domProps: { value: _vm.dni },
+                        attrs: {
+                          type: "number",
+                          id: "documento",
+                          name: "documento"
+                        },
+                        domProps: { value: _vm.document },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.dni = $event.target.value
+                            _vm.document = $event.target.value
                           }
                         }
                       })
@@ -31867,7 +32154,7 @@ var render = function() {
                   [
                     _c(
                       "label",
-                      { staticClass: "sr-only", attrs: { for: "email" } },
+                      { staticClass: "sr-only", attrs: { for: "mail" } },
                       [_vm._v("e-mail: ")]
                     ),
                     _vm._v(" "),
@@ -31888,21 +32175,19 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.user ? _vm.user : _vm.email,
-                            expression: "user ? user : email"
+                            value: _vm.email,
+                            expression: "email"
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "email", id: "email", name: "email" },
-                        domProps: { value: _vm.user ? _vm.user : _vm.email },
+                        attrs: { type: "email", id: "mail", name: "mail" },
+                        domProps: { value: _vm.email },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.user
-                              ? _vm.user
-                              : (_vm.email = $event.target.value)
+                            _vm.email = $event.target.value
                           }
                         }
                       })
@@ -31910,6 +32195,7 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
+                _c("br"),
                 _c("br"),
                 _vm._v(" "),
                 _c("div", { staticClass: "text-center" }, [
@@ -31920,7 +32206,7 @@ var render = function() {
                       _vm._v("Buscar información "),
                       _c("icon-app", {
                         attrs: {
-                          iconImage: "toggleIconImage",
+                          iconImage: _vm.toggleIconImage,
                           aditionalClasses: _vm.btnClasses
                         }
                       })
@@ -31932,14 +32218,403 @@ var render = function() {
             )
           ])
         ])
-      : _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" }, [
-          _c("h2", { staticClass: "text-center" }, [
-            _vm._v(
-              "Bienvenido " + _vm._s(_vm.user.name + ", " + _vm.user.lastname)
+      : _c(
+          "div",
+          {
+            staticClass:
+              "col-xs-12 col-sm-12 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6"
+          },
+          [
+            !_vm.userNotFound
+              ? _c("h2", { staticClass: "text-center" }, [
+                  _vm._v("La reserva se hará a nombre de:")
+                ])
+              : _c("div", { staticClass: "alert alert-info text-center" }, [
+                  _c(
+                    "p",
+                    [
+                      _c("icon-app", { attrs: { iconImage: "info-circle" } }),
+                      _vm._v(
+                        "\n                Le pedimos disculpas, no hemos podido encontrar su información."
+                      ),
+                      _c("br"),
+                      _vm._v(
+                        "\n                Por favor complete el siguente formulario.\n            "
+                      )
+                    ],
+                    1
+                  )
+                ]),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    _vm.closeDeal($event)
+                  }
+                }
+              },
+              [
+                _c(
+                  "div",
+                  { class: ["form-group", { "has-error": !_vm.name }] },
+                  [
+                    _c(
+                      "label",
+                      { staticClass: "sr-only", attrs: { for: "name" } },
+                      [_vm._v("Nombres: ")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group" }, [
+                      _c("div", { staticClass: "input-group-addon" }, [
+                        _vm._v("Nombres")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.name,
+                            expression: "name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", id: "name", name: "name" },
+                        domProps: { value: _vm.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.name = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { class: ["form-group", { "has-error": !_vm.lastname }] },
+                  [
+                    _c(
+                      "label",
+                      { staticClass: "sr-only", attrs: { for: "lastname" } },
+                      [_vm._v("Apellidos: ")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group" }, [
+                      _c("div", { staticClass: "input-group-addon" }, [
+                        _vm._v("Apellidos")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.lastname,
+                            expression: "lastname"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "lastname",
+                          name: "lastname"
+                        },
+                        domProps: { value: _vm.lastname },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.lastname = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { class: ["form-group", { "has-error": !_vm.email }] },
+                  [
+                    _c(
+                      "label",
+                      { staticClass: "sr-only", attrs: { for: "email" } },
+                      [_vm._v("e-mail: ")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group" }, [
+                      _c("div", { staticClass: "input-group-addon" }, [
+                        _vm._v("e-mail")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.email,
+                            expression: "email"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "email", id: "email", name: "email" },
+                        domProps: { value: _vm.email },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.email = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { class: ["form-group", { "has-error": !_vm.document }] },
+                  [
+                    _c(
+                      "label",
+                      { staticClass: "sr-only", attrs: { for: "document" } },
+                      [_vm._v(_vm._s(!_vm.onOff ? "DNI" : "Pasaporte") + ":")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "h3",
+                      {
+                        staticClass: "text-center",
+                        attrs: { id: "tt-btn-document", role: "button" },
+                        on: { click: _vm.onOffImg }
+                      },
+                      [
+                        _c(
+                          "span",
+                          {
+                            class: {
+                              "text-mutted": _vm.onOff,
+                              "text-deleted": _vm.onOff,
+                              "text-primary": !_vm.onOff
+                            }
+                          },
+                          [_vm._v("DNI")]
+                        ),
+                        _vm._v(" "),
+                        _c("icon-app", {
+                          attrs: {
+                            iconImage: _vm.onOffBtn,
+                            aditionalClasses: _vm.changeToogle
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            class: {
+                              "text-mutted": !_vm.onOff,
+                              "text-deleted": !_vm.onOff,
+                              "text-primary": _vm.onOff
+                            }
+                          },
+                          [_vm._v("Pasaporte")]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group" }, [
+                      _c("div", { staticClass: "input-group-addon" }, [
+                        _vm._v(_vm._s(!_vm.onOff ? "DNI" : "Pasaporte"))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.document,
+                            expression: "document"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "number",
+                          id: "document",
+                          name: "document"
+                        },
+                        domProps: { value: _vm.document },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.document = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { class: ["form-group", { "has-error": !_vm.genre }] },
+                  [
+                    _c(
+                      "label",
+                      { staticClass: "sr-only", attrs: { for: "genero" } },
+                      [_vm._v("Genero: ")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group" }, [
+                      _c("div", { staticClass: "input-group-addon" }, [
+                        _vm._v("Genero")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.genre,
+                              expression: "genre"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            id: "genero",
+                            name: "genero",
+                            placeholder: "Elija su genero por favor..."
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.genre = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "m" } }, [
+                            _vm._v("Masculino")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "f" } }, [
+                            _vm._v("Femenino")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "o" } }, [
+                            _vm._v("Otro")
+                          ])
+                        ]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { class: ["form-group", { "has-error": !_vm.country }] },
+                  [
+                    _c(
+                      "label",
+                      { staticClass: "sr-only", attrs: { for: "country" } },
+                      [_vm._v("País: ")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group" }, [
+                      _c("div", { staticClass: "input-group-addon" }, [
+                        _vm._v("País")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.country,
+                              expression: "country"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            id: "country",
+                            name: "country",
+                            placeholder: "Elija su país por favor..."
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.country = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        _vm._l(_vm.countries, function(pais) {
+                          return _c(
+                            "option",
+                            { domProps: { value: pais.id } },
+                            [_vm._v(_vm._s(pais.country))]
+                          )
+                        })
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("div", { staticClass: "text-center" }, [
+                  _c(
+                    "button",
+                    { staticClass: "btn btn-success btn-lg" },
+                    [
+                      _vm._v("\n                    Finalizar reserva "),
+                      _c("icon-app", {
+                        attrs: {
+                          iconImage: _vm.toggleIconImage,
+                          aditionalClasses: _vm.btnClasses
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ])
+              ]
             )
-          ]),
-          _vm._v("\n        form\n    ")
-        ])
+          ]
+        )
   ])
 }
 var staticRenderFns = [
@@ -32055,7 +32730,11 @@ var render = function() {
           staticClass: "container jumbotron",
           attrs: { id: "reservas-component2" }
         },
-        [_vm._m(1), _vm._v(" "), _c("deal-app")],
+        [
+          _vm._m(1),
+          _vm._v(" "),
+          !_vm.closedDeal ? _c("deal-app") : _c("closed-deal-app")
+        ],
         1
       )
 }
@@ -32116,7 +32795,7 @@ var render = function() {
     "div",
     {
       staticClass:
-        "col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-8 col-lg-offset-2"
+        "col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-10 col-lg-offset-1"
     },
     [
       _vm.toRentals.length
@@ -32201,6 +32880,58 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-b43e3f08", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-bb2f4838\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/ClosedDeal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c(
+      "div",
+      {
+        staticClass:
+          "col-xs-12 col-sm-12 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6"
+      },
+      [
+        _c("h2", { staticClass: "text-center" }, [
+          _vm._v("Se contretó con éxito la reserva!")
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "text-center" },
+          [
+            _c("icon-app", {
+              attrs: {
+                iconImage: "thumbs-o-up",
+                aditionalClasses: "text-success mano-grande"
+              }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "text-center" }, [
+          _c("p", [_vm._v(_vm._s(_vm.responseMessage))])
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-bb2f4838", module.exports)
   }
 }
 
@@ -32358,6 +33089,33 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b43e3f08\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./List-group.vue", function() {
      var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b43e3f08\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./List-group.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-bb2f4838\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/ClosedDeal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-bb2f4838\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/ClosedDeal.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("8ab76aa8", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-bb2f4838\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ClosedDeal.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-bb2f4838\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ClosedDeal.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -43914,6 +44672,57 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-rentals-app/components/ClosedDeal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-bb2f4838\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/ClosedDeal.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/ClosedDeal.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-bb2f4838\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/ClosedDeal.vue")
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/vue-rentals-app/components/ClosedDeal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ClosedDeal.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-bb2f4838", Component.options)
+  } else {
+    hotAPI.reload("data-v-bb2f4838", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-rentals-app/components/Deal.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -44200,36 +45009,46 @@ exports.default = {
 
         commit('setToRentals', toRentals);
     },
-    deleteItemToRentals: function deleteItemToRentals(_ref4, index) {
+    setCountries: function setCountries(_ref4, countries) {
         var commit = _ref4.commit;
+
+        commit('setCountries', countries);
+    },
+    deleteItemToRentals: function deleteItemToRentals(_ref5, index) {
+        var commit = _ref5.commit;
 
         commit('deleteItemToRentals', index);
     },
-    setLastQueryData: function setLastQueryData(_ref5, payload) {
-        var commit = _ref5.commit;
+    setLastQueryData: function setLastQueryData(_ref6, payload) {
+        var commit = _ref6.commit;
 
         commit('setLastQuery', payload.choice);
         commit('setLastSimple', payload.simple);
         commit('setLasDateFrom', payload.dateFrom);
         commit('setLasDateTo', payload.dateTo);
     },
-    setQueryFinished: function setQueryFinished(_ref6, bool) {
-        var commit = _ref6.commit;
+    setQueryFinished: function setQueryFinished(_ref7, bool) {
+        var commit = _ref7.commit;
 
         commit('setQueryFinished', bool);
     },
-    setResponseStatus: function setResponseStatus(_ref7, status) {
-        var commit = _ref7.commit;
+    setResponseStatus: function setResponseStatus(_ref8, status) {
+        var commit = _ref8.commit;
 
         commit('setResponseStatus', status);
     },
-    setResponseError: function setResponseError(_ref8, error) {
-        var commit = _ref8.commit;
+    setResponseError: function setResponseError(_ref9, error) {
+        var commit = _ref9.commit;
 
         commit('setResponseError', error);
     },
-    handlingXhrErrors: function handlingXhrErrors(_ref9, error) {
-        var dispatch = _ref9.dispatch;
+    setResponseMessage: function setResponseMessage(_ref10, message) {
+        var commit = _ref10.commit;
+
+        commit('setResponseMessage', message);
+    },
+    handlingXhrErrors: function handlingXhrErrors(_ref11, error) {
+        var dispatch = _ref11.dispatch;
 
         if (error.response) {
             // The request was made and the server responded with a status code
@@ -44247,8 +45066,9 @@ exports.default = {
         }
         dispatch('setQueryFinished', true);
     },
-    setCottages: function setCottages(_ref10) {
-        var commit = _ref10.commit;
+    setCottages: function setCottages(_ref12) {
+        var commit = _ref12.commit,
+            dispatch = _ref12.dispatch;
 
         _myAxios.http.get('rentals/basic/').then(function (response) {
             commit('setCottages', response.data.cottages);
@@ -44256,8 +45076,8 @@ exports.default = {
             return dispatch('handlingXhrErrors', err);
         });
     },
-    queryForCapacity: function queryForCapacity(_ref11, payload) {
-        var dispatch = _ref11.dispatch;
+    queryForCapacity: function queryForCapacity(_ref13, payload) {
+        var dispatch = _ref13.dispatch;
 
         _myAxios.http.post('rentals/capacity/', {
             query: payload.choice,
@@ -44272,8 +45092,8 @@ exports.default = {
         });
         dispatch('setLastQueryData', payload);
     },
-    queryForCottage: function queryForCottage(_ref12, payload) {
-        var dispatch = _ref12.dispatch;
+    queryForCottage: function queryForCottage(_ref14, payload) {
+        var dispatch = _ref14.dispatch;
 
         _myAxios.http.post('rentals/cottage/', {
             query: payload.choice,
@@ -44288,23 +45108,23 @@ exports.default = {
         });
         dispatch('setLastQueryData', payload);
     },
-    setDeal: function setDeal(_ref13, bool) {
-        var commit = _ref13.commit;
+    setDeal: function setDeal(_ref15, bool) {
+        var commit = _ref15.commit;
 
         commit('setDeal', bool);
     },
-    setUserData: function setUserData(_ref14, user) {
-        var commit = _ref14.commit;
+    setUserData: function setUserData(_ref16, user) {
+        var commit = _ref16.commit;
 
         commit('setUser', user);
     },
-    setToken: function setToken(_ref15, token) {
-        var commit = _ref15.commit;
+    setToken: function setToken(_ref17, token) {
+        var commit = _ref17.commit;
 
         commit('setToken', token);
     },
-    authenticateUser: function authenticateUser(_ref16, payload) {
-        var dispatch = _ref16.dispatch;
+    authenticateUser: function authenticateUser(_ref18, payload) {
+        var dispatch = _ref18.dispatch;
 
         return new Promise(function (resolve, reject) {
             _myAxios.http.post('rentals/auth/', {
@@ -44314,10 +45134,21 @@ exports.default = {
             }).then(function (response) {
                 dispatch('setUserData', response.data.user);
                 dispatch('setToken', response.data.token);
+                dispatch('setCountries', response.data.countries);
                 resolve();
             }).catch(function (err) {
                 dispatch('handlingXhrErrors', err);
                 reject();
+            });
+        });
+    },
+    sendClosedDeal: function sendClosedDeal(context, payload) {
+        return new Promise(function (resolve, reject) {
+            _myAxios.http.post('rentals/store?token=' + context.state.xhr.token, payload).then(function (response) {
+                context.dispatch('setResponseMessage', response.data.message);
+                context.commit('setClosedDeal', true);
+            }).catch(function (err) {
+                return context.dispatch('handlingXhrErrors', err);
             });
         });
     }
@@ -44369,6 +45200,13 @@ exports.default = {
             state.data.cottages = new Array(cottages);
         }
     },
+    setCountries: function setCountries(state, countries) {
+        if (Array.isArray(countries)) {
+            state.data.countries = countries;
+        } else {
+            state.data.countries = new Array(countries);
+        }
+    },
     setIsForCottage: function setIsForCottage(state, bool) {
         state.frmCmp.isForCottage = bool;
     },
@@ -44383,6 +45221,12 @@ exports.default = {
     },
     setDeal: function setDeal(state, bool) {
         state.data.deal = bool;
+    },
+    setClosedDeal: function setClosedDeal(state, bool) {
+        state.data.closedDeal = bool;
+    },
+    setResponseMessage: function setResponseMessage(state, message) {
+        state.xhr.responseMessage = message;
     },
     setResponseError: function setResponseError(state, error) {
         state.xhr.responseError = error;
@@ -44423,8 +45267,10 @@ exports.default = {
         isAdmin: false,
         user: {},
         deal: false,
+        closedDeal: false,
         cottages: [],
-        toRentals: []
+        toRentals: [],
+        countries: []
     },
     lastQueryData: {
         query: 0,
@@ -44434,6 +45280,7 @@ exports.default = {
     },
     xhr: {
         token: '',
+        responseMessage: '',
         responseError: '',
         responseStatus: 0,
         queryFinished: true
