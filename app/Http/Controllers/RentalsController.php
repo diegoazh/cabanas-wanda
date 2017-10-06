@@ -112,13 +112,13 @@ class RentalsController extends Controller
 
                     $rental = new Rental();
 
-                    if (Rental::cottageForNumber($cottage->number, false, $dateFrom->toDateString(), $dateTo->toDateString())) {
+                    /*if (Rental::cottageForNumber($cottage->number, false, $dateFrom->toDateString(), $dateTo->toDateString())) {
                         throw new Exception('La cabaña ya ha sido reservada.');
-                    }
+                    }*/
 
                     $rental->cottage_id = $cottage->id;
-                    $rental->from = $dateFrom->toDateString();
-                    $rental->to = $dateTo->toDateString();
+                    $rental->dateFrom = $dateFrom->toDateString();
+                    $rental->dateTo = $dateTo->toDateString();
                     ($cliente->getTable() === 'users') ? $rental->user_id = $cliente->id : $rental->passenger_id = $cliente->id;
                     $rental->cottage_price = $cottage->price;
                     $rental->total_days = $dateFrom->diffInDays($dateTo);
@@ -186,6 +186,12 @@ class RentalsController extends Controller
         //
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Rental  $rental
+     * @return \Illuminate\Http\Response
+     */
     public function basicInfo(Request $request)
     {
         $cottages = Cottage::where('state', '!=', 'disabled')->orderBy('number')->get();
@@ -193,6 +199,12 @@ class RentalsController extends Controller
         return response()->json(compact('cottages'), 200);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Rental  $rental
+     * @return \Illuminate\Http\Response
+     */
     public function forCapacity(RentalRequest $request)
     {
         $info = $request->all();
@@ -210,6 +222,12 @@ class RentalsController extends Controller
         return response()->json(compact('cottages'), 200);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Rental  $rental
+     * @return \Illuminate\Http\Response
+     */
     public function forCottages(RentalRequest $request)
     {
         $info = $request->all();
@@ -227,6 +245,12 @@ class RentalsController extends Controller
         return response()->json(compact('cottage'), 200);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Rental  $rental
+     * @return \Illuminate\Http\Response
+     */
     public function authenticate(Request $request)
     {
         $info = $request->all();

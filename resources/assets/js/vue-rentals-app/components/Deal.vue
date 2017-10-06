@@ -165,10 +165,8 @@
                     this.document = this.user.dni ? this.user.dni : this.user.passport;
                     this.genre = this.user.genre;
                     this.country = this.user.country_id
-                } else {
-
+                    this.dataForm = true;
                 }
-                this.dataForm = true;
             },
             onOffImg() {
                 this.onOff = !this.onOff;
@@ -180,9 +178,12 @@
                 this.authenticateUser({
                     isAdmin: this.isAdmin,
                     dni: this.document,
-                    email: this.user
+                    email: this.email
                 })
-                    .then(() => this.verifyUser());
+                    .then(() => {
+                        this.verifyUser();
+                        this.setQueryFinished(true);
+                    });
             },
             closeDeal() {
                 const deal = {};

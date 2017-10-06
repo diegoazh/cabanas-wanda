@@ -17,8 +17,8 @@ class CreateRentalsTable extends Migration
             $table->increments('id');
             $table->string('codeReservation', 40);
             $table->integer('cottage_id')->unsigned();
-            $table->date('from');
-            $table->date('to');
+            $table->date('dateFrom');
+            $table->date('dateTo');
             $table->string('description', 200)->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('passenger_id')->unsigned()->nullable();

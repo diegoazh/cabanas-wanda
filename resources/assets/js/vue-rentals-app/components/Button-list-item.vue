@@ -16,7 +16,7 @@
                     <li><span :class="['label', {'label-primary': cottage.type === 'simple', 'label-success': cottage.type === 'matrimonial'}]"><b class="text-capitalize">{{ cottage.type }}</b></span></li>
                     <li><b>Días: {{ calcularDias }}</b></li>
                     <li><b>Precio: <span class="label label-primary"><icon-app iconImage="dollar"></icon-app>{{ cottage.price }}</span></b></li>
-                    <li><b>Precio final: <span class="label label-danger"><icon-app iconImage="dollar"></icon-app>{{ calcularDias * cottage.price }}</span></b></li>
+                    <li><b>Precio final: <span class="label label-danger"><icon-app iconImage="dollar"></icon-app>{{ calcularMonto(calcularDias, cottage.price) }}</span></b></li>
                 </ul>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+    import _ from 'lodash'
     import { mapActions, mapState } from 'vuex'
     import Icon from './Icon.vue'
     import moment from 'moment'
@@ -48,6 +49,9 @@
             })
         },
         methods: {
+            calcularMonto(dias, precio) {
+                return _.round(dias * precio, 2);
+            },
             ...mapActions(['deleteItemToRentals'])
         }
     }
