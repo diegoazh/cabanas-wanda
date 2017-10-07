@@ -17,7 +17,19 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="{{ route('home.cottages.index') }}"><i class="fa fa-home" aria-hidden="true"></i> Caba&ntilde;as</a>
+                        <a href="{{ route('home.cottages.index') }}">
+                            <i class="fa fa-home" aria-hidden="true"></i> Caba&ntilde;as
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="{{ route('home.rentals.index') }}">
+                            <i class="fa fa-handshake-o" aria-hidden="true"></i> Reservas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route(Auth::check() ? (Auth::user()->isAdminOrEmployed() ? 'comidas.index' : 'home') : 'home') }}">
+                            <i class="fa fa-cutlery" aria-hidden="true"></i> Comidas
+                        </a>
                     </li>
                 </ul>
                 <!-- Right Side Of Navbar -->

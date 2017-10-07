@@ -60,6 +60,11 @@ class User extends Authenticatable
         return ($this->type === 'empleado');
     }
 
+    public function isAdminOrEmployed()
+    {
+        return $this->isAdmin() || $this->isEmployed();
+    }
+
     public function displayName()
     {
         return $this->lastname . ', ' . $this->name;

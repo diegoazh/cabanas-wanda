@@ -17,8 +17,7 @@ use Illuminate\Http\Request;
 // No olvidar hacer pasar las peticiones por el middleware jwt.auth
 Route::prefix('rentals')->group(function () {
     Route::get('basic', 'RentalsController@basicInfo')->name('api.rentals.basic');
-    Route::post('capacity', 'RentalsController@forCapacity')->name('api.rentals.capacity');
-    Route::post('cottage', 'RentalsController@forCottages')->name('api.rentals.cottage');
+    Route::post('availables', 'RentalsController@cottagesAvailables')->name('api.rentals.availabels');
     Route::post('auth', 'RentalsController@authenticate')->name('api.rentals.auth');
 
     Route::middleware(['jwt.auth'])->group(function () {

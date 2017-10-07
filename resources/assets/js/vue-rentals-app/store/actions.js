@@ -28,63 +28,65 @@ export default {
     setQueryFinished({commit}, bool) {
         commit('setQueryFinished', bool);
     },
-    setResponseStatus({commit}, status) {
-        commit('setResponseStatus', status);
-    },
-    setResponseError({commit}, error) {
-        commit('setResponseError', error);
-    },
-    setResponseMessage({commit}, message) {
-        commit('setResponseMessage', message);
-    },
     handlingXhrErrors({dispatch}, error) {
+        dispatch('setQueryFinished', true);
         if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
-            dispatch('setResponseStatus', +error.response.status);
-            dispatch('setResponseError', 'ERROR - ' + error.response.status + ': ' + error.response.data.error);
+            return {
+                title: 'ERROR ' + error.response.status,
+                message: error.response.data.error
+            };
         } else if (error.request) {
             // The request was made but no response was received
             // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
             // http.ClientRequest in node.js
-            console.log(error.request);
+            console.log('Info', error.request);
+            return {
+                title: 'Se produjo un error',
+                message: 'No hemos recibido respuesta desde el servidor.'
+            };
         } else {
             // Something happened in setting up the request that triggered an Error
             console.log('Error', error.message);
+            return {
+                title: 'Se produjo un error',
+                message: 'Algo ocurrio generando la petición al servidor.'
+            }
         }
-        dispatch('setQueryFinished', true);
     },
     setCottages({commit, dispatch}){
-        http.get('rentals/basic/')
-            .then(response => {
-                commit('setCottages', response.data.cottages);
-            }).catch(err => dispatch('handlingXhrErrors', err));
+        return new Promise((resolve, reject) => {
+            http.get('rentals/basic/')
+                .then(response => {
+                    commit('setCottages', response.data.cottages);
+                    resolve({
+                        title: 'Info loaded',
+                        message: 'Info loaded successfully!'
+                    });
+                }).catch(err => reject(dispatch('handlingXhrErrors', err)));
+        });
     },
-    queryForCapacity({dispatch}, payload) {
-        http.post('rentals/capacity/', {
-            query: payload.choice,
-            simple: payload.simple,
-            dateFrom: payload.dateFrom,
-            dateTo: payload.dateTo
-        }).then(response => {
-            dispatch('setToRentals', response.data.cottages);
-            dispatch('setQueryFinished', true);
-        })
-            .catch(err => dispatch('handlingXhrErrors', err));
-        dispatch('setLastQueryData', payload);
-    },
-    queryForCottage({dispatch}, payload) {
-        http.post('rentals/cottage/', {
-            query: payload.choice,
-            simple: payload.simple,
-            dateFrom: payload.dateFrom,
-            dateTo: payload.dateTo
-        }).then(response => {
-            dispatch('setToRentals', response.data.cottage);
-            dispatch('setQueryFinished', true);
-        })
-            .catch(err => dispatch('handlingXhrErrors', err));
-        dispatch('setLastQueryData', payload);
+    queryCottagesAvailables({dispatch}, payload) {
+        return new Promise((resolve, reject) => {
+            const url = 'rentals/availables/';
+            http.post(url, {
+                query: payload.choice,
+                simple: payload.simple,
+                dateFrom: payload.dateFrom,
+                dateTo: payload.dateTo,
+                isForCottage: payload.isForCottage
+            }).then(response => {
+                dispatch('setToRentals', response.data.cottages);
+                dispatch('setQueryFinished', true);
+                resolve();
+            }).catch(err => {
+                dispatch('handlingXhrErrors', err)
+                    .then(response => reject(response))
+                    .catch(error => reject({title: 'ERROR', messagge: error}))
+            });
+            dispatch('setLastQueryData', payload);
+        });
     },
     setDeal({commit}, bool) {
         commit('setDeal', bool);

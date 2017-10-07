@@ -16,9 +16,6 @@ export default {
     },
     xhr: {
         token: '',
-        responseMessage: '',
-        responseError: '',
-        responseStatus: 0,
         queryFinished: true
     },
     frmCmp: {

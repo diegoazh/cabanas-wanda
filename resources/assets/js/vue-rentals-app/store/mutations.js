@@ -41,15 +41,6 @@ export default {
     setClosedDeal(state, bool) {
         state.data.closedDeal = bool;
     },
-    setResponseMessage(state, message) {
-        state.xhr.responseMessage = message;
-    },
-    setResponseError(state, error) {
-        state.xhr.responseError = error;
-    },
-    setResponseStatus(state, status) {
-        state.xhr.responseStatus = status;
-    },
     setQueryFinished(state, bool) {
         state.xhr.queryFinished = bool;
     },

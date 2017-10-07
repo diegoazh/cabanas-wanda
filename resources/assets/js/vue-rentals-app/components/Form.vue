@@ -48,6 +48,7 @@
     import DatePicker from 'vue-bootstrap-datetimepicker'
     import moment from 'moment'
     import { mapActions, mapGetters, mapState } from 'vuex'
+    import VueNoti from 'vue-notifications'
 
     export default {
         components: {
@@ -126,26 +127,30 @@
             selectQuery() {
                 if (this.hasErrors) return;
                 this.setQueryFinished(false);
-                if (this.isForCottage) {
-                    this.queryForCottage({
-                        choice: this.choice,
-                        simple: this.bedSimple,
-                        dateFrom: moment(this.dateFrom).format('DD/MM/YYYY'),
-                        dateTo: moment(this.dateTo).format('DD/MM/YYYY')
-                    })
-                } else {
-                    this.queryForCapacity({
-                        choice: this.choice,
-                        simple: this.bedSimple,
-                        dateFrom: moment(this.dateFrom).format('DD/MM/YYYY'),
-                        dateTo: moment(this.dateTo).format('DD/MM/YYYY')
-                    })
-                }
+                this.queryCottagesAvailables({
+                    isForCottage: this.isForCottage,
+                    choice: this.choice,
+                    simple: this.bedSimple,
+                    dateFrom: moment(this.dateFrom).format('DD/MM/YYYY'),
+                    dateTo: moment(this.dateTo).format('DD/MM/YYYY')
+                }).then(response => {
+                    VueNoti.success({
+                        title: response.title,
+                        message: response.message,
+                        useSwal: true
+                    });
+                }).catch(error => {
+                    VueNoti.error({
+                        title: error.title,
+                        message: error.message,
+                        useSwal: true
+                    });
+                })
             },
             toggleBedSimple() {
                 this.bedSimple = !this.bedSimple;
             },
-            ...mapActions(['setBasicInfo', 'queryForCapacity', 'queryForCottage', 'setQueryFinished'])
+            ...mapActions(['setBasicInfo', 'queryCottagesAvailables', 'setQueryFinished'])
         }
     }
 

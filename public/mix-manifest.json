@@ -1,6 +1,7 @@
 {
-    "/js/app.js": "/js/app.js?id=7c1a1641761d9ba795a8",
-    "/js/backend.js": "/js/backend.js?id=47753d56c489fc2263f7",
+    "/js/vue-rentals.js": "/js/vue-rentals.js?id=423af65f68306214c042",
+    "/js/vue-admin-food.js": "/js/vue-admin-food.js?id=eeb7cdc1754530c08f58",
+    "/js/backend.js": "/js/backend.js?id=e51f8d5b4ac3a5b6a63d",
     "/css/frontend.css": "/css/frontend.css?id=cc5426329734fbcc5156",
     "/css/cottages.css": "/css/cottages.css?id=b36c182840da8fed4c90",
     "/css/profile.css": "/css/profile.css?id=e6e7021c3d6b51e2a337",
@@ -20,7 +21,7 @@
     "css/profile.css": "css/profile.css?id=e6e7021c3d6b51e2a337",
     "css/backend.css": "css/backend.css?id=a16066cd5e0e4da9ec42",
     "js/libraries.js": "js/libraries.js?id=1c145a4e9f0afe4fc7f1",
-    "js/backend.js": "js/backend.js?id=47753d56c489fc2263f7",
+    "js/backend.js": "js/backend.js?id=e51f8d5b4ac3a5b6a63d",
     "js/frontend.js": "js/frontend.js?id=9759d713d35ea6e1c501",
-    "js/app.js": "js/app.js?id=7c1a1641761d9ba795a8"
+    "js/vue-rentals.js": "js/vue-rentals.js?id=423af65f68306214c042"
 }

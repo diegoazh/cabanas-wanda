@@ -21,9 +21,7 @@
             'icon-app': Icon
         },
         computed: {
-            ...mapState({
-                responseMessage: state => state.xhr.responseMessage
-            })
+            ...mapState({})
         }
     }
 </script>

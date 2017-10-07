@@ -4,7 +4,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <h1 class="text-center">Reservas</h1>
                 <div class="alert alert-info text-center">
-                    Esta consultando por: <b>{{ stateButton ? 'Cabaña' : 'Capacidad' }}</b>
+                    <icon-app iconImage="info-circle"></icon-app> Esta consultando por: <b>{{ stateButton ? 'Cabaña' : 'Capacidad' }}</b>
                 </div>
             </div>
         </div>
@@ -40,12 +40,18 @@
 </template>
 
 <script>
+    import Vue from 'vue'
     import { mapActions, mapState } from 'vuex'
+    import VueNotifications from 'vue-notifications'
+    import { optionsIzi } from '../notifications/notifications'
     import Icon from './Icon.vue'
     import Form from './Form.vue'
     import List from './List-group.vue'
     import Deal from './Deal.vue'
     import CloseDeal from './ClosedDeal.vue'
+
+    Vue.use(VueNotifications, optionsIzi);
+
 
     export default {
         components: {

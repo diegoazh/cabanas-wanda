@@ -205,44 +205,27 @@ class RentalsController extends Controller
      * @param  \App\Rental  $rental
      * @return \Illuminate\Http\Response
      */
-    public function forCapacity(RentalRequest $request)
+    public function cottagesAvailables(RentalRequest $request)
     {
         $info = $request->all();
+        $cottages = null;
 
         // cambiamos las fechas con Carbon ya que sino nos da error al consultar en la DB.
         $info['dateFrom'] = Carbon::createFromFormat('d/m/Y', $info['dateFrom'])->toDateString();
         $info['dateTo'] = Carbon::createFromFormat('d/m/Y', $info['dateTo'])->toDateString();
 
-        $cottages = Rental::cottageForCapacity($info['query'], $info['simple'], $info['dateFrom'], $info['dateTo']);
+        if ($info['isForCottage']) {
+            $cottage = Rental::cottageForNumber($info['query'], $info['simple'], $info['dateFrom'], $info['dateTo']);
+        } else {
+            $cottages = Rental::cottageForCapacity($info['query'], $info['simple'], $info['dateFrom'], $info['dateTo']);
+        }
 
         if (empty($cottages)) {
-            return response()->json(['error' => 'No tenemos cabañas disponibles en esa fecha para la capacidad indicada. Lo sentimos mucho, por favor prueba con otra fecha o varía la capacidad.'], 404);
+            $message = $info['isForCottage'] ? 'Lo sentimos la cabaña no está disponible en esa fecha. Por favor intenta con otra cabaña o con una fecha diferente.' : 'No tenemos cabañas disponibles en esa fecha para la capacidad indicada. Lo sentimos mucho, por favor prueba con otra fecha o varía la capacidad.';
+            return response()->json(['error' => $message], 404);
         }
 
         return response()->json(compact('cottages'), 200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Rental  $rental
-     * @return \Illuminate\Http\Response
-     */
-    public function forCottages(RentalRequest $request)
-    {
-        $info = $request->all();
-
-        // cambiamos las fechas con Carbon ya que sino nos da error al consultar en la DB.
-        $info['dateFrom'] = Carbon::createFromFormat('d/m/Y', $info['dateFrom'])->toDateString();
-        $info['dateTo'] = Carbon::createFromFormat('d/m/Y', $info['dateTo'])->toDateString();
-
-        $cottage = Rental::cottageForNumber($info['query'], $info['simple'], $info['dateFrom'], $info['dateTo']);
-
-        if (empty($cottage)) {
-            return response()->json(['error' => 'Lo sentimos la cabaña no está disponible en esa fecha. Por favor intenta con otra cabaña o con una fecha diferente.'], 404);
-        }
-
-        return response()->json(compact('cottage'), 200);
     }
 
     /**
