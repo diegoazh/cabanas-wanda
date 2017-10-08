@@ -34,7 +34,7 @@ export default {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
             return {
-                title: 'ERROR ' + error.response.status,
+                title: error.response.data.title ? error.response.data.title : 'ERROR ' + error.response.status,
                 message: error.response.data.error
             };
         } else if (error.request) {
@@ -61,10 +61,14 @@ export default {
                 .then(response => {
                     commit('setCottages', response.data.cottages);
                     resolve({
-                        title: 'Info loaded',
-                        message: 'Info loaded successfully!'
+                        title: 'Ok!',
+                        message: 'Widget cargado correctamente!'
                     });
-                }).catch(err => reject(dispatch('handlingXhrErrors', err)));
+                }).catch(err => {
+                    dispatch('handlingXhrErrors', err)
+                        .then(response => reject(response))
+                        .catch(error => reject({title: 'ERROR', messagge: error}))
+                });
         });
     },
     queryCottagesAvailables({dispatch}, payload) {
@@ -81,6 +85,7 @@ export default {
                 dispatch('setQueryFinished', true);
                 resolve();
             }).catch(err => {
+                dispatch('setToRentals', []);
                 dispatch('handlingXhrErrors', err)
                     .then(response => reject(response))
                     .catch(error => reject({title: 'ERROR', messagge: error}))
@@ -90,6 +95,9 @@ export default {
     },
     setDeal({commit}, bool) {
         commit('setDeal', bool);
+    },
+    setClosedDeal({commit}, bool) {
+        commit('setClosedDeal', bool);
     },
     setUserData({commit}, user) {
         commit('setUser', user);
@@ -103,27 +111,52 @@ export default {
                 isAdmin: payload.isAdmin,
                 dni: payload.dni,
                 email: payload.email
-            })
-                .then(response => {
+            }).then(response => {
+                    let obj = {};
                     dispatch('setUserData', response.data.user);
                     dispatch('setToken', response.data.token);
                     dispatch('setCountries', response.data.countries);
-                    resolve();
-                })
-                .catch(err => {
-                    dispatch('handlingXhrErrors', err);
-                    reject();
-                });
+                    if (response.data.token) {
+                        obj = {
+                            title: 'ClIENTE IDENTIFICADO',
+                            message: 'Hemos identificado tus datos. Por favor verifica que sean correctos.',
+                            type: 'success',
+                            useSwal: true
+                        }
+                    } else {
+                        obj = {
+                            title: 'ClIENTE ANONIMO',
+                            message: 'No hemos podido identificarte, por favor ingresa completa los siguientes datos. Muchas gracias.',
+                            type: 'warn',
+                            useSwal: true
+                        }
+                    }
+                    resolve(obj);
+            }).catch(err => {
+                dispatch('handlingXhrErrors', err)
+                    .then(response => reject(response))
+                    .catch(error => reject({title: 'ERROR', messagge: error}))
+            });
         });
     },
     sendClosedDeal(context, payload) {
         return new Promise((resolve, reject) => {
             http.post('rentals/store?token=' + context.state.xhr.token, payload)
                 .then(response => {
-                    context.dispatch('setResponseMessage', response.data.message);
+                    let token = response.headers.authorization.split(' ')[1];
+                    context.commit('setToken', token);
                     context.commit('setClosedDeal', true);
-                })
-                .catch(err => context.dispatch('handlingXhrErrors', err));
+                    context.commit('setInfoDeal', response.data.rentals);
+                    resolve({
+                        title: 'RESERVA EXITOSA',
+                        message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
+                        useSwal: true
+                    });
+                }).catch(err => {
+                    dispatch('handlingXhrErrors', err)
+                    .then(response => reject(response))
+                    .catch(error => reject({title: 'ERROR', messagge: error}))
+            });
         })
     }
 };

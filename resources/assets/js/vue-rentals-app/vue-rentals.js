@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import { mapActions } from 'vuex'
 import VueNotifications from 'vue-notifications'
+import VTooltip from 'v-tooltip'
 import { optionsIzi } from "./notifications/notifications"
 import store from './store/store'
 import Rentals from './components/Rentals.vue'
 
-Vue.use(VueNotifications, optionsIzi);
+Vue.use(VueNotifications, optionsIzi).use(VTooltip);
 
 window.EventBus = new Vue();
 

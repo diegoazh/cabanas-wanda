@@ -15,7 +15,7 @@ class CreateRentalsTable extends Migration
     {
         Schema::create('rentals', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('codeReservation', 40);
+            $table->string('code_reservation', 40);
             $table->integer('cottage_id')->unsigned();
             $table->date('dateFrom');
             $table->date('dateTo');

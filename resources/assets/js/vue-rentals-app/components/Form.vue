@@ -145,7 +145,7 @@
                         message: error.message,
                         useSwal: true
                     });
-                })
+                });
             },
             toggleBedSimple() {
                 this.bedSimple = !this.bedSimple;

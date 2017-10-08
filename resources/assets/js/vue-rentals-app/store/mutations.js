@@ -55,5 +55,8 @@ export default {
     },
     setLasDateTo(state, date) {
         state.lastQueryData.dateTo = date;
+    },
+    setInfoDeal(state, infoDeal) {
+        state.data.infoDeal = infoDeal;
     }
 };

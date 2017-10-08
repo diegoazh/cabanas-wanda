@@ -20,7 +20,7 @@ Route::prefix('rentals')->group(function () {
     Route::post('availables', 'RentalsController@cottagesAvailables')->name('api.rentals.availabels');
     Route::post('auth', 'RentalsController@authenticate')->name('api.rentals.auth');
 
-    Route::middleware(['jwt.auth'])->group(function () {
+    Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
         Route::post('store', 'RentalsController@store')->name('api.rentals.store');
     });
 });

@@ -77,9 +77,7 @@ class RentalsController extends Controller
         ]);
 
         $info = $request->all();
-        $finalPayment = [];
-        $dateOverDue = [];
-        $code = [];
+        $rentals = [];
 
         $cliente = User::where('name', $info['name'])->where('lastname', $info['lastname'])->where('email', $info['email'])->first();
 
@@ -88,8 +86,8 @@ class RentalsController extends Controller
         }
 
         try {
-            DB::transaction(function () use ($info, $cliente, $finalPayment, $dateOverDue, $code) {
-
+            DB::transaction(function () use ($info, $cliente, &$rentals) {
+                
                 if (!$cliente) {
                     $cliente = new Passenger();
                     $cliente->name = $info['name'];
@@ -126,19 +124,18 @@ class RentalsController extends Controller
                     // Fix me: Agregar la promoción y el calculo de su descuento aquí.
                     $rental->deductions = 0;
                     $rental->finalPayment = ($rental->cottage_price * $rental->total_days) - $rental->deductions;
-                    $rental->createCodeReservation();
+                    $rental->code_reservation = $rental->createCodeReservation();
                     $rental->save();
+                    $rental->cottage;
 
-                    array_push($finalPayment, $rental->finalPayment);
-                    array_push($dateOverDue, Carbon::createFromFormat('Y-m-d H:i:s', $rental->dateReservationPayment)->format('d/m/Y H:i:s'));
-                    array_push($code, $rental->codeReservation);
+                    array_push($rentals, $rental);
                 }
             });
         } catch (\Exception $exception) {
             return response()->json(['error' => 'Ha ocurrido un error intentando realizar las reservas. Por favor verifique y reintente. Error: ' . $exception->getMessage() . ' Codigo: ' . $exception->getCode()], 500);
         }
 
-        return response()->json(compact('finalPayment', 'dateOverDue', 'code'), 200);
+        return response()->json(compact('rentals'), 200);
     }
 
     /**
@@ -215,14 +212,14 @@ class RentalsController extends Controller
         $info['dateTo'] = Carbon::createFromFormat('d/m/Y', $info['dateTo'])->toDateString();
 
         if ($info['isForCottage']) {
-            $cottage = Rental::cottageForNumber($info['query'], $info['simple'], $info['dateFrom'], $info['dateTo']);
+            $cottages = Rental::cottageForNumber($info['query'], $info['simple'], $info['dateFrom'], $info['dateTo']);
         } else {
             $cottages = Rental::cottageForCapacity($info['query'], $info['simple'], $info['dateFrom'], $info['dateTo']);
         }
 
         if (empty($cottages)) {
             $message = $info['isForCottage'] ? 'Lo sentimos la cabaña no está disponible en esa fecha. Por favor intenta con otra cabaña o con una fecha diferente.' : 'No tenemos cabañas disponibles en esa fecha para la capacidad indicada. Lo sentimos mucho, por favor prueba con otra fecha o varía la capacidad.';
-            return response()->json(['error' => $message], 404);
+            return response()->json(['title' => 'SIN DISPONIBILIDAD', 'error' => $message], 404);
         }
 
         return response()->json(compact('cottages'), 200);

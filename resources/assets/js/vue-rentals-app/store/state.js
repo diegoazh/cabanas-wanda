@@ -6,7 +6,8 @@ export default {
         closedDeal: false,
         cottages: [],
         toRentals: [],
-        countries: []
+        countries: [],
+        infoDeal: {}
     },
     lastQueryData: {
         query: 0,

@@ -11,7 +11,7 @@ class Rental extends Model
 
     protected $table = 'rentals';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['codeReservation', 'cottage_id', 'dateFrom', 'dateTo', 'own', 'description', 'user_id', 'passenger_id', 'promotion_id', 'cottage_price', 'total_days', 'dateReservationPayment', 'deductions', 'deductionsDescription', 'finalPayment', 'dateFinalPayment', 'state', 'wasRated'];
+    protected $fillable = ['code_reservation', 'cottage_id', 'dateFrom', 'dateTo', 'own', 'description', 'user_id', 'passenger_id', 'promotion_id', 'cottage_price', 'total_days', 'dateReservationPayment', 'deductions', 'deductionsDescription', 'finalPayment', 'dateFinalPayment', 'state', 'wasRated'];
 
     /**
      * Relaciones del modelo
@@ -46,7 +46,7 @@ class Rental extends Model
      **/
     public function setCodeReservationAttribute($value)
     {
-        $this->attributes['codeReservation'] = sha1($value);
+        $this->attributes['code_reservation'] = sha1($value);
     }
 
     /**
@@ -55,7 +55,7 @@ class Rental extends Model
     public function createCodeReservation()
     {
         $idUser = (!empty($this->attributes['user_id'])) ? $this->attributes['user_id'] : $this->attributes['passenger_id'];
-        $this->attributes['codeReservation'] = $this->attributes['cottage_id'] . $idUser . time();
+        return $this->attributes['cottage_id'] . $idUser . time();
     }
 
     /**
@@ -94,7 +94,7 @@ class Rental extends Model
                 ->where('state', 'enabled') // deben estar habilitadas
                 ->where('type', $simple ? '=' : 'like', $simple ? 'simple' : '%')
                 ->limit($necesariasFive > $cottagesFive ? $cottagesFive : $necesariasFive)// limitamos los resultados a la cantidad de cabañas necesaria
-                ->get()->toArray();
+                ->get();
 
         }
 
@@ -111,37 +111,46 @@ class Rental extends Model
                 ->where('state', 'enabled') // deben estar habilitadas
                 ->where('type', $simple ? '=' : 'like', $simple ? 'simple' : '%')
                 ->limit($necesariasFour > $cottagesFour ? $cottagesFour : $necesariasFour)// limitamos los resultados a la cantidad de cabañas necesaria
-                ->get()->toArray();
+                ->get();
 
         }
 
         if (!empty($cottages)) {
 
+            $cottages = $cottages->toArray();
+
             if (!empty($cottages2)) {
+
+                $cottages2 = $cottages2->toArray();
                 return array_merge($cottages, $cottages2);
+
             }
 
             return $cottages;
 
         } else if (!empty($cottages2)) {
+
+            $cottages2 = $cottages2->toArray();
             return $cottages2;
+
         } else {
+
             return [];
+
         }
     }
 
     public static function cottageForNumber($number, $simple, $dateFrom, $dateTo)
     {
-        $rentals = Rental::whereIn('cottage_id', function ($query) use ($number, $simple, $dateFrom, $dateTo) {
-            $query->select('id')->from(with(new Cottage)->getTable())
-                ->where('number', $number);
-        })->whereBetween('dateFrom', [$dateFrom, $dateTo])
-            ->orWhere(function ($query) use ($dateFrom, $dateTo) {
-                $query->whereBetween('dateTo', [$dateFrom, $dateTo]);
-            })->get()->toArray();
+        $cottage = Cottage::whereNotIn('id', function ($query) use ($simple, $dateFrom, $dateTo) { // pedimos ids que no esten dentro de la subconsulta.
+            $query->select('cottage_id')// subconsulta: pedimos ids de cabañas que han sido reservadas entre las fechas elegidas por el usuario
+            ->from(with(new Rental)->getTable())
+                ->whereBetween('dateFrom', [$dateFrom, $dateTo])
+                ->orWhere(function ($query) use ($dateFrom, $dateTo) {
+                    $query->whereBetween('dateTo', [$dateFrom, $dateTo]);
+                });
+        })->where('number', $number)->where('state', 'enabled')->where('type', $simple ? '=' : 'like', $simple ? 'simple' : '%')->first();
 
-        $cottage = Cottage::where('number', $number)->where('state', 'enabled')->where('type', $simple ? '=' : 'like', $simple ? 'simple' : '%')->first();
-
-        return empty($rentals) ? (empty($cottage) ? [] : $cottage->toArray()) : [];
+        return empty($cottage) ?  [] : $cottage->toArray();
     }
 }
