@@ -43,7 +43,7 @@
     import Vue from 'vue'
     import { mapActions, mapState } from 'vuex'
     import VueNotifications from 'vue-notifications'
-    import { optionsIzi } from '../notifications/notifications'
+    import { optionsIzi } from '../../vue-commons/notifications/notifications'
     import Icon from './Icon.vue'
     import Form from './Form.vue'
     import List from './List-group.vue'

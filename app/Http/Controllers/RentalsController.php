@@ -12,7 +12,7 @@ use App\Rental;
 use App\Cottage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Requests\RentalRequest;
+use App\Http\Requests\RequestRental;
 
 class RentalsController extends Controller
 {
@@ -202,7 +202,7 @@ class RentalsController extends Controller
      * @param  \App\Rental  $rental
      * @return \Illuminate\Http\Response
      */
-    public function cottagesAvailables(RentalRequest $request)
+    public function cottagesAvailables(RequestRental $request)
     {
         $info = $request->all();
         $cottages = null;

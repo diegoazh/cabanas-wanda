@@ -2465,7 +2465,7 @@ var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/di
 
 var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
 
-var _notifications = __webpack_require__("./resources/assets/js/vue-rentals-app/notifications/notifications.js");
+var _notifications = __webpack_require__("./resources/assets/js/vue-commons/notifications/notifications.js");
 
 var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
 
@@ -67762,6 +67762,59 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-commons/notifications/notifications.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.optionsIzi = undefined;
+
+var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
+
+var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
+
+var _izitoast = __webpack_require__("./node_modules/izitoast/dist/js/iziToast.js");
+
+var _izitoast2 = _interopRequireDefault(_izitoast);
+
+__webpack_require__("./node_modules/izitoast/dist/css/iziToast.min.css");
+
+var _sweetalert = __webpack_require__("./node_modules/sweetalert/dist/sweetalert.min.js");
+
+var _sweetalert2 = _interopRequireDefault(_sweetalert);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function toastIziSwal(_ref) {
+    var title = _ref.title,
+        message = _ref.message,
+        type = _ref.type,
+        timeout = _ref.timeout,
+        cb = _ref.cb,
+        useSwal = _ref.useSwal;
+
+    if (type === _vueNotifications2.default.types.warn) type = 'warning';
+
+    if (useSwal) {
+        return (0, _sweetalert2.default)(title, message, type);
+    } else {
+        return _izitoast2.default[type]({ title: title, message: message, timeout: timeout });
+    }
+}
+
+var optionsIzi = exports.optionsIzi = {
+    success: toastIziSwal,
+    error: toastIziSwal,
+    info: toastIziSwal,
+    warn: toastIziSwal
+};
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-rentals-app/axios/my-axios.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -68144,59 +68197,6 @@ if (false) {(function () {
 
 module.exports = Component.exports
 
-
-/***/ }),
-
-/***/ "./resources/assets/js/vue-rentals-app/notifications/notifications.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.optionsIzi = undefined;
-
-var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
-
-var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
-
-var _izitoast = __webpack_require__("./node_modules/izitoast/dist/js/iziToast.js");
-
-var _izitoast2 = _interopRequireDefault(_izitoast);
-
-__webpack_require__("./node_modules/izitoast/dist/css/iziToast.min.css");
-
-var _sweetalert = __webpack_require__("./node_modules/sweetalert/dist/sweetalert.min.js");
-
-var _sweetalert2 = _interopRequireDefault(_sweetalert);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function toastIziSwal(_ref) {
-    var title = _ref.title,
-        message = _ref.message,
-        type = _ref.type,
-        timeout = _ref.timeout,
-        cb = _ref.cb,
-        useSwal = _ref.useSwal;
-
-    if (type === _vueNotifications2.default.types.warn) type = 'warning';
-
-    if (useSwal) {
-        return (0, _sweetalert2.default)(title, message, type);
-    } else {
-        return _izitoast2.default[type]({ title: title, message: message, timeout: timeout });
-    }
-}
-
-var optionsIzi = exports.optionsIzi = {
-    success: toastIziSwal,
-    error: toastIziSwal,
-    info: toastIziSwal,
-    warn: toastIziSwal
-};
 
 /***/ }),
 
@@ -68621,7 +68621,7 @@ var _vTooltip = __webpack_require__("./node_modules/v-tooltip/dist/v-tooltip.esm
 
 var _vTooltip2 = _interopRequireDefault(_vTooltip);
 
-var _notifications = __webpack_require__("./resources/assets/js/vue-rentals-app/notifications/notifications.js");
+var _notifications = __webpack_require__("./resources/assets/js/vue-commons/notifications/notifications.js");
 
 var _store = __webpack_require__("./resources/assets/js/vue-rentals-app/store/store.js");
 
