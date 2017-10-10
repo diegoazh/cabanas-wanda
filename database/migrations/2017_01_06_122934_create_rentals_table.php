@@ -14,15 +14,15 @@ class CreateRentalsTable extends Migration
     public function up()
     {
         Schema::create('rentals', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('code_reservation', 40);
             $table->integer('cottage_id')->unsigned();
             $table->date('dateFrom');
             $table->date('dateTo');
             $table->string('description', 200)->nullable();
-            $table->integer('user_id')->unsigned()->nullable();
-            $table->integer('passenger_id')->unsigned()->nullable();
-            $table->integer('promotion_id')->unsigned()->nullable();
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->bigInteger('passenger_id')->unsigned()->nullable();
+            $table->bigInteger('promotion_id')->unsigned()->nullable();
             $table->double('cottage_price', 8, 2);
             $table->integer('total_days');
             $table->datetime('dateReservationPayment');

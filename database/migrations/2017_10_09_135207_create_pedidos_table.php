@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDetallePedidoTable extends Migration
+class CreatePedidosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateDetallePedidoTable extends Migration
      */
     public function up()
     {
-        Schema::create('detalle-pedido', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('pedidos', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->dateTime('fecha_pedido');
+            $table->bigInteger('rental_id')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreign('rental_id')->references('id')->on('rentals');
         });
     }
 
@@ -26,6 +30,6 @@ class CreateDetallePedidoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detalle-pedido');
+        Schema::dropIfExists('pedido');
     }
 }

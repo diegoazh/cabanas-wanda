@@ -14,7 +14,7 @@ class CreatePassengersTable extends Migration
     public function up()
     {
         Schema::create('passengers', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name', 40);
             $table->string('lastname', 40);
             $table->enum('genre', ['m', 'f', 'o'])->default('m')->nullable();
