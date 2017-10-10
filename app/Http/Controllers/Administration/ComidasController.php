@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Administration;
 
-use App\Comidas;
+use App\Comida;
 use Illuminate\Http\Request;
 use App\Http\Requests\RequestComida;
 use App\Http\Controllers\Controller;
@@ -29,7 +29,7 @@ class ComidasController extends Controller
     {
         $info = $request->all();
 
-        $menu = new Comidas();
+        $menu = new Comida();
         $menu->name = $info['name'];
         $menu->type = $info['type'];
         $menu->description = $info['description'];
@@ -52,14 +52,14 @@ class ComidasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Comidas  $menus
+     * @param  \App\Comida  $menus
      * @return \Illuminate\Http\Response
      */
-    public function update(RequestComida $request, Comidas $name)
+    public function update(RequestComida $request, Comida $name)
     {
         $info = $request->all();
 
-        $menu = Comidas::where('name', $name)->first();
+        $menu = Comida::where('name', $name)->first();
         if(isset($info['name']) && !empty($info['name'])) { $menu->name = $info['name']; }
         if(isset($info['type']) && !empty($info['name'])) { $menu->type = $info['type']; }
         if(isset($info['description']) && !empty($info['name'])) { $menu->description = $info['description']; }
@@ -81,12 +81,12 @@ class ComidasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Comidas  $menus
+     * @param  \App\Comida  $menus
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comidas $name)
+    public function destroy(Comida $name)
     {
-        if (!$menu = $menu = Comidas::where('name', $name)->first()) {
+        if (!$menu = $menu = Comida::where('name', $name)->first()) {
 
             return response()->json(['error' => 'No hemos podido encontrar un plato con ese nombre.'], 404);
 
