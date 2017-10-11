@@ -9,7 +9,7 @@
     @yield('styles')
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-fluid container-backend">
     <div id="header" class="row">
         @section('header')
             @include('templates.headers.main-header')
