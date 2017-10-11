@@ -20,6 +20,6 @@ class Pedido extends Model
 
     public function detallePedidos()
     {
-        $this->hasMany('App\DetallePedidos', 'pedido_id', 'id');
+        $this->hasMany('App\DetallePedido', 'pedido_id', 'id');
     }
 }

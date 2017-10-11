@@ -19,7 +19,6 @@ class CreateDetallePedidosTable extends Migration
             $table->bigInteger('comida_id')->unsigned();
             $table->dateTime('fecha_entrega');
             $table->integer('cantidad');
-            $table->double('precio_unidad', 15, 2);
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('pedido_id')->references('id')->on('pedidos');
