@@ -166,6 +166,7 @@
 
 @section('scripts')
     <script src="{{ asset('lib/editor.md/editormd.min.js') }}"></script>
+    <script src="{{ asset('lib/editor.md/languages/en.js') }}"></script>
     <script>
         $(document).ready(function() {
             var editor;

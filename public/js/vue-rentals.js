@@ -2153,6 +2153,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
 
@@ -54634,7 +54635,11 @@ var render = function() {
     [
       _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4" }, [
         _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "capacidad" } }),
+          _c("label", {
+            attrs: {
+              for: _vm.isForCottage ? "capacidad-select" : "capacidad-number"
+            }
+          }),
           _vm._v(" "),
           _c("div", { staticClass: "input-group" }, [
             _c(
@@ -54647,43 +54652,67 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
+            !_vm.isForCottage
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.choice,
+                      expression: "choice"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "number",
+                    name: "capacidad",
+                    id: "capacidad-number"
+                  },
+                  domProps: { value: _vm.choice },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.choice = $event.target.value
+                    }
+                  }
+                })
+              : _c(
+                  "select",
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.choice,
-                    expression: "choice"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { name: "capacidad", id: "capacidad" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.choice = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              _vm._l(_vm.quantityOrCottages, function(value) {
-                return _c(
-                  "option",
-                  { domProps: { value: value.number ? value.number : value } },
-                  [_vm._v(_vm._s(value.name ? value.name : value))]
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.choice,
+                        expression: "choice"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "capacidad", id: "capacidad-select" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.choice = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  _vm._l(_vm.cottages, function(value) {
+                    return _c("option", { domProps: { value: value.number } }, [
+                      _vm._v(_vm._s(value.name))
+                    ])
+                  })
                 )
-              })
-            )
           ])
         ])
       ]),
@@ -68359,6 +68388,7 @@ exports.default = {
                 email: payload.email
             }).then(function (response) {
                 var obj = {};
+                // set Header Authorization: Bearer {yourtokenhere}
                 dispatch('setUserData', response.data.user);
                 dispatch('setToken', response.data.token);
                 dispatch('setCountries', response.data.countries);

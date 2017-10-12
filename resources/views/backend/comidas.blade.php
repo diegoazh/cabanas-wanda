@@ -13,5 +13,6 @@
 
 @section('scripts')
     <script src="{{ asset('lib/editor.md/editormd.min.js') }}"></script>
+    <script src="{{ asset('lib/editor.md/languages/en.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/vue-admin-food.js') }}"></script>
 @endsection

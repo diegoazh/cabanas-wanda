@@ -26,10 +26,23 @@
                             <i class="fa fa-handshake-o" aria-hidden="true"></i> Reservas
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route(Auth::check() ? (Auth::user()->isAdminOrEmployed() ? 'comidas.index' : 'home') : 'home') }}">
-                            <i class="fa fa-cutlery" aria-hidden="true"></i> Comidas
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-cutlery" aria-hidden="true"></i> Comidas <span class="caret"></span>
                         </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Realizar pedido</a></li>
+                            <li><a href="#">Ver pedidos</a></li>
+                            @if(Auth::check())
+                                @if(Auth::user()->isAdminOrEmployed())
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Lista de platos</a></li>
+                                    @if(Auth::user()->isAdmin())
+                                        <li><a href="{{ route('comidas.index') }}">Añadir platos</a></li>
+                                    @endif
+                                @endif
+                            @endif
+                        </ul>
                     </li>
                 </ul>
                 <!-- Right Side Of Navbar -->

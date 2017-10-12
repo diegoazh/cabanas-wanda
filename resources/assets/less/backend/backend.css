@@ -2,12 +2,22 @@
  * Imports
  ********************************************/
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+/******************************************************
+* Colores
+******************************************************/
 /********************************************
  * Clases
  ********************************************/
 .img-clicked {
   padding: 0px;
   border: 5px solid #2b669a;
+}
+.menu-fixed {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
+  box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.5);
 }
 /********************************************
  * Estilos del sitio
@@ -18,39 +28,43 @@
 body {
   background-color: #FFEFD5;
 }
-body .container-fluid {
-  min-height: 985px;
-  background-image: url('../../images/cabanias/cabanas2.jpg');
+body .container-backend {
+  height: 980px;
+  min-height: 980px;
+  background-image: url('../../../../public/images/cabanias/cabanas2.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
-body .container-fluid #header nav.navbar {
+body .container-backend #header nav.navbar {
   border-radius: 0px;
   margin-bottom: 0px;
 }
-body .container-fluid #header nav.navbar .container .navbar-header a {
+body .container-backend #header nav.navbar .container .navbar-header a {
   padding: 0;
 }
-body .container-fluid #header nav.navbar .container .navbar-header a span#app_name {
+body .container-backend #header nav.navbar .container .navbar-header a span#app_name {
   position: relative;
   top: -25%;
 }
-body .container-fluid #header nav.navbar .container .navbar-header a:before {
-  content: url('../../images/logos/logo-cabanas-wanda-45x44.png');
+body .container-backend #header nav.navbar .container .navbar-header a:before {
+  content: url('../../../../public/images/logos/logo-cabanas-wanda-45x44.png');
   width: 50%;
   height: auto;
   margin-right: 5px;
 }
-body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-right li a.img-user-profile {
+body .container-backend #header nav.navbar .container .navbar-collapse ul.navbar-right li a.img-user-profile {
   padding: 5px;
 }
-body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-right li a.img-user-profile img {
+body .container-backend #header nav.navbar .container .navbar-collapse ul.navbar-right li a.img-user-profile img {
   display: inline-block;
   width: 40px;
   height: auto;
 }
-body .container-fluid #content #main_menu .tt-menu {
+body .container-backend #content {
+  min-height: 97%;
+}
+body .container-backend #content #main_menu .tt-menu {
   display: inline-block;
   text-align: center;
   border-bottom: dotted;
@@ -59,28 +73,28 @@ body .container-fluid #content #main_menu .tt-menu {
   text-shadow: #000000 2px 2px 3px;
   color: #ffffff;
 }
-body .container-fluid #content #main_menu a {
+body .container-backend #content #main_menu a {
   text-decoration: none;
 }
-body .container-fluid #content #main_menu ul,
-body .container-fluid #content #main_menu ul ul {
+body .container-backend #content #main_menu ul,
+body .container-backend #content #main_menu ul ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-body .container-fluid #content #main_menu #wrapper {
+body .container-backend #content #main_menu #wrapper {
   width: auto;
   margin: 20px auto;
   font-size: 20px;
 }
-body .container-fluid #content #main_menu .menu {
+body .container-backend #content #main_menu .menu {
   width: auto;
   height: auto;
   -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.73), 0px 0px 18px 0px rgba(0, 0, 0, 0.13);
   -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.73), 0px 0px 18px 0px rgba(0, 0, 0, 0.13);
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.73), 0px 0px 18px 0px rgba(0, 0, 0, 0.13);
 }
-body .container-fluid #content #main_menu .menu > li > a {
+body .container-backend #content #main_menu .menu > li > a {
   background-color: #A0522D;
   border-bottom: 1px solid #33373d;
   -webkit-box-shadow: inset 0px 1px 0px 0px #878e98;
@@ -96,7 +110,7 @@ body .container-fluid #content #main_menu .menu > li > a {
   color: #fff;
   text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
 }
-body .container-fluid #content #main_menu .menu ul li a {
+body .container-backend #content #main_menu .menu ul li a {
   background: #fff;
   border-bottom: 1px solid #efeff0;
   width: 100%;
@@ -109,31 +123,36 @@ body .container-fluid #content #main_menu .menu ul li a {
   font-weight: 400;
   color: #878d95;
 }
-body .container-fluid #content #main_menu .menu ul li:last-child a {
+body .container-backend #content #main_menu .menu ul li:last-child a {
   border-bottom: 1px solid #33373d;
 }
-body .container-fluid #content #main_menu .menu > li > a:hover,
-body .container-fluid #content #main_menu .menu > li > a.active {
+body .container-backend #content #main_menu .menu > li > a:hover,
+body .container-backend #content #main_menu .menu > li > a.active {
   background-color: #CD853F;
   border-bottom: 1px solid #103c56;
   -webkit-box-shadow: inset 0px 1px 0px 0px #6ad2ef;
   -moz-box-shadow: inset 0px 1px 0px 0px #6ad2ef;
   box-shadow: inset 0px 1px 0px 0px #6ad2ef;
 }
-body .container-fluid #content #main_menu .menu > li > a.active {
+body .container-backend #content #main_menu .menu > li > a.active {
   border-bottom: 1px solid #1a638f;
 }
-body .container-fluid #content #main_menu .menu > li > a.cottage:before {
+body .container-backend #content #main_menu .menu > li > a.frontend:before {
+  content: '\f108';
+  font-family: 'FontAwesome';
+  margin-right: 5px;
+}
+body .container-backend #content #main_menu .menu > li > a.cottage:before {
   content: '\f015';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-fluid #content #main_menu .menu > li > a.users:before {
+body .container-backend #content #main_menu .menu > li > a.users:before {
   content: '\f0c0';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-fluid #content #main_menu .menu > li > a span {
+body .container-backend #content #main_menu .menu > li > a span {
   font-size: 0.757em;
   display: inline-block;
   position: absolute;
@@ -156,11 +175,11 @@ body .container-fluid #content #main_menu .menu > li > a span {
   text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   font-weight: 500;
 }
-body .container-fluid #content #main_menu .menu > li > a:hover span,
-body .container-fluid #content #main_menu .menu > li a.active span {
+body .container-backend #content #main_menu .menu > li > a:hover span,
+body .container-backend #content #main_menu .menu > li a.active span {
   background: #FFEFD5;
 }
-body .container-fluid #content #main_menu .menu ul > li > a span {
+body .container-backend #content #main_menu .menu ul > li > a span {
   font-size: 0.757em;
   display: inline-block;
   position: absolute;
@@ -180,7 +199,7 @@ body .container-fluid #content #main_menu .menu ul > li > a span {
   border-radius: .769em;
   text-shadow: 0px 0px 0px rgba(255, 255, 255, 0.01);
 }
-body .container-fluid #content #main_menu .menu > li > ul li a:before {
+body .container-backend #content #main_menu .menu > li > ul li a:before {
   content: '▶';
   font-size: 8px;
   color: #bcbcbf;
@@ -190,67 +209,72 @@ body .container-fluid #content #main_menu .menu > li > ul li a:before {
   top: 0;
   left: -2.7em;
 }
-body .container-fluid #content #main_menu .menu > li > ul li:hover a,
-body .container-fluid #content #main_menu .menu > li > ul li:hover a span,
-body .container-fluid #content #main_menu .menu > li > ul li:hover a:before {
+body .container-backend #content #main_menu .menu > li > ul li:hover a,
+body .container-backend #content #main_menu .menu > li > ul li:hover a span,
+body .container-backend #content #main_menu .menu > li > ul li:hover a:before {
   color: #32373D;
 }
-body .container-fluid #content #main_content .panel {
+body .container-backend #content #main_content .panel {
   margin-top: 10%;
 }
-body .container-fluid #content #main_content .panel .tt-users,
-body .container-fluid #content #main_content .panel .tt-cottages {
+body .container-backend #content #main_content .panel .tt-users,
+body .container-backend #content #main_content .panel .tt-cottages {
   margin-left: 10px;
 }
-body .container-fluid #content #main_content .panel .tt-users:before {
+body .container-backend #content #main_content .panel .tt-users:before {
   content: '\f0c0';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-fluid #content #main_content .panel .tt-cottages:before {
+body .container-backend #content #main_content .panel .tt-cottages:before {
   content: '\f015';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-fluid #content #main_content .panel .table-responsive {
+body .container-backend #content #main_content .panel .table-responsive {
   margin: 7px 10px;
 }
-body .container-fluid #content #main_content .panel .table-responsive table tbody tr td {
+body .container-backend #content #main_content .panel .table-responsive table tbody tr td {
   text-transform: capitalize;
 }
-body .container-fluid #content #main_content .panel .table-responsive table tbody tr td.email-lower {
+body .container-backend #content #main_content .panel .table-responsive table tbody tr td.email-lower {
   text-transform: none;
 }
-body .container-fluid #content #main_content .panel.form-panel {
+body .container-backend #content #main_content .panel.form-panel {
   border: 2px dashed #808080;
 }
-body .container-fluid #content #main_content .panel.form-panel .panel-heading {
+body .container-backend #content #main_content .panel.form-panel .panel-heading {
   background-image: none;
   background-color: #A0522D;
   color: #ffffff;
   border-bottom: 2px dashed #ffffff;
 }
-body .container-fluid #content #main_content .panel.form-panel .panel-heading h3.tt-cottages:before {
+body .container-backend #content #main_content .panel.form-panel .panel-heading h3.tt-cottages:before {
   content: '\f015';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-fluid #content #main_content .panel.form-panel .help-info {
+body .container-backend #content #main_content .panel.form-panel .help-info {
   display: block;
 }
-body .container-fluid #content #main_content .panel.form-panel .help-info .help-icon {
+body .container-backend #content #main_content .panel.form-panel .help-info .help-icon {
   position: relative;
   float: right;
   top: -5px;
   left: 7px;
   z-index: 10;
 }
-body .container-fluid #content #optional_content .panel {
+body .container-backend #content #optional_content .panel {
   margin-top: 10%;
 }
-body .container-fluid #content #optional_content .panel .tt-actual-images span {
+body .container-backend #content #optional_content .panel .tt-actual-images span {
   text-decoration: underline;
 }
-body .container-fluid #content #optional_content .panel .cottage-images div img {
+body .container-backend #content #optional_content .panel .cottage-images div img {
   margin-bottom: 15px;
+}
+body .container-backend #footer #footer_rights {
+  background-color: #7a7a7a;
+  color: #d4dfc4;
+  padding: 15px 0px;
 }

@@ -20,7 +20,7 @@
     </script>
 </head>
 <body>
-<div id="app" class="container-fluid">
+<div id="app" class="container-fluid container-frontend">
     <div id="header" class="row">
         @include('templates.headers.main-header')
         @section('header')

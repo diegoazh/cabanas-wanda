@@ -116,6 +116,12 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     data: function data() {
@@ -125,7 +131,7 @@ exports.default = {
     },
     mounted: function mounted() {
         window.jQuery(window.document).ready(function () {
-            $('#type').selectize({
+            window.jQuery('#type').selectize({
                 persist: false,
                 maxItems: 1,
                 valueField: 'id',
@@ -134,9 +140,21 @@ exports.default = {
                 options: [{ id: 1, nombre: 'Desayuno' }, { id: 2, nombre: 'Almuerzo' }, { id: 3, nombre: 'Merienda' }, { id: 4, nombre: 'Cena' }],
                 create: false,
                 preload: true,
-                placeholder: 'Seleccione el tipo de cabaña',
+                placeholder: 'Seleccione la categoría del plato',
                 inputClass: 'form-control selectize-input',
                 dropdownParent: 'body'
+            });
+
+            var editor = editormd({
+                id: 'editormd',
+                width: '100%',
+                height: '400px',
+                path: '/lib/editor.md/lib/',
+                theme: 'dark',
+                previweTheme: 'default',
+                editorTheme: 'pastel-on-dark',
+                syncScrolling: true,
+                saveHTMLToTextarea: true
             });
         });
     }
@@ -167,7 +185,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -5429,78 +5447,100 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" }, [
           _c("form", [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { staticClass: "sr-only", attrs: { for: "name" } }, [
-                _vm._v("Nombre:")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group" }, [
-                _c("div", { staticClass: "input-group-addon" }, [
-                  _vm._v("Nombre")
+            _c(
+              "div",
+              { staticClass: "col-xs-12 col-sm-12 col-md-offset-2 col-md-8" },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    { staticClass: "sr-only", attrs: { for: "name" } },
+                    [_vm._v("Nombre:")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group" }, [
+                    _c("div", { staticClass: "input-group-addon" }, [
+                      _vm._v("Nombre")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "name",
+                        name: "name",
+                        type: "text",
+                        placeholder: "Ej: Desayuno americano"
+                      }
+                    })
+                  ])
                 ]),
                 _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { id: "name", name: "name", type: "text" }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { staticClass: "sr-only", attrs: { for: "type" } }, [
-                _vm._v("Tipo:")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group" }, [
-                _c("div", { staticClass: "input-group-addon" }, [
-                  _vm._v("Tipo")
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    { staticClass: "sr-only", attrs: { for: "type" } },
+                    [_vm._v("Tipo:")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group" }, [
+                    _c("div", { staticClass: "input-group-addon" }, [
+                      _vm._v("Tipo")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "type", name: "type" }
+                    })
+                  ])
                 ]),
                 _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { type: "text", id: "type", name: "type" }
-                })
-              ])
-            ]),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    { staticClass: "sr-only", attrs: { for: "price" } },
+                    [_vm._v("Precio:")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group" }, [
+                    _c("div", { staticClass: "input-group-addon" }, [
+                      _vm._v("Precio")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "price",
+                        name: "price",
+                        type: "number",
+                        step: "0.01",
+                        placeholder: "Ej: 150"
+                      }
+                    })
+                  ])
+                ])
+              ]
+            ),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { staticClass: "sr-only", attrs: { for: "price" } }, [
-                _vm._v("Precio:")
+            _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c(
+                  "label",
+                  { staticClass: "sr-only", attrs: { for: "description" } },
+                  [_vm._v("Descripión:")]
+                ),
+                _vm._v(" "),
+                _c("div", { attrs: { id: "editormd" } }, [
+                  _c("textarea", {
+                    staticClass: "form-control",
+                    attrs: { id: "description", name: "description" }
+                  })
+                ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "input-group" }, [
-                _c("div", { staticClass: "input-group-addon" }, [
-                  _vm._v("Precio")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "price",
-                    name: "price",
-                    type: "number",
-                    step: "0.01"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c(
-                "label",
-                { staticClass: "sr-only", attrs: { for: "description" } },
-                [_vm._v("Descripión:")]
-              ),
-              _vm._v(" "),
-              _c("textarea", {
-                staticClass: "form-control",
-                attrs: { id: "description", name: "description" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "text-center" }, [
-              _c("button", { staticClass: "btn btn success" }, [
-                _vm._v("Crear plato")
+              _c("div", { staticClass: "text-center" }, [
+                _c("button", { staticClass: "btn btn-primary" }, [
+                  _c("b", [_vm._v("Crear plato")])
+                ])
               ])
             ])
           ])

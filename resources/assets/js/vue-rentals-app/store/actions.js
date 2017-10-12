@@ -113,6 +113,7 @@ export default {
                 email: payload.email
             }).then(response => {
                     let obj = {};
+                    // set Header Authorization: Bearer {yourtokenhere}
                     dispatch('setUserData', response.data.user);
                     dispatch('setToken', response.data.token);
                     dispatch('setCountries', response.data.countries);

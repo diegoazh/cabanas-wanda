@@ -6,33 +6,39 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <form>
-                    <div class="form-group">
-                        <label for="name" class="sr-only">Nombre:</label>
-                        <div class="input-group">
-                            <div class="input-group-addon">Nombre</div>
-                            <input id="name" name="name" type="text" class="form-control">
+                    <div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8">
+                        <div class="form-group">
+                            <label for="name" class="sr-only">Nombre:</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">Nombre</div>
+                                <input id="name" name="name" type="text" class="form-control" placeholder="Ej: Desayuno americano">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="type" class="sr-only">Tipo:</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">Tipo</div>
+                                <input type="text" id="type" name="type" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="price" class="sr-only">Precio:</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">Precio</div>
+                                <input id="price" name="price" type="number" step="0.01" class="form-control" placeholder="Ej: 150">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="type" class="sr-only">Tipo:</label>
-                        <div class="input-group">
-                            <div class="input-group-addon">Tipo</div>
-                            <input type="text" id="type" name="type" class="form-control">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="description" class="sr-only">Descripión:</label>
+                            <div id="editormd">
+                                <textarea id="description" name="description" class="form-control"></textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="price" class="sr-only">Precio:</label>
-                        <div class="input-group">
-                            <div class="input-group-addon">Precio</div>
-                            <input id="price" name="price" type="number" step="0.01" class="form-control">
+                        <div class="text-center">
+                            <button class="btn btn-primary"><b>Crear plato</b></button>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="description" class="sr-only">Descripión:</label>
-                        <textarea id="description" name="description" class="form-control"></textarea>
-                    </div>
-                    <div class="text-center">
-                        <button class="btn btn success">Crear plato</button>
                     </div>
                 </form>
             </div>
@@ -54,7 +60,7 @@
         },
         mounted() {
             window.jQuery(window.document).ready(function () {
-                $('#type').selectize({
+                window.jQuery('#type').selectize({
                     persist: false,
                     maxItems: 1,
                     valueField: 'id',
@@ -68,9 +74,21 @@
                     ],
                     create: false,
                     preload: true,
-                    placeholder: 'Seleccione el tipo de cabaña',
+                    placeholder: 'Seleccione la categoría del plato',
                     inputClass: 'form-control selectize-input',
                     dropdownParent: 'body'
+                });
+
+                const editor = editormd({
+                    id      : 'editormd',
+                    width   : '100%',
+                    height  : '400px',
+                    path    : '/lib/editor.md/lib/',
+                    theme: 'dark',
+                    previweTheme: 'default',
+                    editorTheme: 'pastel-on-dark',
+                    syncScrolling : true,
+                    saveHTMLToTextarea : true
                 });
             });
         }

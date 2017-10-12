@@ -3,6 +3,17 @@
  ********************************************/
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
+/******************************************************
+* Colores
+******************************************************/
+@blanco: #ffffff;
+@negro: #000000;
+@naranja: #fd7500;
+@naranja-amarronado: #f99418;
+@crema-pastel: #f0e7b2;
+@granito-pastel: #d4dfc4;
+@celeste-suave-pastel: #9fd7db;
+
 /********************************************
  * Clases
  ********************************************/
@@ -29,7 +40,8 @@ body {
   background-color: #FFEFD5;
 
   .container-backend {
-    min-height: 985px;
+    height: 980px;
+    min-height: 980px;
     background-image: url('../../../../public/images/cabanias/cabanas2.jpg');
     background-repeat: no-repeat;
     background-size: cover;
@@ -76,6 +88,8 @@ body {
       }
     }
     #content {
+      min-height: 97%;
+
       #main_menu {
         .tt-menu {
           display: inline-block;
@@ -313,6 +327,13 @@ body {
             }
           }
         }
+      }
+    }
+    #footer {
+      #footer_rights {
+        background-color: lighten(@negro, 48%);
+        color: @granito-pastel;
+        padding: 15px 0px;
       }
     }
   }
