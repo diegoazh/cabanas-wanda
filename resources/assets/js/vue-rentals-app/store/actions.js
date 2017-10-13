@@ -1,9 +1,9 @@
-import { http } from '../axios/my-axios'
+import { http } from '../../vue-commons/axios/app-axios'
 
 export default {
     setBasicInfo({commit}, payload) {
         commit('setIsAdmin', payload.basicOne);
-        commit('setUser', payload.basicTwo);
+        commit('setUserLogged', payload.basicTwo);
         window.clearTimeout(window.verify);
         delete window.verify;
     },
@@ -109,11 +109,11 @@ export default {
         return new Promise((resolve, reject) => {
             http.post('rentals/auth/', {
                 isAdmin: payload.isAdmin,
-                dni: payload.dni,
+                userLogged: payload.userLogged,
+                document: payload.dni,
                 email: payload.email
             }).then(response => {
                     let obj = {};
-                    // set Header Authorization: Bearer {yourtokenhere}
                     dispatch('setUserData', response.data.user);
                     dispatch('setToken', response.data.token);
                     dispatch('setCountries', response.data.countries);

@@ -47,20 +47,23 @@
 </template>
 
 <script>
+    import { mapActions } from 'vuex'
+
     export default {
         data() {
             return {
                myTypes: [
-                   {id: 1, nombre: 'Desayuno'},
-                   {id: 2, nombre: 'Almuerzo'},
-                   {id: 3, nombre: 'Merienda'},
-                   {id: 4, nombre: 'Cena'}
+                   {id: 'desayuno', nombre: 'Desayuno'},
+                   {id: 'almuerzo', nombre: 'Almuerzo'},
+                   {id: 'merienda', nombre: 'Merienda'},
+                   {id: 'cena', nombre: 'Cena'}
                ]
             }
         },
         mounted() {
             window.jQuery(window.document).ready(function () {
-                window.jQuery('#type').selectize({
+                window.appFood = {};
+                window.appFood.type = window.jQuery('#type').selectize({
                     persist: false,
                     maxItems: 1,
                     valueField: 'id',
@@ -79,7 +82,7 @@
                     dropdownParent: 'body'
                 });
 
-                const editor = editormd({
+                window.appFood.editor = editormd({
                     id      : 'editormd',
                     width   : '100%',
                     height  : '400px',
@@ -91,6 +94,19 @@
                     saveHTMLToTextarea : true
                 });
             });
+
+            this.defineXhrToken();
+        },
+        methods: {
+            defineXhrToken() {
+                window.verifyToken = setTimeout(() => {
+                    if (window.adminInfo) {
+                        this.setXhrToken(window.adminInfo.token);
+                        delete window.adminInfo;
+                    }
+                }, 1000);
+            },
+            ...mapActions(['setXhrToken'])
         }
     }
 </script>

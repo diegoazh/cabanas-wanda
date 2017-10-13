@@ -1,6 +1,7 @@
 export default {
     data: {
         isAdmin: false,
+        userLogged: "",
         user: {},
         deal: false,
         closedDeal: false,

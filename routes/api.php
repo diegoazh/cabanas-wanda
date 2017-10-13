@@ -24,3 +24,7 @@ Route::prefix('rentals')->group(function () {
         Route::post('store', 'RentalsController@store')->name('api.rentals.store');
     });
 });
+
+Route::prefix('food')->middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
+    Route::post('store', 'Administration\ComidasController@store')->name('api.food.store');
+});

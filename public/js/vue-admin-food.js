@@ -74,7 +74,8 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-//
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
 //
 //
 //
@@ -123,10 +124,12 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
 exports.default = {
     data: function data() {
         return {
-            myTypes: [{ id: 1, nombre: 'Desayuno' }, { id: 2, nombre: 'Almuerzo' }, { id: 3, nombre: 'Merienda' }, { id: 4, nombre: 'Cena' }]
+            myTypes: [{ id: 'desayuno', nombre: 'Desayuno' }, { id: 'almuerzo', nombre: 'Almuerzo' }, { id: 'merienda', nombre: 'Merienda' }, { id: 'cena', nombre: 'Cena' }]
         };
     },
     mounted: function mounted() {
@@ -157,7 +160,22 @@ exports.default = {
                 saveHTMLToTextarea: true
             });
         });
-    }
+
+        this.defineXhrToken();
+    },
+
+    methods: _extends({
+        defineXhrToken: function defineXhrToken() {
+            var _this = this;
+
+            window.verifyToken = setTimeout(function () {
+                if (window.adminInfo) {
+                    _this.setXhrToken(window.adminInfo.token);
+                    delete window.adminInfo;
+                }
+            }, 1000);
+        }
+    }, (0, _vuex.mapActions)(['setXhrToken']))
 };
 
 /***/ }),
@@ -185,7 +203,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -17214,9 +17232,17 @@ module.exports = Component.exports
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    setXhrToken: function setXhrToken(_ref, token) {
+        var commit = _ref.commit;
+
+        commit('setXhrToken', token);
+        window.clearTimeout(window.verifyToken);
+        delete window.verifyToken;
+    }
+};
 
 /***/ }),
 
@@ -17240,9 +17266,13 @@ exports.default = {};
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    setXhrToken: function setXhrToken(state, token) {
+        state.xhr.token = token;
+    }
+};
 
 /***/ }),
 
@@ -17257,7 +17287,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
     data: {},
-    xhr: {}
+    xhr: {
+        token: ''
+    }
 };
 
 /***/ }),
@@ -17300,12 +17332,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _vue2.default.use(_vuex2.default);
 
-exports.default = {
+exports.default = new _vuex2.default.Store({
     state: _state2.default,
     getters: _getters2.default,
     mutations: _mutations2.default,
     actions: _actions2.default
-};
+});
 
 /***/ }),
 

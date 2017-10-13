@@ -32,6 +32,9 @@ export default {
     setUser(state, user) {
         state.data.user = user;
     },
+    setUserLogged(state, user) {
+        state.data.userLogged = user;
+    },
     setToken(state, token) {
         state.xhr.token = token;
     },

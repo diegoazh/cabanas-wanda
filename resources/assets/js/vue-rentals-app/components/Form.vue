@@ -129,6 +129,7 @@
                 if (this.hasErrors) return;
                 this.setQueryFinished(false);
                 this.queryCottagesAvailables({
+                    /* Evaluar que dateTo sea mayor a dateFrom */
                     isForCottage: this.isForCottage,
                     choice: this.choice,
                     simple: this.bedSimple,

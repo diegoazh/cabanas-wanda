@@ -29,22 +29,13 @@ class RentalsController extends Controller
         if (Auth::check()) {
             if (Auth::user()->isAdmin() || Auth::user()->isEmployed()) {
                 $administration = true;
+                $user = Auth::user()->email;
             } else {
                 $user = Auth::user()->email;
             }
         }
 
         return view('frontend.rentals')->with(compact('administration', 'user'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -139,28 +130,6 @@ class RentalsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Rental  $rental
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Rental $rental)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Rental  $rental
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Rental $rental)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -235,20 +204,42 @@ class RentalsController extends Controller
     {
         $info = $request->all();
         $user = null;
+        $logged = null;
         $token = '';
         $countries = null;
 
-        if (!$info['isAdmin']) {
-            if (!empty($info['dni'])) {
-                $user = User::where('dni', $info['dni'])->where('email', $info['email'])->first();
-            } else {
-                $user = User::where('email', $info['email'])->first();
+        if($info['isAdmin']) {
+
+            $logged = User::where('email', $info['userLogged'])->first();
+
+        }
+
+        if (empty($info['email'])) {
+
+            $user = User::where('dni', $info['document'])->first();
+
+            if (!$user) {
+
+                $user = User::where('passport', $info['document'])->first();
+
+            }
+
+        } else if (empty($info['document'])) {
+
+            $user = User::where('email', $info['email'])->first();
+
+        } else {
+
+            $user = User::where('dni', $info['document'])->where('email', $info['email'])->first();
+
+            if (!$user) {
+
+                $user = User::where('passport', $info['document'])->where('email', $info['email'])->first();
+
             }
         }
 
-        if ($user) {
-            $token = JWTAuth::fromUser($user);
-        }
+        $token = JWTAuth::fromUser($logged ? $logged : $user);
 
         $countries = Country::orderBy('country')->get();
 

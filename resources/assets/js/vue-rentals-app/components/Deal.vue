@@ -33,7 +33,7 @@
                     </div>
                     <br><br>
                     <div class="text-center">
-                        <button class="btn btn-primary btn-lg">Buscar información <icon-app :iconImage="toggleIconImage" :aditionalClasses="btnClasses"></icon-app></button>
+                        <button class="btn btn-primary btn-lg" :disabled="documentOrEmail">Buscar información <icon-app :iconImage="toggleIconImage" :aditionalClasses="btnClasses"></icon-app></button>
                     </div>
                 </form>
             </div>
@@ -99,7 +99,7 @@
                 </div>
                 <br>
                 <div class="text-center">
-                    <button class="btn btn-success btn-lg">
+                    <button class="btn btn-success btn-lg" :disabled="btnCreateNewUser">
                         Finalizar reserva <icon-app :iconImage="toggleIconImage" :aditionalClasses="btnClasses"></icon-app>
                     </button>
                 </div>
@@ -118,8 +118,8 @@
             'icon-app': Icon
         },
         mounted() {
-            this.email = this.user.email || this.user;
-            this.findUser();
+            this.email = this.user.email || (!this.isAdmin ? this.userLogged : '');
+            if (!this.isAdmin) this.findUser();
         },
         data() {
             return {
@@ -127,7 +127,7 @@
                 name: '',
                 lastname: '',
                 email: '',
-                document: 0,
+                document: null,
                 genre: '',
                 country: '',
                 dataForm: false,
@@ -135,6 +135,9 @@
             }
         },
         computed: {
+            documentOrEmail() {
+                return this.isNullOrUndefined(this.document) || this.isNullOrUndefined(this.email);
+            },
             toggleIconImage() {
                 return !this.queryFinished ? 'spinner' : 'search';
             },
@@ -150,9 +153,13 @@
             changeToogle() {
                 return this.onOff ? 'text-primary' : 'text-muted';
             },
+            btnCreateNewUser() {
+                 return !(this.name && this.lastname && this.email && this.document && this.genre && this.country);
+            },
             ...mapState({
                 token: state => state.xhr.token,
                 isAdmin: state => state.data.isAdmin,
+                userLogged: state => state.data.userLogged,
                 user: state => state.data.user,
                 queryFinished: state => state.xhr.queryFinished,
                 countries: state => state.data.countries,
@@ -172,6 +179,8 @@
                     this.genre = this.user.genre;
                     this.country = this.user.country_id;
                     this.dataForm = true;
+                } else {
+                    this.userNotFound = true;
                 }
             },
             onOffImg() {
@@ -183,7 +192,8 @@
                 this.setQueryFinished(!bool);
                 this.authenticateUser({
                     isAdmin: this.isAdmin,
-                    dni: this.document,
+                    userLogged: this.userLogged,
+                    document: this.document,
                     email: this.email
                 }).then((response) => {
                         this.verifyUser();
@@ -191,7 +201,6 @@
                         response.type === 'success' ? VueNoti.success(response) : VueNoti.warn(response);
                         if (bool) {
                             this.dataForm = true;
-                            this.userNotFound = true;
                         }
                     }).catch(error => {
                         VueNoti.warn({
@@ -233,6 +242,9 @@
             goBackToFindUser() {
                 this.dataForm = false;
                 this.userNotFound = false;
+            },
+            isNullOrUndefined(val) {
+                return typeof val === 'undefined' || val === null;
             },
             ...mapActions(['authenticateUser', 'setQueryFinished', 'sendClosedDeal', 'setDeal'])
         }

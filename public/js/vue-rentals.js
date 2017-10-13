@@ -1955,8 +1955,8 @@ exports.default = {
         'icon-app': _Icon2.default
     },
     mounted: function mounted() {
-        this.email = this.user.email || this.user;
-        this.findUser();
+        this.email = this.user.email || (!this.isAdmin ? this.userLogged : '');
+        if (!this.isAdmin) this.findUser();
     },
     data: function data() {
         return {
@@ -1964,7 +1964,7 @@ exports.default = {
             name: '',
             lastname: '',
             email: '',
-            document: 0,
+            document: null,
             genre: '',
             country: '',
             dataForm: false,
@@ -1973,6 +1973,9 @@ exports.default = {
     },
 
     computed: _extends({
+        documentOrEmail: function documentOrEmail() {
+            return this.isNullOrUndefined(this.document) || this.isNullOrUndefined(this.email);
+        },
         toggleIconImage: function toggleIconImage() {
             return !this.queryFinished ? 'spinner' : 'search';
         },
@@ -1987,6 +1990,9 @@ exports.default = {
         },
         changeToogle: function changeToogle() {
             return this.onOff ? 'text-primary' : 'text-muted';
+        },
+        btnCreateNewUser: function btnCreateNewUser() {
+            return !(this.name && this.lastname && this.email && this.document && this.genre && this.country);
         }
     }, (0, _vuex.mapState)({
         token: function token(state) {
@@ -1994,6 +2000,9 @@ exports.default = {
         },
         isAdmin: function isAdmin(state) {
             return state.data.isAdmin;
+        },
+        userLogged: function userLogged(state) {
+            return state.data.userLogged;
         },
         user: function user(state) {
             return state.data.user;
@@ -2027,6 +2036,8 @@ exports.default = {
                 this.genre = this.user.genre;
                 this.country = this.user.country_id;
                 this.dataForm = true;
+            } else {
+                this.userNotFound = true;
             }
         },
         onOffImg: function onOffImg() {
@@ -2042,7 +2053,8 @@ exports.default = {
             this.setQueryFinished(!bool);
             this.authenticateUser({
                 isAdmin: this.isAdmin,
-                dni: this.document,
+                userLogged: this.userLogged,
+                document: this.document,
                 email: this.email
             }).then(function (response) {
                 _this.verifyUser();
@@ -2050,7 +2062,6 @@ exports.default = {
                 response.type === 'success' ? _vueNotifications2.default.success(response) : _vueNotifications2.default.warn(response);
                 if (bool) {
                     _this.dataForm = true;
-                    _this.userNotFound = true;
                 }
             }).catch(function (error) {
                 _vueNotifications2.default.warn({
@@ -2092,6 +2103,9 @@ exports.default = {
         goBackToFindUser: function goBackToFindUser() {
             this.dataForm = false;
             this.userNotFound = false;
+        },
+        isNullOrUndefined: function isNullOrUndefined(val) {
+            return typeof val === 'undefined' || val === null;
         }
     }, (0, _vuex.mapActions)(['authenticateUser', 'setQueryFinished', 'sendClosedDeal', 'setDeal']))
 };
@@ -2264,6 +2278,7 @@ exports.default = {
             if (this.hasErrors) return;
             this.setQueryFinished(false);
             this.queryCottagesAvailables({
+                /* Evaluar que dateTo sea mayor a dateFrom */
                 isForCottage: this.isForCottage,
                 choice: this.choice,
                 simple: this.bedSimple,
@@ -55059,7 +55074,10 @@ var render = function() {
                 _c("div", { staticClass: "text-center" }, [
                   _c(
                     "button",
-                    { staticClass: "btn btn-primary btn-lg" },
+                    {
+                      staticClass: "btn btn-primary btn-lg",
+                      attrs: { disabled: _vm.documentOrEmail }
+                    },
                     [
                       _vm._v("Buscar información "),
                       _c("icon-app", {
@@ -55456,7 +55474,10 @@ var render = function() {
                 _c("div", { staticClass: "text-center" }, [
                   _c(
                     "button",
-                    { staticClass: "btn btn-success btn-lg" },
+                    {
+                      staticClass: "btn btn-success btn-lg",
+                      attrs: { disabled: _vm.btnCreateNewUser }
+                    },
                     [
                       _vm._v("\n                    Finalizar reserva "),
                       _c("icon-app", {
@@ -67791,6 +67812,34 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-commons/axios/app-axios.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.http = undefined;
+
+var _axios = __webpack_require__("./node_modules/axios/index.js");
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var http = exports.http = _axios2.default.create({
+    baseURL: 'http://homestead.app/api/',
+    timeout: 5000,
+    headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+    }
+});
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-commons/notifications/notifications.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -67841,34 +67890,6 @@ var optionsIzi = exports.optionsIzi = {
     info: toastIziSwal,
     warn: toastIziSwal
 };
-
-/***/ }),
-
-/***/ "./resources/assets/js/vue-rentals-app/axios/my-axios.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.http = undefined;
-
-var _axios = __webpack_require__("./node_modules/axios/index.js");
-
-var _axios2 = _interopRequireDefault(_axios);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var http = exports.http = _axios2.default.create({
-    baseURL: 'http://homestead.app/api/',
-    timeout: 5000,
-    headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest'
-    }
-});
 
 /***/ }),
 
@@ -68239,14 +68260,14 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _myAxios = __webpack_require__("./resources/assets/js/vue-rentals-app/axios/my-axios.js");
+var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
 
 exports.default = {
     setBasicInfo: function setBasicInfo(_ref, payload) {
         var commit = _ref.commit;
 
         commit('setIsAdmin', payload.basicOne);
-        commit('setUser', payload.basicTwo);
+        commit('setUserLogged', payload.basicTwo);
         window.clearTimeout(window.verify);
         delete window.verify;
     },
@@ -68317,7 +68338,7 @@ exports.default = {
             dispatch = _ref9.dispatch;
 
         return new Promise(function (resolve, reject) {
-            _myAxios.http.get('rentals/basic/').then(function (response) {
+            _appAxios.http.get('rentals/basic/').then(function (response) {
                 commit('setCottages', response.data.cottages);
                 resolve({
                     title: 'Ok!',
@@ -68337,7 +68358,7 @@ exports.default = {
 
         return new Promise(function (resolve, reject) {
             var url = 'rentals/availables/';
-            _myAxios.http.post(url, {
+            _appAxios.http.post(url, {
                 query: payload.choice,
                 simple: payload.simple,
                 dateFrom: payload.dateFrom,
@@ -68382,13 +68403,13 @@ exports.default = {
         var dispatch = _ref15.dispatch;
 
         return new Promise(function (resolve, reject) {
-            _myAxios.http.post('rentals/auth/', {
+            _appAxios.http.post('rentals/auth/', {
                 isAdmin: payload.isAdmin,
-                dni: payload.dni,
+                userLogged: payload.userLogged,
+                document: payload.dni,
                 email: payload.email
             }).then(function (response) {
                 var obj = {};
-                // set Header Authorization: Bearer {yourtokenhere}
                 dispatch('setUserData', response.data.user);
                 dispatch('setToken', response.data.token);
                 dispatch('setCountries', response.data.countries);
@@ -68419,7 +68440,7 @@ exports.default = {
     },
     sendClosedDeal: function sendClosedDeal(context, payload) {
         return new Promise(function (resolve, reject) {
-            _myAxios.http.post('rentals/store?token=' + context.state.xhr.token, payload).then(function (response) {
+            _appAxios.http.post('rentals/store?token=' + context.state.xhr.token, payload).then(function (response) {
                 var token = response.headers.authorization.split(' ')[1];
                 context.commit('setToken', token);
                 context.commit('setClosedDeal', true);
@@ -68502,6 +68523,9 @@ exports.default = {
     setUser: function setUser(state, user) {
         state.data.user = user;
     },
+    setUserLogged: function setUserLogged(state, user) {
+        state.data.userLogged = user;
+    },
     setToken: function setToken(state, token) {
         state.xhr.token = token;
     },
@@ -68545,6 +68569,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     data: {
         isAdmin: false,
+        userLogged: "",
         user: {},
         deal: false,
         closedDeal: false,

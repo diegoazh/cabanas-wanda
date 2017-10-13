@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Administration;
 
+use JWTAuth;
 use App\Comida;
 use Illuminate\Http\Request;
 use App\Http\Requests\RequestComida;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ComidasController extends Controller
 {
@@ -16,7 +18,18 @@ class ComidasController extends Controller
      */
     public function index()
     {
-        return view('backend.comidas');
+        $token = null;
+
+        if (Auth::check()) {
+
+            if (Auth::user()->isAdminOrEmployed()) {
+
+                $token = JWTAuth::fromUser(Auth::user());
+
+            }
+        }
+
+        return view('backend.comidas')->with('token', $token);
     }
 
     /**
