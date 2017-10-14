@@ -1,4 +1,4 @@
-import { http } from '../../vue-commons/axios/app-axios'
+import { http, handlingXhrErrors } from '../../axios/app-axios'
 
 export default {
     setBasicInfo({commit}, payload) {
@@ -28,32 +28,17 @@ export default {
     setQueryFinished({commit}, bool) {
         commit('setQueryFinished', bool);
     },
-    handlingXhrErrors({dispatch}, error) {
-        dispatch('setQueryFinished', true);
-        if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            return {
-                title: error.response.data.title ? error.response.data.title : 'ERROR ' + error.response.status,
-                message: error.response.data.error
-            };
-        } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log('Info', error.request);
-            return {
-                title: 'Se produjo un error',
-                message: 'No hemos recibido respuesta desde el servidor.'
-            };
-        } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message);
-            return {
-                title: 'Se produjo un error',
-                message: 'Algo ocurrio generando la petición al servidor.'
-            }
-        }
+    setDeal({commit}, bool) {
+        commit('setDeal', bool);
+    },
+    setClosedDeal({commit}, bool) {
+        commit('setClosedDeal', bool);
+    },
+    setUserData({commit}, user) {
+        commit('setUser', user);
+    },
+    setToken({commit}, token) {
+        commit('setToken', token);
     },
     setCottages({commit, dispatch}){
         return new Promise((resolve, reject) => {
@@ -65,9 +50,8 @@ export default {
                         message: 'Widget cargado correctamente!'
                     });
                 }).catch(err => {
-                    dispatch('handlingXhrErrors', err)
-                        .then(response => reject(response))
-                        .catch(error => reject({title: 'ERROR', messagge: error}))
+                    dispatch('setQueryFinished', true);
+                    reject(handlingXhrErrors(err));
                 });
         });
     },
@@ -86,24 +70,11 @@ export default {
                 resolve();
             }).catch(err => {
                 dispatch('setToRentals', []);
-                dispatch('handlingXhrErrors', err)
-                    .then(response => reject(response))
-                    .catch(error => reject({title: 'ERROR', messagge: error}))
+                dispatch('setQueryFinished', true);
+                reject(handlingXhrErrors(err));
             });
             dispatch('setLastQueryData', payload);
         });
-    },
-    setDeal({commit}, bool) {
-        commit('setDeal', bool);
-    },
-    setClosedDeal({commit}, bool) {
-        commit('setClosedDeal', bool);
-    },
-    setUserData({commit}, user) {
-        commit('setUser', user);
-    },
-    setToken({commit}, token) {
-        commit('setToken', token);
     },
     authenticateUser({dispatch}, payload) {
         return new Promise((resolve, reject) => {
@@ -134,15 +105,14 @@ export default {
                     }
                     resolve(obj);
             }).catch(err => {
-                dispatch('handlingXhrErrors', err)
-                    .then(response => reject(response))
-                    .catch(error => reject({title: 'ERROR', messagge: error}))
+                dispatch('setQueryFinished', true);
+                reject(handlingXhrErrors(err));
             });
         });
     },
     sendClosedDeal(context, payload) {
         return new Promise((resolve, reject) => {
-            http.post('rentals/store?token=' + context.state.xhr.token, payload)
+            http.post('rentals/rentals?token=' + context.state.xhr.token, payload)
                 .then(response => {
                     let token = response.headers.authorization.split(' ')[1];
                     context.commit('setToken', token);
@@ -154,10 +124,9 @@ export default {
                         useSwal: true
                     });
                 }).catch(err => {
-                    dispatch('handlingXhrErrors', err)
-                    .then(response => reject(response))
-                    .catch(error => reject({title: 'ERROR', messagge: error}))
-            });
+                    context.dispatch('setQueryFinished', true);
+                    reject(handlingXhrErrors(err));
+                });
         })
     }
 };

@@ -109,9 +109,11 @@
 </template>
 
 <script>
+    import { createNamespacedHelpers } from 'vuex'
     import VueNoti from 'vue-notifications'
     import Icon from './Icon.vue'
-    import { mapActions, mapState } from 'vuex'
+
+    const { mapActions, mapState } = createNamespacedHelpers('rentals');
 
     export default {
         components: {

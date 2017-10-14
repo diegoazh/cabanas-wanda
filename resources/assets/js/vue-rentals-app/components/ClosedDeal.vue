@@ -65,9 +65,11 @@
 </template>
 
 <script>
+    import { createNamespacedHelpers } from 'vuex'
     import moment from 'moment'
-    import { mapActions, mapState } from 'vuex'
     import Icon from './Icon.vue'
+
+    const { mapActions, mapState } = createNamespacedHelpers('rentals');
 
     export default {
         components: {

@@ -27,10 +27,12 @@
 </template>
 
 <script>
+    import { createNamespacedHelpers } from 'vuex'
     import _ from 'lodash'
-    import { mapActions, mapState } from 'vuex'
     import Icon from './Icon.vue'
     import moment from 'moment'
+
+    const { mapActions, mapState } = createNamespacedHelpers('rentals');
 
     export default {
         components: {

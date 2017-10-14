@@ -3,6 +3,7 @@ export default {
 
     },
     xhr: {
-        token: ''
+        token: '',
+        queryFinished: true
     }
 }

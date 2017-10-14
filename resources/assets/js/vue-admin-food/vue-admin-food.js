@@ -1,11 +1,10 @@
 import Vue from 'vue'
-import VueNotification from 'vue-notifications';
+import VueNotifications from 'vue-notifications';
 import VTooltip from 'v-tooltip'
+import store from '../vue-commons/store/store'
+import { optionsIzi } from '../vue-commons/notifications/notifications'
 
-import store from './store/store'
-import options from '../vue-commons/notifications/notifications'
-
-Vue.use(VueNotification, options).use(VTooltip);
+Vue.use(VueNotifications, optionsIzi).use(VTooltip);
 
 import AdminFood from './components/AdminFood.vue'
 

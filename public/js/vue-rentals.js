@@ -1654,11 +1654,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
 var _lodash = __webpack_require__("./node_modules/lodash/lodash.js");
 
 var _lodash2 = _interopRequireDefault(_lodash);
-
-var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
 var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
 
@@ -1669,6 +1669,10 @@ var _moment = __webpack_require__("./node_modules/moment/moment.js");
 var _moment2 = _interopRequireDefault(_moment);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _createNamespacedHelp = (0, _vuex.createNamespacedHelpers)('rentals'),
+    mapActions = _createNamespacedHelp.mapActions,
+    mapState = _createNamespacedHelp.mapState;
 
 exports.default = {
     components: {
@@ -1681,7 +1685,7 @@ exports.default = {
             var to = (0, _moment2.default)(this.dateTo + ' 10:00:00', 'DD/MM/YYYY HH:mm:ss').add(1, 'day');
             return to.diff(from, 'days');
         }
-    }, (0, _vuex.mapState)({
+    }, mapState({
         dateFrom: function dateFrom(state) {
             return state.lastQueryData.dateFrom;
         },
@@ -1693,7 +1697,7 @@ exports.default = {
         calcularMonto: function calcularMonto(dias, precio) {
             return _lodash2.default.round(dias * precio, 2);
         }
-    }, (0, _vuex.mapActions)(['deleteItemToRentals']))
+    }, mapActions(['deleteItemToRentals']))
 };
 
 /***/ }),
@@ -1775,11 +1779,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
 var _moment = __webpack_require__("./node_modules/moment/moment.js");
 
 var _moment2 = _interopRequireDefault(_moment);
-
-var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
 var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
 
@@ -1787,11 +1791,15 @@ var _Icon2 = _interopRequireDefault(_Icon);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var _createNamespacedHelp = (0, _vuex.createNamespacedHelpers)('rentals'),
+    mapActions = _createNamespacedHelp.mapActions,
+    mapState = _createNamespacedHelp.mapState;
+
 exports.default = {
     components: {
         'icon-app': _Icon2.default
     },
-    computed: _extends({}, (0, _vuex.mapState)({
+    computed: _extends({}, mapState({
         infoDeal: function infoDeal(state) {
             return state.data.infoDeal;
         }
@@ -1802,7 +1810,7 @@ exports.default = {
             this.setClosedDeal(false);
             this.setDeal(false);
         }
-    }, (0, _vuex.mapActions)(['setDeal', 'setClosedDeal', 'setToRentals'])),
+    }, mapActions(['setDeal', 'setClosedDeal', 'setToRentals'])),
     filters: {
         argentineDateTime: function argentineDateTime(value) {
             if (!value) return;
@@ -1938,6 +1946,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
 var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
@@ -1946,9 +1956,11 @@ var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/component
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _createNamespacedHelp = (0, _vuex.createNamespacedHelpers)('rentals'),
+    mapActions = _createNamespacedHelp.mapActions,
+    mapState = _createNamespacedHelp.mapState;
 
 exports.default = {
     components: {
@@ -1994,7 +2006,7 @@ exports.default = {
         btnCreateNewUser: function btnCreateNewUser() {
             return !(this.name && this.lastname && this.email && this.document && this.genre && this.country);
         }
-    }, (0, _vuex.mapState)({
+    }, mapState({
         token: function token(state) {
             return state.xhr.token;
         },
@@ -2107,7 +2119,7 @@ exports.default = {
         isNullOrUndefined: function isNullOrUndefined(val) {
             return typeof val === 'undefined' || val === null;
         }
-    }, (0, _vuex.mapActions)(['authenticateUser', 'setQueryFinished', 'sendClosedDeal', 'setDeal']))
+    }, mapActions(['authenticateUser', 'setQueryFinished', 'sendClosedDeal', 'setDeal']))
 };
 
 /***/ }),
@@ -2169,6 +2181,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
 var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
 
 var _Icon2 = _interopRequireDefault(_Icon);
@@ -2181,13 +2195,16 @@ var _moment = __webpack_require__("./node_modules/moment/moment.js");
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
 var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _createNamespacedHelp = (0, _vuex.createNamespacedHelpers)('rentals'),
+    mapActions = _createNamespacedHelp.mapActions,
+    mapGetters = _createNamespacedHelp.mapGetters,
+    mapState = _createNamespacedHelp.mapState;
 
 exports.default = {
     components: {
@@ -2231,7 +2248,7 @@ exports.default = {
         checkSimple: function checkSimple() {
             return this.bedSimple ? 'check-square-o' : 'square-o';
         }
-    }, (0, _vuex.mapState)({
+    }, mapState({
         cottages: function cottages(state) {
             return state.data.cottages;
         },
@@ -2241,7 +2258,7 @@ exports.default = {
         queryFinished: function queryFinished(state) {
             return state.xhr.queryFinished;
         }
-    }), (0, _vuex.mapGetters)(['toggleConfig'])),
+    }), mapGetters(['toggleConfig'])),
     methods: _extends({
         initChoice: function initChoice() {
             if (!this.draftCottage) {
@@ -2301,7 +2318,7 @@ exports.default = {
         toggleBedSimple: function toggleBedSimple() {
             this.bedSimple = !this.bedSimple;
         }
-    }, (0, _vuex.mapActions)(['setBasicInfo', 'queryCottagesAvailables', 'setQueryFinished']))
+    }, mapActions(['setBasicInfo', 'queryCottagesAvailables', 'setQueryFinished']))
 };
 
 
@@ -2404,17 +2421,21 @@ var _Icon2 = _interopRequireDefault(_Icon);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var _createNamespacedHelp = (0, _vuex.createNamespacedHelpers)('rentals'),
+    mapState = _createNamespacedHelp.mapState,
+    mapActions = _createNamespacedHelp.mapActions;
+
 exports.default = {
     components: {
         'button-item': _ButtonListItem2.default,
         'icon-app': _Icon2.default
     },
-    computed: _extends({}, (0, _vuex.mapState)({
+    computed: _extends({}, mapState({
         toRentals: function toRentals(state) {
             return state.data.toRentals;
         }
     })),
-    methods: _extends({}, (0, _vuex.mapActions)(['setDeal']))
+    methods: _extends({}, mapActions(['setDeal']))
 };
 
 /***/ }),
@@ -2471,11 +2492,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
 var _vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 
 var _vue2 = _interopRequireDefault(_vue);
-
-var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -2507,6 +2528,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _vue2.default.use(_vueNotifications2.default, _notifications.optionsIzi);
 
+var _createNamespacedHelp = (0, _vuex.createNamespacedHelpers)('rentals'),
+    mapActions = _createNamespacedHelp.mapActions,
+    mapState = _createNamespacedHelp.mapState;
+
 exports.default = {
     components: {
         'icon-app': _Icon2.default,
@@ -2521,7 +2546,7 @@ exports.default = {
         };
     },
 
-    computed: _extends({}, (0, _vuex.mapState)({
+    computed: _extends({}, mapState({
         isForCottage: function isForCottage(state) {
             return state.frmCmp.isForCottage;
         },
@@ -2538,7 +2563,7 @@ exports.default = {
             this.stateButton = this.isForCottage;
             EventBus.$emit('choice-change');
         }
-    }, (0, _vuex.mapActions)(['setIsForCottage']))
+    }, mapActions(['setIsForCottage']))
 };
 
 /***/ }),
@@ -67822,6 +67847,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.http = undefined;
+exports.handlingXhrErrors = handlingXhrErrors;
 
 var _axios = __webpack_require__("./node_modules/axios/index.js");
 
@@ -67837,6 +67863,33 @@ var http = exports.http = _axios2.default.create({
         'X-Requested-With': 'XMLHttpRequest'
     }
 });
+
+function handlingXhrErrors(error) {
+    if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        return {
+            title: error.response.data.title ? error.response.data.title : 'ERROR ' + error.response.status,
+            message: error.response.data.error
+        };
+    } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log('Info', error.request);
+        return {
+            title: 'Se produjo un error',
+            message: 'No hemos recibido respuesta desde el servidor.'
+        };
+    } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {
+            title: 'Se produjo un error',
+            message: 'Algo ocurrio generando la petición al servidor.'
+        };
+    }
+}
 
 /***/ }),
 
@@ -67890,6 +67943,525 @@ var optionsIzi = exports.optionsIzi = {
     info: toastIziSwal,
     warn: toastIziSwal
 };
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/food/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
+
+exports.default = {
+    setXhrToken: function setXhrToken(_ref, token) {
+        var commit = _ref.commit;
+
+        commit('setXhrToken', token);
+        window.clearTimeout(window.verifyToken);
+        delete window.verifyToken;
+    },
+    sendNewFood: function sendNewFood(context, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('food/rentals', payload, {
+                params: {
+                    token: context.state.xhr.token
+                }
+            }).then(function (response) {
+                return resolve(response.data);
+            }).catch(function (error) {
+                context.commit('setQueryFinished', bool);
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/food/getters.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/food/moduleFood.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.moduleFood = undefined;
+
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/food/state.js");
+
+var _state2 = _interopRequireDefault(_state);
+
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/food/getters.js");
+
+var _getters2 = _interopRequireDefault(_getters);
+
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/food/mutations.js");
+
+var _mutations2 = _interopRequireDefault(_mutations);
+
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/food/actions.js");
+
+var _actions2 = _interopRequireDefault(_actions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var moduleFood = exports.moduleFood = {
+    namespaced: true,
+    state: _state2.default,
+    getters: _getters2.default,
+    mutations: _mutations2.default,
+    actions: _actions2.default
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/food/mutations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    setXhrToken: function setXhrToken(state, token) {
+        state.xhr.token = token;
+    },
+    setQueryFinished: function setQueryFinished(state, bool) {
+        state.xhr.queryFinished = bool;
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/food/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    data: {},
+    xhr: {
+        token: '',
+        queryFinished: true
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/rentals/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
+
+exports.default = {
+    setBasicInfo: function setBasicInfo(_ref, payload) {
+        var commit = _ref.commit;
+
+        commit('setIsAdmin', payload.basicOne);
+        commit('setUserLogged', payload.basicTwo);
+        window.clearTimeout(window.verify);
+        delete window.verify;
+    },
+    setIsForCottage: function setIsForCottage(_ref2, bool) {
+        var commit = _ref2.commit;
+
+        commit('setIsForCottage', bool);
+    },
+    setToRentals: function setToRentals(_ref3, toRentals) {
+        var commit = _ref3.commit;
+
+        commit('setToRentals', toRentals);
+    },
+    setCountries: function setCountries(_ref4, countries) {
+        var commit = _ref4.commit;
+
+        commit('setCountries', countries);
+    },
+    deleteItemToRentals: function deleteItemToRentals(_ref5, index) {
+        var commit = _ref5.commit;
+
+        commit('deleteItemToRentals', index);
+    },
+    setLastQueryData: function setLastQueryData(_ref6, payload) {
+        var commit = _ref6.commit;
+
+        commit('setLastQuery', payload.choice);
+        commit('setLastSimple', payload.simple);
+        commit('setLasDateFrom', payload.dateFrom);
+        commit('setLasDateTo', payload.dateTo);
+    },
+    setQueryFinished: function setQueryFinished(_ref7, bool) {
+        var commit = _ref7.commit;
+
+        commit('setQueryFinished', bool);
+    },
+    setDeal: function setDeal(_ref8, bool) {
+        var commit = _ref8.commit;
+
+        commit('setDeal', bool);
+    },
+    setClosedDeal: function setClosedDeal(_ref9, bool) {
+        var commit = _ref9.commit;
+
+        commit('setClosedDeal', bool);
+    },
+    setUserData: function setUserData(_ref10, user) {
+        var commit = _ref10.commit;
+
+        commit('setUser', user);
+    },
+    setToken: function setToken(_ref11, token) {
+        var commit = _ref11.commit;
+
+        commit('setToken', token);
+    },
+    setCottages: function setCottages(_ref12) {
+        var commit = _ref12.commit,
+            dispatch = _ref12.dispatch;
+
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.get('rentals/basic/').then(function (response) {
+                commit('setCottages', response.data.cottages);
+                resolve({
+                    title: 'Ok!',
+                    message: 'Widget cargado correctamente!'
+                });
+            }).catch(function (err) {
+                dispatch('setQueryFinished', true);
+                reject((0, _appAxios.handlingXhrErrors)(err));
+            });
+        });
+    },
+    queryCottagesAvailables: function queryCottagesAvailables(_ref13, payload) {
+        var dispatch = _ref13.dispatch;
+
+        return new Promise(function (resolve, reject) {
+            var url = 'rentals/availables/';
+            _appAxios.http.post(url, {
+                query: payload.choice,
+                simple: payload.simple,
+                dateFrom: payload.dateFrom,
+                dateTo: payload.dateTo,
+                isForCottage: payload.isForCottage
+            }).then(function (response) {
+                dispatch('setToRentals', response.data.cottages);
+                dispatch('setQueryFinished', true);
+                resolve();
+            }).catch(function (err) {
+                dispatch('setToRentals', []);
+                dispatch('setQueryFinished', true);
+                reject((0, _appAxios.handlingXhrErrors)(err));
+            });
+            dispatch('setLastQueryData', payload);
+        });
+    },
+    authenticateUser: function authenticateUser(_ref14, payload) {
+        var dispatch = _ref14.dispatch;
+
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('rentals/auth/', {
+                isAdmin: payload.isAdmin,
+                userLogged: payload.userLogged,
+                document: payload.dni,
+                email: payload.email
+            }).then(function (response) {
+                var obj = {};
+                dispatch('setUserData', response.data.user);
+                dispatch('setToken', response.data.token);
+                dispatch('setCountries', response.data.countries);
+                if (response.data.token) {
+                    obj = {
+                        title: 'ClIENTE IDENTIFICADO',
+                        message: 'Hemos identificado tus datos. Por favor verifica que sean correctos.',
+                        type: 'success',
+                        useSwal: true
+                    };
+                } else {
+                    obj = {
+                        title: 'ClIENTE ANONIMO',
+                        message: 'No hemos podido identificarte, por favor ingresa completa los siguientes datos. Muchas gracias.',
+                        type: 'warn',
+                        useSwal: true
+                    };
+                }
+                resolve(obj);
+            }).catch(function (err) {
+                dispatch('setQueryFinished', true);
+                reject((0, _appAxios.handlingXhrErrors)(err));
+            });
+        });
+    },
+    sendClosedDeal: function sendClosedDeal(context, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('rentals/rentals?token=' + context.state.xhr.token, payload).then(function (response) {
+                var token = response.headers.authorization.split(' ')[1];
+                context.commit('setToken', token);
+                context.commit('setClosedDeal', true);
+                context.commit('setInfoDeal', response.data.rentals);
+                resolve({
+                    title: 'RESERVA EXITOSA',
+                    message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
+                    useSwal: true
+                });
+            }).catch(function (err) {
+                context.dispatch('setQueryFinished', true);
+                reject((0, _appAxios.handlingXhrErrors)(err));
+            });
+        });
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/rentals/getters.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    toggleConfig: function toggleConfig(state, getters) {
+        return state.data.isAdmin ? state.frmCmp.configForAdmin : state.frmCmp.configForUser;
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/rentals/moduleRentals.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.moduleRentals = undefined;
+
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/rentals/state.js");
+
+var _state2 = _interopRequireDefault(_state);
+
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/rentals/mutations.js");
+
+var _mutations2 = _interopRequireDefault(_mutations);
+
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/rentals/actions.js");
+
+var _actions2 = _interopRequireDefault(_actions);
+
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/rentals/getters.js");
+
+var _getters2 = _interopRequireDefault(_getters);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var moduleRentals = exports.moduleRentals = {
+    namespaced: true,
+    state: _state2.default,
+    getters: _getters2.default,
+    mutations: _mutations2.default,
+    actions: _actions2.default
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/rentals/mutations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    setToRentals: function setToRentals(state, toRentals) {
+        if (Array.isArray(toRentals)) {
+            state.data.toRentals = toRentals;
+        } else {
+            state.data.toRentals = new Array(toRentals);
+        }
+    },
+    deleteItemToRentals: function deleteItemToRentals(state, index) {
+        state.data.toRentals.splice(index, 1);
+    },
+    setCottages: function setCottages(state, cottages) {
+        if (Array.isArray(cottages)) {
+            state.data.cottages = cottages;
+        } else {
+            state.data.cottages = new Array(cottages);
+        }
+    },
+    setCountries: function setCountries(state, countries) {
+        if (Array.isArray(countries)) {
+            state.data.countries = countries;
+        } else {
+            state.data.countries = new Array(countries);
+        }
+    },
+    setIsForCottage: function setIsForCottage(state, bool) {
+        state.frmCmp.isForCottage = bool;
+    },
+    setIsAdmin: function setIsAdmin(state, admin) {
+        state.data.isAdmin = admin;
+    },
+    setUser: function setUser(state, user) {
+        state.data.user = user;
+    },
+    setUserLogged: function setUserLogged(state, user) {
+        state.data.userLogged = user;
+    },
+    setToken: function setToken(state, token) {
+        state.xhr.token = token;
+    },
+    setDeal: function setDeal(state, bool) {
+        state.data.deal = bool;
+    },
+    setClosedDeal: function setClosedDeal(state, bool) {
+        state.data.closedDeal = bool;
+    },
+    setQueryFinished: function setQueryFinished(state, bool) {
+        state.xhr.queryFinished = bool;
+    },
+    setLastQuery: function setLastQuery(state, number) {
+        state.lastQueryData.query = number;
+    },
+    setLastSimple: function setLastSimple(state, bool) {
+        state.lastQueryData.simple = bool;
+    },
+    setLasDateFrom: function setLasDateFrom(state, date) {
+        state.lastQueryData.dateFrom = date;
+    },
+    setLasDateTo: function setLasDateTo(state, date) {
+        state.lastQueryData.dateTo = date;
+    },
+    setInfoDeal: function setInfoDeal(state, infoDeal) {
+        state.data.infoDeal = infoDeal;
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/rentals/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    data: {
+        isAdmin: false,
+        userLogged: "",
+        user: {},
+        deal: false,
+        closedDeal: false,
+        cottages: [],
+        toRentals: [],
+        countries: [],
+        infoDeal: {}
+    },
+    lastQueryData: {
+        query: 0,
+        simple: false,
+        dateFrom: '',
+        dateTo: ''
+    },
+    xhr: {
+        token: '',
+        queryFinished: true
+    },
+    frmCmp: {
+        isForCottage: false,
+        configForAdmin: {
+            locale: 'es',
+            format: 'DD/MM/YYYY',
+            minDate: moment(moment().format('DD/MM/YYYY') + ' 00:00 AM', 'DD/MM/YYYY hh:mm A'),
+            maxDate: moment().add(2, 'Y')
+        },
+        configForUser: {
+            locale: 'es',
+            format: 'DD/MM/YYYY',
+            minDate: moment(moment().add(2, 'd').format('DD/MM/YYYY') + ' 00:00 AM', 'DD/MM/YYYY hh:mm A'),
+            maxDate: moment().add(2, 'Y')
+        }
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/store.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
+var _vuex2 = _interopRequireDefault(_vuex);
+
+var _moduleRentals = __webpack_require__("./resources/assets/js/vue-commons/store/rentals/moduleRentals.js");
+
+var _moduleFood = __webpack_require__("./resources/assets/js/vue-commons/store/food/moduleFood.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_vue2.default.use(_vuex2.default);
+
+exports.default = new _vuex2.default.Store({
+    modules: {
+        rentals: _moduleRentals.moduleRentals,
+        food: _moduleFood.moduleFood
+    }
+});
 
 /***/ }),
 
@@ -68250,410 +68822,6 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-rentals-app/store/actions.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
-
-exports.default = {
-    setBasicInfo: function setBasicInfo(_ref, payload) {
-        var commit = _ref.commit;
-
-        commit('setIsAdmin', payload.basicOne);
-        commit('setUserLogged', payload.basicTwo);
-        window.clearTimeout(window.verify);
-        delete window.verify;
-    },
-    setIsForCottage: function setIsForCottage(_ref2, bool) {
-        var commit = _ref2.commit;
-
-        commit('setIsForCottage', bool);
-    },
-    setToRentals: function setToRentals(_ref3, toRentals) {
-        var commit = _ref3.commit;
-
-        commit('setToRentals', toRentals);
-    },
-    setCountries: function setCountries(_ref4, countries) {
-        var commit = _ref4.commit;
-
-        commit('setCountries', countries);
-    },
-    deleteItemToRentals: function deleteItemToRentals(_ref5, index) {
-        var commit = _ref5.commit;
-
-        commit('deleteItemToRentals', index);
-    },
-    setLastQueryData: function setLastQueryData(_ref6, payload) {
-        var commit = _ref6.commit;
-
-        commit('setLastQuery', payload.choice);
-        commit('setLastSimple', payload.simple);
-        commit('setLasDateFrom', payload.dateFrom);
-        commit('setLasDateTo', payload.dateTo);
-    },
-    setQueryFinished: function setQueryFinished(_ref7, bool) {
-        var commit = _ref7.commit;
-
-        commit('setQueryFinished', bool);
-    },
-    handlingXhrErrors: function handlingXhrErrors(_ref8, error) {
-        var dispatch = _ref8.dispatch;
-
-        dispatch('setQueryFinished', true);
-        if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            return {
-                title: error.response.data.title ? error.response.data.title : 'ERROR ' + error.response.status,
-                message: error.response.data.error
-            };
-        } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log('Info', error.request);
-            return {
-                title: 'Se produjo un error',
-                message: 'No hemos recibido respuesta desde el servidor.'
-            };
-        } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message);
-            return {
-                title: 'Se produjo un error',
-                message: 'Algo ocurrio generando la petición al servidor.'
-            };
-        }
-    },
-    setCottages: function setCottages(_ref9) {
-        var commit = _ref9.commit,
-            dispatch = _ref9.dispatch;
-
-        return new Promise(function (resolve, reject) {
-            _appAxios.http.get('rentals/basic/').then(function (response) {
-                commit('setCottages', response.data.cottages);
-                resolve({
-                    title: 'Ok!',
-                    message: 'Widget cargado correctamente!'
-                });
-            }).catch(function (err) {
-                dispatch('handlingXhrErrors', err).then(function (response) {
-                    return reject(response);
-                }).catch(function (error) {
-                    return reject({ title: 'ERROR', messagge: error });
-                });
-            });
-        });
-    },
-    queryCottagesAvailables: function queryCottagesAvailables(_ref10, payload) {
-        var dispatch = _ref10.dispatch;
-
-        return new Promise(function (resolve, reject) {
-            var url = 'rentals/availables/';
-            _appAxios.http.post(url, {
-                query: payload.choice,
-                simple: payload.simple,
-                dateFrom: payload.dateFrom,
-                dateTo: payload.dateTo,
-                isForCottage: payload.isForCottage
-            }).then(function (response) {
-                dispatch('setToRentals', response.data.cottages);
-                dispatch('setQueryFinished', true);
-                resolve();
-            }).catch(function (err) {
-                dispatch('setToRentals', []);
-                dispatch('handlingXhrErrors', err).then(function (response) {
-                    return reject(response);
-                }).catch(function (error) {
-                    return reject({ title: 'ERROR', messagge: error });
-                });
-            });
-            dispatch('setLastQueryData', payload);
-        });
-    },
-    setDeal: function setDeal(_ref11, bool) {
-        var commit = _ref11.commit;
-
-        commit('setDeal', bool);
-    },
-    setClosedDeal: function setClosedDeal(_ref12, bool) {
-        var commit = _ref12.commit;
-
-        commit('setClosedDeal', bool);
-    },
-    setUserData: function setUserData(_ref13, user) {
-        var commit = _ref13.commit;
-
-        commit('setUser', user);
-    },
-    setToken: function setToken(_ref14, token) {
-        var commit = _ref14.commit;
-
-        commit('setToken', token);
-    },
-    authenticateUser: function authenticateUser(_ref15, payload) {
-        var dispatch = _ref15.dispatch;
-
-        return new Promise(function (resolve, reject) {
-            _appAxios.http.post('rentals/auth/', {
-                isAdmin: payload.isAdmin,
-                userLogged: payload.userLogged,
-                document: payload.dni,
-                email: payload.email
-            }).then(function (response) {
-                var obj = {};
-                dispatch('setUserData', response.data.user);
-                dispatch('setToken', response.data.token);
-                dispatch('setCountries', response.data.countries);
-                if (response.data.token) {
-                    obj = {
-                        title: 'ClIENTE IDENTIFICADO',
-                        message: 'Hemos identificado tus datos. Por favor verifica que sean correctos.',
-                        type: 'success',
-                        useSwal: true
-                    };
-                } else {
-                    obj = {
-                        title: 'ClIENTE ANONIMO',
-                        message: 'No hemos podido identificarte, por favor ingresa completa los siguientes datos. Muchas gracias.',
-                        type: 'warn',
-                        useSwal: true
-                    };
-                }
-                resolve(obj);
-            }).catch(function (err) {
-                dispatch('handlingXhrErrors', err).then(function (response) {
-                    return reject(response);
-                }).catch(function (error) {
-                    return reject({ title: 'ERROR', messagge: error });
-                });
-            });
-        });
-    },
-    sendClosedDeal: function sendClosedDeal(context, payload) {
-        return new Promise(function (resolve, reject) {
-            _appAxios.http.post('rentals/store?token=' + context.state.xhr.token, payload).then(function (response) {
-                var token = response.headers.authorization.split(' ')[1];
-                context.commit('setToken', token);
-                context.commit('setClosedDeal', true);
-                context.commit('setInfoDeal', response.data.rentals);
-                resolve({
-                    title: 'RESERVA EXITOSA',
-                    message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
-                    useSwal: true
-                });
-            }).catch(function (err) {
-                dispatch('handlingXhrErrors', err).then(function (response) {
-                    return reject(response);
-                }).catch(function (error) {
-                    return reject({ title: 'ERROR', messagge: error });
-                });
-            });
-        });
-    }
-};
-
-/***/ }),
-
-/***/ "./resources/assets/js/vue-rentals-app/store/getters.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = {
-    toggleConfig: function toggleConfig(state, getters) {
-        return state.data.isAdmin ? state.frmCmp.configForAdmin : state.frmCmp.configForUser;
-    }
-};
-
-/***/ }),
-
-/***/ "./resources/assets/js/vue-rentals-app/store/mutations.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = {
-    setToRentals: function setToRentals(state, toRentals) {
-        if (Array.isArray(toRentals)) {
-            state.data.toRentals = toRentals;
-        } else {
-            state.data.toRentals = new Array(toRentals);
-        }
-    },
-    deleteItemToRentals: function deleteItemToRentals(state, index) {
-        state.data.toRentals.splice(index, 1);
-    },
-    setCottages: function setCottages(state, cottages) {
-        if (Array.isArray(cottages)) {
-            state.data.cottages = cottages;
-        } else {
-            state.data.cottages = new Array(cottages);
-        }
-    },
-    setCountries: function setCountries(state, countries) {
-        if (Array.isArray(countries)) {
-            state.data.countries = countries;
-        } else {
-            state.data.countries = new Array(countries);
-        }
-    },
-    setIsForCottage: function setIsForCottage(state, bool) {
-        state.frmCmp.isForCottage = bool;
-    },
-    setIsAdmin: function setIsAdmin(state, admin) {
-        state.data.isAdmin = admin;
-    },
-    setUser: function setUser(state, user) {
-        state.data.user = user;
-    },
-    setUserLogged: function setUserLogged(state, user) {
-        state.data.userLogged = user;
-    },
-    setToken: function setToken(state, token) {
-        state.xhr.token = token;
-    },
-    setDeal: function setDeal(state, bool) {
-        state.data.deal = bool;
-    },
-    setClosedDeal: function setClosedDeal(state, bool) {
-        state.data.closedDeal = bool;
-    },
-    setQueryFinished: function setQueryFinished(state, bool) {
-        state.xhr.queryFinished = bool;
-    },
-    setLastQuery: function setLastQuery(state, number) {
-        state.lastQueryData.query = number;
-    },
-    setLastSimple: function setLastSimple(state, bool) {
-        state.lastQueryData.simple = bool;
-    },
-    setLasDateFrom: function setLasDateFrom(state, date) {
-        state.lastQueryData.dateFrom = date;
-    },
-    setLasDateTo: function setLasDateTo(state, date) {
-        state.lastQueryData.dateTo = date;
-    },
-    setInfoDeal: function setInfoDeal(state, infoDeal) {
-        state.data.infoDeal = infoDeal;
-    }
-};
-
-/***/ }),
-
-/***/ "./resources/assets/js/vue-rentals-app/store/state.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = {
-    data: {
-        isAdmin: false,
-        userLogged: "",
-        user: {},
-        deal: false,
-        closedDeal: false,
-        cottages: [],
-        toRentals: [],
-        countries: [],
-        infoDeal: {}
-    },
-    lastQueryData: {
-        query: 0,
-        simple: false,
-        dateFrom: '',
-        dateTo: ''
-    },
-    xhr: {
-        token: '',
-        queryFinished: true
-    },
-    frmCmp: {
-        isForCottage: false,
-        configForAdmin: {
-            locale: 'es',
-            format: 'DD/MM/YYYY',
-            minDate: moment(moment().format('DD/MM/YYYY') + ' 00:00 AM', 'DD/MM/YYYY hh:mm A'),
-            maxDate: moment().add(2, 'Y')
-        },
-        configForUser: {
-            locale: 'es',
-            format: 'DD/MM/YYYY',
-            minDate: moment(moment().add(2, 'd').format('DD/MM/YYYY') + ' 00:00 AM', 'DD/MM/YYYY hh:mm A'),
-            maxDate: moment().add(2, 'Y')
-        }
-    }
-};
-
-/***/ }),
-
-/***/ "./resources/assets/js/vue-rentals-app/store/store.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-
-var _vuex2 = _interopRequireDefault(_vuex);
-
-var _state = __webpack_require__("./resources/assets/js/vue-rentals-app/store/state.js");
-
-var _state2 = _interopRequireDefault(_state);
-
-var _mutations = __webpack_require__("./resources/assets/js/vue-rentals-app/store/mutations.js");
-
-var _mutations2 = _interopRequireDefault(_mutations);
-
-var _actions = __webpack_require__("./resources/assets/js/vue-rentals-app/store/actions.js");
-
-var _actions2 = _interopRequireDefault(_actions);
-
-var _getters = __webpack_require__("./resources/assets/js/vue-rentals-app/store/getters.js");
-
-var _getters2 = _interopRequireDefault(_getters);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_vue2.default.use(_vuex2.default);
-
-exports.default = new _vuex2.default.Store({
-    state: _state2.default,
-    getters: _getters2.default,
-    mutations: _mutations2.default,
-    actions: _actions2.default
-});
-
-/***/ }),
-
 /***/ "./resources/assets/js/vue-rentals-app/vue-rentals.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -68666,8 +68834,6 @@ var _vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
 var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
@@ -68676,9 +68842,11 @@ var _vTooltip = __webpack_require__("./node_modules/v-tooltip/dist/v-tooltip.esm
 
 var _vTooltip2 = _interopRequireDefault(_vTooltip);
 
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
 var _notifications = __webpack_require__("./resources/assets/js/vue-commons/notifications/notifications.js");
 
-var _store = __webpack_require__("./resources/assets/js/vue-rentals-app/store/store.js");
+var _store = __webpack_require__("./resources/assets/js/vue-commons/store/store.js");
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -68687,6 +68855,9 @@ var _Rentals = __webpack_require__("./resources/assets/js/vue-rentals-app/compon
 var _Rentals2 = _interopRequireDefault(_Rentals);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _createNamespacedHelp = (0, _vuex.createNamespacedHelpers)('rentals'),
+    mapActions = _createNamespacedHelp.mapActions;
 
 _vue2.default.use(_vueNotifications2.default, _notifications.optionsIzi).use(_vTooltip2.default);
 
@@ -68706,7 +68877,7 @@ var rentalsApp = new _vue2.default({
         });
     },
 
-    methods: _extends({}, (0, _vuex.mapActions)(['setCottages']))
+    methods: _extends({}, mapActions(['setCottages']))
 });
 
 /***/ }),

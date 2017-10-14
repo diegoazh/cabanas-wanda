@@ -11,7 +11,7 @@
         <h2>P&aacute;gina principal</h2>
     </div>
     <div class="panel-body">
-        {{ Form::open(['route' => (isset($front)) ? ['frontend.update', $front->id] : 'frontend.store', 'files' => true, 'method' => (isset($front)) ? 'PUT' : 'POST']) }}
+        {{ Form::open(['route' => (isset($front)) ? ['frontend.update', $front->id] : 'rentals', 'files' => true, 'method' => (isset($front)) ? 'PUT' : 'POST']) }}
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#welcome" aria-controls="welcome" role="tab" data-toggle="tab">Presentación</a></li>

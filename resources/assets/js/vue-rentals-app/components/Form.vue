@@ -45,11 +45,13 @@
 </template>
 
 <script>
+    import { createNamespacedHelpers } from 'vuex'
     import Icon from './Icon.vue'
     import DatePicker from 'vue-bootstrap-datetimepicker'
     import moment from 'moment'
-    import { mapActions, mapGetters, mapState } from 'vuex'
     import VueNoti from 'vue-notifications'
+
+    const { mapActions, mapGetters, mapState } = createNamespacedHelpers('rentals');
 
     export default {
         components: {

@@ -47,17 +47,17 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+    import { createNamespacedHelpers } from 'vuex'
+
+    const { mapActions } = createNamespacedHelpers('food');
 
     export default {
         data() {
             return {
-               myTypes: [
-                   {id: 'desayuno', nombre: 'Desayuno'},
-                   {id: 'almuerzo', nombre: 'Almuerzo'},
-                   {id: 'merienda', nombre: 'Merienda'},
-                   {id: 'cena', nombre: 'Cena'}
-               ]
+                name: '',
+                type: '',
+                price: '',
+                descriptcion: ''
             }
         },
         mounted() {
@@ -70,10 +70,10 @@
                     labelField: 'nombre',
                     searchField: ['id', 'nombre'],
                     options: [
-                        {id: 1, nombre: 'Desayuno'},
-                        {id: 2, nombre: 'Almuerzo'},
-                        {id: 3, nombre: 'Merienda'},
-                        {id: 4, nombre: 'Cena'}
+                        {id: 'desayuno', nombre: 'Desayuno'},
+                        {id: 'almuerzo', nombre: 'Almuerzo'},
+                        {id: 'merienda', nombre: 'Merienda'},
+                        {id: 'cena', nombre: 'Cena'}
                     ],
                     create: false,
                     preload: true,
@@ -105,6 +105,9 @@
                         delete window.adminInfo;
                     }
                 }, 1000);
+            },
+            sendNewFood() {
+
             },
             ...mapActions(['setXhrToken'])
         }

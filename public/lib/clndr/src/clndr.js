@@ -177,7 +177,7 @@
 
         // This used to be a place where we'd figure out the current month,
         // but since we want to open up support for arbitrary lengths of time
-        // we're going to store the current range in addition to the current
+        // we're going to rentals the current range in addition to the current
         // month.
         if (this.options.lengthOfTime.months || this.options.lengthOfTime.days) {
             // We want to establish intervalStart and intervalEnd, which will

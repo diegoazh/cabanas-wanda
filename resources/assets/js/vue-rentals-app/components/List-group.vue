@@ -17,9 +17,11 @@
 </template>
 
 <script>
-    import { mapState, mapActions } from 'vuex'
+    import { createNamespacedHelpers } from 'vuex'
     import Item from './Button-list-item.vue'
     import Icon from './Icon.vue'
+
+    const { mapState, mapActions } = createNamespacedHelpers('rentals');
 
     export default {
         components: {

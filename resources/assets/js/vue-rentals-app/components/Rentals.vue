@@ -40,8 +40,8 @@
 </template>
 
 <script>
+    import { createNamespacedHelpers } from 'vuex'
     import Vue from 'vue'
-    import { mapActions, mapState } from 'vuex'
     import VueNotifications from 'vue-notifications'
     import { optionsIzi } from '../../vue-commons/notifications/notifications'
     import Icon from './Icon.vue'
@@ -51,6 +51,8 @@
     import CloseDeal from './ClosedDeal.vue'
 
     Vue.use(VueNotifications, optionsIzi);
+
+    const { mapActions, mapState } = createNamespacedHelpers('rentals');
 
 
     export default {
