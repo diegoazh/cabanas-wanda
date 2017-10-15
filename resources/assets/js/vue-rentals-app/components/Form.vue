@@ -45,13 +45,11 @@
 </template>
 
 <script>
-    import { createNamespacedHelpers } from 'vuex'
+    import { mapActions, mapGetters, mapState } from 'vuex'
     import Icon from './Icon.vue'
     import DatePicker from 'vue-bootstrap-datetimepicker'
     import moment from 'moment'
     import VueNoti from 'vue-notifications'
-
-    const { mapActions, mapGetters, mapState } = createNamespacedHelpers('rentals');
 
     export default {
         components: {
@@ -90,12 +88,14 @@
             checkSimple() {
                 return this.bedSimple ? 'check-square-o' : 'square-o';
             },
-            ...mapState({
+            ...mapState('rentals', {
                 cottages: state => state.data.cottages,
                 isForCottage: state => state.frmCmp.isForCottage,
-                queryFinished: state => state.xhr.queryFinished,
             }),
-            ...mapGetters(['toggleConfig'])
+            ...mapState('auth', {
+                queryFinished: state => state.xhr.queryFinished
+            }),
+            ...mapGetters('rentals', ['toggleConfig'])
         },
         methods: {
             initChoice() {
@@ -137,24 +137,20 @@
                     simple: this.bedSimple,
                     dateFrom: moment(this.dateFrom).format('DD/MM/YYYY'),
                     dateTo: moment(this.dateTo).format('DD/MM/YYYY')
-                }).then(response => {
-                    VueNoti.success({
-                        title: response.title,
-                        message: response.message,
-                        useSwal: true
+                }).then(response => {})
+                    .catch(error => {
+                        VueNoti.error({
+                            title: error.title,
+                            message: error.message,
+                            useSwal: true
+                        });
                     });
-                }).catch(error => {
-                    VueNoti.error({
-                        title: error.title,
-                        message: error.message,
-                        useSwal: true
-                    });
-                });
             },
             toggleBedSimple() {
                 this.bedSimple = !this.bedSimple;
             },
-            ...mapActions(['setBasicInfo', 'queryCottagesAvailables', 'setQueryFinished'])
+            ...mapActions('rentals', ['setBasicInfo', 'queryCottagesAvailables', 'setQueryFinished']),
+            ...mapActions('auth', ['setQueryFinished'])
         }
     }
 

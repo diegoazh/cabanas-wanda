@@ -1681,9 +1681,9 @@ exports.default = {
     props: ['cottage', 'index'],
     computed: _extends({
         calcularDias: function calcularDias() {
-            var from = (0, _moment2.default)(this.dateFrom + ' 00:00:00', 'DD/MM/YYYY HH:mm:ss');
-            var to = (0, _moment2.default)(this.dateTo + ' 10:00:00', 'DD/MM/YYYY HH:mm:ss').add(1, 'day');
-            return to.diff(from, 'days');
+            var dateFrom = (0, _moment2.default)(this.dateFrom + ' 00:00:00', 'DD/MM/YYYY HH:mm:ss');
+            var dateTo = (0, _moment2.default)(this.dateTo + ' 10:00:00', 'DD/MM/YYYY HH:mm:ss').add(1, 'day');
+            return dateTo.diff(dateFrom, 'days');
         }
     }, mapState({
         dateFrom: function dateFrom(state) {
@@ -1958,10 +1958,6 @@ var _Icon2 = _interopRequireDefault(_Icon);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _createNamespacedHelp = (0, _vuex.createNamespacedHelpers)('rentals'),
-    mapActions = _createNamespacedHelp.mapActions,
-    mapState = _createNamespacedHelp.mapState;
-
 exports.default = {
     components: {
         'icon-app': _Icon2.default
@@ -2006,7 +2002,7 @@ exports.default = {
         btnCreateNewUser: function btnCreateNewUser() {
             return !(this.name && this.lastname && this.email && this.document && this.genre && this.country);
         }
-    }, mapState({
+    }, (0, _vuex.mapState)('rentals', {
         token: function token(state) {
             return state.xhr.token;
         },
@@ -2036,6 +2032,13 @@ exports.default = {
         },
         dateTo: function dateTo(state) {
             return state.lastQueryData.dateTo;
+        }
+    }), (0, _vuex.mapState)('auth', {
+        token: function token(state) {
+            return state.xhr.token;
+        },
+        queryFinished: function queryFinished(state) {
+            return state.xhr.queryFinished;
         }
     })),
     methods: _extends({
@@ -2086,18 +2089,19 @@ exports.default = {
         closeDeal: function closeDeal() {
             var _this2 = this;
 
-            var deal = {};
-            deal.name = this.name;
-            deal.lastname = this.lastname;
-            deal.email = this.email;
-            deal.document = this.document;
-            deal.genre = this.genre;
-            deal.country = this.country;
-            deal.toRentals = this.toRentals;
-            deal.user = this.user;
-            deal.isDni = !this.onOff;
-            deal.dateFrom = this.dateFrom;
-            deal.dateTo = this.dateTo;
+            var deal = {
+                name: this.name,
+                lastname: this.lastname,
+                email: this.email,
+                document: this.document,
+                genre: this.genre,
+                country: this.country,
+                toRentals: this.toRentals,
+                user: this.user,
+                isDni: !this.onOff,
+                dateFrom: this.dateFrom,
+                dateTo: this.dateTo
+            };
 
             this.setQueryFinished(false);
 
@@ -2119,7 +2123,7 @@ exports.default = {
         isNullOrUndefined: function isNullOrUndefined(val) {
             return typeof val === 'undefined' || val === null;
         }
-    }, mapActions(['authenticateUser', 'setQueryFinished', 'sendClosedDeal', 'setDeal']))
+    }, (0, _vuex.mapActions)('rentals', ['authenticateUser', 'sendClosedDeal', 'setDeal']), (0, _vuex.mapActions)('auth', ['setQueryFinished']))
 };
 
 /***/ }),
@@ -2201,11 +2205,6 @@ var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _createNamespacedHelp = (0, _vuex.createNamespacedHelpers)('rentals'),
-    mapActions = _createNamespacedHelp.mapActions,
-    mapGetters = _createNamespacedHelp.mapGetters,
-    mapState = _createNamespacedHelp.mapState;
-
 exports.default = {
     components: {
         'icon-app': _Icon2.default,
@@ -2248,17 +2247,18 @@ exports.default = {
         checkSimple: function checkSimple() {
             return this.bedSimple ? 'check-square-o' : 'square-o';
         }
-    }, mapState({
+    }, (0, _vuex.mapState)('rentals', {
         cottages: function cottages(state) {
             return state.data.cottages;
         },
         isForCottage: function isForCottage(state) {
             return state.frmCmp.isForCottage;
-        },
+        }
+    }), (0, _vuex.mapState)('auth', {
         queryFinished: function queryFinished(state) {
             return state.xhr.queryFinished;
         }
-    }), mapGetters(['toggleConfig'])),
+    }), (0, _vuex.mapGetters)('rentals', ['toggleConfig'])),
     methods: _extends({
         initChoice: function initChoice() {
             if (!this.draftCottage) {
@@ -2301,13 +2301,7 @@ exports.default = {
                 simple: this.bedSimple,
                 dateFrom: (0, _moment2.default)(this.dateFrom).format('DD/MM/YYYY'),
                 dateTo: (0, _moment2.default)(this.dateTo).format('DD/MM/YYYY')
-            }).then(function (response) {
-                _vueNotifications2.default.success({
-                    title: response.title,
-                    message: response.message,
-                    useSwal: true
-                });
-            }).catch(function (error) {
+            }).then(function (response) {}).catch(function (error) {
                 _vueNotifications2.default.error({
                     title: error.title,
                     message: error.message,
@@ -2318,7 +2312,7 @@ exports.default = {
         toggleBedSimple: function toggleBedSimple() {
             this.bedSimple = !this.bedSimple;
         }
-    }, mapActions(['setBasicInfo', 'queryCottagesAvailables', 'setQueryFinished']))
+    }, (0, _vuex.mapActions)('rentals', ['setBasicInfo', 'queryCottagesAvailables', 'setQueryFinished']), (0, _vuex.mapActions)('auth', ['setQueryFinished']))
 };
 
 
@@ -67846,8 +67840,7 @@ module.exports = function(module) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.http = undefined;
-exports.handlingXhrErrors = handlingXhrErrors;
+exports.handlingXhrErrors = exports.http = undefined;
 
 var _axios = __webpack_require__("./node_modules/axios/index.js");
 
@@ -67864,7 +67857,7 @@ var http = exports.http = _axios2.default.create({
     }
 });
 
-function handlingXhrErrors(error) {
+var handlingXhrErrors = exports.handlingXhrErrors = function handlingXhrErrors(error) {
     if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
@@ -67889,7 +67882,7 @@ function handlingXhrErrors(error) {
             message: 'Algo ocurrio generando la petición al servidor.'
         };
     }
-}
+};
 
 /***/ }),
 
@@ -67946,6 +67939,120 @@ var optionsIzi = exports.optionsIzi = {
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-commons/store/auth/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    setToken: function setToken(_ref, token) {
+        var commit = _ref.commit;
+
+        commit('setToken', token);
+    },
+    setQueryFinished: function setQueryFinished(_ref2, bool) {
+        var commit = _ref2.commit;
+
+        commit('setQueryFinished', bool);
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/auth/getters.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/auth/moduleAuth.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.moduleAuth = undefined;
+
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/auth/state.js");
+
+var _state2 = _interopRequireDefault(_state);
+
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/auth/getters.js");
+
+var _getters2 = _interopRequireDefault(_getters);
+
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/auth/mutations.js");
+
+var _mutations2 = _interopRequireDefault(_mutations);
+
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/auth/actions.js");
+
+var _actions2 = _interopRequireDefault(_actions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var moduleAuth = exports.moduleAuth = {
+    namespaced: true,
+    state: _state2.default,
+    getters: _getters2.default,
+    mutations: _mutations2.default,
+    actions: _actions2.default
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/auth/mutations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    setToken: function setToken(state, token) {
+        state.xhr.token = token;
+    },
+    setQueryFinished: function setQueryFinished(state, bool) {
+        state.xhr.queryFinished = bool;
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/auth/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    xhr: {
+        token: '',
+        queryFinished: true
+    }
+};
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-commons/store/food/actions.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -67962,7 +68069,7 @@ exports.default = {
     setXhrToken: function setXhrToken(_ref, token) {
         var commit = _ref.commit;
 
-        commit('setXhrToken', token);
+        commit('setToken', token, { root: true });
         window.clearTimeout(window.verifyToken);
         delete window.verifyToken;
     },
@@ -67970,12 +68077,12 @@ exports.default = {
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('food/rentals', payload, {
                 params: {
-                    token: context.state.xhr.token
+                    token: context.state.auth.xhr.token
                 }
             }).then(function (response) {
                 return resolve(response.data);
             }).catch(function (error) {
-                context.commit('setQueryFinished', bool);
+                context.commit('setQueryFinished', bool, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(error));
             });
         });
@@ -68043,16 +68150,9 @@ var moduleFood = exports.moduleFood = {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-exports.default = {
-    setXhrToken: function setXhrToken(state, token) {
-        state.xhr.token = token;
-    },
-    setQueryFinished: function setQueryFinished(state, bool) {
-        state.xhr.queryFinished = bool;
-    }
-};
+exports.default = {};
 
 /***/ }),
 
@@ -68066,11 +68166,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
-    data: {},
-    xhr: {
-        token: '',
-        queryFinished: true
-    }
+    data: {}
 };
 
 /***/ }),
@@ -68124,34 +68220,24 @@ exports.default = {
         commit('setLasDateFrom', payload.dateFrom);
         commit('setLasDateTo', payload.dateTo);
     },
-    setQueryFinished: function setQueryFinished(_ref7, bool) {
+    setDeal: function setDeal(_ref7, bool) {
         var commit = _ref7.commit;
-
-        commit('setQueryFinished', bool);
-    },
-    setDeal: function setDeal(_ref8, bool) {
-        var commit = _ref8.commit;
 
         commit('setDeal', bool);
     },
-    setClosedDeal: function setClosedDeal(_ref9, bool) {
-        var commit = _ref9.commit;
+    setClosedDeal: function setClosedDeal(_ref8, bool) {
+        var commit = _ref8.commit;
 
         commit('setClosedDeal', bool);
     },
-    setUserData: function setUserData(_ref10, user) {
-        var commit = _ref10.commit;
+    setUserData: function setUserData(_ref9, user) {
+        var commit = _ref9.commit;
 
         commit('setUser', user);
     },
-    setToken: function setToken(_ref11, token) {
-        var commit = _ref11.commit;
-
-        commit('setToken', token);
-    },
-    setCottages: function setCottages(_ref12) {
-        var commit = _ref12.commit,
-            dispatch = _ref12.dispatch;
+    setCottages: function setCottages(_ref10) {
+        var commit = _ref10.commit,
+            dispatch = _ref10.dispatch;
 
         return new Promise(function (resolve, reject) {
             _appAxios.http.get('rentals/basic/').then(function (response) {
@@ -68161,17 +68247,16 @@ exports.default = {
                     message: 'Widget cargado correctamente!'
                 });
             }).catch(function (err) {
-                dispatch('setQueryFinished', true);
+                dispatch('auth/setQueryFinished', true);
                 reject((0, _appAxios.handlingXhrErrors)(err));
             });
         });
     },
-    queryCottagesAvailables: function queryCottagesAvailables(_ref13, payload) {
-        var dispatch = _ref13.dispatch;
+    queryCottagesAvailables: function queryCottagesAvailables(_ref11, payload) {
+        var dispatch = _ref11.dispatch;
 
         return new Promise(function (resolve, reject) {
-            var url = 'rentals/availables/';
-            _appAxios.http.post(url, {
+            _appAxios.http.post('rentals/availables/', {
                 query: payload.choice,
                 simple: payload.simple,
                 dateFrom: payload.dateFrom,
@@ -68179,29 +68264,29 @@ exports.default = {
                 isForCottage: payload.isForCottage
             }).then(function (response) {
                 dispatch('setToRentals', response.data.cottages);
-                dispatch('setQueryFinished', true);
+                dispatch('auth/setQueryFinished', true, { root: true });
                 resolve();
             }).catch(function (err) {
                 dispatch('setToRentals', []);
-                dispatch('setQueryFinished', true);
+                dispatch('auth/setQueryFinished', true, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(err));
             });
             dispatch('setLastQueryData', payload);
         });
     },
-    authenticateUser: function authenticateUser(_ref14, payload) {
-        var dispatch = _ref14.dispatch;
+    authenticateUser: function authenticateUser(_ref12, payload) {
+        var dispatch = _ref12.dispatch;
 
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('rentals/auth/', {
                 isAdmin: payload.isAdmin,
                 userLogged: payload.userLogged,
-                document: payload.dni,
+                document: payload.document,
                 email: payload.email
             }).then(function (response) {
                 var obj = {};
                 dispatch('setUserData', response.data.user);
-                dispatch('setToken', response.data.token);
+                dispatch('auth/setToken', response.data.token, { root: true });
                 dispatch('setCountries', response.data.countries);
                 if (response.data.token) {
                     obj = {
@@ -68220,16 +68305,16 @@ exports.default = {
                 }
                 resolve(obj);
             }).catch(function (err) {
-                dispatch('setQueryFinished', true);
+                dispatch('auth/setQueryFinished', true, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(err));
             });
         });
     },
     sendClosedDeal: function sendClosedDeal(context, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('rentals/rentals?token=' + context.state.xhr.token, payload).then(function (response) {
+            _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
                 var token = response.headers.authorization.split(' ')[1];
-                context.commit('setToken', token);
+                context.commit('auth/setToken', token, { root: true });
                 context.commit('setClosedDeal', true);
                 context.commit('setInfoDeal', response.data.rentals);
                 resolve({
@@ -68238,7 +68323,7 @@ exports.default = {
                     useSwal: true
                 });
             }).catch(function (err) {
-                context.dispatch('setQueryFinished', true);
+                context.dispatch('auth/setQueryFinished', true, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(err));
             });
         });
@@ -68349,17 +68434,11 @@ exports.default = {
     setUserLogged: function setUserLogged(state, user) {
         state.data.userLogged = user;
     },
-    setToken: function setToken(state, token) {
-        state.xhr.token = token;
-    },
     setDeal: function setDeal(state, bool) {
         state.data.deal = bool;
     },
     setClosedDeal: function setClosedDeal(state, bool) {
         state.data.closedDeal = bool;
-    },
-    setQueryFinished: function setQueryFinished(state, bool) {
-        state.xhr.queryFinished = bool;
     },
     setLastQuery: function setLastQuery(state, number) {
         state.lastQueryData.query = number;
@@ -68407,10 +68486,6 @@ exports.default = {
         dateFrom: '',
         dateTo: ''
     },
-    xhr: {
-        token: '',
-        queryFinished: true
-    },
     frmCmp: {
         isForCottage: false,
         configForAdmin: {
@@ -68448,6 +68523,8 @@ var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
+var _moduleAuth = __webpack_require__("./resources/assets/js/vue-commons/store/auth/moduleAuth.js");
+
 var _moduleRentals = __webpack_require__("./resources/assets/js/vue-commons/store/rentals/moduleRentals.js");
 
 var _moduleFood = __webpack_require__("./resources/assets/js/vue-commons/store/food/moduleFood.js");
@@ -68458,6 +68535,7 @@ _vue2.default.use(_vuex2.default);
 
 exports.default = new _vuex2.default.Store({
     modules: {
+        auth: _moduleAuth.moduleAuth,
         rentals: _moduleRentals.moduleRentals,
         food: _moduleFood.moduleFood
     }

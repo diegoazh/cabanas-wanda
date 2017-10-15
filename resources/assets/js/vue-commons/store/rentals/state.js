@@ -16,10 +16,6 @@ export default {
         dateFrom: '',
         dateTo: '',
     },
-    xhr: {
-        token: '',
-        queryFinished: true
-    },
     frmCmp: {
         isForCottage: false,
         configForAdmin: {

@@ -25,9 +25,6 @@ export default {
         commit('setLasDateFrom', payload.dateFrom);
         commit('setLasDateTo', payload.dateTo);
     },
-    setQueryFinished({commit}, bool) {
-        commit('setQueryFinished', bool);
-    },
     setDeal({commit}, bool) {
         commit('setDeal', bool);
     },
@@ -36,9 +33,6 @@ export default {
     },
     setUserData({commit}, user) {
         commit('setUser', user);
-    },
-    setToken({commit}, token) {
-        commit('setToken', token);
     },
     setCottages({commit, dispatch}){
         return new Promise((resolve, reject) => {
@@ -50,15 +44,14 @@ export default {
                         message: 'Widget cargado correctamente!'
                     });
                 }).catch(err => {
-                    dispatch('setQueryFinished', true);
+                    dispatch('auth/setQueryFinished', true);
                     reject(handlingXhrErrors(err));
                 });
         });
     },
     queryCottagesAvailables({dispatch}, payload) {
         return new Promise((resolve, reject) => {
-            const url = 'rentals/availables/';
-            http.post(url, {
+            http.post('rentals/availables/', {
                 query: payload.choice,
                 simple: payload.simple,
                 dateFrom: payload.dateFrom,
@@ -66,11 +59,11 @@ export default {
                 isForCottage: payload.isForCottage
             }).then(response => {
                 dispatch('setToRentals', response.data.cottages);
-                dispatch('setQueryFinished', true);
+                dispatch('auth/setQueryFinished', true, {root: true});
                 resolve();
             }).catch(err => {
                 dispatch('setToRentals', []);
-                dispatch('setQueryFinished', true);
+                dispatch('auth/setQueryFinished', true, {root: true});
                 reject(handlingXhrErrors(err));
             });
             dispatch('setLastQueryData', payload);
@@ -81,12 +74,12 @@ export default {
             http.post('rentals/auth/', {
                 isAdmin: payload.isAdmin,
                 userLogged: payload.userLogged,
-                document: payload.dni,
+                document: payload.document,
                 email: payload.email
             }).then(response => {
                     let obj = {};
                     dispatch('setUserData', response.data.user);
-                    dispatch('setToken', response.data.token);
+                    dispatch('auth/setToken', response.data.token, {root: true});
                     dispatch('setCountries', response.data.countries);
                     if (response.data.token) {
                         obj = {
@@ -105,17 +98,17 @@ export default {
                     }
                     resolve(obj);
             }).catch(err => {
-                dispatch('setQueryFinished', true);
+                dispatch('auth/setQueryFinished', true, {root: true});
                 reject(handlingXhrErrors(err));
             });
         });
     },
     sendClosedDeal(context, payload) {
         return new Promise((resolve, reject) => {
-            http.post('rentals/rentals?token=' + context.state.xhr.token, payload)
+            http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload)
                 .then(response => {
                     let token = response.headers.authorization.split(' ')[1];
-                    context.commit('setToken', token);
+                    context.commit('auth/setToken', token, {root: true});
                     context.commit('setClosedDeal', true);
                     context.commit('setInfoDeal', response.data.rentals);
                     resolve({
@@ -124,7 +117,7 @@ export default {
                         useSwal: true
                     });
                 }).catch(err => {
-                    context.dispatch('setQueryFinished', true);
+                    context.dispatch('auth/setQueryFinished', true, {root: true});
                     reject(handlingXhrErrors(err));
                 });
         })

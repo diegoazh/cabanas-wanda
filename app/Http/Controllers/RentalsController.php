@@ -214,7 +214,7 @@ class RentalsController extends Controller
 
         }
 
-        if (empty($info['email'])) {
+        if (empty($info['email']) && !empty($info['document'])) {
 
             $user = User::where('dni', $info['document'])->first();
 
@@ -224,7 +224,7 @@ class RentalsController extends Controller
 
             }
 
-        } else if (empty($info['document'])) {
+        } else if (empty($info['document']) && !empty($info['email'])) {
 
             $user = User::where('email', $info['email'])->first();
 
@@ -239,7 +239,11 @@ class RentalsController extends Controller
             }
         }
 
-        $token = JWTAuth::fromUser($logged ? $logged : $user);
+        if (!empty($logged) || !empty($user)) {
+
+            $token = JWTAuth::fromUser($logged ? $logged : $user);
+
+        }
 
         $countries = Country::orderBy('country')->get();
 

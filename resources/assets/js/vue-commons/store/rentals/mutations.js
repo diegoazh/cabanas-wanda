@@ -35,17 +35,11 @@ export default {
     setUserLogged(state, user) {
         state.data.userLogged = user;
     },
-    setToken(state, token) {
-        state.xhr.token = token;
-    },
     setDeal(state, bool) {
         state.data.deal = bool;
     },
     setClosedDeal(state, bool) {
         state.data.closedDeal = bool;
-    },
-    setQueryFinished(state, bool) {
-        state.xhr.queryFinished = bool;
     },
     setLastQuery(state, number) {
         state.lastQueryData.query = number;

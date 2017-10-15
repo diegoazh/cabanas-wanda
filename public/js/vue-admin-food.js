@@ -19053,8 +19053,7 @@ var adminFoodApp = new _vue2.default({
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.http = undefined;
-exports.handlingXhrErrors = handlingXhrErrors;
+exports.handlingXhrErrors = exports.http = undefined;
 
 var _axios = __webpack_require__("./node_modules/axios/index.js");
 
@@ -19071,7 +19070,7 @@ var http = exports.http = _axios2.default.create({
     }
 });
 
-function handlingXhrErrors(error) {
+var handlingXhrErrors = exports.handlingXhrErrors = function handlingXhrErrors(error) {
     if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
@@ -19096,7 +19095,7 @@ function handlingXhrErrors(error) {
             message: 'Algo ocurrio generando la petición al servidor.'
         };
     }
-}
+};
 
 /***/ }),
 
@@ -19153,6 +19152,120 @@ var optionsIzi = exports.optionsIzi = {
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-commons/store/auth/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    setToken: function setToken(_ref, token) {
+        var commit = _ref.commit;
+
+        commit('setToken', token);
+    },
+    setQueryFinished: function setQueryFinished(_ref2, bool) {
+        var commit = _ref2.commit;
+
+        commit('setQueryFinished', bool);
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/auth/getters.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/auth/moduleAuth.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.moduleAuth = undefined;
+
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/auth/state.js");
+
+var _state2 = _interopRequireDefault(_state);
+
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/auth/getters.js");
+
+var _getters2 = _interopRequireDefault(_getters);
+
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/auth/mutations.js");
+
+var _mutations2 = _interopRequireDefault(_mutations);
+
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/auth/actions.js");
+
+var _actions2 = _interopRequireDefault(_actions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var moduleAuth = exports.moduleAuth = {
+    namespaced: true,
+    state: _state2.default,
+    getters: _getters2.default,
+    mutations: _mutations2.default,
+    actions: _actions2.default
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/auth/mutations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    setToken: function setToken(state, token) {
+        state.xhr.token = token;
+    },
+    setQueryFinished: function setQueryFinished(state, bool) {
+        state.xhr.queryFinished = bool;
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/auth/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    xhr: {
+        token: '',
+        queryFinished: true
+    }
+};
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-commons/store/food/actions.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19169,7 +19282,7 @@ exports.default = {
     setXhrToken: function setXhrToken(_ref, token) {
         var commit = _ref.commit;
 
-        commit('setXhrToken', token);
+        commit('setToken', token, { root: true });
         window.clearTimeout(window.verifyToken);
         delete window.verifyToken;
     },
@@ -19177,12 +19290,12 @@ exports.default = {
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('food/rentals', payload, {
                 params: {
-                    token: context.state.xhr.token
+                    token: context.state.auth.xhr.token
                 }
             }).then(function (response) {
                 return resolve(response.data);
             }).catch(function (error) {
-                context.commit('setQueryFinished', bool);
+                context.commit('setQueryFinished', bool, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(error));
             });
         });
@@ -19250,16 +19363,9 @@ var moduleFood = exports.moduleFood = {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-exports.default = {
-    setXhrToken: function setXhrToken(state, token) {
-        state.xhr.token = token;
-    },
-    setQueryFinished: function setQueryFinished(state, bool) {
-        state.xhr.queryFinished = bool;
-    }
-};
+exports.default = {};
 
 /***/ }),
 
@@ -19273,11 +19379,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
-    data: {},
-    xhr: {
-        token: '',
-        queryFinished: true
-    }
+    data: {}
 };
 
 /***/ }),
@@ -19331,34 +19433,24 @@ exports.default = {
         commit('setLasDateFrom', payload.dateFrom);
         commit('setLasDateTo', payload.dateTo);
     },
-    setQueryFinished: function setQueryFinished(_ref7, bool) {
+    setDeal: function setDeal(_ref7, bool) {
         var commit = _ref7.commit;
-
-        commit('setQueryFinished', bool);
-    },
-    setDeal: function setDeal(_ref8, bool) {
-        var commit = _ref8.commit;
 
         commit('setDeal', bool);
     },
-    setClosedDeal: function setClosedDeal(_ref9, bool) {
-        var commit = _ref9.commit;
+    setClosedDeal: function setClosedDeal(_ref8, bool) {
+        var commit = _ref8.commit;
 
         commit('setClosedDeal', bool);
     },
-    setUserData: function setUserData(_ref10, user) {
-        var commit = _ref10.commit;
+    setUserData: function setUserData(_ref9, user) {
+        var commit = _ref9.commit;
 
         commit('setUser', user);
     },
-    setToken: function setToken(_ref11, token) {
-        var commit = _ref11.commit;
-
-        commit('setToken', token);
-    },
-    setCottages: function setCottages(_ref12) {
-        var commit = _ref12.commit,
-            dispatch = _ref12.dispatch;
+    setCottages: function setCottages(_ref10) {
+        var commit = _ref10.commit,
+            dispatch = _ref10.dispatch;
 
         return new Promise(function (resolve, reject) {
             _appAxios.http.get('rentals/basic/').then(function (response) {
@@ -19368,17 +19460,16 @@ exports.default = {
                     message: 'Widget cargado correctamente!'
                 });
             }).catch(function (err) {
-                dispatch('setQueryFinished', true);
+                dispatch('auth/setQueryFinished', true);
                 reject((0, _appAxios.handlingXhrErrors)(err));
             });
         });
     },
-    queryCottagesAvailables: function queryCottagesAvailables(_ref13, payload) {
-        var dispatch = _ref13.dispatch;
+    queryCottagesAvailables: function queryCottagesAvailables(_ref11, payload) {
+        var dispatch = _ref11.dispatch;
 
         return new Promise(function (resolve, reject) {
-            var url = 'rentals/availables/';
-            _appAxios.http.post(url, {
+            _appAxios.http.post('rentals/availables/', {
                 query: payload.choice,
                 simple: payload.simple,
                 dateFrom: payload.dateFrom,
@@ -19386,29 +19477,29 @@ exports.default = {
                 isForCottage: payload.isForCottage
             }).then(function (response) {
                 dispatch('setToRentals', response.data.cottages);
-                dispatch('setQueryFinished', true);
+                dispatch('auth/setQueryFinished', true, { root: true });
                 resolve();
             }).catch(function (err) {
                 dispatch('setToRentals', []);
-                dispatch('setQueryFinished', true);
+                dispatch('auth/setQueryFinished', true, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(err));
             });
             dispatch('setLastQueryData', payload);
         });
     },
-    authenticateUser: function authenticateUser(_ref14, payload) {
-        var dispatch = _ref14.dispatch;
+    authenticateUser: function authenticateUser(_ref12, payload) {
+        var dispatch = _ref12.dispatch;
 
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('rentals/auth/', {
                 isAdmin: payload.isAdmin,
                 userLogged: payload.userLogged,
-                document: payload.dni,
+                document: payload.document,
                 email: payload.email
             }).then(function (response) {
                 var obj = {};
                 dispatch('setUserData', response.data.user);
-                dispatch('setToken', response.data.token);
+                dispatch('auth/setToken', response.data.token, { root: true });
                 dispatch('setCountries', response.data.countries);
                 if (response.data.token) {
                     obj = {
@@ -19427,16 +19518,16 @@ exports.default = {
                 }
                 resolve(obj);
             }).catch(function (err) {
-                dispatch('setQueryFinished', true);
+                dispatch('auth/setQueryFinished', true, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(err));
             });
         });
     },
     sendClosedDeal: function sendClosedDeal(context, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('rentals/rentals?token=' + context.state.xhr.token, payload).then(function (response) {
+            _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
                 var token = response.headers.authorization.split(' ')[1];
-                context.commit('setToken', token);
+                context.commit('auth/setToken', token, { root: true });
                 context.commit('setClosedDeal', true);
                 context.commit('setInfoDeal', response.data.rentals);
                 resolve({
@@ -19445,7 +19536,7 @@ exports.default = {
                     useSwal: true
                 });
             }).catch(function (err) {
-                context.dispatch('setQueryFinished', true);
+                context.dispatch('auth/setQueryFinished', true, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(err));
             });
         });
@@ -19556,17 +19647,11 @@ exports.default = {
     setUserLogged: function setUserLogged(state, user) {
         state.data.userLogged = user;
     },
-    setToken: function setToken(state, token) {
-        state.xhr.token = token;
-    },
     setDeal: function setDeal(state, bool) {
         state.data.deal = bool;
     },
     setClosedDeal: function setClosedDeal(state, bool) {
         state.data.closedDeal = bool;
-    },
-    setQueryFinished: function setQueryFinished(state, bool) {
-        state.xhr.queryFinished = bool;
     },
     setLastQuery: function setLastQuery(state, number) {
         state.lastQueryData.query = number;
@@ -19614,10 +19699,6 @@ exports.default = {
         dateFrom: '',
         dateTo: ''
     },
-    xhr: {
-        token: '',
-        queryFinished: true
-    },
     frmCmp: {
         isForCottage: false,
         configForAdmin: {
@@ -19655,6 +19736,8 @@ var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
+var _moduleAuth = __webpack_require__("./resources/assets/js/vue-commons/store/auth/moduleAuth.js");
+
 var _moduleRentals = __webpack_require__("./resources/assets/js/vue-commons/store/rentals/moduleRentals.js");
 
 var _moduleFood = __webpack_require__("./resources/assets/js/vue-commons/store/food/moduleFood.js");
@@ -19665,6 +19748,7 @@ _vue2.default.use(_vuex2.default);
 
 exports.default = new _vuex2.default.Store({
     modules: {
+        auth: _moduleAuth.moduleAuth,
         rentals: _moduleRentals.moduleRentals,
         food: _moduleFood.moduleFood
     }

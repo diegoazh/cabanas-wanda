@@ -109,11 +109,9 @@
 </template>
 
 <script>
-    import { createNamespacedHelpers } from 'vuex'
+    import { mapActions, mapState } from 'vuex'
     import VueNoti from 'vue-notifications'
     import Icon from './Icon.vue'
-
-    const { mapActions, mapState } = createNamespacedHelpers('rentals');
 
     export default {
         components: {
@@ -158,7 +156,7 @@
             btnCreateNewUser() {
                  return !(this.name && this.lastname && this.email && this.document && this.genre && this.country);
             },
-            ...mapState({
+            ...mapState('rentals', {
                 token: state => state.xhr.token,
                 isAdmin: state => state.data.isAdmin,
                 userLogged: state => state.data.userLogged,
@@ -169,6 +167,10 @@
                 isForCottage: state => state.frmCmp.isForCottage,
                 dateFrom: state => state.lastQueryData.dateFrom,
                 dateTo: state => state.lastQueryData.dateTo,
+            }),
+            ...mapState('auth', {
+                token: state => state.xhr.token,
+                queryFinished: state => state.xhr.queryFinished,
             })
         },
         methods: {
@@ -213,18 +215,19 @@
                 });
             },
             closeDeal() {
-                const deal = {};
-                deal.name = this.name;
-                deal. lastname = this.lastname;
-                deal.email = this.email;
-                deal.document = this.document;
-                deal.genre = this.genre;
-                deal.country = this.country;
-                deal.toRentals = this.toRentals;
-                deal.user = this.user;
-                deal.isDni = !this.onOff;
-                deal.dateFrom = this.dateFrom;
-                deal.dateTo = this.dateTo;
+                const deal = {
+                    name: this.name,
+                    lastname: this.lastname,
+                    email: this.email,
+                    document: this.document,
+                    genre: this.genre,
+                    country: this.country,
+                    toRentals: this.toRentals,
+                    user: this.user,
+                    isDni: !this.onOff,
+                    dateFrom: this.dateFrom,
+                    dateTo: this.dateTo,
+                };
 
                 this.setQueryFinished(false);
 
@@ -248,7 +251,8 @@
             isNullOrUndefined(val) {
                 return typeof val === 'undefined' || val === null;
             },
-            ...mapActions(['authenticateUser', 'setQueryFinished', 'sendClosedDeal', 'setDeal'])
+            ...mapActions('rentals', ['authenticateUser', 'sendClosedDeal', 'setDeal']),
+            ...mapActions('auth', ['setQueryFinished'])
         }
     }
 </script>

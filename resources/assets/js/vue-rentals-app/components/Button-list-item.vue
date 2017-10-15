@@ -41,9 +41,9 @@
         props: ['cottage', 'index'],
         computed: {
             calcularDias() {
-                const from = moment(this.dateFrom + ' 00:00:00', 'DD/MM/YYYY HH:mm:ss');
-                const to = moment(this.dateTo + ' 10:00:00', 'DD/MM/YYYY HH:mm:ss').add(1, 'day');
-                return to.diff(from, 'days');
+                const dateFrom = moment(this.dateFrom + ' 00:00:00', 'DD/MM/YYYY HH:mm:ss');
+                const dateTo = moment(this.dateTo + ' 10:00:00', 'DD/MM/YYYY HH:mm:ss').add(1, 'day');
+                return dateTo.diff(dateFrom, 'days');
             },
             ...mapState({
                 dateFrom: state => state.lastQueryData.dateFrom,

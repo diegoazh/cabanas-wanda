@@ -2,7 +2,7 @@ import { http, handlingXhrErrors } from '../../axios/app-axios'
 
 export default {
     setXhrToken({commit}, token) {
-        commit('setXhrToken', token);
+        commit('setToken', token, {root: true});
         window.clearTimeout(window.verifyToken);
         delete window.verifyToken;
     },
@@ -10,11 +10,11 @@ export default {
         return new Promise((resolve, reject) => {
             http.post('food/rentals', payload, {
                 params: {
-                    token: context.state.xhr.token,
+                    token: context.state.auth.xhr.token,
                 }
             }).then(response => resolve(response.data))
                 .catch(error => {
-                    context.commit('setQueryFinished', bool);
+                    context.commit('setQueryFinished', bool, {root: true});
                     reject(handlingXhrErrors(error))
                 });
         });

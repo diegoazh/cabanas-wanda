@@ -9,7 +9,7 @@ export const http =  axios.create({
     },
 });
 
-export function handlingXhrErrors(error) {
+export const handlingXhrErrors = (error) => {
     if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
