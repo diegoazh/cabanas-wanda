@@ -29,7 +29,7 @@ class ComidasController extends Controller
             }
         }
 
-        return view('backend.comidas')->with('token', $token);
+        return view('backend.comidas')->with(compact('token'));
     }
 
     /**
@@ -58,7 +58,7 @@ class ComidasController extends Controller
 
         }
 
-        return response()->json(compact($menu), 200);
+        return response()->json(['message' => 'La información se dió de alta correctamente'], 200);
     }
 
     /**
@@ -116,5 +116,12 @@ class ComidasController extends Controller
         }
 
         return response()->json(['message' => 'El plato fué eliminado correctamente.'], 200);
+    }
+
+    public function all()
+    {
+        $comidas = Comida::orderBy('type')->orderBy('name')->get();
+
+        return response()->json(compact('comidas'), 200);
     }
 }

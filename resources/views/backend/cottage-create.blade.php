@@ -14,7 +14,7 @@
         <h3 class="tt-cottages">{{ (isset($cottage)) ? 'Editar caba&ntilde;a' : 'Registrar Caba&ntilde;a' }}</h3>
     </div>
     <div class="panel-body form-panel">
-        {{ Form::open(['route' => ((isset($cottage)) ? ['cottages.update', $cottage] : 'rentals'), 'method' => ((isset($cottage)) ? 'PUT' : 'POST'), 'files' => true, 'id' => (isset($cottage) ? 'frmUpdateCottage' : 'frmCreateCottage')]) }}
+        {{ Form::open(['route' => ((isset($cottage)) ? ['cottages.update', $cottage] : 'cottages.store'), 'method' => ((isset($cottage)) ? 'PUT' : 'POST'), 'files' => true, 'id' => (isset($cottage) ? 'frmUpdateCottage' : 'frmCreateCottage')]) }}
         <div class="form-group">
             {{ Form::label('number', 'Numero de cabaña', ['class' => 'sr-only']) }}
             <div class="input-group">

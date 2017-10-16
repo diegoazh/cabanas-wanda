@@ -19,7 +19,7 @@
 <script>
     import { createNamespacedHelpers } from 'vuex'
     import Item from './Button-list-item.vue'
-    import Icon from './Icon.vue'
+    import Icon from '../../vue-commons/components/Icon.vue'
 
     const { mapState, mapActions } = createNamespacedHelpers('rentals');
 

@@ -107,8 +107,7 @@ export default {
         return new Promise((resolve, reject) => {
             http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload)
                 .then(response => {
-                    let token = response.headers.authorization.split(' ')[1];
-                    context.commit('auth/setToken', token, {root: true});
+                    context.dispatch('auth/refreshToken', response.headers, {root: true});
                     context.commit('setClosedDeal', true);
                     context.commit('setInfoDeal', response.data.rentals);
                     resolve({

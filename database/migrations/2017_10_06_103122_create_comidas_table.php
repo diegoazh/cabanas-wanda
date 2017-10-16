@@ -19,6 +19,8 @@ class CreateComidasTable extends Migration
             $table->enum('type', ['desayuno', 'almuerzo', 'merienda', 'cena']);
             $table->text('description');
             $table->double('price', 8, 2);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

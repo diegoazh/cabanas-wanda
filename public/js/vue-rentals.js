@@ -1615,6 +1615,54 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-commons/components/Icon.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//
+//
+//
+//
+
+exports.default = {
+    props: {
+        iconImage: {
+            type: String,
+            default: '',
+            required: true
+        },
+        iconId: {
+            type: String,
+            default: '',
+            required: false
+        },
+        aditionalClasses: {
+            type: String,
+            default: '',
+            required: false
+        }
+    },
+    computed: {
+        toggleIconClass: function toggleIconClass() {
+            var classes = 'fa fa-' + this.iconImage;
+            if (this.aditionalClasses) {
+                classes += ' ' + this.aditionalClasses;
+            }
+            return classes;
+        },
+        dinamycId: function dinamycId() {
+            return this.iconId;
+        }
+    }
+};
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1660,7 +1708,7 @@ var _lodash = __webpack_require__("./node_modules/lodash/lodash.js");
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
+var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
@@ -1785,7 +1833,7 @@ var _moment = __webpack_require__("./node_modules/moment/moment.js");
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
+var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
@@ -1952,7 +2000,7 @@ var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/di
 
 var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
 
-var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
+var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
@@ -2187,7 +2235,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
-var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
+var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
@@ -2326,54 +2374,6 @@ $('#capacidad').selectize({
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/Icon.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-//
-//
-//
-//
-
-exports.default = {
-    props: {
-        iconImage: {
-            type: String,
-            default: '',
-            required: true
-        },
-        iconId: {
-            type: String,
-            default: '',
-            required: false
-        },
-        aditionalClasses: {
-            type: String,
-            default: '',
-            required: false
-        }
-    },
-    computed: {
-        toggleIconClass: function toggleIconClass() {
-            var classes = 'fa fa-' + this.iconImage;
-            if (this.aditionalClasses) {
-                classes += ' ' + this.aditionalClasses;
-            }
-            return classes;
-        },
-        dinamycId: function dinamycId() {
-            return this.iconId;
-        }
-    }
-};
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2409,7 +2409,7 @@ var _ButtonListItem = __webpack_require__("./resources/assets/js/vue-rentals-app
 
 var _ButtonListItem2 = _interopRequireDefault(_ButtonListItem);
 
-var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
+var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
@@ -2498,7 +2498,7 @@ var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
 
 var _notifications = __webpack_require__("./resources/assets/js/vue-commons/notifications/notifications.js");
 
-var _Icon = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Icon.vue");
+var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
@@ -2592,7 +2592,7 @@ exports.push([module.i, "\n.img-btn-item {\n    max-width: 75%;\n    display: in
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-233b7a36\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/Icon.vue":
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1edc32ac\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/Icon.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(undefined);
@@ -54625,7 +54625,7 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-233b7a36\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/Icon.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1edc32ac\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-commons/components/Icon.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -54643,7 +54643,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-233b7a36", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-1edc32ac", module.exports)
   }
 }
 
@@ -55948,7 +55948,13 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("td", [
-                        _vm._v(_vm._s(_vm._f("argentineDate")(rental.dateFrom)))
+                        _vm._v(
+                          _vm._s(
+                            _vm._f("argentineDateTime")(
+                              rental.dateFrom + " 15:00:00"
+                            )
+                          )
+                        )
                       ])
                     ]),
                     _vm._v(" "),
@@ -55963,7 +55969,13 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("td", [
-                        _vm._v(_vm._s(_vm._f("argentineDate")(rental.dateTo)))
+                        _vm._v(
+                          _vm._s(
+                            _vm._f("argentineDateTime")(
+                              rental.dateTo + " 12:00:00"
+                            )
+                          )
+                        )
                       ])
                     ]),
                     _vm._v(" "),
@@ -56243,23 +56255,23 @@ if(false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-233b7a36\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/Icon.vue":
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1edc32ac\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/Icon.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-233b7a36\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/Icon.vue");
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1edc32ac\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/Icon.vue");
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("1ad5852b", content, false);
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("5e38e942", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-233b7a36\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Icon.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-233b7a36\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Icon.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1edc32ac\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Icon.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1edc32ac\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Icon.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -67886,6 +67898,57 @@ var handlingXhrErrors = exports.handlingXhrErrors = function handlingXhrErrors(e
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-commons/components/Icon.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1edc32ac\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/Icon.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-commons/components/Icon.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1edc32ac\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-commons/components/Icon.vue")
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/vue-commons/components/Icon.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Icon.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1edc32ac", Component.options)
+  } else {
+    hotAPI.reload("data-v-1edc32ac", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-commons/notifications/notifications.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -67939,7 +68002,7 @@ var optionsIzi = exports.optionsIzi = {
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/auth/actions.js":
+/***/ "./resources/assets/js/vue-commons/store/module-auth/actions.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67958,12 +68021,19 @@ exports.default = {
         var commit = _ref2.commit;
 
         commit('setQueryFinished', bool);
+    },
+    refreshToken: function refreshToken(_ref3, headers) {
+        var dispatch = _ref3.dispatch;
+
+        if (headers.authorization) {
+            dispatch('setToken', headers.authorization.split(' ')[1]);
+        }
     }
 };
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/auth/getters.js":
+/***/ "./resources/assets/js/vue-commons/store/module-auth/getters.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67976,7 +68046,7 @@ exports.default = {};
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/auth/moduleAuth.js":
+/***/ "./resources/assets/js/vue-commons/store/module-auth/moduleAuth.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67987,19 +68057,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.moduleAuth = undefined;
 
-var _state = __webpack_require__("./resources/assets/js/vue-commons/store/auth/state.js");
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-auth/state.js");
 
 var _state2 = _interopRequireDefault(_state);
 
-var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/auth/getters.js");
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/module-auth/getters.js");
 
 var _getters2 = _interopRequireDefault(_getters);
 
-var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/auth/mutations.js");
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/module-auth/mutations.js");
 
 var _mutations2 = _interopRequireDefault(_mutations);
 
-var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/auth/actions.js");
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/module-auth/actions.js");
 
 var _actions2 = _interopRequireDefault(_actions);
 
@@ -68015,7 +68085,7 @@ var moduleAuth = exports.moduleAuth = {
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/auth/mutations.js":
+/***/ "./resources/assets/js/vue-commons/store/module-auth/mutations.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68035,7 +68105,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/auth/state.js":
+/***/ "./resources/assets/js/vue-commons/store/module-auth/state.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68053,7 +68123,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/food/actions.js":
+/***/ "./resources/assets/js/vue-commons/store/module-food/actions.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68069,20 +68139,47 @@ exports.default = {
     setXhrToken: function setXhrToken(_ref, token) {
         var commit = _ref.commit;
 
-        commit('setToken', token, { root: true });
+        commit('auth/setToken', token, { root: true });
         window.clearTimeout(window.verifyToken);
         delete window.verifyToken;
     },
+    setFood: function setFood(_ref2, food) {
+        var commit = _ref2.commit;
+
+        commit('setFood', food);
+    },
+    setCreate: function setCreate(_ref3, bool) {
+        var commit = _ref3.commit;
+
+        commit('setCreate', bool);
+    },
+    getAllFood: function getAllFood(_ref4) {
+        var dispatch = _ref4.dispatch;
+
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.get('food/all').then(function (response) {
+                dispatch('setFood', response.data.comidas);
+                resolve();
+            }).catch(function (error) {
+                return reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    },
     sendNewFood: function sendNewFood(context, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('food/rentals', payload, {
+            _appAxios.http.post('food/store', payload, {
                 params: {
-                    token: context.state.auth.xhr.token
+                    token: context.rootState.auth.xhr.token
                 }
             }).then(function (response) {
-                return resolve(response.data);
+                context.dispatch('auth/refreshToken', response.headers, { root: true });
+                resolve({
+                    title: 'Creado',
+                    message: response.data.message,
+                    useSwal: true
+                });
             }).catch(function (error) {
-                context.commit('setQueryFinished', bool, { root: true });
+                context.commit('auth/setQueryFinished', bool, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(error));
             });
         });
@@ -68091,7 +68188,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/food/getters.js":
+/***/ "./resources/assets/js/vue-commons/store/module-food/getters.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68104,7 +68201,7 @@ exports.default = {};
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/food/moduleFood.js":
+/***/ "./resources/assets/js/vue-commons/store/module-food/moduleFood.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68115,19 +68212,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.moduleFood = undefined;
 
-var _state = __webpack_require__("./resources/assets/js/vue-commons/store/food/state.js");
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-food/state.js");
 
 var _state2 = _interopRequireDefault(_state);
 
-var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/food/getters.js");
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/module-food/getters.js");
 
 var _getters2 = _interopRequireDefault(_getters);
 
-var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/food/mutations.js");
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/module-food/mutations.js");
 
 var _mutations2 = _interopRequireDefault(_mutations);
 
-var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/food/actions.js");
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/module-food/actions.js");
 
 var _actions2 = _interopRequireDefault(_actions);
 
@@ -68143,20 +68240,7 @@ var moduleFood = exports.moduleFood = {
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/food/mutations.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {};
-
-/***/ }),
-
-/***/ "./resources/assets/js/vue-commons/store/food/state.js":
+/***/ "./resources/assets/js/vue-commons/store/module-food/mutations.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68166,12 +68250,35 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
-    data: {}
+    setCreate: function setCreate(state, bool) {
+        state.data.create = bool;
+    },
+    setFood: function setFood(state, food) {
+        state.data.food = food;
+    }
 };
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/rentals/actions.js":
+/***/ "./resources/assets/js/vue-commons/store/module-food/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    data: {
+        create: false,
+        food: []
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-rentals/actions.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68313,8 +68420,7 @@ exports.default = {
     sendClosedDeal: function sendClosedDeal(context, payload) {
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
-                var token = response.headers.authorization.split(' ')[1];
-                context.commit('auth/setToken', token, { root: true });
+                context.dispatch('auth/refreshToken', response.headers, { root: true });
                 context.commit('setClosedDeal', true);
                 context.commit('setInfoDeal', response.data.rentals);
                 resolve({
@@ -68332,7 +68438,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/rentals/getters.js":
+/***/ "./resources/assets/js/vue-commons/store/module-rentals/getters.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68349,7 +68455,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/rentals/moduleRentals.js":
+/***/ "./resources/assets/js/vue-commons/store/module-rentals/moduleRentals.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68360,19 +68466,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.moduleRentals = undefined;
 
-var _state = __webpack_require__("./resources/assets/js/vue-commons/store/rentals/state.js");
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-rentals/state.js");
 
 var _state2 = _interopRequireDefault(_state);
 
-var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/rentals/mutations.js");
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/module-rentals/mutations.js");
 
 var _mutations2 = _interopRequireDefault(_mutations);
 
-var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/rentals/actions.js");
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/module-rentals/actions.js");
 
 var _actions2 = _interopRequireDefault(_actions);
 
-var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/rentals/getters.js");
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/module-rentals/getters.js");
 
 var _getters2 = _interopRequireDefault(_getters);
 
@@ -68388,7 +68494,7 @@ var moduleRentals = exports.moduleRentals = {
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/rentals/mutations.js":
+/***/ "./resources/assets/js/vue-commons/store/module-rentals/mutations.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68459,7 +68565,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/rentals/state.js":
+/***/ "./resources/assets/js/vue-commons/store/module-rentals/state.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68523,11 +68629,11 @@ var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _moduleAuth = __webpack_require__("./resources/assets/js/vue-commons/store/auth/moduleAuth.js");
+var _moduleAuth = __webpack_require__("./resources/assets/js/vue-commons/store/module-auth/moduleAuth.js");
 
-var _moduleRentals = __webpack_require__("./resources/assets/js/vue-commons/store/rentals/moduleRentals.js");
+var _moduleRentals = __webpack_require__("./resources/assets/js/vue-commons/store/module-rentals/moduleRentals.js");
 
-var _moduleFood = __webpack_require__("./resources/assets/js/vue-commons/store/food/moduleFood.js");
+var _moduleFood = __webpack_require__("./resources/assets/js/vue-commons/store/module-food/moduleFood.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -68736,57 +68842,6 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-3699f5b0", Component.options)
   } else {
     hotAPI.reload("data-v-3699f5b0", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/vue-rentals-app/components/Icon.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-233b7a36\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/Icon.vue")
-}
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/Icon.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-233b7a36\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/Icon.vue")
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/vue-rentals-app/components/Icon.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Icon.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-233b7a36", Component.options)
-  } else {
-    hotAPI.reload("data-v-233b7a36", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

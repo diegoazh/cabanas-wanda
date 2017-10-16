@@ -44,7 +44,7 @@
     import Vue from 'vue'
     import VueNotifications from 'vue-notifications'
     import { optionsIzi } from '../../vue-commons/notifications/notifications'
-    import Icon from './Icon.vue'
+    import Icon from '../../vue-commons/components/Icon.vue'
     import Form from './Form.vue'
     import List from './List-group.vue'
     import Deal from './Deal.vue'

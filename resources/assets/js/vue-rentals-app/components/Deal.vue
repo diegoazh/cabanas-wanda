@@ -111,7 +111,7 @@
 <script>
     import { mapActions, mapState } from 'vuex'
     import VueNoti from 'vue-notifications'
-    import Icon from './Icon.vue'
+    import Icon from '../../vue-commons/components/Icon.vue'
 
     export default {
         components: {

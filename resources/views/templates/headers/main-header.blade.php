@@ -36,9 +36,8 @@
                             @if(Auth::check())
                                 @if(Auth::user()->isAdminOrEmployed())
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#">Lista de platos</a></li>
                                     @if(Auth::user()->isAdmin())
-                                        <li><a href="{{ route('comidas.index') }}">Añadir platos</a></li>
+                                        <li><a href="{{ route('comidas.index') }}">Administración de platos</a></li>
                                     @endif
                                 @endif
                             @endif

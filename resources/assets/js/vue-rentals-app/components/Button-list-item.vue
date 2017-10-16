@@ -29,7 +29,7 @@
 <script>
     import { createNamespacedHelpers } from 'vuex'
     import _ from 'lodash'
-    import Icon from './Icon.vue'
+    import Icon from '../../vue-commons/components/Icon.vue'
     import moment from 'moment'
 
     const { mapActions, mapState } = createNamespacedHelpers('rentals');

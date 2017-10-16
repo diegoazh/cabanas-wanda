@@ -77,6 +77,7 @@ class RentalsController extends Controller
         }
 
         try {
+
             DB::transaction(function () use ($info, $cliente, &$rentals) {
                 
                 if (!$cliente) {
@@ -122,8 +123,11 @@ class RentalsController extends Controller
                     array_push($rentals, $rental);
                 }
             });
+
         } catch (\Exception $exception) {
+
             return response()->json(['error' => 'Ha ocurrido un error intentando realizar las reservas. Por favor verifique y reintente. Error: ' . $exception->getMessage() . ' Codigo: ' . $exception->getCode()], 500);
+
         }
 
         return response()->json(compact('rentals'), 200);
@@ -181,14 +185,21 @@ class RentalsController extends Controller
         $info['dateTo'] = Carbon::createFromFormat('d/m/Y', $info['dateTo'])->toDateString();
 
         if ($info['isForCottage']) {
+
             $cottages = Rental::cottageForNumber($info['query'], $info['simple'], $info['dateFrom'], $info['dateTo']);
+
         } else {
+
             $cottages = Rental::cottageForCapacity($info['query'], $info['simple'], $info['dateFrom'], $info['dateTo']);
+
         }
 
         if (empty($cottages)) {
+
             $message = $info['isForCottage'] ? 'Lo sentimos la cabaña no está disponible en esa fecha. Por favor intenta con otra cabaña o con una fecha diferente.' : 'No tenemos cabañas disponibles en esa fecha para la capacidad indicada. Lo sentimos mucho, por favor prueba con otra fecha o varía la capacidad.';
+
             return response()->json(['title' => 'SIN DISPONIBILIDAD', 'error' => $message], 404);
+
         }
 
         return response()->json(compact('cottages'), 200);

@@ -42,11 +42,11 @@
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="calendar"></icon-app> Desde</th>
-                                <td>{{ rental.dateFrom | argentineDate }}</td>
+                                <td>{{ rental.dateFrom + ' 15:00:00' | argentineDateTime }}</td>
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="calendar"></icon-app> Hasta</th>
-                                <td>{{ rental.dateTo | argentineDate }}</td>
+                                <td>{{ rental.dateTo + ' 12:00:00' | argentineDateTime }}</td>
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="calendar"></icon-app> Vto. reserva</th>
@@ -67,7 +67,7 @@
 <script>
     import { createNamespacedHelpers } from 'vuex'
     import moment from 'moment'
-    import Icon from './Icon.vue'
+    import Icon from '../../vue-commons/components/Icon.vue'
 
     const { mapActions, mapState } = createNamespacedHelpers('rentals');
 

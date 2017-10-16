@@ -46,7 +46,7 @@
 
 <script>
     import { mapActions, mapGetters, mapState } from 'vuex'
-    import Icon from './Icon.vue'
+    import Icon from '../../vue-commons/components/Icon.vue'
     import DatePicker from 'vue-bootstrap-datetimepicker'
     import moment from 'moment'
     import VueNoti from 'vue-notifications'

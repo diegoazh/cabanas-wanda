@@ -25,6 +25,10 @@ Route::prefix('rentals')->group(function () {
     });
 });
 
-Route::prefix('food')->middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
-    Route::post('store', 'Administration\ComidasController@store')->name('api.food.store');
+Route::prefix('food')->group(function () {
+    Route::get('all', 'Administration\ComidasController@all')->name('api.food.all');
+
+    Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
+        Route::post('store', 'Administration\ComidasController@store')->name('api.food.store');
+    });
 });
