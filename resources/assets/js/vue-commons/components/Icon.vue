@@ -4,6 +4,7 @@
 
 <script>
     export default {
+        name: 'icon-app',
         props: {
             iconImage: {
                 type: String,

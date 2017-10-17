@@ -32,6 +32,10 @@
 body {
   background-color: #ffffff;
 }
+body .container-frontend {
+  height: 980px;
+  min-height: 980px;
+}
 body .container-frontend #header {
   height: 606.5px;
   min-height: 67%;

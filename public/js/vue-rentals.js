@@ -1630,6 +1630,7 @@ Object.defineProperty(exports, "__esModule", {
 //
 
 exports.default = {
+    name: 'icon-app',
     props: {
         iconImage: {
             type: String,
@@ -2600,7 +2601,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -68343,6 +68344,77 @@ exports.default = {
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-commons/store/module-orders/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-orders/getters.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-orders/moduleOrders.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.moduleOrders = undefined;
+
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-orders/state.js");
+
+var _state2 = _interopRequireDefault(_state);
+
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/module-orders/getters.js");
+
+var _getters2 = _interopRequireDefault(_getters);
+
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/module-orders/mutations.js");
+
+var _mutations2 = _interopRequireDefault(_mutations);
+
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/module-orders/actions.js");
+
+var _actions2 = _interopRequireDefault(_actions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var moduleOrders = exports.moduleOrders = {
+    namespaced: true,
+    state: _state2.default,
+    getters: _getters2.default,
+    mutations: _mutations2.default,
+    actions: _actions2.default
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-orders/mutations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-orders/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-commons/store/module-rentals/actions.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -68700,6 +68772,8 @@ var _moduleRentals = __webpack_require__("./resources/assets/js/vue-commons/stor
 
 var _moduleFood = __webpack_require__("./resources/assets/js/vue-commons/store/module-food/moduleFood.js");
 
+var _moduleOrders = __webpack_require__("./resources/assets/js/vue-commons/store/module-orders/moduleOrders.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vuex2.default);
@@ -68708,7 +68782,8 @@ exports.default = new _vuex2.default.Store({
     modules: {
         auth: _moduleAuth.moduleAuth,
         rentals: _moduleRentals.moduleRentals,
-        food: _moduleFood.moduleFood
+        food: _moduleFood.moduleFood,
+        orders: _moduleOrders.moduleOrders
     }
 });
 
@@ -69054,10 +69129,10 @@ var _Rentals2 = _interopRequireDefault(_Rentals);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+_vue2.default.use(_vueNotifications2.default, _notifications.optionsIzi).use(_vTooltip2.default);
+
 var _createNamespacedHelp = (0, _vuex.createNamespacedHelpers)('rentals'),
     mapActions = _createNamespacedHelp.mapActions;
-
-_vue2.default.use(_vueNotifications2.default, _notifications.optionsIzi).use(_vTooltip2.default);
 
 window.EventBus = new _vue2.default();
 

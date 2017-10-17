@@ -35,7 +35,7 @@ class RentalsController extends Controller
             }
         }
 
-        return view('frontend.rentals')->with(compact('administration', 'user'));
+        return view('frontend.rentals-index')->with(compact('administration', 'user'));
     }
 
     /**

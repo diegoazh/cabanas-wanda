@@ -6,8 +6,9 @@ import { optionsIzi } from "../vue-commons/notifications/notifications"
 import store from '../vue-commons/store/store'
 import Rentals from './components/Rentals.vue'
 
-const { mapActions } = createNamespacedHelpers('rentals');
 Vue.use(VueNotifications, optionsIzi).use(VTooltip);
+
+const { mapActions } = createNamespacedHelpers('rentals');
 
 window.EventBus = new Vue();
 

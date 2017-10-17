@@ -14,7 +14,7 @@ class PedidosController extends Controller
      */
     public function index()
     {
-        // retornar la página de comidas en el frontend
+        return view('frontend.order-index');
     }
 
     /**

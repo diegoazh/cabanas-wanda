@@ -57,7 +57,7 @@ $(document).ready(function (event) {
     }
 
     if (/register/.test(path)) {
-        backgroundLoginRegister('dibujo-coati', 'no-repeat', 'contain', '100% 50%');
+        backgroundLoginRegister('dibujo-carpincho', 'no-repeat', 'contain', '100% 50%');
         $('.panel-default').css('box-shadow', '3px 3px 17px 6px #333333');
         $('.panel-heading').css('background-color', '#fd7500');
     } else if (/login/.test(path)) {
@@ -66,6 +66,10 @@ $(document).ready(function (event) {
         $('#arrow_left, #arrow_right').css('border-bottom-color', '#f9f9f9');
         $('.panel-default').css('box-shadow', '3px 3px 17px 6px #333333');
         $('.panel-heading').css('background-color', '#fd7500');
+    } else if (/rentals/.test(path)) {
+        backgroundLoginRegister('dibujo-mono', 'no-repeat', 'contain', '100% 50%');
+    } else if (/order/.test(path)) {
+        backgroundLoginRegister('dibujo-aguara-guazu', 'no-repeat', '45%', '100% 100%');
     }
 
     function setFrontendModal(ttModal, bodyModal) {

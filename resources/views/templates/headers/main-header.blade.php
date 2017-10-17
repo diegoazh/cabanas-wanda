@@ -32,7 +32,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Ver carta</a></li>
-                            <li><a href="#">Realizar pedido</a></li>
+                            <li><a href="{{ route('home.order.index') }}">Realizar pedido</a></li>
                             @if(Auth::check())
                                 @if(Auth::user()->isAdminOrEmployed())
                                     <li role="separator" class="divider"></li>

@@ -28,6 +28,7 @@
 
 <script>
     export default {
+        name: 'b3-modal-app',
         data() {
             return {
                 show: this.displayModal
