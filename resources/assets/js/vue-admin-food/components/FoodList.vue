@@ -18,7 +18,9 @@
                             <b class="text-capitalize">{{ comida.name }}</b>
                         </td>
                         <td>
-                            <a class="btn btn-link" role="button" @click="showDescription(comida)" data-toggle="modal" data-target="#ModalDescriptionFood">Descripción</a>
+                            <a class="btn btn-link" role="button" @click="showDescription(comida)" data-toggle="modal" data-target="#ModalDescriptionFood">
+                                <b><icon-app iconImage="eye"></icon-app> ver descripción</b>
+                            </a>
                         </td>
                         <td>
                             <span class="label label-primary"><b>{{ comida.type }}</b></span>

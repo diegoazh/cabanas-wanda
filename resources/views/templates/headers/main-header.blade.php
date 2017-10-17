@@ -31,8 +31,8 @@
                             <i class="fa fa-cutlery" aria-hidden="true"></i> Comidas <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
+                            <li><a href="#">Ver carta</a></li>
                             <li><a href="#">Realizar pedido</a></li>
-                            <li><a href="#">Ver pedidos</a></li>
                             @if(Auth::check())
                                 @if(Auth::user()->isAdminOrEmployed())
                                     <li role="separator" class="divider"></li>

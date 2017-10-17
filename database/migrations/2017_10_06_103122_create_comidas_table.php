@@ -15,10 +15,11 @@ class CreateComidasTable extends Migration
     {
         Schema::create('comidas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->enum('type', ['desayuno', 'almuerzo', 'merienda', 'cena']);
             $table->text('description');
             $table->double('price', 8, 2);
+            $table->string('image')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

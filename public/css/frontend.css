@@ -31,10 +31,6 @@
 body {
   background-color: #ffffff;
 }
-body .container-frontend {
-  height: 980px;
-  min-height: 980px;
-}
 body .container-frontend #header {
   height: 606.5px;
   min-height: 67%;
@@ -148,7 +144,9 @@ body .container-frontend #content {
   background-image: url(/images/dibujo-tucan.jpg?e20d6be01100e58edd0eab913446f14c);
   background-repeat: no-repeat;
   background-position: 5% 15%;
-  min-height: 50%;
+  height: 980px;
+  min-height: 980px;
+  max-height: 100%;
 }
 body .container-frontend #content hr.division {
   width: 70%;

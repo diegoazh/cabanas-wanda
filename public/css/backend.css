@@ -29,8 +29,6 @@ body {
   background-color: #FFEFD5;
 }
 body .container-backend {
-  height: 980px;
-  min-height: 980px;
   background-image: url(/images/cabanas2.jpg?ed6c34914de6a04575f4665e7ce28864);
   background-repeat: no-repeat;
   background-size: cover;
@@ -62,7 +60,9 @@ body .container-backend #header nav.navbar .container .navbar-collapse ul.navbar
   height: auto;
 }
 body .container-backend #content {
-  min-height: 97%;
+  height: 980px;
+  min-height: 980px;
+  max-height: 100%;
 }
 body .container-backend #content #main_menu .tt-menu {
   display: inline-block;
