@@ -19,9 +19,11 @@ class UsersTableSeeder extends Seeder
         $mantenimito = new User();
         $mantenimito->name = "Mantenimiento";
         $mantenimito->lastname = "Interno";
-        $mantenimito->dni = $faker->unique()->numberBetween(15000000, 45000000);
+        $mantenimito->dni = 00000001;
+        $mantenimito->country_id = 13;
         $mantenimito->email = "mantenimientoInterno@cabaniasdewanda.com.ar";
         $mantenimito->password = \Hash::make('Mantenimiento@Interno');
+        $mantenimito->confirmed = true;
         $mantenimito->save();
 
         for ($i = 0; $i < 60; $i++)
@@ -40,6 +42,7 @@ class UsersTableSeeder extends Seeder
             $user->password = \Hash::make('123456789');
             $user->type = $type[rand(0, 3)];
             $user->imageProfile = $faker->imageUrl();
+            $user->confirmed = true;
             $user->save();
         }
     }

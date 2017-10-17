@@ -17,6 +17,8 @@ class CreatePedidosTable extends Migration
             $table->bigIncrements('id');
             $table->dateTime('fecha_pedido');
             $table->bigInteger('rental_id')->unsigned();
+            $table->enum('estado', ['pendiente', 'preparandose', 'entregado'])->default('pendiente');
+            $table->boolean('pagado')->default(false);
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('rental_id')->references('id')->on('rentals');

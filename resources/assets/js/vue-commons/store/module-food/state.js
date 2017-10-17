@@ -4,6 +4,6 @@ export default {
     data: {
         create: false,
         food: [],
-        itemToUpdate: {},
+        itemToUpdate: null,
     }
 }

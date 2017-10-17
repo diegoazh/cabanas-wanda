@@ -178,7 +178,7 @@
                     this.price = this.itemToUpdate.price;
                     this.type = this.itemToUpdate.type;
                     this.description = this.itemToUpdate.description;
-                    this.setItemToUpdate({});
+                    this.setItemToUpdate(null);
                     this.isUpdate = true;
                 }
             },
