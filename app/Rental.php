@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Faker\Factory as Faker;
 
 class Rental extends Model
 {
@@ -54,8 +55,9 @@ class Rental extends Model
      **/
     public function createCodeReservation()
     {
+        $faker = Faker::create();
         $idUser = (!empty($this->attributes['user_id'])) ? $this->attributes['user_id'] : $this->attributes['passenger_id'];
-        return $this->attributes['cottage_id'] . $idUser . time();
+        return strtoupper($faker->lexify('??')) . $this->attributes['cottage_id'] . $idUser . strtoupper($faker->lexify('???')) . time();
     }
 
     /**

@@ -68148,13 +68148,28 @@ exports.default = {
 
         commit('setFood', food);
     },
-    setCreate: function setCreate(_ref3, bool) {
+    setItemToUpdate: function setItemToUpdate(_ref3, food) {
         var commit = _ref3.commit;
+
+        commit('setItemToUpdate', food);
+    },
+    setCreate: function setCreate(_ref4, bool) {
+        var commit = _ref4.commit;
 
         commit('setCreate', bool);
     },
-    getAllFood: function getAllFood(_ref4) {
-        var dispatch = _ref4.dispatch;
+    setItemsPerPage: function setItemsPerPage(_ref5, items) {
+        var commit = _ref5.commit;
+
+        commit('setItemsPerPage', items);
+    },
+    pagination: function pagination(_ref6, page) {
+        var commit = _ref6.commit;
+
+        commit('PAGINATE', page);
+    },
+    getAllFood: function getAllFood(_ref7) {
+        var dispatch = _ref7.dispatch;
 
         return new Promise(function (resolve, reject) {
             _appAxios.http.get('food/all').then(function (response) {
@@ -68165,7 +68180,7 @@ exports.default = {
             });
         });
     },
-    sendNewFood: function sendNewFood(context, payload) {
+    storeFood: function storeFood(context, payload) {
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('food/store', payload, {
                 params: {
@@ -68175,6 +68190,44 @@ exports.default = {
                 context.dispatch('auth/refreshToken', response.headers, { root: true });
                 resolve({
                     title: 'Creado',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                context.commit('auth/setQueryFinished', bool, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    },
+    updateFood: function updateFood(context, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.put('food/update/' + payload.id, payload, {
+                params: {
+                    token: context.rootState.auth.xhr.token
+                }
+            }).then(function (response) {
+                context.dispatch('auth/refreshToken', response.headers, { root: true });
+                resolve({
+                    title: 'Actualizado',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                context.commit('auth/setQueryFinished', bool, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    },
+    deleteFood: function deleteFood(context, id) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.delete('food/destroy/' + id, {
+                params: {
+                    token: context.rootState.auth.xhr.token
+                }
+            }).then(function (response) {
+                context.dispatch('auth/refreshToken', response.headers, { root: true });
+                resolve({
+                    title: 'Eliminado',
                     message: response.data.message,
                     useSwal: true
                 });
@@ -68255,6 +68308,15 @@ exports.default = {
     },
     setFood: function setFood(state, food) {
         state.data.food = food;
+    },
+    setItemToUpdate: function setItemToUpdate(state, food) {
+        state.data.itemToUpdate = food;
+    },
+    setItemsPerPage: function setItemsPerPage(state, items) {
+        state.itemsPerPage = items;
+    },
+    PAGINATE: function PAGINATE(state, page) {
+        state.page = page;
     }
 };
 
@@ -68270,9 +68332,12 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
+    page: 1,
+    itemsPerPage: 10,
     data: {
         create: false,
-        food: []
+        food: [],
+        itemToUpdate: {}
     }
 };
 

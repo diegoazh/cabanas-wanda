@@ -65,14 +65,19 @@ class ComidasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Comida  $menus
+     * @param  integer  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RequestComida $request, Comida $name)
+    public function update(RequestComida $request, $id)
     {
         $info = $request->all();
 
-        $menu = Comida::where('name', $name)->first();
+        if (!$menu = Comida::find($id)) {
+
+            return response()->json(['error' => 'No hemos podido encontrar un plato con ese nombre.'], 404);
+
+        }
+
         if(isset($info['name']) && !empty($info['name'])) { $menu->name = $info['name']; }
         if(isset($info['type']) && !empty($info['name'])) { $menu->type = $info['type']; }
         if(isset($info['description']) && !empty($info['name'])) { $menu->description = $info['description']; }
@@ -88,18 +93,18 @@ class ComidasController extends Controller
 
         }
 
-        return response()->json(compact($menu), 200);
+        return response()->json(['message' => 'El plato se actualizó correctamente'], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Comida  $menus
+     * @param  integer  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comida $name)
+    public function destroy($id)
     {
-        if (!$menu = $menu = Comida::where('name', $name)->first()) {
+        if (!$menu = Comida::find($id)) {
 
             return response()->json(['error' => 'No hemos podido encontrar un plato con ese nombre.'], 404);
 
@@ -118,6 +123,12 @@ class ComidasController extends Controller
         return response()->json(['message' => 'El plato fué eliminado correctamente.'], 200);
     }
 
+    /**
+     * Return all resources from DB.
+     *
+     *
+     *
+     */
     public function all()
     {
         $comidas = Comida::orderBy('type')->orderBy('name')->get();

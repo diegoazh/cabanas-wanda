@@ -32,11 +32,11 @@
                     <div class="form-group">
                         <label for="description" class="sr-only">Descripión:</label>
                         <div id="editormd">
-                            <textarea id="description" name="description" class="form-control"></textarea>
+                            <textarea id="description" name="description" class="form-control">{{ this.description }}</textarea>
                         </div>
                     </div>
                     <div class="text-center">
-                        <button class="btn btn-primary"><b>Crear plato <icon-app :iconImage="toogleeIcon" :aditionalClasses="addAditionalClasses"></icon-app></b></button>
+                        <button class="btn btn-primary"><b>{{ !isUpdate? 'Crear plato' : 'Actualizar plato' }} <icon-app :iconImage="toogleeIcon" :aditionalClasses="addAditionalClasses"></icon-app></b></button>
                     </div>
                 </div>
             </form>
@@ -58,11 +58,15 @@
                 name: '',
                 type: '',
                 price: '',
-                description: ''
+                description: '',
+                isUpdate: false,
+                idToUpdate: 0
             }
         },
         mounted() {
             const module = this;
+
+            this.setInfoToUpdate();
             window.jQuery(window.document).ready(function () {
                 window.appFood = {};
                 window.appFood.type = window.jQuery('#type').selectize({
@@ -85,6 +89,7 @@
                 });
 
                 window.appFood.type[0].selectize.on('change', module.setTypeFood);
+                module.type ? window.appFood.type[0].selectize.setValue(module.type) : '';
 
                 window.appFood.editor = editormd({
                     id      : 'editormd',
@@ -104,36 +109,61 @@
         },
         computed: {
             toogleeIcon() {
-                return this.queryFinished ? 'send' : 'spinner'
+                return this.queryFinished ? (this.isUpdate ? 'refresh' : 'send') : 'spinner'
             },
             addAditionalClasses() {
                 return this.queryFinished ? '' : 'fa-pulse fa-fw'
             },
             ...mapState('auth', {
                 queryFinished: state => state.xhr.queryFinished
+            }),
+            ...mapState('food', {
+                itemToUpdate: state => state.data.itemToUpdate
             })
         },
         methods: {
             sendDatatoBackend() {
                 this.setQueryFinished(false);
-                this.sendNewFood({
-                    name: this.name,
-                    price: this.price,
-                    type: this.type,
-                    description: this.description
-                }).then(data => {
-                    this.name = '';
-                    this.price = '';
-                    this.description = '';
-                    this.type = '';
-                    window.appFood.editor.clear();
-                    window.appFood.type[0].selectize.clear();
-                    this.setQueryFinished(true);
-                    VueNoti.success(data);
-                }).catch(error => {
-                    this.setQueryFinished(true);
-                    VueNoti.error(error);
-                });
+                if (!this.isUpdate) {
+                    this.storeFood({
+                        name: this.name,
+                        price: this.price,
+                        type: this.type,
+                        description: this.description
+                    }).then(data => {
+                        this.name = '';
+                        this.price = '';
+                        this.description = '';
+                        this.type = '';
+                        window.appFood.editor.clear();
+                        window.appFood.type[0].selectize.clear();
+                        this.setQueryFinished(true);
+                        VueNoti.success(data);
+                    }).catch(error => {
+                        this.setQueryFinished(true);
+                        VueNoti.error(error);
+                    });
+                } else {
+                    this.updateFood({
+                        id: this.idToUpdate,
+                        name: this.name,
+                        price: this.price,
+                        type: this.type,
+                        description: this.description
+                    }).then(data => {
+                        this.name = '';
+                        this.price = '';
+                        this.description = '';
+                        this.type = '';
+                        window.appFood.editor.clear();
+                        window.appFood.type[0].selectize.clear();
+                        this.setQueryFinished(true);
+                        VueNoti.success(data);
+                    }).catch(error => {
+                        this.setQueryFinished(true);
+                        VueNoti.error(error);
+                    });
+                }
             },
             setTypeFood() {
                 this.type = window.appFood.type[0].selectize.getValue();
@@ -141,7 +171,18 @@
             setTextMarkdown() {
                 this.description = window.appFood.editor.getMarkdown();
             },
-            ...mapActions('food', ['sendNewFood']),
+            setInfoToUpdate() {
+                if(this.itemToUpdate) {
+                    this.idToUpdate = this.itemToUpdate.id
+                    this.name = this.itemToUpdate.name;
+                    this.price = this.itemToUpdate.price;
+                    this.type = this.itemToUpdate.type;
+                    this.description = this.itemToUpdate.description;
+                    this.setItemToUpdate({});
+                    this.isUpdate = true;
+                }
+            },
+            ...mapActions('food', ['storeFood', 'updateFood', 'setItemToUpdate']),
             ...mapActions('auth', ['setQueryFinished'])
         }
     }

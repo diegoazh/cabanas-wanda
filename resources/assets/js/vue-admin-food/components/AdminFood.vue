@@ -3,6 +3,13 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <h1 class="text-center">Administración de platos</h1>
+                <div class="col-xs-12 col-sm-12 col-md-offset-9 col-md-3" v-if="!create">
+                    <div class="form-group">
+                        <label for="perPage" role="button">Por página</label>
+                        <input id="perPage" type="number" class="form-control" v-model="userItemsPerPage" @change="refreshItemsPerPage">
+                        <small class="text-primary">Presiona <kbd>Enter ↵</kbd></small>
+                    </div>
+                </div>
                 <div class="text-center">
                     <ul class="nav nav-tabs">
                         <li role="presentation" :class="{'active': !create}"><a @click="toogleCreate" role="button">Lista de platos</a></li>
@@ -26,6 +33,11 @@
     const { mapActions, mapState } = createNamespacedHelpers('food');
 
     export default {
+        data() {
+            return {
+                userItemsPerPage: 15,
+            }
+        },
         components: {
             'icon-app': Icon,
             'food-list-app': FoodList,
@@ -33,7 +45,6 @@
         },
         mounted() {
             this.defineXhrToken();
-            this.getFoodFromBackend();
         },
         computed: {
             ...mapState({
@@ -49,21 +60,20 @@
                     }
                 }, 1000);
             },
-            getFoodFromBackend() {
-                this.getAllFood()
-                    .then(response => {})
-                    .catch(error => {
-                        VueNoti.error({
-                            title: error.title,
-                            message: error.message,
-                            useSwal: false
-                        });
-                    });
-            },
             toogleCreate() {
                 this.setCreate(!this.create);
             },
-            ...mapActions(['setXhrToken', 'getAllFood', 'setCreate'])
+            refreshItemsPerPage() {
+                this.setItemsPerPage(+this.userItemsPerPage)
+                    .then(response => {
+                        this.pagination(1);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+
+            },
+            ...mapActions(['setXhrToken', 'setCreate', 'setItemsPerPage', 'pagination'])
         }
     }
 </script>

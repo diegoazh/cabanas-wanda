@@ -9,8 +9,17 @@ export default {
     setFood({commit}, food) {
         commit('setFood', food);
     },
+    setItemToUpdate({commit}, food) {
+        commit('setItemToUpdate', food);
+    },
     setCreate({commit}, bool) {
         commit('setCreate', bool);
+    },
+    setItemsPerPage({commit}, items) {
+        commit('setItemsPerPage', items);
+    },
+    pagination({commit}, page) {
+        commit('PAGINATE', page);
     },
     getAllFood({dispatch}) {
         return new Promise((resolve, reject) => {
@@ -22,7 +31,7 @@ export default {
                .catch(error => reject(handlingXhrErrors(error)));
         });
     },
-    sendNewFood(context, payload) {
+    storeFood(context, payload) {
         return new Promise((resolve, reject) => {
             http.post('food/store', payload, {
                 params: {
@@ -40,5 +49,43 @@ export default {
                 reject(handlingXhrErrors(error));
             });
         });
-    }
+    },
+    updateFood(context, payload) {
+        return new Promise((resolve, reject) => {
+            http.put('food/update/' + payload.id, payload, {
+                params: {
+                    token: context.rootState.auth.xhr.token,
+                }
+            }).then(response => {
+                context.dispatch('auth/refreshToken', response.headers, {root: true});
+                resolve({
+                    title: 'Actualizado',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(error => {
+                context.commit('auth/setQueryFinished', bool, {root: true});
+                reject(handlingXhrErrors(error));
+            });
+        });
+    },
+    deleteFood(context, id) {
+        return new Promise((resolve, reject) => {
+            http.delete('food/destroy/' + id, {
+                params: {
+                    token: context.rootState.auth.xhr.token,
+                }
+            }).then(response => {
+                context.dispatch('auth/refreshToken', response.headers, {root: true});
+                resolve({
+                    title: 'Eliminado',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(error => {
+                context.commit('auth/setQueryFinished', bool, {root: true});
+                reject(handlingXhrErrors(error));
+            });
+        });
+    },
 }

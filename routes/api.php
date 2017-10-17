@@ -30,5 +30,7 @@ Route::prefix('food')->group(function () {
 
     Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
         Route::post('store', 'Administration\ComidasController@store')->name('api.food.store');
+        Route::put('update/{id}', 'Administration\ComidasController@update')->name('api.food.update');
+        Route::delete('destroy/{id}', 'Administration\ComidasController@destroy')->name('api.food.destroy');
     });
 });

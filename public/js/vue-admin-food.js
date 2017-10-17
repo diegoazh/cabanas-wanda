@@ -1643,6 +1643,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -1669,6 +1676,12 @@ var _createNamespacedHelp = (0, _vuex.createNamespacedHelpers)('food'),
     mapState = _createNamespacedHelp.mapState;
 
 exports.default = {
+    data: function data() {
+        return {
+            userItemsPerPage: 15
+        };
+    },
+
     components: {
         'icon-app': _Icon2.default,
         'food-list-app': _FoodList2.default,
@@ -1676,7 +1689,6 @@ exports.default = {
     },
     mounted: function mounted() {
         this.defineXhrToken();
-        this.getFoodFromBackend();
     },
 
     computed: _extends({}, mapState({
@@ -1695,19 +1707,19 @@ exports.default = {
                 }
             }, 1000);
         },
-        getFoodFromBackend: function getFoodFromBackend() {
-            this.getAllFood().then(function (response) {}).catch(function (error) {
-                _vueNotifications2.default.error({
-                    title: error.title,
-                    message: error.message,
-                    useSwal: false
-                });
-            });
-        },
         toogleCreate: function toogleCreate() {
             this.setCreate(!this.create);
+        },
+        refreshItemsPerPage: function refreshItemsPerPage() {
+            var _this2 = this;
+
+            this.setItemsPerPage(+this.userItemsPerPage).then(function (response) {
+                _this2.pagination(1);
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
-    }, mapActions(['setXhrToken', 'getAllFood', 'setCreate']))
+    }, mapActions(['setXhrToken', 'setCreate', 'setItemsPerPage', 'pagination']))
 };
 
 /***/ }),
@@ -1790,11 +1802,15 @@ exports.default = {
             name: '',
             type: '',
             price: '',
-            description: ''
+            description: '',
+            isUpdate: false,
+            idToUpdate: 0
         };
     },
     mounted: function mounted() {
         var module = this;
+
+        this.setInfoToUpdate();
         window.jQuery(window.document).ready(function () {
             window.appFood = {};
             window.appFood.type = window.jQuery('#type').selectize({
@@ -1812,6 +1828,7 @@ exports.default = {
             });
 
             window.appFood.type[0].selectize.on('change', module.setTypeFood);
+            module.type ? window.appFood.type[0].selectize.setValue(module.type) : '';
 
             window.appFood.editor = editormd({
                 id: 'editormd',
@@ -1832,7 +1849,7 @@ exports.default = {
 
     computed: _extends({
         toogleeIcon: function toogleeIcon() {
-            return this.queryFinished ? 'send' : 'spinner';
+            return this.queryFinished ? this.isUpdate ? 'refresh' : 'send' : 'spinner';
         },
         addAditionalClasses: function addAditionalClasses() {
             return this.queryFinished ? '' : 'fa-pulse fa-fw';
@@ -1841,38 +1858,75 @@ exports.default = {
         queryFinished: function queryFinished(state) {
             return state.xhr.queryFinished;
         }
+    }), (0, _vuex.mapState)('food', {
+        itemToUpdate: function itemToUpdate(state) {
+            return state.data.itemToUpdate;
+        }
     })),
     methods: _extends({
         sendDatatoBackend: function sendDatatoBackend() {
             var _this = this;
 
             this.setQueryFinished(false);
-            this.sendNewFood({
-                name: this.name,
-                price: this.price,
-                type: this.type,
-                description: this.description
-            }).then(function (data) {
-                _this.name = '';
-                _this.price = '';
-                _this.description = '';
-                _this.type = '';
-                window.appFood.editor.clear();
-                window.appFood.type[0].selectize.clear();
-                _this.setQueryFinished(true);
-                _vueNotifications2.default.success(data);
-            }).catch(function (error) {
-                _this.setQueryFinished(true);
-                _vueNotifications2.default.error(error);
-            });
+            if (!this.isUpdate) {
+                this.storeFood({
+                    name: this.name,
+                    price: this.price,
+                    type: this.type,
+                    description: this.description
+                }).then(function (data) {
+                    _this.name = '';
+                    _this.price = '';
+                    _this.description = '';
+                    _this.type = '';
+                    window.appFood.editor.clear();
+                    window.appFood.type[0].selectize.clear();
+                    _this.setQueryFinished(true);
+                    _vueNotifications2.default.success(data);
+                }).catch(function (error) {
+                    _this.setQueryFinished(true);
+                    _vueNotifications2.default.error(error);
+                });
+            } else {
+                this.updateFood({
+                    id: this.idToUpdate,
+                    name: this.name,
+                    price: this.price,
+                    type: this.type,
+                    description: this.description
+                }).then(function (data) {
+                    _this.name = '';
+                    _this.price = '';
+                    _this.description = '';
+                    _this.type = '';
+                    window.appFood.editor.clear();
+                    window.appFood.type[0].selectize.clear();
+                    _this.setQueryFinished(true);
+                    _vueNotifications2.default.success(data);
+                }).catch(function (error) {
+                    _this.setQueryFinished(true);
+                    _vueNotifications2.default.error(error);
+                });
+            }
         },
         setTypeFood: function setTypeFood() {
             this.type = window.appFood.type[0].selectize.getValue();
         },
         setTextMarkdown: function setTextMarkdown() {
             this.description = window.appFood.editor.getMarkdown();
+        },
+        setInfoToUpdate: function setInfoToUpdate() {
+            if (this.itemToUpdate) {
+                this.idToUpdate = this.itemToUpdate.id;
+                this.name = this.itemToUpdate.name;
+                this.price = this.itemToUpdate.price;
+                this.type = this.itemToUpdate.type;
+                this.description = this.itemToUpdate.description;
+                this.setItemToUpdate({});
+                this.isUpdate = true;
+            }
         }
-    }, (0, _vuex.mapActions)('food', ['sendNewFood']), (0, _vuex.mapActions)('auth', ['setQueryFinished']))
+    }, (0, _vuex.mapActions)('food', ['storeFood', 'updateFood', 'setItemToUpdate']), (0, _vuex.mapActions)('auth', ['setQueryFinished']))
 };
 
 /***/ }),
@@ -1937,12 +1991,43 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
+
+var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
 
 var _vueMarkdown = __webpack_require__("./node_modules/vue-markdown/dist/vue-markdown.common.js");
 
 var _vueMarkdown2 = _interopRequireDefault(_vueMarkdown);
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
+var _vuePagination = __webpack_require__("./node_modules/vue-pagination-2/index.js");
 
 var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
 
@@ -1954,34 +2039,96 @@ var _Modal2 = _interopRequireDefault(_Modal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _createNamespacedHelp = (0, _vuex.createNamespacedHelpers)('food'),
-    mapState = _createNamespacedHelp.mapState;
-
 exports.default = {
     data: function data() {
         return {
+            pagChunk: 7,
             titleModal: '',
-            textContentModal: ''
+            textContentModal: '',
+            idToDelete: 0
         };
     },
 
     components: {
         VueMarkdown: _vueMarkdown2.default,
+        Pagination: _vuePagination.Pagination,
+        PaginationEvent: _vuePagination.PaginationEvent,
         'icon-app': _Icon2.default,
         'modal-app': _Modal2.default
     },
-    computed: _extends({}, mapState({
+    mounted: function mounted() {
+        this.getFoodFromBackend();
+    },
+
+    computed: _extends({
+        fiftheenElements: function fiftheenElements() {
+            var pageTo = this.page * this.itemsPerPage; // quince debería ser una variable
+            var pageFrom = this.page === 1 ? 0 : (this.page - 1) * this.itemsPerPage;
+            return this.food.filter(function (element, index, array) {
+                return index >= pageFrom && index < pageTo;
+            });
+        },
+        toogleIcon: function toogleIcon() {
+            return this.queryFinished ? 'trash' : 'spinner';
+        },
+        adiotionalClasses: function adiotionalClasses() {
+            return this.queryFinished ? '' : 'fa-pulse fa-fw';
+        }
+    }, (0, _vuex.mapState)('food', {
         food: function food(state) {
             return state.data.food;
+        },
+        page: function page(state) {
+            return state.page;
+        },
+        itemsPerPage: function itemsPerPage(state) {
+            return state.itemsPerPage;
+        }
+    }), (0, _vuex.mapState)('auth', {
+        queryFinished: function queryFinished(state) {
+            return state.xhr.queryFinished;
         }
     })),
-    methods: {
+    methods: _extends({
+        getFoodFromBackend: function getFoodFromBackend() {
+            this.getAllFood().then(function (response) {}).catch(function (error) {
+                _vueNotifications2.default.error({
+                    title: error.title,
+                    message: error.message,
+                    useSwal: false
+                });
+            });
+        },
         showDescription: function showDescription(comida) {
-            console.log(comida.description);
             this.titleModal = 'Descripticón plato: ' + comida.name;
             this.textContentModal = comida.description;
+        },
+        setIdToDelete: function setIdToDelete(comida) {
+            this.idToDelete = comida.id;
+            this.titleModal = 'Eliminar: ' + comida.name;
+        },
+        setEditItem: function setEditItem(comida) {
+            this.setItemToUpdate(comida);
+            this.setCreate(true);
+        },
+        deleteItem: function deleteItem() {
+            var _this = this;
+
+            this.setQueryFinished(false);
+            this.deleteFood(this.idToDelete).then(function (response) {
+                _this.food.map(function (element, index, array) {
+                    if (index === this.idToDelete) {
+                        array.splice(index, 1);
+                    }
+                });
+                _vueNotifications2.default.success(response);
+                _this.setQueryFinished(true);
+            }).catch(function (error) {
+                _vueNotifications2.default.error(error);
+                _this.setQueryFinished(true);
+            });
         }
-    }
+    }, (0, _vuex.mapActions)('food', ['getAllFood', 'deleteFood', 'setCreate', 'setItemToUpdate']), (0, _vuex.mapActions)('auth', ['setQueryFinished']))
 };
 
 /***/ }),
@@ -2062,6 +2209,15 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     data: function data() {
@@ -2069,8 +2225,97 @@ exports.default = {
             show: this.displayModal
         };
     },
+    mounted: function mounted() {
+        this.handledEventsToModal();
+    },
 
-    props: ['modalId', 'modalTitle', 'modalSize', 'txtBtnClose']
+    props: {
+        modalId: {
+            type: String,
+            default: 'b3-modal-id'
+        },
+        modalSize: {
+            type: String,
+            default: ''
+        },
+        modalTitle: {
+            type: String,
+            default: '',
+            required: true
+        },
+        showBtnSave: {
+            type: Boolean,
+            default: true
+        },
+        txtBtnSave: {
+            type: String,
+            default: 'Guardar'
+        },
+        actionBtnSave: {
+            type: Function,
+            default: null
+        },
+        typeBtnSave: {
+            type: String,
+            default: 'btn-primary'
+        },
+        showBtnClose: {
+            type: Boolean,
+            default: true
+        },
+        txtBtnClose: {
+            type: String,
+            default: 'Cerrar'
+        },
+        actionBtnClose: {
+            type: Function,
+            default: null
+        },
+        typeBtnClose: {
+            type: String,
+            default: 'btn-default'
+        },
+        onModalShown: {
+            type: Function,
+            default: null
+        },
+        onModalHidden: {
+            type: Function,
+            default: null
+        }
+    },
+    computed: {
+        setActionSave: function setActionSave() {
+            if (this.actionBtnSave) {
+                return this.actionBtnSave;
+            }
+            return function () {};
+        },
+        setActionClose: function setActionClose() {
+            if (this.actionBtnClose) {
+                return this.actionBtnClose;
+            }
+            return function () {};
+        }
+    },
+    methods: {
+        handledEventsToModal: function handledEventsToModal() {
+            var module = this;
+            window.jQuery(window.document).ready(function (e) {
+                window.jQuery('#' + module.modalId).on('shown.bs.modal', function (e) {
+                    if (module.onModalShown) {
+                        module.onModalShown();
+                    }
+                });
+
+                window.jQuery('#' + module.modalId).on('hidden.bs.modal', function (e) {
+                    if (module.onModalHidden) {
+                        module.onModalHidden();
+                    }
+                });
+            });
+        }
+    }
 };
 
 /***/ }),
@@ -5030,7 +5275,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -5045,7 +5290,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -5075,7 +5320,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -5090,7 +5335,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -29986,7 +30231,7 @@ var render = function() {
           _c(
             "tbody",
             [
-              _vm._l(_vm.food, function(comida) {
+              _vm._l(_vm.fiftheenElements, function(comida) {
                 return [
                   _c("tr", [
                     _c("td", [
@@ -30035,20 +30280,38 @@ var render = function() {
                     _c("td", [
                       _c(
                         "button",
-                        { staticClass: "btn btn-warning btn-sm" },
+                        {
+                          staticClass: "btn btn-warning btn-sm",
+                          on: {
+                            click: function($event) {
+                              _vm.setEditItem(comida)
+                            }
+                          }
+                        },
                         [
                           _c("icon-app", { attrs: { iconImage: "edit" } }),
-                          _vm._v(" Editar")
+                          _vm._v(" Editar\n                        ")
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
                         "button",
-                        { staticClass: "btn btn-danger btn-sm" },
+                        {
+                          staticClass: "btn btn-danger btn-sm",
+                          attrs: {
+                            "data-toggle": "modal",
+                            "data-target": "#ModalDeleteFood"
+                          },
+                          on: {
+                            click: function($event) {
+                              _vm.setIdToDelete(comida)
+                            }
+                          }
+                        },
                         [
                           _c("icon-app", { attrs: { iconImage: "trash" } }),
-                          _vm._v(" Eliminar")
+                          _vm._v(" Eliminar\n                        ")
                         ],
                         1
                       )
@@ -30064,16 +30327,108 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c(
+          "div",
+          { staticClass: "text-center" },
+          [
+            _c("pagination", {
+              attrs: {
+                for: "food",
+                records: _vm.food.length,
+                "per-page": _vm.itemsPerPage,
+                chunk: _vm.pagChunk,
+                vuex: true,
+                "count-text":
+                  "Listando {from} a {to} de {count} items|{count} items|Un item"
+              }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
           "modal-app",
           {
             attrs: {
               modalId: "ModalDescriptionFood",
               modalTitle: _vm.titleModal,
+              showBtnSave: false,
               txtBtnClose: "Cerrar"
             }
           },
           [_c("vue-markdown", { attrs: { source: _vm.textContentModal } })],
           1
+        ),
+        _vm._v(" "),
+        _c(
+          "modal-app",
+          { attrs: { modalId: "ModalDeleteFood", modalTitle: _vm.titleModal } },
+          [
+            _c("div", { staticClass: "alert alert-warning" }, [
+              _c(
+                "p",
+                [
+                  _c("icon-app", {
+                    attrs: { iconImage: "exclamation-triangle" }
+                  }),
+                  _vm._v(" "),
+                  _c("icon-app", {
+                    attrs: {
+                      iconImage: "question",
+                      aditionalClasses: "fa-rotate-180"
+                    }
+                  }),
+                  _vm._v("Esta seguro que desea realizar esta operación"),
+                  _c("icon-app", { attrs: { iconImage: "question" } })
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "text-danger" }, [
+              _vm._v("Esto eliminará de manera permanente el plato.")
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { attrs: { slot: "b3-modal-footer" }, slot: "b3-modal-footer" },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    on: {
+                      click: function($event) {
+                        _vm.deleteItem()
+                      }
+                    }
+                  },
+                  [
+                    _c("icon-app", {
+                      attrs: {
+                        iconImage: _vm.toogleIcon,
+                        aditionalClasses: _vm.adiotionalClasses
+                      }
+                    }),
+                    _vm._v(" Eliminar\n                ")
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-dfault",
+                    attrs: { "data-dismiss": "modal" }
+                  },
+                  [
+                    _c("icon-app", { attrs: { iconImage: "close" } }),
+                    _vm._v(" Cerrar\n                ")
+                  ],
+                  1
+                )
+              ]
+            )
+          ]
         )
       ],
       1
@@ -30158,33 +30513,72 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "modal-content" }, [
-            _c("div", { staticClass: "modal-header bg-dark" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "h4",
-                { staticClass: "modal-title", attrs: { id: "myModalLabel" } },
-                [_vm._v(_vm._s(_vm.modalTitle))]
-              )
-            ]),
-            _vm._v(" "),
             _c(
               "div",
-              { staticClass: "modal-body bg-light" },
-              [_vm._t("default")],
+              { staticClass: "modal-header" },
+              [
+                _vm._t("b3-modal-header", [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "h4",
+                    {
+                      staticClass: "modal-title",
+                      attrs: { id: "myModalLabel" }
+                    },
+                    [_vm._v(_vm._s(_vm.modalTitle))]
+                  )
+                ])
+              ],
               2
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "modal-footer bg-dark" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-default",
-                  attrs: { type: "button", "data-dismiss": "modal" }
-                },
-                [_vm._v(_vm._s(_vm.txtBtnClose))]
-              )
-            ])
+            _c("div", { staticClass: "modal-body" }, [_vm._t("default")], 2),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "modal-footer" },
+              [
+                _vm._t("b3-modal-footer", [
+                  _vm.showBtnClose
+                    ? _c(
+                        "button",
+                        {
+                          class: ["btn", _vm.typeBtnClose],
+                          attrs: { type: "button", "data-dismiss": "modal" },
+                          on: { click: _vm.setActionClose }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(_vm.txtBtnClose) +
+                              "\n                    "
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.showBtnSave
+                    ? _c(
+                        "button",
+                        {
+                          class: ["btn", _vm.typeBtnSave],
+                          attrs: { type: "button" },
+                          on: { click: _vm.setActionSave }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(_vm.txtBtnSave) +
+                              "\n                    "
+                          )
+                        ]
+                      )
+                    : _vm._e()
+                ])
+              ],
+              2
+            )
           ])
         ]
       )
@@ -30359,14 +30753,35 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
-            _vm._m(2),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                { staticClass: "sr-only", attrs: { for: "description" } },
+                [_vm._v("Descripión:")]
+              ),
+              _vm._v(" "),
+              _c("div", { attrs: { id: "editormd" } }, [
+                _c(
+                  "textarea",
+                  {
+                    staticClass: "form-control",
+                    attrs: { id: "description", name: "description" }
+                  },
+                  [_vm._v(_vm._s(this.description))]
+                )
+              ])
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "text-center" }, [
               _c("button", { staticClass: "btn btn-primary" }, [
                 _c(
                   "b",
                   [
-                    _vm._v("Crear plato "),
+                    _vm._v(
+                      _vm._s(
+                        !_vm.isUpdate ? "Crear plato" : "Actualizar plato"
+                      ) + " "
+                    ),
                     _c("icon-app", {
                       attrs: {
                         iconImage: _vm.toogleeIcon,
@@ -30413,23 +30828,6 @@ var staticRenderFns = [
         })
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticClass: "sr-only", attrs: { for: "description" } }, [
-        _vm._v("Descripión:")
-      ]),
-      _vm._v(" "),
-      _c("div", { attrs: { id: "editormd" } }, [
-        _c("textarea", {
-          staticClass: "form-control",
-          attrs: { id: "description", name: "description" }
-        })
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -30459,6 +30857,45 @@ var render = function() {
           _c("h1", { staticClass: "text-center" }, [
             _vm._v("Administración de platos")
           ]),
+          _vm._v(" "),
+          !_vm.create
+            ? _c(
+                "div",
+                { staticClass: "col-xs-12 col-sm-12 col-md-offset-9 col-md-3" },
+                [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "perPage", role: "button" } }, [
+                      _vm._v("Por página")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.userItemsPerPage,
+                          expression: "userItemsPerPage"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { id: "perPage", type: "number" },
+                      domProps: { value: _vm.userItemsPerPage },
+                      on: {
+                        change: _vm.refreshItemsPerPage,
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.userItemsPerPage = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._m(0)
+                  ])
+                ]
+              )
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "text-center" }, [
             _c("ul", { staticClass: "nav nav-tabs" }, [
@@ -30507,7 +30944,17 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("small", { staticClass: "text-primary" }, [
+      _vm._v("Presiona "),
+      _c("kbd", [_vm._v("Enter ↵")])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -31155,6 +31602,303 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 return VueNotifications;
 }));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-pagination-2/compiled/Pagination.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var template = __webpack_require__("./node_modules/vue-pagination-2/compiled/template.js");
+var bus = __webpack_require__("./node_modules/vue-pagination-2/compiled/bus.js");
+
+module.exports = {
+  render: template(),
+  props: {
+    for: {
+      type: String,
+      required: true
+    },
+    records: {
+      type: Number,
+      required: true
+    },
+    perPage: {
+      type: Number,
+      required: false,
+      default: 25
+    },
+    chunk: {
+      type: Number,
+      required: false,
+      default: 10
+    },
+    countText: {
+      type: String,
+      required: false,
+      default: 'Showing {from} to {to} of {count} records|{count} records|One record'
+    },
+    vuex: {
+      type: Boolean
+    }
+  },
+  created: function created() {
+
+    if (!this.vuex) return;
+
+    var name = this.for;
+
+    if (this.$store.state[name]) return;
+
+    this.$store.registerModule(this.for, {
+      state: {
+        page: 1
+      },
+      mutations: _defineProperty({}, name + '/PAGINATE', function undefined(state, page) {
+        state.page = page;
+      })
+    });
+  },
+  data: function data() {
+    return {
+      Page: 1
+    };
+  },
+  computed: {
+    page: function page() {
+      return this.vuex ? this.$store.state[this.for].page : this.Page;
+    },
+
+    pages: function pages() {
+      if (!this.records) return [];
+
+      return range(this.paginationStart, this.pagesInCurrentChunk);
+    },
+    totalPages: function totalPages() {
+      return this.records ? Math.ceil(this.records / this.perPage) : 1;
+    },
+    totalChunks: function totalChunks() {
+      return Math.ceil(this.totalPages / this.chunk);
+    },
+    currentChunk: function currentChunk() {
+      return Math.ceil(this.page / this.chunk);
+    },
+    paginationStart: function paginationStart() {
+      return (this.currentChunk - 1) * this.chunk + 1;
+    },
+    pagesInCurrentChunk: function pagesInCurrentChunk() {
+
+      return this.paginationStart + this.chunk <= this.totalPages ? this.chunk : this.totalPages - this.paginationStart + 1;
+    },
+    count: function count() {
+
+      var from = (this.page - 1) * this.perPage + 1;
+      var to = this.page == this.totalPages ? this.records : from + this.perPage - 1;
+      var parts = this.countText.split('|');
+      var i = Math.min(this.records == 1 ? 2 : this.totalPages == 1 ? 1 : 0, parts.length - 1);
+
+      return parts[i].replace('{count}', this.records).replace('{from}', from).replace('{to}', to);
+    }
+  },
+  methods: {
+    setPage: function setPage(page) {
+      if (this.allowedPage(page)) {
+        this.paginate(page);
+      }
+    },
+    paginate: function paginate(page) {
+      if (this.vuex) {
+        this.$store.commit(this.for + '/PAGINATE', page);
+      } else {
+        this.Page = page;
+        bus.$emit('vue-pagination::' + this.for, page);
+      }
+    },
+
+    next: function next() {
+      return this.setPage(this.page + 1);
+    },
+    prev: function prev() {
+      return this.setPage(this.page - 1);
+    },
+    nextChunk: function nextChunk() {
+      return this.setChunk(1);
+    },
+    prevChunk: function prevChunk() {
+      return this.setChunk(-1);
+    },
+    setChunk: function setChunk(direction) {
+      this.setPage((this.currentChunk - 1 + direction) * this.chunk + 1);
+    },
+    allowedPage: function allowedPage(page) {
+      return page >= 1 && page <= this.totalPages;
+    },
+    allowedChunk: function allowedChunk(direction) {
+      return direction == 1 && this.currentChunk < this.totalChunks || direction == -1 && this.currentChunk > 1;
+    },
+    allowedPageClass: function allowedPageClass(direction) {
+      return this.allowedPage(direction) ? '' : 'disabled';
+    },
+    allowedChunkClass: function allowedChunkClass(direction) {
+      return this.allowedChunk(direction) ? '' : 'disabled';
+    },
+    activeClass: function activeClass(page) {
+      return this.page == page ? 'active' : '';
+    }
+  }
+};
+
+function range(start, count) {
+  return Array.apply(0, Array(count)).map(function (element, index) {
+    return index + start;
+  });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-pagination-2/compiled/bus.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var bus = new _vue2.default();
+
+module.exports = bus;
+
+/***/ }),
+
+/***/ "./node_modules/vue-pagination-2/compiled/template.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function () {
+  return function (h) {
+
+    var items = [];
+
+    this.pages.map(function (page) {
+      items.push(h(
+        "li",
+        { "class": "VuePagination__pagination-item page-item " + this.activeClass(page) },
+        [h(
+          "a",
+          { "class": "page-link", attrs: { role: "button"
+            },
+            on: {
+              click: this.setPage.bind(this, page)
+            }
+          },
+          [page]
+        )]
+      ));
+    }.bind(this));
+
+    return h(
+      "div",
+      { "class": "VuePagination" },
+      [h(
+        "ul",
+        {
+          directives: [{
+            name: "show",
+            value: this.totalPages > 1
+          }],
+
+          "class": "pagination VuePagination__pagination" },
+        [h(
+          "li",
+          { "class": "VuePagination__pagination-item page-item VuePagination__pagination-item-prev-chunk " + this.allowedChunkClass(-1) },
+          [h(
+            "a",
+            { "class": "page-link", attrs: { href: "javascript:void(0);"
+              },
+              on: {
+                click: this.setChunk.bind(this, -1)
+              }
+            },
+            ["<<"]
+          )]
+        ), h(
+          "li",
+          { "class": "VuePagination__pagination-item page-item VuePagination__pagination-item-prev-page " + this.allowedPageClass(this.page - 1) },
+          [h(
+            "a",
+            { "class": "page-link", attrs: { href: "javascript:void(0);"
+              },
+              on: {
+                click: this.prev.bind(this)
+              }
+            },
+            ["<"]
+          )]
+        ), items, h(
+          "li",
+          { "class": "VuePagination__pagination-item page-item VuePagination__pagination-item-next-page " + this.allowedPageClass(this.page + 1) },
+          [h(
+            "a",
+            { "class": "page-link", attrs: { href: "javascript:void(0);"
+              },
+              on: {
+                click: this.next.bind(this)
+              }
+            },
+            [">"]
+          )]
+        ), h(
+          "li",
+          { "class": "VuePagination__pagination-item page-item VuePagination__pagination-item-next-chunk " + this.allowedChunkClass(1) },
+          [h(
+            "a",
+            { "class": "page-link", attrs: { href: "javascript:void(0);"
+              },
+              on: {
+                click: this.setChunk.bind(this, 1)
+              }
+            },
+            [">>"]
+          )]
+        )]
+      ), h(
+        "p",
+        {
+          directives: [{
+            name: "show",
+            value: parseInt(this.records)
+          }],
+
+          "class": "VuePagination__count" },
+        [this.count]
+      )]
+    );
+  };
+};
+
+/***/ }),
+
+/***/ "./node_modules/vue-pagination-2/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+var Pagination = __webpack_require__("./node_modules/vue-pagination-2/compiled/Pagination.js");
+var PaginationEvent = __webpack_require__("./node_modules/vue-pagination-2/compiled/bus.js");
+
+module.exports = {
+  Pagination:Pagination,
+  PaginationEvent:PaginationEvent
+}
 
 
 /***/ }),
@@ -43271,13 +44015,28 @@ exports.default = {
 
         commit('setFood', food);
     },
-    setCreate: function setCreate(_ref3, bool) {
+    setItemToUpdate: function setItemToUpdate(_ref3, food) {
         var commit = _ref3.commit;
+
+        commit('setItemToUpdate', food);
+    },
+    setCreate: function setCreate(_ref4, bool) {
+        var commit = _ref4.commit;
 
         commit('setCreate', bool);
     },
-    getAllFood: function getAllFood(_ref4) {
-        var dispatch = _ref4.dispatch;
+    setItemsPerPage: function setItemsPerPage(_ref5, items) {
+        var commit = _ref5.commit;
+
+        commit('setItemsPerPage', items);
+    },
+    pagination: function pagination(_ref6, page) {
+        var commit = _ref6.commit;
+
+        commit('PAGINATE', page);
+    },
+    getAllFood: function getAllFood(_ref7) {
+        var dispatch = _ref7.dispatch;
 
         return new Promise(function (resolve, reject) {
             _appAxios.http.get('food/all').then(function (response) {
@@ -43288,7 +44047,7 @@ exports.default = {
             });
         });
     },
-    sendNewFood: function sendNewFood(context, payload) {
+    storeFood: function storeFood(context, payload) {
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('food/store', payload, {
                 params: {
@@ -43298,6 +44057,44 @@ exports.default = {
                 context.dispatch('auth/refreshToken', response.headers, { root: true });
                 resolve({
                     title: 'Creado',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                context.commit('auth/setQueryFinished', bool, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    },
+    updateFood: function updateFood(context, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.put('food/update/' + payload.id, payload, {
+                params: {
+                    token: context.rootState.auth.xhr.token
+                }
+            }).then(function (response) {
+                context.dispatch('auth/refreshToken', response.headers, { root: true });
+                resolve({
+                    title: 'Actualizado',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                context.commit('auth/setQueryFinished', bool, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    },
+    deleteFood: function deleteFood(context, id) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.delete('food/destroy/' + id, {
+                params: {
+                    token: context.rootState.auth.xhr.token
+                }
+            }).then(function (response) {
+                context.dispatch('auth/refreshToken', response.headers, { root: true });
+                resolve({
+                    title: 'Eliminado',
                     message: response.data.message,
                     useSwal: true
                 });
@@ -43378,6 +44175,15 @@ exports.default = {
     },
     setFood: function setFood(state, food) {
         state.data.food = food;
+    },
+    setItemToUpdate: function setItemToUpdate(state, food) {
+        state.data.itemToUpdate = food;
+    },
+    setItemsPerPage: function setItemsPerPage(state, items) {
+        state.itemsPerPage = items;
+    },
+    PAGINATE: function PAGINATE(state, page) {
+        state.page = page;
     }
 };
 
@@ -43393,9 +44199,12 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
+    page: 1,
+    itemsPerPage: 10,
     data: {
         create: false,
-        food: []
+        food: [],
+        itemToUpdate: {}
     }
 };
 
