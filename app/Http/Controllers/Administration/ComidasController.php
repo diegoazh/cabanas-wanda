@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Administration;
 use JWTAuth;
 use App\Comida;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use App\Http\Requests\RequestComida;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,9 @@ class ComidasController extends Controller
             }
         }
 
-        return view('backend.comidas')->with(compact('token'));
+        Cookie::queue('info_one', $token, 180, null, null, false, false); // el último parametro es importante sino la cookie no es accesible desde el cliente $httpOnly = true es el default
+
+        return view('backend.comidas');
     }
 
     /**

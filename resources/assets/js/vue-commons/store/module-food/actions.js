@@ -3,8 +3,6 @@ import { http, handlingXhrErrors } from '../../axios/app-axios'
 export default {
     setXhrToken({commit}, token) {
         commit('auth/setToken', token, {root: true});
-        window.clearTimeout(window.verifyToken);
-        delete window.verifyToken;
     },
     setFood({commit}, food) {
         commit('setFood', food);

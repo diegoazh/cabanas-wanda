@@ -1683,7 +1683,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     data: function data() {
         return {
-            forCode: true
+            forCode: true,
+            reserva: '',
+            dni: '',
+            email: ''
         };
     },
 
@@ -1698,9 +1701,18 @@ exports.default = {
     methods: {
         toggleIcon: function toggleIcon() {
             this.forCode = !this.forCode;
-        }
+        },
+        sendFindParameters: function sendFindParameters() {}
     }
 }; //
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7178,6 +7190,105 @@ if (GlobalVue) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-cookies/vue-cookies.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Vue Cookies v1.5.4
+ * https://github.com/cmp-cc/vue-cookies
+ *
+ * Copyright 2016, cmp-cc
+ * Released under the MIT license
+ */
+
+(function() {
+  var VueCookies = {
+    // install of Vue
+    install: function(Vue) {
+      Vue.prototype.$cookies = this
+      Vue.cookies = this
+    },
+    get: function(key) {
+      return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+    },
+    set: function(key, value, expireTimes, path, domain, secure) {
+      if (!key) {
+        throw new Error("cookie name is not find in first argument")
+      }else if(/^(?:expires|max\-age|path|domain|secure)$/i.test(key)){
+        throw new Error("cookie key name illegality ,Cannot be set to ['expires','max-age','path','domain','secure']\t","current key name: "+key);
+      }
+      var _expires = "; max-age=86400"; // default expire time for 1 day
+      if (expireTimes) {
+        switch (expireTimes.constructor) {
+          case Number:
+            if(expireTimes === Infinity || expireTimes === -1) _expires = "; expires=Fri, 31 Dec 9999 23:59:59 GMT"
+            else _expires = "; max-age=" + expireTimes;
+            break;
+          case String:
+            if (/^(?:\d{1,}(y|m|d|h|min|s))$/i.test(expireTimes)) {
+              // get capture number group
+              var _expireTime = expireTimes.replace(/^(\d{1,})(?:y|m|d|h|min|s)$/i, "$1");
+              // get capture type group , to lower case
+              switch (expireTimes.replace(/^(?:\d{1,})(y|m|d|h|min|s)$/i, "$1").toLowerCase()) {
+                // Frequency sorting
+                case 'm':  _expires = "; max-age=" + +_expireTime * 259200; break; // 60 * 60 * 24 * 30
+                case 'd':  _expires = "; max-age=" + +_expireTime * 86400; break; // 60 * 60 * 24
+                case 'h': _expires = "; max-age=" + +_expireTime * 3600; break; // 60 * 60
+                case 'min':  _expires = "; max-age=" + +_expireTime * 60; break; // 60
+                case 's': _expires = "; max-age=" + _expireTime; break;
+                case 'y': _expires = "; max-age=" + +_expireTime * 31104000; break; // 60 * 60 * 24 * 30 * 12            
+                default: new Error("unknown exception of 'set operation'");
+              }
+            } else {
+              _expires = "; expires=" + expireTimes;
+            }
+            break;
+          case Date:
+            _expires = "; expires=" + expireTimes.toUTCString();
+            break;
+        }
+      }
+      document.cookie = encodeURIComponent(key) + "=" + encodeURIComponent(value) + _expires + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : "") + (secure ? "; secure" : "");
+      return this;
+    },
+    remove: function(key, path, domain) {
+      if (!key || !this.isKey(key)) {
+        return false;
+      }
+      document.cookie = encodeURIComponent(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : "");
+      return true;
+    },
+    isKey: function(key) {
+      return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+    },
+    keys: /* optional method: you can safely remove it! */ function() {
+      var _keys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+      for (var _index = 0; _index < _keys.length; _index++) {
+        _keys[_index] = decodeURIComponent(_keys[_index]);
+      }
+      return _keys;
+    }
+  }
+
+  if (true) {
+    module.exports = VueCookies;
+  } else if (typeof define == "function" && define.amd) {
+    define([], function() {
+      return VueCookies;
+    })
+  } else if (window.Vue) {
+    Vue.use(VueCookies);
+  }
+  // vue-cookies can exist independently,no dependencies library
+  if(typeof window!=="undefined"){
+        window.$cookies = VueCookies;
+    }
+
+
+})()
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/component-normalizer.js":
 /***/ (function(module, exports) {
 
@@ -7360,9 +7471,9 @@ var render = function() {
             "span",
             {
               class: {
-                "text-deleted": this.forCode,
-                "text-muted": this.forCode,
-                "text-primary": !this.forCode
+                "text-deleted": _vm.forCode,
+                "text-muted": _vm.forCode,
+                "text-primary": !_vm.forCode
               }
             },
             [_vm._v("DNI + email")]
@@ -7387,9 +7498,9 @@ var render = function() {
             "span",
             {
               class: {
-                "text-deleted": !this.forCode,
-                "text-muted": !this.forCode,
-                "text-primary": this.forCode
+                "text-deleted": !_vm.forCode,
+                "text-muted": !_vm.forCode,
+                "text-primary": _vm.forCode
               }
             },
             [_vm._v("Código de reserva")]
@@ -7397,43 +7508,144 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("form", { staticClass: "form-inline" }, [
-        _c("fieldset", [
-          _c("legend", [_vm._v("Código de reserva")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c(
-              "label",
-              { staticClass: "sr-only", attrs: { for: "code-reserva" } },
-              [_vm._v("Código de reserva")]
-            ),
+      _c(
+        "form",
+        {
+          staticClass: "form-inline",
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              _vm.sendFindParameters($event)
+            }
+          }
+        },
+        [
+          _c("fieldset", [
+            _c("legend", [
+              _vm._v(_vm._s(_vm.forCode ? "Código de reserva" : "DNI + email"))
+            ]),
             _vm._v(" "),
-            _c("div", { staticClass: "input-group" }, [
+            _c("div", { staticClass: "form-group" }, [
               _c(
-                "div",
-                { staticClass: "input-group-addon" },
-                [_c("icon-app", { attrs: { iconImage: "barcode" } })],
-                1
+                "label",
+                {
+                  staticClass: "sr-only",
+                  attrs: { for: _vm.forCode ? "codigo-reserva" : "dni-reseva" }
+                },
+                [_vm._v("Código de reserva")]
               ),
               _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", id: "code-reserva" }
-              })
+              _c("div", { staticClass: "input-group" }, [
+                _c(
+                  "div",
+                  { staticClass: "input-group-addon" },
+                  [
+                    _c("icon-app", {
+                      attrs: { iconImage: _vm.forCode ? "barcode" : "hashtag" }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm.forCode
+                  ? _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.reserva,
+                          expression: "reserva"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "codigo-reserva" },
+                      domProps: { value: _vm.reserva },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.reserva = $event.target.value
+                        }
+                      }
+                    })
+                  : _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.dni,
+                          expression: "dni"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "number", id: "dni-reseva" },
+                      domProps: { value: _vm.dni },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.dni = $event.target.value
+                        }
+                      }
+                    })
+              ])
             ]),
+            _vm._v(" "),
+            !_vm.forCode
+              ? _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    { staticClass: "sr-only", attrs: { for: "emal-reserva" } },
+                    [_vm._v("Email")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group" }, [
+                    _c(
+                      "div",
+                      { staticClass: "input-group-addon" },
+                      [_c("icon-app", { attrs: { iconImage: "at" } })],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.email,
+                          expression: "email"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "email", id: "emal-reserva" },
+                      domProps: { value: _vm.email },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.email = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "button",
               { staticClass: "btn btn-primary" },
               [
                 _c("icon-app", { attrs: { iconImage: "search" } }),
-                _vm._v("Buscar")
+                _vm._v(" Buscar")
               ],
               1
             )
           ])
-        ])
-      ])
+        ]
+      )
     ])
   ])
 }
@@ -19407,8 +19619,6 @@ exports.default = {
         var commit = _ref.commit;
 
         commit('auth/setToken', token, { root: true });
-        window.clearTimeout(window.verifyToken);
-        delete window.verifyToken;
     },
     setFood: function setFood(_ref2, food) {
         var commit = _ref2.commit;
@@ -19616,6 +19826,16 @@ exports.default = {
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
+
+exports.default = {
+    findReserva: function findReserva(cntx, payload) {}
+};
+
 /***/ }),
 
 /***/ "./resources/assets/js/vue-commons/store/module-orders/getters.js":
@@ -19623,6 +19843,11 @@ exports.default = {
 
 "use strict";
 
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
 
 /***/ }),
 
@@ -19671,6 +19896,11 @@ var moduleOrders = exports.moduleOrders = {
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
 /***/ }),
 
 /***/ "./resources/assets/js/vue-commons/store/module-orders/state.js":
@@ -19678,6 +19908,11 @@ var moduleOrders = exports.moduleOrders = {
 
 "use strict";
 
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
 
 /***/ }),
 
@@ -19697,10 +19932,8 @@ exports.default = {
     setBasicInfo: function setBasicInfo(_ref, payload) {
         var commit = _ref.commit;
 
-        commit('setIsAdmin', payload.basicOne);
-        commit('setUserLogged', payload.basicTwo);
-        window.clearTimeout(window.verify);
-        delete window.verify;
+        commit('setIsAdmin', payload.infoOne);
+        commit('setUserLogged', payload.infoTwo);
     },
     setIsForCottage: function setIsForCottage(_ref2, bool) {
         var commit = _ref2.commit;
@@ -20167,13 +20400,17 @@ var _vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
-
-var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
-
 var _vTooltip = __webpack_require__("./node_modules/v-tooltip/dist/v-tooltip.esm.js");
 
 var _vTooltip2 = _interopRequireDefault(_vTooltip);
+
+var _vueCookies = __webpack_require__("./node_modules/vue-cookies/vue-cookies.js");
+
+var _vueCookies2 = _interopRequireDefault(_vueCookies);
+
+var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
+
+var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
 
 var _store = __webpack_require__("./resources/assets/js/vue-commons/store/store.js");
 
@@ -20187,7 +20424,7 @@ var _Orders2 = _interopRequireDefault(_Orders);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_vue2.default.use(_vueNotifications2.default, _notifications.optionsIzi).use(_vTooltip2.default);
+_vue2.default.use(_vueNotifications2.default, _notifications.optionsIzi).use(_vueCookies2.default).use(_vTooltip2.default);
 
 var ordersApp = new _vue2.default({
     el: '#vue-order-app',

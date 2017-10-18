@@ -6,6 +6,7 @@ use App\Country;
 use App\Passenger;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use JWTAuth;
 use App\Rental;
@@ -24,18 +25,21 @@ class RentalsController extends Controller
     public function index()
     {
         $administration = 0;
-        $user = '';
+        $email = 0;
 
         if (Auth::check()) {
             if (Auth::user()->isAdmin() || Auth::user()->isEmployed()) {
                 $administration = true;
-                $user = Auth::user()->email;
+                $email = Auth::user()->email;
             } else {
-                $user = Auth::user()->email;
+                $email = Auth::user()->email;
             }
         }
 
-        return view('frontend.rentals-index')->with(compact('administration', 'user'));
+        Cookie::queue('info_one', $administration, 180, null, null, false, false); // el último parametro es importante sino la cookie no es accesible desde el cliente $httpOnly = true es el default
+        Cookie::queue('info_two', $email, 180, null, null, false, false);
+
+        return view('frontend.rentals-index');
     }
 
     /**
@@ -131,6 +135,68 @@ class RentalsController extends Controller
         }
 
         return response()->json(compact('rentals'), 200);
+    }
+
+    /**
+     * Find the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function find(Request $request)
+    {
+        $this->validate($request, [
+            'reserva' => 'string',
+            'dni' => 'numeric',
+            'emal' => 'email'
+        ], [
+            'reserva.string' => 'El codigo de reserva debe ser una cadena de texto.',
+            'dni.numeric' => 'El dni debe ser un número.',
+            'email.email' => 'El email debe tener un formato de email válido.'
+        ]);
+
+        $info = $request->only('reserva', 'dni', 'email');
+
+        if ($info['reserva']) {
+
+            if (!$reserva = Rental::where('code_reservation', sha1($info['reserva']))->get()) {
+
+                return response()->json(['error' => 'No encontramos una reserva activa a la fecha para el usuario proporcionado.'], 404);
+
+            }
+
+            $token = JWTAuth::fromUser(!empty($reserva->user_id) ? $reserva->user_id : $reserva->passenger_id);
+
+        } else if ($info['dni'] && $info['email']) {
+
+            if (!$user = User::where('dni', $info['dni'])->where('email', $info['email'])->get()) {
+
+                if (!$passenger = Passenger::where('dni', $info['dni'])->where('email', $info['email'])->get()) {
+
+                    return response()->json(['error' => 'No se encontraron ni usuarios ni pasajeros con los datos proporcionados.'], 404);
+
+                }
+
+            }
+
+            if (!$reserva = Rental::where((isset($user) && !empty($user)) ? 'user_id' : 'passenger_id', (isset($user) && !empty($user)) ? $user->id : $passenger->id)
+                ->where('dateFrom', '<=', Carbon::now()->toDateString())
+                ->where('dateTo', '>=', Carbon::now()->toDateString())
+                ->get()) {
+
+                return response()->json(['error' => 'No encontramos una reserva activa a la fecha para el usuario proporcionado.'], 404);
+
+            }
+
+            $token = JWTAuth::fromUser(!empty($user) ? $user : $passenger);
+
+        } else {
+
+            return response()->json(['error' => 'No se proporcionaron datos para poder encontrar la reserva.'], 404);
+
+        }
+
+        return response()->json(compact('reserva', 'token'), 200);
     }
 
     /**

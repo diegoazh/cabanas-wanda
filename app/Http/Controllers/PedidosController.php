@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Cookie;
+use JWTAuth;
 use App\Pedido;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PedidosController extends Controller
 {
@@ -14,6 +17,17 @@ class PedidosController extends Controller
      */
     public function index()
     {
+        $user = null;
+
+        if (Auth::check()) {
+
+            $user = Auth::user();
+
+        }
+
+        Cookie::queue('info_one', $user->dni, 60, null, null, false, false); // el último parametro es importante sino la cookie no es accesible desde el cliente $httpOnly = true es el default
+        Cookie::queue('info_two', $user->email, 60, null, null, false, false);
+
         return view('frontend.order-index');
     }
 

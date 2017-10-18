@@ -15,11 +15,4 @@
 
 @section('scripts')
     <script type="text/javascript" src="{{ asset('js/vue-rentals.js') }}"></script>
-    <script type="text/javascript">
-        (function () {
-            window.myInfo = {};
-            window.myInfo.basicOne = {{ $administration }};
-            window.myInfo.basicTwo = "{{ $user }}";
-        })();
-    </script>
 @endsection

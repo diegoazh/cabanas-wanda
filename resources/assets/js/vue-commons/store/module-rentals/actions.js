@@ -2,10 +2,8 @@ import { http, handlingXhrErrors } from '../../axios/app-axios'
 
 export default {
     setBasicInfo({commit}, payload) {
-        commit('setIsAdmin', payload.basicOne);
-        commit('setUserLogged', payload.basicTwo);
-        window.clearTimeout(window.verify);
-        delete window.verify;
+        commit('setIsAdmin', payload.infoOne);
+        commit('setUserLogged', payload.infoTwo);
     },
     setIsForCottage({commit}, bool) {
         commit('setIsForCottage', bool);

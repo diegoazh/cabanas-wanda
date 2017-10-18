@@ -56,7 +56,7 @@
             'icon-app': Icon,
             'date-picker': DatePicker
         },
-        created() {
+        mounted() {
             EventBus.$on('choice-change', () => this.previousChoice());
             this.defineDate();
         },
@@ -114,13 +114,13 @@
                 }
             },
             defineDate() {
-                window.verify = window.setTimeout(() => {
-                    if (window.myInfo) {
-                        this.setBasicInfo(window.myInfo);
-                        delete window.myInfo;
-                        this.dtpConfig = this.toggleConfig;
-                    }
-                }, 1000);
+                if (this.$cookies.isKey('info_one')) {
+                    this.setBasicInfo({
+                        infoOne: +this.$cookies.get('info_one'),
+                        infoTwo: +this.$cookies.get('info_two') ? this.$cookies.get('info_two') :  ''
+                    });
+                    this.dtpConfig = this.toggleConfig;
+                }
             },
             hasErrorsInForm() {
                 if (this.dateFrom && this.dateTo) {

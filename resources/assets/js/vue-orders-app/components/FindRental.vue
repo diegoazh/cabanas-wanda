@@ -5,19 +5,27 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
             <div class="text-center">
-                <p id="p-for-code"><span :class="{'text-deleted': this.forCode, 'text-muted': this.forCode, 'text-primary': !this.forCode}">DNI + email</span> <a @click="toggleIcon" role="button"><icon-app iconId="on-off-code" :iconImage="toggleIconCode" aditionalClasses="text-muted"></icon-app></a> <span :class="{'text-deleted': !this.forCode, 'text-muted': !this.forCode, 'text-primary': this.forCode}">Código de reserva</span></p>
+                <p id="p-for-code"><span :class="{'text-deleted': forCode, 'text-muted': forCode, 'text-primary': !forCode}">DNI + email</span> <a @click="toggleIcon" role="button"><icon-app iconId="on-off-code" :iconImage="toggleIconCode" aditionalClasses="text-muted"></icon-app></a> <span :class="{'text-deleted': !forCode, 'text-muted': !forCode, 'text-primary': forCode}">Código de reserva</span></p>
             </div>
-            <form class="form-inline">
+            <form @submit.prevent="sendFindParameters" class="form-inline">
                 <fieldset>
-                    <legend>Código de reserva</legend>
+                    <legend>{{ forCode ? 'Código de reserva' : 'DNI + email' }}</legend>
                     <div class="form-group">
-                        <label for="code-reserva" class="sr-only">Código de reserva</label>
+                        <label :for="forCode ? 'codigo-reserva' : 'dni-reseva'" class="sr-only">Código de reserva</label>
                         <div class="input-group">
-                            <div class="input-group-addon"><icon-app iconImage="barcode"></icon-app></div>
-                            <input type="text" class="form-control" id="code-reserva">
+                            <div class="input-group-addon"><icon-app :iconImage="forCode ? 'barcode' : 'hashtag'"></icon-app></div>
+                            <input type="text" class="form-control" id="codigo-reserva" v-model="reserva" v-if="forCode">
+                            <input type="number" class="form-control" id="dni-reseva" v-model="dni" v-else>
                         </div>
-                        <button class="btn btn-primary"><icon-app iconImage="search"></icon-app>Buscar</button>
                     </div>
+                    <div class="form-group" v-if="!forCode">
+                        <label for="emal-reserva" class="sr-only">Email</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><icon-app iconImage="at"></icon-app></div>
+                            <input type="email" class="form-control" id="emal-reserva" v-model="email">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary"><icon-app iconImage="search"></icon-app> Buscar</button>
                 </fieldset>
             </form>
         </div>
@@ -30,7 +38,10 @@
     export default {
         data() {
             return {
-                forCode: true
+                forCode: true,
+                reserva: '',
+                dni: '',
+                email: ''
             }
         },
         components: {
@@ -44,6 +55,9 @@
         methods: {
             toggleIcon() {
                 this.forCode = !this.forCode;
+            },
+            sendFindParameters() {
+
             }
         }
     }

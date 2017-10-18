@@ -1,12 +1,13 @@
 import Vue from 'vue'
-import VueNotifications from 'vue-notifications'
 import VTooltip from 'v-tooltip'
+import VueCookies from 'vue-cookies'
+import VueNotifications from 'vue-notifications'
 import { createNamespacedHelpers } from 'vuex'
 import { optionsIzi } from "../vue-commons/notifications/notifications"
 import store from '../vue-commons/store/store'
 import Rentals from './components/Rentals.vue'
 
-Vue.use(VueNotifications, optionsIzi).use(VTooltip);
+Vue.use(VueNotifications, optionsIzi).use(VueCookies).use(VTooltip);
 
 const { mapActions } = createNamespacedHelpers('rentals');
 

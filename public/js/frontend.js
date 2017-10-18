@@ -226,6 +226,8 @@ $(document).ready(function (event) {
         $('#arrow_left, #arrow_right').css('border-bottom-color', '#f9f9f9');
         $('.panel-default').css('box-shadow', '3px 3px 17px 6px #333333');
         $('.panel-heading').css('background-color', '#fd7500');
+    } else if (/profile/.test(path)) {
+        backgroundLoginRegister('dibujo-coati-2', 'no-repeat', 'contain', '100% 50%');
     } else if (/rentals/.test(path)) {
         backgroundLoginRegister('dibujo-mono', 'no-repeat', 'contain', '100% 50%');
     } else if (/order/.test(path)) {

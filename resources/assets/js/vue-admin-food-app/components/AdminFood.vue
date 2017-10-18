@@ -53,12 +53,9 @@
         },
         methods: {
             defineXhrToken() {
-                window.verifyToken = setTimeout(() => {
-                    if (window.adminInfo) {
-                        this.setXhrToken(window.adminInfo.token);
-                        delete window.adminInfo;
-                    }
-                }, 1000);
+                if (this.$cookies.isKey('info_one')) {
+                    this.setXhrToken(this.$cookies.get('info_one'));
+                }
             },
             toogleCreate() {
                 this.setCreate(!this.create);
