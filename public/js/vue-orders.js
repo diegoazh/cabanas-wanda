@@ -1693,6 +1693,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
@@ -7852,6 +7854,19 @@ var render = function() {
         ],
         1
       ),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("h4", { staticClass: "text-center" }, [
+        _vm._v("Desde: "),
+        _c("span", { staticClass: "label label-success" }, [
+          _vm._v(_vm._s(_vm.rental.dateFrom))
+        ]),
+        _vm._v(" | Hasta: "),
+        _c("span", { staticClass: "label label-danger" }, [
+          _vm._v(_vm._s(_vm.rental.dateTo))
+        ])
+      ]),
       _vm._v(" "),
       _c("hr")
     ]),
