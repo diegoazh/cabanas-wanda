@@ -159,19 +159,21 @@ class RentalsController extends Controller
 
         if ($info['reserva']) {
 
-            if (!$reserva = Rental::where('code_reservation', sha1($info['reserva']))->get()) {
+            if (!$reserva = Rental::where('code_reservation', $info['reserva'])->first()) {
 
-                return response()->json(['error' => 'No encontramos una reserva activa a la fecha para el usuario proporcionado.'], 404);
+                return response()->json(['error' => 'No encontramos una reserva activa a la fecha para los datos proporcionado.'], 404);
 
             }
 
-            $token = JWTAuth::fromUser(!empty($reserva->user_id) ? $reserva->user_id : $reserva->passenger_id);
+            $owner = !empty($reserva->user_id) ? User::find($reserva->user_id) : Passenger::find($reserva->passenger_id);
+
+            $token = JWTAuth::fromUser($owner);
 
         } else if ($info['dni'] && $info['email']) {
 
-            if (!$user = User::where('dni', $info['dni'])->where('email', $info['email'])->get()) {
+            if (!$user = User::where('dni', $info['dni'])->where('email', $info['email'])->first()) {
 
-                if (!$passenger = Passenger::where('dni', $info['dni'])->where('email', $info['email'])->get()) {
+                if (!$passenger = Passenger::where('dni', $info['dni'])->where('email', $info['email'])->first()) {
 
                     return response()->json(['error' => 'No se encontraron ni usuarios ni pasajeros con los datos proporcionados.'], 404);
 
@@ -182,7 +184,7 @@ class RentalsController extends Controller
             if (!$reserva = Rental::where((isset($user) && !empty($user)) ? 'user_id' : 'passenger_id', (isset($user) && !empty($user)) ? $user->id : $passenger->id)
                 ->where('dateFrom', '<=', Carbon::now()->toDateString())
                 ->where('dateTo', '>=', Carbon::now()->toDateString())
-                ->get()) {
+                ->first()) {
 
                 return response()->json(['error' => 'No encontramos una reserva activa a la fecha para el usuario proporcionado.'], 404);
 
@@ -195,6 +197,12 @@ class RentalsController extends Controller
             return response()->json(['error' => 'No se proporcionaron datos para poder encontrar la reserva.'], 404);
 
         }
+
+        $reserva->cottage;
+        $reserva->user;
+        $reserva->passenger;
+        $reserva->promotion;
+        $reserva->claims;
 
         return response()->json(compact('reserva', 'token'), 200);
     }

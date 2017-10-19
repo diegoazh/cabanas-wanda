@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 
-class ComidasTableSeeder extends Seeder
+class FoodsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class ComidasTableSeeder extends Seeder
         $faker = Faker::create();
 
         for ($i = 0; $i < 150; $i++) {
-            $plato = new \App\Comida();
+            $plato = new \App\Food();
             $plato->name = $faker->unique()->name;
             $plato->type = $faker->randomElement(['desayuno', 'almuerzo', 'merienda', 'cena']);
             $plato->price = $faker->numberBetween(30, 250);

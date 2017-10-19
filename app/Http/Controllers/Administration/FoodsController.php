@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Administration;
 
 use JWTAuth;
-use App\Comida;
+use App\Food;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use App\Http\Requests\RequestComida;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class ComidasController extends Controller
+class FoodsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,8 +31,9 @@ class ComidasController extends Controller
         }
 
         Cookie::queue('info_one', $token, 180, null, null, false, false); // el último parametro es importante sino la cookie no es accesible desde el cliente $httpOnly = true es el default
+        Cookie::queue(Cookie::forget('info_two'));
 
-        return view('backend.comidas');
+        return view('backend.foods');
     }
 
     /**
@@ -45,7 +46,7 @@ class ComidasController extends Controller
     {
         $info = $request->all();
 
-        $menu = new Comida();
+        $menu = new Food();
         $menu->name = $info['name'];
         $menu->type = $info['type'];
         $menu->description = $info['description'];
@@ -75,7 +76,7 @@ class ComidasController extends Controller
     {
         $info = $request->all();
 
-        if (!$menu = Comida::find($id)) {
+        if (!$menu = Food::find($id)) {
 
             return response()->json(['error' => 'No hemos podido encontrar un plato con ese nombre.'], 404);
 
@@ -107,7 +108,7 @@ class ComidasController extends Controller
      */
     public function destroy($id)
     {
-        if (!$menu = Comida::find($id)) {
+        if (!$menu = Food::find($id)) {
 
             return response()->json(['error' => 'No hemos podido encontrar un plato con ese nombre.'], 404);
 
@@ -134,7 +135,7 @@ class ComidasController extends Controller
      */
     public function all()
     {
-        $comidas = Comida::orderBy('type')->orderBy('name')->get();
+        $comidas = Food::orderBy('type')->orderBy('name')->get();
 
         return response()->json(compact('comidas'), 200);
     }

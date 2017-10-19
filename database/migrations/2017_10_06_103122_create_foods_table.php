@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateComidasTable extends Migration
+class CreateFoodsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateComidasTable extends Migration
      */
     public function up()
     {
-        Schema::create('comidas', function (Blueprint $table) {
+        Schema::create('foods', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->enum('type', ['desayuno', 'almuerzo', 'merienda', 'cena']);
@@ -32,6 +32,6 @@ class CreateComidasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comidas');
+        Schema::dropIfExists('foods');
     }
 }

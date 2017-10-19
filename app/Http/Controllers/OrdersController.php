@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Cookie;
 use JWTAuth;
-use App\Pedido;
+use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PedidosController extends Controller
+class OrdersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,8 +25,8 @@ class PedidosController extends Controller
 
         }
 
-        Cookie::queue('info_one', $user->dni, 60, null, null, false, false); // el último parametro es importante sino la cookie no es accesible desde el cliente $httpOnly = true es el default
-        Cookie::queue('info_two', $user->email, 60, null, null, false, false);
+        Cookie::queue('info_one', isset($user) ? $user->dni : null, 60, null, null, false, false); // el último parametro es importante sino la cookie no es accesible desde el cliente $httpOnly = true es el default
+        Cookie::queue('info_two', isset($user) ? $user->email : null, 60, null, null, false, false);
 
         return view('frontend.order-index');
     }
@@ -49,7 +49,7 @@ class PedidosController extends Controller
             'rental_id.integer' => 'el identificador debe ser un entero.',
         ]);
 
-        $pedido = new Pedido($request->all());
+        $pedido = new Order($request->all());
 
         try {
 
@@ -82,7 +82,7 @@ class PedidosController extends Controller
         ]);
 
         $info = $request->all();
-        $pedido = Pedido::find($id);
+        $pedido = Order::find($id);
 
         if(!$pedido) {
 
@@ -114,7 +114,7 @@ class PedidosController extends Controller
      */
     public function destroy($id)
     {
-        $pedido = Pedido::find($id);
+        $pedido = Order::find($id);
 
         if(!$pedido) {
 

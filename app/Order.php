@@ -5,13 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Pedido extends Model
+class Order extends Model
 {
     use SoftDeletes;
 
-    protected $table = "pedidos";
+    protected $table = "orders";
     protected $dates = ['deleted_at'];
-    protected $fillable = ['fecha_pedido', 'rental_id'];
+    protected $fillable = ['order_date', 'rental_id', 'state', 'paid'];
 
     public function rental()
     {
@@ -20,6 +20,6 @@ class Pedido extends Model
 
     public function detallePedidos()
     {
-        $this->hasMany('App\DetallePedido', 'pedido_id', 'id');
+        $this->hasMany('App\OrdersDetail', 'pedido_id', 'id');
     }
 }

@@ -1664,6 +1664,57 @@ exports.default = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-orders-app/components/AddOrders.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
+var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    components: {
+        'icon-app': _Icon2.default
+    },
+    computed: _extends({}, (0, _vuex.mapState)('orders', {
+        rental: function rental(state) {
+            return state.data.rental;
+        }
+    }))
+};
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-orders-app/components/FindRental.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1674,9 +1725,50 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
+
+var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
+
 var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
 
 var _Icon2 = _interopRequireDefault(_Icon);
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1693,51 +1785,50 @@ exports.default = {
     components: {
         'icon-app': _Icon2.default
     },
-    computed: {
+    computed: _extends({
         toggleIconCode: function toggleIconCode() {
             return this.forCode ? 'toggle-on' : 'toggle-off';
+        },
+        toggleBtnIcon: function toggleBtnIcon() {
+            return this.queryFinished ? 'search' : 'spinner';
+        },
+        toggleBtnClasses: function toggleBtnClasses() {
+            return this.queryFinished ? '' : 'fa-pulse fa-fw';
         }
-    },
-    methods: {
+    }, (0, _vuex.mapState)('auth', {
+        queryFinished: function queryFinished(state) {
+            return state.xhr.queryFinished;
+        }
+    })),
+    methods: _extends({
         toggleIcon: function toggleIcon() {
             this.forCode = !this.forCode;
         },
-        sendFindParameters: function sendFindParameters() {}
-    }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+        sendFindParameters: function sendFindParameters() {
+            var _this = this;
+
+            this.setQueryFinished(false);
+            this.findReserva({
+                reserva: this.reserva,
+                dni: this.dni,
+                email: this.email
+            }).then(function (response) {
+                _this.setQueryFinished(true);
+                _vueNotifications2.default.success(response);
+                _this.reserva = '';
+                _this.dni = '';
+                _this.email = '';
+            }).catch(function (error) {
+                _this.setQueryFinished(true);
+                _vueNotifications2.default.error({
+                    title: error.title,
+                    message: error.message,
+                    useSwal: true
+                });
+            });
+        }
+    }, (0, _vuex.mapActions)('orders', ['findReserva']), (0, _vuex.mapActions)('auth', ['setQueryFinished']))
+};
 
 /***/ }),
 
@@ -1751,28 +1842,59 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
 var _FindRental = __webpack_require__("./resources/assets/js/vue-orders-app/components/FindRental.vue");
 
 var _FindRental2 = _interopRequireDefault(_FindRental);
 
+var _AddOrders = __webpack_require__("./resources/assets/js/vue-orders-app/components/AddOrders.vue");
+
+var _AddOrders2 = _interopRequireDefault(_AddOrders);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
+    data: function data() {
+        return {};
+    },
+    created: function created() {
+        this.checkItemInStorage();
+    },
+
     components: {
-        'find-rental-app': _FindRental2.default
-    }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+        'find-rental-app': _FindRental2.default,
+        'add-orders-app': _AddOrders2.default
+    },
+    computed: _extends({}, (0, _vuex.mapState)('orders', {
+        rental: function rental(state) {
+            return state.data.rental;
+        }
+    })),
+    methods: _extends({
+        checkItemInStorage: function checkItemInStorage() {
+            var reserva = JSON.parse(sessionStorage.getItem('reserva'));
+
+            if (reserva) {
+                this.setRental(reserva);
+            }
+        }
+    }, (0, _vuex.mapActions)('orders', ['setRental']))
+};
 
 /***/ }),
 
@@ -1830,6 +1952,21 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 // module
 exports.push([module.i, "\n#on-off-code {\n    font-size: 250%;\n    cursor: pointer;\n    position: relative;\n    top: 7px;\n}\n.text-deleted {\n    text-decoration: line-through;\n    font-size: inherit;\n}\n#p-for-code span {\n    font-size: inherit;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a32dfffc\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-orders-app/components/AddOrders.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n#details_reservation span {\n    font-size: inherit;\n}\n", ""]);
 
 // exports
 
@@ -7421,7 +7558,11 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "container jumbotron", attrs: { id: "orders-component" } },
-    [_vm._m(0), _vm._v(" "), _c("find-rental-app")],
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      !_vm.rental ? _c("find-rental-app") : _c("add-orders-app")
+    ],
     1
   )
 }
@@ -7638,7 +7779,12 @@ var render = function() {
               "button",
               { staticClass: "btn btn-primary" },
               [
-                _c("icon-app", { attrs: { iconImage: "search" } }),
+                _c("icon-app", {
+                  attrs: {
+                    iconImage: _vm.toggleBtnIcon,
+                    aditionalClasses: _vm.toggleBtnClasses
+                  }
+                }),
                 _vm._v(" Buscar")
               ],
               1
@@ -7667,6 +7813,67 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-96a5715e", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a32dfffc\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-orders-app/components/AddOrders.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+      _c("h2", { staticClass: "text-center" }, [_vm._v("Reserva")]),
+      _vm._v(" "),
+      _c(
+        "h3",
+        { staticClass: "text-center", attrs: { id: "details_reservation" } },
+        [
+          _vm._v("\n            Titular: "),
+          _c("span", { staticClass: "label label-info" }, [
+            _vm._v(
+              _vm._s(_vm.rental.user.name + ", " + _vm.rental.user.lastname)
+            )
+          ]),
+          _vm._v(" |\n            Cabaña: "),
+          _c("span", { staticClass: "label label-default" }, [
+            _vm._v(_vm._s("" + _vm.rental.cottage.name))
+          ]),
+          _vm._v(" |\n            "),
+          _c("icon-app", { attrs: { iconImage: "hashtag" } }),
+          _vm._v(" "),
+          _c("span", { staticClass: "label label-default" }, [
+            _vm._v(_vm._s("" + _vm.rental.cottage.number))
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("hr")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+      _c("form", {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+          }
+        }
+      })
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-a32dfffc", module.exports)
   }
 }
 
@@ -7915,6 +8122,33 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-96a5715e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FindRental.vue", function() {
      var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-96a5715e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FindRental.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a32dfffc\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-orders-app/components/AddOrders.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a32dfffc\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-orders-app/components/AddOrders.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("bc6eaa74", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a32dfffc\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AddOrders.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a32dfffc\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AddOrders.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -19519,9 +19753,13 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    getToken: function getToken(state, getters) {
+        return state.xhr.token;
+    }
+};
 
 /***/ }),
 
@@ -19833,7 +20071,30 @@ Object.defineProperty(exports, "__esModule", {
 var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
 
 exports.default = {
-    findReserva: function findReserva(cntx, payload) {}
+    setRental: function setRental(_ref, rental) {
+        var commit = _ref.commit;
+
+        commit('setRental', rental);
+    },
+    findReserva: function findReserva(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('rentals/find', payload, {
+                params: {
+                    token: cntx.rootGetters['auth/getToken']
+                }
+            }).then(function (response) {
+                cntx.commit('auth/setToken', response.data.token, { root: true });
+                cntx.commit('setRental', response.data.reserva);
+                resolve({
+                    title: '¡Excelente!',
+                    message: 'Encontramos la reserva, ahora puedes realizar tus pedidos sin ningún problema',
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    }
 };
 
 /***/ }),
@@ -19897,9 +20158,14 @@ var moduleOrders = exports.moduleOrders = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    setRental: function setRental(state, rental) {
+        state.data.rental = rental;
+        sessionStorage.setItem('reserva', JSON.stringify(rental));
+    }
+};
 
 /***/ }),
 
@@ -19910,9 +20176,13 @@ exports.default = {};
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    data: {
+        rental: null
+    }
+};
 
 /***/ }),
 
@@ -20285,6 +20555,57 @@ exports.default = new _vuex2.default.Store({
         orders: _moduleOrders.moduleOrders
     }
 });
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-orders-app/components/AddOrders.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a32dfffc\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-orders-app/components/AddOrders.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-orders-app/components/AddOrders.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a32dfffc\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-orders-app/components/AddOrders.vue")
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/vue-orders-app/components/AddOrders.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] AddOrders.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a32dfffc", Component.options)
+  } else {
+    hotAPI.reload("data-v-a32dfffc", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
 
 /***/ }),
 

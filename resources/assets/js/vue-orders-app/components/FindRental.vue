@@ -25,7 +25,7 @@
                             <input type="email" class="form-control" id="emal-reserva" v-model="email">
                         </div>
                     </div>
-                    <button class="btn btn-primary"><icon-app iconImage="search"></icon-app> Buscar</button>
+                    <button class="btn btn-primary"><icon-app :iconImage="toggleBtnIcon" :aditionalClasses="toggleBtnClasses"></icon-app> Buscar</button>
                 </fieldset>
             </form>
         </div>
@@ -33,7 +33,9 @@
 </template>
 
 <script>
+    import VueNoti from 'vue-notifications'
     import Icon from '../../vue-commons/components/Icon.vue'
+    import { mapActions, mapState } from 'vuex';
 
     export default {
         data() {
@@ -50,15 +52,44 @@
         computed: {
             toggleIconCode() {
                 return this.forCode ? 'toggle-on' : 'toggle-off';
-            }
+            },
+            toggleBtnIcon() {
+                return this.queryFinished ? 'search' : 'spinner';
+            },
+            toggleBtnClasses() {
+                return this.queryFinished ? '' : 'fa-pulse fa-fw';
+            },
+            ...mapState('auth', {
+                queryFinished: state => state.xhr.queryFinished
+            })
         },
         methods: {
             toggleIcon() {
                 this.forCode = !this.forCode;
             },
             sendFindParameters() {
-
-            }
+                this.setQueryFinished(false);
+                this.findReserva({
+                    reserva: this.reserva,
+                    dni: this.dni,
+                    email: this.email
+                }).then(response => {
+                    this.setQueryFinished(true);
+                    VueNoti.success(response);
+                    this.reserva = '';
+                    this.dni = '';
+                    this.email = '';
+                }).catch(error => {
+                    this.setQueryFinished(true);
+                    VueNoti.error({
+                        title: error.title,
+                        message : error.message,
+                        useSwal: true
+                    });
+                })
+            },
+            ...mapActions('orders', ['findReserva']),
+            ...mapActions('auth', ['setQueryFinished']),
         }
     }
 </script>

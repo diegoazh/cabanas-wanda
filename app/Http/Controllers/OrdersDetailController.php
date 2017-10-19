@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\DetallePedido;
+use App\OrdersDetail;
 use App\Http\Requests\RequestDetallePedidos;
 use Illuminate\Http\Request;
 
-class DetallePedidosController extends Controller
+class OrdersDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +26,7 @@ class DetallePedidosController extends Controller
      */
     public function store(RequestDetallePedidos $request)
     {
-        $detalle = new DetallePedido($request->all());
+        $detalle = new OrdersDetail($request->all());
 
         try {
 
@@ -52,7 +52,7 @@ class DetallePedidosController extends Controller
     {
         $info = $request->all();
 
-        if (!$detalle = DetallePedido::find($id)) {
+        if (!$detalle = OrdersDetail::find($id)) {
 
             return response()->json(['error' => 'No hemos econtrado el item que intenta actualizar. Por favor verifique y reintente.'], 404);
 
@@ -86,7 +86,7 @@ class DetallePedidosController extends Controller
      */
     public function destroy($id)
     {
-        if (!$detalle = DetallePedido::find($id)) {
+        if (!$detalle = OrdersDetail::find($id)) {
 
             return response()->json(['error' => 'No hemos econtrado el item que intenta actualizar. Por favor verifique y reintente.'], 404);
 

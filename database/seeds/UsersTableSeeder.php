@@ -32,7 +32,7 @@ class UsersTableSeeder extends Seeder
             $user->name = $faker->firstName;
             $user->lastname = $faker->lastName;
             $user->dateOfBirth = $faker->date('Y-m-d');
-            $user->country_id = $faker->numberBetween(0, 240);
+            $user->country_id = $faker->numberBetween(1, 240);
             $user->dni = $faker->unique()->numberBetween(15000000, 45000000);
             $user->email = $faker->unique()->email;
             $user->celphone = $faker->e164PhoneNumber;

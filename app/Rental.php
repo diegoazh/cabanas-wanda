@@ -42,6 +42,11 @@ class Rental extends Model
         return $this->hasMany('App\Claim');
     }
 
+    public function pedidos()
+    {
+        return $this->hasMany('App\Order');
+    }
+
     /**
      * Mutators
      **/

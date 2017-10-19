@@ -68138,9 +68138,13 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    getToken: function getToken(state, getters) {
+        return state.xhr.token;
+    }
+};
 
 /***/ }),
 
@@ -68452,7 +68456,30 @@ Object.defineProperty(exports, "__esModule", {
 var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
 
 exports.default = {
-    findReserva: function findReserva(cntx, payload) {}
+    setRental: function setRental(_ref, rental) {
+        var commit = _ref.commit;
+
+        commit('setRental', rental);
+    },
+    findReserva: function findReserva(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('rentals/find', payload, {
+                params: {
+                    token: cntx.rootGetters['auth/getToken']
+                }
+            }).then(function (response) {
+                cntx.commit('auth/setToken', response.data.token, { root: true });
+                cntx.commit('setRental', response.data.reserva);
+                resolve({
+                    title: '¡Excelente!',
+                    message: 'Encontramos la reserva, ahora puedes realizar tus pedidos sin ningún problema',
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    }
 };
 
 /***/ }),
@@ -68516,9 +68543,14 @@ var moduleOrders = exports.moduleOrders = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    setRental: function setRental(state, rental) {
+        state.data.rental = rental;
+        sessionStorage.setItem('reserva', JSON.stringify(rental));
+    }
+};
 
 /***/ }),
 
@@ -68529,9 +68561,13 @@ exports.default = {};
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    data: {
+        rental: null
+    }
+};
 
 /***/ }),
 
