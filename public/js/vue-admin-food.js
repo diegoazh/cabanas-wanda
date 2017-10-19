@@ -1694,6 +1694,9 @@ exports.default = {
     computed: _extends({}, mapState({
         create: function create(state) {
             return state.data.create;
+        },
+        page: function page(state) {
+            return state.page;
         }
     })),
     methods: _extends({
@@ -1708,8 +1711,14 @@ exports.default = {
         refreshItemsPerPage: function refreshItemsPerPage() {
             var _this = this;
 
-            this.setItemsPerPage(+this.userItemsPerPage).then(function (response) {
-                _this.pagination(1);
+            this.pagination(1).then(function (response) {
+                var bool = true;
+                while (bool) {
+                    if (_this.page === 1) {
+                        _this.setItemsPerPage(+_this.userItemsPerPage);
+                        bool = false;
+                    }
+                }
             }).catch(function (error) {
                 console.log(error);
             });
@@ -5334,7 +5343,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 

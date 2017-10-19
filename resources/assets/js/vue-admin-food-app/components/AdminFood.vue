@@ -49,6 +49,7 @@
         computed: {
             ...mapState({
                 create: state => state.data.create,
+                page: state => state.page
             })
         },
         methods: {
@@ -61,14 +62,19 @@
                 this.setCreate(!this.create);
             },
             refreshItemsPerPage() {
-                this.setItemsPerPage(+this.userItemsPerPage)
+                this.pagination(1)
                     .then(response => {
-                        this.pagination(1);
+                        let bool = true;
+                        while (bool) {
+                            if (this.page === 1) {
+                                this.setItemsPerPage(+this.userItemsPerPage);
+                                bool = false;
+                            }
+                        }
                     })
                     .catch(error => {
                         console.log(error);
                     });
-
             },
             ...mapActions(['setXhrToken', 'setCreate', 'setItemsPerPage', 'pagination'])
         }
