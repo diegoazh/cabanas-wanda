@@ -68456,8 +68456,13 @@ Object.defineProperty(exports, "__esModule", {
 var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
 
 exports.default = {
-    setRental: function setRental(_ref, rental) {
+    pagination: function pagination(_ref, page) {
         var commit = _ref.commit;
+
+        commit('PAGINATE', page);
+    },
+    setRental: function setRental(_ref2, rental) {
+        var commit = _ref2.commit;
 
         commit('setRental', rental);
     },
@@ -68546,6 +68551,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
+    PAGINATE: function PAGINATE(state, page) {
+        state.page = page;
+    },
     setRental: function setRental(state, rental) {
         state.data.rental = rental;
         sessionStorage.setItem('reserva', JSON.stringify(rental));
@@ -68564,6 +68572,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
+    page: 1,
+    itemsPerPage: 10,
     data: {
         rental: null
     }

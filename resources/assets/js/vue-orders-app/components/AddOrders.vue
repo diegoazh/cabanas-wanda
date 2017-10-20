@@ -5,32 +5,321 @@
             <h3 id="details_reservation" class="text-center">
                 Titular: <span class="label label-info">{{ `${rental.user.name}, ${rental.user.lastname}` }}</span> |
                 Cabaña: <span class="label label-default">{{ `${rental.cottage.name}` }}</span> |
-                <icon-app iconImage="hashtag"></icon-app> <span class="label label-default">{{ `${rental.cottage.number}` }}</span>
+                <icon-app iconImage="hashtag"></icon-app>
+                <span class="label label-default">{{ `${rental.cottage.number}` }}</span>
             </h3>
             <br>
-            <h4 class="text-center">Desde: <span class="label label-success">{{ rental.dateFrom }}</span> | Hasta: <span class="label label-danger">{{ rental.dateTo }}</span></h4>
+            <h4 class="text-center">Desde: <span class="label label-success">{{ rental.dateFrom | argentineDate
+                }}</span> | Hasta: <span class="label label-danger">{{ rental.dateTo | argentineDate }}</span></h4>
             <hr>
+            <div class="row">
+                <div class="col-md-3 pull-right">
+                    <caption class="text-right">
+                        <a class="btn btn-danger btn-xs" role="button" data-toggle="modal" data-target="#aclaraciones-pedidos">
+                            <icon-app iconImage="exclamation-triangle"></icon-app> Por favor tenga en cuenta lo siguiente...
+                        </a>
+                    </caption>
+                </div>
+            </div>
+            <h3 class="text-right">
+                <icon-app iconImage="shopping-basket"></icon-app>
+                <span class="label label-info img-circle">{{ totalQuantity }}</span>
+                <icon-app iconImage="money"></icon-app>
+                <span class="label label-warning img-circle"><icon-app iconImage="dollar"></icon-app> {{ totalAmount }}</span>
+            </h3>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <form @submit.prevent="">
-                
-            </form>
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab"
+                                                          @click="savePreviousPage('desayuno')">Desayuno</a></li>
+                <li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab"
+                                           @click="savePreviousPage('almuerzo')">Almuerzo</a></li>
+                <li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab"
+                                           @click="savePreviousPage('merienda')">Merienda</a></li>
+                <li role="presentation"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab"
+                                           @click="savePreviousPage('cena')">Cena</a></li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" :class="['tab-pane', {'active': number === 1}]" :id="'tab'+number"
+                     v-for="number in 4">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Estado</th>
+                            <th>Plato</th>
+                            <th>Fecha de entrega</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Agregar/Quitar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(food, index) in elementsPerPage(number)">
+                            <td>
+                                <p>
+                                    <icon-app :iconImage="food.checked ? 'check-square-o' : 'square-o'"
+                                              :aditionalClasses="food.checked ? 'text-primary' : 'text-default'"></icon-app>
+                                </p>
+                            </td>
+                            <td>{{ food.name }}</td>
+                            <td>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon date-piker">
+                                            <icon-app iconImage="calendar"></icon-app>
+                                        </div>
+                                        <date-picker placeholder="Seleccione la fecha..."
+                                                     :config="defineConfDateTimePiker(rental)" :id="'delivery'+index"
+                                                     :name="'delivery'+index" v-model="food.delivery"></date-picker>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <icon-app iconImage="dollar"></icon-app>
+                                {{ food.price }}
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon date-piker">
+                                            <icon-app iconImage="hashtag"></icon-app>
+                                        </div>
+                                        <input type="number" :id="'cantidad'+index" :name="'cantidad'+index"
+                                               class="form-control" placeholder="Seleccione la cantidad..." v-model="food.quantity" @change="updateQuantity(food)">
+                                    </div>
+                                    <small class="text-primary">Presiona <kbd>Enter ↵</kbd></small>
+                                </div>
+                            </td>
+                            <td class="text-right">
+                                <button :class="['btn', {'btn-success': !food.checked, 'btn-danger': food.checked}]"
+                                        @click="toggelAddRemoveFood(food)">
+                                    <icon-app :iconImage="food.checked ? 'minus' : 'plus'"></icon-app>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="6" class="text-center">
+                                <h3 class="text-right">
+                                    <icon-app iconImage="shopping-basket"></icon-app>
+                                    <span class="label label-info img-circle">{{ totalQuantity }}</span>
+                                    <icon-app iconImage="money"></icon-app>
+                                    <span class="label label-warning img-circle"><icon-app
+                                            iconImage="dollar"></icon-app> {{ totalAmount }}</span>
+                                </h3>
+                                <pagination for="orders" :records="quantityForType(number)" :per-page="itemsPerPage"
+                                            :chunk="7" :vuex="true"
+                                            count-text="Mostrando {from} a {to} de {count} items|{count} items|Un item"></pagination>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <modal-app modalTitle="Aclaraciones de la cocina" modalId="aclaraciones-pedidos" :showBtnSave="false">
+                <ul>
+                    <li>Debe indicar la hora en la que desea que el pedido se entregue</li>
+                    <li>La hora mínima para realizar el pedido es con  3 hs de anticipación, otra forma debe hacerlo personalmente en el restaurante</li>
+                    <li>El último pedido se entrega a las 23 hs por lo que pudiendo realizarlo hasta las 20 hs</li>
+                    <li>Los sábados solo se entregarán pedidos realizados previamente, ya que la cocina inicia a las 19:30 hs</li>
+                </ul>
+            </modal-app>
         </div>
     </div>
 </template>
 
 <script>
-    import { mapState } from 'vuex'
+    import moment from 'moment'
+    import datePicker from 'vue-bootstrap-datetimepicker'
+    import {mapState, mapActions} from 'vuex'
+    import {Pagination, PaginationEvent} from 'vue-pagination-2';
     import Icon from '../../vue-commons/components/Icon.vue'
+    import Modal from '../../vue-commons/components/Modal.vue'
 
     export default {
+        data() {
+            return {
+                desayunos: [],
+                almuerzos: [],
+                meriendas: [],
+                cenas: [],
+                orders: [],
+                trashPage: {
+                    choice: 'desayuno',
+                    desayuno: 1,
+                    almuerzo: 1,
+                    merienda: 1,
+                    cena: 1
+                },
+            }
+        },
+        mounted() {
+            this.getAllFood()
+                .then(response => {
+                    this.filterFoodType(this.foods);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
         components: {
-            'icon-app': Icon
+            Pagination,
+            PaginationEvent,
+            datePicker,
+            'icon-app': Icon,
+            'modal-app': Modal
         },
         computed: {
+            totalAmount() {
+                let amount = 0;
+
+                for (let order of this.orders) {
+                    amount += (order.price * order.quantity);
+                }
+
+                return amount;
+            },
+            totalQuantity() {
+                let quanty = 0;
+
+                for (let order of this.orders) {
+                    quanty += (+order.quantity);
+                }
+
+                return quanty;
+            },
             ...mapState('orders', {
-                rental: state => state.data.rental
+                page: state => state.page,
+                rental: state => state.data.rental,
+                itemsPerPage: state => state.itemsPerPage
+            }),
+            ...mapState('food', {
+                foods: state => state.data.food,
             })
+        },
+        methods: {
+            filterFoodType(foods) {
+                let foodType = [];
+                let types = ['desayuno', 'almuerzo', 'merienda', 'cena'];
+
+                for (let food of foods) {
+                    food.delivery = moment().format('DD/MM/YYYY HH:mm');
+                    food.quantity = 1;
+                    food = Object.assign({}, food, {checked: false})
+                    //this.$set(food, 'checked', false);
+                }
+
+                for (let i = types.length - 1; i >= 0; i--) {
+                    foodType = foods.filter((element, index, array) => {
+                        return element.type === types[i];
+                    });
+
+                    switch (types[i]) {
+                        case 'desayuno':
+                            this.desayunos = foodType;
+                            break;
+                        case 'almuerzo':
+                            this.almuerzos = foodType;
+                            break;
+                        case 'merienda':
+                            this.meriendas = foodType;
+                            break;
+                        case 'cena':
+                            this.cenas = foodType;
+                            break;
+                    }
+                }
+            },
+            elementsPerPage(number) {
+                let food = [];
+
+                switch (number) {
+                    case 1:
+                        food = this.desayunos;
+                        break;
+                    case 2:
+                        food = this.almuerzos;
+                        break;
+                    case 3:
+                        food = this.meriendas;
+                        break;
+                    case 4:
+                        food = this.cenas;
+                        break;
+                }
+
+                let pageTo = this.page * this.itemsPerPage; // quince debería ser una variable
+                let pageFrom = (this.page === 1) ? 0 : (this.page - 1) * this.itemsPerPage;
+
+                return food.filter(function (element, index, array) {
+                    return index >= pageFrom && index < pageTo;
+                });
+            },
+            quantityForType(number) {
+                let quantity = 0;
+
+                switch (number) {
+                    case 1:
+                        quantity = this.desayunos.length;
+                        break;
+                    case 2:
+                        quantity = this.almuerzos.length;
+                        break;
+                    case 3:
+                        quantity = this.meriendas.length;
+                        break;
+                    case 4:
+                        quantity = this.cenas.length;
+                        break;
+                }
+
+                return quantity;
+            },
+            savePreviousPage(tabName) {
+                this.trashPage[this.trashPage.choice] = this.page;
+                this.pagination(this.trashPage[tabName]);
+                this.trashPage.choice = tabName;
+            },
+            defineConfDateTimePiker(rental) {
+                return {
+                    locale: 'es',
+                    format: 'DD/MM/YYYY HH:mm',
+                    minDate: moment(moment().add(3, 'h').format('DD/MM/YYYY HH:mm'), 'DD/MM/YYYY HH:mm'),
+                    maxDate: moment(moment(rental.dateTo + ' 20:00', 'YYYY/MM/DD HH:mm'), 'DD/MM/YYYY HH:mm'),
+                }
+            },
+            findInOrders(food) {
+                this.orders.find((element) => {
+                    return element.name === food.name;
+                });
+            },
+            toggelAddRemoveFood(food) {
+                food.checked = !food.checked;
+                if (food.checked) {
+                    this.orders.push(food);
+                } else {
+                    this.orders.splice(this.orders.findIndex(element => element.name === food.name), 1);
+                }
+            },
+            updateQuantity(food) {
+                let theIndex = this.orders.findIndex(element => element.name === food.name);
+                if (theIndex > 0) {
+                    this.orders[theIndex].quantity = food.quantity;
+                }
+            },
+            ...mapActions('orders', ['pagination']),
+            ...mapActions('food', ['getAllFood']),
+        },
+        filters: {
+            argentineDateTime(value) {
+                if (!value) return;
+                return moment(value, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY HH:mm:ss');
+            },
+            argentineDate(value) {
+                if (!value) return;
+                return moment(value, 'YYYY-MM-DD').format('DD/MM/YYYY');
+            }
         }
     }
 </script>

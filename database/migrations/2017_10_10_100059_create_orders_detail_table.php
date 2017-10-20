@@ -17,7 +17,7 @@ class CreateOrdersDetailTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('order_id')->unsigned();
             $table->bigInteger('food_id')->unsigned();
-            $table->dateTime('return_date');
+            $table->dateTime('delivery');
             $table->integer('quantity');
             $table->timestamps();
             $table->softDeletes();

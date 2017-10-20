@@ -11,15 +11,15 @@ class OrdersDetail extends Model
 
     protected $table = 'orders_detail';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['order_id', 'food_id', 'return_date', 'quantity'];
+    protected $fillable = ['order_id', 'food_id', 'delivery', 'quantity'];
 
     public function pedido()
     {
-        $this->belongsTo('App\Order', 'pedido_id', 'id');
+        $this->belongsTo('App\Order', 'order_id', 'id');
     }
 
     public function comida()
     {
-        $this->hasOne('App\Food', 'comida_id', 'id');
+        $this->hasOne('App\Food', 'food_id', 'id');
     }
 }

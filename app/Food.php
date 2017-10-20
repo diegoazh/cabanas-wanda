@@ -15,6 +15,6 @@ class Food extends Model
 
     public function detallesPedidos()
     {
-        $this->belongsTo('App\OrdersDetail', 'comida_id', 'id');
+        $this->belongsTo('App\OrdersDetail', 'food_id', 'id');
     }
 }

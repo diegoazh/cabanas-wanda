@@ -20,6 +20,6 @@ class Order extends Model
 
     public function detallePedidos()
     {
-        $this->hasMany('App\OrdersDetail', 'pedido_id', 'id');
+        $this->hasMany('App\OrdersDetail', 'order_id', 'id');
     }
 }

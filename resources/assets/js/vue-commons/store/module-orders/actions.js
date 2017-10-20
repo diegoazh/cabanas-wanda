@@ -1,6 +1,9 @@
 import { http, handlingXhrErrors} from '../../axios/app-axios'
 
 export default {
+    pagination({commit}, page) {
+        commit('PAGINATE', page);
+    },
     setRental({commit}, rental) {
         commit('setRental', rental);
     },
