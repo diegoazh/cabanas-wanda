@@ -85,9 +85,8 @@
                                             <icon-app iconImage="hashtag"></icon-app>
                                         </div>
                                         <input type="number" :id="'cantidad'+index" :name="'cantidad'+index"
-                                               class="form-control" placeholder="Seleccione la cantidad..." v-model="food.quantity" @change="updateQuantity(food)">
+                                               class="form-control" placeholder="Seleccione la cantidad..." v-model="food.quantity" @change="" @keyup="">
                                     </div>
-                                    <small class="text-primary">Presiona <kbd>Enter ↵</kbd></small>
                                 </div>
                             </td>
                             <td class="text-right">
@@ -119,6 +118,7 @@
             </div>
             <modal-app modalTitle="Aclaraciones de la cocina" modalId="aclaraciones-pedidos" :showBtnSave="false">
                 <ul>
+                    <li>El desayuno se sirve hasta </li>
                     <li>Debe indicar la hora en la que desea que el pedido se entregue</li>
                     <li>La hora mínima para realizar el pedido es con  3 hs de anticipación, otra forma debe hacerlo personalmente en el restaurante</li>
                     <li>El último pedido se entrega a las 23 hs por lo que pudiendo realizarlo hasta las 20 hs</li>
@@ -204,10 +204,10 @@
                 let types = ['desayuno', 'almuerzo', 'merienda', 'cena'];
 
                 for (let food of foods) {
-                    food.delivery = moment().format('DD/MM/YYYY HH:mm');
-                    food.quantity = 1;
-                    food = Object.assign({}, food, {checked: false})
-                    //this.$set(food, 'checked', false);
+                    //food = Object.assign({}, food, {checked: false})
+                    this.$set(food, 'checked', false);
+                    this.$set(food, 'quantity', 1);
+                    this.$set(food, 'delivery', moment().add(3, 'h').format('DD/MM/YYYY'));
                 }
 
                 for (let i = types.length - 1; i >= 0; i--) {
@@ -284,9 +284,9 @@
             defineConfDateTimePiker(rental) {
                 return {
                     locale: 'es',
-                    format: 'DD/MM/YYYY HH:mm',
-                    minDate: moment(moment().add(3, 'h').format('DD/MM/YYYY HH:mm'), 'DD/MM/YYYY HH:mm'),
-                    maxDate: moment(moment(rental.dateTo + ' 20:00', 'YYYY/MM/DD HH:mm'), 'DD/MM/YYYY HH:mm'),
+                    format: 'DD/MM/YYYY',
+                    minDate: moment(moment().format('DD/MM/YYYY') + ' 00:00 AM', 'DD/MM/YYYY hh:mm A'),
+                    maxDate: moment(moment(rental.dateTo + ' 23:59:59', 'YYYY/MM/DD HH:mm:ss').format('DD/MM/YYYY HH:mm:ss'), 'DD/MM/YYYY HH:mm:ss')
                 }
             },
             findInOrders(food) {
@@ -303,9 +303,9 @@
                 }
             },
             updateQuantity(food) {
-                let theIndex = this.orders.findIndex(element => element.name === food.name);
-                if (theIndex > 0) {
-                    this.orders[theIndex].quantity = food.quantity;
+                let i = this.orders.findIndex(element => element.name === food.name);
+                if (i > 0) {
+                    this.orders[i].quantity = +food.quantity;
                 }
             },
             ...mapActions('orders', ['pagination']),

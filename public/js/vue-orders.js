@@ -2093,10 +2093,10 @@ exports.default = {
                 for (var _iterator3 = foods[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
                     var food = _step3.value;
 
-                    food.delivery = (0, _moment2.default)().format('DD/MM/YYYY HH:mm');
-                    food.quantity = 1;
-                    food = Object.assign({}, food, { checked: false });
-                    //this.$set(food, 'checked', false);
+                    //food = Object.assign({}, food, {checked: false})
+                    this.$set(food, 'checked', false);
+                    this.$set(food, 'quantity', 1);
+                    this.$set(food, 'delivery', (0, _moment2.default)().add(3, 'h').format('DD/MM/YYYY'));
                 }
             } catch (err) {
                 _didIteratorError3 = true;
@@ -2191,9 +2191,9 @@ exports.default = {
         defineConfDateTimePiker: function defineConfDateTimePiker(rental) {
             return {
                 locale: 'es',
-                format: 'DD/MM/YYYY HH:mm',
-                minDate: (0, _moment2.default)((0, _moment2.default)().add(3, 'h').format('DD/MM/YYYY HH:mm'), 'DD/MM/YYYY HH:mm'),
-                maxDate: (0, _moment2.default)((0, _moment2.default)(rental.dateTo + ' 20:00', 'YYYY/MM/DD HH:mm'), 'DD/MM/YYYY HH:mm')
+                format: 'DD/MM/YYYY',
+                minDate: (0, _moment2.default)((0, _moment2.default)().format('DD/MM/YYYY') + ' 00:00 AM', 'DD/MM/YYYY hh:mm A'),
+                maxDate: (0, _moment2.default)((0, _moment2.default)(rental.dateTo + ' 23:59:59', 'YYYY/MM/DD HH:mm:ss').format('DD/MM/YYYY HH:mm:ss'), 'DD/MM/YYYY HH:mm:ss')
             };
         },
         findInOrders: function findInOrders(food) {
@@ -2212,11 +2212,11 @@ exports.default = {
             }
         },
         updateQuantity: function updateQuantity(food) {
-            var theIndex = this.orders.findIndex(function (element) {
+            var i = this.orders.findIndex(function (element) {
                 return element.name === food.name;
             });
-            if (theIndex > 0) {
-                this.orders[theIndex].quantity = food.quantity;
+            if (i > 0) {
+                this.orders[i].quantity = +food.quantity;
             }
         }
     }, (0, _vuex.mapActions)('orders', ['pagination']), (0, _vuex.mapActions)('food', ['getAllFood'])),
@@ -38056,9 +38056,8 @@ var render = function() {
                                 },
                                 domProps: { value: food.quantity },
                                 on: {
-                                  change: function($event) {
-                                    _vm.updateQuantity(food)
-                                  },
+                                  change: function($event) {},
+                                  keyup: function($event) {},
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return
@@ -38067,9 +38066,7 @@ var render = function() {
                                   }
                                 }
                               })
-                            ]),
-                            _vm._v(" "),
-                            _vm._m(1, true)
+                            ])
                           ])
                         ]),
                         _vm._v(" "),
@@ -38176,6 +38173,8 @@ var render = function() {
           },
           [
             _c("ul", [
+              _c("li", [_vm._v("El desayuno se sirve hasta ")]),
+              _vm._v(" "),
               _c("li", [
                 _vm._v(
                   "Debe indicar la hora en la que desea que el pedido se entregue"
@@ -38226,15 +38225,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Agregar/Quitar")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("small", { staticClass: "text-primary" }, [
-      _vm._v("Presiona "),
-      _c("kbd", [_vm._v("Enter ↵")])
     ])
   }
 ]
