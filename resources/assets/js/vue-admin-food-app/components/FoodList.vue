@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <table class="table table-striped table-hover">
+            <table class="table table-striped table-hover table-responsive">
                 <thead>
                 <tr>
                     <th>Nombre</th>
@@ -27,7 +27,7 @@
                             <span class="label label-primary"><b>{{ comida.type }}</b></span>
                         </td>
                         <td>
-                            <span class="label label-primary"><b>{{ comida.available ? 'Si' : 'No' }}</b></span>
+                            <span class="label label-info"><b>{{ comida.available ? 'Si' : 'No' }}</b></span>
                         </td>
                         <td>
                             <b><icon-app iconImage="dollar"></icon-app> {{ comida.price }}</b>

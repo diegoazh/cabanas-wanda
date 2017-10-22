@@ -32,4 +32,16 @@ export default {
             });
         });
     },
+    setDesayunos({commit}, desayunos) {
+        commit('setDesayunos', desayunos);
+    },
+    setAlmuerzos({commit}, almuerzos) {
+        commit('setAlmuerzos', almuerzos);
+    },
+    setMeriendas({commit}, meriendas) {
+        commit('setMeriendas', meriendas);
+    },
+    setCenas({commit}, cenas) {
+        commit('setCenas', cenas);
+    },
 }

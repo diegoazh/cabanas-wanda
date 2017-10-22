@@ -1975,10 +1975,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     data: function data() {
         return {
-            desayunos: [],
-            almuerzos: [],
-            meriendas: [],
-            cenas: [],
             trashPage: {
                 choice: 'desayuno',
                 desayuno: 1,
@@ -1990,13 +1986,7 @@ exports.default = {
         };
     },
     mounted: function mounted() {
-        var _this = this;
-
-        this.getAllFood().then(function (response) {
-            _this.filterFoodType(_this.foods, _this.orders);
-        }).catch(function (error) {
-            // console.log(error);
-        });
+        this.checkFoodsInStore();
     },
 
     components: {
@@ -2077,6 +2067,18 @@ exports.default = {
         orders: function orders(state) {
             return state.data.orders;
         },
+        desayunos: function desayunos(state) {
+            return state.data.desayunos;
+        },
+        almuerzos: function almuerzos(state) {
+            return state.data.almuerzos;
+        },
+        meriendas: function meriendas(state) {
+            return state.data.meriendas;
+        },
+        cenas: function cenas(state) {
+            return state.data.cenas;
+        },
         itemsPerPage: function itemsPerPage(state) {
             return state.itemsPerPage;
         }
@@ -2086,6 +2088,17 @@ exports.default = {
         }
     })),
     methods: _extends({
+        checkFoodsInStore: function checkFoodsInStore() {
+            var _this = this;
+
+            if (this.foods.length === 0) {
+                this.getAllFood().then(function (response) {
+                    _this.filterFoodType(_this.foods, _this.orders);
+                }).catch(function (error) {
+                    // console.log(error);
+                });
+            }
+        },
         filterFoodType: function filterFoodType(foods, orders) {
             var _this2 = this;
 
@@ -2103,35 +2116,6 @@ exports.default = {
                     this.$set(food, 'checked', false);
                     this.$set(food, 'quantity', 1);
                     this.$set(food, 'delivery', (0, _moment2.default)().add(3, 'h').format('DD/MM/YYYY'));
-
-                    if (this.orders.length > 0) {
-                        var _iteratorNormalCompletion4 = true;
-                        var _didIteratorError4 = false;
-                        var _iteratorError4 = undefined;
-
-                        try {
-                            for (var _iterator4 = orders[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                                var order = _step4.value;
-
-                                if (order.name === food.name) {
-                                    food.checked = true;
-                                }
-                            }
-                        } catch (err) {
-                            _didIteratorError4 = true;
-                            _iteratorError4 = err;
-                        } finally {
-                            try {
-                                if (!_iteratorNormalCompletion4 && _iterator4.return) {
-                                    _iterator4.return();
-                                }
-                            } finally {
-                                if (_didIteratorError4) {
-                                    throw _iteratorError4;
-                                }
-                            }
-                        }
-                    }
                 }
             } catch (err) {
                 _didIteratorError3 = true;
@@ -2155,16 +2139,16 @@ exports.default = {
 
                 switch (types[i]) {
                     case 'desayuno':
-                        _this2.desayunos = foodType;
+                        _this2.setDesayunos(foodType);
                         break;
                     case 'almuerzo':
-                        _this2.almuerzos = foodType;
+                        _this2.setAlmuerzos(foodType);
                         break;
                     case 'merienda':
-                        _this2.meriendas = foodType;
+                        _this2.setMeriendas(foodType);
                         break;
                     case 'cena':
-                        _this2.cenas = foodType;
+                        _this2.setCenas(foodType);
                         break;
                 }
             };
@@ -2256,7 +2240,7 @@ exports.default = {
         btnCloseOrder: function btnCloseOrder() {
             this.setCloseOrder(true);
         }
-    }, (0, _vuex.mapActions)('orders', ['pagination', 'setOrders', 'setCloseOrder']), (0, _vuex.mapActions)('food', ['getAllFood'])),
+    }, (0, _vuex.mapActions)('orders', ['pagination', 'setOrders', 'setCloseOrder', 'setDesayunos', 'setAlmuerzos', 'setMeriendas', 'setCenas']), (0, _vuex.mapActions)('food', ['getAllFood'])),
     filters: {
         argentineDateTime: function argentineDateTime(value) {
             if (!value) return;
@@ -2418,13 +2402,13 @@ exports.default = {
     }, (0, _vuex.mapActions)('orders', ['setCloseOrder'])),
     filters: {
         displayArgDate: function displayArgDate(date) {
-            var d = null;
-
-            if (date.indexOf('/') > 0) {
-                d = (0, _moment2.default)(date, 'DD/MM/YYYY');
+            if (!_moment2.default.isMoment(date) && typeof date === 'string') {
+                if (date.indexOf('/') > 0) {
+                    return (0, _moment2.default)(date, 'DD/MM/YYYY').format('DD/MM/YYYY');
+                }
+            } else {
+                return date.format('DD/MM/YYYY');
             }
-
-            return d.format('DD/MM/YYYY');
         }
     },
     created: function created() {},
@@ -37723,13 +37707,16 @@ var render = function() {
           on: { click: _vm.backToItems }
         },
         [
-          _c("icon-app", { attrs: { iconImage: "cart-plus" } }),
-          _vm._v(" "),
-          _c("b", [_vm._v("Añadir items")]),
-          _vm._v(" "),
-          _c("icon-app", { attrs: { iconImage: "mail-reply" } })
-        ],
-        1
+          _c(
+            "b",
+            [
+              _c("icon-app", { attrs: { iconImage: "cart-plus" } }),
+              _vm._v(" Editar pedido "),
+              _c("icon-app", { attrs: { iconImage: "mail-reply" } })
+            ],
+            1
+          )
+        ]
       )
     ]),
     _vm._v(" "),
@@ -38304,40 +38291,101 @@ var render = function() {
                 attrs: { role: "tabpanel", id: "tab" + number }
               },
               [
-                _c("table", { staticClass: "table table-striped" }, [
-                  _vm._m(0, true),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.elementsPerPage(number), function(food, index) {
-                      return _c("tr", [
-                        _c("td", [
+                _c(
+                  "table",
+                  { staticClass: "table table-striped table-responsive" },
+                  [
+                    _vm._m(0, true),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.elementsPerPage(number), function(
+                        food,
+                        index
+                      ) {
+                        return _c("tr", [
+                          _c("td", [
+                            _c(
+                              "p",
+                              [
+                                _c("icon-app", {
+                                  attrs: {
+                                    iconImage: food.checked
+                                      ? "check-square-o"
+                                      : "square-o",
+                                    aditionalClasses: food.checked
+                                      ? "text-primary"
+                                      : "text-default"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(food.name))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c(
+                                "div",
+                                { staticClass: "input-group" },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "input-group-addon date-piker"
+                                    },
+                                    [
+                                      _c("icon-app", {
+                                        attrs: { iconImage: "calendar" }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c("date-picker", {
+                                    attrs: {
+                                      placeholder: "Seleccione la fecha...",
+                                      config: _vm.defineConfDateTimePiker(
+                                        _vm.rental
+                                      ),
+                                      id: "delivery" + index,
+                                      name: "delivery" + index
+                                    },
+                                    model: {
+                                      value: food.delivery,
+                                      callback: function($$v) {
+                                        food.delivery = $$v
+                                      },
+                                      expression: "food.delivery"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
                           _c(
-                            "p",
+                            "td",
                             [
                               _c("icon-app", {
-                                attrs: {
-                                  iconImage: food.checked
-                                    ? "check-square-o"
-                                    : "square-o",
-                                  aditionalClasses: food.checked
-                                    ? "text-primary"
-                                    : "text-default"
-                                }
-                              })
+                                attrs: { iconImage: "dollar" }
+                              }),
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(food.price) +
+                                  "\n                        "
+                              )
                             ],
                             1
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(food.name))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
-                              "div",
-                              { staticClass: "input-group" },
-                              [
+                          ),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("div", { staticClass: "input-group" }, [
                                 _c(
                                   "div",
                                   {
@@ -38345,181 +38393,138 @@ var render = function() {
                                   },
                                   [
                                     _c("icon-app", {
-                                      attrs: { iconImage: "calendar" }
+                                      attrs: { iconImage: "hashtag" }
                                     })
                                   ],
                                   1
                                 ),
                                 _vm._v(" "),
-                                _c("date-picker", {
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: food.quantity,
+                                      expression: "food.quantity"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
                                   attrs: {
-                                    placeholder: "Seleccione la fecha...",
-                                    config: _vm.defineConfDateTimePiker(
-                                      _vm.rental
-                                    ),
-                                    id: "delivery" + index,
-                                    name: "delivery" + index
+                                    type: "number",
+                                    id: "cantidad" + index,
+                                    name: "cantidad" + index,
+                                    placeholder: "Seleccione la cantidad..."
                                   },
-                                  model: {
-                                    value: food.delivery,
-                                    callback: function($$v) {
-                                      food.delivery = $$v
-                                    },
-                                    expression: "food.delivery"
+                                  domProps: { value: food.quantity },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      food.quantity = $event.target.value
+                                    }
+                                  }
+                                })
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-right" }, [
+                            _c(
+                              "button",
+                              {
+                                class: [
+                                  "btn",
+                                  {
+                                    "btn-success": !food.checked,
+                                    "btn-danger": food.checked
+                                  }
+                                ],
+                                on: {
+                                  click: function($event) {
+                                    _vm.toggelAddRemoveFood(food)
+                                  }
+                                }
+                              },
+                              [
+                                _c("icon-app", {
+                                  attrs: {
+                                    iconImage: food.checked ? "minus" : "plus"
                                   }
                                 })
                               ],
                               1
                             )
                           ])
-                        ]),
-                        _vm._v(" "),
+                        ])
+                      })
+                    ),
+                    _vm._v(" "),
+                    _c("tfoot", [
+                      _c("tr", [
                         _c(
                           "td",
+                          {
+                            staticClass: "text-center",
+                            attrs: { colspan: "6" }
+                          },
                           [
-                            _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(food.price) +
-                                "\n                        "
-                            )
+                            _c(
+                              "h3",
+                              { staticClass: "text-right" },
+                              [
+                                _c("icon-app", {
+                                  attrs: { iconImage: "shopping-basket" }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass: "label label-info img-circle"
+                                  },
+                                  [_vm._v(_vm._s(_vm.totalQuantity))]
+                                ),
+                                _vm._v(" "),
+                                _c("icon-app", {
+                                  attrs: { iconImage: "money" }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "label label-warning img-circle"
+                                  },
+                                  [
+                                    _c("icon-app", {
+                                      attrs: { iconImage: "dollar" }
+                                    }),
+                                    _vm._v(" " + _vm._s(_vm.totalAmount))
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("pagination", {
+                              attrs: {
+                                for: "orders",
+                                records: _vm.quantityForType(number),
+                                "per-page": _vm.itemsPerPage,
+                                chunk: 7,
+                                vuex: true,
+                                "count-text":
+                                  "Mostrando {from} a {to} de {count} items|{count} items|Un item"
+                              }
+                            })
                           ],
                           1
-                        ),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("div", { staticClass: "input-group" }, [
-                              _c(
-                                "div",
-                                { staticClass: "input-group-addon date-piker" },
-                                [
-                                  _c("icon-app", {
-                                    attrs: { iconImage: "hashtag" }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: food.quantity,
-                                    expression: "food.quantity"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "number",
-                                  id: "cantidad" + index,
-                                  name: "cantidad" + index,
-                                  placeholder: "Seleccione la cantidad..."
-                                },
-                                domProps: { value: food.quantity },
-                                on: {
-                                  change: function($event) {},
-                                  keyup: function($event) {},
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    food.quantity = $event.target.value
-                                  }
-                                }
-                              })
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "text-right" }, [
-                          _c(
-                            "button",
-                            {
-                              class: [
-                                "btn",
-                                {
-                                  "btn-success": !food.checked,
-                                  "btn-danger": food.checked
-                                }
-                              ],
-                              on: {
-                                click: function($event) {
-                                  _vm.toggelAddRemoveFood(food)
-                                }
-                              }
-                            },
-                            [
-                              _c("icon-app", {
-                                attrs: {
-                                  iconImage: food.checked ? "minus" : "plus"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ])
+                        )
                       ])
-                    })
-                  ),
-                  _vm._v(" "),
-                  _c("tfoot", [
-                    _c("tr", [
-                      _c(
-                        "td",
-                        { staticClass: "text-center", attrs: { colspan: "6" } },
-                        [
-                          _c(
-                            "h3",
-                            { staticClass: "text-right" },
-                            [
-                              _c("icon-app", {
-                                attrs: { iconImage: "shopping-basket" }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                { staticClass: "label label-info img-circle" },
-                                [_vm._v(_vm._s(_vm.totalQuantity))]
-                              ),
-                              _vm._v(" "),
-                              _c("icon-app", { attrs: { iconImage: "money" } }),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  staticClass: "label label-warning img-circle"
-                                },
-                                [
-                                  _c("icon-app", {
-                                    attrs: { iconImage: "dollar" }
-                                  }),
-                                  _vm._v(" " + _vm._s(_vm.totalAmount))
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("pagination", {
-                            attrs: {
-                              for: "orders",
-                              records: _vm.quantityForType(number),
-                              "per-page": _vm.itemsPerPage,
-                              chunk: 7,
-                              vuex: true,
-                              "count-text":
-                                "Mostrando {from} a {to} de {count} items|{count} items|Un item"
-                            }
-                          })
-                        ],
-                        1
-                      )
                     ])
-                  ])
-                ])
+                  ]
+                )
               ]
             )
           })
@@ -51278,6 +51283,26 @@ exports.default = {
                 reject((0, _appAxios.handlingXhrErrors)(error));
             });
         });
+    },
+    setDesayunos: function setDesayunos(_ref5, desayunos) {
+        var commit = _ref5.commit;
+
+        commit('setDesayunos', desayunos);
+    },
+    setAlmuerzos: function setAlmuerzos(_ref6, almuerzos) {
+        var commit = _ref6.commit;
+
+        commit('setAlmuerzos', almuerzos);
+    },
+    setMeriendas: function setMeriendas(_ref7, meriendas) {
+        var commit = _ref7.commit;
+
+        commit('setMeriendas', meriendas);
+    },
+    setCenas: function setCenas(_ref8, cenas) {
+        var commit = _ref8.commit;
+
+        commit('setCenas', cenas);
     }
 };
 
@@ -51363,6 +51388,18 @@ exports.default = {
     },
     setCloseOrder: function setCloseOrder(state, bool) {
         state.data.closeOrder = bool;
+    },
+    setDesayunos: function setDesayunos(state, desayunos) {
+        state.data.desayunos = desayunos;
+    },
+    setAlmuerzos: function setAlmuerzos(state, almuerzos) {
+        state.data.almuerzos = almuerzos;
+    },
+    setMeriendas: function setMeriendas(state, meriendas) {
+        state.data.meriendas = meriendas;
+    },
+    setCenas: function setCenas(state, cenas) {
+        state.data.cenas = cenas;
     }
 };
 
@@ -51382,8 +51419,12 @@ exports.default = {
     itemsPerPage: 10,
     data: {
         rental: null,
+        closeOrder: false,
         orders: [],
-        closeOrder: false
+        desayunos: [],
+        almuerzos: [],
+        meriendas: [],
+        cenas: []
     }
 };
 

@@ -68494,6 +68494,26 @@ exports.default = {
                 reject((0, _appAxios.handlingXhrErrors)(error));
             });
         });
+    },
+    setDesayunos: function setDesayunos(_ref5, desayunos) {
+        var commit = _ref5.commit;
+
+        commit('setDesayunos', desayunos);
+    },
+    setAlmuerzos: function setAlmuerzos(_ref6, almuerzos) {
+        var commit = _ref6.commit;
+
+        commit('setAlmuerzos', almuerzos);
+    },
+    setMeriendas: function setMeriendas(_ref7, meriendas) {
+        var commit = _ref7.commit;
+
+        commit('setMeriendas', meriendas);
+    },
+    setCenas: function setCenas(_ref8, cenas) {
+        var commit = _ref8.commit;
+
+        commit('setCenas', cenas);
     }
 };
 
@@ -68579,6 +68599,18 @@ exports.default = {
     },
     setCloseOrder: function setCloseOrder(state, bool) {
         state.data.closeOrder = bool;
+    },
+    setDesayunos: function setDesayunos(state, desayunos) {
+        state.data.desayunos = desayunos;
+    },
+    setAlmuerzos: function setAlmuerzos(state, almuerzos) {
+        state.data.almuerzos = almuerzos;
+    },
+    setMeriendas: function setMeriendas(state, meriendas) {
+        state.data.meriendas = meriendas;
+    },
+    setCenas: function setCenas(state, cenas) {
+        state.data.cenas = cenas;
     }
 };
 
@@ -68598,8 +68630,12 @@ exports.default = {
     itemsPerPage: 10,
     data: {
         rental: null,
+        closeOrder: false,
         orders: [],
-        closeOrder: false
+        desayunos: [],
+        almuerzos: [],
+        meriendas: [],
+        cenas: []
     }
 };
 

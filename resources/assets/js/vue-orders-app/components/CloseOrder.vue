@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <button class="btn btn-info pull-right" @click="backToItems">
-                <icon-app iconImage="cart-plus"></icon-app> <b>Añadir items</b> <icon-app iconImage="mail-reply"></icon-app>
+                <b><icon-app iconImage="cart-plus"></icon-app> Editar pedido <icon-app iconImage="mail-reply"></icon-app></b>
             </button>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -82,13 +82,13 @@
         },
         filters: {
             displayArgDate(date) {
-                let d = null;
-
-                if (date.indexOf('/') > 0) {
-                    d = moment(date, 'DD/MM/YYYY');
+                if (!moment.isMoment(date) && typeof date === 'string') {
+                    if (date.indexOf('/') > 0) {
+                        return moment(date, 'DD/MM/YYYY').format('DD/MM/YYYY');
+                    }
+                } else {
+                    return date.format('DD/MM/YYYY');
                 }
-
-                return d.format('DD/MM/YYYY');
             }
         },
         created() {},

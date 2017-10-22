@@ -43,7 +43,7 @@
             <div class="tab-content">
                 <div role="tabpanel" :class="['tab-pane', {'active': number === 1}]" :id="'tab'+number"
                      v-for="number in 4">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-responsive">
                         <thead>
                         <tr>
                             <th>Estado</th>
@@ -86,7 +86,7 @@
                                             <icon-app iconImage="hashtag"></icon-app>
                                         </div>
                                         <input type="number" :id="'cantidad'+index" :name="'cantidad'+index"
-                                               class="form-control" placeholder="Seleccione la cantidad..." v-model="food.quantity" @change="" @keyup="">
+                                               class="form-control" placeholder="Seleccione la cantidad..." v-model="food.quantity">
                                     </div>
                                 </div>
                             </td>
@@ -144,10 +144,6 @@
     export default {
         data() {
             return {
-                desayunos: [],
-                almuerzos: [],
-                meriendas: [],
-                cenas: [],
                 trashPage: {
                     choice: 'desayuno',
                     desayuno: 1,
@@ -159,13 +155,7 @@
             }
         },
         mounted() {
-            this.getAllFood()
-                .then(response => {
-                    this.filterFoodType(this.foods, this.orders);
-                })
-                .catch(error => {
-                    // console.log(error);
-                });
+            this.checkFoodsInStore();
         },
         components: {
             Pagination,
@@ -197,13 +187,29 @@
                 page: state => state.page,
                 rental: state => state.data.rental,
                 orders: state => state.data.orders,
-                itemsPerPage: state => state.itemsPerPage
+                desayunos: state => state.data.desayunos,
+                almuerzos: state => state.data.almuerzos,
+                meriendas: state => state.data.meriendas,
+                cenas: state => state.data.cenas,
+                itemsPerPage: state => state.itemsPerPage,
             }),
             ...mapState('food', {
                 foods: state => state.data.food,
             })
         },
         methods: {
+            checkFoodsInStore() {
+                if (this.foods.length === 0) {
+                    this.getAllFood()
+                        .then(response => {
+                            this.filterFoodType(this.foods, this.orders);
+                        })
+                        .catch(error => {
+                            // console.log(error);
+                        });
+                }
+
+            },
             filterFoodType(foods, orders) {
                 let foodType = [];
                 let types = ['desayuno', 'almuerzo', 'merienda', 'cena'];
@@ -212,14 +218,6 @@
                     this.$set(food, 'checked', false);
                     this.$set(food, 'quantity', 1);
                     this.$set(food, 'delivery', moment().add(3, 'h').format('DD/MM/YYYY'));
-
-                    if (this.orders.length > 0) {
-                        for (let order of orders) {
-                            if (order.name === food.name) {
-                                food.checked = true;
-                            }
-                        }
-                    }
                 }
 
                 for (let i = types.length - 1; i >= 0; i--) {
@@ -229,16 +227,16 @@
 
                     switch (types[i]) {
                         case 'desayuno':
-                            this.desayunos = foodType;
+                            this.setDesayunos(foodType);
                             break;
                         case 'almuerzo':
-                            this.almuerzos = foodType;
+                            this.setAlmuerzos(foodType);
                             break;
                         case 'merienda':
-                            this.meriendas = foodType;
+                            this.setMeriendas(foodType);
                             break;
                         case 'cena':
-                            this.cenas = foodType;
+                            this.setCenas(foodType);
                             break;
                     }
                 }
@@ -324,7 +322,7 @@
             btnCloseOrder() {
                 this.setCloseOrder(true);
             },
-            ...mapActions('orders', ['pagination', 'setOrders', 'setCloseOrder']),
+            ...mapActions('orders', ['pagination', 'setOrders', 'setCloseOrder', 'setDesayunos', 'setAlmuerzos', 'setMeriendas', 'setCenas']),
             ...mapActions('food', ['getAllFood']),
         },
         filters: {

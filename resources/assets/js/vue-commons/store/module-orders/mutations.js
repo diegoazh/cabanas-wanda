@@ -15,5 +15,17 @@ export default {
     },
     setCloseOrder(state, bool) {
         state.data.closeOrder = bool;
-    }
+    },
+    setDesayunos(state, desayunos) {
+        state.data.desayunos = desayunos;
+    },
+    setAlmuerzos(state, almuerzos) {
+        state.data.almuerzos = almuerzos;
+    },
+    setMeriendas(state, meriendas) {
+        state.data.meriendas = meriendas;
+    },
+    setCenas(state, cenas) {
+        state.data.cenas = cenas;
+    },
 }

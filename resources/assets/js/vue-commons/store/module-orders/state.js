@@ -3,7 +3,11 @@ export default {
     itemsPerPage: 10,
     data: {
         rental: null,
-        orders: [],
         closeOrder: false,
+        orders: [],
+        desayunos: [],
+        almuerzos: [],
+        meriendas: [],
+        cenas: [],
     }
 }

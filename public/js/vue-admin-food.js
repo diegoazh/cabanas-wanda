@@ -30474,123 +30474,127 @@ var render = function() {
       "div",
       { staticClass: "col-xs-12 col-sm-12 col-md-12" },
       [
-        _c("table", { staticClass: "table table-striped table-hover" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            [
-              _vm._l(_vm.fiftheenElements, function(comida) {
-                return [
-                  _c("tr", [
-                    _c("td", [
-                      _c("b", { staticClass: "text-capitalize" }, [
-                        _vm._v(_vm._s(comida.name))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-link",
-                          attrs: {
-                            role: "button",
-                            "data-toggle": "modal",
-                            "data-target": "#ModalDescriptionFood"
-                          },
-                          on: {
-                            click: function($event) {
-                              _vm.showDescription(comida)
-                            }
-                          }
-                        },
-                        [
-                          _c(
-                            "b",
-                            [
-                              _c("icon-app", { attrs: { iconImage: "eye" } }),
-                              _vm._v(" ver descripción")
-                            ],
-                            1
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("span", { staticClass: "label label-primary" }, [
-                        _c("b", [_vm._v(_vm._s(comida.type))])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("span", { staticClass: "label label-primary" }, [
-                        _c("b", [
-                          _vm._v(_vm._s(comida.available ? "Si" : "No"))
+        _c(
+          "table",
+          { staticClass: "table table-striped table-hover table-responsive" },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              [
+                _vm._l(_vm.fiftheenElements, function(comida) {
+                  return [
+                    _c("tr", [
+                      _c("td", [
+                        _c("b", { staticClass: "text-capitalize" }, [
+                          _vm._v(_vm._s(comida.name))
                         ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "b",
-                        [
-                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                          _vm._v(" " + _vm._s(comida.price))
-                        ],
-                        1
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-warning btn-sm",
-                          on: {
-                            click: function($event) {
-                              _vm.setEditItem(comida)
-                            }
-                          }
-                        },
-                        [
-                          _c("icon-app", { attrs: { iconImage: "edit" } }),
-                          _vm._v(" Editar\n                        ")
-                        ],
-                        1
-                      ),
+                      ]),
                       _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-sm",
-                          attrs: {
-                            "data-toggle": "modal",
-                            "data-target": "#ModalDeleteFood"
-                          },
-                          on: {
-                            click: function($event) {
-                              _vm.setIdToDelete(comida)
+                      _c("td", [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-link",
+                            attrs: {
+                              role: "button",
+                              "data-toggle": "modal",
+                              "data-target": "#ModalDescriptionFood"
+                            },
+                            on: {
+                              click: function($event) {
+                                _vm.showDescription(comida)
+                              }
                             }
-                          }
-                        },
-                        [
-                          _c("icon-app", { attrs: { iconImage: "trash" } }),
-                          _vm._v(" Eliminar\n                        ")
-                        ],
-                        1
-                      )
+                          },
+                          [
+                            _c(
+                              "b",
+                              [
+                                _c("icon-app", { attrs: { iconImage: "eye" } }),
+                                _vm._v(" ver descripción")
+                              ],
+                              1
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("span", { staticClass: "label label-primary" }, [
+                          _c("b", [_vm._v(_vm._s(comida.type))])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("span", { staticClass: "label label-info" }, [
+                          _c("b", [
+                            _vm._v(_vm._s(comida.available ? "Si" : "No"))
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "b",
+                          [
+                            _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                            _vm._v(" " + _vm._s(comida.price))
+                          ],
+                          1
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-warning btn-sm",
+                            on: {
+                              click: function($event) {
+                                _vm.setEditItem(comida)
+                              }
+                            }
+                          },
+                          [
+                            _c("icon-app", { attrs: { iconImage: "edit" } }),
+                            _vm._v(" Editar\n                        ")
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-sm",
+                            attrs: {
+                              "data-toggle": "modal",
+                              "data-target": "#ModalDeleteFood"
+                            },
+                            on: {
+                              click: function($event) {
+                                _vm.setIdToDelete(comida)
+                              }
+                            }
+                          },
+                          [
+                            _c("icon-app", { attrs: { iconImage: "trash" } }),
+                            _vm._v(" Eliminar\n                        ")
+                          ],
+                          1
+                        )
+                      ])
                     ])
-                  ])
-                ]
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _vm._m(1)
-        ]),
+                  ]
+                })
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _vm._m(1)
+          ]
+        ),
         _vm._v(" "),
         _c(
           "div",
@@ -44451,6 +44455,26 @@ exports.default = {
                 reject((0, _appAxios.handlingXhrErrors)(error));
             });
         });
+    },
+    setDesayunos: function setDesayunos(_ref5, desayunos) {
+        var commit = _ref5.commit;
+
+        commit('setDesayunos', desayunos);
+    },
+    setAlmuerzos: function setAlmuerzos(_ref6, almuerzos) {
+        var commit = _ref6.commit;
+
+        commit('setAlmuerzos', almuerzos);
+    },
+    setMeriendas: function setMeriendas(_ref7, meriendas) {
+        var commit = _ref7.commit;
+
+        commit('setMeriendas', meriendas);
+    },
+    setCenas: function setCenas(_ref8, cenas) {
+        var commit = _ref8.commit;
+
+        commit('setCenas', cenas);
     }
 };
 
@@ -44536,6 +44560,18 @@ exports.default = {
     },
     setCloseOrder: function setCloseOrder(state, bool) {
         state.data.closeOrder = bool;
+    },
+    setDesayunos: function setDesayunos(state, desayunos) {
+        state.data.desayunos = desayunos;
+    },
+    setAlmuerzos: function setAlmuerzos(state, almuerzos) {
+        state.data.almuerzos = almuerzos;
+    },
+    setMeriendas: function setMeriendas(state, meriendas) {
+        state.data.meriendas = meriendas;
+    },
+    setCenas: function setCenas(state, cenas) {
+        state.data.cenas = cenas;
     }
 };
 
@@ -44555,8 +44591,12 @@ exports.default = {
     itemsPerPage: 10,
     data: {
         rental: null,
+        closeOrder: false,
         orders: [],
-        closeOrder: false
+        desayunos: [],
+        almuerzos: [],
+        meriendas: [],
+        cenas: []
     }
 };
 
