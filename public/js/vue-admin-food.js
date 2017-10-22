@@ -1784,6 +1784,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -1806,6 +1811,7 @@ exports.default = {
             name: '',
             type: '',
             price: '',
+            available: false,
             description: '',
             isUpdate: false,
             idToUpdate: 0
@@ -1877,12 +1883,14 @@ exports.default = {
                     name: this.name,
                     price: this.price,
                     type: this.type,
-                    description: this.description
+                    description: this.description,
+                    available: this.available
                 }).then(function (data) {
                     _this.name = '';
                     _this.price = '';
                     _this.description = '';
                     _this.type = '';
+                    _this.available = false;
                     window.appFood.editor.clear();
                     window.appFood.type[0].selectize.clear();
                     _this.setQueryFinished(true);
@@ -1897,14 +1905,9 @@ exports.default = {
                     name: this.name,
                     price: this.price,
                     type: this.type,
-                    description: this.description
+                    description: this.description,
+                    available: this.available
                 }).then(function (data) {
-                    _this.name = '';
-                    _this.price = '';
-                    _this.description = '';
-                    _this.type = '';
-                    window.appFood.editor.clear();
-                    window.appFood.type[0].selectize.clear();
                     _this.setQueryFinished(true);
                     _vueNotifications2.default.success(data);
                 }).catch(function (error) {
@@ -1946,6 +1949,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
 //
 //
 //
@@ -5298,7 +5305,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -5328,7 +5335,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -30518,6 +30525,14 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("td", [
+                      _c("span", { staticClass: "label label-primary" }, [
+                        _c("b", [
+                          _vm._v(_vm._s(comida.available ? "Si" : "No"))
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
                       _c(
                         "b",
                         [
@@ -30699,6 +30714,8 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Tipo")]),
         _vm._v(" "),
+        _c("th", [_vm._v("Disponible")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Precio")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Acciones")])
@@ -30711,7 +30728,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tfoot", [
       _c("tr", [
-        _c("td", { attrs: { colspan: "5" } }, [
+        _c("td", { attrs: { colspan: "6" } }, [
           _c("p", { staticClass: "text-right" }, [
             _vm._v("Lista de platos disponibles a la fecha")
           ])
@@ -30864,6 +30881,57 @@ var render = function() {
                     }
                   })
                 ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c(
+                  "label",
+                  { staticClass: "sr-only", attrs: { for: "available" } },
+                  [
+                    _vm._v("\n                        Precio: "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.available,
+                          expression: "available"
+                        }
+                      ],
+                      attrs: {
+                        id: "available",
+                        name: "available",
+                        type: "checkbox"
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.available)
+                          ? _vm._i(_vm.available, null) > -1
+                          : _vm.available
+                      },
+                      on: {
+                        __c: function($event) {
+                          var $$a = _vm.available,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.available = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.available = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.available = $$c
+                          }
+                        }
+                      }
+                    })
+                  ]
+                )
               ])
             ]
           ),
@@ -44355,6 +44423,16 @@ exports.default = {
 
         commit('setRental', rental);
     },
+    setOrders: function setOrders(_ref3, food) {
+        var commit = _ref3.commit;
+
+        commit('setOrders', food);
+    },
+    setCloseOrder: function setCloseOrder(_ref4, bool) {
+        var commit = _ref4.commit;
+
+        commit('setCloseOrder', bool);
+    },
     findReserva: function findReserva(cntx, payload) {
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('rentals/find', payload, {
@@ -44446,6 +44524,18 @@ exports.default = {
     setRental: function setRental(state, rental) {
         state.data.rental = rental;
         sessionStorage.setItem('reserva', JSON.stringify(rental));
+    },
+    setOrders: function setOrders(state, food) {
+        if (food.checked) {
+            state.data.orders.push(food);
+        } else {
+            state.data.orders.splice(state.data.orders.findIndex(function (element) {
+                return element.name === food.name;
+            }), 1);
+        }
+    },
+    setCloseOrder: function setCloseOrder(state, bool) {
+        state.data.closeOrder = bool;
     }
 };
 
@@ -44464,7 +44554,9 @@ exports.default = {
     page: 1,
     itemsPerPage: 10,
     data: {
-        rental: null
+        rental: null,
+        orders: [],
+        closeOrder: false
     }
 };
 

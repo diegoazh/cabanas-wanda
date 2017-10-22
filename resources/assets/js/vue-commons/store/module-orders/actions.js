@@ -7,6 +7,12 @@ export default {
     setRental({commit}, rental) {
         commit('setRental', rental);
     },
+    setOrders({commit}, food) {
+        commit('setOrders', food);
+    },
+    setCloseOrder({commit}, bool) {
+        commit('setCloseOrder', bool);
+    },
     findReserva(cntx, payload) {
         return new Promise((resolve, reject) => {
             http.post('rentals/find', payload, {
@@ -25,5 +31,5 @@ export default {
                 reject(handlingXhrErrors(error));
             });
         });
-    }
+    },
 }

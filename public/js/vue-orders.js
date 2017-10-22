@@ -1945,6 +1945,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 var _moment = __webpack_require__("./node_modules/moment/moment.js");
 
@@ -1975,23 +1979,23 @@ exports.default = {
             almuerzos: [],
             meriendas: [],
             cenas: [],
-            orders: [],
             trashPage: {
                 choice: 'desayuno',
                 desayuno: 1,
                 almuerzo: 1,
                 merienda: 1,
                 cena: 1
-            }
+            },
+            activeReload: false
         };
     },
     mounted: function mounted() {
         var _this = this;
 
         this.getAllFood().then(function (response) {
-            _this.filterFoodType(_this.foods);
+            _this.filterFoodType(_this.foods, _this.orders);
         }).catch(function (error) {
-            console.log(error);
+            // console.log(error);
         });
     },
 
@@ -2070,6 +2074,9 @@ exports.default = {
         rental: function rental(state) {
             return state.data.rental;
         },
+        orders: function orders(state) {
+            return state.data.orders;
+        },
         itemsPerPage: function itemsPerPage(state) {
             return state.itemsPerPage;
         }
@@ -2079,7 +2086,7 @@ exports.default = {
         }
     })),
     methods: _extends({
-        filterFoodType: function filterFoodType(foods) {
+        filterFoodType: function filterFoodType(foods, orders) {
             var _this2 = this;
 
             var foodType = [];
@@ -2093,10 +2100,38 @@ exports.default = {
                 for (var _iterator3 = foods[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
                     var food = _step3.value;
 
-                    //food = Object.assign({}, food, {checked: false})
                     this.$set(food, 'checked', false);
                     this.$set(food, 'quantity', 1);
                     this.$set(food, 'delivery', (0, _moment2.default)().add(3, 'h').format('DD/MM/YYYY'));
+
+                    if (this.orders.length > 0) {
+                        var _iteratorNormalCompletion4 = true;
+                        var _didIteratorError4 = false;
+                        var _iteratorError4 = undefined;
+
+                        try {
+                            for (var _iterator4 = orders[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                                var order = _step4.value;
+
+                                if (order.name === food.name) {
+                                    food.checked = true;
+                                }
+                            }
+                        } catch (err) {
+                            _didIteratorError4 = true;
+                            _iteratorError4 = err;
+                        } finally {
+                            try {
+                                if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                                    _iterator4.return();
+                                }
+                            } finally {
+                                if (_didIteratorError4) {
+                                    throw _iteratorError4;
+                                }
+                            }
+                        }
+                    }
                 }
             } catch (err) {
                 _didIteratorError3 = true;
@@ -2203,13 +2238,7 @@ exports.default = {
         },
         toggelAddRemoveFood: function toggelAddRemoveFood(food) {
             food.checked = !food.checked;
-            if (food.checked) {
-                this.orders.push(food);
-            } else {
-                this.orders.splice(this.orders.findIndex(function (element) {
-                    return element.name === food.name;
-                }), 1);
-            }
+            this.setOrders(food);
         },
         updateQuantity: function updateQuantity(food) {
             var i = this.orders.findIndex(function (element) {
@@ -2218,8 +2247,16 @@ exports.default = {
             if (i > 0) {
                 this.orders[i].quantity = +food.quantity;
             }
+        },
+        changeReserva: function changeReserva() {
+            this.activeReload = true;
+            EventBus.$emit('change-reserva');
+            this.activeReload = false;
+        },
+        btnCloseOrder: function btnCloseOrder() {
+            this.setCloseOrder(true);
         }
-    }, (0, _vuex.mapActions)('orders', ['pagination']), (0, _vuex.mapActions)('food', ['getAllFood'])),
+    }, (0, _vuex.mapActions)('orders', ['pagination', 'setOrders', 'setCloseOrder']), (0, _vuex.mapActions)('food', ['getAllFood'])),
     filters: {
         argentineDateTime: function argentineDateTime(value) {
             if (!value) return;
@@ -2229,6 +2266,170 @@ exports.default = {
             if (!value) return;
             return (0, _moment2.default)(value, 'YYYY-MM-DD').format('DD/MM/YYYY');
         }
+    }
+};
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-orders-app/components/CloseOrder.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _moment = __webpack_require__("./node_modules/moment/moment.js");
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
+var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    components: {
+        'icon-app': _Icon2.default
+    },
+    data: function data() {
+        return {};
+    },
+
+    computed: _extends({
+        totalAmount: function totalAmount() {
+            var final = 0;
+
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = this.orders[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var order = _step.value;
+
+                    final += order.quantity * order.price;
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            return final;
+        },
+        totalQuantity: function totalQuantity() {
+            var final = 0;
+
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = this.orders[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var order = _step2.value;
+
+                    final += +order.quantity;
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
+
+            return final;
+        }
+    }, (0, _vuex.mapState)('orders', {
+        orders: function orders(state) {
+            return state.data.orders;
+        }
+    })),
+    methods: _extends({
+        hasOrder: function hasOrder() {
+            if (this.orders.length === 0) {
+                this.setCloseOrder(false);
+            }
+        },
+        backToItems: function backToItems() {
+            this.setCloseOrder(false);
+        }
+    }, (0, _vuex.mapActions)('orders', ['setCloseOrder'])),
+    filters: {
+        displayArgDate: function displayArgDate(date) {
+            var d = null;
+
+            if (date.indexOf('/') > 0) {
+                d = (0, _moment2.default)(date, 'DD/MM/YYYY');
+            }
+
+            return d.format('DD/MM/YYYY');
+        }
+    },
+    created: function created() {},
+    mounted: function mounted() {
+        this.hasOrder();
     }
 };
 
@@ -2374,6 +2575,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
@@ -2385,6 +2587,10 @@ var _AddOrders = __webpack_require__("./resources/assets/js/vue-orders-app/compo
 
 var _AddOrders2 = _interopRequireDefault(_AddOrders);
 
+var _CloseOrder = __webpack_require__("./resources/assets/js/vue-orders-app/components/CloseOrder.vue");
+
+var _CloseOrder2 = _interopRequireDefault(_CloseOrder);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
@@ -2394,14 +2600,25 @@ exports.default = {
     created: function created() {
         this.checkItemInStorage();
     },
+    mounted: function mounted() {
+        var _this = this;
+
+        EventBus.$on('change-reserva', function () {
+            return _this.changeReserva();
+        });
+    },
 
     components: {
         'find-rental-app': _FindRental2.default,
-        'add-orders-app': _AddOrders2.default
+        'add-orders-app': _AddOrders2.default,
+        'close-order-app': _CloseOrder2.default
     },
     computed: _extends({}, (0, _vuex.mapState)('orders', {
         rental: function rental(state) {
             return state.data.rental;
+        },
+        closeOrder: function closeOrder(state) {
+            return state.data.closeOrder;
         }
     })),
     methods: _extends({
@@ -2411,6 +2628,10 @@ exports.default = {
             if (reserva) {
                 this.setRental(reserva);
             }
+        },
+        changeReserva: function changeReserva() {
+            this.setRental(null);
+            window.sessionStorage.removeItem('reserva');
         }
     }, (0, _vuex.mapActions)('orders', ['setRental']))
 };
@@ -2462,6 +2683,21 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-578fe6ca\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-orders-app/components/CloseOrder.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-753af80e\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-orders-app/components/Orders.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2500,7 +2736,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n#details_reservation span {\n    font-size: inherit;\n}\n", ""]);
+exports.push([module.i, "\n#details_reservation span {\n    font-size: inherit;\n}\n.padding-bottom-20 {\n    padding-bottom: 20px;\n}\n", ""]);
 
 // exports
 
@@ -37471,6 +37707,111 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-578fe6ca\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-orders-app/components/CloseOrder.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-info pull-right",
+          on: { click: _vm.backToItems }
+        },
+        [
+          _c("icon-app", { attrs: { iconImage: "cart-plus" } }),
+          _vm._v(" "),
+          _c("b", [_vm._v("Añadir items")]),
+          _vm._v(" "),
+          _c("icon-app", { attrs: { iconImage: "mail-reply" } })
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+      _c("table", { staticClass: "table table-striped" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.orders, function(order) {
+            return _c("tr", [
+              _c("td", [
+                _vm._v(_vm._s(_vm._f("displayArgDate")(order.delivery)))
+              ]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(order.name))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(order.quantity))]),
+              _vm._v(" "),
+              _c(
+                "td",
+                [
+                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                  _vm._v(" " + _vm._s(order.price))
+                ],
+                1
+              )
+            ])
+          })
+        ),
+        _vm._v(" "),
+        _c("tfoot", [
+          _c("tr", { staticClass: "danger" }, [
+            _c("td", [_vm._v("Monto final")]),
+            _vm._v(" "),
+            _c("td"),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(_vm.totalQuantity))]),
+            _vm._v(" "),
+            _c(
+              "td",
+              [
+                _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                _vm._v(" " + _vm._s(_vm.totalAmount))
+              ],
+              1
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "dafault" }, [
+        _c("th", [_vm._v("Fecha de entrega")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Plato")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Cantidad")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Precio")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-578fe6ca", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-753af80e\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-orders-app/components/Orders.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37484,7 +37825,11 @@ var render = function() {
     [
       _vm._m(0),
       _vm._v(" "),
-      !_vm.rental ? _c("find-rental-app") : _c("add-orders-app")
+      !_vm.rental
+        ? _c("find-rental-app")
+        : _vm.rental && !_vm.closeOrder
+          ? _c("add-orders-app")
+          : _c("close-order-app")
     ],
     1
   )
@@ -37495,7 +37840,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+      _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12 page-header" }, [
         _c("h1", { staticClass: "text-center" }, [_vm._v("Ordenes")]),
         _vm._v(" "),
         _c("p", { staticClass: "text-center" }, [
@@ -37750,6 +38095,24 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary btn-xs pull-right",
+          on: { click: _vm.changeReserva }
+        },
+        [
+          _c("icon-app", {
+            attrs: {
+              iconImage: "refresh",
+              aditionalClasses: _vm.activeReload ? "fa-spin fa-fw" : ""
+            }
+          }),
+          _vm._v(" Cambiar reserva")
+        ],
+        1
+      ),
+      _vm._v(" "),
       _c("h2", { staticClass: "text-center" }, [_vm._v("Reserva")]),
       _vm._v(" "),
       _c(
@@ -38161,6 +38524,21 @@ var render = function() {
             )
           })
         ),
+        _vm._v(" "),
+        _c("div", { staticClass: "text-center padding-bottom-20" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-success btn-lg",
+              on: { click: _vm.btnCloseOrder }
+            },
+            [
+              _c("icon-app", { attrs: { iconImage: "handshake-o" } }),
+              _vm._v(" Cerrar pedido")
+            ],
+            1
+          )
+        ]),
         _vm._v(" "),
         _c(
           "modal-app",
@@ -38752,6 +39130,33 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1edc32ac\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Icon.vue", function() {
      var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1edc32ac\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Icon.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-578fe6ca\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-orders-app/components/CloseOrder.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-578fe6ca\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-orders-app/components/CloseOrder.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("a4680020", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-578fe6ca\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CloseOrder.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-578fe6ca\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CloseOrder.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -50845,6 +51250,16 @@ exports.default = {
 
         commit('setRental', rental);
     },
+    setOrders: function setOrders(_ref3, food) {
+        var commit = _ref3.commit;
+
+        commit('setOrders', food);
+    },
+    setCloseOrder: function setCloseOrder(_ref4, bool) {
+        var commit = _ref4.commit;
+
+        commit('setCloseOrder', bool);
+    },
     findReserva: function findReserva(cntx, payload) {
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('rentals/find', payload, {
@@ -50936,6 +51351,18 @@ exports.default = {
     setRental: function setRental(state, rental) {
         state.data.rental = rental;
         sessionStorage.setItem('reserva', JSON.stringify(rental));
+    },
+    setOrders: function setOrders(state, food) {
+        if (food.checked) {
+            state.data.orders.push(food);
+        } else {
+            state.data.orders.splice(state.data.orders.findIndex(function (element) {
+                return element.name === food.name;
+            }), 1);
+        }
+    },
+    setCloseOrder: function setCloseOrder(state, bool) {
+        state.data.closeOrder = bool;
     }
 };
 
@@ -50954,7 +51381,9 @@ exports.default = {
     page: 1,
     itemsPerPage: 10,
     data: {
-        rental: null
+        rental: null,
+        orders: [],
+        closeOrder: false
     }
 };
 
@@ -51383,6 +51812,57 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-orders-app/components/CloseOrder.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-578fe6ca\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-orders-app/components/CloseOrder.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-orders-app/components/CloseOrder.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-578fe6ca\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-orders-app/components/CloseOrder.vue")
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/vue-orders-app/components/CloseOrder.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] CloseOrder.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-578fe6ca", Component.options)
+  } else {
+    hotAPI.reload("data-v-578fe6ca", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-orders-app/components/FindRental.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -51520,6 +52000,8 @@ var _Orders2 = _interopRequireDefault(_Orders);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vueNotifications2.default, _notifications.optionsIzi).use(_vueCookies2.default).use(_vTooltip2.default);
+
+window.EventBus = new _vue2.default();
 
 var ordersApp = new _vue2.default({
     el: '#vue-order-app',

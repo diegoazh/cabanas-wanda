@@ -11,7 +11,7 @@ class Food extends Model
 
     protected $table = 'foods';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['name', 'type', 'description', 'price'];
+    protected $fillable = ['name', 'type', 'description', 'price', 'available'];
 
     public function detallesPedidos()
     {

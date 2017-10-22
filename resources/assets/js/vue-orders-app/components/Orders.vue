@@ -1,13 +1,14 @@
 <template>
     <div id="orders-component" class="container jumbotron">
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 page-header">
                 <h1 class="text-center">Ordenes</h1>
                 <p class="text-center">Puedes programar los pedidos que desee para cada día de tu estadía</p>
             </div>
         </div>
         <find-rental-app v-if="!rental"></find-rental-app>
-        <add-orders-app v-else></add-orders-app>
+        <add-orders-app v-else-if="rental && !closeOrder"></add-orders-app>
+        <close-order-app v-else></close-order-app>
     </div>
 </template>
 
@@ -15,6 +16,7 @@
     import { mapState, mapActions } from 'vuex'
     import FindRental from './FindRental.vue'
     import AddOrders from './AddOrders.vue'
+    import CloseOrder from './CloseOrder.vue'
 
     export default {
         data() {
@@ -25,13 +27,18 @@
         created() {
             this.checkItemInStorage();
         },
+        mounted() {
+            EventBus.$on('change-reserva', () => this.changeReserva());
+        },
         components: {
             'find-rental-app': FindRental,
-            'add-orders-app': AddOrders
+            'add-orders-app': AddOrders,
+            'close-order-app': CloseOrder,
         },
         computed: {
             ...mapState('orders', {
-                rental: state => state.data.rental
+                rental: state => state.data.rental,
+                closeOrder: state => state.data.closeOrder,
             })
         },
         methods: {
@@ -41,6 +48,10 @@
                 if (reserva) {
                     this.setRental(reserva);
                 }
+            },
+            changeReserva() {
+                this.setRental(null);
+                window.sessionStorage.removeItem('reserva');
             },
             ...mapActions('orders', ['setRental'])
         }

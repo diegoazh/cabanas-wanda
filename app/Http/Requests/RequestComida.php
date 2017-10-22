@@ -27,7 +27,8 @@ class RequestComida extends FormRequest
             'name' => 'required|string',
             'type' => 'required|string',
             'description' => 'required|string',
-            'price' => 'required|numeric'
+            'price' => 'required|numeric',
+            'available' => 'boolean'
         ];
     }
 
@@ -46,7 +47,8 @@ class RequestComida extends FormRequest
             'description.required' => 'Es necesario que describa el plato',
             'description.string' => 'La descripción debe ser texto',
             'price.required' => 'Es necesario que asigne un valor en $ al plato',
-            'price.numeric' => 'El precio debe puede tener hasta 2 decimales'
+            'price.numeric' => 'El precio debe puede tener hasta 2 decimales',
+            'available.boolean' => 'La disponibilidad debe ser verdadero o falso'
         ];
     }
 }

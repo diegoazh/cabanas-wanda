@@ -8,6 +8,8 @@ import Orders from './components/Orders.vue'
 
 Vue.use(VueNotifications, optionsIzi).use(VueCookies).use(VTooltip);
 
+window.EventBus = new Vue();
+
 const ordersApp = new Vue({
     el: '#vue-order-app',
     store,

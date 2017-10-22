@@ -20,6 +20,7 @@ class CreateFoodsTable extends Migration
             $table->text('description');
             $table->double('price', 8, 2);
             $table->string('image')->nullable();
+            $table->boolean('available')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

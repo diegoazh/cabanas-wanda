@@ -86,6 +86,7 @@ class FoodsController extends Controller
         if(isset($info['type']) && !empty($info['name'])) { $menu->type = $info['type']; }
         if(isset($info['description']) && !empty($info['name'])) { $menu->description = $info['description']; }
         if(isset($info['price']) && !empty($info['name'])) { $menu->price = $info['price']; }
+        if(isset($info['available']) && !empty($info['available'])) { $menu->available = $info['available']; }
 
         try {
 
@@ -135,7 +136,7 @@ class FoodsController extends Controller
      */
     public function all()
     {
-        $comidas = Food::orderBy('type')->orderBy('name')->get();
+        $comidas = Food::where('available', true)->orderBy('type')->orderBy('name')->get();
 
         return response()->json(compact('comidas'), 200);
     }

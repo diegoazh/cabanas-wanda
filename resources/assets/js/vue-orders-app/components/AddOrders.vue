@@ -1,6 +1,7 @@
 <template>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
+            <button class="btn btn-primary btn-xs pull-right" @click="changeReserva"><icon-app iconImage="refresh" :aditionalClasses="activeReload ? 'fa-spin fa-fw' : ''"></icon-app> Cambiar reserva</button>
             <h2 class="text-center">Reserva</h2>
             <h3 id="details_reservation" class="text-center">
                 Titular: <span class="label label-info">{{ `${rental.user.name}, ${rental.user.lastname}` }}</span> |
@@ -116,6 +117,9 @@
                     </table>
                 </div>
             </div>
+            <div class="text-center padding-bottom-20">
+                <button class="btn btn-success btn-lg" @click="btnCloseOrder"><icon-app iconImage="handshake-o"></icon-app> Cerrar pedido</button>
+            </div>
             <modal-app modalTitle="Aclaraciones de la cocina" modalId="aclaraciones-pedidos" :showBtnSave="false">
                 <ul>
                     <li>El desayuno se sirve hasta </li>
@@ -144,7 +148,6 @@
                 almuerzos: [],
                 meriendas: [],
                 cenas: [],
-                orders: [],
                 trashPage: {
                     choice: 'desayuno',
                     desayuno: 1,
@@ -152,15 +155,16 @@
                     merienda: 1,
                     cena: 1
                 },
+                activeReload: false,
             }
         },
         mounted() {
             this.getAllFood()
                 .then(response => {
-                    this.filterFoodType(this.foods);
+                    this.filterFoodType(this.foods, this.orders);
                 })
                 .catch(error => {
-                    console.log(error);
+                    // console.log(error);
                 });
         },
         components: {
@@ -192,6 +196,7 @@
             ...mapState('orders', {
                 page: state => state.page,
                 rental: state => state.data.rental,
+                orders: state => state.data.orders,
                 itemsPerPage: state => state.itemsPerPage
             }),
             ...mapState('food', {
@@ -199,15 +204,22 @@
             })
         },
         methods: {
-            filterFoodType(foods) {
+            filterFoodType(foods, orders) {
                 let foodType = [];
                 let types = ['desayuno', 'almuerzo', 'merienda', 'cena'];
 
                 for (let food of foods) {
-                    //food = Object.assign({}, food, {checked: false})
                     this.$set(food, 'checked', false);
                     this.$set(food, 'quantity', 1);
                     this.$set(food, 'delivery', moment().add(3, 'h').format('DD/MM/YYYY'));
+
+                    if (this.orders.length > 0) {
+                        for (let order of orders) {
+                            if (order.name === food.name) {
+                                food.checked = true;
+                            }
+                        }
+                    }
                 }
 
                 for (let i = types.length - 1; i >= 0; i--) {
@@ -296,11 +308,7 @@
             },
             toggelAddRemoveFood(food) {
                 food.checked = !food.checked;
-                if (food.checked) {
-                    this.orders.push(food);
-                } else {
-                    this.orders.splice(this.orders.findIndex(element => element.name === food.name), 1);
-                }
+                this.setOrders(food);
             },
             updateQuantity(food) {
                 let i = this.orders.findIndex(element => element.name === food.name);
@@ -308,7 +316,15 @@
                     this.orders[i].quantity = +food.quantity;
                 }
             },
-            ...mapActions('orders', ['pagination']),
+            changeReserva() {
+                this.activeReload = true;
+                EventBus.$emit('change-reserva');
+                this.activeReload = false;
+            },
+            btnCloseOrder() {
+                this.setCloseOrder(true);
+            },
+            ...mapActions('orders', ['pagination', 'setOrders', 'setCloseOrder']),
             ...mapActions('food', ['getAllFood']),
         },
         filters: {
@@ -327,5 +343,8 @@
 <style>
     #details_reservation span {
         font-size: inherit;
+    }
+    .padding-bottom-20 {
+        padding-bottom: 20px;
     }
 </style>

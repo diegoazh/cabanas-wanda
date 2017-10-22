@@ -7,6 +7,7 @@
                     <th>Nombre</th>
                     <th>Descripción</th>
                     <th>Tipo</th>
+                    <th>Disponible</th>
                     <th>Precio</th>
                     <th class="text-center">Acciones</th>
                 </tr>
@@ -26,6 +27,9 @@
                             <span class="label label-primary"><b>{{ comida.type }}</b></span>
                         </td>
                         <td>
+                            <span class="label label-primary"><b>{{ comida.available ? 'Si' : 'No' }}</b></span>
+                        </td>
+                        <td>
                             <b><icon-app iconImage="dollar"></icon-app> {{ comida.price }}</b>
                         </td>
                         <td>
@@ -41,7 +45,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="5">
+                    <td colspan="6">
                         <p class="text-right">Lista de platos disponibles a la fecha</p>
                     </td>
                 </tr>

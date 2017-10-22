@@ -2,6 +2,8 @@ export default {
     page: 1,
     itemsPerPage: 10,
     data: {
-        rental: null
+        rental: null,
+        orders: [],
+        closeOrder: false,
     }
 }

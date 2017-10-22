@@ -27,6 +27,11 @@
                             <input id="price" name="price" type="number" step="0.01" class="form-control" placeholder="Ej: 150" v-model="price">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="available" class="sr-only">
+                            Precio: <input id="available" name="available" type="checkbox" v-model="available">
+                        </label>
+                    </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
@@ -58,6 +63,7 @@
                 name: '',
                 type: '',
                 price: '',
+                available: false,
                 description: '',
                 isUpdate: false,
                 idToUpdate: 0
@@ -129,12 +135,14 @@
                         name: this.name,
                         price: this.price,
                         type: this.type,
-                        description: this.description
+                        description: this.description,
+                        available: this.available
                     }).then(data => {
                         this.name = '';
                         this.price = '';
                         this.description = '';
                         this.type = '';
+                        this.available = false;
                         window.appFood.editor.clear();
                         window.appFood.type[0].selectize.clear();
                         this.setQueryFinished(true);
@@ -149,14 +157,9 @@
                         name: this.name,
                         price: this.price,
                         type: this.type,
-                        description: this.description
+                        description: this.description,
+                        available: this.available
                     }).then(data => {
-                        this.name = '';
-                        this.price = '';
-                        this.description = '';
-                        this.type = '';
-                        window.appFood.editor.clear();
-                        window.appFood.type[0].selectize.clear();
                         this.setQueryFinished(true);
                         VueNoti.success(data);
                     }).catch(error => {

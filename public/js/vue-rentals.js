@@ -68466,6 +68466,16 @@ exports.default = {
 
         commit('setRental', rental);
     },
+    setOrders: function setOrders(_ref3, food) {
+        var commit = _ref3.commit;
+
+        commit('setOrders', food);
+    },
+    setCloseOrder: function setCloseOrder(_ref4, bool) {
+        var commit = _ref4.commit;
+
+        commit('setCloseOrder', bool);
+    },
     findReserva: function findReserva(cntx, payload) {
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('rentals/find', payload, {
@@ -68557,6 +68567,18 @@ exports.default = {
     setRental: function setRental(state, rental) {
         state.data.rental = rental;
         sessionStorage.setItem('reserva', JSON.stringify(rental));
+    },
+    setOrders: function setOrders(state, food) {
+        if (food.checked) {
+            state.data.orders.push(food);
+        } else {
+            state.data.orders.splice(state.data.orders.findIndex(function (element) {
+                return element.name === food.name;
+            }), 1);
+        }
+    },
+    setCloseOrder: function setCloseOrder(state, bool) {
+        state.data.closeOrder = bool;
     }
 };
 
@@ -68575,7 +68597,9 @@ exports.default = {
     page: 1,
     itemsPerPage: 10,
     data: {
-        rental: null
+        rental: null,
+        orders: [],
+        closeOrder: false
     }
 };
 
