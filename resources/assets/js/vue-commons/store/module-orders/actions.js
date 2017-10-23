@@ -13,25 +13,6 @@ export default {
     setCloseOrder({commit}, bool) {
         commit('setCloseOrder', bool);
     },
-    findReserva(cntx, payload) {
-        return new Promise((resolve, reject) => {
-            http.post('rentals/find', payload, {
-                params: {
-                    token: cntx.rootGetters['auth/getToken'],
-                }
-            }).then(response => {
-                cntx.commit('auth/setToken', response.data.token, {root: true});
-                cntx.commit('setRental', response.data.reserva);
-                resolve({
-                    title: '¡Excelente!',
-                    message: 'Encontramos la reserva, ahora puedes realizar tus pedidos sin ningún problema',
-                    useSwal: true
-                });
-            }).catch(error => {
-                reject(handlingXhrErrors(error));
-            });
-        });
-    },
     setDesayunos({commit}, desayunos) {
         commit('setDesayunos', desayunos);
     },
@@ -44,4 +25,42 @@ export default {
     setCenas({commit}, cenas) {
         commit('setCenas', cenas);
     },
+    findReserva(cntx, payload) {
+        return new Promise((resolve, reject) => {
+            http.post('rentals/find', payload, {
+                params: {
+                    token: cntx.rootGetters['auth/getToken'],
+                }
+            }).then(response => {
+                cntx.dispatch('auth/setToken', response, {root: true});
+                cntx.dispatch('setRental', response.data.reserva);
+                resolve({
+                    title: '¡Excelente!',
+                    message: 'Encontramos la reserva, ahora puedes realizar tus pedidos sin ningún problema',
+                    useSwal: true
+                });
+            }).catch(error => {
+                reject(handlingXhrErrors(error));
+            });
+        });
+    },
+    sendOrder(cntx, payload) {
+        return new Promise((resolve, reject) => {
+            http.post('orders/store', payload, {
+                params: {
+                    token: cntx.rootGetters['auth/getToken']
+                }
+            }).then(response => {
+                cntx.dispatch('auth/setToken', response, {root: true});
+                resolve({
+                    title: 'PEDIDO REALIZADO',
+                    message: response.data.message,
+                    useSwal: true,
+                });
+            }).catch(error => {
+                cntx.dispatch('auth/setToken', error.response, {root: true});
+                reject(handlingXhrErrors(error))
+            });
+        });
+    }
 }

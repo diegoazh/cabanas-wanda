@@ -35,3 +35,9 @@ Route::prefix('food')->group(function () {
         Route::delete('destroy/{id}', 'Administration\FoodsController@destroy')->name('api.food.destroy');
     });
 });
+
+Route::prefix('orders')->group(function () {
+    Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
+        Route::post('store', 'OrdersController@store')->name('api.orders.store');
+    });
+});

@@ -1949,6 +1949,26 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
+
+var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
 
 var _moment = __webpack_require__("./node_modules/moment/moment.js");
 
@@ -2093,13 +2113,13 @@ exports.default = {
 
             if (this.foods.length === 0) {
                 this.getAllFood().then(function (response) {
-                    _this.filterFoodType(_this.foods, _this.orders);
+                    _this.filterFoodType(_this.foods);
                 }).catch(function (error) {
                     // console.log(error);
                 });
             }
         },
-        filterFoodType: function filterFoodType(foods, orders) {
+        filterFoodType: function filterFoodType(foods) {
             var _this2 = this;
 
             var foodType = [];
@@ -2115,7 +2135,7 @@ exports.default = {
 
                     this.$set(food, 'checked', false);
                     this.$set(food, 'quantity', 1);
-                    this.$set(food, 'delivery', (0, _moment2.default)().add(3, 'h').format('DD/MM/YYYY'));
+                    this.$set(food, 'delivery', null);
                 }
             } catch (err) {
                 _didIteratorError3 = true;
@@ -2208,11 +2228,12 @@ exports.default = {
             this.trashPage.choice = tabName;
         },
         defineConfDateTimePiker: function defineConfDateTimePiker(rental) {
+            var min = (0, _moment2.default)((0, _moment2.default)(rental.dateFrom + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY');
             return {
                 locale: 'es',
                 format: 'DD/MM/YYYY',
-                minDate: (0, _moment2.default)((0, _moment2.default)().format('DD/MM/YYYY') + ' 00:00 AM', 'DD/MM/YYYY hh:mm A'),
-                maxDate: (0, _moment2.default)((0, _moment2.default)(rental.dateTo + ' 23:59:59', 'YYYY/MM/DD HH:mm:ss').format('DD/MM/YYYY HH:mm:ss'), 'DD/MM/YYYY HH:mm:ss')
+                minDate: min.isBefore(_moment2.default.now()) ? (0, _moment2.default)((0, _moment2.default)().add(3, 'h').format('DD/MM/YYYY'), 'DD/MM/YYYY') : min,
+                maxDate: (0, _moment2.default)((0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY')
             };
         },
         findInOrders: function findInOrders(food) {
@@ -2221,6 +2242,14 @@ exports.default = {
             });
         },
         toggelAddRemoveFood: function toggelAddRemoveFood(food) {
+            if (!food.delivery) {
+                _vueNotifications2.default.warn({
+                    title: 'SIN FECHA',
+                    message: 'Por favor seleccione la fecha en la que desea la entrega del plato. Muchas gracias.',
+                    useSwal: true
+                });
+                return;
+            }
             food.checked = !food.checked;
             this.setOrders(food);
         },
@@ -2303,6 +2332,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
+
+var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
 
 var _moment = __webpack_require__("./node_modules/moment/moment.js");
 
@@ -2384,10 +2425,23 @@ exports.default = {
             }
 
             return final;
+        },
+        toggleIcon: function toggleIcon() {
+            return this.queryFinished ? 'handshake-o' : 'spinner';
+        },
+        addAditionalClasses: function addAditionalClasses() {
+            return this.queryFinished ? '' : 'fa-spin fa-fw';
         }
     }, (0, _vuex.mapState)('orders', {
         orders: function orders(state) {
             return state.data.orders;
+        },
+        rental: function rental(state) {
+            return state.data.rental;
+        }
+    }), (0, _vuex.mapState)('auth', {
+        queryFinished: function queryFinished(state) {
+            return state.xhr.queryFinished;
         }
     })),
     methods: _extends({
@@ -2398,8 +2452,27 @@ exports.default = {
         },
         backToItems: function backToItems() {
             this.setCloseOrder(false);
+        },
+        setOrderToSend: function setOrderToSend() {
+            var _this = this;
+
+            this.setQueryFinished(false);
+            this.sendOrder({
+                rental_id: this.rental.id,
+                orders: this.orders
+            }).then(function (response) {
+                _vueNotifications2.default.success(response);
+                _this.setQueryFinished(true);
+                _this.setOrders([]);
+                _this.setCloseOrder(false);
+                EventBus.$emit('change-reserva');
+            }).catch(function (error) {
+                error.useSwal = true;
+                _vueNotifications2.default.error(error);
+                _this.setQueryFinished(true);
+            });
         }
-    }, (0, _vuex.mapActions)('orders', ['setCloseOrder'])),
+    }, (0, _vuex.mapActions)('orders', ['setCloseOrder', 'sendOrder', 'setOrders']), (0, _vuex.mapActions)('auth', ['setQueryFinished'])),
     filters: {
         displayArgDate: function displayArgDate(date) {
             if (!_moment2.default.isMoment(date) && typeof date === 'string') {
@@ -2616,8 +2689,9 @@ exports.default = {
         changeReserva: function changeReserva() {
             this.setRental(null);
             window.sessionStorage.removeItem('reserva');
+            this.setFood([]);
         }
-    }, (0, _vuex.mapActions)('orders', ['setRental']))
+    }, (0, _vuex.mapActions)('orders', ['setRental']), (0, _vuex.mapActions)('food', ['setFood']))
 };
 
 /***/ }),
@@ -2675,7 +2749,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -37710,7 +37784,7 @@ var render = function() {
           _c(
             "b",
             [
-              _c("icon-app", { attrs: { iconImage: "cart-plus" } }),
+              _c("icon-app", { attrs: { iconImage: "shopping-basket" } }),
               _vm._v(" Editar pedido "),
               _c("icon-app", { attrs: { iconImage: "mail-reply" } })
             ],
@@ -37722,7 +37796,33 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
       _c("table", { staticClass: "table table-striped" }, [
-        _vm._m(0),
+        _c("thead", [
+          _c("tr", { staticClass: "dafault" }, [
+            _c("th", [_vm._v("Fecha de entrega")]),
+            _vm._v(" "),
+            _c("th", [_vm._v("Plato")]),
+            _vm._v(" "),
+            _c("th", [_vm._v("Cantidad")]),
+            _vm._v(" "),
+            _c(
+              "th",
+              [
+                _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                _vm._v("/unidad")
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "th",
+              [
+                _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                _vm._v(" total por plato")
+              ],
+              1
+            )
+          ])
+        ]),
         _vm._v(" "),
         _c(
           "tbody",
@@ -37743,6 +37843,15 @@ var render = function() {
                   _vm._v(" " + _vm._s(order.price))
                 ],
                 1
+              ),
+              _vm._v(" "),
+              _c(
+                "td",
+                [
+                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                  _vm._v(" " + _vm._s(order.price * order.quantity))
+                ],
+                1
               )
             ])
           })
@@ -37756,6 +37865,8 @@ var render = function() {
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(_vm.totalQuantity))]),
             _vm._v(" "),
+            _c("td"),
+            _vm._v(" "),
             _c(
               "td",
               [
@@ -37766,28 +37877,36 @@ var render = function() {
             )
           ])
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "text-center" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-lg btn-success",
+            on: { click: _vm.setOrderToSend }
+          },
+          [
+            _c(
+              "b",
+              [
+                _c("icon-app", {
+                  attrs: {
+                    iconImage: _vm.toggleIcon,
+                    aditionalClasses: _vm.addAditionalClasses
+                  }
+                }),
+                _vm._v(" Confirmar pedido")
+              ],
+              1
+            )
+          ]
+        )
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", { staticClass: "dafault" }, [
-        _c("th", [_vm._v("Fecha de entrega")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Plato")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Cantidad")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Precio")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -38095,7 +38214,7 @@ var render = function() {
               aditionalClasses: _vm.activeReload ? "fa-spin fa-fw" : ""
             }
           }),
-          _vm._v(" Cambiar reserva")
+          _vm._v("\n            Cambiar reserva\n        ")
         ],
         1
       ),
@@ -38159,7 +38278,7 @@ var render = function() {
                   attrs: { iconImage: "exclamation-triangle" }
                 }),
                 _vm._v(
-                  " Por favor tenga en cuenta lo siguiente...\n                    "
+                  "\n                        Por favor tenga en cuenta lo siguiente...\n                    "
                 )
               ],
               1
@@ -38291,10 +38410,8 @@ var render = function() {
                 attrs: { role: "tabpanel", id: "tab" + number }
               },
               [
-                _c(
-                  "table",
-                  { staticClass: "table table-striped table-responsive" },
-                  [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c("table", { staticClass: "table table-striped" }, [
                     _vm._m(0, true),
                     _vm._v(" "),
                     _c(
@@ -38375,9 +38492,9 @@ var render = function() {
                                 attrs: { iconImage: "dollar" }
                               }),
                               _vm._v(
-                                "\n                            " +
+                                "\n                                " +
                                   _vm._s(food.price) +
-                                  "\n                        "
+                                  "\n                            "
                               )
                             ],
                             1
@@ -38523,8 +38640,8 @@ var render = function() {
                         )
                       ])
                     ])
-                  ]
-                )
+                  ])
+                ])
               ]
             )
           })
@@ -38539,7 +38656,7 @@ var render = function() {
             },
             [
               _c("icon-app", { attrs: { iconImage: "handshake-o" } }),
-              _vm._v(" Cerrar pedido")
+              _vm._v("\n                Cerrar pedido\n            ")
             ],
             1
           )
@@ -38556,29 +38673,35 @@ var render = function() {
           },
           [
             _c("ul", [
-              _c("li", [_vm._v("El desayuno se sirve hasta ")]),
+              _c("li", [_vm._v("El desayuno se sirve hasta las 10:00 hs")]),
               _vm._v(" "),
               _c("li", [
                 _vm._v(
-                  "Debe indicar la hora en la que desea que el pedido se entregue"
+                  "El almuerzo se sirve desde las 12:00 hs hasta las 15:00 hs"
                 )
               ]),
               _vm._v(" "),
               _c("li", [
                 _vm._v(
-                  "La hora mínima para realizar el pedido es con  3 hs de anticipación, otra forma debe hacerlo personalmente en el restaurante"
+                  "La merienda se sirve desde las 17:00 hs hasta las 19:00 hs"
                 )
               ]),
               _vm._v(" "),
               _c("li", [
-                _vm._v(
-                  "El último pedido se entrega a las 23 hs por lo que pudiendo realizarlo hasta las 20 hs"
-                )
+                _vm._v("La cena se sirve desde las 21:00 hs hasta las 23:00 hs")
               ]),
               _vm._v(" "),
               _c("li", [
                 _vm._v(
-                  "Los sábados solo se entregarán pedidos realizados previamente, ya que la cocina inicia a las 19:30 hs"
+                  "Debe indicar la fecha en la que debe ser entregado el pedido"
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [_vm._v("La cocina cierra a las 23:00 hs")]),
+              _vm._v(" "),
+              _c("li", [
+                _vm._v(
+                  "\n                    Los sábados solo se entregarán pedidos realizados previamente, ya que la cocina inicia a las 19:30 hs\n                "
                 )
               ])
             ])
@@ -50899,22 +51022,19 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
-    setToken: function setToken(_ref, token) {
+    setToken: function setToken(_ref, response) {
         var commit = _ref.commit;
 
-        commit('setToken', token);
+        if (response && response.headers.authorization) {
+            commit('setToken', response.headers.authorization.split(' ')[1]);
+        } else if (response && response.data.token) {
+            commit('setToken', response.data.token);
+        }
     },
     setQueryFinished: function setQueryFinished(_ref2, bool) {
         var commit = _ref2.commit;
 
         commit('setQueryFinished', bool);
-    },
-    refreshToken: function refreshToken(_ref3, headers) {
-        var dispatch = _ref3.dispatch;
-
-        if (headers.authorization) {
-            dispatch('setToken', headers.authorization.split(' ')[1]);
-        }
     }
 };
 
@@ -51076,13 +51196,14 @@ exports.default = {
                     token: context.rootState.auth.xhr.token
                 }
             }).then(function (response) {
-                context.dispatch('auth/refreshToken', response.headers, { root: true });
+                context.dispatch('auth/setToken', response, { root: true });
                 resolve({
                     title: 'Creado',
                     message: response.data.message,
                     useSwal: true
                 });
             }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
                 context.commit('auth/setQueryFinished', bool, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(error));
             });
@@ -51095,13 +51216,14 @@ exports.default = {
                     token: context.rootState.auth.xhr.token
                 }
             }).then(function (response) {
-                context.dispatch('auth/refreshToken', response.headers, { root: true });
+                context.dispatch('auth/setToken', response, { root: true });
                 resolve({
                     title: 'Actualizado',
                     message: response.data.message,
                     useSwal: true
                 });
             }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
                 context.commit('auth/setQueryFinished', bool, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(error));
             });
@@ -51114,13 +51236,14 @@ exports.default = {
                     token: context.rootState.auth.xhr.token
                 }
             }).then(function (response) {
-                context.dispatch('auth/refreshToken', response.headers, { root: true });
+                context.dispatch('auth/setToken', response, { root: true });
                 resolve({
                     title: 'Eliminado',
                     message: response.data.message,
                     useSwal: true
                 });
             }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
                 context.commit('auth/setQueryFinished', bool, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(error));
             });
@@ -51265,25 +51388,6 @@ exports.default = {
 
         commit('setCloseOrder', bool);
     },
-    findReserva: function findReserva(cntx, payload) {
-        return new Promise(function (resolve, reject) {
-            _appAxios.http.post('rentals/find', payload, {
-                params: {
-                    token: cntx.rootGetters['auth/getToken']
-                }
-            }).then(function (response) {
-                cntx.commit('auth/setToken', response.data.token, { root: true });
-                cntx.commit('setRental', response.data.reserva);
-                resolve({
-                    title: '¡Excelente!',
-                    message: 'Encontramos la reserva, ahora puedes realizar tus pedidos sin ningún problema',
-                    useSwal: true
-                });
-            }).catch(function (error) {
-                reject((0, _appAxios.handlingXhrErrors)(error));
-            });
-        });
-    },
     setDesayunos: function setDesayunos(_ref5, desayunos) {
         var commit = _ref5.commit;
 
@@ -51303,6 +51407,44 @@ exports.default = {
         var commit = _ref8.commit;
 
         commit('setCenas', cenas);
+    },
+    findReserva: function findReserva(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('rentals/find', payload, {
+                params: {
+                    token: cntx.rootGetters['auth/getToken']
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                cntx.dispatch('setRental', response.data.reserva);
+                resolve({
+                    title: '¡Excelente!',
+                    message: 'Encontramos la reserva, ahora puedes realizar tus pedidos sin ningún problema',
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    },
+    sendOrder: function sendOrder(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('orders/store', payload, {
+                params: {
+                    token: cntx.rootGetters['auth/getToken']
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve({
+                    title: 'PEDIDO REALIZADO',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                cntx.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
     }
 };
 
@@ -51543,7 +51685,7 @@ exports.default = {
             }).then(function (response) {
                 var obj = {};
                 dispatch('setUserData', response.data.user);
-                dispatch('auth/setToken', response.data.token, { root: true });
+                dispatch('auth/setToken', response, { root: true });
                 dispatch('setCountries', response.data.countries);
                 if (response.data.token) {
                     obj = {
@@ -51570,7 +51712,7 @@ exports.default = {
     sendClosedDeal: function sendClosedDeal(context, payload) {
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
-                context.dispatch('auth/refreshToken', response.headers, { root: true });
+                context.dispatch('auth/setToken', response, { root: true });
                 context.commit('setClosedDeal', true);
                 context.commit('setInfoDeal', response.data.rentals);
                 resolve({
@@ -51579,6 +51721,7 @@ exports.default = {
                     useSwal: true
                 });
             }).catch(function (err) {
+                context.dispatch('auth/setToken', err.response, { root: true });
                 context.dispatch('auth/setQueryFinished', true, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(err));
             });

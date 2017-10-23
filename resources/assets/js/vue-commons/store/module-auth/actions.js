@@ -1,13 +1,12 @@
 export default {
-    setToken({commit}, token) {
-        commit('setToken', token);
+    setToken({commit}, response) {
+        if (response && response.headers.authorization) {
+            commit('setToken', response.headers.authorization.split(' ')[1]);
+        } else if (response && response.data.token) {
+            commit('setToken', response.data.token);
+        }
     },
     setQueryFinished({commit}, bool) {
         commit('setQueryFinished', bool);
-    },
-    refreshToken({dispatch}, headers) {
-        if (headers.authorization) {
-            dispatch('setToken', headers.authorization.split(' ')[1]);
-        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Faker\Factory as Faker;
@@ -42,7 +43,7 @@ class Rental extends Model
         return $this->hasMany('App\Claim');
     }
 
-    public function pedidos()
+    public function orders()
     {
         return $this->hasMany('App\Order');
     }
@@ -50,10 +51,7 @@ class Rental extends Model
     /**
      * Mutators
      **/
-    public function setCodeReservationAttribute($value)
-    {
-        $this->attributes['code_reservation'] = sha1($value);
-    }
+
 
     /**
      * Metodos del modelo

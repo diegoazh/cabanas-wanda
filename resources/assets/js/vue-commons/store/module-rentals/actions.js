@@ -77,7 +77,7 @@ export default {
             }).then(response => {
                     let obj = {};
                     dispatch('setUserData', response.data.user);
-                    dispatch('auth/setToken', response.data.token, {root: true});
+                    dispatch('auth/setToken', response, {root: true});
                     dispatch('setCountries', response.data.countries);
                     if (response.data.token) {
                         obj = {
@@ -105,7 +105,7 @@ export default {
         return new Promise((resolve, reject) => {
             http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload)
                 .then(response => {
-                    context.dispatch('auth/refreshToken', response.headers, {root: true});
+                    context.dispatch('auth/setToken', response, {root: true});
                     context.commit('setClosedDeal', true);
                     context.commit('setInfoDeal', response.data.rentals);
                     resolve({
@@ -114,6 +114,7 @@ export default {
                         useSwal: true
                     });
                 }).catch(err => {
+                    context.dispatch('auth/setToken', err.response, {root: true});
                     context.dispatch('auth/setQueryFinished', true, {root: true});
                     reject(handlingXhrErrors(err));
                 });

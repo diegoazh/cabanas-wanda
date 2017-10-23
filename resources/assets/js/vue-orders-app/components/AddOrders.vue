@@ -1,7 +1,10 @@
 <template>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <button class="btn btn-primary btn-xs pull-right" @click="changeReserva"><icon-app iconImage="refresh" :aditionalClasses="activeReload ? 'fa-spin fa-fw' : ''"></icon-app> Cambiar reserva</button>
+            <button class="btn btn-primary btn-xs pull-right" @click="changeReserva">
+                <icon-app iconImage="refresh" :aditionalClasses="activeReload ? 'fa-spin fa-fw' : ''"></icon-app>
+                Cambiar reserva
+            </button>
             <h2 class="text-center">Reserva</h2>
             <h3 id="details_reservation" class="text-center">
                 Titular: <span class="label label-info">{{ `${rental.user.name}, ${rental.user.lastname}` }}</span> |
@@ -16,8 +19,10 @@
             <div class="row">
                 <div class="col-md-3 pull-right">
                     <caption class="text-right">
-                        <a class="btn btn-danger btn-xs" role="button" data-toggle="modal" data-target="#aclaraciones-pedidos">
-                            <icon-app iconImage="exclamation-triangle"></icon-app> Por favor tenga en cuenta lo siguiente...
+                        <a class="btn btn-danger btn-xs" role="button" data-toggle="modal"
+                           data-target="#aclaraciones-pedidos">
+                            <icon-app iconImage="exclamation-triangle"></icon-app>
+                            Por favor tenga en cuenta lo siguiente...
                         </a>
                     </caption>
                 </div>
@@ -43,90 +48,101 @@
             <div class="tab-content">
                 <div role="tabpanel" :class="['tab-pane', {'active': number === 1}]" :id="'tab'+number"
                      v-for="number in 4">
-                    <table class="table table-striped table-responsive">
-                        <thead>
-                        <tr>
-                            <th>Estado</th>
-                            <th>Plato</th>
-                            <th>Fecha de entrega</th>
-                            <th>Precio</th>
-                            <th>Cantidad</th>
-                            <th>Agregar/Quitar</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="(food, index) in elementsPerPage(number)">
-                            <td>
-                                <p>
-                                    <icon-app :iconImage="food.checked ? 'check-square-o' : 'square-o'"
-                                              :aditionalClasses="food.checked ? 'text-primary' : 'text-default'"></icon-app>
-                                </p>
-                            </td>
-                            <td>{{ food.name }}</td>
-                            <td>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-addon date-piker">
-                                            <icon-app iconImage="calendar"></icon-app>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Estado</th>
+                                <th>Plato</th>
+                                <th>Fecha de entrega</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Agregar/Quitar</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(food, index) in elementsPerPage(number)">
+                                <td>
+                                    <p>
+                                        <icon-app :iconImage="food.checked ? 'check-square-o' : 'square-o'"
+                                                  :aditionalClasses="food.checked ? 'text-primary' : 'text-default'"></icon-app>
+                                    </p>
+                                </td>
+                                <td>{{ food.name }}</td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon date-piker">
+                                                <icon-app iconImage="calendar"></icon-app>
+                                            </div>
+                                            <date-picker placeholder="Seleccione la fecha..."
+                                                         :config="defineConfDateTimePiker(rental)"
+                                                         :id="'delivery'+index"
+                                                         :name="'delivery'+index" v-model="food.delivery"></date-picker>
                                         </div>
-                                        <date-picker placeholder="Seleccione la fecha..."
-                                                     :config="defineConfDateTimePiker(rental)" :id="'delivery'+index"
-                                                     :name="'delivery'+index" v-model="food.delivery"></date-picker>
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                <icon-app iconImage="dollar"></icon-app>
-                                {{ food.price }}
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-addon date-piker">
-                                            <icon-app iconImage="hashtag"></icon-app>
+                                </td>
+                                <td>
+                                    <icon-app iconImage="dollar"></icon-app>
+                                    {{ food.price }}
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon date-piker">
+                                                <icon-app iconImage="hashtag"></icon-app>
+                                            </div>
+                                            <input type="number" :id="'cantidad'+index" :name="'cantidad'+index"
+                                                   class="form-control" placeholder="Seleccione la cantidad..."
+                                                   v-model="food.quantity">
                                         </div>
-                                        <input type="number" :id="'cantidad'+index" :name="'cantidad'+index"
-                                               class="form-control" placeholder="Seleccione la cantidad..." v-model="food.quantity">
                                     </div>
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                <button :class="['btn', {'btn-success': !food.checked, 'btn-danger': food.checked}]"
-                                        @click="toggelAddRemoveFood(food)">
-                                    <icon-app :iconImage="food.checked ? 'minus' : 'plus'"></icon-app>
-                                </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <td colspan="6" class="text-center">
-                                <h3 class="text-right">
-                                    <icon-app iconImage="shopping-basket"></icon-app>
-                                    <span class="label label-info img-circle">{{ totalQuantity }}</span>
-                                    <icon-app iconImage="money"></icon-app>
-                                    <span class="label label-warning img-circle"><icon-app
-                                            iconImage="dollar"></icon-app> {{ totalAmount }}</span>
-                                </h3>
-                                <pagination for="orders" :records="quantityForType(number)" :per-page="itemsPerPage"
-                                            :chunk="7" :vuex="true"
-                                            count-text="Mostrando {from} a {to} de {count} items|{count} items|Un item"></pagination>
-                            </td>
-                        </tr>
-                        </tfoot>
-                    </table>
+                                </td>
+                                <td class="text-right">
+                                    <button :class="['btn', {'btn-success': !food.checked, 'btn-danger': food.checked}]"
+                                            @click="toggelAddRemoveFood(food)">
+                                        <icon-app :iconImage="food.checked ? 'minus' : 'plus'"></icon-app>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    <h3 class="text-right">
+                                        <icon-app iconImage="shopping-basket"></icon-app>
+                                        <span class="label label-info img-circle">{{ totalQuantity }}</span>
+                                        <icon-app iconImage="money"></icon-app>
+                                        <span class="label label-warning img-circle"><icon-app
+                                                iconImage="dollar"></icon-app> {{ totalAmount }}</span>
+                                    </h3>
+                                    <pagination for="orders" :records="quantityForType(number)" :per-page="itemsPerPage"
+                                                :chunk="7" :vuex="true"
+                                                count-text="Mostrando {from} a {to} de {count} items|{count} items|Un item"></pagination>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="text-center padding-bottom-20">
-                <button class="btn btn-success btn-lg" @click="btnCloseOrder"><icon-app iconImage="handshake-o"></icon-app> Cerrar pedido</button>
+                <button class="btn btn-success btn-lg" @click="btnCloseOrder">
+                    <icon-app iconImage="handshake-o"></icon-app>
+                    Cerrar pedido
+                </button>
             </div>
             <modal-app modalTitle="Aclaraciones de la cocina" modalId="aclaraciones-pedidos" :showBtnSave="false">
                 <ul>
-                    <li>El desayuno se sirve hasta </li>
-                    <li>Debe indicar la hora en la que desea que el pedido se entregue</li>
-                    <li>La hora mínima para realizar el pedido es con  3 hs de anticipación, otra forma debe hacerlo personalmente en el restaurante</li>
-                    <li>El último pedido se entrega a las 23 hs por lo que pudiendo realizarlo hasta las 20 hs</li>
-                    <li>Los sábados solo se entregarán pedidos realizados previamente, ya que la cocina inicia a las 19:30 hs</li>
+                    <li>El desayuno se sirve hasta las 10:00 hs</li>
+                    <li>El almuerzo se sirve desde las 12:00 hs hasta las 15:00 hs</li>
+                    <li>La merienda se sirve desde las 17:00 hs hasta las 19:00 hs</li>
+                    <li>La cena se sirve desde las 21:00 hs hasta las 23:00 hs</li>
+                    <li>Debe indicar la fecha en la que debe ser entregado el pedido</li>
+                    <li>La cocina cierra a las 23:00 hs</li>
+                    <li>
+                        Los sábados solo se entregarán pedidos realizados previamente, ya que la cocina inicia a las 19:30 hs
+                    </li>
                 </ul>
             </modal-app>
         </div>
@@ -134,6 +150,7 @@
 </template>
 
 <script>
+    import VueNoti from 'vue-notifications'
     import moment from 'moment'
     import datePicker from 'vue-bootstrap-datetimepicker'
     import {mapState, mapActions} from 'vuex'
@@ -202,7 +219,7 @@
                 if (this.foods.length === 0) {
                     this.getAllFood()
                         .then(response => {
-                            this.filterFoodType(this.foods, this.orders);
+                            this.filterFoodType(this.foods);
                         })
                         .catch(error => {
                             // console.log(error);
@@ -210,14 +227,14 @@
                 }
 
             },
-            filterFoodType(foods, orders) {
+            filterFoodType(foods) {
                 let foodType = [];
                 let types = ['desayuno', 'almuerzo', 'merienda', 'cena'];
 
                 for (let food of foods) {
                     this.$set(food, 'checked', false);
                     this.$set(food, 'quantity', 1);
-                    this.$set(food, 'delivery', moment().add(3, 'h').format('DD/MM/YYYY'));
+                    this.$set(food, 'delivery', null);
                 }
 
                 for (let i = types.length - 1; i >= 0; i--) {
@@ -292,11 +309,12 @@
                 this.trashPage.choice = tabName;
             },
             defineConfDateTimePiker(rental) {
+                let min = moment(moment(rental.dateFrom + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY');
                 return {
                     locale: 'es',
                     format: 'DD/MM/YYYY',
-                    minDate: moment(moment().format('DD/MM/YYYY') + ' 00:00 AM', 'DD/MM/YYYY hh:mm A'),
-                    maxDate: moment(moment(rental.dateTo + ' 23:59:59', 'YYYY/MM/DD HH:mm:ss').format('DD/MM/YYYY HH:mm:ss'), 'DD/MM/YYYY HH:mm:ss')
+                    minDate: min.isBefore(moment.now()) ? moment(moment().add(3, 'h').format('DD/MM/YYYY'), 'DD/MM/YYYY') : min,
+                    maxDate: moment(moment(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY')
                 }
             },
             findInOrders(food) {
@@ -305,6 +323,14 @@
                 });
             },
             toggelAddRemoveFood(food) {
+                if (!food.delivery) {
+                    VueNoti.warn({
+                        title: 'SIN FECHA',
+                        message: 'Por favor seleccione la fecha en la que desea la entrega del plato. Muchas gracias.',
+                        useSwal: true
+                    });
+                    return;
+                }
                 food.checked = !food.checked;
                 this.setOrders(food);
             },
@@ -342,6 +368,7 @@
     #details_reservation span {
         font-size: inherit;
     }
+
     .padding-bottom-20 {
         padding-bottom: 20px;
     }

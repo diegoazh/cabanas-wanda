@@ -50,6 +50,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Rental');
     }
 
+    public function orders()
+    {
+        return $this->hasMany('App\Order', 'closed_for', 'id');
+    }
+
     public function isAdmin()
     {
         return ($this->type === 'administrador' || $this->type === 'sysadmin');

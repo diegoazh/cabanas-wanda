@@ -52,8 +52,10 @@
             changeReserva() {
                 this.setRental(null);
                 window.sessionStorage.removeItem('reserva');
+                this.setFood([]);
             },
-            ...mapActions('orders', ['setRental'])
+            ...mapActions('orders', ['setRental']),
+            ...mapActions('food', ['setFood']),
         }
     }
 </script>

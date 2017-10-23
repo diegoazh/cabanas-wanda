@@ -36,13 +36,14 @@ export default {
                     token: context.rootState.auth.xhr.token,
                 }
             }).then(response => {
-                context.dispatch('auth/refreshToken', response.headers, {root: true});
+                context.dispatch('auth/setToken', response, {root: true});
                 resolve({
                     title: 'Creado',
                     message: response.data.message,
                     useSwal: true
                 });
             }).catch(error => {
+                context.dispatch('auth/setToken', error.response, {root: true});
                 context.commit('auth/setQueryFinished', bool, {root: true});
                 reject(handlingXhrErrors(error));
             });
@@ -55,13 +56,14 @@ export default {
                     token: context.rootState.auth.xhr.token,
                 }
             }).then(response => {
-                context.dispatch('auth/refreshToken', response.headers, {root: true});
+                context.dispatch('auth/setToken', response, {root: true});
                 resolve({
                     title: 'Actualizado',
                     message: response.data.message,
                     useSwal: true
                 });
             }).catch(error => {
+                context.dispatch('auth/setToken', error.response, {root: true});
                 context.commit('auth/setQueryFinished', bool, {root: true});
                 reject(handlingXhrErrors(error));
             });
@@ -74,13 +76,14 @@ export default {
                     token: context.rootState.auth.xhr.token,
                 }
             }).then(response => {
-                context.dispatch('auth/refreshToken', response.headers, {root: true});
+                context.dispatch('auth/setToken', response, {root: true});
                 resolve({
                     title: 'Eliminado',
                     message: response.data.message,
                     useSwal: true
                 });
             }).catch(error => {
+                context.dispatch('auth/setToken', error.response, {root: true});
                 context.commit('auth/setQueryFinished', bool, {root: true});
                 reject(handlingXhrErrors(error));
             });

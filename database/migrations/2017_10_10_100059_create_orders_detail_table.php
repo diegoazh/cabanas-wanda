@@ -19,6 +19,7 @@ class CreateOrdersDetailTable extends Migration
             $table->bigInteger('food_id')->unsigned();
             $table->dateTime('delivery');
             $table->integer('quantity');
+            $table->enum('state', ['pendiente', 'preparandose', 'entregado', 'cancelado'])->default('pendiente');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('order_id')->references('id')->on('orders');

@@ -11,15 +11,20 @@ class Order extends Model
 
     protected $table = "orders";
     protected $dates = ['deleted_at'];
-    protected $fillable = ['order_date', 'rental_id', 'state', 'paid'];
+    protected $fillable = ['rental_id', 'state', 'senia', 'senia_date', 'closed_for'];
 
     public function rental()
     {
-        $this->belongsTo('App\Rental', 'rental_id', 'id');
+        return $this->belongsTo('App\Rental', 'rental_id', 'id');
     }
 
-    public function detallePedidos()
+    public function ordersDetail()
     {
-        $this->hasMany('App\OrdersDetail', 'order_id', 'id');
+        return $this->hasMany('App\OrdersDetail', 'order_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'closed_for', 'id');
     }
 }

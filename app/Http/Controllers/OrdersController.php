@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\OrdersDetail;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\DB;
 use JWTAuth;
 use App\Order;
 use Illuminate\Http\Request;
@@ -40,28 +43,38 @@ class OrdersController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'fecha_pedido' => 'required|string',
             'rental_id' => 'required|integer',
         ], [
-            'fecha_pedido.required' => 'Es necesario que proporcione la fecha del pedido',
-            'fecha_pedido.string' => 'Es necesario que la fecha sea una cadena de texto',
             'rental_id.required' => 'Es necesario que proporcione la identificación del alquiler',
             'rental_id.integer' => 'el identificador debe ser un entero.',
         ]);
 
-        $pedido = new Order($request->all());
+        $info = $request->only('rental_id', 'orders');
 
         try {
+            DB::transaction(function () use($info) {
 
-            $pedido->save();
+                $order = new Order(['rental_id' => $info['rental_id']]);
+                $order->save();
+
+                foreach ($info['orders'] as $items) {
+                    $detail = new OrdersDetail([
+                        'food_id' => $items['id'],
+                        'delivery' => Carbon::createFromFormat('Y-m-d', explode('T', $items['delivery'])[0]),
+                        'quantity' => $items['quantity']
+                    ]);
+
+                    $order->ordersDetail()->save($detail);
+                }
+            });
 
         } catch(\Exception $exception) {
 
-            return response()->json(['error' => 'Ocurrio un error intentando dar de alta el pedido. Por favor verifiquelo: Codigo: ' . $exception->getCode() . ' - Mensaje: ' . $exception->getMessage()], 500);
+            return response()->json(['error' => 'Ocurrio un error intentando dar de alta el pedido. Por favor verifiquelo: Codigo: ' . $exception->getCode() . ' - Mensaje: ' . $exception->getMessage()], 500); //  . ' - Line: ' . $exception->getLine()
 
         }
 
-        return response()->json(compact('pedido'), 200);
+        return response()->json(['message' => 'Se dió de alta correctamente el pedido.'], 200);
 
     }
 

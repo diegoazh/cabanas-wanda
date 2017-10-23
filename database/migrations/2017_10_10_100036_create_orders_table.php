@@ -15,13 +15,15 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->dateTime('order_date');
             $table->bigInteger('rental_id')->unsigned();
-            $table->enum('state', ['pendiente', 'preparandose', 'entregado'])->default('pendiente');
-            $table->boolean('paid')->default(false);
+            $table->enum('state', ['pendiente', 'seniado', 'pagado', 'cancelado'])->default('pendiente');
+            $table->double('senia', '15', '2')->nullable();
+            $table->dateTime('senia_date')->nullable();
+            $table->bigInteger('closed_for')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('rental_id')->references('id')->on('rentals');
+            $table->foreign('closed_for')->references('id')->on('users');
         });
     }
 

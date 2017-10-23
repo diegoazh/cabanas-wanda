@@ -68110,22 +68110,19 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
-    setToken: function setToken(_ref, token) {
+    setToken: function setToken(_ref, response) {
         var commit = _ref.commit;
 
-        commit('setToken', token);
+        if (response && response.headers.authorization) {
+            commit('setToken', response.headers.authorization.split(' ')[1]);
+        } else if (response && response.data.token) {
+            commit('setToken', response.data.token);
+        }
     },
     setQueryFinished: function setQueryFinished(_ref2, bool) {
         var commit = _ref2.commit;
 
         commit('setQueryFinished', bool);
-    },
-    refreshToken: function refreshToken(_ref3, headers) {
-        var dispatch = _ref3.dispatch;
-
-        if (headers.authorization) {
-            dispatch('setToken', headers.authorization.split(' ')[1]);
-        }
     }
 };
 
@@ -68287,13 +68284,14 @@ exports.default = {
                     token: context.rootState.auth.xhr.token
                 }
             }).then(function (response) {
-                context.dispatch('auth/refreshToken', response.headers, { root: true });
+                context.dispatch('auth/setToken', response, { root: true });
                 resolve({
                     title: 'Creado',
                     message: response.data.message,
                     useSwal: true
                 });
             }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
                 context.commit('auth/setQueryFinished', bool, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(error));
             });
@@ -68306,13 +68304,14 @@ exports.default = {
                     token: context.rootState.auth.xhr.token
                 }
             }).then(function (response) {
-                context.dispatch('auth/refreshToken', response.headers, { root: true });
+                context.dispatch('auth/setToken', response, { root: true });
                 resolve({
                     title: 'Actualizado',
                     message: response.data.message,
                     useSwal: true
                 });
             }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
                 context.commit('auth/setQueryFinished', bool, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(error));
             });
@@ -68325,13 +68324,14 @@ exports.default = {
                     token: context.rootState.auth.xhr.token
                 }
             }).then(function (response) {
-                context.dispatch('auth/refreshToken', response.headers, { root: true });
+                context.dispatch('auth/setToken', response, { root: true });
                 resolve({
                     title: 'Eliminado',
                     message: response.data.message,
                     useSwal: true
                 });
             }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
                 context.commit('auth/setQueryFinished', bool, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(error));
             });
@@ -68476,25 +68476,6 @@ exports.default = {
 
         commit('setCloseOrder', bool);
     },
-    findReserva: function findReserva(cntx, payload) {
-        return new Promise(function (resolve, reject) {
-            _appAxios.http.post('rentals/find', payload, {
-                params: {
-                    token: cntx.rootGetters['auth/getToken']
-                }
-            }).then(function (response) {
-                cntx.commit('auth/setToken', response.data.token, { root: true });
-                cntx.commit('setRental', response.data.reserva);
-                resolve({
-                    title: '¡Excelente!',
-                    message: 'Encontramos la reserva, ahora puedes realizar tus pedidos sin ningún problema',
-                    useSwal: true
-                });
-            }).catch(function (error) {
-                reject((0, _appAxios.handlingXhrErrors)(error));
-            });
-        });
-    },
     setDesayunos: function setDesayunos(_ref5, desayunos) {
         var commit = _ref5.commit;
 
@@ -68514,6 +68495,44 @@ exports.default = {
         var commit = _ref8.commit;
 
         commit('setCenas', cenas);
+    },
+    findReserva: function findReserva(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('rentals/find', payload, {
+                params: {
+                    token: cntx.rootGetters['auth/getToken']
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                cntx.dispatch('setRental', response.data.reserva);
+                resolve({
+                    title: '¡Excelente!',
+                    message: 'Encontramos la reserva, ahora puedes realizar tus pedidos sin ningún problema',
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    },
+    sendOrder: function sendOrder(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('orders/store', payload, {
+                params: {
+                    token: cntx.rootGetters['auth/getToken']
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve({
+                    title: 'PEDIDO REALIZADO',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                cntx.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
     }
 };
 
@@ -68754,7 +68773,7 @@ exports.default = {
             }).then(function (response) {
                 var obj = {};
                 dispatch('setUserData', response.data.user);
-                dispatch('auth/setToken', response.data.token, { root: true });
+                dispatch('auth/setToken', response, { root: true });
                 dispatch('setCountries', response.data.countries);
                 if (response.data.token) {
                     obj = {
@@ -68781,7 +68800,7 @@ exports.default = {
     sendClosedDeal: function sendClosedDeal(context, payload) {
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
-                context.dispatch('auth/refreshToken', response.headers, { root: true });
+                context.dispatch('auth/setToken', response, { root: true });
                 context.commit('setClosedDeal', true);
                 context.commit('setInfoDeal', response.data.rentals);
                 resolve({
@@ -68790,6 +68809,7 @@ exports.default = {
                     useSwal: true
                 });
             }).catch(function (err) {
+                context.dispatch('auth/setToken', err.response, { root: true });
                 context.dispatch('auth/setQueryFinished', true, { root: true });
                 reject((0, _appAxios.handlingXhrErrors)(err));
             });

@@ -13,8 +13,8 @@ class Food extends Model
     protected $dates = ['deleted_at'];
     protected $fillable = ['name', 'type', 'description', 'price', 'available'];
 
-    public function detallesPedidos()
+    public function ordersDetail()
     {
-        $this->belongsTo('App\OrdersDetail', 'food_id', 'id');
+        return $this->belongsTo('App\OrdersDetail', 'food_id', 'id');
     }
 }
