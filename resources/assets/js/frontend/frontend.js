@@ -49,7 +49,7 @@ $(document).ready(function (event) {
      *
      * */
     var path = window.location.pathname;
-    function backgroundLoginRegister(dibujo, repeat, size, position) {
+    function backgroundDrawing(dibujo, size, position, repeat = 'no-repeat') {
         $('#content').css('background-image', 'url("http://' + window.location.host + '/images/frontend/'+ dibujo +'.jpg")')
             .css('background-repeat', repeat)
             .css('background-size', size)
@@ -57,21 +57,23 @@ $(document).ready(function (event) {
     }
 
     if (/register/.test(path)) {
-        backgroundLoginRegister('dibujo-carpincho', 'no-repeat', 'contain', '100% 50%');
+        backgroundDrawing('dibujo-carpincho', 'contain', '100% 50%');
         $('.panel-default').css('box-shadow', '3px 3px 17px 6px #333333');
         $('.panel-heading').css('background-color', '#fd7500');
     } else if (/login/.test(path)) {
-        backgroundLoginRegister('dibujo-yaguarete', 'no-repeat', 'contain', '0% 50%');
+        backgroundDrawing('dibujo-yaguarete', 'contain', '0% 50%');
         $('#content').css('background-color', '#f9f9f9');
         $('#arrow_left, #arrow_right').css('border-bottom-color', '#f9f9f9');
         $('.panel-default').css('box-shadow', '3px 3px 17px 6px #333333');
         $('.panel-heading').css('background-color', '#fd7500');
     } else if (/profile/.test(path)) {
-        backgroundLoginRegister('dibujo-coati-2', 'no-repeat', 'contain', '100% 50%');
-    } else if (/rentals/.test(path)) {
-        backgroundLoginRegister('dibujo-mono', 'no-repeat', 'contain', '100% 50%');
+        backgroundDrawing('dibujo-coati-2', 'contain', '100% 50%');
     } else if (/order/.test(path)) {
-        backgroundLoginRegister('dibujo-aguara-guazu', 'no-repeat', '45%', '100% 100%');
+        backgroundDrawing('dibujo-aguara-guazu', '45%', '100% 100%');
+    } else if (/liquidation/.test(path)) {
+        backgroundDrawing('dibujo-tapir', '50%', '100% 50%')
+    } else if (/rentals/.test(path)) {
+        backgroundDrawing('dibujo-mono', 'contain', '100% 50%');
     }
 
     function setFrontendModal(ttModal, bodyModal) {

@@ -28,7 +28,11 @@
             this.checkItemInStorage();
         },
         mounted() {
+            this.changeReserva();
             EventBus.$on('change-reserva', () => this.changeReserva());
+        },
+        beforeDestroy() {
+            EventBus.$emit('change-reserva');
         },
         components: {
             'find-rental-app': FindRental,

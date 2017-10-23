@@ -21,10 +21,9 @@ class RentalsTableSeeder extends Seeder
             $rental->total_days = $faker->numberBetween(1, 30);
             $rental->dateFrom = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $faker->unique()->dateTimeBetween(\Carbon\Carbon::now()->toDateTimeString(), \Carbon\Carbon::now()->addYear()->toDateTimeString(), date_default_timezone_get())->date)->toDateString();
             $rental->dateTo = \Carbon\Carbon::createFromFormat('Y-m-d', $rental->dateFrom)->addDays($rental->total_days)->toDateString();
-            $users = \App\User::where('type', 'frecuente')->get()->toArray();
-            $user = $faker->randomElement($users);
+            $user = $faker->randomElement(\App\User::where('type', 'frecuente')->get()->toArray());
             $rental->user_id = $user['id'];
-            $rental->cottage_price = $faker->numberBetween(300, 850);
+            $rental->cottage_price = \App\Cottage::find($rental->cottage_id)->price;
             $rental->dateReservationPayment = \Carbon\Carbon::createFromFormat('Y-m-d', $rental->dateFrom)->subDay()->toDateString();
             $rental->code_reservation = $rental->createCodeReservation();
             $rental->save();

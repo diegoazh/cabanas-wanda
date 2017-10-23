@@ -20,6 +20,6 @@ class OrdersDetail extends Model
 
     public function food()
     {
-        return $this->hasOne('App\Food', 'food_id', 'id');
+        return $this->belongsTo('App\Food', 'food_id', 'id');
     }
 }

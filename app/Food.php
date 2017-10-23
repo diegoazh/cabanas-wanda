@@ -15,6 +15,6 @@ class Food extends Model
 
     public function ordersDetail()
     {
-        return $this->belongsTo('App\OrdersDetail', 'food_id', 'id');
+        return $this->hasMany('App\OrdersDetail', 'food_id', 'id');
     }
 }

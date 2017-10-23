@@ -36,7 +36,7 @@ export default {
                 cntx.dispatch('setRental', response.data.reserva);
                 resolve({
                     title: '¡Excelente!',
-                    message: 'Encontramos la reserva, ahora puedes realizar tus pedidos sin ningún problema',
+                    message: 'Encontramos la reserva, ahora puedes realizar las operaciones necesarias',
                     useSwal: true
                 });
             }).catch(error => {

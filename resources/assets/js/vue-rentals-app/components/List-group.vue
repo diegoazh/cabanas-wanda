@@ -50,5 +50,6 @@
         -moz-box-shadow: 2px 3px 7px #333333;
         box-shadow: 2px 3px 7px #333333;
         text-shadow: 2px 3px 7px #333333;
+        margin-bottom: 20px;
     }
 </style>

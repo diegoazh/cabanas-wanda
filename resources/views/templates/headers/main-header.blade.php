@@ -22,9 +22,13 @@
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="{{ route('home.rentals.index') }}">
-                            <i class="fa fa-handshake-o" aria-hidden="true"></i> Reservas
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-handshake-o" aria-hidden="true"></i> Reservas <span class="caret"></span>
                         </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('home.rentals.index') }}">Realizar reserva</a></li>
+                            <li><a href="{{ route('home.rentals.liquidation') }}">Ver liquidación</a></li>
+                        </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

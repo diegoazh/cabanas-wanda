@@ -44084,6 +44084,11 @@ exports.default = {
         var commit = _ref2.commit;
 
         commit('setQueryFinished', bool);
+    },
+    fireSetTokenMutation: function fireSetTokenMutation(_ref3, token) {
+        var commit = _ref3.commit;
+
+        commit('setToken', token);
     }
 };
 
@@ -44404,6 +44409,97 @@ exports.default = {
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-commons/store/module-liquidation/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-liquidation/getters.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-liquidation/moduleLiquidation.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.moduleLiquidation = undefined;
+
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-liquidation/state.js");
+
+var _state2 = _interopRequireDefault(_state);
+
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/module-liquidation/getters.js");
+
+var _getters2 = _interopRequireDefault(_getters);
+
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/module-liquidation/mutations.js");
+
+var _mutations2 = _interopRequireDefault(_mutations);
+
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/module-liquidation/actions.js");
+
+var _actions2 = _interopRequireDefault(_actions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var moduleLiquidation = exports.moduleLiquidation = {
+    namespaced: true,
+    state: _state2.default,
+    getters: _getters2.default,
+    mutations: _mutations2.default,
+    actions: _actions2.default
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-liquidation/mutations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-liquidation/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-commons/store/module-orders/actions.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -44468,7 +44564,7 @@ exports.default = {
                 cntx.dispatch('setRental', response.data.reserva);
                 resolve({
                     title: '¡Excelente!',
-                    message: 'Encontramos la reserva, ahora puedes realizar tus pedidos sin ningún problema',
+                    message: 'Encontramos la reserva, ahora puedes realizar las operaciones necesarias',
                     useSwal: true
                 });
             }).catch(function (error) {
@@ -44979,6 +45075,8 @@ var _moduleFood = __webpack_require__("./resources/assets/js/vue-commons/store/m
 
 var _moduleOrders = __webpack_require__("./resources/assets/js/vue-commons/store/module-orders/moduleOrders.js");
 
+var _moduleLiquidation = __webpack_require__("./resources/assets/js/vue-commons/store/module-liquidation/moduleLiquidation.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vuex2.default);
@@ -44988,7 +45086,8 @@ exports.default = new _vuex2.default.Store({
         auth: _moduleAuth.moduleAuth,
         rentals: _moduleRentals.moduleRentals,
         food: _moduleFood.moduleFood,
-        orders: _moduleOrders.moduleOrders
+        orders: _moduleOrders.moduleOrders,
+        liquidation: _moduleLiquidation.moduleLiquidation
     }
 });
 

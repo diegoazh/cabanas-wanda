@@ -8,5 +8,8 @@ export default {
     },
     setQueryFinished({commit}, bool) {
         commit('setQueryFinished', bool);
+    },
+    fireSetTokenMutation({commit}, token) {
+        commit('setToken', token);
     }
 }
