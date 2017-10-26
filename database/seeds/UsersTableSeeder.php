@@ -26,6 +26,18 @@ class UsersTableSeeder extends Seeder
         $mantenimito->confirmed = true;
         $mantenimito->save();
 
+        $dazh = new User([
+            'name' => 'Diego Alberto',
+            'lastname' => 'Zapata Häntsch',
+            'dni' => 31511811,
+            'country_id' =>  13,
+            'email' => 'diegoazh2003@gmail.com',
+            'password' => \Hash::make('yusuke'),
+            'confirmed' => true,
+            'type' => 'sysadmin'
+        ]);
+        $dazh->save();
+
         for ($i = 0; $i < 60; $i++)
         {
             $user = new User();

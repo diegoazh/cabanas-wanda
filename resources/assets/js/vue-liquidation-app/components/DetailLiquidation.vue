@@ -64,7 +64,12 @@
             <table class="table table-striped" v-for="(order, index) in rental.orders">
                 <thead>
                 <tr>
-                    <th colspan="5" class="text-center">Pedido {{ index + 1 }}</th>
+                    <th colspan="5" class="text-center">
+                        <button :class="['pull-right', 'btn', 'btn-xs', {'btn-info': !order.show, 'btn-warning': order.show}]" @click="order.show = !order.show">
+                            {{ order.show ? 'Ocultar detalle' : 'Mostrar detalle' }} <icon-app :iconImage="toggleCaret(order.show)"></icon-app>
+                        </button>
+                        Pedido {{ index + 1 }}
+                    </th>
                 </tr>
                 <tr>
                     <th scope="col">Fecha y Estado</th>
@@ -81,15 +86,19 @@
                     <th><icon-app iconImage="dollar"></icon-app> total por plato</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr v-for="item in order.orders_detail">
-                    <td>{{ item.delivery | displayArgDate }}</td>
-                    <td>{{ item.food.name }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td><icon-app iconImage="dollar"></icon-app> {{ item.food.price }}</td>
-                    <td><icon-app iconImage="dollar"></icon-app> {{ item.food.price * item.quantity }}</td>
-                </tr>
-                </tbody>
+                <transition name="slide-fade"
+                            enter-active-class="animated bounceIn"
+                            leave-active-class="animated bounceOut">
+                    <tbody v-if="order.show">
+                    <tr v-for="item in order.orders_detail">
+                        <td>{{ item.delivery | displayArgDate }}</td>
+                        <td>{{ item.food.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td><icon-app iconImage="dollar"></icon-app> {{ item.food.price }}</td>
+                        <td><icon-app iconImage="dollar"></icon-app> {{ item.food.price * item.quantity }}</td>
+                    </tr>
+                    </tbody>
+                </transition>
                 <tfoot>
                 <tr class="danger">
                     <td>Monto final</td>
@@ -113,6 +122,7 @@
     import moment from 'moment'
     import { mapState, mapActions } from 'vuex'
     import Icon from '../../vue-commons/components/Icon.vue'
+    import 'animate.css/animate.css'
 
     export default {
         components: {
@@ -181,6 +191,9 @@
                 EventBus.$emit('change-reserva');
                 this.activeReload = false;
             },
+            toggleCaret(bool) {
+                return bool ? 'caret-down' : 'caret-right';
+            },
         },
         filters: {
             displayArgDate(date) {
@@ -196,6 +209,9 @@
             }
         },
         created() {
+            for (let order of this.rental.orders) {
+                this.$set(order, 'show', false);
+            }
         },
         mounted() {
         },
