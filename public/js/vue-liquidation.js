@@ -1826,6 +1826,42 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _moment = __webpack_require__("./node_modules/moment/moment.js");
 
@@ -1847,7 +1883,8 @@ exports.default = {
     },
     data: function data() {
         return {
-            activeReload: false
+            activeReload: false,
+            payLiquidation: false
         };
     },
 
@@ -1863,110 +1900,6 @@ exports.default = {
             var reserva = this.reservaAmount;
             var deductions = this.rental.deductions || 0;
             return (total - reserva - deductions).toFixed(2);
-        },
-        totalAmount: function totalAmount() {
-            var final = 0;
-
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = this.rental.orders[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var order = _step.value;
-                    var _iteratorNormalCompletion2 = true;
-                    var _didIteratorError2 = false;
-                    var _iteratorError2 = undefined;
-
-                    try {
-                        for (var _iterator2 = order.orders_detail[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                            var detail = _step2.value;
-
-                            final += +detail.quantity * detail.food.price;
-                        }
-                    } catch (err) {
-                        _didIteratorError2 = true;
-                        _iteratorError2 = err;
-                    } finally {
-                        try {
-                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                                _iterator2.return();
-                            }
-                        } finally {
-                            if (_didIteratorError2) {
-                                throw _iteratorError2;
-                            }
-                        }
-                    }
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
-
-            return final;
-        },
-        totalQuantity: function totalQuantity() {
-            var final = 0;
-
-            var _iteratorNormalCompletion3 = true;
-            var _didIteratorError3 = false;
-            var _iteratorError3 = undefined;
-
-            try {
-                for (var _iterator3 = this.rental.orders[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                    var order = _step3.value;
-                    var _iteratorNormalCompletion4 = true;
-                    var _didIteratorError4 = false;
-                    var _iteratorError4 = undefined;
-
-                    try {
-                        for (var _iterator4 = order.orders_detail[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                            var detail = _step4.value;
-
-                            final += +detail.quantity;
-                        }
-                    } catch (err) {
-                        _didIteratorError4 = true;
-                        _iteratorError4 = err;
-                    } finally {
-                        try {
-                            if (!_iteratorNormalCompletion4 && _iterator4.return) {
-                                _iterator4.return();
-                            }
-                        } finally {
-                            if (_didIteratorError4) {
-                                throw _iteratorError4;
-                            }
-                        }
-                    }
-                }
-            } catch (err) {
-                _didIteratorError3 = true;
-                _iteratorError3 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                        _iterator3.return();
-                    }
-                } finally {
-                    if (_didIteratorError3) {
-                        throw _iteratorError3;
-                    }
-                }
-            }
-
-            return final;
         },
         defineOwner: function defineOwner() {
             return this.rental.user ? this.rental.user.lastname + ', ' + this.rental.user.name : this.rental.passenger.lastname + ', ' + this.rental.passenger.name;
@@ -1987,6 +1920,66 @@ exports.default = {
         }
     })),
     methods: {
+        totalAmount: function totalAmount(order) {
+            var final = 0;
+
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = order.orders_detail[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var detail = _step.value;
+
+                    final += +detail.quantity * detail.food.price;
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            return final;
+        },
+        totalQuantity: function totalQuantity(order) {
+            var final = 0;
+
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = order.orders_detail[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var detail = _step2.value;
+
+                    final += +detail.quantity;
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
+
+            return final;
+        },
         changeReserva: function changeReserva() {
             this.activeReload = true;
             EventBus.$emit('change-reserva');
@@ -1994,7 +1987,8 @@ exports.default = {
         },
         toggleCaret: function toggleCaret(bool) {
             return bool ? 'caret-down' : 'caret-right';
-        }
+        },
+        sendLiquidation: function sendLiquidation() {}
     },
     filters: {
         displayArgDate: function displayArgDate(date) {
@@ -2010,27 +2004,27 @@ exports.default = {
         }
     },
     created: function created() {
-        var _iteratorNormalCompletion5 = true;
-        var _didIteratorError5 = false;
-        var _iteratorError5 = undefined;
+        var _iteratorNormalCompletion3 = true;
+        var _didIteratorError3 = false;
+        var _iteratorError3 = undefined;
 
         try {
-            for (var _iterator5 = this.rental.orders[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-                var order = _step5.value;
+            for (var _iterator3 = this.rental.orders[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                var order = _step3.value;
 
                 this.$set(order, 'show', false);
             }
         } catch (err) {
-            _didIteratorError5 = true;
-            _iteratorError5 = err;
+            _didIteratorError3 = true;
+            _iteratorError3 = err;
         } finally {
             try {
-                if (!_iteratorNormalCompletion5 && _iterator5.return) {
-                    _iterator5.return();
+                if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                    _iterator3.return();
                 }
             } finally {
-                if (_didIteratorError5) {
-                    throw _iteratorError5;
+                if (_didIteratorError3) {
+                    throw _iteratorError3;
                 }
             }
         }
@@ -2099,9 +2093,8 @@ exports.default = {
             }
         },
         changeReserva: function changeReserva() {
-            this.setRental(null);
             window.sessionStorage.removeItem('reserva');
-            this.setFood([]);
+            this.setRental(null);
         }
     }, (0, _vuex.mapActions)('auth', ['fireSetTokenMutation']), (0, _vuex.mapActions)('orders', ['setRental'])),
     filters: {},
@@ -2112,6 +2105,9 @@ exports.default = {
         this.checkTokenOnCookie();
         EventBus.$on('change-reserva', function () {
             return _this.changeReserva();
+        });
+        EventBus.$on('pay-liquidation', function () {
+            return _this.payLiquidation = !_this.payLiquidation;
         });
     },
     beforeDestroy: function beforeDestroy() {
@@ -2321,7 +2317,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n#btn-liquidation {\n    margin-bottom: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.btn-frm {\n    padding-top: 15px;\n    padding-bottom: 25px;\n}\n", ""]);
 
 // exports
 
@@ -20521,97 +20517,140 @@ var render = function() {
                 _vm._v("Nombre y apellido")
               ]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(_vm.defineOwner))]),
+              _c("td", [
+                _c("span", { staticClass: "label label-primary" }, [
+                  _vm._v(_vm._s(_vm.defineOwner))
+                ])
+              ]),
               _vm._v(" "),
               _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(_vm.rental.state))]),
+              _c("td", [
+                _c(
+                  "span",
+                  { staticClass: "label label-info text-capitalize" },
+                  [_vm._v(_vm._s(_vm.rental.state))]
+                )
+              ]),
               _vm._v(" "),
               _c("th", { attrs: { scope: "col" } }, [
                 _vm._v("Fecha de realización")
               ]),
               _vm._v(" "),
               _c("td", [
-                _vm._v(_vm._s(_vm._f("displayArgDate")(_vm.rental.created_at)))
+                _c("span", { staticClass: "label label-default" }, [
+                  _vm._v(
+                    _vm._s(_vm._f("displayArgDate")(_vm.rental.created_at))
+                  )
+                ])
               ])
             ]),
             _vm._v(" "),
             _c("tr", [
               _c("th", { attrs: { scope: "col" } }, [_vm._v("Cabaña")]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(_vm.rental.cottage.name))]),
+              _c("td", [
+                _c("span", { staticClass: "label label-warning" }, [
+                  _vm._v(_vm._s(_vm.rental.cottage.name))
+                ])
+              ]),
               _vm._v(" "),
               _c("th", { attrs: { scope: "col" } }, [_vm._v("Número")]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(_vm.rental.cottage.number))]),
+              _c("td", [
+                _c("span", { staticClass: "label label-default" }, [
+                  _vm._v(_vm._s(_vm.rental.cottage.number))
+                ])
+              ]),
               _vm._v(" "),
               _c("th", { attrs: { scope: "col" } }, [_vm._v("Precio")]),
               _vm._v(" "),
-              _c(
-                "td",
-                [
-                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                  _vm._v(" " + _vm._s(_vm.rental.cottage_price))
-                ],
-                1
-              )
+              _c("td", [
+                _c(
+                  "span",
+                  { staticClass: "label label-warning" },
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v(" " + _vm._s(_vm.rental.cottage_price))
+                  ],
+                  1
+                )
+              ])
             ]),
             _vm._v(" "),
             _c("tr", [
               _c("th", { attrs: { scope: "col" } }, [_vm._v("Desde")]),
               _vm._v(" "),
               _c("td", [
-                _vm._v(_vm._s(_vm._f("displayArgDate")(_vm.rental.dateFrom)))
+                _c("span", { staticClass: "label label-info" }, [
+                  _vm._v(_vm._s(_vm._f("displayArgDate")(_vm.rental.dateFrom)))
+                ])
               ]),
               _vm._v(" "),
               _c("th", { attrs: { scope: "col" } }, [_vm._v("Hasta")]),
               _vm._v(" "),
               _c("td", [
-                _vm._v(_vm._s(_vm._f("displayArgDate")(_vm.rental.dateTo)))
+                _c("span", { staticClass: "label label-info" }, [
+                  _vm._v(_vm._s(_vm._f("displayArgDate")(_vm.rental.dateTo)))
+                ])
               ]),
               _vm._v(" "),
               _c("th", { attrs: { scope: "col" } }, [
                 _vm._v("Cantidad de dias")
               ]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(_vm.rental.total_days))])
+              _c("td", [
+                _c("span", { staticClass: "label label-primary" }, [
+                  _vm._v(_vm._s(_vm.rental.total_days))
+                ])
+              ])
             ]),
             _vm._v(" "),
             _c("tr", [
               _c("th", { attrs: { scope: "col" } }, [_vm._v("Monto total")]),
               _vm._v(" "),
-              _c(
-                "td",
-                [
-                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                  _vm._v(" " + _vm._s(_vm.rentalTotalAmount))
-                ],
-                1
-              ),
+              _c("td", [
+                _c(
+                  "span",
+                  { staticClass: "label label-danger" },
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v(" " + _vm._s(_vm.rentalTotalAmount))
+                  ],
+                  1
+                )
+              ]),
               _vm._v(" "),
               _c("th", { attrs: { scope: "col" } }, [
                 _vm._v("Monto de reserva")
               ]),
               _vm._v(" "),
-              _c(
-                "td",
-                [
-                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                  _vm._v(" " + _vm._s(_vm.reservaAmount))
-                ],
-                1
-              ),
+              _c("td", [
+                _c(
+                  "span",
+                  { staticClass: "label label-success" },
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v(" " + _vm._s(_vm.reservaAmount))
+                  ],
+                  1
+                )
+              ]),
               _vm._v(" "),
               _c("th", { attrs: { scope: "col" } }, [
                 _vm._v("Vto. pago de reserva")
               ]),
               _vm._v(" "),
               _c("td", [
-                _vm._v(
-                  _vm._s(
-                    _vm._f("displayArgDate")(_vm.rental.dateReservationPayment)
+                _c("span", { staticClass: "label label-default" }, [
+                  _vm._v(
+                    _vm._s(
+                      _vm._f("displayArgDate")(
+                        _vm.rental.dateReservationPayment
+                      )
+                    )
                   )
-                )
+                ])
               ])
             ]),
             _vm._v(" "),
@@ -20619,36 +20658,44 @@ var render = function() {
               _c("th", { attrs: { scope: "col" } }, [_vm._v("Promocion")]),
               _vm._v(" "),
               _c("td", [
-                _vm._v(
-                  _vm._s(
-                    _vm.rental.promotion
-                      ? _vm.rental.promotion.name
-                      : "Sin promoción"
+                _c("span", { staticClass: "label label-info" }, [
+                  _vm._v(
+                    _vm._s(
+                      _vm.rental.promotion
+                        ? _vm.rental.promotion.name
+                        : "Sin promoción"
+                    )
                   )
-                )
+                ])
               ]),
               _vm._v(" "),
               _c("th", { attrs: { scope: "col" } }, [_vm._v("Descuento")]),
               _vm._v(" "),
-              _c(
-                "td",
-                [
-                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                  _vm._v(" " + _vm._s(_vm.rental.deductions || 0))
-                ],
-                1
-              ),
+              _c("td", [
+                _c(
+                  "span",
+                  { staticClass: "label label-success" },
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v(" " + _vm._s(_vm.rental.deductions || 0))
+                  ],
+                  1
+                )
+              ]),
               _vm._v(" "),
               _c("th", { attrs: { scope: "col" } }, [_vm._v("Monto restante")]),
               _vm._v(" "),
-              _c(
-                "td",
-                [
-                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                  _vm._v(" " + _vm._s(_vm.finalAmountWithDeductions))
-                ],
-                1
-              )
+              _c("td", [
+                _c(
+                  "span",
+                  { staticClass: "label label-danger" },
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v(" " + _vm._s(_vm.finalAmountWithDeductions))
+                  ],
+                  1
+                )
+              ])
             ])
           ]),
           _vm._v(" "),
@@ -20685,51 +20732,48 @@ var render = function() {
                           }
                         },
                         [
+                          _c("icon-app", {
+                            attrs: { iconImage: _vm.toggleCaret(order.show) }
+                          }),
                           _vm._v(
-                            "\n                        " +
+                            " " +
                               _vm._s(
                                 order.show
                                   ? "Ocultar detalle"
                                   : "Mostrar detalle"
                               ) +
-                              " "
-                          ),
-                          _c("icon-app", {
-                            attrs: { iconImage: _vm.toggleCaret(order.show) }
-                          })
+                              "\n                        "
+                          )
                         ],
                         1
                       ),
                       _vm._v(
-                        "\n                    Pedido " +
+                        "\n                        Pedido " +
                           _vm._s(index + 1) +
-                          "\n                "
+                          "\n                    "
                       )
                     ]
                   )
                 ]),
                 _vm._v(" "),
                 _c("tr", [
-                  _c("th", { attrs: { scope: "col" } }, [
-                    _vm._v("Fecha y Estado")
-                  ]),
+                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha")]),
                   _vm._v(" "),
                   _c("td", [
-                    _vm._v(_vm._s(_vm._f("displayArgDate")(order.created_at)))
+                    _c("span", { staticClass: "label label-default" }, [
+                      _vm._v(_vm._s(_vm._f("displayArgDate")(order.created_at)))
+                    ])
                   ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(order.state))]),
+                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
                   _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Seña")]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    [
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                      _vm._v(" " + _vm._s(order.senia || 0))
-                    ],
-                    1
-                  )
+                  _c("td", [
+                    _c(
+                      "span",
+                      { staticClass: "label label-warning text-capitalize" },
+                      [_vm._v(_vm._s(order.state))]
+                    )
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("tr", { staticClass: "dafault" }, [
@@ -20815,12 +20859,12 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("tfoot", [
-                _c("tr", { staticClass: "danger" }, [
-                  _c("td", [_vm._v("Monto final")]),
+                _c("tr", { staticClass: "info" }, [
+                  _c("th", [_vm._v("Monto parcial")]),
                   _vm._v(" "),
                   _c("td"),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(_vm.totalQuantity))]),
+                  _c("td", [_vm._v(_vm._s(_vm.totalQuantity(order)))]),
                   _vm._v(" "),
                   _c("td"),
                   _vm._v(" "),
@@ -20828,7 +20872,40 @@ var render = function() {
                     "td",
                     [
                       _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                      _vm._v(" " + _vm._s(_vm.totalAmount))
+                      _vm._v(" " + _vm._s(_vm.totalAmount(order)))
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c("tr", { staticClass: "warning" }, [
+                  _c("th", [_vm._v("Seña")]),
+                  _vm._v(" "),
+                  _c("td", { attrs: { colspan: "3" } }),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _vm._v(" " + _vm._s(order.senia || 0))
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c("tr", { staticClass: "danger" }, [
+                  _c("th", [_vm._v("Monto final")]),
+                  _vm._v(" "),
+                  _c("td", { attrs: { colspan: "3" } }),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _vm._v(
+                        " " +
+                          _vm._s(_vm.totalAmount(order) - (order.senia || 0))
+                      )
                     ],
                     1
                   )
@@ -20839,31 +20916,135 @@ var render = function() {
           )
         }),
         _vm._v(" "),
-        _c("div", { staticClass: "text-center" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-lg btn-success",
-              attrs: { id: "btn-liquidation" },
-              on: { click: function($event) {} }
-            },
-            [
-              _c(
-                "b",
-                [
-                  _c("icon-app", {
-                    attrs: {
-                      iconImage: _vm.toggleIcon,
-                      aditionalClasses: _vm.addAditionalClasses
-                    }
-                  }),
-                  _vm._v(" Liquidar saldo")
-                ],
-                1
-              )
-            ]
-          )
-        ])
+        _c(
+          "div",
+          { staticClass: "text-center btn-frm" },
+          [
+            _c(
+              "transition",
+              {
+                attrs: {
+                  name: "btnFrm-tran",
+                  "enter-active-class": "animated flip",
+                  "leave-active-class": "animated fadeOutDownBig"
+                }
+              },
+              [
+                !_vm.payLiquidation
+                  ? [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-lg btn-success",
+                          attrs: { id: "btn-liquidation" },
+                          on: {
+                            click: function($event) {
+                              _vm.payLiquidation = !_vm.payLiquidation
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "b",
+                            [
+                              _c("icon-app", {
+                                attrs: {
+                                  iconImage: _vm.toggleIcon,
+                                  aditionalClasses: _vm.addAditionalClasses
+                                }
+                              }),
+                              _vm._v(" Liquidar saldo")
+                            ],
+                            1
+                          )
+                        ]
+                      )
+                    ]
+                  : [
+                      _c(
+                        "form",
+                        {
+                          staticClass: "form-inline",
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              _vm.sendLiquidation($event)
+                            }
+                          }
+                        },
+                        [
+                          _c("fieldset", [
+                            _c("legend", [
+                              _vm._v("Ingrese su contraseña de administrador")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "sr-only",
+                                  attrs: { for: "admin-password" }
+                                },
+                                [_vm._v("Contraseña")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "input-group" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "input-group-addon" },
+                                  [
+                                    _c("icon-app", {
+                                      attrs: { iconImage: "asterisk" }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("icon-app", {
+                                      attrs: { iconImage: "asterisk" }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("icon-app", {
+                                      attrs: { iconImage: "asterisk" }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "password",
+                                    id: "admin-password",
+                                    name: "admin-password"
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary",
+                                  attrs: { role: "button", type: "submit" }
+                                },
+                                [
+                                  _c("icon-app", {
+                                    attrs: { iconImage: "credit-card" }
+                                  }),
+                                  _vm._v(
+                                    " Liquidar!\n                                "
+                                  )
+                                ],
+                                1
+                              )
+                            ])
+                          ])
+                        ]
+                      )
+                    ]
+              ],
+              2
+            )
+          ],
+          1
+        )
       ],
       2
     )
@@ -33369,7 +33550,9 @@ exports.default = {
         sessionStorage.setItem('reserva', JSON.stringify(rental));
     },
     setOrders: function setOrders(state, food) {
-        if (food.checked) {
+        if (Array.isArray(food) && food.length === 0) {
+            state.data.orders = food;
+        } else if (food.checked) {
             state.data.orders.push(food);
         } else {
             state.data.orders.splice(state.data.orders.findIndex(function (element) {

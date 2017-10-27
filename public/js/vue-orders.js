@@ -2691,11 +2691,12 @@ exports.default = {
             }
         },
         changeReserva: function changeReserva() {
-            this.setRental(null);
             window.sessionStorage.removeItem('reserva');
+            this.setOrders([]);
+            this.setRental(null);
             this.setFood([]);
         }
-    }, (0, _vuex.mapActions)('orders', ['setRental']), (0, _vuex.mapActions)('food', ['setFood']))
+    }, (0, _vuex.mapActions)('orders', ['setRental', 'setOrders']), (0, _vuex.mapActions)('food', ['setFood']))
 };
 
 /***/ }),
@@ -51620,7 +51621,9 @@ exports.default = {
         sessionStorage.setItem('reserva', JSON.stringify(rental));
     },
     setOrders: function setOrders(state, food) {
-        if (food.checked) {
+        if (Array.isArray(food) && food.length === 0) {
+            state.data.orders = food;
+        } else if (food.checked) {
             state.data.orders.push(food);
         } else {
             state.data.orders.splice(state.data.orders.findIndex(function (element) {

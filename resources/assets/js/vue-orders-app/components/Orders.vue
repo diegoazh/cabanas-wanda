@@ -54,11 +54,12 @@
                 }
             },
             changeReserva() {
-                this.setRental(null);
                 window.sessionStorage.removeItem('reserva');
+                this.setOrders([]);
+                this.setRental(null);
                 this.setFood([]);
             },
-            ...mapActions('orders', ['setRental']),
+            ...mapActions('orders', ['setRental', 'setOrders']),
             ...mapActions('food', ['setFood']),
         }
     }

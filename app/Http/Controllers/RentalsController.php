@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Cottage;
 use App\Country;
+use App\Http\Requests\RequestRental;
 use App\Passenger;
+use App\Rental;
 use App\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use JWTAuth;
-use App\Rental;
-use App\Cottage;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use App\Http\Requests\RequestRental;
 
 class RentalsController extends Controller
 {

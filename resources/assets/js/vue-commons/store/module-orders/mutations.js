@@ -7,7 +7,9 @@ export default {
         sessionStorage.setItem('reserva', JSON.stringify(rental));
     },
     setOrders(state, food) {
-        if (food.checked) {
+        if (Array.isArray(food) && food.length === 0) {
+            state.data.orders = food;
+        } else if (food.checked) {
             state.data.orders.push(food);
         } else {
             state.data.orders.splice(state.data.orders.findIndex(element => element.name === food.name), 1);

@@ -38,9 +38,8 @@
                 }
             },
             changeReserva() {
-                this.setRental(null);
                 window.sessionStorage.removeItem('reserva');
-                this.setFood([]);
+                this.setRental(null);
             },
             ...mapActions('auth', ['fireSetTokenMutation']),
             ...mapActions('orders', ['setRental']),
@@ -51,6 +50,7 @@
         mounted() {
             this.checkTokenOnCookie();
             EventBus.$on('change-reserva', () => this.changeReserva());
+            EventBus.$on('pay-liquidation', () => this.payLiquidation = !this.payLiquidation);
         },
         beforeDestroy() {
             EventBus.$emit('change-reserva');
