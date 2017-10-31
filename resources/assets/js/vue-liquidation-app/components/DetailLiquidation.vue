@@ -9,62 +9,72 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <table class="table table-striped">
                 <thead>
-                <tr>
-                    <th colspan="6" class="text-center">Reserva</th>
-                </tr>
+                    <tr>
+                        <th colspan="6" class="text-center">Reserva</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="col">Nombre y apellido</th>
-                    <td><span class="label label-primary">{{ defineOwner }}</span></td>
-                    <th scope="col">Estado</th>
-                    <td><span class="label label-info text-capitalize">{{ rental.state }}</span></td>
-                    <th scope="col">Fecha de realización</th>
-                    <td><span class="label label-default">{{ rental.created_at | displayArgDate }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="col">Cabaña</th>
-                    <td><span class="label label-warning">{{ rental.cottage.name }}</span></td>
-                    <th scope="col">Número</th>
-                    <td><span class="label label-default">{{ rental.cottage.number }}</span></td>
-                    <th scope="col">Precio</th>
-                    <td><span class="label label-warning"><icon-app iconImage="dollar"></icon-app> {{ rental.cottage_price }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="col">Desde</th>
-                    <td><span class="label label-info">{{ rental.dateFrom | displayArgDate }}</span></td>
-                    <th scope="col">Hasta</th>
-                    <td><span class="label label-info">{{ rental.dateTo | displayArgDate }}</span></td>
-                    <th scope="col">Cantidad de dias</th>
-                    <td><span class="label label-primary">{{ rental.total_days }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="col">Monto total</th>
-                    <td><span class="label label-danger"><icon-app iconImage="dollar"></icon-app> {{ rentalTotalAmount }}</span></td>
-                    <th scope="col">Monto de reserva</th>
-                    <td><span class="label label-success"><icon-app iconImage="dollar"></icon-app> {{ reservaAmount }}</span></td>
-                    <th scope="col">Vto. pago de reserva</th>
-                    <td><span class="label label-default">{{ rental.dateReservationPayment | displayArgDate }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="col">Promocion</th>
-                    <td><span class="label label-info">{{ rental.promotion ? rental.promotion.name : 'Sin promoción' }}</span></td>
-                    <th scope="col">Descuento</th>
-                    <td><span class="label label-success"><icon-app iconImage="dollar"></icon-app> {{ rental.deductions || 0 }}</span></td>
-                    <th scope="col">Monto restante</th>
-                    <td><span class="label label-danger"><icon-app iconImage="dollar"></icon-app> {{ finalAmountWithDeductions }}</span></td>
-                </tr>
+                    <tr>
+                        <th scope="row">Nombre y apellido</th>
+                        <td><span class="label label-primary">{{ defineOwner }}</span></td>
+                        <th scope="row">Estado</th>
+                        <td><span class="label label-info text-capitalize">{{ rental.state }}</span></td>
+                        <th scope="row">Fecha de realización</th>
+                        <td><span class="label label-default">{{ rental.created_at | displayArgDate }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Cabaña</th>
+                        <td><span class="label label-warning">{{ rental.cottage.name }}</span></td>
+                        <th scope="row">Número</th>
+                        <td><span class="label label-default">{{ rental.cottage.number }}</span></td>
+                        <th scope="row">Precio</th>
+                        <td><span class="label label-warning"><icon-app iconImage="dollar"></icon-app> {{ rental.cottage_price }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Desde</th>
+                        <td><span class="label label-info">{{ rental.dateFrom | displayArgDate }}</span></td>
+                        <th scope="row">Hasta</th>
+                        <td><span class="label label-info">{{ rental.dateTo | displayArgDate }}</span></td>
+                        <th scope="row">Cantidad de dias</th>
+                        <td><span class="label label-primary">{{ rental.total_days }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Monto total</th>
+                        <td><span class="label label-danger"><icon-app iconImage="dollar"></icon-app> {{ rentalTotalAmount }}</span></td>
+                        <th scope="row">Monto de reserva</th>
+                        <td><span class="label label-success"><icon-app iconImage="dollar"></icon-app> {{ reservaAmount }}</span></td>
+                        <th scope="row">Vto. pago de reserva</th>
+                        <td><span class="label label-default">{{ rental.dateReservationPayment | displayArgDate }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Promocion</th>
+                        <td><span class="label label-info">{{ rental.promotion ? rental.promotion.name : 'Sin promoción' }}</span></td>
+                        <th scope="row">Descuento</th>
+                        <td><span class="label label-success"><icon-app iconImage="dollar"></icon-app> {{ rental.deductions || 0 }}</span></td>
+                        <th scope="row">Monto restante</th>
+                        <td><span class="label label-danger"><icon-app iconImage="dollar"></icon-app> {{ finalAmountWithDeductions }}</span></td>
+                    </tr>
                 </tbody>
-                <tbody>
-                <tr>
-
-                </tr>
-                </tbody>
+                <tfoot>
+                    <tr class="warning">
+                        <th scope="row" colspan="5">Seña</th>
+                        <td><span class="label label-success"><icon-app iconImage="minus"></icon-app> <icon-app iconImage="dollar"></icon-app> {{ reservaAmount }}</span></td>
+                    </tr>
+                    <tr :class="{'danger': !rental.dateFinalPayment, 'success': rental.dateFinalPayment}">
+                        <th scope="row" colspan="4">{{ rental.dateFinalPayment ? 'Pagado' : 'Saldo final'}}</th>
+                        <td><span class="label label-default">{{ rental.dateFinalPayment | displayArgDate }}</span></td>
+                        <td>
+                            <span :class="['label', {'label-danger': !rental.dateFinalPayment, 'label-success': rental.dateFinalPayment}]">
+                                <icon-app iconImage="dollar"></icon-app> {{ finalAmountWithDeductions - reservaAmount }}
+                            </span>
+                        </td>
+                    </tr>
+                </tfoot>
             </table>
             <table class="table table-striped" v-for="(order, index) in rental.orders">
                 <thead>
                     <tr>
-                        <th colspan="5" class="text-center">
+                        <th colspan="6" class="text-center">
                             <button :class="['pull-right', 'btn', 'btn-xs', {'btn-info': !order.show, 'btn-warning': order.show}]" @click="order.show = !order.show">
                                 <icon-app :iconImage="toggleCaret(order.show)"></icon-app> {{ order.show ? 'Ocultar detalle' : 'Mostrar detalle' }}
                             </button>
@@ -73,13 +83,14 @@
                     </tr>
                     <tr>
                         <th scope="col">Fecha</th>
-                        <td><span class="label label-default">{{ order.created_at | displayArgDate }}</span></td>
+                        <td colspan="2" class="text-center"><span class="label label-default">{{ order.created_at | displayArgDate }}</span></td>
                         <th scope="col">Estado</th>
-                        <td><span class="label label-warning text-capitalize">{{ order.state }}</span></td>
+                        <td colspan="2" class="text-center"><span class="label label-warning text-capitalize">{{ order.state }}</span></td>
                     </tr>
                     <tr class="dafault">
                         <th>Fecha de entrega</th>
                         <th>Plato</th>
+                        <th>Categoría</th>
                         <th>Cantidad</th>
                         <th><icon-app iconImage="dollar"></icon-app>/unidad</th>
                         <th><icon-app iconImage="dollar"></icon-app> total por plato</th>
@@ -92,6 +103,7 @@
                         <tr v-for="item in order.orders_detail">
                             <td>{{ item.delivery | displayArgDate }}</td>
                             <td>{{ item.food.name }}</td>
+                            <td><span class="label label-info text-capitalize">{{ item.food.type }}</span></td>
                             <td>{{ item.quantity }}</td>
                             <td><icon-app iconImage="dollar"></icon-app> {{ item.food.price }}</td>
                             <td><icon-app iconImage="dollar"></icon-app> {{ item.food.price * item.quantity }}</td>
@@ -101,19 +113,19 @@
                 <tfoot>
                     <tr class="info">
                         <th>Monto parcial</th>
-                        <td></td>
+                        <td colspan="2"></td>
                         <td>{{ totalQuantity(order) }}</td>
                         <td></td>
                         <td><icon-app iconImage="dollar"></icon-app> {{ totalAmount(order) }}</td>
                     </tr>
                     <tr class="warning">
                         <th>Seña</th>
-                        <td colspan="3"></td>
-                        <td><icon-app iconImage="dollar"></icon-app> {{ order.senia || 0 }}</td>
+                        <td colspan="4"></td>
+                        <td><icon-app iconImage="minus"></icon-app> <icon-app iconImage="dollar"></icon-app> {{ order.senia || 0 }}</td>
                     </tr>
                     <tr class="danger">
                         <th>Monto final</th>
-                        <td colspan="3"></td>
+                        <td colspan="4"></td>
                         <td><icon-app iconImage="dollar"></icon-app> {{ totalAmount(order) - (order.senia || 0) }}</td>
                     </tr>
                 </tfoot>
@@ -130,18 +142,24 @@
                     <template v-else>
                         <form @submit.prevent="sendLiquidation" class="form-inline">
                             <fieldset>
-                                <legend>Ingrese su contraseña de administrador</legend>
+                                <legend>Ingrese sus credenciales de administrador</legend>
                                 <div class="form-group">
-                                    <label for="admin-password" class="sr-only">Contraseña</label>
+                                    <label for="admin-email" class="sr-only">Email</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <icon-app iconImage="at"></icon-app>
+                                        </div>
+                                        <input type="text" id="admin-email" name="admin-email" class="form-control" v-model="adminEmail">
+                                    </div>
                                     <div class="input-group">
                                         <div class="input-group-addon">
                                             <icon-app iconImage="asterisk"></icon-app>
                                             <icon-app iconImage="asterisk"></icon-app>
                                             <icon-app iconImage="asterisk"></icon-app>
                                         </div>
-                                        <input type="password" id="admin-password" name="admin-password" class="form-control">
+                                        <input type="password" id="admin-password" name="admin-password" class="form-control" v-model="adminPass">
                                     </div>
-                                    <button class="btn btn-primary" role="button" type="submit">
+                                    <button class="btn btn-primary" role="button" type="submit" :disabled="!adminPass">
                                         <icon-app iconImage="credit-card"></icon-app> Liquidar!
                                     </button>
                                 </div>
@@ -158,7 +176,6 @@
     import moment from 'moment'
     import { mapState, mapActions } from 'vuex'
     import Icon from '../../vue-commons/components/Icon.vue'
-    import 'animate.css/animate.css'
 
     export default {
         components: {
@@ -168,14 +185,16 @@
             return {
                 activeReload: false,
                 payLiquidation: false,
+                adminEmail: '',
+                adminPass: ''
             }
         },
         computed: {
             rentalTotalAmount() {
-                return this.rental.cottage_price * this.rental.total_days;
+                return (this.rental.cottage_price * this.rental.total_days).toFixed(2);
             },
             reservaAmount() {
-                return 30 / 100 * this.rentalTotalAmount;
+                return (30 / 100 * this.rentalTotalAmount).toFixed(2);
             },
             finalAmountWithDeductions() {
                 let total = this.rentalTotalAmount;
@@ -232,6 +251,9 @@
         },
         filters: {
             displayArgDate(date) {
+
+                if (!date) return
+
                 if (!moment.isMoment(date) && typeof date === 'string') {
                     if (date.indexOf('/') > 0) {
                         return moment(date, 'DD/MM/YYYY').format('DD/MM/YYYY');

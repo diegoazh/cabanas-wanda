@@ -2576,6 +2576,10 @@ exports.default = {
         queryFinished: function queryFinished(state) {
             return state.xhr.queryFinished;
         }
+    }), (0, _vuex.mapState)('orders', {
+        liquidation: function liquidation(state) {
+            return state.data.liquidation;
+        }
     })),
     methods: _extends({
         toggleIcon: function toggleIcon() {
@@ -2587,8 +2591,9 @@ exports.default = {
             this.setQueryFinished(false);
             this.findReserva({
                 reserva: this.reserva,
-                dni: this.dni,
-                email: this.email
+                dni: +this.dni,
+                email: this.email,
+                liquidation: this.liquidation
             }).then(function (response) {
                 _this.setQueryFinished(true);
                 _vueNotifications2.default.success(response);
@@ -2656,6 +2661,7 @@ exports.default = {
     },
     created: function created() {
         this.checkItemInStorage();
+        this.setLiquidation(false);
     },
     mounted: function mounted() {
         var _this = this;
@@ -2696,7 +2702,7 @@ exports.default = {
             this.setRental(null);
             this.setFood([]);
         }
-    }, (0, _vuex.mapActions)('orders', ['setRental', 'setOrders']), (0, _vuex.mapActions)('food', ['setFood']))
+    }, (0, _vuex.mapActions)('orders', ['setRental', 'setOrders', 'setLiquidation']), (0, _vuex.mapActions)('food', ['setFood']))
 };
 
 /***/ }),
@@ -51509,6 +51515,11 @@ exports.default = {
 
         commit('setCenas', cenas);
     },
+    setLiquidation: function setLiquidation(_ref9, bool) {
+        var commit = _ref9.commit;
+
+        commit('setLiquidation', bool);
+    },
     findReserva: function findReserva(cntx, payload) {
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('rentals/find', payload, {
@@ -51645,6 +51656,9 @@ exports.default = {
     },
     setCenas: function setCenas(state, cenas) {
         state.data.cenas = cenas;
+    },
+    setLiquidation: function setLiquidation(state, bool) {
+        state.data.liquidation = bool;
     }
 };
 
@@ -51669,7 +51683,8 @@ exports.default = {
         desayunos: [],
         almuerzos: [],
         meriendas: [],
-        cenas: []
+        cenas: [],
+        liquidation: false
     }
 };
 

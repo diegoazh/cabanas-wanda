@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cottage;
 use App\Country;
+use App\Http\Requests\RequestLiquidation;
 use App\Http\Requests\RequestRental;
 use App\Passenger;
 use App\Rental;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 
 class RentalsController extends Controller
@@ -181,7 +183,10 @@ class RentalsController extends Controller
 
         if ($info['reserva']) {
 
-            if (!$reserva = Rental::where('code_reservation', $info['reserva'])->first()) {
+            if (!$reserva = Rental::where('code_reservation', $info['reserva'])
+                ->where('dateFrom', '<=', Carbon::now()->toDateString())
+                ->where('dateTo', '>=', Carbon::now()->toDateString())
+                ->first()) {
 
                 return response()->json(['error' => 'No encontramos una reserva activa a la fecha para los datos proporcionado.'], 404);
 
@@ -225,12 +230,15 @@ class RentalsController extends Controller
         $reserva->passenger;
         $reserva->promotion;
         $reserva->claims;
+
         foreach ($reserva->orders as $order) {
-            $order->ordersDetail;
 
             foreach ($order->ordersDetail as $detail) {
+
                 $detail->food;
+
             }
+
         }
 
         return response()->json(compact('reserva', 'token'), 200);
@@ -262,7 +270,7 @@ class RentalsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Rental  $rental
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function basicInfo(Request $request)
@@ -275,7 +283,7 @@ class RentalsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Rental  $rental
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function cottagesAvailables(RequestRental $request)
@@ -311,7 +319,7 @@ class RentalsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Rental  $rental
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function authenticate(Request $request)
@@ -363,5 +371,33 @@ class RentalsController extends Controller
 
         // all good so return the token
         return response()->json(compact('token', 'user', 'countries'), 200);
+    }
+
+    /**
+     * Total debt settlement
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function finalLiquidation(RequestLiquidation $request)
+    {
+        $info = $request->only('rental_id', 'email', 'password');
+        $user = User::where('email', $info['email'])->where('password', Hash::make($info['password']))->first();
+        $rental = Rental::find($info['rental_id']);
+        $rental->cottage;
+        $rental->user;
+        $rental->passenger;
+        $rental->promotion;
+        $rental->claims;
+
+        foreach ($rental->orders as $order) {
+
+            foreach ($order->ordersDetail as $detail) {
+
+                $detail->food;
+
+            }
+
+        }
     }
 }

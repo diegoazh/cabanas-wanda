@@ -18,8 +18,9 @@ mix.copy([
     ], './public/fonts')
     .styles([
         './public/lib/bootstrap/dist/css/bootstrap.css',
+        './public/lib/animate.css/animate.css',
         './public/lib/dashicons/css/dashicons.css',
-        './public/lib/font-awesome/css/font-awesome.css'
+        './public/lib/font-awesome/css/font-awesome.css',
     ], './public/css/app.css')
     .styles([
         './public/lib/clndr/demo/css/clndr.css'

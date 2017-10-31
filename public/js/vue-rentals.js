@@ -68592,6 +68592,11 @@ exports.default = {
 
         commit('setCenas', cenas);
     },
+    setLiquidation: function setLiquidation(_ref9, bool) {
+        var commit = _ref9.commit;
+
+        commit('setLiquidation', bool);
+    },
     findReserva: function findReserva(cntx, payload) {
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('rentals/find', payload, {
@@ -68728,6 +68733,9 @@ exports.default = {
     },
     setCenas: function setCenas(state, cenas) {
         state.data.cenas = cenas;
+    },
+    setLiquidation: function setLiquidation(state, bool) {
+        state.data.liquidation = bool;
     }
 };
 
@@ -68752,7 +68760,8 @@ exports.default = {
         desayunos: [],
         almuerzos: [],
         meriendas: [],
-        cenas: []
+        cenas: [],
+        liquidation: false
     }
 };
 
