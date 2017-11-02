@@ -109,7 +109,7 @@
 </template>
 
 <script>
-    import { mapActions, mapState } from 'vuex'
+    import { mapActions, mapState, mapMutations } from 'vuex'
     import VueNoti from 'vue-notifications'
     import Icon from '../../vue-commons/components/Icon.vue'
 
@@ -175,7 +175,7 @@
         },
         methods: {
             verifyUser() {
-                if (this.token) {
+                if (this.token || this.user) {
                     this.name = this.user.name;
                     this.lastname = this.user.lastname;
                     this.email = this.user.email;
@@ -184,6 +184,10 @@
                     this.country = this.user.country_id;
                     this.dataForm = true;
                 } else {
+                    this.name = '';
+                    this.lastname = '';
+                    this.genre = '';
+                    this.country = '';
                     this.userNotFound = true;
                 }
             },
@@ -197,7 +201,7 @@
                 this.authenticateUser({
                     isAdmin: this.isAdmin,
                     userLogged: this.userLogged,
-                    document: this.document,
+                    document: this.user.dni ? this.user.dni : this.user.passport,
                     email: this.email
                 }).then((response) => {
                         this.verifyUser();
@@ -219,12 +223,12 @@
                     name: this.name,
                     lastname: this.lastname,
                     email: this.email,
-                    document: this.document,
+                    dni: this.onOff ? null : this.document,
+                    passport: this.onOff ? this.document : null,
                     genre: this.genre,
                     country: this.country,
                     toRentals: this.toRentals,
                     user: this.user,
-                    isDni: !this.onOff,
                     dateFrom: this.dateFrom,
                     dateTo: this.dateTo,
                 };
@@ -245,14 +249,17 @@
                 this.setDeal(false);
             },
             goBackToFindUser() {
+                this.setToken('');
+                this.setUserData({});
                 this.dataForm = false;
                 this.userNotFound = false;
             },
             isNullOrUndefined(val) {
                 return typeof val === 'undefined' || val === null;
             },
-            ...mapActions('rentals', ['authenticateUser', 'sendClosedDeal', 'setDeal']),
-            ...mapActions('auth', ['setQueryFinished'])
+            ...mapActions('rentals', ['authenticateUser', 'sendClosedDeal', 'setDeal', 'setUserData']),
+            ...mapActions('auth', ['setQueryFinished']),
+            ...mapMutations('auth', ['setToken'])
         }
     }
 </script>

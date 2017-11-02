@@ -1,4 +1,4 @@
-import { http, handlingXhrErrors } from '../../axios/app-axios'
+import {http, handlingXhrErrors} from '../../axios/app-axios'
 
 export default {
     setBasicInfo({commit}, payload) {
@@ -32,9 +32,9 @@ export default {
     setUserData({commit}, user) {
         commit('setUser', user);
     },
-    setCottages({commit, dispatch}){
+    setCottages({commit, dispatch}) {
         return new Promise((resolve, reject) => {
-            http.get('rentals/basic/')
+            http.get('cottages/enabled/')
                 .then(response => {
                     commit('setCottages', response.data.cottages);
                     resolve({
@@ -42,9 +42,9 @@ export default {
                         message: 'Widget cargado correctamente!'
                     });
                 }).catch(err => {
-                    dispatch('auth/setQueryFinished', true);
-                    reject(handlingXhrErrors(err));
-                });
+                dispatch('auth/setQueryFinished', true);
+                reject(handlingXhrErrors(err));
+            });
         });
     },
     queryCottagesAvailables({dispatch}, payload) {
@@ -69,32 +69,32 @@ export default {
     },
     authenticateUser({dispatch}, payload) {
         return new Promise((resolve, reject) => {
-            http.post('rentals/auth/', {
+            http.post('auth/auth/', {
                 isAdmin: payload.isAdmin,
                 userLogged: payload.userLogged,
                 document: payload.document,
                 email: payload.email
             }).then(response => {
-                    let obj = {};
-                    dispatch('setUserData', response.data.user);
-                    dispatch('auth/setToken', response, {root: true});
-                    dispatch('setCountries', response.data.countries);
-                    if (response.data.token) {
-                        obj = {
-                            title: 'ClIENTE IDENTIFICADO',
-                            message: 'Hemos identificado tus datos. Por favor verifica que sean correctos.',
-                            type: 'success',
-                            useSwal: true
-                        }
-                    } else {
-                        obj = {
-                            title: 'ClIENTE ANONIMO',
-                            message: 'No hemos podido identificarte, por favor ingresa completa los siguientes datos. Muchas gracias.',
-                            type: 'warn',
-                            useSwal: true
-                        }
+                let obj = {};
+                dispatch('setUserData', response.data.user || response.data.passenger);
+                dispatch('auth/setToken', response, {root: true});
+                dispatch('setCountries', response.data.countries);
+                if (response.data.token || response.data.passenger) {
+                    obj = {
+                        title: 'ClIENTE IDENTIFICADO',
+                        message: 'Hemos identificado tus datos. Por favor verifica que sean correctos.',
+                        type: 'success',
+                        useSwal: true
                     }
-                    resolve(obj);
+                } else {
+                    obj = {
+                        title: 'ClIENTE ANONIMO',
+                        message: 'No hemos podido identificarte, por favor ingresa completa los siguientes datos. Muchas gracias.',
+                        type: 'warn',
+                        useSwal: true
+                    }
+                }
+                resolve(obj);
             }).catch(err => {
                 dispatch('auth/setQueryFinished', true, {root: true});
                 reject(handlingXhrErrors(err));
@@ -103,17 +103,22 @@ export default {
     },
     sendClosedDeal(context, payload) {
         return new Promise((resolve, reject) => {
-            http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload)
+            http.post('passengers/store', payload)
                 .then(response => {
                     context.dispatch('auth/setToken', response, {root: true});
-                    context.commit('setClosedDeal', true);
-                    context.commit('setInfoDeal', response.data.rentals);
-                    resolve({
-                        title: 'RESERVA EXITOSA',
-                        message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
-                        useSwal: true
-                    });
-                }).catch(err => {
+                    http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload)
+                        .then(response => {
+                            context.dispatch('auth/setToken', response, {root: true});
+                            context.commit('setClosedDeal', true);
+                            context.commit('setInfoDeal', response.data.rentals);
+                            resolve({
+                                title: 'RESERVA EXITOSA',
+                                message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
+                                useSwal: true
+                            });
+                        })
+                })
+                .catch(err => {
                     context.dispatch('auth/setToken', err.response, {root: true});
                     context.dispatch('auth/setQueryFinished', true, {root: true});
                     reject(handlingXhrErrors(err));

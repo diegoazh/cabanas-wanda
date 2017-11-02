@@ -27,7 +27,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('home.rentals.index') }}">Realizar reserva</a></li>
-                            <li><a href="{{ route('home.rentals.liquidation') }}">Ver liquidación</a></li>
+                            <li><a href="{{ route('home.liquidation.liquidation') }}">Ver liquidación</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">

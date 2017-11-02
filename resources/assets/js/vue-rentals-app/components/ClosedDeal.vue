@@ -42,11 +42,11 @@
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="calendar"></icon-app> Desde</th>
-                                <td>{{ rental.dateFrom + ' 15:00:00' | argentineDateTime }}</td>
+                                <td>{{ rental.dateFrom + ' 10:00:00' | argentineDateTime }}</td>
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="calendar"></icon-app> Hasta</th>
-                                <td>{{ rental.dateTo + ' 12:00:00' | argentineDateTime }}</td>
+                                <td>{{ rental.dateTo + ' 10:00:00' | argentineDateTime }}</td>
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="calendar"></icon-app> Vto. reserva</th>
@@ -54,7 +54,7 @@
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="barcode"></icon-app> Código de reserva</th>
-                                <td><p class="label label-primary">{{ rental.code_reservation }}</p></td>
+                                <td><p class="label label-primary text-uppercase">{{ rental.code_reservation }}</p></td>
                             </tr>
                         </template>
                     </tbody>

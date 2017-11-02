@@ -2092,7 +2092,7 @@ exports.default = {
     })),
     methods: _extends({
         verifyUser: function verifyUser() {
-            if (this.token) {
+            if (this.token || this.user) {
                 this.name = this.user.name;
                 this.lastname = this.user.lastname;
                 this.email = this.user.email;
@@ -2101,6 +2101,10 @@ exports.default = {
                 this.country = this.user.country_id;
                 this.dataForm = true;
             } else {
+                this.name = '';
+                this.lastname = '';
+                this.genre = '';
+                this.country = '';
                 this.userNotFound = true;
             }
         },
@@ -2118,7 +2122,7 @@ exports.default = {
             this.authenticateUser({
                 isAdmin: this.isAdmin,
                 userLogged: this.userLogged,
-                document: this.document,
+                document: this.user.dni ? this.user.dni : this.user.passport,
                 email: this.email
             }).then(function (response) {
                 _this.verifyUser();
@@ -2142,12 +2146,12 @@ exports.default = {
                 name: this.name,
                 lastname: this.lastname,
                 email: this.email,
-                document: this.document,
+                dni: this.onOff ? null : this.document,
+                passport: this.onOff ? this.document : null,
                 genre: this.genre,
                 country: this.country,
                 toRentals: this.toRentals,
                 user: this.user,
-                isDni: !this.onOff,
                 dateFrom: this.dateFrom,
                 dateTo: this.dateTo
             };
@@ -2166,13 +2170,15 @@ exports.default = {
             this.setDeal(false);
         },
         goBackToFindUser: function goBackToFindUser() {
+            this.setToken('');
+            this.setUserData({});
             this.dataForm = false;
             this.userNotFound = false;
         },
         isNullOrUndefined: function isNullOrUndefined(val) {
             return typeof val === 'undefined' || val === null;
         }
-    }, (0, _vuex.mapActions)('rentals', ['authenticateUser', 'sendClosedDeal', 'setDeal']), (0, _vuex.mapActions)('auth', ['setQueryFinished']))
+    }, (0, _vuex.mapActions)('rentals', ['authenticateUser', 'sendClosedDeal', 'setDeal', 'setUserData']), (0, _vuex.mapActions)('auth', ['setQueryFinished']), (0, _vuex.mapMutations)('auth', ['setToken']))
 };
 
 /***/ }),
@@ -54778,8 +54784,17 @@ var render = function() {
               "div",
               { staticClass: "input-group-addon" },
               [
-                _c("icon-app", { attrs: { iconImage: "users" } }),
-                _vm._v(" ¿Cuantas personas son?")
+                _c("icon-app", {
+                  attrs: { iconImage: _vm.isForCottage ? "home" : "users" }
+                }),
+                _vm._v(
+                  " " +
+                    _vm._s(
+                      _vm.isForCottage
+                        ? "¿Que cabaña desea?"
+                        : "¿Cuantas personas son?"
+                    )
+                )
               ],
               1
             ),
@@ -56049,7 +56064,7 @@ var render = function() {
                         _vm._v(
                           _vm._s(
                             _vm._f("argentineDateTime")(
-                              rental.dateFrom + " 15:00:00"
+                              rental.dateFrom + " 10:00:00"
                             )
                           )
                         )
@@ -56070,7 +56085,7 @@ var render = function() {
                         _vm._v(
                           _vm._s(
                             _vm._f("argentineDateTime")(
-                              rental.dateTo + " 12:00:00"
+                              rental.dateTo + " 10:00:00"
                             )
                           )
                         )
@@ -56111,9 +56126,11 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("td", [
-                        _c("p", { staticClass: "label label-primary" }, [
-                          _vm._v(_vm._s(rental.code_reservation))
-                        ])
+                        _c(
+                          "p",
+                          { staticClass: "label label-primary text-uppercase" },
+                          [_vm._v(_vm._s(rental.code_reservation))]
+                        )
                       ])
                     ])
                   ]
@@ -68117,6 +68134,8 @@ exports.default = {
             commit('setToken', response.headers.authorization.split(' ')[1]);
         } else if (response && response.data.token) {
             commit('setToken', response.data.token);
+        } else {
+            commit('setToken', '');
         }
     },
     setQueryFinished: function setQueryFinished(_ref2, bool) {
@@ -68592,11 +68611,6 @@ exports.default = {
 
         commit('setCenas', cenas);
     },
-    setLiquidation: function setLiquidation(_ref9, bool) {
-        var commit = _ref9.commit;
-
-        commit('setLiquidation', bool);
-    },
     findReserva: function findReserva(cntx, payload) {
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('rentals/find', payload, {
@@ -68733,9 +68747,6 @@ exports.default = {
     },
     setCenas: function setCenas(state, cenas) {
         state.data.cenas = cenas;
-    },
-    setLiquidation: function setLiquidation(state, bool) {
-        state.data.liquidation = bool;
     }
 };
 
@@ -68760,8 +68771,7 @@ exports.default = {
         desayunos: [],
         almuerzos: [],
         meriendas: [],
-        cenas: [],
-        liquidation: false
+        cenas: []
     }
 };
 
@@ -68834,7 +68844,7 @@ exports.default = {
             dispatch = _ref10.dispatch;
 
         return new Promise(function (resolve, reject) {
-            _appAxios.http.get('rentals/basic/').then(function (response) {
+            _appAxios.http.get('cottages/enabled/').then(function (response) {
                 commit('setCottages', response.data.cottages);
                 resolve({
                     title: 'Ok!',
@@ -68872,17 +68882,17 @@ exports.default = {
         var dispatch = _ref12.dispatch;
 
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('rentals/auth/', {
+            _appAxios.http.post('auth/auth/', {
                 isAdmin: payload.isAdmin,
                 userLogged: payload.userLogged,
                 document: payload.document,
                 email: payload.email
             }).then(function (response) {
                 var obj = {};
-                dispatch('setUserData', response.data.user);
+                dispatch('setUserData', response.data.user || response.data.passenger);
                 dispatch('auth/setToken', response, { root: true });
                 dispatch('setCountries', response.data.countries);
-                if (response.data.token) {
+                if (response.data.token || response.data.passenger) {
                     obj = {
                         title: 'ClIENTE IDENTIFICADO',
                         message: 'Hemos identificado tus datos. Por favor verifica que sean correctos.',
@@ -68906,14 +68916,17 @@ exports.default = {
     },
     sendClosedDeal: function sendClosedDeal(context, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
+            _appAxios.http.post('passengers/store', payload).then(function (response) {
                 context.dispatch('auth/setToken', response, { root: true });
-                context.commit('setClosedDeal', true);
-                context.commit('setInfoDeal', response.data.rentals);
-                resolve({
-                    title: 'RESERVA EXITOSA',
-                    message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
-                    useSwal: true
+                _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
+                    context.dispatch('auth/setToken', response, { root: true });
+                    context.commit('setClosedDeal', true);
+                    context.commit('setInfoDeal', response.data.rentals);
+                    resolve({
+                        title: 'RESERVA EXITOSA',
+                        message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
+                        useSwal: true
+                    });
                 });
             }).catch(function (err) {
                 context.dispatch('auth/setToken', err.response, { root: true });

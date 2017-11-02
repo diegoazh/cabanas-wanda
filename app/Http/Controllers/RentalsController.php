@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Cottage;
-use App\Country;
-use App\Http\Requests\RequestLiquidation;
 use App\Http\Requests\RequestRental;
+use App\Http\Requests\RequestRentalFind;
+use App\Http\Requests\RequestRentalStore;
 use App\Passenger;
 use App\Rental;
 use App\User;
@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 
 class RentalsController extends Controller
@@ -45,82 +44,35 @@ class RentalsController extends Controller
     }
 
     /**
-     * Display a final liquidation of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function liquidation()
-    {
-        $token = null;
-
-        if (Auth::check()) {
-            if (Auth::user()->isAdmin() || Auth::user()->isEmployed()) {
-
-                $token = JWTAuth::fromUser(Auth::user());
-
-            }
-        }
-
-        !$token ? Cookie::forget('info_one') : Cookie::queue('info_one', $token, 180, null, null, false, false);;
-
-        return view('frontend.rentals-liquidation');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RequestRentalStore $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string',
-            'lastname' => 'required|string',
-            'email' => 'required|email',
-            'document' => 'required',
-            'dateFrom' => 'required|string',
-            'dateTo' => 'required|string'
-        ], [
-            'name.required' => 'Es necesario que proporcione su nombre.',
-            'name.string' => 'Su nombre debe ser unicamente texto.',
-            'lastname.required' => 'Es necesario que proporcione su apellido.',
-            'lastname.string' => 'Su apellido debe ser unicamente texto.',
-            'email.required' => 'Necesitamos que nos brinde su email.',
-            'email.email' => 'El email proporcionado debe tener un formato válido.',
-            'document.required' => 'Necesitamos que proporcione su DNI o pasaporte.',
-            'dateFrom.required' => 'Necesitamos saber desde que fecha desea alquilar.',
-            'dateFrom.string' => 'La fecha debe ser en formato de texto.',
-            'dateTo.required' => 'Necesitamos saber hasta que fecha desea alquilar.',
-            'dateTo.string' => 'La fecha debe ser en formato de texto.',
-        ]);
-
-        $info = $request->all();
         $rentals = [];
-
-        $cliente = User::where('name', $info['name'])->where('lastname', $info['lastname'])->where('email', $info['email'])->first();
-
-        if (!$cliente) {
-            $cliente = Passenger::where('name', $info['name'])->where('lastname', $info['lastname'])->where('email', $info['email'])->first();
-        }
 
         try {
 
-            DB::transaction(function () use ($info, $cliente, &$rentals) {
-                
-                if (!$cliente) {
-                    $cliente = new Passenger();
-                    $cliente->name = $info['name'];
-                    $cliente->lastname = $info['lastname'];
-                    $info['isDni'] ? $cliente->dni = $info['document'] : $cliente->passport = $info['document'];
-                    $cliente->email = $info['email'];
-                    $cliente->genre = $info['genre'];
-                    $cliente->country_id = $info['country'];
-                    $cliente->save();
+            DB::transaction(function () use ($request, &$rentals) {
+
+                $info = $request->all();
+
+                if (!$cliente = User::where('name', $info['name'])->where('lastname', $info['lastname'])->where('email', $info['email'])->first()) {
+
+                    if(!$cliente = Passenger::where('name', $info['name'])->where('lastname', $info['lastname'])->where('email', $info['email'])->first()) {
+
+                        throw new \Exception('No se ha encontrado ni usuario ni pasajero que corresponda a los datos brindados.', 404);
+
+                    }
+
                 }
 
                 if (!$info['toRentals']) {
-                    return response()->json(['error' => 'No se ha enviado la información con la o las cabañas que desea alquilar.'], 404);
+
+                    throw new \Exception('No se ha enviado la información con la o las cabañas que desea alquilar.', 404);
+
                 }
 
                 foreach ($info['toRentals'] as $toRental) {
@@ -130,9 +82,11 @@ class RentalsController extends Controller
 
                     $rental = new Rental();
 
-                    /*if (Rental::cottageForNumber($cottage->number, false, $dateFrom->toDateString(), $dateTo->toDateString())) {
-                        throw new Exception('La cabaña ya ha sido reservada.');
-                    }*/
+                    if (empty($cottages = Rental::cottageForNumber($cottage->number, false, $dateFrom->toDateString(), $dateTo->toDateString()))) {
+
+                        throw new \Exception('La cabaña ya ha sido reservada.');
+
+                    }
 
                     $rental->cottage_id = $cottage->id;
                     $rental->dateFrom = $dateFrom->toDateString();
@@ -167,18 +121,8 @@ class RentalsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function find(Request $request)
+    public function find(RequestRentalFind $request)
     {
-        $this->validate($request, [
-            'reserva' => 'string',
-            'dni' => 'numeric',
-            'emal' => 'email'
-        ], [
-            'reserva.string' => 'El codigo de reserva debe ser una cadena de texto.',
-            'dni.numeric' => 'El dni debe ser un número.',
-            'email.email' => 'El email debe tener un formato de email válido.'
-        ]);
-
         $info = $request->only('reserva', 'dni', 'email');
 
         if ($info['reserva']) {
@@ -273,19 +217,6 @@ class RentalsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function basicInfo(Request $request)
-    {
-        $cottages = Cottage::where('state', '!=', 'disabled')->orderBy('number')->get();
-
-        return response()->json(compact('cottages'), 200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function cottagesAvailables(RequestRental $request)
     {
         $info = $request->all();
@@ -314,90 +245,5 @@ class RentalsController extends Controller
         }
 
         return response()->json(compact('cottages'), 200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function authenticate(Request $request)
-    {
-        $info = $request->all();
-        $user = null;
-        $logged = null;
-        $token = '';
-        $countries = null;
-
-        if($info['isAdmin']) {
-
-            $logged = User::where('email', $info['userLogged'])->first();
-
-        }
-
-        if (empty($info['email']) && !empty($info['document'])) {
-
-            $user = User::where('dni', $info['document'])->first();
-
-            if (!$user) {
-
-                $user = User::where('passport', $info['document'])->first();
-
-            }
-
-        } else if (empty($info['document']) && !empty($info['email'])) {
-
-            $user = User::where('email', $info['email'])->first();
-
-        } else {
-
-            $user = User::where('dni', $info['document'])->where('email', $info['email'])->first();
-
-            if (!$user) {
-
-                $user = User::where('passport', $info['document'])->where('email', $info['email'])->first();
-
-            }
-        }
-
-        if (!empty($logged) || !empty($user)) {
-
-            $token = JWTAuth::fromUser($logged ? $logged : $user);
-
-        }
-
-        $countries = Country::orderBy('country')->get();
-
-        // all good so return the token
-        return response()->json(compact('token', 'user', 'countries'), 200);
-    }
-
-    /**
-     * Total debt settlement
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function finalLiquidation(RequestLiquidation $request)
-    {
-        $info = $request->only('rental_id', 'email', 'password');
-        $user = User::where('email', $info['email'])->where('password', Hash::make($info['password']))->first();
-        $rental = Rental::find($info['rental_id']);
-        $rental->cottage;
-        $rental->user;
-        $rental->passenger;
-        $rental->promotion;
-        $rental->claims;
-
-        foreach ($rental->orders as $order) {
-
-            foreach ($order->ordersDetail as $detail) {
-
-                $detail->food;
-
-            }
-
-        }
     }
 }

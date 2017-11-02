@@ -26,6 +26,8 @@ class PassengerTableSeeder extends Seeder
             $passenger->phone = $faker->e164PhoneNumber;
             $passenger->address = $faker->address;
             $passenger->destination = $faker->sentence(5);
+            $passenger->genre = $faker->randomElement(['m', 'f']);
+            $passenger->country_id = $faker->numberBetween(1, 240);
             $passenger->save();
         }
     }

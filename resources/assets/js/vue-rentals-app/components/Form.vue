@@ -4,7 +4,7 @@
             <div class="form-group">
                 <label :for="isForCottage ? 'capacidad-select' : 'capacidad-number'"></label>
                 <div class="input-group">
-                    <div class="input-group-addon"><icon-app iconImage="users"></icon-app> ¿Cuantas personas son?</div>
+                    <div class="input-group-addon"><icon-app :iconImage="isForCottage ? 'home' : 'users'"></icon-app> {{isForCottage ? '¿Que cabaña desea?' : '¿Cuantas personas son?' }}</div>
                     <input v-if="!isForCottage" v-model="choice" type="number" name="capacidad" id="capacidad-number" class="form-control">
                     <select v-else v-model="choice" name="capacidad" id="capacidad-select" class="form-control">
                         <option v-for="value in cottages" :value="value.number">{{ value.name }}</option>

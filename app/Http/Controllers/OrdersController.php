@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\OrdersDetail;
+use App\Rental;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
@@ -54,13 +55,26 @@ class OrdersController extends Controller
         try {
             DB::transaction(function () use($info) {
 
+                $rental = Rental::find($info['rental_id']);
+                $dateFrom = Carbon::createFromFormat('Y-m-d', $rental->dateFrom);
+                $dateTo = Carbon::createFromFormat('Y-m-d', $rental->dateTo);
+
                 $order = new Order(['rental_id' => $info['rental_id']]);
                 $order->save();
 
                 foreach ($info['orders'] as $items) {
+
+                    $delivery = Carbon::createFromFormat('Y-m-d', explode('T', $items['delivery'])[0]);
+
+                    if (!$delivery->between($dateFrom, $dateTo)) {
+
+                        throw new \Exception('La fecha ' . $delivery->format('d/m/Y') . ' no se encuentra dentro del periodo de estadía según la reserva seleccionada. Las fechas deben encontrarse entre ' . $dateFrom->format('d/m/Y') . ' y ' . $dateTo->format('d/m/Y') . ' o ser iguales a las mismas, por favor verifique las fechas y reintente. Muchas gracias', 500);
+
+                    }
+
                     $detail = new OrdersDetail([
                         'food_id' => $items['id'],
-                        'delivery' => Carbon::createFromFormat('Y-m-d', explode('T', $items['delivery'])[0]),
+                        'delivery' => $delivery,
                         'quantity' => $items['quantity']
                     ]);
 
@@ -70,7 +84,7 @@ class OrdersController extends Controller
 
         } catch(\Exception $exception) {
 
-            return response()->json(['error' => 'Ocurrio un error intentando dar de alta el pedido. Por favor verifiquelo: Codigo: ' . $exception->getCode() . ' - Mensaje: ' . $exception->getMessage()], 500); //  . ' - Line: ' . $exception->getLine()
+            return response()->json(['error' => 'Ocurrio un error intentando dar de alta el pedido.\n Por favor tenga en cuenta el siguiente detalle: Codigo: ' . $exception->getCode() . ' - Mensaje: ' . $exception->getMessage()], 500); //  . ' - Line: ' . $exception->getLine()
 
         }
 

@@ -55,6 +55,7 @@ class UsersTableSeeder extends Seeder
             $user->type = $type[rand(0, 3)];
             $user->imageProfile = $faker->imageUrl();
             $user->confirmed = true;
+            $user->genre = $faker->randomElement(['m', 'f']);
             $user->save();
         }
     }

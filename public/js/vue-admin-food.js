@@ -44078,6 +44078,8 @@ exports.default = {
             commit('setToken', response.headers.authorization.split(' ')[1]);
         } else if (response && response.data.token) {
             commit('setToken', response.data.token);
+        } else {
+            commit('setToken', '');
         }
     },
     setQueryFinished: function setQueryFinished(_ref2, bool) {
@@ -44553,11 +44555,6 @@ exports.default = {
 
         commit('setCenas', cenas);
     },
-    setLiquidation: function setLiquidation(_ref9, bool) {
-        var commit = _ref9.commit;
-
-        commit('setLiquidation', bool);
-    },
     findReserva: function findReserva(cntx, payload) {
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('rentals/find', payload, {
@@ -44694,9 +44691,6 @@ exports.default = {
     },
     setCenas: function setCenas(state, cenas) {
         state.data.cenas = cenas;
-    },
-    setLiquidation: function setLiquidation(state, bool) {
-        state.data.liquidation = bool;
     }
 };
 
@@ -44721,8 +44715,7 @@ exports.default = {
         desayunos: [],
         almuerzos: [],
         meriendas: [],
-        cenas: [],
-        liquidation: false
+        cenas: []
     }
 };
 
@@ -44795,7 +44788,7 @@ exports.default = {
             dispatch = _ref10.dispatch;
 
         return new Promise(function (resolve, reject) {
-            _appAxios.http.get('rentals/basic/').then(function (response) {
+            _appAxios.http.get('cottages/enabled/').then(function (response) {
                 commit('setCottages', response.data.cottages);
                 resolve({
                     title: 'Ok!',
@@ -44833,17 +44826,17 @@ exports.default = {
         var dispatch = _ref12.dispatch;
 
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('rentals/auth/', {
+            _appAxios.http.post('auth/auth/', {
                 isAdmin: payload.isAdmin,
                 userLogged: payload.userLogged,
                 document: payload.document,
                 email: payload.email
             }).then(function (response) {
                 var obj = {};
-                dispatch('setUserData', response.data.user);
+                dispatch('setUserData', response.data.user || response.data.passenger);
                 dispatch('auth/setToken', response, { root: true });
                 dispatch('setCountries', response.data.countries);
-                if (response.data.token) {
+                if (response.data.token || response.data.passenger) {
                     obj = {
                         title: 'ClIENTE IDENTIFICADO',
                         message: 'Hemos identificado tus datos. Por favor verifica que sean correctos.',
@@ -44867,14 +44860,17 @@ exports.default = {
     },
     sendClosedDeal: function sendClosedDeal(context, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
+            _appAxios.http.post('passengers/store', payload).then(function (response) {
                 context.dispatch('auth/setToken', response, { root: true });
-                context.commit('setClosedDeal', true);
-                context.commit('setInfoDeal', response.data.rentals);
-                resolve({
-                    title: 'RESERVA EXITOSA',
-                    message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
-                    useSwal: true
+                _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
+                    context.dispatch('auth/setToken', response, { root: true });
+                    context.commit('setClosedDeal', true);
+                    context.commit('setInfoDeal', response.data.rentals);
+                    resolve({
+                        title: 'RESERVA EXITOSA',
+                        message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
+                        useSwal: true
+                    });
                 });
             }).catch(function (err) {
                 context.dispatch('auth/setToken', err.response, { root: true });

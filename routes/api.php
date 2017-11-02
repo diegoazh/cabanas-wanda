@@ -13,17 +13,23 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::prefix('auth')->group(function () {
+    Route::post('auth', 'Auth\AuthenticateController@authenticate')->name('api.auth.auth');
+});
+
+Route::prefix('cottages')->group(function () {
+    Route::get('enabled', 'CottagesController@cottagesEnabled')->name('api.cottages.enabled');
+});
+
+Route::prefix('passengers')->group(function () {
+    Route::post('store', 'PassengersController@store')->name('api.passengers.store');
+});
 
 // No olvidar hacer pasar las peticiones por el middleware jwt.auth
 Route::prefix('rentals')->group(function () {
-    Route::get('basic', 'RentalsController@basicInfo')->name('api.rentals.basic');
     Route::post('availables', 'RentalsController@cottagesAvailables')->name('api.rentals.availabels');
-    Route::post('auth', 'RentalsController@authenticate')->name('api.rentals.auth');
     Route::post('find', 'RentalsController@find')->name('api.rentals.find');
-
-    Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
-        Route::post('store', 'RentalsController@store')->name('api.rentals.store');
-    });
+    Route::post('store', 'RentalsController@store')->name('api.rentals.store');
 });
 
 Route::prefix('food')->group(function () {

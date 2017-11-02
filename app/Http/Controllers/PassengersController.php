@@ -35,7 +35,21 @@ class PassengersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $info = $request->all();
+
+        $cliente = new Passenger([
+            'name' => $info['name'],
+            'lastname' => $info['lastname'],
+            'dni' => $info['dni'],
+            'passport' => $info['passport'],
+            'email' => $info['email'],
+            'genre' => $info['genre'],
+            'country_id' => $info['country']
+        ]);
+
+        $cliente->save();
+
+        return response()->json(compact('cliente'), 200);
     }
 
     /**
