@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestLiquidation;
+use App\Rental;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 
 class LiquidationController extends Controller
@@ -41,12 +46,13 @@ class LiquidationController extends Controller
     public function finalLiquidation(RequestLiquidation $request)
     {
         $info = $request->only('rental_id', 'email', 'password');
-        $user = User::where('email', $info['email'])
-            ->where('password', Hash::make($info['password']))
-            ->where('type', 'admin')
-            ->orWhere('type', 'sysadmin')
-            ->first();
-        $rental = Rental::find($info['rental_id']);
+
+        if (!$rental = Rental::find($info['rental_id'])) {
+
+            return response()->json(['error' => 'No pudimos localizar la reserva solicitada. Por favor verifique la misma y reintente o avise al Administrador del sistema. Muchas gracias.']);
+
+        }
+
         $rental->cottage;
         $rental->user;
         $rental->passenger;
@@ -62,5 +68,45 @@ class LiquidationController extends Controller
             }
 
         }
+
+        if (!$user = User::where('email', $info['email'])
+            ->where('password', Hash::make($info['password']))
+            ->where('type', 'admin')
+            ->orWhere('type', 'sysadmin')
+            ->first()) {
+
+            return response()->json(['error' => 'El usuario no está habilitado para realizar está operación.'], 500);
+
+        }
+
+        try {
+
+            DB::transaction(function () use($rental, $user) {
+
+                $rental->state = 'finalizada';
+                $rental->dateReservationPayment = Carbon::now()->toDateTimeString();
+                $monto = (double) ($rental->cottage_price * $rental->total_days);
+                $reserva = (double) (30/100 * $monto);
+                $rental->finalPayment = $monto - $reserva - (double) $rental->deductions;
+
+                foreach ($rental->orders as $order) {
+
+                    $order->state = 'pagado';
+                    $order->closed_for = $user->id;
+                    $order->save();
+
+                }
+
+                $rental->save();
+
+            });
+
+        } catch(\Exception $exception) {
+
+            return response()->json(['error' => 'Ha ocurrido un error intentando realizar las operación de liquidación. Verifique y reintente. Mensaje: ' . $exception->getMessage() . ' - Código: ' . $exception->getCode()], 500);
+
+        }
+
+        return response()->json(['message' => 'La liquidación se realizó correctamente.'], 200);
     }
 }

@@ -103,26 +103,46 @@ export default {
     },
     sendClosedDeal(context, payload) {
         return new Promise((resolve, reject) => {
-            http.post('passengers/store', payload)
-                .then(response => {
-                    context.dispatch('auth/setToken', response, {root: true});
-                    http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload)
-                        .then(response => {
-                            context.dispatch('auth/setToken', response, {root: true});
-                            context.commit('setClosedDeal', true);
-                            context.commit('setInfoDeal', response.data.rentals);
-                            resolve({
-                                title: 'RESERVA EXITOSA',
-                                message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
-                                useSwal: true
-                            });
-                        })
-                })
-                .catch(err => {
-                    context.dispatch('auth/setToken', err.response, {root: true});
-                    context.dispatch('auth/setQueryFinished', true, {root: true});
-                    reject(handlingXhrErrors(err));
-                });
+            if (payload.createNew) {
+                http.post('passengers/store', payload)
+                    .then(response => {
+                        context.dispatch('auth/setToken', response, {root: true});
+                        http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload)
+                            .then(response => {
+                                context.dispatch('auth/setToken', response, {root: true});
+                                context.commit('setClosedDeal', true);
+                                context.commit('setInfoDeal', response.data.rentals);
+                                resolve({
+                                    title: 'RESERVA EXITOSA',
+                                    message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
+                                    useSwal: true
+                                });
+                            })
+                    })
+                    .catch(err => {
+                        context.dispatch('auth/setToken', err.response, {root: true});
+                        context.dispatch('auth/setQueryFinished', true, {root: true});
+                        reject(handlingXhrErrors(err));
+                    });
+            } else {
+                http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload)
+                    .then(response => {
+                        context.dispatch('auth/setToken', response, {root: true});
+                        context.commit('setClosedDeal', true);
+                        context.commit('setInfoDeal', response.data.rentals);
+                        resolve({
+                            title: 'RESERVA EXITOSA',
+                            message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
+                            useSwal: true
+                        });
+                    })
+                    .catch(err => {
+                        context.dispatch('auth/setToken', err.response, {root: true});
+                        context.dispatch('auth/setQueryFinished', true, {root: true});
+                        reject(handlingXhrErrors(err));
+                    });
+            }
+
         })
     }
 };

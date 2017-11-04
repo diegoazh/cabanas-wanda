@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row" v-if="!liquidationOk">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <button class="btn btn-primary btn-xs pull-right" @click="changeReserva">
                 <icon-app iconImage="refresh" :aditionalClasses="activeReload ? 'fa-spin fa-fw' : ''"></icon-app>
@@ -155,8 +155,8 @@
             </table>
             <div class="text-center btn-frm">
                 <transition name="btnFrm-tran"
-                            enter-active-class="animated flip"
-                            leave-active-class="animated fadeOutDownBig">
+                            enter-active-class="animated fadeInUp"
+                            leave-active-class="animated fadeOutUp">
                     <template v-if="!payLiquidation">
                         <button id="btn-liquidation" class="btn btn-lg btn-success" @click="payLiquidation = !payLiquidation">
                             <b><icon-app :iconImage="toggleIcon" :aditionalClasses="addAditionalClasses"></icon-app> Liquidar saldo</b>
@@ -183,7 +183,7 @@
                                         <input type="password" id="admin-password" name="admin-password" class="form-control" v-model="adminPass">
                                     </div>
                                     <button class="btn btn-primary" role="button" type="submit" :disabled="!adminPass">
-                                        <icon-app iconImage="credit-card"></icon-app> Liquidar!
+                                        <icon-app :iconImage="queryFinished ? 'credit-card' : 'spinner'" :aditionalClasses="queryFinished ? 'fa-spin fa-fw' : ''"></icon-app> Liquidar!
                                     </button>
                                 </div>
                             </fieldset>
@@ -193,9 +193,27 @@
             </div>
         </div>
     </div>
+    <div class="row" v-else>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <button class="btn btn-primary btn-xs pull-right" @click="changeReserva">
+                <icon-app iconImage="refresh" :aditionalClasses="activeReload ? 'fa-spin fa-fw' : ''"></icon-app>
+                Volver a buscar reserva
+            </button>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="text-center">
+                <span class="fa-stack fa-lg fa-5x text-success">
+                  <i class="fa fa-circle-o fa-stack-2x"></i>
+                  <i class="fa fa-check fa-stack-1x"></i>
+                </span>
+                <h2>La liquidación se realizó correctamente. <br> ¡Muchas gracias por elegirnos!</h2>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
+    import VueNoti from 'vue-notifications'
     import moment from 'moment'
     import { mapState, mapActions } from 'vuex'
     import Icon from '../../vue-commons/components/Icon.vue'
@@ -209,7 +227,8 @@
                 activeReload: false,
                 payLiquidation: false,
                 adminEmail: '',
-                adminPass: ''
+                adminPass: '',
+                liquidationOk: false
             }
         },
         computed: {
@@ -273,14 +292,29 @@
             changeReserva() {
                 this.activeReload = true;
                 EventBus.$emit('change-reserva');
+                this.liquidationOk = false;
                 this.activeReload = false;
             },
             toggleCaret(bool) {
                 return bool ? 'caret-down' : 'caret-right';
             },
             sendLiquidation() {
-
-            }
+                this.setQueryFinished(false);
+                this.sendFinalLiquidation({
+                    rental_id: this.rental.id,
+                    email: this.adminEmail,
+                    password: this.adminPass
+                }).then(response => {
+                    this.liquidationOk = true;
+                    this.setQueryFinished(true);
+                    VueNoti.success(response);
+                }).catch(error => {
+                    this.setQueryFinished(true);
+                    VueNoti.error(error);
+                });
+            },
+            ...mapActions('liquidation', ['sendFinalLiquidation']),
+            ...mapActions('auth', ['setQueryFinished']),
         },
         filters: {
             displayArgDate(date) {

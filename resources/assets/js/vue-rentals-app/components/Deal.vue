@@ -131,7 +131,8 @@
                 genre: '',
                 country: '',
                 dataForm: false,
-                userNotFound: false
+                userNotFound: false,
+                createNew: false
             }
         },
         computed: {
@@ -206,7 +207,13 @@
                 }).then((response) => {
                         this.verifyUser();
                         this.setQueryFinished(true);
-                        response.type === 'success' ? VueNoti.success(response) : VueNoti.warn(response);
+                        if (response.type === 'success') {
+                            VueNoti.success(response);
+                            this.createNew = false;
+                        } else {
+                            VueNoti.warn(response);
+                            this.createNew = true;
+                        }
                         if (bool) {
                             this.dataForm = true;
                         }
@@ -231,6 +238,7 @@
                     user: this.user,
                     dateFrom: this.dateFrom,
                     dateTo: this.dateTo,
+                    createNew: this.createNew,
                 };
 
                 this.setQueryFinished(false);

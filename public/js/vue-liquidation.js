@@ -1871,6 +1871,27 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
+
+var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
 
 var _moment = __webpack_require__("./node_modules/moment/moment.js");
 
@@ -1893,7 +1914,8 @@ exports.default = {
             activeReload: false,
             payLiquidation: false,
             adminEmail: '',
-            adminPass: ''
+            adminPass: '',
+            liquidationOk: false
         };
     },
 
@@ -1959,7 +1981,7 @@ exports.default = {
             return state.xhr.queryFinished;
         }
     })),
-    methods: {
+    methods: _extends({
         totalAmount: function totalAmount(order) {
             var final = 0;
 
@@ -2023,13 +2045,30 @@ exports.default = {
         changeReserva: function changeReserva() {
             this.activeReload = true;
             EventBus.$emit('change-reserva');
+            this.liquidationOk = false;
             this.activeReload = false;
         },
         toggleCaret: function toggleCaret(bool) {
             return bool ? 'caret-down' : 'caret-right';
         },
-        sendLiquidation: function sendLiquidation() {}
-    },
+        sendLiquidation: function sendLiquidation() {
+            var _this = this;
+
+            this.setQueryFinished(false);
+            this.sendFinalLiquidation({
+                rental_id: this.rental.id,
+                email: this.adminEmail,
+                password: this.adminPass
+            }).then(function (response) {
+                _this.liquidationOk = true;
+                _this.setQueryFinished(true);
+                _vueNotifications2.default.success(response);
+            }).catch(function (error) {
+                _this.setQueryFinished(true);
+                _vueNotifications2.default.error(error);
+            });
+        }
+    }, (0, _vuex.mapActions)('liquidation', ['sendFinalLiquidation']), (0, _vuex.mapActions)('auth', ['setQueryFinished'])),
     filters: {
         displayArgDate: function displayArgDate(date) {
 
@@ -20511,578 +20550,623 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary btn-xs pull-right",
-          on: { click: _vm.changeReserva }
-        },
-        [
-          _c("icon-app", {
-            attrs: {
-              iconImage: "refresh",
-              aditionalClasses: _vm.activeReload ? "fa-spin fa-fw" : ""
-            }
-          }),
-          _vm._v("\n            Cambiar reserva\n        ")
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "col-xs-12 col-sm-12 col-md-12" },
-      [
-        _c("table", { staticClass: "table table-striped" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("tbody", [
-            _c("tr", [
-              _c("th", { attrs: { scope: "row" } }, [
-                _vm._v("Nombre y apellido")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _c("span", { staticClass: "label label-primary" }, [
-                  _vm._v(_vm._s(_vm.defineOwner))
-                ])
-              ]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "row" } }, [_vm._v("Estado")]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "span",
-                  { staticClass: "label label-info text-capitalize" },
-                  [_vm._v(_vm._s(_vm.rental.state))]
-                )
-              ]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "row" } }, [
-                _vm._v("Fecha de realización")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _c("span", { staticClass: "label label-default" }, [
-                  _vm._v(
-                    _vm._s(_vm._f("displayArgDate")(_vm.rental.created_at))
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("th", { attrs: { scope: "row" } }, [_vm._v("Cabaña")]),
-              _vm._v(" "),
-              _c("td", [
-                _c("span", { staticClass: "label label-warning" }, [
-                  _vm._v(_vm._s(_vm.rental.cottage.name))
-                ])
-              ]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "row" } }, [_vm._v("Número")]),
-              _vm._v(" "),
-              _c("td", [
-                _c("span", { staticClass: "label label-default" }, [
-                  _vm._v(_vm._s(_vm.rental.cottage.number))
-                ])
-              ]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "row" } }, [_vm._v("Precio")]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "span",
-                  { staticClass: "label label-warning" },
-                  [
-                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                    _vm._v(" " + _vm._s(_vm.rental.cottage_price))
-                  ],
-                  1
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("th", { attrs: { scope: "row" } }, [_vm._v("Desde")]),
-              _vm._v(" "),
-              _c("td", [
-                _c("span", { staticClass: "label label-info" }, [
-                  _vm._v(_vm._s(_vm._f("displayArgDate")(_vm.rental.dateFrom)))
-                ])
-              ]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "row" } }, [_vm._v("Hasta")]),
-              _vm._v(" "),
-              _c("td", [
-                _c("span", { staticClass: "label label-info" }, [
-                  _vm._v(_vm._s(_vm._f("displayArgDate")(_vm.rental.dateTo)))
-                ])
-              ]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "row" } }, [
-                _vm._v("Cantidad de dias")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _c("span", { staticClass: "label label-primary" }, [
-                  _vm._v(_vm._s(_vm.rental.total_days))
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("th", { attrs: { scope: "row" } }, [_vm._v("Monto total")]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "span",
-                  { staticClass: "label label-danger" },
-                  [
-                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                    _vm._v(" " + _vm._s(_vm.rentalTotalAmount))
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "row" } }, [
-                _vm._v("Monto de reserva")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "span",
-                  { staticClass: "label label-success" },
-                  [
-                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                    _vm._v(" " + _vm._s(_vm.reservaAmount))
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "row" } }, [
-                _vm._v("Vto. pago de reserva")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _c("span", { staticClass: "label label-default" }, [
-                  _vm._v(
-                    _vm._s(
-                      _vm._f("displayArgDate")(
-                        _vm.rental.dateReservationPayment
-                      )
-                    )
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("th", { attrs: { scope: "row" } }, [_vm._v("Promocion")]),
-              _vm._v(" "),
-              _c("td", [
-                _c("span", { staticClass: "label label-info" }, [
-                  _vm._v(
-                    _vm._s(
-                      _vm.rental.promotion
-                        ? _vm.rental.promotion.name
-                        : "Sin promoción"
-                    )
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "row" } }, [_vm._v("Descuento")]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "span",
-                  { staticClass: "label label-success" },
-                  [
-                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                    _vm._v(
-                      " " + _vm._s((+_vm.rental.deductions || 0).toFixed(2))
-                    )
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "row" } }, [_vm._v("Monto restante")]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "span",
-                  { staticClass: "label label-danger" },
-                  [
-                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                    _vm._v(" " + _vm._s(_vm.finalAmountWithDeductions))
-                  ],
-                  1
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tfoot", [
-            _c("tr", { staticClass: "warning" }, [
-              _c("th", { attrs: { scope: "row", colspan: "5" } }, [
-                _vm._v("Seña")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "span",
-                  { staticClass: "label label-success" },
-                  [
-                    _c("icon-app", { attrs: { iconImage: "minus" } }),
-                    _vm._v(" "),
-                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                    _vm._v(" " + _vm._s(_vm.reservaAmount))
-                  ],
-                  1
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "tr",
-              {
-                class: {
-                  danger: !_vm.rental.dateFinalPayment,
-                  success: _vm.rental.dateFinalPayment
+  return !_vm.liquidationOk
+    ? _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary btn-xs pull-right",
+              on: { click: _vm.changeReserva }
+            },
+            [
+              _c("icon-app", {
+                attrs: {
+                  iconImage: "refresh",
+                  aditionalClasses: _vm.activeReload ? "fa-spin fa-fw" : ""
                 }
-              },
-              [
-                _c("th", { attrs: { scope: "row", colspan: "4" } }, [
-                  _vm._v(
-                    _vm._s(
-                      _vm.rental.dateFinalPayment ? "Pagado" : "Saldo final"
+              }),
+              _vm._v("\n            Cambiar reserva\n        ")
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-xs-12 col-sm-12 col-md-12" },
+          [
+            _c("table", { staticClass: "table table-striped" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("tbody", [
+                _c("tr", [
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _vm._v("Nombre y apellido")
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("span", { staticClass: "label label-primary" }, [
+                      _vm._v(_vm._s(_vm.defineOwner))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("Estado")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "span",
+                      { staticClass: "label label-info text-capitalize" },
+                      [_vm._v(_vm._s(_vm.rental.state))]
                     )
-                  )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _vm._v("Fecha de realización")
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("span", { staticClass: "label label-default" }, [
+                      _vm._v(
+                        _vm._s(_vm._f("displayArgDate")(_vm.rental.created_at))
+                      )
+                    ])
+                  ])
                 ]),
                 _vm._v(" "),
-                _c("td", [
-                  _c("span", { staticClass: "label label-default" }, [
-                    _vm._v(
-                      _vm._s(
-                        _vm._f("displayArgDate")(_vm.rental.dateFinalPayment)
-                      )
+                _c("tr", [
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("Cabaña")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("span", { staticClass: "label label-warning" }, [
+                      _vm._v(_vm._s(_vm.rental.cottage.name))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("Número")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("span", { staticClass: "label label-default" }, [
+                      _vm._v(_vm._s(_vm.rental.cottage.number))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("Precio")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "span",
+                      { staticClass: "label label-warning" },
+                      [
+                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _vm._v(" " + _vm._s(_vm.rental.cottage_price))
+                      ],
+                      1
                     )
                   ])
                 ]),
                 _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "span",
-                    {
-                      class: [
-                        "label",
-                        {
-                          "label-danger": !_vm.rental.dateFinalPayment,
-                          "label-success": _vm.rental.dateFinalPayment
-                        }
-                      ]
-                    },
-                    [
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                      _vm._v(
-                        " " +
-                          _vm._s(
-                            (_vm.finalAmountWithDeductions - _vm.reservaAmount
-                            ).toFixed(2)
-                          ) +
-                          "\n                        "
-                      )
-                    ],
-                    1
-                  )
-                ])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _vm._l(_vm.rental.orders, function(order, index) {
-          return _c(
-            "table",
-            { staticClass: "table table-striped" },
-            [
-              _c("thead", [
                 _c("tr", [
-                  _c(
-                    "th",
-                    { staticClass: "text-center", attrs: { colspan: "6" } },
-                    [
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("Desde")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("span", { staticClass: "label label-info" }, [
+                      _vm._v(
+                        _vm._s(_vm._f("displayArgDate")(_vm.rental.dateFrom))
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("Hasta")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("span", { staticClass: "label label-info" }, [
+                      _vm._v(
+                        _vm._s(_vm._f("displayArgDate")(_vm.rental.dateTo))
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _vm._v("Cantidad de dias")
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("span", { staticClass: "label label-primary" }, [
+                      _vm._v(_vm._s(_vm.rental.total_days))
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _vm._v("Monto total")
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "span",
+                      { staticClass: "label label-danger" },
+                      [
+                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _vm._v(" " + _vm._s(_vm.rentalTotalAmount))
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _vm._v("Monto de reserva")
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "span",
+                      { staticClass: "label label-success" },
+                      [
+                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _vm._v(" " + _vm._s(_vm.reservaAmount))
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _vm._v("Vto. pago de reserva")
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("span", { staticClass: "label label-default" }, [
+                      _vm._v(
+                        _vm._s(
+                          _vm._f("displayArgDate")(
+                            _vm.rental.dateReservationPayment
+                          )
+                        )
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("Promocion")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("span", { staticClass: "label label-info" }, [
+                      _vm._v(
+                        _vm._s(
+                          _vm.rental.promotion
+                            ? _vm.rental.promotion.name
+                            : "Sin promoción"
+                        )
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("Descuento")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "span",
+                      { staticClass: "label label-success" },
+                      [
+                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _vm._v(
+                          " " + _vm._s((+_vm.rental.deductions || 0).toFixed(2))
+                        )
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _vm._v("Monto restante")
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "span",
+                      { staticClass: "label label-danger" },
+                      [
+                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _vm._v(" " + _vm._s(_vm.finalAmountWithDeductions))
+                      ],
+                      1
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tfoot", [
+                _c("tr", { staticClass: "warning" }, [
+                  _c("th", { attrs: { scope: "row", colspan: "5" } }, [
+                    _vm._v("Seña")
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "span",
+                      { staticClass: "label label-success" },
+                      [
+                        _c("icon-app", { attrs: { iconImage: "minus" } }),
+                        _vm._v(" "),
+                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _vm._v(" " + _vm._s(_vm.reservaAmount))
+                      ],
+                      1
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "tr",
+                  {
+                    class: {
+                      danger: !_vm.rental.dateFinalPayment,
+                      success: _vm.rental.dateFinalPayment
+                    }
+                  },
+                  [
+                    _c("th", { attrs: { scope: "row", colspan: "4" } }, [
+                      _vm._v(
+                        _vm._s(
+                          _vm.rental.dateFinalPayment ? "Pagado" : "Saldo final"
+                        )
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("span", { staticClass: "label label-default" }, [
+                        _vm._v(
+                          _vm._s(
+                            _vm._f("displayArgDate")(
+                              _vm.rental.dateFinalPayment
+                            )
+                          )
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
                       _c(
-                        "button",
+                        "span",
                         {
                           class: [
-                            "pull-right",
-                            "btn",
-                            "btn-xs",
+                            "label",
                             {
-                              "btn-info": !order.show,
-                              "btn-warning": order.show
+                              "label-danger": !_vm.rental.dateFinalPayment,
+                              "label-success": _vm.rental.dateFinalPayment
                             }
-                          ],
-                          on: {
-                            click: function($event) {
-                              order.show = !order.show
-                            }
-                          }
+                          ]
                         },
                         [
-                          _c("icon-app", {
-                            attrs: { iconImage: _vm.toggleCaret(order.show) }
-                          }),
+                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
                           _vm._v(
                             " " +
                               _vm._s(
-                                order.show
-                                  ? "Ocultar detalle"
-                                  : "Mostrar detalle"
+                                (_vm.finalAmountWithDeductions -
+                                  _vm.reservaAmount
+                                ).toFixed(2)
                               ) +
                               "\n                        "
                           )
                         ],
                         1
-                      ),
-                      _vm._v(
-                        "\n                        Pedido " +
-                          _vm._s(index + 1) +
-                          "\n                    "
                       )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha")]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    { staticClass: "text-center", attrs: { colspan: "2" } },
-                    [
-                      _c("span", { staticClass: "label label-default" }, [
-                        _vm._v(
-                          _vm._s(_vm._f("displayArgDate")(order.created_at))
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    { staticClass: "text-center", attrs: { colspan: "2" } },
-                    [
-                      _c(
-                        "span",
-                        { staticClass: "label label-warning text-capitalize" },
-                        [_vm._v(_vm._s(order.state))]
-                      )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("tr", { staticClass: "dafault" }, [
-                  _c("th", [_vm._v("Fecha de entrega")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("Plato")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("Categoría")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("Cantidad")]),
-                  _vm._v(" "),
-                  _c(
-                    "th",
-                    [
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                      _vm._v("/unidad")
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "th",
-                    [
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                      _vm._v(" total por plato")
-                    ],
-                    1
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "transition",
-                {
-                  attrs: {
-                    name: "slide-fade",
-                    "enter-active-class": "animated bounceIn",
-                    "leave-active-class": "animated bounceOut"
-                  }
-                },
+                    ])
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.rental.orders, function(order, index) {
+              return _c(
+                "table",
+                { staticClass: "table table-striped" },
                 [
-                  order.show
-                    ? _c(
-                        "tbody",
-                        _vm._l(order.orders_detail, function(item) {
-                          return _c("tr", [
-                            _c("td", [
-                              _vm._v(
-                                _vm._s(_vm._f("displayArgDate")(item.delivery))
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.food.name))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "span",
+                  _c("thead", [
+                    _c("tr", [
+                      _c(
+                        "th",
+                        { staticClass: "text-center", attrs: { colspan: "6" } },
+                        [
+                          _c(
+                            "button",
+                            {
+                              class: [
+                                "pull-right",
+                                "btn",
+                                "btn-xs",
                                 {
-                                  staticClass:
-                                    "label label-info text-capitalize"
-                                },
-                                [_vm._v(_vm._s(item.food.type))]
+                                  "btn-info": !order.show,
+                                  "btn-warning": order.show
+                                }
+                              ],
+                              on: {
+                                click: function($event) {
+                                  order.show = !order.show
+                                }
+                              }
+                            },
+                            [
+                              _c("icon-app", {
+                                attrs: {
+                                  iconImage: _vm.toggleCaret(order.show)
+                                }
+                              }),
+                              _vm._v(
+                                " " +
+                                  _vm._s(
+                                    order.show
+                                      ? "Ocultar detalle"
+                                      : "Mostrar detalle"
+                                  ) +
+                                  "\n                        "
                               )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.quantity))]),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              [
-                                _c("icon-app", {
-                                  attrs: { iconImage: "dollar" }
-                                }),
-                                _vm._v(" " + _vm._s(item.food.price))
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              [
-                                _c("icon-app", {
-                                  attrs: { iconImage: "dollar" }
-                                }),
-                                _vm._v(
-                                  " " + _vm._s(item.food.price * item.quantity)
-                                )
-                              ],
-                              1
+                            ],
+                            1
+                          ),
+                          _vm._v(
+                            "\n                        Pedido " +
+                              _vm._s(index + 1) +
+                              "\n                    "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha")]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "text-center", attrs: { colspan: "2" } },
+                        [
+                          _c("span", { staticClass: "label label-default" }, [
+                            _vm._v(
+                              _vm._s(_vm._f("displayArgDate")(order.created_at))
                             )
                           ])
-                        })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "text-center", attrs: { colspan: "2" } },
+                        [
+                          _c(
+                            "span",
+                            {
+                              staticClass: "label label-warning text-capitalize"
+                            },
+                            [_vm._v(_vm._s(order.state))]
+                          )
+                        ]
                       )
-                    : _vm._e()
-                ]
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", { staticClass: "dafault" }, [
+                      _c("th", [_vm._v("Fecha de entrega")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Plato")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Categoría")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Cantidad")]),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        [
+                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                          _vm._v("/unidad")
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        [
+                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                          _vm._v(" total por plato")
+                        ],
+                        1
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "transition",
+                    {
+                      attrs: {
+                        name: "slide-fade",
+                        "enter-active-class": "animated bounceIn",
+                        "leave-active-class": "animated bounceOut"
+                      }
+                    },
+                    [
+                      order.show
+                        ? _c(
+                            "tbody",
+                            _vm._l(order.orders_detail, function(item) {
+                              return _c("tr", [
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm._f("displayArgDate")(item.delivery)
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.food.name))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "label label-info text-capitalize"
+                                    },
+                                    [_vm._v(_vm._s(item.food.type))]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.quantity))]),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  [
+                                    _c("icon-app", {
+                                      attrs: { iconImage: "dollar" }
+                                    }),
+                                    _vm._v(" " + _vm._s(item.food.price))
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  [
+                                    _c("icon-app", {
+                                      attrs: { iconImage: "dollar" }
+                                    }),
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(item.food.price * item.quantity)
+                                    )
+                                  ],
+                                  1
+                                )
+                              ])
+                            })
+                          )
+                        : _vm._e()
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("tfoot", [
+                    _c("tr", { staticClass: "info" }, [
+                      _c("th", [_vm._v("Monto parcial")]),
+                      _vm._v(" "),
+                      _c("td", { attrs: { colspan: "2" } }),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(_vm.totalQuantity(order)))]),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                          _vm._v(" " + _vm._s(_vm.totalAmount(order)))
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", { staticClass: "warning" }, [
+                      _c("th", [_vm._v("Seña")]),
+                      _vm._v(" "),
+                      _c("td", { attrs: { colspan: "4" } }),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c("icon-app", { attrs: { iconImage: "minus" } }),
+                          _vm._v(" "),
+                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                          _vm._v(" " + _vm._s((+order.senia || 0).toFixed(2)))
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", { staticClass: "danger" }, [
+                      _c("th", [_vm._v("Monto final")]),
+                      _vm._v(" "),
+                      _c("td", { attrs: { colspan: "4" } }),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                          _vm._v(
+                            " " +
+                              _vm._s(
+                                (_vm.totalAmount(order) - (order.senia || 0)
+                                ).toFixed(2)
+                              )
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  ])
+                ],
+                1
+              )
+            }),
+            _vm._v(" "),
+            _c("table", { staticClass: "table table-striped" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                [
+                  _c("tr", [
+                    _c("th", { attrs: { scope: "row" } }, [_vm._v("Reserva")]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "text-right", attrs: { colspan: "5" } },
+                      [
+                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _vm._v(
+                          " " +
+                            _vm._s(
+                              _vm.rental.dateFinalPayment
+                                ? 0
+                                : (_vm.finalAmountWithDeductions -
+                                    _vm.reservaAmount
+                                  ).toFixed(2)
+                            )
+                        )
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.rental.orders, function(order, index) {
+                    return _c("tr", [
+                      _c("th", { attrs: { scope: "row" } }, [
+                        _vm._v("Pedido " + _vm._s(index + 1))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "text-right", attrs: { colspan: "5" } },
+                        [
+                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                          _vm._v(
+                            " " +
+                              _vm._s(
+                                (_vm.totalAmount(order) - (order.senia || 0)
+                                ).toFixed(2)
+                              )
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  })
+                ],
+                2
               ),
               _vm._v(" "),
               _c("tfoot", [
-                _c("tr", { staticClass: "info" }, [
-                  _c("th", [_vm._v("Monto parcial")]),
-                  _vm._v(" "),
-                  _c("td", { attrs: { colspan: "2" } }),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(_vm.totalQuantity(order)))]),
-                  _vm._v(" "),
-                  _c("td"),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    [
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                      _vm._v(" " + _vm._s(_vm.totalAmount(order)))
-                    ],
-                    1
-                  )
-                ]),
-                _vm._v(" "),
-                _c("tr", { staticClass: "warning" }, [
-                  _c("th", [_vm._v("Seña")]),
-                  _vm._v(" "),
-                  _c("td", { attrs: { colspan: "4" } }),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    [
-                      _c("icon-app", { attrs: { iconImage: "minus" } }),
-                      _vm._v(" "),
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                      _vm._v(" " + _vm._s((+order.senia || 0).toFixed(2)))
-                    ],
-                    1
-                  )
-                ]),
-                _vm._v(" "),
                 _c("tr", { staticClass: "danger" }, [
-                  _c("th", [_vm._v("Monto final")]),
-                  _vm._v(" "),
-                  _c("td", { attrs: { colspan: "4" } }),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    [
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                      _vm._v(
-                        " " +
-                          _vm._s(
-                            (_vm.totalAmount(order) - (order.senia || 0)
-                            ).toFixed(2)
-                          )
-                      )
-                    ],
-                    1
-                  )
-                ])
-              ])
-            ],
-            1
-          )
-        }),
-        _vm._v(" "),
-        _c("table", { staticClass: "table table-striped" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            [
-              _c("tr", [
-                _c("th", { attrs: { scope: "row" } }, [_vm._v("Reserva")]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  { staticClass: "text-right", attrs: { colspan: "5" } },
-                  [
-                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                    _vm._v(
-                      " " +
-                        _vm._s(
-                          _vm.rental.dateFinalPayment
-                            ? 0
-                            : (_vm.finalAmountWithDeductions - _vm.reservaAmount
-                              ).toFixed(2)
-                        )
-                    )
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.rental.orders, function(order, index) {
-                return _c("tr", [
-                  _c("th", { attrs: { scope: "row" } }, [
-                    _vm._v("Pedido " + _vm._s(index + 1))
-                  ]),
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("Saldo")]),
                   _vm._v(" "),
                   _c(
                     "td",
@@ -21090,233 +21174,240 @@ var render = function() {
                     [
                       _c("icon-app", { attrs: { iconImage: "dollar" } }),
                       _vm._v(
-                        " " +
-                          _vm._s(
-                            (_vm.totalAmount(order) - (order.senia || 0)
-                            ).toFixed(2)
-                          )
+                        " " + _vm._s(_vm.finalAmountWhitDeductionsAndOrders)
                       )
                     ],
                     1
                   )
                 ])
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c("tfoot", [
-            _c("tr", { staticClass: "danger" }, [
-              _c("th", { attrs: { scope: "row" } }, [_vm._v("Saldo")]),
-              _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "text-right", attrs: { colspan: "5" } },
-                [
-                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                  _vm._v(" " + _vm._s(_vm.finalAmountWhitDeductionsAndOrders))
-                ],
-                1
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "text-center btn-frm" },
-          [
+              ])
+            ]),
+            _vm._v(" "),
             _c(
-              "transition",
-              {
-                attrs: {
-                  name: "btnFrm-tran",
-                  "enter-active-class": "animated flip",
-                  "leave-active-class": "animated fadeOutDownBig"
-                }
-              },
+              "div",
+              { staticClass: "text-center btn-frm" },
               [
-                !_vm.payLiquidation
-                  ? [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-lg btn-success",
-                          attrs: { id: "btn-liquidation" },
-                          on: {
-                            click: function($event) {
-                              _vm.payLiquidation = !_vm.payLiquidation
-                            }
-                          }
-                        },
-                        [
+                _c(
+                  "transition",
+                  {
+                    attrs: {
+                      name: "btnFrm-tran",
+                      "enter-active-class": "animated fadeInUp",
+                      "leave-active-class": "animated fadeOutUp"
+                    }
+                  },
+                  [
+                    !_vm.payLiquidation
+                      ? [
                           _c(
-                            "b",
-                            [
-                              _c("icon-app", {
-                                attrs: {
-                                  iconImage: _vm.toggleIcon,
-                                  aditionalClasses: _vm.addAditionalClasses
+                            "button",
+                            {
+                              staticClass: "btn btn-lg btn-success",
+                              attrs: { id: "btn-liquidation" },
+                              on: {
+                                click: function($event) {
+                                  _vm.payLiquidation = !_vm.payLiquidation
                                 }
-                              }),
-                              _vm._v(" Liquidar saldo")
-                            ],
-                            1
-                          )
-                        ]
-                      )
-                    ]
-                  : [
-                      _c(
-                        "form",
-                        {
-                          staticClass: "form-inline",
-                          on: {
-                            submit: function($event) {
-                              $event.preventDefault()
-                              _vm.sendLiquidation($event)
-                            }
-                          }
-                        },
-                        [
-                          _c("fieldset", [
-                            _c("legend", [
-                              _vm._v(
-                                "Ingrese sus credenciales de administrador"
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "form-group" }, [
+                              }
+                            },
+                            [
                               _c(
-                                "label",
-                                {
-                                  staticClass: "sr-only",
-                                  attrs: { for: "admin-email" }
-                                },
-                                [_vm._v("Email")]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "input-group" }, [
-                                _c(
-                                  "div",
-                                  { staticClass: "input-group-addon" },
-                                  [
-                                    _c("icon-app", {
-                                      attrs: { iconImage: "at" }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.adminEmail,
-                                      expression: "adminEmail"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: {
-                                    type: "text",
-                                    id: "admin-email",
-                                    name: "admin-email"
-                                  },
-                                  domProps: { value: _vm.adminEmail },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.adminEmail = $event.target.value
-                                    }
-                                  }
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "input-group" }, [
-                                _c(
-                                  "div",
-                                  { staticClass: "input-group-addon" },
-                                  [
-                                    _c("icon-app", {
-                                      attrs: { iconImage: "asterisk" }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("icon-app", {
-                                      attrs: { iconImage: "asterisk" }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("icon-app", {
-                                      attrs: { iconImage: "asterisk" }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.adminPass,
-                                      expression: "adminPass"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: {
-                                    type: "password",
-                                    id: "admin-password",
-                                    name: "admin-password"
-                                  },
-                                  domProps: { value: _vm.adminPass },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.adminPass = $event.target.value
-                                    }
-                                  }
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-primary",
-                                  attrs: {
-                                    role: "button",
-                                    type: "submit",
-                                    disabled: !_vm.adminPass
-                                  }
-                                },
+                                "b",
                                 [
                                   _c("icon-app", {
-                                    attrs: { iconImage: "credit-card" }
+                                    attrs: {
+                                      iconImage: _vm.toggleIcon,
+                                      aditionalClasses: _vm.addAditionalClasses
+                                    }
                                   }),
-                                  _vm._v(
-                                    " Liquidar!\n                                "
-                                  )
+                                  _vm._v(" Liquidar saldo")
                                 ],
                                 1
                               )
-                            ])
-                          ])
+                            ]
+                          )
                         ]
-                      )
-                    ]
+                      : [
+                          _c(
+                            "form",
+                            {
+                              staticClass: "form-inline",
+                              on: {
+                                submit: function($event) {
+                                  $event.preventDefault()
+                                  _vm.sendLiquidation($event)
+                                }
+                              }
+                            },
+                            [
+                              _c("fieldset", [
+                                _c("legend", [
+                                  _vm._v(
+                                    "Ingrese sus credenciales de administrador"
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "sr-only",
+                                      attrs: { for: "admin-email" }
+                                    },
+                                    [_vm._v("Email")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "input-group" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "input-group-addon" },
+                                      [
+                                        _c("icon-app", {
+                                          attrs: { iconImage: "at" }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.adminEmail,
+                                          expression: "adminEmail"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "text",
+                                        id: "admin-email",
+                                        name: "admin-email"
+                                      },
+                                      domProps: { value: _vm.adminEmail },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.adminEmail = $event.target.value
+                                        }
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "input-group" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "input-group-addon" },
+                                      [
+                                        _c("icon-app", {
+                                          attrs: { iconImage: "asterisk" }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("icon-app", {
+                                          attrs: { iconImage: "asterisk" }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("icon-app", {
+                                          attrs: { iconImage: "asterisk" }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.adminPass,
+                                          expression: "adminPass"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "password",
+                                        id: "admin-password",
+                                        name: "admin-password"
+                                      },
+                                      domProps: { value: _vm.adminPass },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.adminPass = $event.target.value
+                                        }
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-primary",
+                                      attrs: {
+                                        role: "button",
+                                        type: "submit",
+                                        disabled: !_vm.adminPass
+                                      }
+                                    },
+                                    [
+                                      _c("icon-app", {
+                                        attrs: {
+                                          iconImage: _vm.queryFinished
+                                            ? "credit-card"
+                                            : "spinner",
+                                          aditionalClasses: _vm.queryFinished
+                                            ? "fa-spin fa-fw"
+                                            : ""
+                                        }
+                                      }),
+                                      _vm._v(
+                                        " Liquidar!\n                                "
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ]
+                  ],
+                  2
+                )
               ],
-              2
+              1
             )
           ],
-          1
+          2
         )
-      ],
-      2
-    )
-  ])
+      ])
+    : _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary btn-xs pull-right",
+              on: { click: _vm.changeReserva }
+            },
+            [
+              _c("icon-app", {
+                attrs: {
+                  iconImage: "refresh",
+                  aditionalClasses: _vm.activeReload ? "fa-spin fa-fw" : ""
+                }
+              }),
+              _vm._v("\n            Volver a buscar reserva\n        ")
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _vm._m(2)
+      ])
 }
 var staticRenderFns = [
   function() {
@@ -21342,6 +21433,30 @@ var staticRenderFns = [
         ])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" },
+      [
+        _c("div", { staticClass: "text-center" }, [
+          _c("span", { staticClass: "fa-stack fa-lg fa-5x text-success" }, [
+            _c("i", { staticClass: "fa fa-circle-o fa-stack-2x" }),
+            _vm._v(" "),
+            _c("i", { staticClass: "fa fa-check fa-stack-1x" })
+          ]),
+          _vm._v(" "),
+          _c("h2", [
+            _vm._v("La liquidación se realizó correctamente. "),
+            _c("br"),
+            _vm._v(" ¡Muchas gracias por elegirnos!")
+          ])
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -33577,9 +33692,28 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+
+var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
+
+exports.default = {
+    sendFinalLiquidation: function sendFinalLiquidation(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('liquidation/final', payload).then(function (response) {
+                resolve({
+                    title: '¡Excelente!',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                var messages = (0, _appAxios.handlingXhrErrors)(error);
+                messages.useSwal = true;
+                reject(messages);
+            });
+        });
+    }
+};
 
 /***/ }),
 
@@ -34019,8 +34153,25 @@ exports.default = {
     },
     sendClosedDeal: function sendClosedDeal(context, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('passengers/store', payload).then(function (response) {
-                context.dispatch('auth/setToken', response, { root: true });
+            if (payload.createNew) {
+                _appAxios.http.post('passengers/store', payload).then(function (response) {
+                    context.dispatch('auth/setToken', response, { root: true });
+                    _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
+                        context.dispatch('auth/setToken', response, { root: true });
+                        context.commit('setClosedDeal', true);
+                        context.commit('setInfoDeal', response.data.rentals);
+                        resolve({
+                            title: 'RESERVA EXITOSA',
+                            message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
+                            useSwal: true
+                        });
+                    });
+                }).catch(function (err) {
+                    context.dispatch('auth/setToken', err.response, { root: true });
+                    context.dispatch('auth/setQueryFinished', true, { root: true });
+                    reject((0, _appAxios.handlingXhrErrors)(err));
+                });
+            } else {
                 _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
                     context.dispatch('auth/setToken', response, { root: true });
                     context.commit('setClosedDeal', true);
@@ -34030,12 +34181,12 @@ exports.default = {
                         message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
                         useSwal: true
                     });
+                }).catch(function (err) {
+                    context.dispatch('auth/setToken', err.response, { root: true });
+                    context.dispatch('auth/setQueryFinished', true, { root: true });
+                    reject((0, _appAxios.handlingXhrErrors)(err));
                 });
-            }).catch(function (err) {
-                context.dispatch('auth/setToken', err.response, { root: true });
-                context.dispatch('auth/setQueryFinished', true, { root: true });
-                reject((0, _appAxios.handlingXhrErrors)(err));
-            });
+            }
         });
     }
 };

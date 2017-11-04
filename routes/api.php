@@ -47,3 +47,7 @@ Route::prefix('orders')->group(function () {
         Route::post('store', 'OrdersController@store')->name('api.orders.store');
     });
 });
+
+Route::prefix('liquidation')->group(function () {
+    Route::post('final', 'LiquidationController@finalLiquidation')->name('api.liquidation.final');
+});

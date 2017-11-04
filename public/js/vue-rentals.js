@@ -2029,7 +2029,8 @@ exports.default = {
             genre: '',
             country: '',
             dataForm: false,
-            userNotFound: false
+            userNotFound: false,
+            createNew: false
         };
     },
 
@@ -2131,7 +2132,13 @@ exports.default = {
             }).then(function (response) {
                 _this.verifyUser();
                 _this.setQueryFinished(true);
-                response.type === 'success' ? _vueNotifications2.default.success(response) : _vueNotifications2.default.warn(response);
+                if (response.type === 'success') {
+                    _vueNotifications2.default.success(response);
+                    _this.createNew = false;
+                } else {
+                    _vueNotifications2.default.warn(response);
+                    _this.createNew = true;
+                }
                 if (bool) {
                     _this.dataForm = true;
                 }
@@ -2157,7 +2164,8 @@ exports.default = {
                 toRentals: this.toRentals,
                 user: this.user,
                 dateFrom: this.dateFrom,
-                dateTo: this.dateTo
+                dateTo: this.dateTo,
+                createNew: this.createNew
             };
 
             this.setQueryFinished(false);
@@ -68487,9 +68495,28 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+
+var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
+
+exports.default = {
+    sendFinalLiquidation: function sendFinalLiquidation(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('liquidation/final', payload).then(function (response) {
+                resolve({
+                    title: '¡Excelente!',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                var messages = (0, _appAxios.handlingXhrErrors)(error);
+                messages.useSwal = true;
+                reject(messages);
+            });
+        });
+    }
+};
 
 /***/ }),
 
@@ -68929,8 +68956,25 @@ exports.default = {
     },
     sendClosedDeal: function sendClosedDeal(context, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('passengers/store', payload).then(function (response) {
-                context.dispatch('auth/setToken', response, { root: true });
+            if (payload.createNew) {
+                _appAxios.http.post('passengers/store', payload).then(function (response) {
+                    context.dispatch('auth/setToken', response, { root: true });
+                    _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
+                        context.dispatch('auth/setToken', response, { root: true });
+                        context.commit('setClosedDeal', true);
+                        context.commit('setInfoDeal', response.data.rentals);
+                        resolve({
+                            title: 'RESERVA EXITOSA',
+                            message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
+                            useSwal: true
+                        });
+                    });
+                }).catch(function (err) {
+                    context.dispatch('auth/setToken', err.response, { root: true });
+                    context.dispatch('auth/setQueryFinished', true, { root: true });
+                    reject((0, _appAxios.handlingXhrErrors)(err));
+                });
+            } else {
                 _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
                     context.dispatch('auth/setToken', response, { root: true });
                     context.commit('setClosedDeal', true);
@@ -68940,12 +68984,12 @@ exports.default = {
                         message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
                         useSwal: true
                     });
+                }).catch(function (err) {
+                    context.dispatch('auth/setToken', err.response, { root: true });
+                    context.dispatch('auth/setQueryFinished', true, { root: true });
+                    reject((0, _appAxios.handlingXhrErrors)(err));
                 });
-            }).catch(function (err) {
-                context.dispatch('auth/setToken', err.response, { root: true });
-                context.dispatch('auth/setQueryFinished', true, { root: true });
-                reject((0, _appAxios.handlingXhrErrors)(err));
-            });
+            }
         });
     }
 };
