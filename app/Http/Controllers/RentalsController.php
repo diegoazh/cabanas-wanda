@@ -130,6 +130,7 @@ class RentalsController extends Controller
             if (!$reserva = Rental::where('code_reservation', $info['reserva'])
                 ->where('dateFrom', '<=', Carbon::now()->toDateString())
                 ->where('dateTo', '>=', Carbon::now()->toDateString())
+                ->where('state', 'en curso')
                 ->first()) {
 
                 return response()->json(['error' => 'No encontramos una reserva activa a la fecha para los datos proporcionado.'], 404);
@@ -155,6 +156,7 @@ class RentalsController extends Controller
             if (!$reserva = Rental::where((isset($user) && !empty($user)) ? 'user_id' : 'passenger_id', (isset($user) && !empty($user)) ? $user->id : $passenger->id)
                 ->where('dateFrom', '<=', Carbon::now()->toDateString())
                 ->where('dateTo', '>=', Carbon::now()->toDateString())
+                ->where('state', 'en curso')
                 ->first()) {
 
                 return response()->json(['error' => 'No encontramos una reserva activa a la fecha para el usuario proporcionado.'], 404);

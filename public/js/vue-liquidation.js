@@ -1848,6 +1848,29 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _moment = __webpack_require__("./node_modules/moment/moment.js");
 
@@ -1895,29 +1918,20 @@ exports.default = {
         },
         addAditionalClasses: function addAditionalClasses() {
             return this.queryFinished ? '' : 'fa-spin fa-fw';
-        }
-    }, (0, _vuex.mapState)('orders', {
-        rental: function rental(state) {
-            return state.data.rental;
-        }
-    }), (0, _vuex.mapState)('auth', {
-        queryFinished: function queryFinished(state) {
-            return state.xhr.queryFinished;
-        }
-    })),
-    methods: {
-        totalAmount: function totalAmount(order) {
-            var final = 0;
+        },
+        finalAmountWhitDeductionsAndOrders: function finalAmountWhitDeductionsAndOrders() {
+            var rental = this.rental.dateFinalPayment ? 0 : +(this.finalAmountWithDeductions - this.reservaAmount).toFixed(2);
+            var orders = 0;
 
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
             var _iteratorError = undefined;
 
             try {
-                for (var _iterator = order.orders_detail[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var detail = _step.value;
+                for (var _iterator = this.rental.orders[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var order = _step.value;
 
-                    final += +detail.quantity * detail.food.price;
+                    orders += this.totalAmount(order) - (+order.senia || 0);
                 }
             } catch (err) {
                 _didIteratorError = true;
@@ -1934,9 +1948,19 @@ exports.default = {
                 }
             }
 
-            return final;
-        },
-        totalQuantity: function totalQuantity(order) {
+            return rental + orders;
+        }
+    }, (0, _vuex.mapState)('orders', {
+        rental: function rental(state) {
+            return state.data.rental;
+        }
+    }), (0, _vuex.mapState)('auth', {
+        queryFinished: function queryFinished(state) {
+            return state.xhr.queryFinished;
+        }
+    })),
+    methods: {
+        totalAmount: function totalAmount(order) {
             var final = 0;
 
             var _iteratorNormalCompletion2 = true;
@@ -1947,7 +1971,7 @@ exports.default = {
                 for (var _iterator2 = order.orders_detail[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
                     var detail = _step2.value;
 
-                    final += +detail.quantity;
+                    final += +detail.quantity * +detail.food.price;
                 }
             } catch (err) {
                 _didIteratorError2 = true;
@@ -1960,6 +1984,36 @@ exports.default = {
                 } finally {
                     if (_didIteratorError2) {
                         throw _iteratorError2;
+                    }
+                }
+            }
+
+            return final.toFixed(2);
+        },
+        totalQuantity: function totalQuantity(order) {
+            var final = 0;
+
+            var _iteratorNormalCompletion3 = true;
+            var _didIteratorError3 = false;
+            var _iteratorError3 = undefined;
+
+            try {
+                for (var _iterator3 = order.orders_detail[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                    var detail = _step3.value;
+
+                    final += +detail.quantity;
+                }
+            } catch (err) {
+                _didIteratorError3 = true;
+                _iteratorError3 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                        _iterator3.return();
+                    }
+                } finally {
+                    if (_didIteratorError3) {
+                        throw _iteratorError3;
                     }
                 }
             }
@@ -1993,27 +2047,27 @@ exports.default = {
         }
     },
     created: function created() {
-        var _iteratorNormalCompletion3 = true;
-        var _didIteratorError3 = false;
-        var _iteratorError3 = undefined;
+        var _iteratorNormalCompletion4 = true;
+        var _didIteratorError4 = false;
+        var _iteratorError4 = undefined;
 
         try {
-            for (var _iterator3 = this.rental.orders[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                var order = _step3.value;
+            for (var _iterator4 = this.rental.orders[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                var order = _step4.value;
 
                 this.$set(order, 'show', false);
             }
         } catch (err) {
-            _didIteratorError3 = true;
-            _iteratorError3 = err;
+            _didIteratorError4 = true;
+            _iteratorError4 = err;
         } finally {
             try {
-                if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                    _iterator3.return();
+                if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                    _iterator4.return();
                 }
             } finally {
-                if (_didIteratorError3) {
-                    throw _iteratorError3;
+                if (_didIteratorError4) {
+                    throw _iteratorError4;
                 }
             }
         }
@@ -20651,7 +20705,9 @@ var render = function() {
                   { staticClass: "label label-success" },
                   [
                     _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                    _vm._v(" " + _vm._s(_vm.rental.deductions || 0))
+                    _vm._v(
+                      " " + _vm._s((+_vm.rental.deductions || 0).toFixed(2))
+                    )
                   ],
                   1
                 )
@@ -20738,7 +20794,8 @@ var render = function() {
                       _vm._v(
                         " " +
                           _vm._s(
-                            _vm.finalAmountWithDeductions - _vm.reservaAmount
+                            (_vm.finalAmountWithDeductions - _vm.reservaAmount
+                            ).toFixed(2)
                           ) +
                           "\n                        "
                       )
@@ -20961,7 +21018,7 @@ var render = function() {
                       _c("icon-app", { attrs: { iconImage: "minus" } }),
                       _vm._v(" "),
                       _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                      _vm._v(" " + _vm._s(order.senia || 0))
+                      _vm._v(" " + _vm._s((+order.senia || 0).toFixed(2)))
                     ],
                     1
                   )
@@ -20978,7 +21035,10 @@ var render = function() {
                       _c("icon-app", { attrs: { iconImage: "dollar" } }),
                       _vm._v(
                         " " +
-                          _vm._s(_vm.totalAmount(order) - (order.senia || 0))
+                          _vm._s(
+                            (_vm.totalAmount(order) - (order.senia || 0)
+                            ).toFixed(2)
+                          )
                       )
                     ],
                     1
@@ -20989,6 +21049,78 @@ var render = function() {
             1
           )
         }),
+        _vm._v(" "),
+        _c("table", { staticClass: "table table-striped" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            [
+              _c("tr", [
+                _c("th", { attrs: { scope: "row" } }, [_vm._v("Reserva")]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "text-right", attrs: { colspan: "5" } },
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v(
+                      " " +
+                        _vm._s(
+                          _vm.rental.dateFinalPayment
+                            ? 0
+                            : (_vm.finalAmountWithDeductions - _vm.reservaAmount
+                              ).toFixed(2)
+                        )
+                    )
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.rental.orders, function(order, index) {
+                return _c("tr", [
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _vm._v("Pedido " + _vm._s(index + 1))
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    { staticClass: "text-right", attrs: { colspan: "5" } },
+                    [
+                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _vm._v(
+                        " " +
+                          _vm._s(
+                            (_vm.totalAmount(order) - (order.senia || 0)
+                            ).toFixed(2)
+                          )
+                      )
+                    ],
+                    1
+                  )
+                ])
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c("tfoot", [
+            _c("tr", { staticClass: "danger" }, [
+              _c("th", { attrs: { scope: "row" } }, [_vm._v("Saldo")]),
+              _vm._v(" "),
+              _c(
+                "td",
+                { staticClass: "text-right", attrs: { colspan: "5" } },
+                [
+                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                  _vm._v(" " + _vm._s(_vm.finalAmountWhitDeductionsAndOrders))
+                ],
+                1
+              )
+            ])
+          ])
+        ]),
         _vm._v(" "),
         _c(
           "div",
@@ -21195,6 +21327,18 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { staticClass: "text-center", attrs: { colspan: "6" } }, [
           _vm._v("Reserva")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticClass: "text-center", attrs: { colspan: "6" } }, [
+          _vm._v("Detalle final")
         ])
       ])
     ])

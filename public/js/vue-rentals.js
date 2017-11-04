@@ -1702,6 +1702,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
@@ -1730,9 +1731,12 @@ exports.default = {
     props: ['cottage', 'index'],
     computed: _extends({
         calcularDias: function calcularDias() {
-            var dateFrom = (0, _moment2.default)(this.dateFrom + ' 00:00:00', 'DD/MM/YYYY HH:mm:ss');
+            var dateFrom = (0, _moment2.default)(this.dateFrom + ' 10:00:00', 'DD/MM/YYYY HH:mm:ss');
             var dateTo = (0, _moment2.default)(this.dateTo + ' 10:00:00', 'DD/MM/YYYY HH:mm:ss').add(1, 'day');
             return dateTo.diff(dateFrom, 'days');
+        },
+        deliveryDay: function deliveryDay() {
+            return (0, _moment2.default)(this.dateTo + ' 10:00:00', 'DD/MM/YYYY HH:mm:ss').add(1, 'day').format('DD/MM/YYYY HH:mm');
         }
     }, mapState({
         dateFrom: function dateFrom(state) {
@@ -1744,7 +1748,7 @@ exports.default = {
     })),
     methods: _extends({
         calcularMonto: function calcularMonto(dias, precio) {
-            return _lodash2.default.round(dias * precio, 2);
+            return _lodash2.default.round(dias * precio, 2); // tambien se puede usar .toFixed(2) es de JS puro
         }
     }, mapActions(['deleteItemToRentals']))
 };
@@ -54634,6 +54638,15 @@ var render = function() {
               _c("b", { staticClass: "number-btn-item" }, [
                 _vm._v("Número: "),
                 _c("b", [_vm._v(_vm._s(_vm.cottage.number))])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("b", [
+                _vm._v("Entrega: "),
+                _c("span", { staticClass: "label label-default" }, [
+                  _vm._v(_vm._s(_vm.deliveryDay))
+                ])
               ])
             ])
           ])

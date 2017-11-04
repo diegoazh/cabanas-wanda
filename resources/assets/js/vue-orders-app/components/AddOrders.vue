@@ -7,14 +7,14 @@
             </button>
             <h2 class="text-center">Reserva</h2>
             <h3 id="details_reservation" class="text-center">
-                Titular: <span class="label label-info">{{ `${rental.user.name}, ${rental.user.lastname}` }}</span> |
+                Titular: <span class="label label-info">{{ ownerNames }}</span> |
                 Cabaña: <span class="label label-default">{{ `${rental.cottage.name}` }}</span> |
                 <icon-app iconImage="hashtag"></icon-app>
                 <span class="label label-default">{{ `${rental.cottage.number}` }}</span>
             </h3>
             <br>
             <h4 class="text-center">Desde: <span class="label label-success">{{ rental.dateFrom | argentineDate
-                }}</span> | Hasta: <span class="label label-danger">{{ rental.dateTo | argentineDate }}</span></h4>
+                }} 10:00:00</span> | Hasta: <span class="label label-danger">{{ rental.dateTo | argentineDate }} 10:00:00</span></h4>
             <hr>
             <div class="row">
                 <div class="col-md-3 pull-right">
@@ -76,7 +76,7 @@
                                                 <icon-app iconImage="calendar"></icon-app>
                                             </div>
                                             <date-picker placeholder="Seleccione la fecha..."
-                                                         :config="defineConfDateTimePiker(rental)"
+                                                         :config="defineConfDateTimePiker(rental, food)"
                                                          :id="'delivery'+index"
                                                          :name="'delivery'+index" v-model="food.delivery"></date-picker>
                                         </div>
@@ -182,6 +182,9 @@
             'modal-app': Modal
         },
         computed: {
+            ownerNames() {
+                return this.rental.user ? `${this.rental.user.name}, ${this.rental.user.lastname}` : `${this.rental.passenger.name}, ${this.rental.passenger.lastname}`
+            },
             totalAmount() {
                 let amount = 0;
 
@@ -308,13 +311,13 @@
                 this.pagination(this.trashPage[tabName]);
                 this.trashPage.choice = tabName;
             },
-            defineConfDateTimePiker(rental) {
+            defineConfDateTimePiker(rental, food) {
                 let min = moment(moment(rental.dateFrom + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY');
                 return {
                     locale: 'es',
                     format: 'DD/MM/YYYY',
                     minDate: min.isBefore(moment.now()) ? moment(moment().add(3, 'h').format('DD/MM/YYYY'), 'DD/MM/YYYY') : min,
-                    maxDate: moment(moment(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY')
+                    maxDate: food.type === 'desayuno' ? moment(moment(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY') : moment(moment(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').subtract(1, 'd').format('DD/MM/YYYY'), 'DD/MM/YYYY')
                 }
             },
             findInOrders(food) {

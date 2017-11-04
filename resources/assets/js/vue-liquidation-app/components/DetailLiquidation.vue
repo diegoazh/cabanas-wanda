@@ -50,7 +50,7 @@
                         <th scope="row">Promocion</th>
                         <td><span class="label label-info">{{ rental.promotion ? rental.promotion.name : 'Sin promoción' }}</span></td>
                         <th scope="row">Descuento</th>
-                        <td><span class="label label-success"><icon-app iconImage="dollar"></icon-app> {{ rental.deductions || 0 }}</span></td>
+                        <td><span class="label label-success"><icon-app iconImage="dollar"></icon-app> {{ (+rental.deductions || 0).toFixed(2) }}</span></td>
                         <th scope="row">Monto restante</th>
                         <td><span class="label label-danger"><icon-app iconImage="dollar"></icon-app> {{ finalAmountWithDeductions }}</span></td>
                     </tr>
@@ -65,7 +65,7 @@
                         <td><span class="label label-default">{{ rental.dateFinalPayment | displayArgDate }}</span></td>
                         <td>
                             <span :class="['label', {'label-danger': !rental.dateFinalPayment, 'label-success': rental.dateFinalPayment}]">
-                                <icon-app iconImage="dollar"></icon-app> {{ finalAmountWithDeductions - reservaAmount }}
+                                <icon-app iconImage="dollar"></icon-app> {{ (finalAmountWithDeductions - reservaAmount).toFixed(2) }}
                             </span>
                         </td>
                     </tr>
@@ -121,12 +121,35 @@
                     <tr class="warning">
                         <th>Seña</th>
                         <td colspan="4"></td>
-                        <td><icon-app iconImage="minus"></icon-app> <icon-app iconImage="dollar"></icon-app> {{ order.senia || 0 }}</td>
+                        <td><icon-app iconImage="minus"></icon-app> <icon-app iconImage="dollar"></icon-app> {{ (+order.senia || 0).toFixed(2) }}</td>
                     </tr>
                     <tr class="danger">
                         <th>Monto final</th>
                         <td colspan="4"></td>
-                        <td><icon-app iconImage="dollar"></icon-app> {{ totalAmount(order) - (order.senia || 0) }}</td>
+                        <td><icon-app iconImage="dollar"></icon-app> {{ (totalAmount(order) - (order.senia || 0)).toFixed(2) }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="6" class="text-center">Detalle final</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Reserva</th>
+                        <td colspan="5" class="text-right"><icon-app iconImage="dollar"></icon-app> {{ rental.dateFinalPayment ? 0 : (finalAmountWithDeductions - reservaAmount).toFixed(2) }}</td>
+                    </tr>
+                    <tr v-for="(order, index) in rental.orders">
+                        <th scope="row">Pedido {{ index + 1 }}</th>
+                        <td colspan="5" class="text-right"><icon-app iconImage="dollar"></icon-app> {{ (totalAmount(order) - (order.senia || 0)).toFixed(2) }}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="danger">
+                        <th scope="row">Saldo</th>
+                        <td colspan="5" class="text-right"><icon-app iconImage="dollar"></icon-app> {{ finalAmountWhitDeductionsAndOrders }}</td>
                     </tr>
                 </tfoot>
             </table>
@@ -211,6 +234,16 @@
             addAditionalClasses() {
                 return this.queryFinished ? '' : 'fa-spin fa-fw';
             },
+            finalAmountWhitDeductionsAndOrders() {
+                const rental = this.rental.dateFinalPayment ? 0 : +(this.finalAmountWithDeductions - this.reservaAmount).toFixed(2);
+                let orders = 0;
+
+                for (let order of this.rental.orders) {
+                    orders += this.totalAmount(order) - (+order.senia || 0);
+                }
+
+                return rental + orders;
+            },
             ...mapState('orders', {
                 rental: state => state.data.rental
             }),
@@ -223,10 +256,10 @@
                 let final = 0;
 
                 for (let detail of order.orders_detail) {
-                    final += (+detail.quantity * detail.food.price);
+                    final += (+detail.quantity * +detail.food.price);
                 }
 
-                return final;
+                return final.toFixed(2);
             },
             totalQuantity(order) {
                 let final = 0;

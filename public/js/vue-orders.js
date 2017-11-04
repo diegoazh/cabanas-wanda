@@ -2017,6 +2017,9 @@ exports.default = {
         'modal-app': _Modal2.default
     },
     computed: _extends({
+        ownerNames: function ownerNames() {
+            return this.rental.user ? this.rental.user.name + ', ' + this.rental.user.lastname : this.rental.passenger.name + ', ' + this.rental.passenger.lastname;
+        },
         totalAmount: function totalAmount() {
             var amount = 0;
 
@@ -2227,13 +2230,13 @@ exports.default = {
             this.pagination(this.trashPage[tabName]);
             this.trashPage.choice = tabName;
         },
-        defineConfDateTimePiker: function defineConfDateTimePiker(rental) {
+        defineConfDateTimePiker: function defineConfDateTimePiker(rental, food) {
             var min = (0, _moment2.default)((0, _moment2.default)(rental.dateFrom + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY');
             return {
                 locale: 'es',
                 format: 'DD/MM/YYYY',
                 minDate: min.isBefore(_moment2.default.now()) ? (0, _moment2.default)((0, _moment2.default)().add(3, 'h').format('DD/MM/YYYY'), 'DD/MM/YYYY') : min,
-                maxDate: (0, _moment2.default)((0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY')
+                maxDate: food.type === 'desayuno' ? (0, _moment2.default)((0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY') : (0, _moment2.default)((0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').subtract(1, 'd').format('DD/MM/YYYY'), 'DD/MM/YYYY')
             };
         },
         findInOrders: function findInOrders(food) {
@@ -38232,9 +38235,7 @@ var render = function() {
         [
           _vm._v("\n            Titular: "),
           _c("span", { staticClass: "label label-info" }, [
-            _vm._v(
-              _vm._s(_vm.rental.user.name + ", " + _vm.rental.user.lastname)
-            )
+            _vm._v(_vm._s(_vm.ownerNames))
           ]),
           _vm._v(" |\n            Cabaña: "),
           _c("span", { staticClass: "label label-default" }, [
@@ -38255,11 +38256,15 @@ var render = function() {
       _c("h4", { staticClass: "text-center" }, [
         _vm._v("Desde: "),
         _c("span", { staticClass: "label label-success" }, [
-          _vm._v(_vm._s(_vm._f("argentineDate")(_vm.rental.dateFrom)))
+          _vm._v(
+            _vm._s(_vm._f("argentineDate")(_vm.rental.dateFrom)) + " 10:00:00"
+          )
         ]),
         _vm._v(" | Hasta: "),
         _c("span", { staticClass: "label label-danger" }, [
-          _vm._v(_vm._s(_vm._f("argentineDate")(_vm.rental.dateTo)))
+          _vm._v(
+            _vm._s(_vm._f("argentineDate")(_vm.rental.dateTo)) + " 10:00:00"
+          )
         ])
       ]),
       _vm._v(" "),
@@ -38471,7 +38476,8 @@ var render = function() {
                                     attrs: {
                                       placeholder: "Seleccione la fecha...",
                                       config: _vm.defineConfDateTimePiker(
-                                        _vm.rental
+                                        _vm.rental,
+                                        food
                                       ),
                                       id: "delivery" + index,
                                       name: "delivery" + index

@@ -9,6 +9,7 @@
                     <li><b>Nombre: </b><h5 class="text-capitalize label label-info tt-btn-item">{{ cottage.name }}</h5></li>
                     <li><b class="capacity-btn-item">Capacidad: <b>{{ cottage.accommodation }}</b></b></li>
                     <li><b class="number-btn-item">Número: <b>{{ cottage.number }}</b></b></li>
+                    <li><b>Entrega: <span class="label label-default">{{ deliveryDay }}</span></b></li>
                 </ul>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
@@ -41,9 +42,12 @@
         props: ['cottage', 'index'],
         computed: {
             calcularDias() {
-                const dateFrom = moment(this.dateFrom + ' 00:00:00', 'DD/MM/YYYY HH:mm:ss');
+                const dateFrom = moment(this.dateFrom + ' 10:00:00', 'DD/MM/YYYY HH:mm:ss');
                 const dateTo = moment(this.dateTo + ' 10:00:00', 'DD/MM/YYYY HH:mm:ss').add(1, 'day');
                 return dateTo.diff(dateFrom, 'days');
+            },
+            deliveryDay() {
+                return moment(this.dateTo + ' 10:00:00', 'DD/MM/YYYY HH:mm:ss').add(1, 'day').format('DD/MM/YYYY HH:mm');
             },
             ...mapState({
                 dateFrom: state => state.lastQueryData.dateFrom,
@@ -52,7 +56,7 @@
         },
         methods: {
             calcularMonto(dias, precio) {
-                return _.round(dias * precio, 2);
+                return _.round(dias * precio, 2); // tambien se puede usar .toFixed(2) es de JS puro
             },
             ...mapActions(['deleteItemToRentals'])
         }
