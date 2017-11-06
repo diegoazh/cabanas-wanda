@@ -58,6 +58,7 @@ mix.copy([
     .js('resources/assets/js/vue-admin-food-app/vue-admin-food.js', 'public/js')
     .js('resources/assets/js/vue-orders-app/vue-orders.js', 'public/js')
     .js('resources/assets/js/vue-liquidation-app/vue-liquidation.js', 'public/js')
+    .js('resources/assets/js/vue-reports-app/vue-reports.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .version([
         './public/css/app.css',

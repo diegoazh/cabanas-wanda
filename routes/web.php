@@ -53,5 +53,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Administration', 'middleware'
     Route::delete('users/{user}', 'UsersController@destroy')->name('users.destroy');
     Route::resource('cottages', 'CottagesController');
     Route::get('food', 'FoodsController@index')->name('comidas.index');
+    Route::get('reports', 'ReportsController@index')->name('reports.index');
     //Route::resource('promotions', 'PromotionsController');
 });

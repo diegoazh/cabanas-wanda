@@ -185,7 +185,7 @@ $(document).ready(function (event) {
     /****
      * Cambia el fondo del header cada 10 segundos.
      * */
-    setInterval(backgroundChange, 10000);
+    //setInterval(backgroundChange, 10000);
     var contador = 1;
     function continuousNumber(min, max) {
         var result = min + contador;

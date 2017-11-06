@@ -47,6 +47,13 @@
                             @endif
                         </ul>
                     </li>
+                    @if(Auth::check())
+                        @if(Auth::user()->isAdminOrEmployed())
+                            @if(Auth::user()->isAdmin())
+                                <li><a href="{{ route('reports.index') }}"><i class="fa fa-line-chart" aria-hidden="true"></i> Reportes</a></li>
+                            @endif
+                        @endif
+                    @endif
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">

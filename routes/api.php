@@ -13,26 +13,26 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::prefix('auth')->group(function () {
+Route::prefix('auth')->group(function() {
     Route::post('auth', 'Auth\AuthenticateController@authenticate')->name('api.auth.auth');
 });
 
-Route::prefix('cottages')->group(function () {
+Route::prefix('cottages')->group(function() {
     Route::get('enabled', 'CottagesController@cottagesEnabled')->name('api.cottages.enabled');
 });
 
-Route::prefix('passengers')->group(function () {
+Route::prefix('passengers')->group(function() {
     Route::post('store', 'PassengersController@store')->name('api.passengers.store');
 });
 
 // No olvidar hacer pasar las peticiones por el middleware jwt.auth
-Route::prefix('rentals')->group(function () {
+Route::prefix('rentals')->group(function() {
     Route::post('availables', 'RentalsController@cottagesAvailables')->name('api.rentals.availabels');
     Route::post('find', 'RentalsController@find')->name('api.rentals.find');
     Route::post('store', 'RentalsController@store')->name('api.rentals.store');
 });
 
-Route::prefix('food')->group(function () {
+Route::prefix('food')->group(function() {
     Route::get('all', 'Administration\FoodsController@all')->name('api.food.all');
 
     Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
@@ -42,12 +42,16 @@ Route::prefix('food')->group(function () {
     });
 });
 
-Route::prefix('orders')->group(function () {
+Route::prefix('orders')->group(function() {
     Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
         Route::post('store', 'OrdersController@store')->name('api.orders.store');
     });
 });
 
-Route::prefix('liquidation')->group(function () {
+Route::prefix('liquidation')->group(function() {
     Route::post('final', 'LiquidationController@finalLiquidation')->name('api.liquidation.final');
+});
+
+Route::prefix('reports')->group(function() {
+    Route::get('rentals', 'Administration\ReportsController@rentalsForMonth')->name('api.reports.rentals');
 });

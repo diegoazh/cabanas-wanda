@@ -5,6 +5,7 @@ import { moduleRentals } from './module-rentals/moduleRentals'
 import { moduleFood } from './module-food/moduleFood'
 import { moduleOrders } from "./module-orders/moduleOrders";
 import { moduleLiquidation } from "./module-liquidation/moduleLiquidation";
+import { moduleReports } from "./module-reports/moduleReports";
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
         rentals: moduleRentals,
         food: moduleFood,
         orders: moduleOrders,
-        liquidation: moduleLiquidation
+        liquidation: moduleLiquidation,
+        reports: moduleReports
     }
 });
