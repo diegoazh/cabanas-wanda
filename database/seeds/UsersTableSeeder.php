@@ -38,7 +38,7 @@ class UsersTableSeeder extends Seeder
         ]);
         $dazh->save();
 
-        for ($i = 0; $i < 60; $i++)
+        for ($i = 0; $i < 500; $i++)
         {
             $user = new User();
             $user->name = $faker->firstName;

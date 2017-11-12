@@ -11,10 +11,14 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.copy([
-    './public/lib/bootstrap/fonts',
-    './public/lib/dashicons/fonts',
-    './public/lib/font-awesome/fonts'
+mix.autoload({
+        'jquery': ['$', 'window.jQuery', 'jQuery'],
+        'vue': ['Vue','window.Vue'],
+        'moment': ['moment','window.moment'],
+    }).copy([
+        './public/lib/bootstrap/fonts',
+        './public/lib/dashicons/fonts',
+        './public/lib/font-awesome/fonts'
     ], './public/fonts')
     .styles([
         './public/lib/bootstrap/dist/css/bootstrap.css',

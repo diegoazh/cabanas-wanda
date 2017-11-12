@@ -67998,7 +67998,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var http = exports.http = _axios2.default.create({
     baseURL: 'http://homestead.app/api/',
-    timeout: 5000,
+    timeout: 60000,
     headers: {
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest'
@@ -69186,7 +69186,7 @@ exports.default = {
         return new Promise(function (resolve, reject) {
             _appAxios.http.get('reports/rentals').then(function (response) {
                 cntx.commit('setRentals', response.data.rentals);
-                resolve(cntx.state.data.rentalsForMonth);
+                resolve(cntx.state.data.dataReports);
             }).catch(function (error) {
                 var err = (0, _appAxios.handlingXhrErrors)(error);
                 err.useSwal = true;
@@ -69209,7 +69209,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
     getRentalsForMonth: function getRentalsForMonth(state) {
-        return state.data.rentalsForMonth;
+        return state.data.dataReports;
     }
 };
 
@@ -69266,9 +69266,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     setRentals: function setRentals(state, rentals) {
         state.data.rentals = rentals;
-    },
-    setDataReportRentals: function setDataReportRentals(state, data) {
-        state.data.rentalsForMonth.data.datasets[0].data = data;
     }
 };
 
@@ -69286,12 +69283,12 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     data: {
         rentals: null,
-        rentalsForMonth: {
+        dataReports: {
             type: 'bar',
             data: {
-                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                labels: [],
                 datasets: [{
-                    label: 'Reservas por mes',
+                    label: '',
                     data: [],
                     backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
                     borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)', 'rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],

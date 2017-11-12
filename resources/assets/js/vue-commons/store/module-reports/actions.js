@@ -6,7 +6,7 @@ export default {
             http.get('reports/rentals')
                 .then(response => {
                     cntx.commit('setRentals', response.data.rentals);
-                    resolve(cntx.state.data.rentalsForMonth);
+                    resolve(cntx.state.data.dataReports);
                 })
                 .catch(error => {
                    let err = handlingXhrErrors(error);

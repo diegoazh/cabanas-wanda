@@ -1,5 +1,5 @@
 export default {
     getRentalsForMonth(state) {
-        return state.data.rentalsForMonth;
+        return state.data.dataReports;
     },
 }

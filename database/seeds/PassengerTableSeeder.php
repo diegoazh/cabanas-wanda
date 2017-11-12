@@ -14,7 +14,7 @@ class PassengerTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 60; $i++)
+        for ($i = 0; $i < 450; $i++)
         {
             $passenger = new \App\Passenger();
             $passenger->name = $faker->firstName;

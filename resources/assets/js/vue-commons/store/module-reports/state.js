@@ -1,12 +1,12 @@
 export default {
     data: {
         rentals: null,
-        rentalsForMonth: {
+        dataReports: {
             type: 'bar',
             data: {
-                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                labels: [],
                 datasets: [{
-                    label: 'Reservas por mes',
+                    label: '',
                     data: [],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
