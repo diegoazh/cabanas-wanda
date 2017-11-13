@@ -14,5 +14,19 @@ export default {
                    reject(err);
                 });
         })
+    },
+    getOrdersForRental(cntx, payload) {
+        return new Promise((resolve, reject) => {
+            http.get(`reports/orders`, {
+                params: payload
+            })
+                .then(response => resolve(response.data.orders))
+                .catch(error => {
+                    let err = handlingXhrErrors(error);
+                    err.useSwal = false;
+                    err.timeout = 1000;
+                    reject(err);
+                });
+        })
     }
 }

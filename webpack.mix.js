@@ -11,11 +11,7 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.autoload({
-        'jquery': ['$', 'window.jQuery', 'jQuery'],
-        'vue': ['Vue','window.Vue'],
-        'moment': ['moment','window.moment'],
-    }).copy([
+mix.copy([
         './public/lib/bootstrap/fonts',
         './public/lib/dashicons/fonts',
         './public/lib/font-awesome/fonts'
@@ -44,8 +40,8 @@ mix.autoload({
         './public/lib/jquery/dist/jquery.min.js',
         './public/lib/moment/min/moment-with-locales.min.js',
         './public/lib/bootstrap/dist/js/bootstrap.min.js',
-        './public/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
         './public/lib/clndr/clndr.min.js',
+        './public/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
         './public/lib/selectize/dist/js/standalone/selectize.min.js'
     ], './public/js/libraries.js')
     .js([

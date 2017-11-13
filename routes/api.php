@@ -54,4 +54,5 @@ Route::prefix('liquidation')->group(function() {
 
 Route::prefix('reports')->group(function() {
     Route::get('rentals', 'Administration\ReportsController@rentalsForMonth')->name('api.reports.rentals');
+    Route::get('orders', 'Administration\ReportsController@findOrdersForRental')->name('api.reports.orders');
 });

@@ -3,12 +3,13 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <h1 class="text-center">
+                    <a href="/admin" class="btn btn-primary btn-xs pull-left"><icon-app iconImage="hand-o-left"></icon-app> volver al panel</a>
                     REPORTES
                     <transition name="loader"
                                 enter-active-class="animated fadeIn"
                                 leave-active-class="animated fadeOut">
-                        <icon-app v-if="!queryFinished" iconImage="spinner" aditionalClasses="fa-pulse fa-fw"></icon-app>
-                        <icon-app v-if="queryFinished" iconImage="line-chart" aditionalClasses=""></icon-app>
+                        <icon-app :iconImage="!queryFinished || !queryEnd ? 'spinner' : 'line-chart'"
+                                  :aditionalClasses="!queryFinished || !queryEnd ? 'fa-pulse fa-fw' : ''"></icon-app>
                     </transition>
                 </h1>
             </div>
@@ -16,13 +17,11 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#reservas" aria-controls="reservas" role="tab"
-                                                              data-toggle="tab">Reservas</a></li>
-                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a>
+                    <li role="presentation" class="active">
+                        <a href="#reservas" aria-controls="reservas" role="tab" data-toggle="tab" @click="setPreviousTab">Reservas</a>
                     </li>
-                    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a>
-                    </li>
-                    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a>
+                    <li role="presentation">
+                        <a href="#consumos" aria-controls="consumos" role="tab" data-toggle="tab" @click="setPreviousTab">Consumos</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -31,27 +30,33 @@
                             <ul class="list-inline">
                                 <li>
                                     <label for="forYear" role="button">
-                                        <input type="radio" name="forms" id="forYear" v-model="forms.rentalsRp"
+                                        <input type="radio" name="forms" id="forYear" v-model="forms"
                                                value="year"> Anual en meses
                                     </label>
                                 </li>
                                 <li>
                                     <label for="forMonth" role="button">
-                                        <input type="radio" name="forms" id="forMonth" v-model="forms.rentalsRp"
+                                        <input type="radio" name="forms" id="forMonth" v-model="forms"
                                                value="month"> Mensual por cabaña
                                     </label>
                                 </li>
                                 <li>
                                     <label for="forDecade" role="button">
-                                        <input type="radio" name="forms" id="forDecade" v-model="forms.rentalsRp"
+                                        <input type="radio" name="forms" id="forDecade" v-model="forms"
                                                value="decade"> Decenio por años
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="forPeriod" role="button">
+                                        <input type="radio" name="forms" id="forPeriod" v-model="forms"
+                                               value="period"> Periodo seleccionado
                                     </label>
                                 </li>
                             </ul>
                         </div>
                         <div>
-                            <fieldset v-if="forms.rentalsRp === 'year' || forms.rentalsRp === 'decade'">
-                                <legend>{{ forms.rentalsRp === 'year' ? 'Por año' : 'Por decada' }}</legend>
+                            <fieldset v-if="forms === 'year' || forms === 'decade'">
+                                <legend>{{ forms === 'year' ? 'Por año' : 'Por decada' }}</legend>
                                 <div class="form-group">
                                     <label for="anio" class="sr-only">Año:</label>
                                     <div class="input-group">
@@ -76,7 +81,7 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            <fieldset v-if="forms.rentalsRp === 'month'">
+                            <fieldset v-if="forms === 'month'">
                                 <legend>Por mes</legend>
                                 <div class="form-group">
                                     <label for="mes" class="sr-only">Mes:</label>
@@ -103,18 +108,149 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            <div class="text-center">
-                                <button class="btn btn-success" @click="btnUpateRp">
-                                    <icon-app iconImage="refresh"
-                                              :aditionalClasses="queryFinished ? '' : 'fa-spin fa-fw'"></icon-app>
-                                    Actualizar
-                                </button>
-                            </div>
+                            <fieldset v-if="forms === 'period'">
+                                <legend>Período</legend>
+                                <div class="form-group">
+                                    <ul class="list-inline">
+                                        <li>
+                                            <label for="periodYear" role="button">
+                                                <input type="radio" name="periodTime" id="periodYear" v-model="periodTime"
+                                                       value="year"> por año
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label for="periodMonth" role="button">
+                                                <input type="radio" name="periodTime" id="periodMonth" v-model="periodTime"
+                                                       value="month"> por meses
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <label for="periodFrom" class="sr-only">Desde:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">Desde</div>
+                                        <date-picker placeholder="Seleccione la fecha..."
+                                                     :config="cnfgPeriod"
+                                                     id="periodFrom"
+                                                     name="periodFrom" v-model="periodFrom"></date-picker>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="periodTo" class="sr-only">Hasta:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">Hasta</div>
+                                        <date-picker placeholder="Seleccione la fecha..."
+                                                     :config="cnfgPeriod"
+                                                     id="periodTo"
+                                                     name="periodTo" v-model="periodTo"></date-picker>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="estado3" class="sr-only">Estado:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">Estado</div>
+                                        <select name="estado3" id="estado3" class="form-control" v-model="estado">
+                                            <option value="pendiente">Pendiente</option>
+                                            <option value="confirmada">Confirmada</option>
+                                            <option value="en curso">En curso</option>
+                                            <option value="finalizada">Finalizada</option>
+                                            <option value="cancelada">Cancelada</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </fieldset>
                         </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="profile">...</div>
-                    <div role="tabpanel" class="tab-pane" id="messages">...</div>
-                    <div role="tabpanel" class="tab-pane" id="settings">...</div>
+                    <div role="tabpanel" class="tab-pane" id="consumos">
+                        <div class="padding-div-radios">
+                            <ul class="list-inline">
+                                <li>
+                                    <label for="forDate" role="button">
+                                        <input type="radio" name="forms2" id="forDate" v-model="forms"
+                                               value="date"> Por fecha
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="forCottage" role="button">
+                                        <input type="radio" name="forms2" id="forCottage" v-model="forms"
+                                               value="cottage"> Por cabaña
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="forUser" role="button">
+                                        <input type="radio" name="forms2" id="forUser" v-model="forms"
+                                               value="user"> Por usuario
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <fieldset>
+                                <legend>{{ forms === 'date' ? 'Por fecha' : forms === 'cottage' ? 'Por cabaña' : 'Por usuario' }}</legend>
+                                <div class="form-group">
+                                    <ul class="list-inline">
+                                        <li>
+                                            <label for="filterYear" role="button">
+                                                <input type="radio" name="filterType" id="filterYear" v-model="filterFor"
+                                                       value="year"> por año
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label for="filterMonth" role="button">
+                                                <input type="radio" name="filterType" id="filterMonth" v-model="filterFor"
+                                                       value="month"> por meses
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label for="filterDay" role="button">
+                                                <input type="radio" name="filterType" id="filterDay" v-model="filterFor"
+                                                       value="day"> por dias
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <label for="filterFrom" class="sr-only">Desde:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">Desde</div>
+                                        <date-picker placeholder="Seleccione la fecha..."
+                                                     :config="cnfgPeriod"
+                                                     id="filterFrom"
+                                                     name="filterFrom" v-model="filterFrom"></date-picker>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="filterTo" class="sr-only">Hasta:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">Hasta</div>
+                                        <date-picker placeholder="Seleccione la fecha..."
+                                                     :config="cnfgPeriod"
+                                                     id="filterTo"
+                                                     name="filterTo" v-model="filterTo"></date-picker>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="estado4" class="sr-only">Estado:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">Estado</div>
+                                        <select name="estado4" id="estado4" class="form-control" v-model="estado">
+                                            <option value="pendiente">Pendiente</option>
+                                            <option value="confirmada">Confirmada</option>
+                                            <option value="en curso">En curso</option>
+                                            <option value="finalizada">Finalizada</option>
+                                            <option value="cancelada">Cancelada</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-success" @click="btnUpateRp">
+                        <icon-app iconImage="refresh" :aditionalClasses="(!queryFinished || !queryEnd) ? 'fa-spin fa-fw': ''"></icon-app> Actualizar
+                    </button>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
@@ -128,6 +264,7 @@
 
 <script>
     import Chart from 'chart.js'
+    import async from 'async';
     import moment from 'moment';
     import VueNoti from 'vue-notifications'
     import Icon from '../../vue-commons/components/Icon.vue'
@@ -145,10 +282,16 @@
                 ctx: null,
                 anio: new Date(),
                 mes: new Date(),
+                periodFrom: new Date(),
+                periodTo: new Date(),
+                periodTime: 'year',
+                filterFrom: new Date(),
+                filterTo: new Date(),
+                filterFor: 'year',
                 estado: 'finalizada',
-                forms: {
-                    rentalsRp: 'year',
-                },
+                forms: 'year',
+                previousTab: '',
+                queryEnd: true,
                 cnfgYear: {
                     locale: 'es',
                     format: 'YYYY',
@@ -158,33 +301,55 @@
                     locale: 'es',
                     format: 'MMMM',
                     viewMode: 'months'
+                },
+                cnfgPeriod: {
+                    locale: 'es',
+                    format: 'MMMM YYYY',
                 }
             }
         },
         computed: {
             ...mapState('reports', {
                 rentals: state => state.data.rentals,
+                orders: state => state.data.orders,
+                executingOrdersQuery: state => state.data.executingOrdersQuery,
+                lastQueryOrders: state => state.data.lastQueryOrders,
             }),
             ...mapState('auth', {
                 queryFinished: state => state.xhr.queryFinished,
             }),
         },
         methods: {
+            setPreviousTab() {
+                if (!this.previousTab) {
+                    this.previousTab = this.forms;
+                    this.forms = 'date';
+                } else {
+                    let prev = this.forms;
+                    this.forms = this.previousTab;
+                    this.previousTab = prev;
+                }
+            },
+            getRandomInt(min, max) {
+                return window.Math.floor(window.Math.random() * (max - min)) + min;
+            },
             delaySeconds(seconds = 1) {
                 return new Promise(resolve => {
-                    this.setQueryFinished(false);
+                    this.queryEnd = false;
                     window.pausa = window.setTimeout(() => {
-                        this.setQueryFinished(true);
+                        this.queryEnd = true;
                         delete window.pausa;
                         resolve();
                     }, seconds * 1000);
                 });
             },
             updateChartNewInfo(chart, set) {
-                set && set.labels ? chart.data.labels = set.labels : '';
+                set && set.labels ? chart.data.labels = set.labels : null;
                 chart.data.datasets.forEach((dataset) => {
-                    set.data ? dataset.data = set.data : '';
-                    set.label && !dataset.label || set.label !== dataset.label ? dataset.label = set.label : '';
+                    set.data ? dataset.data = set.data : null;
+                    set.label && !dataset.label || set.label !== dataset.label ? dataset.label = set.label : null;
+                    set.backgroundColor ? dataset.backgroundColor = set.backgroundColor : null;
+                    set.borderColor ? dataset.borderColor = set.borderColor : null;
                 });
                 chart.update();
             },
@@ -192,15 +357,66 @@
                 if (set.labels) { chart.data.labels.push(set.labels); }
                 chart.data.datasets.forEach((dataset) => {
                     if (set.data) { dataset.data.push(set.data); }
+                    if (set.backgroundColor) { dataset.backgroundColor.push(set.backgroundColor); }
+                    if (set.borderColor) { dataset.borderColor.push(set.borderColor); }
                 });
                 chart.update();
+            },
+            addOrdersToRentals(minDate, maxDate, state, filterFor, boolQuery = true) {
+                return new Promise((resolve, reject) => {
+                    let min = 0;
+                    const maxQuery = 200;
+                    const totalRentals = this.rentals.length;
+                    let originalRentals = this.rentals;
+                    let tempRentals = [];
+
+                    this.setExecutingOrdersQuery(true);
+                    this.setLastQueryOrders(moment());
+                    this.setQueryFinished(boolQuery);
+
+                    this.getOrdersForRental({
+                        minDate: minDate.format('YYYY-MM-DD'),
+                        maxDate: maxDate.format('YYYY-MM-DD'),
+                        state: state,
+                        filterFor: filterFor
+                    }).then(data => {
+                            data.length ? tempRentals = tempRentals.concat(data) : null;
+
+                            originalRentals.forEach((rental, index, array) => {
+                                tempRentals.forEach((rent, ind, arr) => {
+                                    if (rental.id === rent.id) {
+                                        if(!rental.orders) rental.orders = [];
+                                        rental.orders = rent.orders;
+                                    }
+                                });
+                            });
+
+                            this.setRentals(originalRentals);
+                            this.setExecutingOrdersQuery(false);
+                            this.setQueryFinished(true);
+                            resolve(originalRentals);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            VueNoti.error({
+                                title: 'ERROR',
+                                message: 'Se ha producido un error inesperado. Verifiquelo y reintente: ' + error,
+                                timeout: 5000,
+                            });
+                            this.setQueryFinished(true);
+                            this.setExecutingOrdersQuery(false);
+                            reject(error);
+                        });
+                });
             },
             rpYear() {
                 let anio = moment.isMoment(this.anio) ? this.anio : moment(new Date());
                 const yearData = {
                     label: 'Reservas por mes',
                     labels: new Array(12),
-                    data: new Array(12)
+                    data: new Array(12),
+                    backgroundColor: [],
+                    borderColor: [],
                 };
 
                 this.rentals.forEach(elem => {
@@ -258,6 +474,12 @@
                     }
                 });
 
+                for (let i = yearData.labels.length - 1; i >= 0; i--) {
+                    let textColor = `rgba(${this.getRandomInt(0, 256)}, ${this.getRandomInt(0, 256)}, ${this.getRandomInt(0, 256)}`;
+                    yearData.backgroundColor[i] = textColor + ', 0.2)';
+                    yearData.borderColor[i] = textColor + ', 1)';
+                }
+
                 return yearData;
             },
             rpMonth() {
@@ -265,7 +487,9 @@
                 let monthsData = {
                     label: 'Dias por cabaña',
                     labels: new Array(10),
-                    data: new Array(10)
+                    data: new Array(10),
+                    backgroundColor: [],
+                    borderColor: [],
                 };
 
                 this.rentals.forEach(elem => {
@@ -315,6 +539,12 @@
                 }
                 });
 
+                for (let i = monthsData.labels.length - 1; i >= 0; i--) {
+                    let textColor = `rgba(${this.getRandomInt(0, 256)}, ${this.getRandomInt(0, 256)}, ${this.getRandomInt(0, 256)}`;
+                    monthsData.backgroundColor[i] = textColor + ', 0.2)';
+                    monthsData.borderColor[i] = textColor + ', 1)';
+                }
+
                 return monthsData;
             },
             rpDecade() {
@@ -324,7 +554,9 @@
                 let decadeData = {
                     label: 'Reservas totales por año',
                     labels: new Array(10),
-                    data: new Array(10)
+                    data: new Array(10),
+                    backgroundColor: [],
+                    borderColor: [],
                 };
 
                 this.rentals.forEach(elem => {
@@ -370,23 +602,163 @@
                     }
                 });
 
+                for (let i = decadeData.labels.length - 1; i >= 0; i--) {
+                    let textColor = `rgba(${this.getRandomInt(0, 256)}, ${this.getRandomInt(0, 256)}, ${this.getRandomInt(0, 256)}`;
+                    decadeData.backgroundColor[i] = textColor + ', 0.2)';
+                    decadeData.borderColor[i] = textColor + ', 1)';
+                }
+
                 return decadeData;
             },
-            rentalsFilter() {
-                if (this.forms.rentalsRp === 'year') {
+            rpPeriod() {
+                let periodFrom = moment.isMoment(this.periodFrom) ? this.periodFrom : moment(new Date());
+                let periodTo = moment.isMoment(this.periodTo) ? this.periodTo : moment(new Date());
+                let periodData = {
+                    label: this.periodTime === 'year' ? 'Reservas del periodo por año' : 'Reservas del periodo por meses',
+                    labels: [],
+                    data: [],
+                    backgroundColor: [],
+                    borderColor: [],
+                };
+
+                this.rentals.forEach(elem => {
+                    let anioRental = moment(elem.dateFrom, 'YYYY-MM-DD');
+
+                    if (anioRental.isBetween(periodFrom, periodTo, this.periodTime, '[]') && elem.state === this.estado) {
+
+                        let labelToPush = this.periodTime === 'year' ? anioRental.format('YYYY') : anioRental.format('MMMM YYYY');
+
+                        if (!periodData.labels.length) {
+                            periodData.labels.push(labelToPush);
+                        } else if (!periodData.labels.find((elemento, index, array) => elemento === labelToPush)) {
+                            periodData.labels.push(labelToPush);
+                        }
+                    }
+                });
+
+                periodData.labels.sort();
+
+                this.rentals.forEach(elem => {
+                    let anioRental = moment(elem.dateFrom, 'YYYY-MM-DD');
+
+                    if (anioRental.isBetween(periodFrom, periodTo, this.periodTime, '[]') && elem.state === this.estado) {
+
+                        let labelToPush = this.periodTime === 'year' ? anioRental.format('YYYY') : anioRental.format('MMMM YYYY');
+
+                        !periodData.data[periodData.labels.findIndex((elemento, index, array) => elemento === labelToPush)] ? periodData.data[periodData.labels.findIndex((elemento, index, array) => elemento === labelToPush)] = 1 : periodData.data[periodData.labels.findIndex((elemento, index, array) => elemento === labelToPush)]++;
+                    }
+                });
+
+                for (let i = periodData.labels.length - 1; i >= 0; i--) {
+                    let textColor = `rgba(${this.getRandomInt(0, 256)}, ${this.getRandomInt(0, 256)}, ${this.getRandomInt(0, 256)}`;
+                    periodData.backgroundColor[i] = textColor + ', 0.2)';
+                    periodData.borderColor[i] = textColor + ', 1)';
+                }
+
+                return periodData;
+            },
+            rpFoodDate() {
+                let filterFrom = moment.isMoment(this.filterFrom) ? this.filterFrom : moment(new Date());
+                let filterTo = moment.isMoment(this.filterTo) ? this.filterTo : moment(new Date());
+                let foodData = {
+                    label: this.filterFor === 'year' ? 'Consumos del periodo por años en $' : this.filterFor === 'month' ? 'Consumos del periodo por meses en $' : 'Consumos del periodo por dias en $',
+                    labels: [],
+                    data: [],
+                    backgroundColor: [],
+                    borderColor: [],
+                };
+
+                this.queryEnd = false;
+
+                this.rentals.forEach(elem => {
+                    let anioRental = moment(elem.dateFrom, 'YYYY-MM-DD');
+                    let labelToPush = '';
+
+                    if (anioRental.isBetween(filterFrom, filterTo, this.filterFor, '[]') && elem.state === this.estado) {
+
+                        if (this.forms === 'date') {
+                            labelToPush = this.filterFor === 'year' ? anioRental.format('YYYY') : this.filterFor === 'month' ? anioRental.format('MMMM YYYY') : anioRental.format('DD/MM/YYYY');
+                        } else if (this.forms === 'cottage') {
+                            labelToPush = elem.cottage.name;
+                        } else if (this.forms === 'user') {
+                            labelToPush = elem.user.email;
+                        }
+
+                        if (!foodData.labels.length) {
+                            foodData.labels.push(labelToPush);
+                        } else if (!foodData.labels.find((elemento, index, array) => elemento === labelToPush)) {
+                            foodData.labels.push(labelToPush);
+                        }
+                    }
+                });
+
+                foodData.labels.sort();
+
+                /*if (!this.lastQueryOrders || moment().diff(this.lastQueryOrders, 'hours') > 5) {
+                    this.addOrdersToRentals(filterFrom, filterTo, this.estado, false);
+                }*/
+
+                this.addOrdersToRentals(filterFrom, filterTo, this.estado, this.filterFor, false)
+                    .then(data => {
+                        this.rentals.forEach((elem, index, array) => {
+                            let anioFrom = moment(elem.dateFrom, 'YYYY-MM-DD');
+                            let anioTo = moment(elem.dateTo, 'YYYY-MM-DD');
+                            let labelToPush = '';
+
+                            if (anioFrom.isBetween(filterFrom, filterTo, this.filterFor, '[]') && anioTo.isBetween(filterFrom, filterTo, this.filterFor, '[]') && elem.state === this.estado) {
+
+                                if (this.forms === 'date') {
+                                    labelToPush = this.filterFor === 'year' ? anioFrom.format('YYYY') : this.filterFor === 'month' ? anioFrom.format('MMMM YYYY') : anioFrom.format('DD/MM/YYYY');
+                                } else if (this.forms === 'cottage') {
+                                    labelToPush = elem.cottage.name;
+                                } else if (this.forms === 'user') {
+                                    labelToPush = elem.user.email;
+                                }
+
+                                let consumo = (elem.cottage_price * elem.total_days) - elem.deductions;
+
+                                elem.orders.forEach(order => {
+                                    order.orders_detail.forEach(detail => {
+                                        consumo += (detail.quantity * detail.food.price);
+                                    })
+                                });
+
+                                !foodData.data[foodData.labels.findIndex(elemento => elemento === labelToPush)] ? foodData.data[foodData.labels.findIndex(elemento => elemento === labelToPush)] = consumo : foodData.data[foodData.labels.findIndex(elemento => elemento === labelToPush)] += consumo;
+                            }
+                        });
+
+                        this.queryEnd = true;
+                    })
+                    .catch(error => {console.log(error)});
+
+                for (let i = foodData.labels.length - 1; i >= 0; i--) {
+                    let textColor = `rgba(${this.getRandomInt(0, 256)}, ${this.getRandomInt(0, 256)}, ${this.getRandomInt(0, 256)}`;
+                    foodData.backgroundColor[i] = textColor + ', 0.2)';
+                    foodData.borderColor[i] = textColor + ', 1)';
+                }
+
+                return foodData;
+            },
+            reportsFilter() {
+                if (this.forms === 'year') {
                     return this.rpYear();
-                } else if (this.forms.rentalsRp === 'month') {
+                } else if (this.forms === 'month') {
                     return this.rpMonth();
-                } else if (this.forms.rentalsRp === 'decade') {
+                } else if (this.forms === 'decade') {
                     return this.rpDecade();
+                } else if (this.forms === 'period') {
+                    return this.rpPeriod();
+                } else if (this.forms === 'date' || this.forms === 'cottage' || this.forms === 'user') {
+                    return this.rpFoodDate();
                 }
             },
             btnUpateRp() {
                 this.delaySeconds();
-                this.updateChartNewInfo(this.myChart, this.rentalsFilter());
+                this.updateChartNewInfo(this.myChart, this.reportsFilter());
             },
             ...mapMutations('auth', ['setToken', 'setQueryFinished']),
-            ...mapActions('reports', ['getReportRentals']),
+            ...mapMutations('reports', ['setRentals', 'setExecutingOrdersQuery', 'setLastQueryOrders']),
+            ...mapActions('reports', ['getReportRentals', 'getOrdersForRental']),
         },
         filters: {},
         created() {
@@ -402,7 +774,7 @@
                         this.ctx = window.document.getElementById('reports_container').getContext('2d');
                         this.myChart = new Chart(this.ctx, response);
                     }
-                    this.updateChartNewInfo(this.myChart, this.rentalsFilter());
+                    this.updateChartNewInfo(this.myChart, this.reportsFilter());
                     this.setQueryFinished(true);
                 })
                 .catch(error => {
