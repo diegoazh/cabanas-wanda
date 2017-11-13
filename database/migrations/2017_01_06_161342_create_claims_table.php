@@ -14,8 +14,8 @@ class CreateClaimsTable extends Migration
     public function up()
     {
         Schema::create('claims', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('rental_id')->unsigned();
+            $table->bigIncrements('id');
+            $table->bigInteger('rental_id')->unsigned();
             $table->enum('type', ['sugerencia', 'queja', 'reclamo'])->default('sugerencia');
             $table->string('title', 30);
             $table->string('description');

@@ -1360,7 +1360,7 @@
 				self.ignoreHover = false;
 			});
 	
-			// store original children and tab index so that they can be
+			// rentals original children and tab index so that they can be
 			// restored when the destroy() method is called.
 			this.revertSettings = {
 				$children : $input.children().detach(),

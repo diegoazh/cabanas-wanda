@@ -21,7 +21,7 @@ class User extends Authenticatable
      */
     protected $table = 'users';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['name', 'lastname', 'dateOfBirth', 'country_id', 'dni', 'passport', 'email', 'celphone', 'phone', 'address', 'destination', 'password', 'type', 'imageProfile', 'slug', 'genre'];
+    protected $fillable = ['name', 'lastname', 'dateOfBirth', 'country_id', 'dni', 'passport', 'email', 'celphone', 'phone', 'address', 'destination', 'password', 'type', 'imageProfile', 'slug', 'genre', 'confirmed'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -50,6 +50,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Rental');
     }
 
+    public function orders()
+    {
+        return $this->hasMany('App\Order', 'closed_for', 'id');
+    }
+
     public function isAdmin()
     {
         return ($this->type === 'administrador' || $this->type === 'sysadmin');
@@ -58,6 +63,11 @@ class User extends Authenticatable
     public function isEmployed()
     {
         return ($this->type === 'empleado');
+    }
+
+    public function isAdminOrEmployed()
+    {
+        return $this->isAdmin() || $this->isEmployed();
     }
 
     public function displayName()

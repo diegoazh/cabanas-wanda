@@ -14,7 +14,7 @@ $(document).ready(function(e) {
         }
     }
 
-    path = window.location.pathname;
+    let path = window.location.pathname;
     path = path.split('/');
     path.shift();
 
@@ -30,6 +30,10 @@ $(document).ready(function(e) {
     } else if (/frontend/.test(path)) {
         activeMenu(/página principal/, menu_a);
         $('#main_content').removeClass('col-md-4').addClass('col-md-6');
+    } else if (/food/.test(path)) {
+        $('#main_content').removeClass('col-md-4').addClass('col-md-6');
+    } else if (/reports/.test(path)) {
+        $('#main_content').removeClass('col-md-offset-1 col-md-4').addClass('col-md-12');
     }
 
 

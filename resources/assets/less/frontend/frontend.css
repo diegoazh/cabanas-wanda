@@ -5,101 +5,122 @@
 @import url('https://fonts.googleapis.com/css?family=Gravitas+One|Pinyon+Script|Satisfy');
 /******************************************************
 * Colores
-*****************************/
+******************************************************/
 /******************************************************
-* Colores
-*****************************/
+* Clases
+*******************************************************/
 .label-email {
   background-color: #a178cd;
   text-shadow: 0px 0px 2px #000000;
+}
+.menu-fixed {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
+  box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.5);
 }
 /******************************************************
 * Estilos
 *****************************/
 * {
   font-family: "Raleway", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
+  min-font-size: 16px;
   line-height: 1.6;
 }
 body {
   background-color: #ffffff;
 }
-body .container-fluid {
+body .container-frontend {
   height: 980px;
   min-height: 980px;
 }
-body .container-fluid #header {
-  min-height: 63%;
-  max-height: 63%;
-  background-image: url('/images/frontend/cabanas1.jpg');
+body .container-frontend #header {
+  height: 606.5px;
+  min-height: 67%;
+  max-height: 67%;
+  background-image: url('../../../../public/images/frontend/cabanas1.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center 55%;
 }
-body .container-fluid #header #overlay {
+body .container-frontend #header #overlay {
   position: absolute;
   width: 100%;
-  min-height: 58.6%;
-  max-height: 58.6%;
+  height: inherit;
   opacity: 0;
   background-color: #333333;
-  background-image: url('/images/frontend/jaguar.jpg');
+  background-image: url('../../../../public/images/frontend/jaguar.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: left 35%;
 }
-body .container-fluid #header nav.navbar {
+body .container-frontend #header #arrow_left,
+body .container-frontend #header #arrow_right {
+  z-index: 100;
+  width: 50%;
+  height: 0;
+  border-bottom: 38px solid #fff;
+  top: -37px;
+}
+body .container-frontend #header #arrow_left {
+  border-right: 55px solid transparent;
+}
+body .container-frontend #header #arrow_right {
+  border-left: 55px solid transparent;
+}
+body .container-frontend #header nav.navbar {
   background-color: #f99418;
   margin-bottom: 0px;
 }
-body .container-fluid #header nav.navbar .container .navbar-header a {
+body .container-frontend #header nav.navbar .container .navbar-header a {
   color: #262626;
   padding: 0;
 }
-body .container-fluid #header nav.navbar .container .navbar-header a span#app_name {
+body .container-frontend #header nav.navbar .container .navbar-header a span#app_name {
   position: relative;
   top: -25%;
 }
-body .container-fluid #header nav.navbar .container .navbar-header a:before {
-  content: url('/images/logos/logo-cabanas-wanda-45x44.png');
+body .container-frontend #header nav.navbar .container .navbar-header a:before {
+  content: url('../../../../public/images/logos/logo-cabanas-wanda-45x44.png');
   width: 50%;
   height: auto;
   margin-right: 5px;
 }
-body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-nav {
+body .container-frontend #header nav.navbar .container .navbar-collapse ul.navbar-nav {
   margin-left: 8px;
 }
-body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-nav li.dropdown {
+body .container-frontend #header nav.navbar .container .navbar-collapse ul.navbar-nav li.dropdown {
   height: 100%;
 }
-body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-nav li.open a,
-body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-nav li.open ul {
+body .container-frontend #header nav.navbar .container .navbar-collapse ul.navbar-nav li.open a,
+body .container-frontend #header nav.navbar .container .navbar-collapse ul.navbar-nav li.open ul {
   background-color: #fd7500;
 }
-body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-nav li.open ul li a:hover {
+body .container-frontend #header nav.navbar .container .navbar-collapse ul.navbar-nav li.open ul li a:hover {
   background-color: #f99418;
 }
-body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-nav li a:hover {
+body .container-frontend #header nav.navbar .container .navbar-collapse ul.navbar-nav li a:hover {
   background-color: #fd7500;
 }
-body .container-fluid #header nav.navbar .container .navbar-collapse ul li a {
+body .container-frontend #header nav.navbar .container .navbar-collapse ul li a {
   color: #262626;
 }
-body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-right li a.img-user-profile {
+body .container-frontend #header nav.navbar .container .navbar-collapse ul.navbar-right li a.img-user-profile {
   padding: 5px;
   color: #262626;
 }
-body .container-fluid #header nav.navbar .container .navbar-collapse ul.navbar-right li a.img-user-profile img {
+body .container-frontend #header nav.navbar .container .navbar-collapse ul.navbar-right li a.img-user-profile img {
   display: inline-block;
   width: 40px;
   height: auto;
 }
-body .container-fluid #header div.col-md-8 {
+body .container-frontend #header div.col-md-8 {
   text-align: center;
-  height: 309px;
-  min-height: 309%;
+  height: inherit;
 }
-body .container-fluid #header div.col-md-8 h1 {
+body .container-frontend #header div.col-md-8 h1 {
   display: inline-block;
   font-family: 'Gravitas One', cursive;
   color: #d4dfc4;
@@ -109,135 +130,277 @@ body .container-fluid #header div.col-md-8 h1 {
   text-shadow: 3px 3px 2px #262626;
   margin-top: 5%;
 }
-body .container-fluid #header div.col-md-8 h1 small {
+body .container-frontend #header div.col-md-8 h1 small {
   font-family: 'Pinyon Script', cursive;
   text-shadow: 2px 2px 1px #262626;
   color: #d4dfc4;
   font-size: 87%;
 }
-body .container-fluid #header div.col-md-8:after {
-  content: url("/images/logos/logo-cabanas-wanda-390x380.png");
+body .container-frontend #header div.col-md-8:after {
+  content: url('../../../../public/images/logos/logo-cabanas-wanda-390x380.png');
   position: relative;
-  top: 10%;
+  top: 4%;
   left: 6%;
 }
-body .container-fluid .row div .alert {
+body .container-frontend .row div .alert {
   margin-top: 1.5%;
 }
-body .container-fluid #content {
-  background-image: url('/images/frontend/dibujo-tucan.jpg');
+body .container-frontend #content {
+  background-image: url('../../../../public/images/frontend/dibujo-tucan.jpg');
   background-repeat: no-repeat;
   background-position: 5% 15%;
-  min-height: 50%;
+  height: 980px;
+  min-height: 980px;
+  max-height: 100%;
 }
-body .container-fluid #content hr.division {
+body .container-frontend #content hr.division {
   width: 70%;
   height: 7px;
-  margin: 70px auto;
+  margin: 20px auto;
+  margin-bottom: 100px;
   border-top: 1px solid #d4dfc4;
   border-bottom: 1px solid #d4dfc4;
+  overflow: visible;
 }
-body .container-fluid #content hr.division:before {
+body .container-frontend #content hr.division:before {
   content: "\f313";
   font-family: 'Dashicons';
   position: relative;
-  font-size: 8em;
+  font-size: 7em;
   left: 45%;
   top: -0.6em;
   z-index: 1;
   background-color: #ffffff;
 }
-body .container-fluid #content .container {
+body .container-frontend #content hr.handicon {
+  width: 50%;
+  height: 0px;
+  margin: 5em auto;
+  border-top: 13px solid #333333;
+  border-bottom: 13px solid #333333;
+  border-right: 20px solid transparent;
+  border-left: 20px solid transparent;
+}
+body .container-frontend #content hr.handicon:before {
+  content: "\f2b5";
+  font-family: 'FontAwesome';
   position: relative;
-  top: -45px;
+  font-size: 7em;
+  left: 40%;
+  top: -0.78em;
+  z-index: 1;
+  background-color: #ffffff;
 }
-body .container-fluid #content .container .panel {
-  -webkit-box-shadow: 2px 2px 5px #333333;
-  -moz-box-shadow: 2px 2px 5px #333333;
-  box-shadow: 2px 2px 5px #333333;
-}
-body .container-fluid #content section {
+body .container-frontend #content section {
   width: 100%;
 }
-body .container-fluid #content section .description {
-  height: 25em;
-  min-height: 25em;
-}
-body .container-fluid #content section .description hr {
-  position: relative;
-  width: 50%;
-  top: 26%;
-  height: 7px;
-  border-top: 1px dotted #d4dfc4;
-  border-bottom: 1px dotted #d4dfc4;
-}
-body .container-fluid #content section .description img {
-  position: relative;
-  width: 330px;
-  top: -14%;
-  height: auto;
-  left: 37%;
-}
-body .container-fluid #content section .description p {
-  position: relative;
-  top: -10%;
-  text-align: center;
-  margin: 0;
-  padding: 0% 18%;
-}
-body .container-fluid #content section .description-paralel img {
-  display: inline-block;
-  position: relative;
-  left: 25%;
-  top: -12%;
-  width: 50%;
-  height: auto;
-  background-color: #ffffff;
-  margin-bottom: 12px;
-}
-body .container-fluid #content section .description-paralel p {
+body .container-frontend #content section .description #main_message h2,
+body .container-frontend #content section .description #main_message p {
   text-align: justify;
-  margin: 0;
-  padding: 0% 2%;
 }
-body .container-fluid #content #testimonies {
+body .container-frontend #content section .description #main_message p {
+  padding-left: 12px;
+  border-left: 4px solid #666666;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+body .container-frontend #content section .description #main_message div .link-button {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bolder;
+  padding: 15px 19px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  display: inline-block;
+  border: 3px solid #b8b8b8;
+  background-color: #262626;
+}
+body .container-frontend #content section .description #main_message div .link-button a {
+  color: #ffffff;
+  text-decoration: none;
+}
+body .container-frontend #content section .description #main_message div .link-button:hover {
+  color: #000000;
+  border: 3px solid #2e2e2e;
+  background-color: #f2f2f2;
+}
+body .container-frontend #content section .description #main_message div .link-button:hover a {
+  color: #000000;
+}
+body .container-frontend #content section .description #short_messeges {
+  margin-bottom: 30px;
+}
+body .container-frontend #content section .description #short_messeges div #first_slogan {
+  background-color: #9fd7db;
+  border: 3px solid #d4dfc4;
+  box-shadow: 3px 3px 25px 5px #8c8c8c;
+  min-height: 490px;
+}
+body .container-frontend #content section .description #short_messeges div #first_slogan h2,
+body .container-frontend #content section .description #short_messeges div #first_slogan p {
+  padding-left: 9px;
+  padding-right: 9px;
+}
+body .container-frontend #content section .description #short_messeges div #first_slogan h2 {
+  text-align: center;
+}
+body .container-frontend #content section .description #short_messeges div #first_slogan p {
+  text-align: justify;
+}
+body .container-frontend #content section .description #short_messeges div div {
+  margin-bottom: 5px;
+}
+body .container-frontend #content section .description #short_messeges div div #second_slogan,
+body .container-frontend #content section .description #short_messeges div div #third_slogan {
+  min-height: 242px;
+}
+body .container-frontend #content section .description #short_messeges div div #second_slogan h2,
+body .container-frontend #content section .description #short_messeges div div #third_slogan h2,
+body .container-frontend #content section .description #short_messeges div div #second_slogan p,
+body .container-frontend #content section .description #short_messeges div div #third_slogan p {
+  padding: 7px 12px;
+  margin: 0;
+  color: #000000;
+  background-color: rgba(212, 223, 196, 0.15);
+  text-shadow: 2px 2px 2px #666666;
+}
+body .container-frontend #content section .description #short_messeges div div #second_slogan h2,
+body .container-frontend #content section .description #short_messeges div div #third_slogan h2 {
+  text-align: center;
+  text-decoration: underline;
+}
+body .container-frontend #content section .description #short_messeges div div #second_slogan p,
+body .container-frontend #content section .description #short_messeges div div #third_slogan p {
+  font-size: 20px;
+  text-align: justify;
+}
+body .container-frontend #content section .description #short_messeges div div #second_slogan {
+  background-color: #99cbc0;
+  background-image: url('../../../../public/images/cabanias/cabanas8.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 3px solid #d4dfc4;
+  box-shadow: 3px 3px 25px 5px #8c8c8c;
+}
+body .container-frontend #content section .description #short_messeges div div #third_slogan {
+  background-color: #99cbc0;
+  background-image: url('../../../../public/images/cabanias/cabanas12.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 3px solid #d4dfc4;
+  box-shadow: 3px 3px 25px 5px #8c8c8c;
+}
+body .container-frontend #content section .description #short_messages_2 {
+  margin-bottom: 30px;
+}
+body .container-frontend #content section .description #short_messages_2 div #fourth_slogan,
+body .container-frontend #content section .description #short_messages_2 div #fifth_slogan,
+body .container-frontend #content section .description #short_messages_2 div #sixth_slogan {
+  background-color: #e0ba79;
+  border: 3px solid #d4dfc4;
+  box-shadow: 3px 3px 25px 5px #8c8c8c;
+}
+body .container-frontend #content section .description #short_messages_2 div #fourth_slogan h2,
+body .container-frontend #content section .description #short_messages_2 div #fifth_slogan h2,
+body .container-frontend #content section .description #short_messages_2 div #sixth_slogan h2,
+body .container-frontend #content section .description #short_messages_2 div #fourth_slogan p,
+body .container-frontend #content section .description #short_messages_2 div #fifth_slogan p,
+body .container-frontend #content section .description #short_messages_2 div #sixth_slogan p {
+  padding-left: 9px;
+  padding-right: 9px;
+}
+body .container-frontend #content section .description #short_messages_2 div #fourth_slogan h2,
+body .container-frontend #content section .description #short_messages_2 div #fifth_slogan h2,
+body .container-frontend #content section .description #short_messages_2 div #sixth_slogan h2 {
+  text-align: center;
+}
+body .container-frontend #content section .description #short_messages_2 div #fourth_slogan p,
+body .container-frontend #content section .description #short_messages_2 div #fifth_slogan p,
+body .container-frontend #content section .description #short_messages_2 div #sixth_slogan p {
+  text-align: justify;
+}
+body .container-frontend #content section .description #short_messages_2 div #fourth_slogan {
+  min-height: 300px;
+  background-image: url('../../../../public/images/cabanias/cabanas7.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+body .container-frontend #content section .description #short_messages_2 div #fourth_slogan h2,
+body .container-frontend #content section .description #short_messages_2 div #fourth_slogan p {
+  padding: 7px 12px;
+  margin: 0;
+  color: #ffffff;
+  background-color: rgba(212, 223, 196, 0.15);
+  text-shadow: 2px 2px 2px #666666;
+}
+body .container-frontend #content section .description #short_messages_2 div #fourth_slogan h2 {
+  text-decoration: underline;
+}
+body .container-frontend #content section .description #short_messages_2 div #fifth_slogan,
+body .container-frontend #content section .description #short_messages_2 div #sixth_slogan {
+  margin-top: 28px;
+  min-height: 450px;
+}
+body .container-frontend #content #testimonies {
   background-color: #9fd7db;
   margin: 0;
   margin-top: 25px;
 }
-body .container-fluid #content #testimonies hr.division:before {
+body .container-frontend #content #testimonies hr.division:before {
   background-color: #9fd7db;
 }
-body .container-fluid #content #testimonies div {
+body .container-frontend #content #testimonies div {
   text-align: left;
 }
-body .container-fluid #content #testimonies div #carousel-example-generic .carousel-inner .item {
+body .container-frontend #content #testimonies div #carousel-example-generic .carousel-inner .item {
   height: 305px;
   min-height: 305px;
   padding: 0 12%;
 }
-body .container-fluid #content #testimonies div #carousel-example-generic .carousel-inner .item img {
+body .container-frontend #content #testimonies div #carousel-example-generic .carousel-inner .item img {
   position: relative;
   display: inline-block;
   width: 18%;
   top: 3.5em;
 }
-body .container-fluid #content #testimonies div #carousel-example-generic .carousel-inner .item blockquote {
+body .container-frontend #content #testimonies div #carousel-example-generic .carousel-inner .item blockquote {
   position: relative;
   left: 20%;
   top: -45%;
   width: 80%;
   text-align: justify;
 }
-body .container-fluid #content #testimonies div #carousel-example-generic a.carousel-control {
+body .container-frontend #content #testimonies div #carousel-example-generic a.carousel-control {
   background-image: none;
 }
-body .container-fluid #content #testimonies div .overlay-testimony .testimony {
+body .container-frontend #content #testimonies div .overlay-testimony .testimony {
   width: auto;
   height: 400px;
   overflow: hidden;
 }
-body .container-fluid #footer #footer_rights {
+body .container-frontend #terms_and_conditions {
+  margin: 0;
+  background-color: #333333;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  color: #d4dfc4;
+  border-top: 5px solid #d4dfc4;
+  border-bottom: 5px solid #d4dfc4;
+}
+body .container-frontend #terms_and_conditions div ul li a {
+  color: #d4dfc4;
+}
+body .container-frontend #terms_and_conditions div ul li a:hover {
+  color: #f99418;
+}
+body .container-frontend #terms_and_conditions div a {
+  display: block;
+  color: #d4dfc4;
+}
+body .container-frontend #terms_and_conditions div a:hover {
+  color: #f99418;
+}
+body .container-frontend #footer #footer_rights {
   background-color: #7a7a7a;
   color: #d4dfc4;
   padding: 15px 0px;

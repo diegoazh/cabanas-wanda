@@ -3,6 +3,17 @@
  ********************************************/
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
+/******************************************************
+* Colores
+******************************************************/
+@blanco: #ffffff;
+@negro: #000000;
+@naranja: #fd7500;
+@naranja-amarronado: #f99418;
+@crema-pastel: #f0e7b2;
+@granito-pastel: #d4dfc4;
+@celeste-suave-pastel: #9fd7db;
+
 /********************************************
  * Clases
  ********************************************/
@@ -28,9 +39,8 @@
 body {
   background-color: #FFEFD5;
 
-  .container-fluid {
-    min-height: 985px;
-    background-image: url('../../images/cabanias/cabanas2.jpg');
+  .container-backend {
+    background-image: url('../../../../public/images/cabanias/cabanas2.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -51,7 +61,7 @@ body {
               }
             }
             a:before {
-              content: url('../../images/logos/logo-cabanas-wanda-45x44.png');
+              content: url('../../../../public/images/logos/logo-cabanas-wanda-45x44.png');
               width: 50%;
               height: auto;
               margin-right: 5px;
@@ -76,6 +86,10 @@ body {
       }
     }
     #content {
+      height: 980px;
+      min-height: 980px;
+      max-height: 100%;
+
       #main_menu {
         .tt-menu {
           display: inline-block;
@@ -313,6 +327,13 @@ body {
             }
           }
         }
+      }
+    }
+    #footer {
+      #footer_rights {
+        background-color: lighten(@negro, 48%);
+        color: @granito-pastel;
+        padding: 15px 0px;
       }
     }
   }

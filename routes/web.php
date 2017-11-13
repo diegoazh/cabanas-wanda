@@ -28,6 +28,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('profile/{slug}/edit', 'UsersController@edit')->name('home.profile.edit');
     Route::put('profile/{slug}', 'UsersController@update')->name('home.profile.update');
     Route::delete('profile/{slug}', 'UsersController@destroy')->name('home.profile.destroy');
+    Route::get('rentals', 'RentalsController@index')->name('home.rentals.index');
+    Route::get('liquidation', 'LiquidationController@liquidation')->name('home.liquidation.liquidation');
+    Route::get('order', 'OrdersController@index')->name('home.order.index');
 
     /**************************************
      * Auth Routes
@@ -49,5 +52,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Administration', 'middleware'
     Route::put('users/{user}', 'UsersController@update')->name('users.update');
     Route::delete('users/{user}', 'UsersController@destroy')->name('users.destroy');
     Route::resource('cottages', 'CottagesController');
+    Route::get('food', 'FoodsController@index')->name('comidas.index');
+    Route::get('reports', 'ReportsController@index')->name('reports.index');
     //Route::resource('promotions', 'PromotionsController');
 });

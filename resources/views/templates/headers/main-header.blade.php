@@ -17,8 +17,43 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="{{ route('home.cottages.index') }}"><i class="fa fa-home" aria-hidden="true"></i> Caba&ntilde;as</a>
+                        <a href="{{ route('home.cottages.index') }}">
+                            <i class="fa fa-home" aria-hidden="true"></i> Caba&ntilde;as
+                        </a>
                     </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-handshake-o" aria-hidden="true"></i> Reservas <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('home.rentals.index') }}">Realizar reserva</a></li>
+                            <li><a href="{{ route('home.liquidation.liquidation') }}">Ver liquidación</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-cutlery" aria-hidden="true"></i> Comidas <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Ver carta</a></li>
+                            <li><a href="{{ route('home.order.index') }}">Realizar pedido</a></li>
+                            @if(Auth::check())
+                                @if(Auth::user()->isAdminOrEmployed())
+                                    <li role="separator" class="divider"></li>
+                                    @if(Auth::user()->isAdmin())
+                                        <li><a href="{{ route('comidas.index') }}">Administración de platos</a></li>
+                                    @endif
+                                @endif
+                            @endif
+                        </ul>
+                    </li>
+                    @if(Auth::check())
+                        @if(Auth::user()->isAdminOrEmployed())
+                            @if(Auth::user()->isAdmin())
+                                <li><a href="{{ route('reports.index') }}"><i class="fa fa-line-chart" aria-hidden="true"></i> Reportes</a></li>
+                            @endif
+                        @endif
+                    @endif
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">

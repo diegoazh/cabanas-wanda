@@ -802,7 +802,7 @@
     }
   }
 
-  // Read and store the height of line widgets associated with the
+  // Read and rentals the height of line widgets associated with the
   // given line.
   function updateWidgetHeight(line) {
     if (line.widgets) for (var i = 0; i < line.widgets.length; ++i)
@@ -6116,7 +6116,7 @@
     }
   }
   // Remove a span from an array, returning undefined if no spans are
-  // left (we don't store arrays for lines without spans).
+  // left (we don't rentals arrays for lines without spans).
   function removeMarkedSpan(spans, span) {
     for (var r, i = 0; i < spans.length; ++i)
       if (spans[i] != span) (r || (r = [])).push(spans[i]);
@@ -7768,7 +7768,7 @@
       dest.push(sel);
   }
 
-  // Used to store marked span information in the history.
+  // Used to rentals marked span information in the history.
   function attachLocalSpans(doc, change, from, to) {
     var existing = change["spans_" + doc.id], n = 0;
     doc.iter(Math.max(doc.first, from), Math.min(doc.first + doc.size, to), function(line) {

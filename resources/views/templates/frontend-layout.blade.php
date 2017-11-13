@@ -20,7 +20,7 @@
     </script>
 </head>
 <body>
-<div id="app" class="container-fluid">
+<div id="app" class="container-fluid container-frontend">
     <div id="header" class="row">
         @include('templates.headers.main-header')
         @section('header')
@@ -42,7 +42,7 @@
     </div>
 </div>
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/libraries.js') }}"></script>
 <script src="{{ asset('js/frontend.js') }}"></script>
 @yield('scripts')
 </body>

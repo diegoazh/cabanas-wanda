@@ -14,26 +14,24 @@ class CreateRentalsTable extends Migration
     public function up()
     {
         Schema::create('rentals', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('codeReservation', 40);
+            $table->bigIncrements('id');
+            $table->string('code_reservation', 40);
             $table->integer('cottage_id')->unsigned();
-            $table->date('from');
-            $table->date('to');
-            $table->boolean('own');
+            $table->date('dateFrom');
+            $table->date('dateTo');
             $table->string('description', 200)->nullable();
-            $table->integer('user_id')->unsigned()->nullable();
-            $table->integer('passenger_id')->unsigned()->nullable();
-            $table->integer('promotion_id')->unsigned()->nullable();
-            $table->double('totalAmount', 5, 2);
-            $table->double('reservationPayment', 5, 2);
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->bigInteger('passenger_id')->unsigned()->nullable();
+            $table->bigInteger('promotion_id')->unsigned()->nullable();
+            $table->double('cottage_price', 8, 2);
+            $table->integer('total_days');
             $table->datetime('dateReservationPayment');
-            $table->double('deductions', 5, 2)->nullable();
+            $table->double('deductions', 8, 2)->nullable();
             $table->string('deductionsDescription')->nullable();
-            $table->double('finalPayment', 5, 2)->nullable();
+            $table->double('finalPayment', 8, 2)->nullable();
             $table->datetime('dateFinalPayment')->nullable();
-            $table->enum('state', ['pendiente', 'confirmada', 'cancelada'])->default('pendiente');
-            $table->enum('cottageState', ['reservada', 'ocupada'])->default('reservada');
-            $table->boolean('wasRated')->nullable();
+            $table->enum('state', ['pendiente', 'confirmada', 'en curso', 'finalizada', 'cancelada'])->default('pendiente');
+            $table->boolean('wasRated')->default(false);
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('cottage_id')->references('id')->on('cottages');

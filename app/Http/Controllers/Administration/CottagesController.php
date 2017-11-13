@@ -42,7 +42,7 @@ class CottagesController extends Controller
             $filename = 'testText.txt';
             $contents = Storage::disk('public')->get($filename);
         }
-        catch (Illuminate\Filesystem\FileNotFoundException $exception)
+        catch (\Illuminate\Filesystem\FileNotFoundException $exception)
         {
             die("No existe el archivo");
         }
@@ -128,6 +128,7 @@ class CottagesController extends Controller
         $attributes = $request->all();
         $cottage->name = $attributes['name'];
         $cottage->type = $attributes['type'];
+        $cottage->state = $attributes['state'];
         $cottage->accommodation = $attributes['accommodation'];
         $cottage->description = $attributes['description'];
         $cottage->price = $attributes['price'];

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cottage as Cottage;
+use Illuminate\Http\Request;
 
 class CottagesController extends Controller
 {
@@ -24,5 +25,18 @@ class CottagesController extends Controller
         $cottage = Cottage::where('slug', $slug)->first();
         $images = explode('|', $cottage->images);
         return view('frontend.cottages-show')->with(compact('cottage', 'images'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function cottagesEnabled(Request $request)
+    {
+        $cottages = Cottage::where('state', '!=', 'disabled')->orderBy('number')->get();
+
+        return response()->json(compact('cottages'), 200);
     }
 }

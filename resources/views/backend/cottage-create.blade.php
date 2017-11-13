@@ -74,7 +74,7 @@
             {{ Form::label('state', 'Estado', ['class' => 'sr-only']) }}
             <div class="input-group">
                 <div class="input-group-addon">Estado</div>
-                {{ Form::select('state', ['enabled' => 'Habilitada', 'maintenance' => 'Mantenimiento', 'disabled' => 'Deshabilitada'], (isset($cottage)) ? $cottage->state : 'disabled', ['class' => 'form-control', 'required']) }}
+                {{ Form::select('state', ['enabled' => 'Habilitada', 'disabled' => 'Deshabilitada'], (isset($cottage)) ? $cottage->state : 'disabled', ['class' => 'form-control', 'required']) }}
             </div>
             <div class="help-info">
                 <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
@@ -166,6 +166,7 @@
 
 @section('scripts')
     <script src="{{ asset('lib/editor.md/editormd.min.js') }}"></script>
+    <script src="{{ asset('lib/editor.md/languages/en.js') }}"></script>
     <script>
         $(document).ready(function() {
             var editor;
