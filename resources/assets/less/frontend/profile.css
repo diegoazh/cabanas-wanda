@@ -23,7 +23,7 @@ body .container-fluid #header div.col-md-8 {
   min-height: 242px;
 }
 body .container-fluid #header div.col-md-8:after {
-  content: url("/images/logos/logo-cabanas-wanda-190x185.png");
+  content: url('../../../../public/images/logos/logo-cabanas-wanda-190x185.png');
 }
 body .container-fluid #content .col-md-8 {
   padding-top: 25px;
