@@ -385,6 +385,8 @@ $(document).ready(function (e) {
         $('#main_content').removeClass('col-md-4').addClass('col-md-6');
     } else if (/reports/.test(path)) {
         $('#main_content').removeClass('col-md-offset-1 col-md-4').addClass('col-md-12');
+    } else {
+        $('#main_content').removeClass('col-md-4').addClass('col-md-8');
     }
 
     menu_a.click(function (e) {

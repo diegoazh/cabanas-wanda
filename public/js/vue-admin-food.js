@@ -44190,6 +44190,102 @@ exports.default = {
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-commons/store/module-dash/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
+
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-dash/getters.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-dash/moduleDash.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.moduleDash = undefined;
+
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-dash/state.js");
+
+var _state2 = _interopRequireDefault(_state);
+
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/module-dash/getters.js");
+
+var _getters2 = _interopRequireDefault(_getters);
+
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/module-dash/mutations.js");
+
+var _mutations2 = _interopRequireDefault(_mutations);
+
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/module-dash/actions.js");
+
+var _actions2 = _interopRequireDefault(_actions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var moduleDash = exports.moduleDash = {
+    namespaced: true,
+    state: _state2.default,
+    getters: _getters2.default,
+    mutations: _mutations2.default,
+    actions: _actions2.default
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-dash/mutations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-dash/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    data: {}
+};
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-commons/store/module-food/actions.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -45285,6 +45381,8 @@ var _moduleLiquidation = __webpack_require__("./resources/assets/js/vue-commons/
 
 var _moduleReports = __webpack_require__("./resources/assets/js/vue-commons/store/module-reports/moduleReports.js");
 
+var _moduleDash = __webpack_require__("./resources/assets/js/vue-commons/store/module-dash/moduleDash.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vuex2.default);
@@ -45296,7 +45394,8 @@ exports.default = new _vuex2.default.Store({
         food: _moduleFood.moduleFood,
         orders: _moduleOrders.moduleOrders,
         liquidation: _moduleLiquidation.moduleLiquidation,
-        reports: _moduleReports.moduleReports
+        reports: _moduleReports.moduleReports,
+        dash: _moduleDash.moduleDash
     }
 });
 
