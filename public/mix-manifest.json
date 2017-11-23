@@ -1,10 +1,10 @@
 {
-    "/js/vue-admin-food.js": "/js/vue-admin-food.js?id=e3de1525ff7f27140232",
-    "/js/vue-reports.js": "/js/vue-reports.js?id=a2f1479766d10f18a7ab",
-    "/js/vue-rentals.js": "/js/vue-rentals.js?id=6c756bc475ede2f635e1",
-    "/js/vue-orders.js": "/js/vue-orders.js?id=53e6d45ca3741b5c8374",
-    "/js/vue-liquidation.js": "/js/vue-liquidation.js?id=7e22fee297b955dfca0d",
-    "/js/vue-dash.js": "/js/vue-dash.js?id=50faae3aa9e9c2e4d840",
+    "/js/vue-admin-food.js": "/js/vue-admin-food.js?id=771f2908e50e4caff0a8",
+    "/js/vue-reports.js": "/js/vue-reports.js?id=15ea01b9c13276cfa8cf",
+    "/js/vue-rentals.js": "/js/vue-rentals.js?id=bc2721474e1f01eac6f9",
+    "/js/vue-orders.js": "/js/vue-orders.js?id=e2e2b8f94bf0a8c2b404",
+    "/js/vue-liquidation.js": "/js/vue-liquidation.js?id=87057d3ca8a3bcb57760",
+    "/js/vue-dash.js": "/js/vue-dash.js?id=eb883182c780c74c5d2f",
     "/js/backend.js": "/js/backend.js?id=5edb56683d38839af842",
     "/css/frontend.css": "/css/frontend.css?id=774a50a512cedb846f61",
     "/css/cottages.css": "/css/cottages.css?id=b36c182840da8fed4c90",
@@ -27,5 +27,5 @@
     "js/libraries.js": "js/libraries.js?id=3651bb6442163881d340",
     "js/backend.js": "js/backend.js?id=5edb56683d38839af842",
     "js/frontend.js": "js/frontend.js?id=cb40bce723e5cdc1efdf",
-    "js/vue-rentals.js": "js/vue-rentals.js?id=6c756bc475ede2f635e1"
+    "js/vue-rentals.js": "js/vue-rentals.js?id=bc2721474e1f01eac6f9"
 }

@@ -248,4 +248,14 @@ class RentalsController extends Controller
 
         return response()->json(compact('cottages'), 200);
     }
+
+    public function rentalsForState($state)
+    {
+        if (!$rentals = DB::table('rentals')->select('dateFrom', 'dateTo', 'cottage_price', 'total_days', 'dateReservationPayment', 'state')
+            ->where('state', $state)->orderBy('dateFrom', 'asc')->get()) {
+            return response()->json(['error' => 'No hay reservas en estado: ' . $state], 404);
+        }
+
+        return response()->json(compact('rentals'), 200);
+    }
 }

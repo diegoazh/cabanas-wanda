@@ -1801,6 +1801,97 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
+
+var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
+var _vuePagination = __webpack_require__("./node_modules/vue-pagination-2/index.js");
+
 var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
 
 var _Icon2 = _interopRequireDefault(_Icon);
@@ -1811,65 +1902,42 @@ var _BtnSwitch2 = _interopRequireDefault(_BtnSwitch);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 exports.default = {
     components: {
+        Pagination: _vuePagination.Pagination,
         'icon-app': _Icon2.default,
         'btn-switch-app': _BtnSwitch2.default
     },
     data: function data() {
         return {
+            pagChunk: 7,
             seeRentals: true
         };
     },
 
-    computed: {},
-    methods: {},
+    computed: _extends({
+        fiftheenElements: function fiftheenElements() {
+            var pageTo = this.page * this.itemsPerPage; // quince debería ser una variable
+            var pageFrom = this.page === 1 ? 0 : (this.page - 1) * this.itemsPerPage;
+            return this.rentals.filter(function (element, index, array) {
+                return index >= pageFrom && index < pageTo;
+            });
+        }
+    }, (0, _vuex.mapState)('dash', {
+        token: function token(state) {
+            return state.data.token;
+        },
+        rentals: function rentals(state) {
+            return state.data.rentals;
+        },
+        page: function page(state) {
+            return state.page;
+        },
+        itemsPerPage: function itemsPerPage(state) {
+            return state.itemsPerPage;
+        }
+    })),
+    methods: _extends({}, (0, _vuex.mapMutations)('dash', ['setToken', 'setRentals']), (0, _vuex.mapActions)('dash', ['rentalsForState'])),
     filters: {},
     created: function created() {
         var _this = this;
@@ -1878,7 +1946,25 @@ exports.default = {
             _this.seeRentals = $event;
         });
     },
-    mounted: function mounted() {}
+    mounted: function mounted() {
+        var _this2 = this;
+
+        this.$cookies.isKey('info_one') ? this.setToken(this.$cookies.get('info_one')) : null;
+
+        this.rentalsForState({
+            state: 'pendiente',
+            token: this.token ? this.token : ''
+        }).then(function (rentals) {
+            _this2.setRentals(rentals);
+            _vueNotifications2.default.success({
+                title: 'OK!',
+                message: 'Data loaded correctly.',
+                timeout: 3000
+            });
+        }).catch(function (error) {
+            _vueNotifications2.default.error(error);
+        });
+    }
 };
 
 /***/ }),
@@ -1936,7 +2022,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -7606,8 +7692,115 @@ var render = function() {
           "div",
           [
             _vm.seeRentals
-              ? [_vm._m(1), _vm._v(" "), _vm._m(2)]
-              : [_vm._m(3), _vm._v(" "), _vm._m(4)]
+              ? [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "tab-content" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "tab-pane active",
+                        attrs: { role: "tabpanel", id: "pendientes" }
+                      },
+                      [
+                        _c("div", { staticClass: "table-responsive" }, [
+                          _c("table", { staticClass: "table table-striped" }, [
+                            _vm._m(2),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              _vm._l(_vm.fiftheenElements, function(
+                                rental,
+                                index
+                              ) {
+                                return _c("tr", [
+                                  _c("td", [_vm._v(_vm._s(index + 1))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(rental.dateFrom))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(rental.dateTo))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(rental.total_days))]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(
+                                      _vm._s(
+                                        (100 /
+                                          30 *
+                                          rental.cottage_price
+                                        ).toFixed(2)
+                                      )
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(
+                                      _vm._s(rental.dateReservationPayment)
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(rental.state))])
+                                ])
+                              })
+                            ),
+                            _vm._v(" "),
+                            _vm._m(3)
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "text-center" },
+                          [
+                            _c("pagination", {
+                              attrs: {
+                                for: "dash",
+                                records: _vm.rentals.length,
+                                "per-page": _vm.itemsPerPage,
+                                chunk: _vm.pagChunk,
+                                vuex: true,
+                                "count-text":
+                                  "Listando {from} a {to} de {count} items|{count} items|Un item"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "tab-pane",
+                        attrs: { role: "tabpanel", id: "confirmadas" }
+                      },
+                      [_vm._v("...")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "tab-pane",
+                        attrs: { role: "tabpanel", id: "en_curso" }
+                      },
+                      [_vm._v("...")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "tab-pane",
+                        attrs: {
+                          role: "tabpanel",
+                          id: "finalizadas_canceladas"
+                        }
+                      },
+                      [_vm._v("...")]
+                    )
+                  ])
+                ]
+              : [_vm._m(4), _vm._v(" "), _vm._m(5)]
           ],
           2
         )
@@ -7701,43 +7894,29 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "tab-content" }, [
-      _c(
-        "div",
-        {
-          staticClass: "tab-pane active",
-          attrs: { role: "tabpanel", id: "pendientes" }
-        },
-        [_vm._v("...")]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "tab-pane",
-          attrs: { role: "tabpanel", id: "confirmadas" }
-        },
-        [_vm._v("...")]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "tab-pane",
-          attrs: { role: "tabpanel", id: "en_curso" }
-        },
-        [_vm._v("...")]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "tab-pane",
-          attrs: { role: "tabpanel", id: "finalizadas_canceladas" }
-        },
-        [_vm._v("...")]
-      )
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Número")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Desde")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Hasta")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Dias")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Seña")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Vto seña")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Estado")])
+      ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tfoot", [_c("tr", [_c("td", { attrs: { colspan: "7" } })])])
   },
   function() {
     var _vm = this
@@ -8028,6 +8207,303 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 return VueNotifications;
 }));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-pagination-2/compiled/Pagination.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var template = __webpack_require__("./node_modules/vue-pagination-2/compiled/template.js");
+var bus = __webpack_require__("./node_modules/vue-pagination-2/compiled/bus.js");
+
+module.exports = {
+  render: template(),
+  props: {
+    for: {
+      type: String,
+      required: true
+    },
+    records: {
+      type: Number,
+      required: true
+    },
+    perPage: {
+      type: Number,
+      required: false,
+      default: 25
+    },
+    chunk: {
+      type: Number,
+      required: false,
+      default: 10
+    },
+    countText: {
+      type: String,
+      required: false,
+      default: 'Showing {from} to {to} of {count} records|{count} records|One record'
+    },
+    vuex: {
+      type: Boolean
+    }
+  },
+  created: function created() {
+
+    if (!this.vuex) return;
+
+    var name = this.for;
+
+    if (this.$store.state[name]) return;
+
+    this.$store.registerModule(this.for, {
+      state: {
+        page: 1
+      },
+      mutations: _defineProperty({}, name + '/PAGINATE', function undefined(state, page) {
+        state.page = page;
+      })
+    });
+  },
+  data: function data() {
+    return {
+      Page: 1
+    };
+  },
+  computed: {
+    page: function page() {
+      return this.vuex ? this.$store.state[this.for].page : this.Page;
+    },
+
+    pages: function pages() {
+      if (!this.records) return [];
+
+      return range(this.paginationStart, this.pagesInCurrentChunk);
+    },
+    totalPages: function totalPages() {
+      return this.records ? Math.ceil(this.records / this.perPage) : 1;
+    },
+    totalChunks: function totalChunks() {
+      return Math.ceil(this.totalPages / this.chunk);
+    },
+    currentChunk: function currentChunk() {
+      return Math.ceil(this.page / this.chunk);
+    },
+    paginationStart: function paginationStart() {
+      return (this.currentChunk - 1) * this.chunk + 1;
+    },
+    pagesInCurrentChunk: function pagesInCurrentChunk() {
+
+      return this.paginationStart + this.chunk <= this.totalPages ? this.chunk : this.totalPages - this.paginationStart + 1;
+    },
+    count: function count() {
+
+      var from = (this.page - 1) * this.perPage + 1;
+      var to = this.page == this.totalPages ? this.records : from + this.perPage - 1;
+      var parts = this.countText.split('|');
+      var i = Math.min(this.records == 1 ? 2 : this.totalPages == 1 ? 1 : 0, parts.length - 1);
+
+      return parts[i].replace('{count}', this.records).replace('{from}', from).replace('{to}', to);
+    }
+  },
+  methods: {
+    setPage: function setPage(page) {
+      if (this.allowedPage(page)) {
+        this.paginate(page);
+      }
+    },
+    paginate: function paginate(page) {
+      if (this.vuex) {
+        this.$store.commit(this.for + '/PAGINATE', page);
+      } else {
+        this.Page = page;
+        bus.$emit('vue-pagination::' + this.for, page);
+      }
+    },
+
+    next: function next() {
+      return this.setPage(this.page + 1);
+    },
+    prev: function prev() {
+      return this.setPage(this.page - 1);
+    },
+    nextChunk: function nextChunk() {
+      return this.setChunk(1);
+    },
+    prevChunk: function prevChunk() {
+      return this.setChunk(-1);
+    },
+    setChunk: function setChunk(direction) {
+      this.setPage((this.currentChunk - 1 + direction) * this.chunk + 1);
+    },
+    allowedPage: function allowedPage(page) {
+      return page >= 1 && page <= this.totalPages;
+    },
+    allowedChunk: function allowedChunk(direction) {
+      return direction == 1 && this.currentChunk < this.totalChunks || direction == -1 && this.currentChunk > 1;
+    },
+    allowedPageClass: function allowedPageClass(direction) {
+      return this.allowedPage(direction) ? '' : 'disabled';
+    },
+    allowedChunkClass: function allowedChunkClass(direction) {
+      return this.allowedChunk(direction) ? '' : 'disabled';
+    },
+    activeClass: function activeClass(page) {
+      return this.page == page ? 'active' : '';
+    }
+  }
+};
+
+function range(start, count) {
+  return Array.apply(0, Array(count)).map(function (element, index) {
+    return index + start;
+  });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-pagination-2/compiled/bus.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var bus = new _vue2.default();
+
+module.exports = bus;
+
+/***/ }),
+
+/***/ "./node_modules/vue-pagination-2/compiled/template.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function () {
+  return function (h) {
+
+    var items = [];
+
+    this.pages.map(function (page) {
+      items.push(h(
+        "li",
+        { "class": "VuePagination__pagination-item page-item " + this.activeClass(page) },
+        [h(
+          "a",
+          { "class": "page-link", attrs: { role: "button"
+            },
+            on: {
+              click: this.setPage.bind(this, page)
+            }
+          },
+          [page]
+        )]
+      ));
+    }.bind(this));
+
+    return h(
+      "div",
+      { "class": "VuePagination" },
+      [h(
+        "ul",
+        {
+          directives: [{
+            name: "show",
+            value: this.totalPages > 1
+          }],
+
+          "class": "pagination VuePagination__pagination" },
+        [h(
+          "li",
+          { "class": "VuePagination__pagination-item page-item VuePagination__pagination-item-prev-chunk " + this.allowedChunkClass(-1) },
+          [h(
+            "a",
+            { "class": "page-link", attrs: { href: "javascript:void(0);"
+              },
+              on: {
+                click: this.setChunk.bind(this, -1)
+              }
+            },
+            ["<<"]
+          )]
+        ), h(
+          "li",
+          { "class": "VuePagination__pagination-item page-item VuePagination__pagination-item-prev-page " + this.allowedPageClass(this.page - 1) },
+          [h(
+            "a",
+            { "class": "page-link", attrs: { href: "javascript:void(0);"
+              },
+              on: {
+                click: this.prev.bind(this)
+              }
+            },
+            ["<"]
+          )]
+        ), items, h(
+          "li",
+          { "class": "VuePagination__pagination-item page-item VuePagination__pagination-item-next-page " + this.allowedPageClass(this.page + 1) },
+          [h(
+            "a",
+            { "class": "page-link", attrs: { href: "javascript:void(0);"
+              },
+              on: {
+                click: this.next.bind(this)
+              }
+            },
+            [">"]
+          )]
+        ), h(
+          "li",
+          { "class": "VuePagination__pagination-item page-item VuePagination__pagination-item-next-chunk " + this.allowedChunkClass(1) },
+          [h(
+            "a",
+            { "class": "page-link", attrs: { href: "javascript:void(0);"
+              },
+              on: {
+                click: this.setChunk.bind(this, 1)
+              }
+            },
+            [">>"]
+          )]
+        )]
+      ), h(
+        "p",
+        {
+          directives: [{
+            name: "show",
+            value: parseInt(this.records)
+          }],
+
+          "class": "VuePagination__count" },
+        [this.count]
+      )]
+    );
+  };
+};
+
+/***/ }),
+
+/***/ "./node_modules/vue-pagination-2/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+var Pagination = __webpack_require__("./node_modules/vue-pagination-2/compiled/Pagination.js");
+var PaginationEvent = __webpack_require__("./node_modules/vue-pagination-2/compiled/bus.js");
+
+module.exports = {
+  Pagination:Pagination,
+  PaginationEvent:PaginationEvent
+}
 
 
 /***/ }),
@@ -19856,12 +20332,29 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
 
-exports.default = {};
+exports.default = {
+    rentalsForState: function rentalsForState(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.get('rentals/for-state/' + payload.state, {
+                params: {
+                    token: payload.token
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve(response.data.rentals);
+            }).catch(function (error) {
+                var err = (0, _appAxios.handlingXhrErrors)(error);
+                err.timeout = 3000;
+                reject(err);
+            });
+        });
+    }
+};
 
 /***/ }),
 
@@ -19924,9 +20417,19 @@ var moduleDash = exports.moduleDash = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    PAGINATE: function PAGINATE(state, page) {
+        state.page = page;
+    },
+    setToken: function setToken(state, token) {
+        state.data.token = token;
+    },
+    setRentals: function setRentals(state, rentals) {
+        state.data.rentals = rentals;
+    }
+};
 
 /***/ }),
 
@@ -19940,7 +20443,12 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
-    data: {}
+    page: 1,
+    itemsPerPage: 10,
+    data: {
+        token: '',
+        rentals: []
+    }
 };
 
 /***/ }),

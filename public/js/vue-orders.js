@@ -51159,12 +51159,29 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
 
-exports.default = {};
+exports.default = {
+    rentalsForState: function rentalsForState(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.get('rentals/for-state/' + payload.state, {
+                params: {
+                    token: payload.token
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve(response.data.rentals);
+            }).catch(function (error) {
+                var err = (0, _appAxios.handlingXhrErrors)(error);
+                err.timeout = 3000;
+                reject(err);
+            });
+        });
+    }
+};
 
 /***/ }),
 
@@ -51227,9 +51244,19 @@ var moduleDash = exports.moduleDash = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    PAGINATE: function PAGINATE(state, page) {
+        state.page = page;
+    },
+    setToken: function setToken(state, token) {
+        state.data.token = token;
+    },
+    setRentals: function setRentals(state, rentals) {
+        state.data.rentals = rentals;
+    }
+};
 
 /***/ }),
 
@@ -51243,7 +51270,12 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
-    data: {}
+    page: 1,
+    itemsPerPage: 10,
+    data: {
+        token: '',
+        rentals: []
+    }
 };
 
 /***/ }),
