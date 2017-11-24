@@ -32,7 +32,7 @@ Route::prefix('rentals')->group(function() {
     Route::post('store', 'RentalsController@store')->name('api.rentals.store');
 
     Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function() {
-        Route::get('for-state/{state}', 'RentalsController@rentalsForState')->name('api.rentals.forState');
+        Route::get('for-state/{state}/{results}', 'RentalsController@rentalsForState')->name('api.rentals.forState');
     });
 });
 
@@ -49,6 +49,7 @@ Route::prefix('food')->group(function() {
 Route::prefix('orders')->group(function() {
     Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function() {
         Route::post('store', 'OrdersController@store')->name('api.orders.store');
+        Route::get('for-state/{state}/{results}', 'OrdersController@ordersForState')->name('api.orders.forState');
     });
 });
 

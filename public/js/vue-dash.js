@@ -1868,21 +1868,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -1900,62 +1885,132 @@ var _BtnSwitch = __webpack_require__("./resources/assets/js/vue-commons/componen
 
 var _BtnSwitch2 = _interopRequireDefault(_BtnSwitch);
 
+var _TableRentals = __webpack_require__("./resources/assets/js/vue-dash-app/components/TableRentals.vue");
+
+var _TableRentals2 = _interopRequireDefault(_TableRentals);
+
+var _TableOrders = __webpack_require__("./resources/assets/js/vue-dash-app/components/TableOrders.vue");
+
+var _TableOrders2 = _interopRequireDefault(_TableOrders);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
     components: {
         Pagination: _vuePagination.Pagination,
         'icon-app': _Icon2.default,
-        'btn-switch-app': _BtnSwitch2.default
+        'btn-switch-app': _BtnSwitch2.default,
+        'table-rentals-app': _TableRentals2.default,
+        'table-orders-app': _TableOrders2.default
     },
     data: function data() {
         return {
             pagChunk: 7,
-            seeRentals: true
+            seeRentals: true,
+            type: 'pendiente',
+            trash: {
+                rentals: 'pendiente',
+                orders: 'pendiente',
+                pendiente: 1,
+                confirmada: 1,
+                en_curso: 1,
+                cancelada: 1,
+                finalizada: 1,
+                pendiente2: 1,
+                seniado: 1,
+                pagado: 1,
+                cancelado: 1
+            }
         };
     },
 
-    computed: _extends({
-        fiftheenElements: function fiftheenElements() {
-            var pageTo = this.page * this.itemsPerPage; // quince debería ser una variable
-            var pageFrom = this.page === 1 ? 0 : (this.page - 1) * this.itemsPerPage;
-            return this.rentals.filter(function (element, index, array) {
-                return index >= pageFrom && index < pageTo;
-            });
-        }
-    }, (0, _vuex.mapState)('dash', {
-        token: function token(state) {
-            return state.data.token;
-        },
-        rentals: function rentals(state) {
-            return state.data.rentals;
+    computed: _extends({}, (0, _vuex.mapState)('dash', {
+        pagination: function pagination(state) {
+            return state.data.pagination;
         },
         page: function page(state) {
             return state.page;
         },
-        itemsPerPage: function itemsPerPage(state) {
-            return state.itemsPerPage;
+        total: function total(state) {
+            return state.total;
+        },
+        per_page: function per_page(state) {
+            return state.per_page;
+        }
+    }), (0, _vuex.mapState)('auth', {
+        token: function token(state) {
+            return state.xhr.token;
         }
     })),
-    methods: _extends({}, (0, _vuex.mapMutations)('dash', ['setToken', 'setRentals']), (0, _vuex.mapActions)('dash', ['rentalsForState'])),
+    methods: _extends({
+        setTypeofQuery: function setTypeofQuery(newType) {
+            if (this.type === 'pendiente') {
+                if (this.seeRentals) {
+                    this.trash.pendiente = this.page;
+                } else {
+                    this.trash.pendiente2 = this.page;
+                }
+            } else if (this.type === 'confirmada') {
+                this.trash.confirmada = this.page;
+            } else if (this.type === 'en curso') {
+                this.trash.en_curso = this.page;
+            } else if (this.type === 'cancelada') {
+                this.trash.cancelada = this.page;
+            } else if (this.type === 'finalizada') {
+                this.trash.finalizada = this.page;
+            } else if (this.type === 'seniado') {
+                this.trash.seniado = this.page;
+            } else if (this.type === 'pagado') {
+                this.trash.pagado = this.page;
+            } else if (this.type === 'cancelado') {
+                this.trash.cancelado = this.page;
+            }
+
+            this.type = newType;
+
+            if (this.type === 'pendiente') {
+                if (this.seeRentals) {
+                    this.page !== this.trash.pendiente ? this.PAGINATE(this.trash.pendiente) : window.EventBus.$emit('page-change', this.page);
+                } else {
+                    this.page !== this.trash.pendiente2 ? this.PAGINATE(this.trash.pendiente2) : window.EventBus.$emit('page-change', this.page);
+                }
+            } else if (this.type === 'confirmada') {
+                this.page !== this.trash.confirmada ? this.PAGINATE(this.trash.confirmada) : window.EventBus.$emit('page-change', this.page);
+            } else if (this.type === 'en curso') {
+                this.page !== this.trash.en_curso ? this.PAGINATE(this.trash.en_curso) : window.EventBus.$emit('page-change', this.page);
+            } else if (this.type === 'cancelada') {
+                this.page !== this.trash.cancelada ? this.PAGINATE(this.trash.cancelada) : window.EventBus.$emit('page-change', this.page);
+            } else if (this.type === 'finalizada') {
+                this.page !== this.trash.finalizada ? this.PAGINATE(this.trash.finalizada) : window.EventBus.$emit('page-change', this.page);
+            } else if (this.type === 'seniado') {
+                this.page !== this.trash.seniado ? this.PAGINATE(this.trash.seniado) : window.EventBus.$emit('page-change', this.page);
+            } else if (this.type === 'pagado') {
+                this.page !== this.trash.pagado ? this.PAGINATE(this.trash.pagado) : window.EventBus.$emit('page-change', this.page);
+            } else if (this.type === 'cancelado') {
+                this.page !== this.trash.cancelado ? this.PAGINATE(this.trash.cancelado) : window.EventBus.$emit('page-change', this.page);
+            }
+        }
+    }, (0, _vuex.mapMutations)('auth', ['setToken']), (0, _vuex.mapMutations)('dash', ['PAGINATE', 'setPagination']), (0, _vuex.mapActions)('dash', ['rentalsOrOrdersForState'])),
     filters: {},
     created: function created() {
         var _this = this;
 
-        window.EventBus.$on('change-side', function ($event) {
-            _this.seeRentals = $event;
-        });
-    },
-    mounted: function mounted() {
-        var _this2 = this;
-
         this.$cookies.isKey('info_one') ? this.setToken(this.$cookies.get('info_one')) : null;
 
-        this.rentalsForState({
-            state: 'pendiente',
-            token: this.token ? this.token : ''
-        }).then(function (rentals) {
-            _this2.setRentals(rentals);
+        window.EventBus.$on('change-side', function ($event) {
+            _this.setPagination(null);
+            _this.seeRentals ? _this.trash.rentals = _this.type : _this.trash.orders = _this.type;
+            _this.seeRentals = $event;
+            _this.seeRentals ? _this.type = _this.trash.rentals : _this.type = _this.trash.orders;
+            window.EventBus.$emit('page-change', _this.page);
+        });
+
+        this.rentalsOrOrdersForState({
+            isRentals: this.seeRentals,
+            state: this.type,
+            token: this.token,
+            query: this.page
+        }).then(function () {
             _vueNotifications2.default.success({
                 title: 'OK!',
                 message: 'Data loaded correctly.',
@@ -1964,7 +2019,171 @@ exports.default = {
         }).catch(function (error) {
             _vueNotifications2.default.error(error);
         });
+    },
+    mounted: function mounted() {
+        var _this2 = this;
+
+        window.EventBus.$on('page-change', function (page) {
+            _this2.rentalsOrOrdersForState({
+                isRentals: _this2.seeRentals,
+                state: _this2.type,
+                token: _this2.token,
+                query: page
+            }).then(function () {
+                _vueNotifications2.default.success({
+                    title: 'OK!',
+                    message: 'Data loaded correctly.',
+                    timeout: 3000
+                });
+            }).catch(function (error) {
+                _vueNotifications2.default.error(error);
+            });
+        });
     }
+};
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-dash-app/components/TableOrders.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
+exports.default = {
+    components: {},
+    data: function data() {
+        return {};
+    },
+
+    computed: _extends({}, (0, _vuex.mapState)('dash', {
+        pagination: function pagination(state) {
+            return state.data.pagination;
+        },
+        page: function page(state) {
+            return state.page;
+        }
+    })),
+    methods: {
+        rowNumber: function rowNumber(index) {
+            var adition = (this.page - 1) * 15;
+            return index + 1 + adition;
+        }
+    },
+    filters: {},
+    created: function created() {},
+    mounted: function mounted() {}
+};
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-dash-app/components/TableRentals.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
+exports.default = {
+    components: {},
+    data: function data() {
+        return {};
+    },
+
+    computed: _extends({}, (0, _vuex.mapState)('dash', {
+        pagination: function pagination(state) {
+            return state.data.pagination;
+        },
+        page: function page(state) {
+            return state.page;
+        }
+    })),
+    methods: {
+        rowNumber: function rowNumber(index) {
+            var adition = (this.page - 1) * 15;
+            return index + 1 + adition;
+        }
+    },
+    filters: {},
+    created: function created() {},
+    mounted: function mounted() {}
 };
 
 /***/ }),
@@ -1978,6 +2197,36 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 // module
 exports.push([module.i, "/*\n* iziToast | v1.1.5\n* http://izitoast.marcelodolce.com\n* by Marcelo Dolce.\n*/.iziToast-capsule{font-size:0;height:0;max-height:1000px;width:100%;transform:translateZ(0);backface-visibility:hidden;transition:transform .5s cubic-bezier(.25,.8,.25,1),height .5s cubic-bezier(.25,.8,.25,1)}.iziToast-capsule,.iziToast-capsule *{box-sizing:border-box}.iziToast{display:inline-block;clear:both;position:relative;font-family:Lato,arial;font-size:14px;padding:8px 45px 9px 0;background:hsla(0,0%,93%,.9);border-color:hsla(0,0%,93%,.9);width:100%;pointer-events:all;cursor:default;transform:translateX(0);-webkit-touch-callout:none /* iOS Safari */;-webkit-user-select:none /* Chrome/Safari/Opera */;-moz-user-select:none /* Firefox */;-ms-user-select:none /* Internet Explorer/Edge */;user-select:none;min-height:54px}.iziToast>.iziToast-progressbar{position:absolute;left:0;bottom:0;width:100%;z-index:1;background:hsla(0,0%,100%,.2)}.iziToast>.iziToast-progressbar>div{height:2px;width:100%;background:rgba(0,0,0,.3);border-radius:0 0 3px 3px}.iziToast.iziToast-balloon:before{content:'';position:absolute;right:8px;left:auto;width:0;height:0;top:100%;border-right:0 solid transparent;border-left:15px solid transparent;border-top:10px solid #000;border-top-color:inherit;border-radius:0}.iziToast.iziToast-balloon .iziToast-progressbar{top:0;bottom:auto}.iziToast.iziToast-balloon>div{border-radius:0 0 0 3px}.iziToast>.iziToast-cover{position:absolute;left:0;top:0;bottom:0;height:100%;margin:0;background-size:100%;background-position:50% 50%;background-repeat:no-repeat;background-color:rgba(0,0,0,.1)}.iziToast>.iziToast-close{position:absolute;right:0;top:0;border:0;padding:0;opacity:.6;width:42px;height:100%;background:url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAJPAAACTwBcGfW0QAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAD3SURBVFiF1ZdtDoMgDEBfdi4PwAX8vLFn0qT7wxantojKupmQmCi8R4tSACpgjC2ICCUbEBa8ingjsU1AXRBeR8aLN64FiknswN8CYefBBDQ3whuFESy7WyQMeC0ipEI0A+0FeBvHUFN8xPaUhAH/iKoWsnXHGegy4J0yxialOfaHJAz4bhRzQzgDvdGnz4GbAonZbCQMuBm1K/kcFu8Mp1N2cFFpsxsMuJqqbIGExGl4loARajU1twskJLLhIsID7+tvUoDnIjTg5T9DPH9EBrz8rxjPzciAl9+O8SxI8CzJ8CxKFfh3ynK8Dyb8wNHM/XDqejx/AtNyPO87tNybAAAAAElFTkSuQmCC\") no-repeat 50% 50%;background-size:8px;cursor:pointer;outline:none}.iziToast>.iziToast-close:hover{opacity:1}.iziToast>.iziToast-body{position:relative;padding:0 0 0 10px;height:100%;min-height:36px;margin:0 0 0 15px}.iziToast>.iziToast-body:after{content:\"\";display:table;clear:both}.iziToast>.iziToast-body>.iziToast-buttons{min-height:17px;display:inline-block;margin:0 -2px}.iziToast>.iziToast-body>.iziToast-buttons>a,.iziToast>.iziToast-body>.iziToast-buttons>button{display:inline-block;margin:6px 2px;border-radius:2px;border:0;padding:5px 10px;font-size:12px;letter-spacing:.02em;cursor:pointer;background:rgba(0,0,0,.1);color:#000}.iziToast>.iziToast-body>.iziToast-buttons>a:hover,.iziToast>.iziToast-body>.iziToast-buttons>button:hover{background:rgba(0,0,0,.2)}.iziToast>.iziToast-body>.iziToast-icon{height:100%;position:absolute;left:0;top:50%;display:table;font-size:23px;line-height:24px;margin-top:-12px;color:#000}.iziToast>.iziToast-body>.iziToast-icon.ico-info{background:url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAflBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACCtoPsAAAAKXRSTlMA6PsIvDob+OapavVhWRYPrIry2MxGQ97czsOzpJaMcE0qJQOwVtKjfxCVFeIAAAI3SURBVFjDlJPZsoIwEETnCiGyb8q+qmjl/3/wFmGKwjBROS9QWbtnOqDDGPq4MdMkSc0m7gcDDhF4NRdv8NoL4EcMpzoJglPl/KTDz4WW3IdvXEvxkfIKn7BMZb1bFK4yZFqghZ03jk0nG8N5NBwzx9xU5cxAg8fXi20/hDdC316lcA8o7t16eRuQvW1XGd2d2P8QSHQDDbdIII/9CR3lUF+lbucfJy4WfMS64EJPORnrZxtfc2pjJdnbuags3l04TTtJMXrdTph4Pyg4XAjugAJqMDf5Rf+oXx2/qi4u6nipakIi7CsgiuMSEF9IGKg8heQJKkxIfFSUU/egWSwNrS1fPDtLfon8sZOcYUQml1Qv9a3kfwsEUyJEMgFBKzdV8o3Iw9yAjg1jdLQCV4qbd3no8yD2GugaC3oMbF0NYHCpJYSDhNI5N2DAWB4F4z9Aj/04Cna/x7eVAQ17vRjQZPh+G/kddYv0h49yY4NWNDWMMOMUIRYvlTECmrN8pUAjo5RCMn8KoPmbJ/+Appgnk//Sy90GYBCGgm7IAskQ7D9hFKW4ApB1ei3FSYD9PjGAKygAV+ARFYBH5BsVgG9kkBSAQWKUFYBRZpkUgGVinRWAdUZQDABBQdIcAElDVBUAUUXWHQBZx1gMAGMprM0AsLbVXHsA5trZe93/wp3svQ0YNb/jWV3AIOLsMtlznSNOH7JqjOpDVh7z8qCZR10ftvO4nxeOvPLkpSuvfXnxzKtvXr7j+v8C5ii0e71At7cAAAAASUVORK5CYII=\") no-repeat 50% 50%;background-size:85%;width:24px;height:24px}.iziToast>.iziToast-body>.iziToast-icon.ico-warning{background:url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAABECAMAAAAPzWOAAAAAkFBMVEUAAAAAAAABAAIAAAABAAIAAAMAAAABAAIBAAIBAAIAAAIAAAABAAIAAAABAAICAAICAAIAAAIAAAAAAAAAAAABAAIBAAIAAAMAAAABAAIBAAMBAAECAAIAAAIAAAIAAAABAAIBAAIBAAMBAAIBAAEAAAIAAAMAAAAAAAABAAECAAICAAIAAAIAAAMAAAQAAAE05yNAAAAAL3RSTlMAB+kD7V8Q+PXicwv7I9iYhkAzJxnx01IV5cmnk2xmHfzexsK4eEw5L7Gei39aRw640awAAAHQSURBVFjD7ZfJdoJAEEWJgCiI4oDiPM8m7///LidErRO7sHrY5u7YXLr7vKqu9kTC0HPmo9n8cJbEQOzqqAdAUHeUZACQuTkGDQBoDJwkHZR0XBz9FkpafXuHP0SJ09mGeJLZ5wwlTmcbA0THPmdEK7XPGTG1zxmInn3OiJ19zkB0jSVTKExMHT0wjAwlWzC0fSPHF1gWRpIhWMYm7fYTFcQGlbemf4dFfdTGg0B/KXM8qBU/3wntbq7rSGqvJ9kla6IpueFJet8fxfem5yhykjyOgNaWF1qSGd5JMNNxpNF7SZQaVh5JzLrTCZIEJ1GyEyVyd+pClMjdaSJK5O40giSRu5PfFiVyd1pAksjdKRnrSsbVdbiHrgT7yss315fkVQPLFQrL+4FHeOXKO5YRFEKv5AiFaMlKLlBpJuVCJlC5sJfvCgztru/3NmBYccPgGTxRAzxn1XGEMUf58pXZvjoOsOCgjL08+b53mtfAM/SVsZcjKLtysQZPqIy9HPP3m/3zKItRwT0LyQo8sTr26tcO83DIUMWIJjierHLsJda/tbNBFY0BP/bKtcM8HNIWCK3aYR4OMzgxo5w5EFLOLKDExXAm9gI4E3iAO94/Ct/lKWuM2LMGbgAAAABJRU5ErkJggg==\") no-repeat 50% 50%;background-size:85%;width:24px;height:24px}.iziToast>.iziToast-body>.iziToast-icon.ico-error{background:url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAeFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVyEiIAAAAJ3RSTlMA3BsB98QV8uSyWVUFz7+kcWMM2LuZioBpTUVBNcq2qaibj4d1azLZZYABAAACZElEQVRYw7WX25KCMAyGAxUoFDkpiohnV97/DXeGBtoOUprZ2dyo1K82fxKbwJJVp+KQZ7so2mX5oThVQLKwjDe9YZu4DF3ptAn6rxY0qQPOEq9fNC9ha3y77a22ba24v+9Xbe8v8x03dPOC2/NdvB6xeSreLfGJpnx0TyotKqLm2s7Jd/WO6ivXNp0tCy02R/aFz5VQ5wUPlUL5fIfj5KIlVGU0nWHm/5QtoTVMWY8mzIVu1K9O7XH2JiU/xnOOT39gnUfj+lFHddx4tFjL3/H8jjzaFCy2Rf0c/fdQyQszI8BDR973IyMSKa4krjxAiW/lkRvMP+bKK9WbYS1ASQg8dKjaUGlYPwRe/WoIkz8tiQchH5QAEMv6T0k8MD4mUyWr4E7jAWqZ+xWcMIYkXvlwggJ3IvFK+wIOcpXAo8n8P0COAaXyKH4OsjBuZB4ew0IGu+H1SebhNazsQBbWm8yj+hFuUJB5eMsN0IUXmYendAFFfJB5uEkRMYwxmcd6zDGRtmQePEykAgubymMRFmMxCSIPCRbTuFNN5OGORTjmNGc0Po0m8Uv0gcCry6xUhR2QeLii9tofbEfhz/qvNti+OfPqNm2Mq6105FUMvdT4GPmufMiV8PqBMkc+DdT1bjYYbjzU/ew23VP4n3mLAz4n8Jtv/Ui3ceTT2mzz5o1mZt0gnBpmsdjqRqVlmplcPdqa7X23kL9brdm2t/uBYDPn2+tyu48mtIGD10JTuUrukVrbCFiwDzcHrPjxKt7PW+AZQyT/WESO+1WL7f3o+WLHL2dYMSZsg6dg/z360ofvP4//v1NPzgs28WlWAAAAAElFTkSuQmCC\") no-repeat 50% 50%;background-size:80%;width:24px;height:24px}.iziToast>.iziToast-body>.iziToast-icon.ico-check{background:url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABABAMAAABYR2ztAAAAIVBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABt0UjBAAAACnRSTlMApAPhIFn82wgGv8mVtwAAAKVJREFUSMft0LEJAkEARNFFFEw1NFJb8CKjAy1AEOzAxNw+bEEEg6nyFjbY4LOzcBwX7S/gwUxoTdIn+Jbv4Lv8bx446+kB6VsBtK0B+wbMCKxrwL33wOrVeeChX28n7KTOTjgoEu6DRSYAgAAAAkAmAIAAAAIACQIkMkACAAgAIACAyECBKAOJuCagTJwSUCaUAEMAABEBRwAAEQFLbCJgO4bW+AZKGnktR+jAFAAAAABJRU5ErkJggg==\") no-repeat 50% 50%;background-size:85%;width:24px;height:24px}.iziToast>.iziToast-body>strong{margin:10px 0 -10px;color:#000}.iziToast>.iziToast-body>p,.iziToast>.iziToast-body>strong{padding:0;line-height:16px;font-size:14px;text-align:left;float:left}.iziToast>.iziToast-body>p{margin:10px 0;color:rgba(0,0,0,.6)}.iziToast.iziToast-animateInside .iziToast-buttons *,.iziToast.iziToast-animateInside .iziToast-icon,.iziToast.iziToast-animateInside p,.iziToast.iziToast-animateInside strong{opacity:0}.iziToast-target{position:relative;width:100%;margin:0 auto}.iziToast-target .iziToast-capsule{overflow:hidden}.iziToast-target .iziToast-capsule:after{visibility:hidden;display:block;font-size:0;content:\" \";clear:both;height:0}.iziToast-target .iziToast-capsule .iziToast{width:100%;float:left}.iziToast-wrapper{z-index:99999;position:fixed;width:100%;pointer-events:none;display:flex;flex-direction:column}.iziToast-wrapper .iziToast.iziToast-balloon:before{border-right:0 solid transparent;border-left:15px solid transparent;border-top:10px solid #000;border-top-color:inherit;right:8px;left:auto}.iziToast-wrapper-bottomLeft{left:0;bottom:0}.iziToast-wrapper-bottomLeft .iziToast.iziToast-balloon:before{border-right:15px solid transparent;border-left:0 solid transparent;right:auto;left:8px}.iziToast-wrapper-bottomRight{right:0;bottom:0;text-align:right}.iziToast-wrapper-topLeft{left:0;top:0}.iziToast-wrapper-topLeft .iziToast.iziToast-balloon:before{border-right:15px solid transparent;border-left:0 solid transparent;right:auto;left:8px}.iziToast-wrapper-topRight{top:0;right:0;text-align:right}.iziToast-wrapper-topCenter{top:0;left:0;right:0;text-align:center}.iziToast-wrapper-bottomCenter,.iziToast-wrapper-center{bottom:0;left:0;right:0;text-align:center}.iziToast-wrapper-center{top:0;justify-content:center;flex-flow:column;align-items:center}.iziToast-rtl{direction:rtl;padding:8px 0 9px 50px}.iziToast-rtl .iziToast-cover{left:auto;right:0}.iziToast-rtl .iziToast-close{right:auto;left:0}.iziToast-rtl .iziToast-body{padding:0 10px 0 0;margin:0 16px 0 0}.iziToast-rtl .iziToast-body strong{padding:0 0 0 10px}.iziToast-rtl .iziToast-body p,.iziToast-rtl .iziToast-body strong{float:right;text-align:right}.iziToast-rtl .iziToast-body .iziToast-icon{left:auto;right:0}@media only screen and (min-width:568px){.iziToast-wrapper{padding:10px 15px}.iziToast-cover{border-radius:3px 0 0 3px}.iziToast{margin:5px 0;border-radius:3px;width:auto}.iziToast:after{content:'';z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;border-radius:3px;box-shadow:inset 0 -10px 20px -10px rgba(0,0,0,.2),inset 0 0 5px rgba(0,0,0,.1),0 8px 8px -5px rgba(0,0,0,.25)}.iziToast.iziToast-color-dark:after{box-shadow:inset 0 -10px 20px -10px hsla(0,0%,100%,.3),0 10px 10px -5px rgba(0,0,0,.25)}.iziToast.iziToast-balloon .iziToast-progressbar{background:transparent}.iziToast.iziToast-balloon:after{box-shadow:0 10px 10px -5px rgba(0,0,0,.25),inset 0 10px 20px -5px rgba(0,0,0,.25)}.iziToast-target .iziToast:after{box-shadow:inset 0 -10px 20px -10px rgba(0,0,0,.2),inset 0 0 5px rgba(0,0,0,.1)}}.iziToast.iziToast-theme-dark{background:#565c70;border-color:#565c70}.iziToast.iziToast-theme-dark strong{color:#fff}.iziToast.iziToast-theme-dark p{color:hsla(0,0%,100%,.7);font-weight:300}.iziToast.iziToast-theme-dark .iziToast-close{background:url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfgCR4OIQIPSao6AAAAwElEQVRIx72VUQ6EIAwFmz2XB+AConhjzqTJ7JeGKhLYlyx/BGdoBVpjIpMJNjgIZDKTkQHYmYfwmR2AfAqGFBcO2QjXZCd24bEggvd1KBx+xlwoDpYmvnBUUy68DYXD77ESr8WDtYqvxRex7a8oHP4Wo1Mkt5I68Mc+qYqv1h5OsZmZsQ3gj/02h6cO/KEYx29hu3R+VTTwz6D3TymIP1E8RvEiiVdZfEzicxYLiljSxKIqlnW5seitTW6uYnv/Aqh4whX3mEUrAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE2LTA5LTMwVDE0OjMzOjAyKzAyOjAwl6RMVgAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNi0wOS0zMFQxNDozMzowMiswMjowMOb59OoAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb7jwaAAAAAElFTkSuQmCC\") no-repeat 50% 50%;background-size:8px}.iziToast.iziToast-theme-dark .iziToast-icon{color:#fff}.iziToast.iziToast-theme-dark .iziToast-icon.ico-info{background:url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAflBMVEUAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////vroaSAAAAKXRSTlMA6PsIvDob+OapavVhWRYPrIry2MxGQ97czsOzpJaMcE0qJQOwVtKjfxCVFeIAAAI3SURBVFjDlJPZsoIwEETnCiGyb8q+qmjl/3/wFmGKwjBROS9QWbtnOqDDGPq4MdMkSc0m7gcDDhF4NRdv8NoL4EcMpzoJglPl/KTDz4WW3IdvXEvxkfIKn7BMZb1bFK4yZFqghZ03jk0nG8N5NBwzx9xU5cxAg8fXi20/hDdC316lcA8o7t16eRuQvW1XGd2d2P8QSHQDDbdIII/9CR3lUF+lbucfJy4WfMS64EJPORnrZxtfc2pjJdnbuags3l04TTtJMXrdTph4Pyg4XAjugAJqMDf5Rf+oXx2/qi4u6nipakIi7CsgiuMSEF9IGKg8heQJKkxIfFSUU/egWSwNrS1fPDtLfon8sZOcYUQml1Qv9a3kfwsEUyJEMgFBKzdV8o3Iw9yAjg1jdLQCV4qbd3no8yD2GugaC3oMbF0NYHCpJYSDhNI5N2DAWB4F4z9Aj/04Cna/x7eVAQ17vRjQZPh+G/kddYv0h49yY4NWNDWMMOMUIRYvlTECmrN8pUAjo5RCMn8KoPmbJ/+Appgnk//Sy90GYBCGgm7IAskQ7D9hFKW4ApB1ei3FSYD9PjGAKygAV+ARFYBH5BsVgG9kkBSAQWKUFYBRZpkUgGVinRWAdUZQDABBQdIcAElDVBUAUUXWHQBZx1gMAGMprM0AsLbVXHsA5trZe93/wp3svQ0YNb/jWV3AIOLsMtlznSNOH7JqjOpDVh7z8qCZR10ftvO4nxeOvPLkpSuvfXnxzKtvXr7j+v8C5ii0e71At7cAAAAASUVORK5CYII=\") no-repeat 50% 50%;background-size:85%}.iziToast.iziToast-theme-dark .iziToast-icon.ico-warning{background:url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAABECAMAAAAPzWOAAAAAllBMVEUAAAD////+//3+//3+//3///////z+//3+//3+//3////////////9//3////+//39//3///3////////////+//3+//39//3///z+//z+//7///3///3///3///3////////+//3+//3+//3+//z+//3+//7///3///z////////+//79//3///3///z///v+//3///+trXouAAAAMHRSTlMAB+j87RBf+PXiCwQClSPYhkAzJxnx05tSyadzcmxmHRbp5d7Gwrh4TDkvsYt/WkdQzCITAAAB1UlEQVRYw+3XaXKCQBCGYSIIighoxCVqNJrEPfly/8vFImKXduNsf/Mc4K1y7FnwlMLQc/bUbj85R6bA1LXRDICg6RjJcZa7NQYtnLUGTpERSiOXxrOPkv9s30iGKDmtbYir3H7OUHJa2ylAuvZzRvzUfs7Ii/2cgfTt54x82s8ZSM848gJmYtroQzA2jHwA+LkBIEuMGt+QIng1igzlyMrkuP2CyOi47axRaYTL5jhDJehoR+aovC29s3iIyly3Eb+hRCvZo2qsGTnhKr2cLDS+J73GsqBI9W80UCmWWpEuhIjh6ZRGjyNRarjzKGJ2Ou2himCvjHwqI+rTqQdlRH06TZQR9ek0hiqiPp06mV4ke7QPX6ERUZxO8Uo3sqrfhxvoRrCpvXwL/UjR9GRHMIvLgke4d5QbiwhM6JV2YKKF4vIl7XIBkwm4keryJVmvk/TfwcmPwQNkUQuyA2/sYGwnXL7GPu4bW1jYsmevrNj09/MGZMOEPXslQVqO8hqykD17JfPHP/bmo2yGGpdZiH3IZvzZa7B3+IdDjjpjesHJcvbs5dZ/e+cddVoDdvlq7x12Nac+iN7e4R8OXTjp0pw5CGnOLNDEzeBs5gVwFniAO+8f8wvfeXP2hyqnmwAAAABJRU5ErkJggg==\") no-repeat 50% 50%;background-size:85%}.iziToast.iziToast-theme-dark .iziToast-icon.ico-error{background:url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAeFBMVEUAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////GqOSsAAAAJ3RSTlMA3BsB98QV8uSyWVUFz6RxYwzYvbupmYqAaU1FQTXKv7abj4d1azKNUit3AAACZElEQVRYw7WXaZOCMAyGw30UORRQBLxX/v8/3BkaWjrY2szO5otKfGrzJrEp6Kw6F8f8sI+i/SE/FucKSBaWiT8p5idlaEtnXTB9tKDLLHAvdSatOan3je93k9F2vRF36+mr1a6eH2NFNydoHq/ieU/UXcWjjk9XykdNWq2ywtp4tXL6Wb2T/MqtzzZutsrNyfvA51KoQROhVCjfrnASIRpSVUZiD5v4RbWExjRdJzSmOsZFvzYz59kRSr6V5zE+/QELHkNdb3VRx45HS1b1u+zfkkcbRAZ3qJ9l/A4qefHUDMShJe+6kZKJDD2pLQ9Q4lu+5Q7rz7Plperd7AtQEgIPI6o2dxr2D4GXvxqCiKcn8cD4gxIAEt7/GYkHL16KqeJd0NB4gJbXfgVnzCGJlzGcocCVSLzUvoAj9xJ4NF7/R8gxoVQexc/hgBpSebjPjgPs59cHmYfn7NkDb6wXmUf1I1ygIPPw4gtgCE8yDw8eAop4J/PQcBExjQmZx37MsZB2ZB4cLKQCG5vKYxMWSzMxIg8pNtOyUkvkocEmXGo69mh8FgnxS4yBwMvDrJSNHZB4uC3ayz/YkcIP4lflwVIT+OU07ZSjrbTkZQ6dTPkYubZ8GC/Cqxu6WvJZII93dcCw46GdNqdpTeF/tiMOuDGB9z/NI6NvyWetGPM0g+bVNeovBmamHXWj0nCbEaGeTMN2PWrqd6cM26ZxP2DeJvj+ph/30Zi/GmRbtlK5SptI+nwGGnvH6gUruT+L16MJHF+58rwNIifTV0vM8+hwMeOXAb6Yx0wXT+b999WXfvn+8/X/F7fWzjdTord5AAAAAElFTkSuQmCC\") no-repeat 50% 50%;background-size:80%}.iziToast.iziToast-theme-dark .iziToast-icon.ico-check{background:url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABABAMAAABYR2ztAAAAIVBMVEUAAAD////////////////////////////////////////PIev5AAAACnRSTlMApAPhIFn82wgGv8mVtwAAAKVJREFUSMft0LEJAkEARNFFFEw1NFJb8CKjAy1AEOzAxNw+bEEEg6nyFjbY4LOzcBwX7S/gwUxoTdIn+Jbv4Lv8bx446+kB6VsBtK0B+wbMCKxrwL33wOrVeeChX28n7KTOTjgoEu6DRSYAgAAAAkAmAIAAAAIACQIkMkACAAgAIACAyECBKAOJuCagTJwSUCaUAEMAABEBRwAAEQFLbCJgO4bW+AZKGnktR+jAFAAAAABJRU5ErkJggg==\") no-repeat 50% 50%;background-size:85%}.iziToast.iziToast-theme-dark strong{font-weight:500}.iziToast.iziToast-theme-dark .iziToast-buttons a,.iziToast.iziToast-theme-dark .iziToast-buttons button{color:#fff;background:hsla(0,0%,100%,.1)}.iziToast.iziToast-theme-dark .iziToast-buttons a:hover,.iziToast.iziToast-theme-dark .iziToast-buttons button:hover{background:hsla(0,0%,100%,.2)}.iziToast.iziToast-color-red{background:rgba(243,186,189,.9);border-color:rgba(243,186,189,.9)}.iziToast.iziToast-color-yellow{background:hsla(55,75%,81%,.9);border-color:hsla(55,75%,81%,.9)}.iziToast.iziToast-color-blue{background:rgba(181,225,249,.9);border-color:rgba(181,225,249,.9)}.iziToast.iziToast-color-green{background:rgba(180,241,196,.9);border-color:rgba(180,241,196,.9)}.iziToast.iziToast-layout2 .iziToast-body>p{width:100%}.iziToast.revealIn,.iziToast .revealIn{-webkit-animation:a 1s cubic-bezier(.25,1.6,.25,1) both;animation:a 1s cubic-bezier(.25,1.6,.25,1) both}.iziToast.slideIn,.iziToast .slideIn{-webkit-animation:b 1s cubic-bezier(.16,.81,.32,1) both;animation:b 1s cubic-bezier(.16,.81,.32,1) both}.iziToast.bounceInLeft{-webkit-animation:c .7s ease-in-out both;animation:c .7s ease-in-out both}.iziToast.bounceInRight{-webkit-animation:d .85s ease-in-out both;animation:d .85s ease-in-out both}.iziToast.bounceInDown{-webkit-animation:e .7s ease-in-out both;animation:e .7s ease-in-out both}.iziToast.bounceInUp{-webkit-animation:f .7s ease-in-out both;animation:f .7s ease-in-out both}.iziToast.fadeIn{-webkit-animation:g .5s ease both;animation:g .5s ease both}.iziToast.fadeInUp{-webkit-animation:h .7s ease both;animation:h .7s ease both}.iziToast.fadeInDown{-webkit-animation:i .7s ease both;animation:i .7s ease both}.iziToast.fadeInLeft{-webkit-animation:j .85s cubic-bezier(.25,.8,.25,1) both;animation:j .85s cubic-bezier(.25,.8,.25,1) both}.iziToast.fadeInRight{-webkit-animation:k .85s cubic-bezier(.25,.8,.25,1) both;animation:k .85s cubic-bezier(.25,.8,.25,1) both}.iziToast.flipInX{-webkit-animation:l .85s cubic-bezier(.35,0,.25,1) both;animation:l .85s cubic-bezier(.35,0,.25,1) both}.iziToast.fadeOut{-webkit-animation:m .7s ease both;animation:m .7s ease both}.iziToast.fadeOutDown{-webkit-animation:n .7s cubic-bezier(.4,.45,.15,.91) both;animation:n .7s cubic-bezier(.4,.45,.15,.91) both}.iziToast.fadeOutUp{-webkit-animation:o .7s cubic-bezier(.4,.45,.15,.91) both;animation:o .7s cubic-bezier(.4,.45,.15,.91) both}.iziToast.fadeOutLeft{-webkit-animation:p .5s ease both;animation:p .5s ease both}.iziToast.fadeOutRight{-webkit-animation:q .5s ease both;animation:q .5s ease both}.iziToast.flipOutX{-webkit-backface-visibility:visible!important;backface-visibility:visible!important;-webkit-animation:r .7s cubic-bezier(.4,.45,.15,.91) both;animation:r .7s cubic-bezier(.4,.45,.15,.91) both}@-webkit-keyframes a{0%{opacity:0;-webkit-transform:scale3d(.3,.3,1)}to{opacity:1}}@-webkit-keyframes b{0%{opacity:0;-webkit-transform:translateX(50px)}to{opacity:1;-webkit-transform:translateX(0)}}@-webkit-keyframes c{0%{opacity:0;-webkit-transform:translateX(280px)}50%{opacity:1;-webkit-transform:translateX(-20px)}70%{-webkit-transform:translateX(10px)}to{-webkit-transform:translateX(0)}}@-webkit-keyframes d{0%{opacity:0;-webkit-transform:translateX(-280px)}50%{opacity:1;-webkit-transform:translateX(20px)}70%{-webkit-transform:translateX(-10px)}to{-webkit-transform:translateX(0)}}@-webkit-keyframes e{0%{opacity:0;-webkit-transform:translateY(-200px)}50%{opacity:1;-webkit-transform:translateY(10px)}70%{-webkit-transform:translateY(-5px)}to{-webkit-transform:translateY(0)}}@-webkit-keyframes f{0%{opacity:0;-webkit-transform:translateY(200px)}50%{opacity:1;-webkit-transform:translateY(-10px)}70%{-webkit-transform:translateY(5px)}to{-webkit-transform:translateY(0)}}@-webkit-keyframes a{0%{opacity:0;transform:scale3d(.3,.3,1)}to{opacity:1}}@keyframes a{0%{opacity:0;transform:scale3d(.3,.3,1)}to{opacity:1}}@-webkit-keyframes b{0%{opacity:0;transform:translateX(50px)}to{opacity:1;transform:translateX(0)}}@keyframes b{0%{opacity:0;transform:translateX(50px)}to{opacity:1;transform:translateX(0)}}@-webkit-keyframes c{0%{opacity:0;transform:translateX(280px)}50%{opacity:1;transform:translateX(-20px)}70%{transform:translateX(10px)}to{transform:translateX(0)}}@keyframes c{0%{opacity:0;transform:translateX(280px)}50%{opacity:1;transform:translateX(-20px)}70%{transform:translateX(10px)}to{transform:translateX(0)}}@-webkit-keyframes d{0%{opacity:0;transform:translateX(-280px)}50%{opacity:1;transform:translateX(20px)}70%{transform:translateX(-10px)}to{transform:translateX(0)}}@keyframes d{0%{opacity:0;transform:translateX(-280px)}50%{opacity:1;transform:translateX(20px)}70%{transform:translateX(-10px)}to{transform:translateX(0)}}@-webkit-keyframes e{0%{opacity:0;transform:translateY(-200px)}50%{opacity:1;transform:translateY(10px)}70%{transform:translateY(-5px)}to{transform:translateY(0)}}@keyframes e{0%{opacity:0;transform:translateY(-200px)}50%{opacity:1;transform:translateY(10px)}70%{transform:translateY(-5px)}to{transform:translateY(0)}}@-webkit-keyframes f{0%{opacity:0;transform:translateY(200px)}50%{opacity:1;transform:translateY(-10px)}70%{transform:translateY(5px)}to{transform:translateY(0)}}@keyframes f{0%{opacity:0;transform:translateY(200px)}50%{opacity:1;transform:translateY(-10px)}70%{transform:translateY(5px)}to{transform:translateY(0)}}@-webkit-keyframes g{0%{opacity:0}to{opacity:1}}@keyframes g{0%{opacity:0}to{opacity:1}}@-webkit-keyframes h{0%{opacity:0;-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0)}to{opacity:1;-webkit-transform:none;transform:none}}@keyframes h{0%{opacity:0;-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0)}to{opacity:1;-webkit-transform:none;transform:none}}@-webkit-keyframes i{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}to{opacity:1;-webkit-transform:none;transform:none}}@keyframes i{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}to{opacity:1;-webkit-transform:none;transform:none}}@-webkit-keyframes j{0%{opacity:0;-webkit-transform:translate3d(300px,0,0);transform:translate3d(300px,0,0)}to{opacity:1;-webkit-transform:none;transform:none}}@keyframes j{0%{opacity:0;-webkit-transform:translate3d(300px,0,0);transform:translate3d(300px,0,0)}to{opacity:1;-webkit-transform:none;transform:none}}@-webkit-keyframes k{0%{opacity:0;-webkit-transform:translate3d(-300px,0,0);transform:translate3d(-300px,0,0)}to{opacity:1;-webkit-transform:none;transform:none}}@keyframes k{0%{opacity:0;-webkit-transform:translate3d(-300px,0,0);transform:translate3d(-300px,0,0)}to{opacity:1;-webkit-transform:none;transform:none}}@-webkit-keyframes l{0%{-webkit-transform:perspective(400px) rotateX(90deg);transform:perspective(400px) rotateX(90deg);opacity:0}40%{-webkit-transform:perspective(400px) rotateX(-20deg);transform:perspective(400px) rotateX(-20deg)}60%{-webkit-transform:perspective(400px) rotateX(10deg);transform:perspective(400px) rotateX(10deg);opacity:1}80%{-webkit-transform:perspective(400px) rotateX(-5deg);transform:perspective(400px) rotateX(-5deg)}to{-webkit-transform:perspective(400px);transform:perspective(400px)}}@keyframes l{0%{-webkit-transform:perspective(400px) rotateX(90deg);transform:perspective(400px) rotateX(90deg);opacity:0}40%{-webkit-transform:perspective(400px) rotateX(-20deg);transform:perspective(400px) rotateX(-20deg)}60%{-webkit-transform:perspective(400px) rotateX(10deg);transform:perspective(400px) rotateX(10deg);opacity:1}80%{-webkit-transform:perspective(400px) rotateX(-5deg);transform:perspective(400px) rotateX(-5deg)}to{-webkit-transform:perspective(400px);transform:perspective(400px)}}@-webkit-keyframes m{0%{opacity:1}to{opacity:0}}@keyframes m{0%{opacity:1}to{opacity:0}}@-webkit-keyframes n{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0)}}@keyframes n{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0)}}@-webkit-keyframes o{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes o{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes p{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(-200px,0,0);transform:translate3d(-200px,0,0)}}@keyframes p{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(-200px,0,0);transform:translate3d(-200px,0,0)}}@-webkit-keyframes q{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(200px,0,0);transform:translate3d(200px,0,0)}}@keyframes q{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(200px,0,0);transform:translate3d(200px,0,0)}}@-webkit-keyframes r{0%{-webkit-transform:perspective(400px);transform:perspective(400px)}30%{-webkit-transform:perspective(400px) rotateX(-20deg);transform:perspective(400px) rotateX(-20deg);opacity:1}to{-webkit-transform:perspective(400px) rotateX(90deg);transform:perspective(400px) rotateX(90deg);opacity:0}}@keyframes r{0%{-webkit-transform:perspective(400px);transform:perspective(400px)}30%{-webkit-transform:perspective(400px) rotateX(-20deg);transform:perspective(400px) rotateX(-20deg);opacity:1}to{-webkit-transform:perspective(400px) rotateX(90deg);transform:perspective(400px) rotateX(90deg);opacity:0}}", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-04c47122\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-dash-app/components/TableRentals.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1b525d3c\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-dash-app/components/TableOrders.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -2022,7 +2271,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -7580,6 +7829,154 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-04c47122\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-dash-app/components/TableRentals.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "table-responsive" }, [
+    _c("table", { staticClass: "table table-striped" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.pagination.data, function(rental, index) {
+          return _c("tr", [
+            _c("td", [_vm._v(_vm._s(_vm.rowNumber(index)))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(rental.dateFrom))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(rental.dateTo))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(rental.total_days))]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(_vm._s((100 / 30 * rental.cottage_price).toFixed(2)))
+            ]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(rental.dateReservationPayment))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(rental.state))])
+          ])
+        })
+      ),
+      _vm._v(" "),
+      _vm._m(1)
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Orden")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Desde")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Hasta")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Dias")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Seña")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Vto seña")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Estado")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tfoot", [_c("tr", [_c("td", { attrs: { colspan: "7" } })])])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-04c47122", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1b525d3c\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-dash-app/components/TableOrders.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "table-responsive" }, [
+    _c("table", { staticClass: "table table-striped" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.pagination.data, function(orders, index) {
+          return _c("tr", [
+            _c("td", [_vm._v(_vm._s(_vm.rowNumber(index)))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(orders.rental.cottage.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(orders.senia))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(orders.senia_date))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(orders.state))])
+          ])
+        })
+      ),
+      _vm._v(" "),
+      _vm._m(1)
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Orden")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Cabaña")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Seña")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Fecha de seña")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Estado")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tfoot", [_c("tr", [_c("td", { attrs: { colspan: "4" } })])])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-1b525d3c", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1edc32ac\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-commons/components/Icon.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7693,114 +8090,307 @@ var render = function() {
           [
             _vm.seeRentals
               ? [
-                  _vm._m(1),
+                  _c(
+                    "ul",
+                    { staticClass: "nav nav-tabs", attrs: { role: "tablist" } },
+                    [
+                      _c(
+                        "li",
+                        {
+                          class: { active: this.type === "pendiente" },
+                          attrs: { role: "presentation" }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: "#pendientes",
+                                "aria-controls": "pendientes",
+                                role: "tab",
+                                "data-toggle": "tab"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.setTypeofQuery("pendiente")
+                                }
+                              }
+                            },
+                            [_vm._v("Pendientes")]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          class: { active: this.type === "confirmada" },
+                          attrs: { role: "presentation" }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: "#confirmadas",
+                                "aria-controls": "confirmadas",
+                                role: "tab",
+                                "data-toggle": "tab"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.setTypeofQuery("confirmada")
+                                }
+                              }
+                            },
+                            [_vm._v("Confirmadas")]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          class: { active: this.type === "en curso" },
+                          attrs: { role: "presentation" }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: "#en_curso",
+                                "aria-controls": "en_curso",
+                                role: "tab",
+                                "data-toggle": "tab"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.setTypeofQuery("en curso")
+                                }
+                              }
+                            },
+                            [_vm._v("En curso")]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          class: { active: this.type === "cancelada" },
+                          attrs: { role: "presentation" }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: "#canceladas",
+                                "aria-controls": "finalizadas_canceladas",
+                                role: "tab",
+                                "data-toggle": "tab"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.setTypeofQuery("cancelada")
+                                }
+                              }
+                            },
+                            [_vm._v("Canceladas")]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          class: { active: this.type === "finalizada" },
+                          attrs: { role: "presentation" }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: "#finalizadas",
+                                "aria-controls": "finalizadas",
+                                role: "tab",
+                                "data-toggle": "tab"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.setTypeofQuery("finalizada")
+                                }
+                              }
+                            },
+                            [_vm._v("Finalizadas")]
+                          )
+                        ]
+                      )
+                    ]
+                  ),
                   _vm._v(" "),
                   _c("div", { staticClass: "tab-content" }, [
                     _c(
                       "div",
                       {
                         staticClass: "tab-pane active",
-                        attrs: { role: "tabpanel", id: "pendientes" }
+                        attrs: { role: "tabpanel" }
                       },
-                      [
-                        _c("div", { staticClass: "table-responsive" }, [
-                          _c("table", { staticClass: "table table-striped" }, [
-                            _vm._m(2),
-                            _vm._v(" "),
-                            _c(
-                              "tbody",
-                              _vm._l(_vm.fiftheenElements, function(
-                                rental,
-                                index
-                              ) {
-                                return _c("tr", [
-                                  _c("td", [_vm._v(_vm._s(index + 1))]),
-                                  _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(rental.dateFrom))]),
-                                  _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(rental.dateTo))]),
-                                  _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(rental.total_days))]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _vm._v(
-                                      _vm._s(
-                                        (100 /
-                                          30 *
-                                          rental.cottage_price
-                                        ).toFixed(2)
-                                      )
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _vm._v(
-                                      _vm._s(rental.dateReservationPayment)
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(rental.state))])
-                                ])
-                              })
-                            ),
-                            _vm._v(" "),
-                            _vm._m(3)
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "text-center" },
-                          [
-                            _c("pagination", {
-                              attrs: {
-                                for: "dash",
-                                records: _vm.rentals.length,
-                                "per-page": _vm.itemsPerPage,
-                                chunk: _vm.pagChunk,
-                                vuex: true,
-                                "count-text":
-                                  "Listando {from} a {to} de {count} items|{count} items|Un item"
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "tab-pane",
-                        attrs: { role: "tabpanel", id: "confirmadas" }
-                      },
-                      [_vm._v("...")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "tab-pane",
-                        attrs: { role: "tabpanel", id: "en_curso" }
-                      },
-                      [_vm._v("...")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "tab-pane",
-                        attrs: {
-                          role: "tabpanel",
-                          id: "finalizadas_canceladas"
-                        }
-                      },
-                      [_vm._v("...")]
+                      [_vm.pagination ? _c("table-rentals-app") : _vm._e()],
+                      1
                     )
                   ])
                 ]
-              : [_vm._m(4), _vm._v(" "), _vm._m(5)]
+              : [
+                  _c(
+                    "ul",
+                    { staticClass: "nav nav-tabs", attrs: { role: "tablist" } },
+                    [
+                      _c(
+                        "li",
+                        {
+                          class: { active: this.type === "pendiente" },
+                          attrs: { role: "presentation" }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: "#pendientes2",
+                                "aria-controls": "pendientes2",
+                                role: "tab",
+                                "data-toggle": "tab"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.setTypeofQuery("pendiente")
+                                }
+                              }
+                            },
+                            [_vm._v("Pendientes")]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          class: { active: this.type === "seniado" },
+                          attrs: { role: "presentation" }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: "#seniadas",
+                                "aria-controls": "seniadas",
+                                role: "tab",
+                                "data-toggle": "tab"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.setTypeofQuery("seniado")
+                                }
+                              }
+                            },
+                            [_vm._v("Señadas")]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          class: { active: this.type === "pagado" },
+                          attrs: { role: "presentation" }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: "#pagadas",
+                                "aria-controls": "pagadas",
+                                role: "tab",
+                                "data-toggle": "tab"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.setTypeofQuery("pagado")
+                                }
+                              }
+                            },
+                            [_vm._v("Pagadas")]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          class: { active: this.type === "cancelado" },
+                          attrs: { role: "presentation" }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: "#canceladas2",
+                                "aria-controls": "canceladas2",
+                                role: "tab",
+                                "data-toggle": "tab"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.setTypeofQuery("cancelado")
+                                }
+                              }
+                            },
+                            [_vm._v("Canceladas")]
+                          )
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "tab-content" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "tab-pane active",
+                        attrs: { role: "tabpanel" }
+                      },
+                      [_vm.pagination ? _c("table-orders-app") : _vm._e()],
+                      1
+                    )
+                  ])
+                ],
+            _vm._v(" "),
+            _vm.pagination
+              ? _c(
+                  "div",
+                  { staticClass: "text-center" },
+                  [
+                    _c("pagination", {
+                      attrs: {
+                        for: "dash",
+                        records: _vm.total,
+                        "per-page": _vm.per_page,
+                        chunk: _vm.pagChunk,
+                        vuex: true,
+                        "count-text":
+                          "Listando {from} a {to} de {count} items|{count} items|Un item"
+                      }
+                    })
+                  ],
+                  1
+                )
+              : _vm._e()
           ],
           2
         )
@@ -7818,213 +8408,6 @@ var staticRenderFns = [
       _c("h1", { staticClass: "text-center" }, [
         _vm._v("Panel de asministración")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      { staticClass: "nav nav-tabs", attrs: { role: "tablist" } },
-      [
-        _c("li", { staticClass: "active", attrs: { role: "presentation" } }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#pendientes",
-                "aria-controls": "pendientes",
-                role: "tab",
-                "data-toggle": "tab"
-              }
-            },
-            [_vm._v("Pendientes")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { attrs: { role: "presentation" } }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#confirmadas",
-                "aria-controls": "confirmadas",
-                role: "tab",
-                "data-toggle": "tab"
-              }
-            },
-            [_vm._v("Confirmadas")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { attrs: { role: "presentation" } }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#en_curso",
-                "aria-controls": "en_curso",
-                role: "tab",
-                "data-toggle": "tab"
-              }
-            },
-            [_vm._v("En curso")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { attrs: { role: "presentation" } }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#finalizadas_canceladas",
-                "aria-controls": "finalizadas_canceladas",
-                role: "tab",
-                "data-toggle": "tab"
-              }
-            },
-            [_vm._v("Finalizadas y canceladas")]
-          )
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Número")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Desde")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Hasta")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Dias")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Seña")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Vto seña")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Estado")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tfoot", [_c("tr", [_c("td", { attrs: { colspan: "7" } })])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      { staticClass: "nav nav-tabs", attrs: { role: "tablist" } },
-      [
-        _c("li", { staticClass: "active", attrs: { role: "presentation" } }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#pendientes2",
-                "aria-controls": "pendientes2",
-                role: "tab",
-                "data-toggle": "tab"
-              }
-            },
-            [_vm._v("Pendientes")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { attrs: { role: "presentation" } }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#seniadas",
-                "aria-controls": "seniadas",
-                role: "tab",
-                "data-toggle": "tab"
-              }
-            },
-            [_vm._v("Señadas")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { attrs: { role: "presentation" } }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#pagadas",
-                "aria-controls": "pagadas",
-                role: "tab",
-                "data-toggle": "tab"
-              }
-            },
-            [_vm._v("Pagadas")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { attrs: { role: "presentation" } }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#canceladas",
-                "aria-controls": "canceladas",
-                role: "tab",
-                "data-toggle": "tab"
-              }
-            },
-            [_vm._v("Canceladas")]
-          )
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "tab-content" }, [
-      _c(
-        "div",
-        {
-          staticClass: "tab-pane active",
-          attrs: { role: "tabpanel", id: "pendientes2" }
-        },
-        [_vm._v("...")]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "tab-pane",
-          attrs: { role: "tabpanel", id: "seniadas" }
-        },
-        [_vm._v("...")]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "tab-pane", attrs: { role: "tabpanel", id: "pagadas" } },
-        [_vm._v("...")]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "tab-pane",
-          attrs: { role: "tabpanel", id: "canceladas" }
-        },
-        [_vm._v("...")]
-      )
     ])
   }
 ]
@@ -8505,6 +8888,60 @@ module.exports = {
   PaginationEvent:PaginationEvent
 }
 
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-04c47122\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-dash-app/components/TableRentals.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-04c47122\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-dash-app/components/TableRentals.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("a8f29156", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-04c47122\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TableRentals.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-04c47122\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TableRentals.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1b525d3c\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-dash-app/components/TableOrders.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1b525d3c\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-dash-app/components/TableOrders.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("12b8478d", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1b525d3c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TableOrders.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1b525d3c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TableOrders.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
 
@@ -20338,15 +20775,22 @@ Object.defineProperty(exports, "__esModule", {
 var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
 
 exports.default = {
-    rentalsForState: function rentalsForState(cntx, payload) {
+    rentalsOrOrdersForState: function rentalsOrOrdersForState(cntx, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.get('rentals/for-state/' + payload.state, {
+            var url = (payload.isRentals ? 'rentals/' : 'orders/') + 'for-state/';
+            _appAxios.http.get(url + payload.state + '/' + cntx.state.per_page, {
                 params: {
-                    token: payload.token
+                    page: payload.query || 1,
+                    token: payload.token || ''
                 }
             }).then(function (response) {
+                var data = payload.isRentals ? response.data.rentals : response.data.orders;
                 cntx.dispatch('auth/setToken', response, { root: true });
-                resolve(response.data.rentals);
+                cntx.commit('setPagination', data);
+                cntx.commit('setPerPage', +data.per_page);
+                cntx.commit('setTotal', data.total);
+                cntx.commit('PAGINATE', data.current_page);
+                resolve();
             }).catch(function (error) {
                 var err = (0, _appAxios.handlingXhrErrors)(error);
                 err.timeout = 3000;
@@ -20421,13 +20865,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
     PAGINATE: function PAGINATE(state, page) {
-        state.page = page;
+        if (state.page !== page) {
+            window.EventBus.$emit('page-change', page);
+            state.page = page;
+        }
     },
-    setToken: function setToken(state, token) {
-        state.data.token = token;
+    setTotal: function setTotal(state, total) {
+        state.total = total;
     },
-    setRentals: function setRentals(state, rentals) {
-        state.data.rentals = rentals;
+    setPerPage: function setPerPage(state, per_page) {
+        state.per_page = per_page;
+    },
+    setPagination: function setPagination(state, pagination) {
+        state.data.pagination = pagination;
     }
 };
 
@@ -20444,10 +20894,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
     page: 1,
-    itemsPerPage: 10,
+    total: 1,
+    per_page: 15,
     data: {
-        token: '',
-        rentals: []
+        pagination: null
     }
 };
 
@@ -21608,6 +22058,108 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-73080dda", Component.options)
   } else {
     hotAPI.reload("data-v-73080dda", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-dash-app/components/TableOrders.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1b525d3c\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-dash-app/components/TableOrders.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-dash-app/components/TableOrders.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1b525d3c\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-dash-app/components/TableOrders.vue")
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/vue-dash-app/components/TableOrders.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] TableOrders.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1b525d3c", Component.options)
+  } else {
+    hotAPI.reload("data-v-1b525d3c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-dash-app/components/TableRentals.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-04c47122\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-dash-app/components/TableRentals.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-dash-app/components/TableRentals.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-04c47122\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-dash-app/components/TableRentals.vue")
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/vue-dash-app/components/TableRentals.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] TableRentals.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-04c47122", Component.options)
+  } else {
+    hotAPI.reload("data-v-04c47122", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

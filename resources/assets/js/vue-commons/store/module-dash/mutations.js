@@ -1,11 +1,17 @@
 export default {
     PAGINATE(state, page) {
-        state.page = page
+        if (state.page !== page) {
+            window.EventBus.$emit('page-change', page);
+            state.page = page;
+        }
     },
-    setToken(state, token) {
-        state.data.token = token;
+    setTotal(state, total) {
+        state.total = total;
     },
-    setRentals(state, rentals) {
-        state.data.rentals = rentals;
+    setPerPage(state, per_page) {
+        state.per_page = per_page;
+    },
+    setPagination(state, pagination) {
+        state.data.pagination = pagination;
     }
 }

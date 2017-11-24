@@ -1,21 +1,27 @@
 import { http, handlingXhrErrors } from '../../axios/app-axios'
 
 export default {
-    rentalsForState(cntx, payload) {
+    rentalsOrOrdersForState(cntx, payload) {
         return new Promise((resolve, reject) => {
-            http.get('rentals/for-state/' + payload.state, {
+            let url = (payload.isRentals ? 'rentals/' : 'orders/') + 'for-state/';
+            http.get(url + payload.state + '/' + cntx.state.per_page, {
                 params: {
-                    token: payload.token
+                    page: payload.query || 1,
+                    token: payload.token || ''
                 }
             }).then(response => {
+                let data = payload.isRentals ? response.data.rentals : response.data.orders;
                 cntx.dispatch('auth/setToken', response, {root: true});
-                resolve(response.data.rentals)
-            })
-                .catch(error => {
-                    let err = handlingXhrErrors(error);
-                    err.timeout = 3000;
-                    reject(err);
-                });
+                cntx.commit('setPagination', data);
+                cntx.commit('setPerPage', +data.per_page);
+                cntx.commit('setTotal', data.total);
+                cntx.commit('PAGINATE', data.current_page);
+                resolve();
+            }).catch(error => {
+                let err = handlingXhrErrors(error);
+                err.timeout = 3000;
+                reject(err);
+            });
         });
-    }
+    },
 }

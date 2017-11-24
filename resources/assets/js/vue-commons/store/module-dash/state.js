@@ -1,8 +1,8 @@
 export default {
     page: 1,
-    itemsPerPage: 10,
+    total: 1,
+    per_page: 15,
     data: {
-        token: '',
-        rentals: []
-    },
+        pagination: null,
+    }
 }

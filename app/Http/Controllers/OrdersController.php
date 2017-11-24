@@ -161,4 +161,27 @@ class OrdersController extends Controller
 
         return response()->json(['message' => 'El pedido fue eliminado correctamente.'], 200);
     }
+
+    public function ordersForState($state, $results)
+    {
+        $quantity = $results > 100 ? 100 : $results;
+
+        if (!$orders = Order::where('state', $state)->paginate($quantity)) {
+
+            return response()->json(['error' => 'No hemos encontrado resultados con el estado seleccionado.'], 404);
+
+        }
+
+        foreach ($orders as $order) {
+
+            $order->rental->cottage;
+
+            foreach ($order->ordersDetail as $detail) {
+                $detail->food;
+            }
+
+        }
+
+        return response()->json(compact('orders'), 200);
+    }
 }

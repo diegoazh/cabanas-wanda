@@ -68280,15 +68280,22 @@ Object.defineProperty(exports, "__esModule", {
 var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
 
 exports.default = {
-    rentalsForState: function rentalsForState(cntx, payload) {
+    rentalsOrOrdersForState: function rentalsOrOrdersForState(cntx, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.get('rentals/for-state/' + payload.state, {
+            var url = (payload.isRentals ? 'rentals/' : 'orders/') + 'for-state/';
+            _appAxios.http.get(url + payload.state + '/' + cntx.state.per_page, {
                 params: {
-                    token: payload.token
+                    page: payload.query || 1,
+                    token: payload.token || ''
                 }
             }).then(function (response) {
+                var data = payload.isRentals ? response.data.rentals : response.data.orders;
                 cntx.dispatch('auth/setToken', response, { root: true });
-                resolve(response.data.rentals);
+                cntx.commit('setPagination', data);
+                cntx.commit('setPerPage', +data.per_page);
+                cntx.commit('setTotal', data.total);
+                cntx.commit('PAGINATE', data.current_page);
+                resolve();
             }).catch(function (error) {
                 var err = (0, _appAxios.handlingXhrErrors)(error);
                 err.timeout = 3000;
@@ -68363,13 +68370,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
     PAGINATE: function PAGINATE(state, page) {
-        state.page = page;
+        if (state.page !== page) {
+            window.EventBus.$emit('page-change', page);
+            state.page = page;
+        }
     },
-    setToken: function setToken(state, token) {
-        state.data.token = token;
+    setTotal: function setTotal(state, total) {
+        state.total = total;
     },
-    setRentals: function setRentals(state, rentals) {
-        state.data.rentals = rentals;
+    setPerPage: function setPerPage(state, per_page) {
+        state.per_page = per_page;
+    },
+    setPagination: function setPagination(state, pagination) {
+        state.data.pagination = pagination;
     }
 };
 
@@ -68386,10 +68399,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
     page: 1,
-    itemsPerPage: 10,
+    total: 1,
+    per_page: 15,
     data: {
-        token: '',
-        rentals: []
+        pagination: null
     }
 };
 

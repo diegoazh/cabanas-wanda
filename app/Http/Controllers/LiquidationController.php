@@ -40,7 +40,7 @@ class LiquidationController extends Controller
     /**
      * Total debt settlement
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\RequestLiquidation $request
      * @return \Illuminate\Http\Response
      */
     public function finalLiquidation(RequestLiquidation $request)
