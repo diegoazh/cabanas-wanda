@@ -33486,13 +33486,29 @@ exports.default = {
                     token: payload.token || ''
                 }
             }).then(function (response) {
-                var data = payload.isRentals ? response.data.rentals : response.data.orders;
                 cntx.dispatch('auth/setToken', response, { root: true });
-                cntx.commit('setPagination', data);
-                cntx.commit('setPerPage', +data.per_page);
-                cntx.commit('setTotal', data.total);
-                cntx.commit('PAGINATE', data.current_page);
+                cntx.commit('setPagination', response.data);
+                cntx.commit('setPerPage', +response.data.per_page);
+                cntx.commit('setTotal', response.data.total);
+                cntx.commit('PAGINATE', response.data.current_page);
                 resolve();
+            }).catch(function (error) {
+                var err = (0, _appAxios.handlingXhrErrors)(error);
+                err.timeout = 3000;
+                reject(err);
+            });
+        });
+    },
+    rentalsOrOrdersForId: function rentalsOrOrdersForId(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            var url = (payload.isRentals ? 'rentals/' : 'orders/') + 'for-id/';
+            _appAxios.http.get(url + payload.id, {
+                params: {
+                    token: cntx.rootState.auth.xhr.token || ''
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve(response.data);
             }).catch(function (error) {
                 var err = (0, _appAxios.handlingXhrErrors)(error);
                 err.timeout = 3000;

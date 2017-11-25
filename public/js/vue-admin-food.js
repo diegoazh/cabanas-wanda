@@ -5282,6 +5282,21 @@ exports.push([module.i, "/*\n* iziToast | v1.1.5\n* http://izitoast.marcelodolce
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-directive-tooltip/css/index.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".vue-tooltip{background-color:#000;box-sizing:border-box;color:#fff;max-width:320px;padding:6px 10px;border-radius:3px;z-index:100;box-shadow:2px 2px 3px rgba(0,0,0,0.4)}.vue-tooltip .vue-tooltip-content{text-align:center}.vue-tooltip .tooltip-arrow{content:'';width:0;height:0;border-style:solid;position:absolute;margin:5px}.vue-tooltip[x-placement^=\"top\"]{margin-bottom:5px}.vue-tooltip[x-placement^=\"top\"] .tooltip-arrow{border-width:5px 5px 0 5px;border-top-color:#000;border-bottom-color:transparent !important;border-left-color:transparent !important;border-right-color:transparent !important;bottom:-5px;margin-top:0;margin-bottom:0}.vue-tooltip[x-placement^=\"bottom\"]{margin-top:5px}.vue-tooltip[x-placement^=\"bottom\"] .tooltip-arrow{border-width:0 5px 5px 5px;border-bottom-color:#000;border-top-color:transparent !important;border-left-color:transparent !important;border-right-color:transparent !important;top:-5px;margin-top:0;margin-bottom:0}.vue-tooltip[x-placement^=\"right\"]{margin-left:5px}.vue-tooltip[x-placement^=\"right\"] .tooltip-arrow{border-width:5px 5px 5px 0;border-right-color:#000;border-top-color:transparent !important;border-left-color:transparent !important;border-bottom-color:transparent !important;left:-5px;margin-left:0;margin-right:0}.vue-tooltip[x-placement^=\"left\"]{margin-right:5px}.vue-tooltip[x-placement^=\"left\"] .tooltip-arrow{border-width:5px 0 5px 5px;border-left-color:#000;border-top-color:transparent !important;border-right-color:transparent !important;border-bottom-color:transparent !important;right:-5px;margin-left:0;margin-right:0}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0eff9468\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/Modal.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26517,13 +26532,146 @@ exports.Z = [32, 160, 5760, 8192, 8193, 8194, 8195, 8196, 8197, 8198, 8199, 8200
 
 /***/ }),
 
-/***/ "./node_modules/v-tooltip/dist/v-tooltip.esm.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/vue-cookies/vue-cookies.js":
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "install", function() { return install; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VTooltip", function() { return VTooltip; });
+/**
+ * Vue Cookies v1.5.4
+ * https://github.com/cmp-cc/vue-cookies
+ *
+ * Copyright 2016, cmp-cc
+ * Released under the MIT license
+ */
+
+(function() {
+  var VueCookies = {
+    // install of Vue
+    install: function(Vue) {
+      Vue.prototype.$cookies = this
+      Vue.cookies = this
+    },
+    get: function(key) {
+      return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+    },
+    set: function(key, value, expireTimes, path, domain, secure) {
+      if (!key) {
+        throw new Error("cookie name is not find in first argument")
+      }else if(/^(?:expires|max\-age|path|domain|secure)$/i.test(key)){
+        throw new Error("cookie key name illegality ,Cannot be set to ['expires','max-age','path','domain','secure']\t","current key name: "+key);
+      }
+      var _expires = "; max-age=86400"; // default expire time for 1 day
+      if (expireTimes) {
+        switch (expireTimes.constructor) {
+          case Number:
+            if(expireTimes === Infinity || expireTimes === -1) _expires = "; expires=Fri, 31 Dec 9999 23:59:59 GMT"
+            else _expires = "; max-age=" + expireTimes;
+            break;
+          case String:
+            if (/^(?:\d{1,}(y|m|d|h|min|s))$/i.test(expireTimes)) {
+              // get capture number group
+              var _expireTime = expireTimes.replace(/^(\d{1,})(?:y|m|d|h|min|s)$/i, "$1");
+              // get capture type group , to lower case
+              switch (expireTimes.replace(/^(?:\d{1,})(y|m|d|h|min|s)$/i, "$1").toLowerCase()) {
+                // Frequency sorting
+                case 'm':  _expires = "; max-age=" + +_expireTime * 259200; break; // 60 * 60 * 24 * 30
+                case 'd':  _expires = "; max-age=" + +_expireTime * 86400; break; // 60 * 60 * 24
+                case 'h': _expires = "; max-age=" + +_expireTime * 3600; break; // 60 * 60
+                case 'min':  _expires = "; max-age=" + +_expireTime * 60; break; // 60
+                case 's': _expires = "; max-age=" + _expireTime; break;
+                case 'y': _expires = "; max-age=" + +_expireTime * 31104000; break; // 60 * 60 * 24 * 30 * 12            
+                default: new Error("unknown exception of 'set operation'");
+              }
+            } else {
+              _expires = "; expires=" + expireTimes;
+            }
+            break;
+          case Date:
+            _expires = "; expires=" + expireTimes.toUTCString();
+            break;
+        }
+      }
+      document.cookie = encodeURIComponent(key) + "=" + encodeURIComponent(value) + _expires + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : "") + (secure ? "; secure" : "");
+      return this;
+    },
+    remove: function(key, path, domain) {
+      if (!key || !this.isKey(key)) {
+        return false;
+      }
+      document.cookie = encodeURIComponent(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : "");
+      return true;
+    },
+    isKey: function(key) {
+      return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+    },
+    keys: /* optional method: you can safely remove it! */ function() {
+      var _keys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+      for (var _index = 0; _index < _keys.length; _index++) {
+        _keys[_index] = decodeURIComponent(_keys[_index]);
+      }
+      return _keys;
+    }
+  }
+
+  if (true) {
+    module.exports = VueCookies;
+  } else if (typeof define == "function" && define.amd) {
+    define([], function() {
+      return VueCookies;
+    })
+  } else if (window.Vue) {
+    Vue.use(VueCookies);
+  }
+  // vue-cookies can exist independently,no dependencies library
+  if(typeof window!=="undefined"){
+        window.$cookies = VueCookies;
+    }
+
+
+})()
+
+/***/ }),
+
+/***/ "./node_modules/vue-directive-tooltip/css/index.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-directive-tooltip/css/index.css");
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/style-loader/lib/addStyles.js")(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../css-loader/index.js!./index.css", function() {
+			var newContent = require("!!../../css-loader/index.js!./index.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-directive-tooltip/dist/vueDirectiveTooltip.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {(function (global, factory) {
+   true ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global.vueDirectiveTooltip = factory());
+}(this, (function () { 'use strict';
+
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
  * @version 1.12.5
@@ -26557,11 +26705,11 @@ var nativeHints = ['native code', '[object MutationObserverConstructor]'];
  * @argument {Function | undefined} fn the function to check
  * @returns {Boolean}
  */
-var isNative = (function (fn) {
+var isNative = function isNative(fn) {
   return nativeHints.some(function (hint) {
     return (fn || '').toString().indexOf(hint) > -1;
   });
-});
+};
 
 var isBrowser = typeof window !== 'undefined';
 var longerTimeoutBrowsers = ['Edge', 'Trident', 'Firefox'];
@@ -26634,7 +26782,7 @@ var debounce = supportsNativeMutationObserver ? microtaskDebounce : taskDebounce
  * @argument {Any} functionToCheck - variable to check
  * @returns {Boolean} answer to: is a function?
  */
-function isFunction$1(functionToCheck) {
+function isFunction(functionToCheck) {
   var getType = {};
   return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
 }
@@ -26859,7 +27007,7 @@ function getBordersSize(styles, axis) {
  */
 var isIE10 = undefined;
 
-var isIE10$1 = function () {
+var isIE10$1 = function isIE10$1() {
   if (isIE10 === undefined) {
     isIE10 = navigator.appVersion.indexOf('MSIE 10') !== -1;
   }
@@ -26881,35 +27029,31 @@ function getWindowSizes() {
   };
 }
 
-var classCallCheck$1 = function (instance, Constructor) {
+var classCallCheck = function classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
   }
 };
 
-var createClass$1 = function () {
+var createClass = function () {
   function defineProperties(target, props) {
     for (var i = 0; i < props.length; i++) {
       var descriptor = props[i];
       descriptor.enumerable = descriptor.enumerable || false;
       descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
+      if ("value" in descriptor) { descriptor.writable = true; }
       Object.defineProperty(target, descriptor.key, descriptor);
     }
   }
 
   return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
+    if (protoProps) { defineProperties(Constructor.prototype, protoProps); }
+    if (staticProps) { defineProperties(Constructor, staticProps); }
     return Constructor;
   };
 }();
 
-
-
-
-
-var defineProperty = function (obj, key, value) {
+var defineProperty = function defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -26925,8 +27069,10 @@ var defineProperty = function (obj, key, value) {
 };
 
 var _extends$1 = Object.assign || function (target) {
+  var arguments$1 = arguments;
+
   for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
+    var source = arguments$1[i];
 
     for (var key in source) {
       if (Object.prototype.hasOwnProperty.call(source, key)) {
@@ -27363,7 +27509,7 @@ function runModifiers(modifiers, data, ends) {
       console.warn('`modifier.function` is deprecated, use `modifier.fn`!');
     }
     var fn = modifier.function || modifier.fn;
-    if (modifier.enabled && isFunction$1(fn)) {
+    if (modifier.enabled && isFunction(fn)) {
       // Add properties to offsets to make them a complete clientRect object
       // we do this before each modifier to make sure the previous one doesn't
       // mess with these values
@@ -27384,7 +27530,7 @@ function runModifiers(modifiers, data, ends) {
  * @method
  * @memberof Popper
  */
-function update() {
+function update$1() {
   // if popper is destroyed, don't perform any further update
   if (this.state.isDestroyed) {
     return;
@@ -28822,7 +28968,7 @@ var Popper = function () {
     var _this = this;
 
     var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-    classCallCheck$1(this, Popper);
+    classCallCheck(this, Popper);
 
     this.scheduleUpdate = function () {
       return requestAnimationFrame(_this.update);
@@ -28867,7 +29013,7 @@ var Popper = function () {
     // they could add new properties to their options configuration
     // BE AWARE: don't add options to `options.modifiers.name` but to `modifierOptions`!
     this.modifiers.forEach(function (modifierOptions) {
-      if (modifierOptions.enabled && isFunction$1(modifierOptions.onLoad)) {
+      if (modifierOptions.enabled && isFunction(modifierOptions.onLoad)) {
         modifierOptions.onLoad(_this.reference, _this.popper, _this.options, modifierOptions, _this.state);
       }
     });
@@ -28888,10 +29034,10 @@ var Popper = function () {
   // class prototype and break stuff like Sinon stubs
 
 
-  createClass$1(Popper, [{
+  createClass(Popper, [{
     key: 'update',
     value: function update$$1() {
-      return update.call(this);
+      return update$1.call(this);
     }
   }, {
     key: 'destroy',
@@ -28914,7 +29060,6 @@ var Popper = function () {
      * @method scheduleUpdate
      * @memberof Popper
      */
-
 
     /**
      * Collection of utilities useful when writing custom modifiers.
@@ -28957,1275 +29102,570 @@ var Popper = function () {
  * An ES6 getter that will return the height of the virtual reference element.
  */
 
-
 Popper.Utils = (typeof window !== 'undefined' ? window : global).PopperUtils;
 Popper.placements = placements;
 Popper.Defaults = Defaults;
 
-/**!
- * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.1.5
- * @license
- * Copyright (c) 2016 Federico Zivolo and contributors
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-/**
- * Check if the given variable is a function
- * @method
- * @memberof Popper.Utils
- * @argument {Any} functionToCheck - variable to check
- * @returns {Boolean} answer to: is a function?
- */
-function isFunction(functionToCheck) {
-  var getType = {};
-  return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-}
-
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-
-
-
-
-
-
 var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
+var arguments$1 = arguments;
+ for (var i = 1; i < arguments.length; i++) { var source = arguments$1[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) { descriptor.writable = true; } Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) { defineProperties(Constructor.prototype, protoProps); } if (staticProps) { defineProperties(Constructor, staticProps); } return Constructor; }; }();
 
-  return target;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var BASE_CLASS$1 = 'h-tooltip';
+var PLACEMENT = ['top', 'left', 'right', 'bottom', 'auto'];
+var SUB_PLACEMENT = ['start', 'end'];
+
+var EVENTS = {
+    ADD: 1,
+    REMOVE: 2
 };
 
 var DEFAULT_OPTIONS = {
-  container: false,
-  delay: 0,
-  html: false,
-  placement: 'top',
-  title: '',
-  template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
-  trigger: 'hover focus',
-  offset: 0
-};
-
-var Tooltip = function () {
-  /**
-   * Create a new Tooltip.js instance
-   * @class Tooltip
-   * @param {HTMLElement} reference - The DOM node used as reference of the tooltip (it can be a jQuery element).
-   * @param {Object} options
-   * @param {String} options.placement=bottom
-   *      Placement of the popper accepted values: `top(-start, -end), right(-start, -end), bottom(-start, -end),
-   *      left(-start, -end)`
-   * @param {HTMLElement|String|false} options.container=false - Append the tooltip to a specific element.
-   * @param {Number|Object} options.delay=0
-   *      Delay showing and hiding the tooltip (ms) - does not apply to manual trigger type.
-   *      If a number is supplied, delay is applied to both hide/show.
-   *      Object structure is: `{ show: 500, hide: 100 }`
-   * @param {Boolean} options.html=false - Insert HTML into the tooltip. If false, the content will inserted with `innerText`.
-   * @param {String|PlacementFunction} options.placement='top' - One of the allowed placements, or a function returning one of them.
-   * @param {String} [options.template='<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>']
-   *      Base HTML to used when creating the tooltip.
-   *      The tooltip's `title` will be injected into the `.tooltip-inner` or `.tooltip__inner`.
-   *      `.tooltip-arrow` or `.tooltip__arrow` will become the tooltip's arrow.
-   *      The outermost wrapper element should have the `.tooltip` class.
-   * @param {String|HTMLElement|TitleFunction} options.title='' - Default title value if `title` attribute isn't present.
-   * @param {String} [options.trigger='hover focus']
-   *      How tooltip is triggered - click, hover, focus, manual.
-   *      You may pass multiple triggers; separate them with a space. `manual` cannot be combined with any other trigger.
-   * @param {HTMLElement} options.boundariesElement
-   *      The element used as boundaries for the tooltip. For more information refer to Popper.js'
-   *      [boundariesElement docs](https://popper.js.org/popper-documentation.html)
-   * @param {Number|String} options.offset=0 - Offset of the tooltip relative to its reference. For more information refer to Popper.js'
-   *      [offset docs](https://popper.js.org/popper-documentation.html)
-   * @param {Object} options.popperOptions={} - Popper options, will be passed directly to popper instance. For more information refer to Popper.js'
-   *      [options docs](https://popper.js.org/popper-documentation.html)
-   * @return {Object} instance - The generated tooltip instance
-   */
-  function Tooltip(reference, options) {
-    classCallCheck(this, Tooltip);
-
-    _initialiseProps.call(this);
-
-    // apply user options over default ones
-    options = _extends({}, DEFAULT_OPTIONS, options);
-
-    reference.jquery && (reference = reference[0]);
-
-    // cache reference and options
-    this.reference = reference;
-    this.options = options;
-
-    // get events list
-    var events = typeof options.trigger === 'string' ? options.trigger.split(' ').filter(function (trigger) {
-      return ['click', 'hover', 'focus'].indexOf(trigger) !== -1;
-    }) : [];
-
-    // set initial state
-    this._isOpen = false;
-
-    // set event listeners
-    this._setEventListeners(reference, events, options);
-  }
-
-  //
-  // Public methods
-  //
-
-  /**
-   * Reveals an element's tooltip. This is considered a "manual" triggering of the tooltip.
-   * Tooltips with zero-length titles are never displayed.
-   * @method Tooltip#show
-   * @memberof Tooltip
-   */
-
-
-  /**
-   * Hides an element’s tooltip. This is considered a “manual” triggering of the tooltip.
-   * @method Tooltip#hide
-   * @memberof Tooltip
-   */
-
-
-  /**
-   * Hides and destroys an element’s tooltip.
-   * @method Tooltip#dispose
-   * @memberof Tooltip
-   */
-
-
-  /**
-   * Toggles an element’s tooltip. This is considered a “manual” triggering of the tooltip.
-   * @method Tooltip#toggle
-   * @memberof Tooltip
-   */
-
-
-  //
-  // Defaults
-  //
-
-
-  //
-  // Private methods
-  //
-
-  createClass(Tooltip, [{
-    key: '_create',
-
-
-    /**
-     * Creates a new tooltip node
-     * @memberof Tooltip
-     * @private
-     * @param {HTMLElement} reference
-     * @param {String} template
-     * @param {String|HTMLElement|TitleFunction} title
-     * @param {Boolean} allowHtml
-     * @return {HTMLelement} tooltipNode
-     */
-    value: function _create(reference, template, title, allowHtml) {
-      // create tooltip element
-      var tooltipGenerator = window.document.createElement('div');
-      tooltipGenerator.innerHTML = template.trim();
-      var tooltipNode = tooltipGenerator.childNodes[0];
-
-      // add unique ID to our tooltip (needed for accessibility reasons)
-      tooltipNode.id = 'tooltip_' + Math.random().toString(36).substr(2, 10);
-
-      // set initial `aria-hidden` state to `false` (it's visible!)
-      tooltipNode.setAttribute('aria-hidden', 'false');
-
-      // add title to tooltip
-      var titleNode = tooltipGenerator.querySelector(this.innerSelector);
-      if (title.nodeType === 1) {
-        // if title is a node, append it only if allowHtml is true
-        allowHtml && titleNode.appendChild(title);
-      } else if (isFunction(title)) {
-        // if title is a function, call it and set innerText or innerHtml depending by `allowHtml` value
-        var titleText = title.call(reference);
-        allowHtml ? titleNode.innerHTML = titleText : titleNode.innerText = titleText;
-      } else {
-        // if it's just a simple text, set innerText or innerHtml depending by `allowHtml` value
-        allowHtml ? titleNode.innerHTML = title : titleNode.innerText = title;
-      }
-
-      // return the generated tooltip node
-      return tooltipNode;
-    }
-  }, {
-    key: '_show',
-    value: function _show(reference, options) {
-      // don't show if it's already visible
-      if (this._isOpen) {
-        return this;
-      }
-      this._isOpen = true;
-
-      // if the tooltipNode already exists, just show it
-      if (this._tooltipNode) {
-        this._tooltipNode.style.display = '';
-        this._tooltipNode.setAttribute('aria-hidden', 'false');
-        this.popperInstance.update();
-        return this;
-      }
-
-      // get title
-      var title = reference.getAttribute('title') || options.title;
-
-      // don't show tooltip if no title is defined
-      if (!title) {
-        return this;
-      }
-
-      // create tooltip node
-      var tooltipNode = this._create(reference, options.template, title, options.html);
-
-      // Add `aria-describedby` to our reference element for accessibility reasons
-      reference.setAttribute('aria-describedby', tooltipNode.id);
-
-      // append tooltip to container
-      var container = this._findContainer(options.container, reference);
-
-      this._append(tooltipNode, container);
-
-      var popperOptions = _extends({}, options.popperOptions, {
-        placement: options.placement
-      });
-
-      popperOptions.modifiers = _extends({}, popperOptions.modifiers, {
+    container: false,
+    delay: 200,
+    instance: null, // the popper.js instance
+    eventsEnabled: true,
+    html: false,
+    modifiers: {
         arrow: {
-          element: this.arrowSelector
+            element: '.tooltip-arrow'
         }
-      });
-
-      if (options.boundariesElement) {
-        popperOptions.modifiers.preventOverflow = {
-          boundariesElement: options.boundariesElement
-        };
-      }
-
-      this.popperInstance = new Popper(reference, tooltipNode, popperOptions);
-
-      this._tooltipNode = tooltipNode;
-
-      return this;
-    }
-  }, {
-    key: '_hide',
-    value: function _hide() /*reference, options*/{
-      // don't hide if it's already hidden
-      if (!this._isOpen) {
-        return this;
-      }
-
-      this._isOpen = false;
-
-      // hide tooltipNode
-      this._tooltipNode.style.display = 'none';
-      this._tooltipNode.setAttribute('aria-hidden', 'true');
-
-      return this;
-    }
-  }, {
-    key: '_dispose',
-    value: function _dispose() {
-      var _this = this;
-
-      if (this._tooltipNode) {
-        this._hide();
-
-        // destroy instance
-        this.popperInstance.destroy();
-
-        // remove event listeners
-        this._events.forEach(function (_ref) {
-          var func = _ref.func,
-              event = _ref.event;
-
-          _this.reference.removeEventListener(event, func);
-        });
-        this._events = [];
-
-        // destroy tooltipNode
-        this._tooltipNode.parentNode.removeChild(this._tooltipNode);
-        this._tooltipNode = null;
-      }
-      return this;
-    }
-  }, {
-    key: '_findContainer',
-    value: function _findContainer(container, reference) {
-      // if container is a query, get the relative element
-      if (typeof container === 'string') {
-        container = window.document.querySelector(container);
-      } else if (container === false) {
-        // if container is `false`, set it to reference parent
-        container = reference.parentNode;
-      }
-      return container;
-    }
-
-    /**
-     * Append tooltip to container
-     * @memberof Tooltip
-     * @private
-     * @param {HTMLElement} tooltip
-     * @param {HTMLElement|String|false} container
-     */
-
-  }, {
-    key: '_append',
-    value: function _append(tooltipNode, container) {
-      container.appendChild(tooltipNode);
-    }
-  }, {
-    key: '_setEventListeners',
-    value: function _setEventListeners(reference, events, options) {
-      var _this2 = this;
-
-      var directEvents = [];
-      var oppositeEvents = [];
-
-      events.forEach(function (event) {
-        switch (event) {
-          case 'hover':
-            directEvents.push('mouseenter');
-            oppositeEvents.push('mouseleave');
-            break;
-          case 'focus':
-            directEvents.push('focus');
-            oppositeEvents.push('blur');
-            break;
-          case 'click':
-            directEvents.push('click');
-            oppositeEvents.push('click');
-            break;
-        }
-      });
-
-      // schedule show tooltip
-      directEvents.forEach(function (event) {
-        var func = function func(evt) {
-          if (_this2._isOpen === true) {
-            return;
-          }
-          evt.usedByTooltip = true;
-          _this2._scheduleShow(reference, options.delay, options, evt);
-        };
-        _this2._events.push({ event: event, func: func });
-        reference.addEventListener(event, func);
-      });
-
-      // schedule hide tooltip
-      oppositeEvents.forEach(function (event) {
-        var func = function func(evt) {
-          if (evt.usedByTooltip === true) {
-            return;
-          }
-          _this2._scheduleHide(reference, options.delay, options, evt);
-        };
-        _this2._events.push({ event: event, func: func });
-        reference.addEventListener(event, func);
-      });
-    }
-  }, {
-    key: '_scheduleShow',
-    value: function _scheduleShow(reference, delay, options /*, evt */) {
-      var _this3 = this;
-
-      // defaults to 0
-      var computedDelay = delay && delay.show || delay || 0;
-      window.setTimeout(function () {
-        return _this3._show(reference, options);
-      }, computedDelay);
-    }
-  }, {
-    key: '_scheduleHide',
-    value: function _scheduleHide(reference, delay, options, evt) {
-      var _this4 = this;
-
-      // defaults to 0
-      var computedDelay = delay && delay.hide || delay || 0;
-      window.setTimeout(function () {
-        if (_this4._isOpen === false) {
-          return;
-        }
-        if (!document.body.contains(_this4._tooltipNode)) {
-          return;
-        }
-
-        // if we are hiding because of a mouseleave, we must check that the new
-        // reference isn't the tooltip, because in this case we don't want to hide it
-        if (evt.type === 'mouseleave') {
-          var isSet = _this4._setTooltipNodeEvent(evt, reference, delay, options);
-
-          // if we set the new event, don't hide the tooltip yet
-          // the new event will take care to hide it if necessary
-          if (isSet) {
-            return;
-          }
-        }
-
-        _this4._hide(reference, options);
-      }, computedDelay);
-    }
-  }]);
-  return Tooltip;
-}();
-
-/**
- * Placement function, its context is the Tooltip instance.
- * @memberof Tooltip
- * @callback PlacementFunction
- * @param {HTMLElement} tooltip - tooltip DOM node.
- * @param {HTMLElement} reference - reference DOM node.
- * @return {String} placement - One of the allowed placement options.
- */
-
-/**
- * Title function, its context is the Tooltip instance.
- * @memberof Tooltip
- * @callback TitleFunction
- * @return {String} placement - The desired title.
- */
-
-
-var _initialiseProps = function _initialiseProps() {
-  var _this5 = this;
-
-  this.show = function () {
-    return _this5._show(_this5.reference, _this5.options);
-  };
-
-  this.hide = function () {
-    return _this5._hide();
-  };
-
-  this.dispose = function () {
-    return _this5._dispose();
-  };
-
-  this.toggle = function () {
-    if (_this5._isOpen) {
-      return _this5.hide();
-    } else {
-      return _this5.show();
-    }
-  };
-
-  this.arrowSelector = '.tooltip-arrow, .tooltip__arrow';
-  this.innerSelector = '.tooltip-inner, .tooltip__inner';
-  this._events = [];
-
-  this._setTooltipNodeEvent = function (evt, reference, delay, options) {
-    var relatedreference = evt.relatedreference || evt.toElement;
-
-    var callback = function callback(evt2) {
-      var relatedreference2 = evt2.relatedreference || evt2.toElement;
-
-      // Remove event listener after call
-      _this5._tooltipNode.removeEventListener(evt.type, callback);
-
-      // If the new reference is not the reference element
-      if (!reference.contains(relatedreference2)) {
-        // Schedule to hide tooltip
-        _this5._scheduleHide(reference, options.delay, options, evt2);
-      }
-    };
-
-    if (_this5._tooltipNode.contains(relatedreference)) {
-      // listen to mouseleave on the tooltip element to be able to hide the tooltip
-      _this5._tooltipNode.addEventListener(evt.type, callback);
-      return true;
-    }
-
-    return false;
-  };
-};
-
-function convertToArray(value) {
-  if (typeof value === 'string') {
-    value = value.split(' ');
-  }
-  return value;
-}
-
-/**
- * Add classes to an element.
- * This method checks to ensure that the classes don't already exist before adding them.
- * It uses el.className rather than classList in order to be IE friendly.
- * @param {object} el - The element to add the classes to.
- * @param {classes} string - List of space separated classes to be added to the element.
- */
-function addClasses(el, classes) {
-  var newClasses = convertToArray(classes);
-  var classList = convertToArray(el.className);
-  newClasses.forEach(function (newClass) {
-    if (classList.indexOf(newClass) === -1) {
-      classList.push(newClass);
-    }
-  });
-  el.className = classList.join(' ');
-}
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-  return typeof obj;
-} : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
-
-
-
-
-
-var asyncGenerator = function () {
-  function AwaitValue(value) {
-    this.value = value;
-  }
-
-  function AsyncGenerator(gen) {
-    var front, back;
-
-    function send(key, arg) {
-      return new Promise(function (resolve, reject) {
-        var request = {
-          key: key,
-          arg: arg,
-          resolve: resolve,
-          reject: reject,
-          next: null
-        };
-
-        if (back) {
-          back = back.next = request;
-        } else {
-          front = back = request;
-          resume(key, arg);
-        }
-      });
-    }
-
-    function resume(key, arg) {
-      try {
-        var result = gen[key](arg);
-        var value = result.value;
-
-        if (value instanceof AwaitValue) {
-          Promise.resolve(value.value).then(function (arg) {
-            resume("next", arg);
-          }, function (arg) {
-            resume("throw", arg);
-          });
-        } else {
-          settle(result.done ? "return" : "normal", result.value);
-        }
-      } catch (err) {
-        settle("throw", err);
-      }
-    }
-
-    function settle(type, value) {
-      switch (type) {
-        case "return":
-          front.resolve({
-            value: value,
-            done: true
-          });
-          break;
-
-        case "throw":
-          front.reject(value);
-          break;
-
-        default:
-          front.resolve({
-            value: value,
-            done: false
-          });
-          break;
-      }
-
-      front = front.next;
-
-      if (front) {
-        resume(front.key, front.arg);
-      } else {
-        back = null;
-      }
-    }
-
-    this._invoke = send;
-
-    if (typeof gen.return !== "function") {
-      this.return = undefined;
-    }
-  }
-
-  if (typeof Symbol === "function" && Symbol.asyncIterator) {
-    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
-      return this;
-    };
-  }
-
-  AsyncGenerator.prototype.next = function (arg) {
-    return this._invoke("next", arg);
-  };
-
-  AsyncGenerator.prototype.throw = function (arg) {
-    return this._invoke("throw", arg);
-  };
-
-  AsyncGenerator.prototype.return = function (arg) {
-    return this._invoke("return", arg);
-  };
-
-  return {
-    wrap: function (fn) {
-      return function () {
-        return new AsyncGenerator(fn.apply(this, arguments));
-      };
     },
-    await: function (value) {
-      return new AwaitValue(value);
-    }
-  };
-}();
-
-
-
-
-
-var classCallCheck$2 = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
+    placement: 'auto',
+    placementPostfix: null, // start | end
+    removeOnDestroy: true,
+    title: '',
+    class: '', // ex: 'tooltip-custom tooltip-other-custom'
+    triggers: ['hover', 'focus'],
+    offset: 5
 };
 
-var createClass$2 = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-
-
-
-
-
-
-var _extends$2 = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
+var includes = function includes(stack, needle) {
+    return stack.indexOf(needle) > -1;
 };
 
-var get = function get(object, property, receiver) {
-  if (object === null) object = Function.prototype;
-  var desc = Object.getOwnPropertyDescriptor(object, property);
-
-  if (desc === undefined) {
-    var parent = Object.getPrototypeOf(object);
-
-    if (parent === null) {
-      return undefined;
-    } else {
-      return get(parent, property, receiver);
-    }
-  } else if ("value" in desc) {
-    return desc.value;
-  } else {
-    var getter = desc.get;
-
-    if (getter === undefined) {
-      return undefined;
-    }
-
-    return getter.call(receiver);
-  }
-};
-
-var inherits = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-};
-
-
-
-
-
-
-
-
-
-
-
-var possibleConstructorReturn = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return call && (typeof call === "object" || typeof call === "function") ? call : self;
-};
-
-var state = {
-	enabled: true
-};
-
-var positions = ['top', 'top-start', 'top-end', 'right', 'right-start', 'right-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end'];
-
-var defaultOptions = {
-	// Default tooltip placement relative to target element
-	defaultPlacement: 'top',
-	// Default CSS classes applied to the tooltip element
-	defaultClass: 'vue-tooltip-theme',
-	// Default HTML template of the tooltip element
-	// It must include `tooltip` & `tooltip-inner` CSS classes
-	defaultTemplate: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
-	// Delay (ms)
-	defaultDelay: 0,
-	// Default events that trigger the tooltip
-	defaultTrigger: 'hover focus',
-	// Default position offset (px)
-	defaultOffset: 0,
-	// Default container where the tooltip will be appended
-	defaultContainer: 'body',
-	defaultBoundariesElement: undefined,
-	defaultPopperOptions: {},
-	autoHide: true,
-	// Auto destroy tooltip DOM nodes (ms)
-	disposeTimeout: 5000
-};
-
-function getOptions(options) {
-	var result = {
-		placement: options.placement || directive.options.defaultPlacement,
-		delay: options.delay || directive.options.defaultDelay,
-		template: options.template || directive.options.defaultTemplate,
-		trigger: options.trigger || directive.options.defaultTrigger,
-		offset: options.offset || directive.options.defaultOffset,
-		container: options.container || directive.options.defaultContainer,
-		boundariesElement: options.boundariesElement || directive.options.defaultBoundariesElement,
-		popperOptions: _extends$2({}, options.popperOptions || directive.options.defaultPopperOptions)
-	};
-
-	if (options.offset) {
-		var typeofOffset = _typeof(options.offset);
-		var offset = options.offset;
-
-		// One value -> switch
-		if (typeofOffset === 'number' || typeofOffset === 'string' && offset.indexOf(',') === -1) {
-			offset = '0, ' + offset;
-		}
-
-		if (!result.popperOptions.modifiers) {
-			result.popperOptions.modifiers = {};
-		}
-		result.popperOptions.modifiers.offset = {
-			offset: offset
-		};
-	}
-
-	return result;
-}
-
-function getPlacement(value, modifiers) {
-	var placement = value.placement;
-	var _iteratorNormalCompletion = true;
-	var _didIteratorError = false;
-	var _iteratorError = undefined;
-
-	try {
-		for (var _iterator = positions[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-			var pos = _step.value;
-
-			if (modifiers[pos]) {
-				placement = pos;
-			}
-		}
-	} catch (err) {
-		_didIteratorError = true;
-		_iteratorError = err;
-	} finally {
-		try {
-			if (!_iteratorNormalCompletion && _iterator.return) {
-				_iterator.return();
-			}
-		} finally {
-			if (_didIteratorError) {
-				throw _iteratorError;
-			}
-		}
-	}
-
-	return placement;
-}
-
-var SuperTooltip = function (_Tooltip) {
-	inherits(SuperTooltip, _Tooltip);
-
-	function SuperTooltip() {
-		classCallCheck$2(this, SuperTooltip);
-		return possibleConstructorReturn(this, (SuperTooltip.__proto__ || Object.getPrototypeOf(SuperTooltip)).apply(this, arguments));
-	}
-
-	createClass$2(SuperTooltip, [{
-		key: 'setClasses',
-		value: function setClasses(classes) {
-			this._classes = classes;
-		}
-	}, {
-		key: 'setContent',
-		value: function setContent(content) {
-			this.options.title = content;
-			if (this._tooltipNode) {
-				var el = this._tooltipNode.querySelector(this.innerSelector);
-
-				if (el) {
-					if (!content) {
-						el.innerHTML = '';
-					} else {
-						el.innerHTML = content;
-					}
-
-					this.popperInstance.update();
-				}
-			}
-		}
-	}, {
-		key: 'setOptions',
-		value: function setOptions(options) {
-			var classesUpdated = false;
-			var classes = options && options.classes || directive.options.defaultClass;
-			if (this._classes !== classes) {
-				this.setClasses(classes);
-				classesUpdated = true;
-			}
-
-			options = getOptions(options);
-
-			var needPopperUpdate = false;
-			var needRestart = false;
-
-			if (this.options.offset !== options.offset || this.options.placement !== options.placement) {
-				needPopperUpdate = true;
-			}
-
-			if (this.options.template !== options.template || this.options.trigger !== options.trigger || this.options.container !== options.container || classesUpdated) {
-				needRestart = true;
-			}
-
-			for (var key in options) {
-				this.options[key] = options[key];
-			}
-
-			if (this._tooltipNode) {
-				if (needRestart) {
-					var isOpen = this._isOpen;
-
-					this.dispose();
-
-					var events = typeof this.options.trigger === 'string' ? options.trigger.split(' ').filter(function (trigger) {
-						return ['click', 'hover', 'focus'].indexOf(trigger) !== -1;
-					}) : [];
-					this._setEventListeners(this.reference, events, this.options);
-
-					if (isOpen) {
-						this.show();
-					}
-				} else if (needPopperUpdate) {
-					this.popperInstance.update();
-				}
-			}
-		}
-	}, {
-		key: '_create',
-		value: function _create() {
-			var _babelHelpers$get;
-
-			for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-				args[_key] = arguments[_key];
-			}
-
-			var result = (_babelHelpers$get = get(SuperTooltip.prototype.__proto__ || Object.getPrototypeOf(SuperTooltip.prototype), '_create', this)).call.apply(_babelHelpers$get, [this].concat(args));
-
-			if (defaultOptions.autoHide && this.options.trigger.indexOf('hover') !== -1) {
-				result.addEventListener('mouseenter', this.hide);
-				result.addEventListener('click', this.hide);
-			}
-
-			return result;
-		}
-	}, {
-		key: '_dispose',
-		value: function _dispose() {
-			var _this2 = this;
-
-			if (this._tooltipNode) {
-				this._tooltipNode.removeEventListener('mouseenter', this.hide);
-				this._tooltipNode.removeEventListener('click', this.hide);
-			}
-
-			this._events.forEach(function (_ref) {
-				var func = _ref.func,
-				    event = _ref.event;
-
-				_this2.reference.removeEventListener(event, func);
-			});
-			this._events = [];
-			return get(SuperTooltip.prototype.__proto__ || Object.getPrototypeOf(SuperTooltip.prototype), '_dispose', this).call(this);
-		}
-	}, {
-		key: '_show',
-		value: function _show(reference, options) {
-			var _babelHelpers$get2,
-			    _this3 = this;
-
-			if (options && typeof options.container === 'string') {
-				var container = document.querySelector(options.container);
-				if (!container) return;
-			}
-
-			options = Object.assign({}, options);
-			delete options.offset;
-
-			var updateClasses = true;
-			if (this._tooltipNode) {
-				addClasses(this._tooltipNode, this._classes);
-				updateClasses = false;
-			}
-
-			for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-				args[_key2 - 2] = arguments[_key2];
-			}
-
-			var result = (_babelHelpers$get2 = get(SuperTooltip.prototype.__proto__ || Object.getPrototypeOf(SuperTooltip.prototype), '_show', this)).call.apply(_babelHelpers$get2, [this, reference, options].concat(args));
-
-			if (updateClasses && this._tooltipNode) {
-				addClasses(this._tooltipNode, this._classes);
-			}
-
-			// Fix position
-			setTimeout(function () {
-				if (_this3.popperInstance) {
-					_this3.popperInstance.update();
-				}
-			}, 0);
-
-			clearTimeout(this._disposeTimer);
-
-			return result;
-		}
-	}, {
-		key: '_hide',
-		value: function _hide() {
-			var _babelHelpers$get3,
-			    _this4 = this;
-
-			for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-				args[_key3] = arguments[_key3];
-			}
-
-			var result = (_babelHelpers$get3 = get(SuperTooltip.prototype.__proto__ || Object.getPrototypeOf(SuperTooltip.prototype), '_hide', this)).call.apply(_babelHelpers$get3, [this].concat(args));
-
-			clearTimeout(this._disposeTimer);
-			this._disposeTimer = setTimeout(function () {
-				if (_this4._tooltipNode) {
-					_this4._tooltipNode.removeEventListener('mouseenter', _this4.hide);
-					_this4._tooltipNode.removeEventListener('click', _this4.hide);
-					_this4._tooltipNode.parentNode.removeChild(_this4._tooltipNode);
-					_this4._tooltipNode = null;
-				}
-			}, directive.options.disposeTimeout || defaultOptions.disposeTimeout);
-
-			return result;
-		}
-	}]);
-	return SuperTooltip;
-}(Tooltip);
-
-function getContent(value) {
-	var type = typeof value === 'undefined' ? 'undefined' : _typeof(value);
-	if (type === 'string') {
-		return value;
-	} else if (value && type === 'object') {
-		return value.content;
-	} else {
-		return false;
-	}
-}
-
-function createTooltip(el, value, modifiers) {
-	var content = getContent(value);
-	var classes = value.classes || directive.options.defaultClass;
-	var opts = _extends$2({
-		title: content,
-		html: true
-	}, getOptions(_extends$2({}, value, {
-		placement: getPlacement(value, modifiers)
-	})));
-	var tooltip = el._tooltip = new SuperTooltip(el, opts);
-	tooltip.setClasses(classes);
-	tooltip._vueEl = el;
-}
-
-function destroyTooltip(el) {
-	if (el._tooltip) {
-		el._tooltip.dispose();
-		delete el._tooltip;
-	}
-}
-
-var directive = {
-	options: defaultOptions,
-	bind: function bind(el, _ref2) {
-		var value = _ref2.value,
-		    modifiers = _ref2.modifiers;
-
-		var content = getContent(value);
-		destroyTooltip(el);
-		if (content && state.enabled) {
-			createTooltip(el, value, modifiers);
-		}
-	},
-	update: function update(el, _ref3) {
-		var value = _ref3.value,
-		    oldValue = _ref3.oldValue,
-		    modifiers = _ref3.modifiers;
-
-		var content = getContent(value);
-		if (!content || !state.enabled) {
-			destroyTooltip(el);
-		} else if (el._tooltip) {
-			var tooltip = el._tooltip;
-			// Content
-			tooltip.setContent(content);
-			// Options
-			tooltip.setOptions(_extends$2({}, value, {
-				placement: getPlacement(value, modifiers)
-			}));
-		} else {
-			createTooltip(el, value, modifiers);
-		}
-	},
-	unbind: function unbind(el) {
-		destroyTooltip(el);
-	}
-};
-
-function install(Vue, options) {
-  if (install.installed) return;
-  install.installed = true;
-
-  options = Object.assign({}, defaultOptions, options || {});
-  directive.options = options;
-  Vue.directive('tooltip', directive);
-}
-
-var VTooltip = directive;
-
-var plugin = {
-  install: install,
-
-  get enabled() {
-    return state.enabled;
-  },
-
-  set enabled(value) {
-    state.enabled = value;
-  }
-};
-
-// Auto-install
-var GlobalVue = null;
-if (typeof window !== 'undefined') {
-  GlobalVue = window.Vue;
-} else if (typeof global !== 'undefined') {
-  GlobalVue = global.Vue;
-}
-if (GlobalVue) {
-  GlobalVue.use(plugin);
-}
-
-
-/* harmony default export */ __webpack_exports__["default"] = (plugin);
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__("./node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
-/***/ "./node_modules/vue-cookies/vue-cookies.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Vue Cookies v1.5.4
- * https://github.com/cmp-cc/vue-cookies
- *
- * Copyright 2016, cmp-cc
- * Released under the MIT license
- */
-
-(function() {
-  var VueCookies = {
-    // install of Vue
-    install: function(Vue) {
-      Vue.prototype.$cookies = this
-      Vue.cookies = this
-    },
-    get: function(key) {
-      return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
-    },
-    set: function(key, value, expireTimes, path, domain, secure) {
-      if (!key) {
-        throw new Error("cookie name is not find in first argument")
-      }else if(/^(?:expires|max\-age|path|domain|secure)$/i.test(key)){
-        throw new Error("cookie key name illegality ,Cannot be set to ['expires','max-age','path','domain','secure']\t","current key name: "+key);
-      }
-      var _expires = "; max-age=86400"; // default expire time for 1 day
-      if (expireTimes) {
-        switch (expireTimes.constructor) {
-          case Number:
-            if(expireTimes === Infinity || expireTimes === -1) _expires = "; expires=Fri, 31 Dec 9999 23:59:59 GMT"
-            else _expires = "; max-age=" + expireTimes;
-            break;
-          case String:
-            if (/^(?:\d{1,}(y|m|d|h|min|s))$/i.test(expireTimes)) {
-              // get capture number group
-              var _expireTime = expireTimes.replace(/^(\d{1,})(?:y|m|d|h|min|s)$/i, "$1");
-              // get capture type group , to lower case
-              switch (expireTimes.replace(/^(?:\d{1,})(y|m|d|h|min|s)$/i, "$1").toLowerCase()) {
-                // Frequency sorting
-                case 'm':  _expires = "; max-age=" + +_expireTime * 259200; break; // 60 * 60 * 24 * 30
-                case 'd':  _expires = "; max-age=" + +_expireTime * 86400; break; // 60 * 60 * 24
-                case 'h': _expires = "; max-age=" + +_expireTime * 3600; break; // 60 * 60
-                case 'min':  _expires = "; max-age=" + +_expireTime * 60; break; // 60
-                case 's': _expires = "; max-age=" + _expireTime; break;
-                case 'y': _expires = "; max-age=" + +_expireTime * 31104000; break; // 60 * 60 * 24 * 30 * 12            
-                default: new Error("unknown exception of 'set operation'");
-              }
-            } else {
-              _expires = "; expires=" + expireTimes;
+var Tooltip$2 = function () {
+    function Tooltip(el) {
+        var _this = this;
+
+        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+        _classCallCheck(this, Tooltip);
+
+        // Tooltip._defaults = DEFAULT_OPTIONS;
+        this._options = _extends({}, Tooltip._defaults, {
+            onCreate: function onCreate(data) {
+                _this.content(_this.tooltip.options.title);
+                _this._$tt.update();
+            },
+            onUpdate: function onUpdate(data) {
+                _this.content(_this.tooltip.options.title);
+                _this._$tt.update();
             }
-            break;
-          case Date:
-            _expires = "; expires=" + expireTimes.toUTCString();
-            break;
+        }, Tooltip.filterOptions(options));
+
+        var $tpl = this._createTooltipElement(this.options);
+        document.querySelector('body').appendChild($tpl);
+
+        this._$el = el;
+        this._$tt = new Popper(el, $tpl, this._options);
+        this._$tpl = $tpl;
+        this._disabled = false;
+        this._visible = false;
+        this._clearDelay = null;
+        this._setEvents();
+    }
+
+    Tooltip.prototype.destroy = function destroy() {
+        this._cleanEvents();
+        document.querySelector('body').removeChild(this._$tpl);
+    };
+
+    Tooltip.prototype._createTooltipElement = function _createTooltipElement(options) {
+        // wrapper
+        var $popper = document.createElement('div');
+        $popper.setAttribute('id', 'tooltip-' + randomId());
+        $popper.setAttribute('class', BASE_CLASS$1 + ' ' + this._options.class);
+        $popper.style.display = 'none';
+
+        // make arrow
+        var $arrow = document.createElement('div');
+        $arrow.setAttribute('class', 'tooltip-arrow');
+        $arrow.setAttribute('x-arrow', '');
+        $popper.appendChild($arrow);
+
+        // make content container
+        var $content = document.createElement('div');
+        $content.setAttribute('class', 'tooltip-content');
+        $popper.appendChild($content);
+
+        return $popper;
+    };
+
+    Tooltip.prototype._events = function _events() {
+        var _this2 = this;
+
+        var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : EVENTS.ADD;
+
+        var evtType = type === EVENTS.ADD ? 'addEventListener' : 'removeEventListener';
+        if (!Array.isArray(this.options.triggers)) {
+            console.error('trigger should be an array', this.options.triggers);
+            return;
         }
-      }
-      document.cookie = encodeURIComponent(key) + "=" + encodeURIComponent(value) + _expires + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : "") + (secure ? "; secure" : "");
-      return this;
-    },
-    remove: function(key, path, domain) {
-      if (!key || !this.isKey(key)) {
-        return false;
-      }
-      document.cookie = encodeURIComponent(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : "");
-      return true;
-    },
-    isKey: function(key) {
-      return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
-    },
-    keys: /* optional method: you can safely remove it! */ function() {
-      var _keys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
-      for (var _index = 0; _index < _keys.length; _index++) {
-        _keys[_index] = decodeURIComponent(_keys[_index]);
-      }
-      return _keys;
+
+        var lis = function lis() {
+            var _$el;
+
+            return (_$el = _this2._$el)[evtType].apply(_$el, arguments);
+        };
+
+        if (includes(this.options.triggers, 'manual')) {
+            lis('click', this._onToggle.bind(this), false);
+        } else {
+            this.options.triggers.map(function (evt) {
+                switch (evt) {
+                    case 'click':
+                        lis('click', _this2._onToggle.bind(_this2), false);
+                        document[evtType]('click', _this2._onDeactivate.bind(_this2), false);
+                        break;
+                    case 'hover':
+                        lis('mouseenter', _this2._onActivate.bind(_this2), false);
+                        lis('mouseleave', _this2._onDeactivate.bind(_this2), true);
+                        break;
+                    case 'focus':
+                        lis('focus', _this2._onActivate.bind(_this2), false);
+                        lis('blur', _this2._onDeactivate.bind(_this2), true);
+                        break;
+                }
+            });
+
+            if (includes(this.options.triggers, 'hover') || includes(this.options.triggers, 'focus')) {
+                this._$tpl[evtType]('mouseenter', this._onMouseOverTooltip.bind(this), false);
+                this._$tpl[evtType]('mouseleave', this._onMouseOutTooltip.bind(this), false);
+            }
+        }
+    };
+
+    Tooltip.prototype._setEvents = function _setEvents() {
+        this._events();
+    };
+
+    Tooltip.prototype._cleanEvents = function _cleanEvents() {
+        this._events(EVENTS.REMOVE);
+    };
+
+    Tooltip.prototype._onActivate = function _onActivate(e) {
+        this.show();
+    };
+
+    Tooltip.prototype._onDeactivate = function _onDeactivate(e) {
+        this.hide();
+    };
+
+    Tooltip.prototype._onToggle = function _onToggle(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        this.toggle();
+    };
+
+    Tooltip.prototype._onMouseOverTooltip = function _onMouseOverTooltip(e) {
+        this.toggle(true, false);
+    };
+
+    Tooltip.prototype._onMouseOutTooltip = function _onMouseOutTooltip(e) {
+        this.toggle(false);
+    };
+
+    Tooltip.prototype.content = function content(_content) {
+        var wrapper = this.tooltip.popper.querySelector('.tooltip-content');
+        if (typeof _content === 'string') {
+            this.tooltip.options.title = _content;
+            wrapper.textContent = _content;
+        } else if (isElement$1(_content)) {
+            if (_content !== wrapper.children[0]) {
+                wrapper.innerHTML = '';
+                wrapper.appendChild(_content);
+            }
+            // var clonedNode = content.cloneNode(true);
+            // this.tooltip.options.title = clonedNode;
+            // if (isElement(content.parentNode)) {
+            //     content.parentNode.removeChild(content);
+            // }
+        } else {
+            console.error('unsupported content type', _content);
+        }
+    };
+
+    Tooltip.filterOptions = function filterOptions(options) {
+        var opt = _extends({}, options);
+
+        opt.modifiers = {};
+        var head = null;
+        var tail = null;
+        if (options.placement.indexOf('-') > -1) {
+            var _options$placement$sp = options.placement.split('-');
+
+            head = _options$placement$sp[0];
+            tail = _options$placement$sp[1];
+
+            opt.placement = includes(PLACEMENT, head) && includes(SUB_PLACEMENT, tail) ? options.placement : Tooltip._defaults.placement;
+        } else {
+            opt.placement = includes(PLACEMENT, options.placement) ? options.placement : Tooltip._defaults.placement;
+        }
+        opt.modifiers.offset = {
+            fn: Tooltip._setOffset
+        };
+
+        return opt;
+    };
+
+    Tooltip._setOffset = function _setOffset(data, opts) {
+        var offset = data.instance.options.offset;
+
+        if (window.isNaN(offset) || offset < 0) {
+            offset = Tooltip._defaults.offset;
+        }
+
+        if (data.placement.indexOf('top') !== -1) {
+            data.offsets.popper.top -= offset;
+        } else if (data.placement.indexOf('right') !== -1) {
+            data.offsets.popper.left += offset;
+        } else if (data.placement.indexOf('bottom') !== -1) {
+            data.offsets.popper.top += offset;
+        } else if (data.placement.indexOf('left') !== -1) {
+            data.offsets.popper.left -= offset;
+        }
+
+        return data;
+    };
+
+    Tooltip.defaults = function defaults(data) {
+        Tooltip._defaults = _extends({}, Tooltip._defaults, data);
+    };
+
+    Tooltip.prototype.show = function show() {
+        this.toggle(true);
+    };
+
+    Tooltip.prototype.hide = function hide() {
+        this.toggle(false);
+    };
+
+    Tooltip.prototype.toggle = function toggle(visible) {
+        var _this3 = this;
+
+        var autoHide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+        var delay = this._options.delay;
+
+        if (this._disabled === true) {
+            visible = false;
+            delay = 0;
+            return;
+        }
+
+        if (typeof visible !== 'boolean') {
+            visible = !this._visible;
+        }
+
+        if (visible === true) {
+            delay = 0;
+        }
+
+        clearTimeout(this._clearDelay);
+
+        if (autoHide === true) {
+            this._clearDelay = setTimeout(function () {
+                _this3._visible = visible;
+                _this3._$tt.popper.style.display = _this3._visible === true ? 'inline-block' : 'none';
+                _this3._$tt.update();
+            }, delay);
+        }
+    };
+
+    _createClass(Tooltip, [{
+        key: 'options',
+        get: function get() {
+            return _extends({}, this._options);
+        }
+    }, {
+        key: 'tooltip',
+        get: function get() {
+            return this._$tt;
+        }
+    }, {
+        key: 'class',
+        set: function set(val) {
+            if (typeof val === 'string') {
+                var classList = this._$tpl.classList.value.replace(this.options.class, val);
+                this._options.class = classList;
+                this._$tpl.setAttribute('class', classList);
+            }
+        }
+    }, {
+        key: 'disabled',
+        set: function set(val) {
+            if (typeof val === 'boolean') {
+                this._disabled = val;
+            }
+        }
+    }]);
+
+    return Tooltip;
+}();
+
+Tooltip$2._defaults = _extends({}, DEFAULT_OPTIONS);
+
+function randomId() {
+    return Date.now() + '-' + Math.round(Math.random() * 100000000);
+}
+
+/**
+ * Check if the variable is an html element
+ * @param {*} value
+ * @return Boolean
+ */
+function isElement$1(value) {
+    return value instanceof window.Element;
+}
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/**
+ * @author: laurent blanes <laurent.blanes@gmail.com>
+ * @tutorial: https://hekigan.github.io/vue-directive-tooltip/
+ */
+var BASE_CLASS = 'vue-tooltip';
+var POSITIONS = ['auto', 'top', 'bottom', 'left', 'right'];
+var SUB_POSITIONS = ['start', 'end'];
+
+/**
+ * usage:
+ *
+ * // basic usage:
+ * <div v-tooltip="'my content'">
+ * or
+ * <div v-tooltip="{content: 'my content'}">
+ *
+ * // change position of tooltip
+ * // options: auto (default) | bottom | top | left | right
+ *
+ * // change sub-position of tooltip
+ * // options: start | end
+ *
+ * <div v-tooltip.top="{content: 'my content'}">
+ *
+ * // add custom class
+ * <div v-tooltip="{class: 'custom-class', content: 'my content'}">
+ *
+ * // toggle visibility
+ * <div v-tooltip="{visible: false, content: 'my content'}">
+ */
+var Tooltip$1 = {
+    name: 'tooltip',
+    config: {},
+    install: function install(Vue, installOptions) {
+        Vue.directive('tooltip', {
+            bind: function bind(el, binding, vnode) {
+                if (installOptions) {
+                    Tooltip$2.defaults(installOptions);
+                }
+            },
+            inserted: function inserted(el, binding, vnode, oldVnode) {
+                if (installOptions) {
+                    Tooltip$2.defaults(installOptions);
+                }
+                var options = filterBindings(binding);
+                el.tooltip = new Tooltip$2(el, options);
+
+                if (binding.modifiers.notrigger && binding.value.visible === true) {
+                    el.tooltip.show();
+                }
+
+                if (binding.value.visible === false) {
+                    el.tooltip.disabled = true;
+                }
+            },
+            componentUpdated: function componentUpdated(el, binding, vnode, oldVnode) {
+                update(el, binding);
+            },
+            unbind: function unbind(el, binding, vnode, oldVnode) {
+                el.tooltip.destroy();
+            }
+        });
     }
-  }
+};
 
-  if (true) {
-    module.exports = VueCookies;
-  } else if (typeof define == "function" && define.amd) {
-    define([], function() {
-      return VueCookies;
-    })
-  } else if (window.Vue) {
-    Vue.use(VueCookies);
-  }
-  // vue-cookies can exist independently,no dependencies library
-  if(typeof window!=="undefined"){
-        window.$cookies = VueCookies;
+function filterBindings(binding) {
+    var delay = isNaN(binding.value.delay) ? Tooltip$2._defaults.delay : binding.value.delay;
+
+    return {
+        class: getClass(binding),
+        html: binding.value.html,
+        placement: getPlacement(binding),
+        title: getContent(binding),
+        triggers: getTriggers(binding),
+        offset: binding.value.offset || Tooltip$2._defaults.offset,
+        delay: delay
+    };
+}
+
+/**
+ * Get placement from modifiers
+ * @param {*} binding
+ */
+function getPlacement(_ref) {
+    var modifiers = _ref.modifiers;
+
+    var MODS = Object.keys(modifiers);
+    var head = 'auto';
+    var tail = null;
+    for (var i = 0; i < MODS.length; i++) {
+        var pos = MODS[i];
+        if (POSITIONS.indexOf(pos) > -1) {
+            head = pos;
+        }
+        if (SUB_POSITIONS.indexOf(pos) > -1) {
+            tail = pos;
+        }
+    }
+    return head && tail ? head + '-' + tail : head;
+}
+
+/**
+ * Get trigger value from modifiers
+ * @param {*} binding
+ * @return String
+ */
+function getTriggers(_ref2) {
+    var modifiers = _ref2.modifiers;
+
+    var trigger = [];
+    if (modifiers.notrigger) {
+        return trigger;
+    } else if (modifiers.manual) {
+        trigger.push('manual');
+    } else {
+        if (modifiers.click) {
+            trigger.push('click');
+        }
+
+        if (modifiers.hover) {
+            trigger.push('hover');
+        }
+
+        if (modifiers.focus) {
+            trigger.push('focus');
+        }
+
+        if (trigger.length === 0) {
+            trigger.push('hover', 'focus');
+        }
     }
 
+    return trigger;
+}
 
-})()
+/**
+ * Check if the variable is an object
+ * @param {*} value
+ * @return Boolean
+ */
+function isObject(value) {
+    return (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object';
+}
+
+/**
+ * Check if the variable is an html element
+ * @param {*} value
+ * @return Boolean
+ */
+function isElement(value) {
+    return value instanceof window.Element;
+}
+
+/**
+ * Get the css class
+ * @param {*} binding
+ * @return HTMLElement | String
+ */
+function getClass(_ref3) {
+    var value = _ref3.value;
+
+    if (isObject(value) && typeof value.class === 'string') {
+        return BASE_CLASS + ' ' + value.class;
+    } else if (Tooltip$2._defaults.class) {
+        return BASE_CLASS + ' ' + Tooltip$2._defaults.class;
+    } else {
+        return BASE_CLASS;
+    }
+}
+
+/**
+ * Get the content
+ * @param {*} binding
+ * @return HTMLElement | String
+ */
+function getContent(_ref4) {
+    var value = _ref4.value;
+
+    if (isObject(value)) {
+        if (value.content !== undefined) {
+            return '' + value.content;
+        } else if (value.html && document.getElementById(value.html)) {
+            return document.getElementById(value.html);
+        } else if (isElement(value.html)) {
+            return value.html;
+        } else {
+            return '';
+        }
+    } else {
+        return '' + value;
+    }
+}
+
+/**
+ * Action on element update
+ * @param {*} el Vue element
+ * @param {*} binding
+ */
+function update(el, binding) {
+    if (typeof binding.value === 'string') {
+        el.tooltip._content = binding.value;
+    } else {
+        if (binding.value.class && binding.value.class.trim() !== el.tooltip.options.class.replace(BASE_CLASS, '').trim()) {
+            el.tooltip.class = BASE_CLASS + ' ' + binding.value.class.trim();
+        }
+
+        el.tooltip.content(getContent(binding));
+
+        if (!binding.modifiers.notrigger && typeof binding.value.visible === 'boolean') {
+            el.tooltip.disabled = !binding.value.visible;
+            return;
+        } else if (binding.modifiers.notrigger) {
+            el.tooltip.disabled = false;
+        }
+
+        if (!el.tooltip.disabled && binding.value.visible === true) {
+            el.tooltip.show();
+        } else {
+            el.tooltip.hide();
+        }
+    }
+}
+
+// if (typeof window !== 'undefined' && window.Vue) {
+//     window.Vue.use(Tooltip);
+// }
+
+return Tooltip$1;
+
+})));
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -43815,9 +43255,9 @@ var _vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vTooltip = __webpack_require__("./node_modules/v-tooltip/dist/v-tooltip.esm.js");
+var _vueDirectiveTooltip = __webpack_require__("./node_modules/vue-directive-tooltip/dist/vueDirectiveTooltip.js");
 
-var _vTooltip2 = _interopRequireDefault(_vTooltip);
+var _vueDirectiveTooltip2 = _interopRequireDefault(_vueDirectiveTooltip);
 
 var _vueCookies = __webpack_require__("./node_modules/vue-cookies/vue-cookies.js");
 
@@ -43837,9 +43277,11 @@ var _AdminFood = __webpack_require__("./resources/assets/js/vue-admin-food-app/c
 
 var _AdminFood2 = _interopRequireDefault(_AdminFood);
 
+__webpack_require__("./node_modules/vue-directive-tooltip/css/index.css");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_vue2.default.use(_vueNotifications2.default, _notifications.optionsIzi).use(_vueCookies2.default).use(_vTooltip2.default);
+_vue2.default.use(_vueNotifications2.default, _notifications.optionsIzi).use(_vueCookies2.default).use(_vueDirectiveTooltip2.default);
 
 var adminFoodApp = new _vue2.default({
     el: '.panel',
@@ -44212,13 +43654,29 @@ exports.default = {
                     token: payload.token || ''
                 }
             }).then(function (response) {
-                var data = payload.isRentals ? response.data.rentals : response.data.orders;
                 cntx.dispatch('auth/setToken', response, { root: true });
-                cntx.commit('setPagination', data);
-                cntx.commit('setPerPage', +data.per_page);
-                cntx.commit('setTotal', data.total);
-                cntx.commit('PAGINATE', data.current_page);
+                cntx.commit('setPagination', response.data);
+                cntx.commit('setPerPage', +response.data.per_page);
+                cntx.commit('setTotal', response.data.total);
+                cntx.commit('PAGINATE', response.data.current_page);
                 resolve();
+            }).catch(function (error) {
+                var err = (0, _appAxios.handlingXhrErrors)(error);
+                err.timeout = 3000;
+                reject(err);
+            });
+        });
+    },
+    rentalsOrOrdersForId: function rentalsOrOrdersForId(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            var url = (payload.isRentals ? 'rentals/' : 'orders/') + 'for-id/';
+            _appAxios.http.get(url + payload.id, {
+                params: {
+                    token: cntx.rootState.auth.xhr.token || ''
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve(response.data);
             }).catch(function (error) {
                 var err = (0, _appAxios.handlingXhrErrors)(error);
                 err.timeout = 3000;

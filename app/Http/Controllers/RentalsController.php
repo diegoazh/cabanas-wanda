@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use JWTAuth;
+use phpDocumentor\Reflection\Types\Integer;
 
 class RentalsController extends Controller
 {
@@ -46,7 +47,7 @@ class RentalsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\RequestRentalStore  $request
      * @return \Illuminate\Http\Response
      */
     public function store(RequestRentalStore $request)
@@ -116,9 +117,42 @@ class RentalsController extends Controller
     }
 
     /**
+     * Find the specified resource in storage by hes id.
+     *
+     * @param  Integer  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function findForId($id)
+    {
+        if (!$reserva = Rental::find($id)) {
+
+            return response()->json(['error' => 'No hemos localizado la reserva'], 404);
+
+        }
+
+        $reserva->cottage;
+        $reserva->user;
+        $reserva->passenger;
+        $reserva->promotion;
+        $reserva->claims;
+
+        foreach ($reserva->orders as $order) {
+
+            foreach ($order->ordersDetail as $detail) {
+
+                $detail->food;
+
+            }
+
+        }
+
+        return response()->json($reserva, 200);
+    }
+
+    /**
      * Find the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\RequestRentalFind  $request
      * @return \Illuminate\Http\Response
      */
     public function find(RequestRentalFind $request)
@@ -260,6 +294,6 @@ class RentalsController extends Controller
 
         }
 
-        return response()->json(compact('rentals'), 200);
+        return response()->json($rentals, 200);
     }
 }

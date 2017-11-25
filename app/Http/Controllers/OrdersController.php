@@ -182,6 +182,6 @@ class OrdersController extends Controller
 
         }
 
-        return response()->json(compact('orders'), 200);
+        return response()->json($orders, 200);
     }
 }

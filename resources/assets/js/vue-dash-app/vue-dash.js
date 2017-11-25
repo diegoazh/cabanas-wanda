@@ -1,12 +1,15 @@
-import Vue from 'vue'
-import VTooltip from 'v-tooltip'
-import VueCookies from 'vue-cookies'
+import Vue from 'vue';
+import Tooltip from 'vue-directive-tooltip';
+import VueCookies from 'vue-cookies';
 import VueNotifications from 'vue-notifications';
-import store from '../vue-commons/store/store'
-import { optionsIzi } from '../vue-commons/notifications/notifications'
-import Dash from './components/Dash.vue'
+import store from '../vue-commons/store/store';
+import { optionsIzi } from '../vue-commons/notifications/notifications';
+import { DateArgFilter } from '../vue-commons/filters/DateGlobalFilter';
+import Dash from './components/Dash.vue';
+import 'vue-directive-tooltip/css/index.css';
 
-Vue.use(VueNotifications, optionsIzi).use(VueCookies).use(VTooltip);
+Vue.use(VueNotifications, optionsIzi).use(VueCookies).use(Tooltip);
+Vue.filter('DateArg', DateArgFilter);
 
 window.EventBus = new Vue();
 

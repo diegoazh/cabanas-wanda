@@ -7,7 +7,7 @@
                 <th>Cabaña</th>
                 <th>Se&ntilde;a</th>
                 <th>Fecha de se&ntilde;a</th>
-                <th>Estado</th>
+                <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -16,7 +16,15 @@
                 <td>{{ orders.rental.cottage.name }}</td>
                 <td>{{ orders.senia }}</td>
                 <td>{{ orders.senia_date }}</td>
-                <td>{{ orders.state }}</td>
+                <td>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <button class="btn btn-info" v-tooltip="'Ver pedido ' + rowNumber(index) + ' de la cabaña ' + orders.rental.cottage.name">
+                                <icon-app iconImage="eye"></icon-app>
+                            </button>
+                        </div>
+                    </div>
+                </td>
             </tr>
             </tbody>
             <tfoot>
@@ -30,9 +38,12 @@
 
 <script>
     import { mapState } from 'vuex';
+    import Icon from '../../vue-commons/components/Icon.vue';
 
     export default {
-        components: {},
+        components: {
+            'icon-app': Icon
+        },
         data() {
             return {}
         },

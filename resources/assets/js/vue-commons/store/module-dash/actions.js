@@ -10,12 +10,11 @@ export default {
                     token: payload.token || ''
                 }
             }).then(response => {
-                let data = payload.isRentals ? response.data.rentals : response.data.orders;
                 cntx.dispatch('auth/setToken', response, {root: true});
-                cntx.commit('setPagination', data);
-                cntx.commit('setPerPage', +data.per_page);
-                cntx.commit('setTotal', data.total);
-                cntx.commit('PAGINATE', data.current_page);
+                cntx.commit('setPagination', response.data);
+                cntx.commit('setPerPage', +response.data.per_page);
+                cntx.commit('setTotal', response.data.total);
+                cntx.commit('PAGINATE', response.data.current_page);
                 resolve();
             }).catch(error => {
                 let err = handlingXhrErrors(error);
@@ -24,4 +23,21 @@ export default {
             });
         });
     },
+    rentalsOrOrdersForId(cntx, payload) {
+        return new Promise((resolve, reject) => {
+            let url = (payload.isRentals ? 'rentals/' : 'orders/') + 'for-id/';
+            http.get(url + payload.id, {
+                params: {
+                    token: cntx.rootState.auth.xhr.token || ''
+                }
+            }).then(response => {
+                cntx.dispatch('auth/setToken', response, {root: true});
+                resolve(response.data);
+            }).catch(error => {
+                let err = handlingXhrErrors(error);
+                err.timeout = 3000;
+                reject(err);
+            })
+        });
+    }
 }

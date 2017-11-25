@@ -9,7 +9,7 @@
                 <th>Dias</th>
                 <th>Se&ntilde;a</th>
                 <th>Vto se&ntilde;a</th>
-                <th>Estado</th>
+                <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -20,7 +20,15 @@
                 <td>{{ rental.total_days }}</td>
                 <td>{{ (100 / 30 * rental.cottage_price).toFixed(2) }}</td>
                 <td>{{ rental.dateReservationPayment }}</td>
-                <td>{{ rental.state }}</td>
+                <td>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <button class="btn btn-info" v-tooltip="'Ver reserva: ' + rowNumber(index)" data-toggle="modal" data-target="#b3-modal-id" @click="findRental(rental.id)">
+                                <icon-app iconImage="eye"></icon-app>
+                            </button>
+                        </div>
+                    </div>
+                </td>
             </tr>
             </tbody>
             <tfoot>
@@ -29,16 +37,159 @@
             </tr>
             </tfoot>
         </table>
+        <modal-app :modalTitle="modalAppTitle" modalSize="lg" :onModalHidden="clearRental">
+            <div class="container-fluid" v-if="rental">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <h2 class="text-center">
+                            Reserva caba&ntilde;a <span class="text-capitalize label label-info">{{ rental.cottage.name }}</span>
+                            <br>
+                            <small>
+                                Desde: <span class="label label-default">{{ rental.dateFrom | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span>
+                                &nbsp;|&nbsp;
+                                Hasta: <span class="label label-default">{{ rental.dateTo | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span>
+                                <br>
+                                <span class="label label-warning text-uppercase" v-if="!editState">{{ rental.state }}</span>&nbsp;
+                                <a role="button" @click.prevent="editState = true" v-tooltip.hover="'Editar estado'" v-if="!editState"><icon-app iconImage="edit"></icon-app></a>
+                                <form @submit.prevent="" class="form-inline" v-if="editState">
+                                    <div class="form-group">
+                                        <label for="state" class="sr-only">Estado: </label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">Estado</div>
+                                            <select name="state" id="state" class="form-control" v-model="rental.state">
+                                                <option value="pendiente" :selected="rental.state === 'pendiente'">Pendiente</option>
+                                                <option value="confirmada" :selected="rental.state === 'confirmada'">Confirmada</option>
+                                                <option value="en curso" :selected="rental.state === 'en curso'">En curso</option>
+                                                <option value="cancelada" :selected="rental.state === 'cancelada'">Cancelada</option>
+                                                <option value="finalizada" :selected="rental.state === 'finalizada'">Finalizada</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-default" @click.prevent="editState = false">Cancelar</button>
+                                            <button class="btn btn-primary">Actualizar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </small>
+                        </h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>Vto reserva:
+                                    </th>
+                                    <td>
+                                        <span class="text-to-14px label label-default">{{ rental.dateReservationPayment | DateArg }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Codigo:
+                                    </th>
+                                    <td>
+                                        <span class="text-to-14px label label-primary">{{ rental.code_reservation }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Cantidad de días:
+                                    </th>
+                                    <td>
+                                        <span class="text-to-14px label label-default">{{ rental.total_days }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ rental.user ? 'Usuario' : 'Pasajero' }}:
+                                    </th>
+                                    <td>
+                                        <span class="text-to-14px text-capitatrze label label-info">{{ fullName(rental) }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Precio al reservar:
+                                    </th>
+                                    <td>
+                                        <span class="text-to-14px label label-danger"><icon-app iconImage="dollar"></icon-app> {{ rental.cottage_price }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Promoción:
+                                    </th>
+                                    <td>
+                                        <span class="text-to-14px label label-warning">{{ rental.promotion || 'Sin promoci&oacute;n' }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Descuentos:
+                                    </th>
+                                    <td>
+                                        <span class="text-to-14px label label-primary"><icon-app iconImage="dollar"></icon-app> {{ rental.deductions || 0 }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <h3 class="text-center">
+                            Descripción <a role="button" @click.prevent="initEditorMd" v-tooltip.hover="'Editar descripción'"><icon-app :iconImage="editDescription ? 'times' : 'edit'"></icon-app></a>
+                            <br>
+                            <small class="text-muted">Aquí puede agregar cualquier comentario que necesite vincular a está reserva.</small>
+                        </h3>
+                        <hr>
+                        <vue-markdown :source="rental.description || '### Sin descripción'" v-if="!editDescription"></vue-markdown>
+                        <div v-else>
+                            <div class="form-group">
+                                <label for="description" class="sr-only">Descripión:</label>
+                                <div id="editormd">
+                                    <textarea id="description" name="description" class="form-control">{{ rental.description }}</textarea>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-default" @click.prevent="editDescription = !editDescription"><b> Cancelar <icon-app iconImage="times-o"></icon-app></b></button>
+                                <button class="btn btn-primary" @click.prevent="setTextMarkdown"><b> Actualizar <icon-app iconImage="update"></icon-app></b></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </modal-app>
     </div>
 </template>
 
 <script>
-    import { mapState } from 'vuex';
+    import VueNoti from 'vue-notifications';
+    import VueMarkdown from 'vue-markdown';
+    import { mapState, mapActions } from 'vuex';
+    import Icon from '../../vue-commons/components/Icon.vue';
+    import Modal from '../../vue-commons/components/Modal.vue';
 
     export default {
-        components: {},
+        components: {
+            VueMarkdown,
+            'icon-app': Icon,
+            'modal-app': Modal
+        },
         data() {
-            return {}
+            return {
+                rental: null,
+                modalAppTitle: '',
+                editState: false,
+                editDescription: false,
+            }
         },
         computed: {
             ...mapState('dash', {
@@ -50,7 +201,58 @@
             rowNumber(index) {
                 let adition = (this.page - 1) * 15;
                 return index + 1 + adition;
-            }
+            },
+            fullName(rental) {
+                return rental.user ? `${rental.user.lastname}, ${rental.user.name}` : `${rental.passenger.lastname}, ${rental.passenger.name}`;
+            },
+            clearRental() {
+                this.rental = null;
+                this.editState = false;
+                this.editDescription = false;
+                delete window.appDash;
+            },
+            initEditorMd() {
+                this.editDescription = !this.editDescription;
+                const module = this;
+                window.jQuery(window.document).ready(function () {
+                    window.appDash = {};
+                    if (!module.editDescription) return;
+                    window.appDash.editor = editormd({
+                        id      : 'editormd',
+                        width   : '100%',
+                        height  : '400px',
+                        path    : '/lib/editor.md/lib/',
+                        theme: 'dark',
+                        previweTheme: 'default',
+                        editorTheme: 'pastel-on-dark',
+                        syncScrolling : true,
+                        saveHTMLToTextarea : true,
+                        /*onchange: function() {
+                            module.setTextMarkdown();
+                        }*/
+                    });
+                });
+            },
+            setTextMarkdown() {
+                this.rental.description = window.appDash.editor.getMarkdown();
+                this.editDescription = !this.editDescription;
+            },
+            findRental(id) {
+                this.rentalsOrOrdersForId({
+                    isRentals: true,
+                    id: id
+                }).then(rental => {
+                    this.rental = rental;
+                    VueNoti.success({
+                        title: 'OK!',
+                        message: 'Reserva cargada con éxito',
+                        timeout: 3000
+                    });
+                }).catch(error => {
+                    VueNoti.error(error);
+                });
+            },
+            ...mapActions('dash', ['rentalsOrOrdersForId'])
         },
         filters: {},
         created() {
@@ -60,4 +262,8 @@
     }
 </script>
 
-<style></style>
+<style>
+    .text-to-14px {
+        font-size: 14px;
+    }
+</style>

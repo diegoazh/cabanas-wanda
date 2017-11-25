@@ -33,6 +33,7 @@ Route::prefix('rentals')->group(function() {
 
     Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function() {
         Route::get('for-state/{state}/{results}', 'RentalsController@rentalsForState')->name('api.rentals.forState');
+        Route::get('for-id/{id}', 'RentalsController@findForId')->name('api.rentals.forId');
     });
 });
 
