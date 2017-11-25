@@ -114,13 +114,11 @@
             })
         },
         methods: {
-            setTypeofQuery(newType) {
-                if (this.type === 'pendiente') {
-                    if (this.seeRentals) {
-                        this.trash.pendiente = this.page;
-                    } else {
-                        this.trash.pendiente2 = this.page;
-                    }
+            savePreviousPage() {
+                if (this.type === 'pendiente' && this.seeRentals) {
+                    this.trash.pendiente = this.page;
+                } else if (this.type === 'pendiente' && !this.seeRentals) {
+                    this.trash.pendiente2 = this.page;
                 } else if (this.type === 'confirmada') {
                     this.trash.confirmada = this.page;
                 } else if (this.type === 'en curso') {
@@ -136,30 +134,40 @@
                 } else if (this.type === 'cancelado') {
                     this.trash.cancelado = this.page;
                 }
-
-                this.type = newType;
-
-                if (this.type === 'pendiente') {
-                    if (this.seeRentals) {
-                        this.page !== this.trash.pendiente ? this.PAGINATE(this.trash.pendiente) : window.EventBus.$emit('page-change', this.page);
-                    } else {
-                        this.page !== this.trash.pendiente2 ? this.PAGINATE(this.trash.pendiente2) : window.EventBus.$emit('page-change', this.page);
-                    }
-                } else if (this.type === 'confirmada') {
-                    this.page !== this.trash.confirmada ? this.PAGINATE(this.trash.confirmada) : window.EventBus.$emit('page-change', this.page);
-                } else if (this.type === 'en curso') {
-                    this.page !== this.trash.en_curso ? this.PAGINATE(this.trash.en_curso) : window.EventBus.$emit('page-change', this.page);
-                } else if (this.type === 'cancelada') {
-                    this.page !== this.trash.cancelada ? this.PAGINATE(this.trash.cancelada) : window.EventBus.$emit('page-change', this.page);
-                } else if (this.type === 'finalizada') {
-                    this.page !== this.trash.finalizada ? this.PAGINATE(this.trash.finalizada) : window.EventBus.$emit('page-change', this.page);
-                } else if (this.type === 'seniado') {
-                    this.page !== this.trash.seniado ? this.PAGINATE(this.trash.seniado) : window.EventBus.$emit('page-change', this.page);
-                } else if (this.type === 'pagado') {
-                    this.page !== this.trash.pagado ? this.PAGINATE(this.trash.pagado) : window.EventBus.$emit('page-change', this.page);
-                } else if (this.type === 'cancelado') {
-                    this.page !== this.trash.cancelado ? this.PAGINATE(this.trash.cancelado) : window.EventBus.$emit('page-change', this.page);
+            },
+            setNewPage() {
+                if (this.type === 'pendiente' && this.seeRentals && this.page !== this.trash.pendiente) {
+                    this.PAGINATE(this.trash.pendiente);
+                } else if (this.type === 'pendiente' && !this.seeRentals && this.page !== this.trash.pendiente2) {
+                    this.PAGINATE(this.trash.pendiente2);
+                } else if (this.type === 'confirmada' && this.page !== this.trash.confirmada) {
+                    this.PAGINATE(this.trash.confirmada);
+                } else if (this.type === 'en curso' && this.page !== this.trash.en_curso) {
+                    this.PAGINATE(this.trash.en_curso);
+                } else if (this.type === 'cancelada' && this.page !== this.trash.cancelada) {
+                    this.PAGINATE(this.trash.cancelada);
+                } else if (this.type === 'finalizada' && this.page !== this.trash.finalizada) {
+                    this.PAGINATE(this.trash.finalizada);
+                } else if (this.type === 'seniado' && this.page !== this.trash.seniado) {
+                    this.PAGINATE(this.trash.seniado);
+                } else if (this.type === 'pagado' && this.page !== this.trash.pagado) {
+                    this.PAGINATE(this.trash.pagado);
+                } else if (this.type === 'cancelado' && this.page !== this.trash.cancelado) {
+                    this.PAGINATE(this.trash.cancelado);
+                } else {
+                    window.EventBus.$emit('page-change', this.page);
                 }
+            },
+            savePreviousType() {
+                this.seeRentals ? this.trash.rentals = this.type : this.trash.orders = this.type;
+            },
+            setNewType(){
+                this.seeRentals ? this.type = this.trash.rentals : this.type = this.trash.orders;
+            },
+            setTypeofQuery(newType) {
+                this.savePreviousPage();
+                this.type = newType;
+                this.setNewPage();
             },
             ...mapMutations('auth', ['setToken']),
             ...mapMutations('dash', ['PAGINATE', 'setPagination']),
@@ -171,10 +179,13 @@
 
             window.EventBus.$on('change-side', ($event)=> {
                 this.setPagination(null);
-                this.seeRentals ? this.trash.rentals = this.type : this.trash.orders = this.type;
-                this.seeRentals = $event;
-                this.seeRentals ? this.type = this.trash.rentals : this.type = this.trash.orders;
-                window.EventBus.$emit('page-change', this.page);
+                this.savePreviousPage();
+                this.savePreviousType();
+                if (this.seeRentals !== $event) {
+                    this.seeRentals = $event;
+                    this.setNewType();
+                    this.setNewPage();
+                }
             });
 
             this.rentalsOrOrdersForState({
