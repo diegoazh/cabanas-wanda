@@ -1,10 +1,10 @@
 <template>
     <div class="panel">
         <div class="panel-heading">
-            <h1 class="text-center">Panel de asministración</h1>
+            <h1 class="text-center"><icon-app iconImage="dashboard"></icon-app> Panel de asministración</h1>
         </div>
         <div class="panel-body">
-            <btn-switch-app :initLeft="seeRentals" textLeft="Reservas" textRight="Pedidos" classOnActive="text-primary" classOnInactive="text-muted" :textDeleted="true"></btn-switch-app>
+            <btn-switch-app :initLeft="seeRentals" textLeft="Reservas" iconTextLeft="handshake-o" textRight="Pedidos" iconTextRight="cutlery" classOnActive="text-primary" classOnInactive="text-muted" :textDeleted="true"></btn-switch-app>
             <div>
                 <template v-if="seeRentals">
                     <!-- Nav tabs -->

@@ -1,11 +1,15 @@
 <template>
     <div class="text-center">
         <h2>
-            <span role="button" :class="applyLeftSide" @click="toggleLeft">{{ textLeft }}</span>&nbsp;
+            <span role="button" :class="applyLeftSide" @click="toggleLeft">
+                <icon-app :iconImage="iconTextLeft" v-if="iconTextLeft"></icon-app> {{ textLeft }}
+            </span>&nbsp;
             <span @click="toggleSide">
                 <icon-app role="button" :iconImage="applyBtnType" :aditionalClasses="aditionalClassesForBtn"></icon-app>&nbsp;
             </span>
-            <span role="button" :class="applyRightSide" @click="toggleRight">{{ textRight }}</span>
+            <span role="button" :class="applyRightSide" @click="toggleRight">
+                {{ textRight }} <icon-app :iconImage="iconTextRight" v-if="iconTextRight"></icon-app>
+            </span>
         </h2>
     </div>
 </template>
@@ -35,10 +39,22 @@
                 required: true,
                 validator: value => value !== undefined && typeof value === 'string'
             },
+            iconTextLeft: {
+                type: String,
+                default : '',
+                required: false,
+                validator: value => value !== undefined && typeof value === 'string'
+            },
             textRight: {
                 type: String,
                 default: 'Text-right',
                 required: true,
+                validator: value => value !== undefined && typeof value === 'string'
+            },
+            iconTextRight: {
+                type: String,
+                default : '',
+                required: false,
                 validator: value => value !== undefined && typeof value === 'string'
             },
             classOnActive: {

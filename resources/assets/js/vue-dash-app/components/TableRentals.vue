@@ -14,16 +14,16 @@
             </thead>
             <tbody>
             <tr v-for="(rental, index) in pagination.data">
-                <td>{{ rowNumber(index) }}</td>
-                <td>{{ rental.dateFrom }}</td>
-                <td>{{ rental.dateTo }}</td>
-                <td>{{ rental.total_days }}</td>
-                <td>{{ (100 / 30 * rental.cottage_price).toFixed(2) }}</td>
-                <td>{{ rental.dateReservationPayment }}</td>
+                <td><icon-app iconImage="hashtag"></icon-app> {{ rowNumber(index) }}</td>
+                <td><span class="text-to-14px label label-default">{{ rental.dateFrom | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span></td>
+                <td><span class="text-to-14px label label-default">{{ rental.dateTo | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span></td>
+                <td><span class="text-to-14px label label-primary">{{ rental.total_days }}</span></td>
+                <td><span class="text-to-14px label label-warning"><icon-app iconImage="dollar"></icon-app>  {{ setSenia(rental.cottage_price) }}</span></td>
+                <td><span class="text-to-14px label label-danger">{{ rental.dateReservationPayment | DateArg }}</span></td>
                 <td>
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <button class="btn btn-info" v-tooltip="'Ver reserva: ' + rowNumber(index)" data-toggle="modal" data-target="#b3-modal-id" @click="findRental(rental.id)">
+                            <button class="btn btn-info" v-tooltip.left="'Ver reserva: ' + rowNumber(index)" data-toggle="modal" data-target="#b3-modal-id" @click="findRental(rental.id)">
                                 <icon-app iconImage="eye"></icon-app>
                             </button>
                         </div>
@@ -52,6 +52,12 @@
                                 <span class="label label-warning text-uppercase" v-if="!editState">{{ rental.state }}</span>&nbsp;
                                 <a role="button" @click.prevent="editState = true" v-tooltip.hover="'Editar estado'" v-if="!editState"><icon-app iconImage="edit"></icon-app></a>
                                 <form @submit.prevent="" class="form-inline" v-if="editState">
+                                    <div :class="['alert', 'alert-dismissible', setClassPenalty(rental.dateFrom)]" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h5 v-html="setMsgPenalty(rental.dateFrom, setSenia(+rental.cottage_price))"></h5>
+                                    </div>
                                     <div class="form-group">
                                         <label for="state" class="sr-only">Estado: </label>
                                         <div class="input-group">
@@ -171,6 +177,7 @@
 </template>
 
 <script>
+    import moment from 'moment';
     import VueNoti from 'vue-notifications';
     import VueMarkdown from 'vue-markdown';
     import { mapState, mapActions } from 'vuex';
@@ -204,6 +211,31 @@
             },
             fullName(rental) {
                 return rental.user ? `${rental.user.lastname}, ${rental.user.name}` : `${rental.passenger.lastname}, ${rental.passenger.name}`;
+            },
+            setSenia(price) {
+                return +(30 / 100 * +price).toFixed(2);
+            },
+            setClassPenalty(dateFrom) {
+                if (!dateFrom || typeof dateFrom !== 'string') { console.error('La fecha no debe ser nula y debe ser un string.'); return; }
+                let arg = moment(dateFrom, 'YYYY-MM-DD');
+                if (arg.diff(moment.now(), 'days') < 2) {
+                    return 'alert-danger';
+                } else {
+                    return 'alert-warning';
+                }
+            },
+            setMsgPenalty(dateFrom, senia) {
+                if (!dateFrom || typeof dateFrom !== 'string' || !senia || typeof senia !== 'number') {
+                    console.error('La fecha no debe ser nula y debe ser un string y la seña debe ser un entero y no debe ser nulo.');
+                    return;
+                }
+                let arg = moment(dateFrom, 'YYYY-MM-DD');
+                if (arg.diff(moment.now(), 'days') < 2) {
+                    let penalty = (30 / 100 * senia).toFixed(2);
+                    return 'Tenga en cuenta que si cancela la reserva con menos de 48 hs tiene 72 hs para devolver devolver la seña de <b>$ ' + senia + '</b> más el <b>30%</b> de la misma en concepto de penalización (<b>$ ' + penalty + '</b>) es decir <b>$ ' + (+senia + +penalty).toFixed(2) + '</b>';
+                } else {
+                    return 'Recuerde que si cancela la reserva tiene 72 hs para devolver la seña de <b>$ ' + senia + '</b>';
+                }
             },
             clearRental() {
                 this.rental = null;

@@ -1658,10 +1658,26 @@ exports.default = {
                 return value !== undefined && typeof value === 'string';
             }
         },
+        iconTextLeft: {
+            type: String,
+            default: '',
+            required: false,
+            validator: function validator(value) {
+                return value !== undefined && typeof value === 'string';
+            }
+        },
         textRight: {
             type: String,
             default: 'Text-right',
             required: true,
+            validator: function validator(value) {
+                return value !== undefined && typeof value === 'string';
+            }
+        },
+        iconTextRight: {
+            type: String,
+            default: '',
+            required: false,
             validator: function validator(value) {
                 return value !== undefined && typeof value === 'string';
             }
@@ -1728,6 +1744,10 @@ exports.default = {
     created: function created() {},
     mounted: function mounted() {}
 }; //
+//
+//
+//
+//
 //
 //
 //
@@ -2463,6 +2483,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
+var _moment = __webpack_require__("./node_modules/moment/moment.js");
+
+var _moment2 = _interopRequireDefault(_moment);
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -2514,6 +2544,33 @@ exports.default = {
         },
         fullName: function fullName(rental) {
             return rental.user ? rental.user.lastname + ', ' + rental.user.name : rental.passenger.lastname + ', ' + rental.passenger.name;
+        },
+        setSenia: function setSenia(price) {
+            return +(30 / 100 * +price).toFixed(2);
+        },
+        setClassPenalty: function setClassPenalty(dateFrom) {
+            if (!dateFrom || typeof dateFrom !== 'string') {
+                console.error('La fecha no debe ser nula y debe ser un string.');return;
+            }
+            var arg = (0, _moment2.default)(dateFrom, 'YYYY-MM-DD');
+            if (arg.diff(_moment2.default.now(), 'days') < 2) {
+                return 'alert-danger';
+            } else {
+                return 'alert-warning';
+            }
+        },
+        setMsgPenalty: function setMsgPenalty(dateFrom, senia) {
+            if (!dateFrom || typeof dateFrom !== 'string' || !senia || typeof senia !== 'number') {
+                console.error('La fecha no debe ser nula y debe ser un string y la seña debe ser un entero y no debe ser nulo.');
+                return;
+            }
+            var arg = (0, _moment2.default)(dateFrom, 'YYYY-MM-DD');
+            if (arg.diff(_moment2.default.now(), 'days') < 2) {
+                var penalty = (30 / 100 * senia).toFixed(2);
+                return 'Tenga en cuenta que si cancela la reserva con menos de 48 hs tiene 72 hs para devolver devolver la seña de <b>$ ' + senia + '</b> más el <b>30%</b> de la misma en concepto de penalización (<b>$ ' + penalty + '</b>) es decir <b>$ ' + (+senia + +penalty).toFixed(2) + '</b>';
+            } else {
+                return 'Recuerde que si cancela la reserva tiene 72 hs para devolver la seña de <b>$ ' + senia + '</b>';
+            }
         },
         clearRental: function clearRental() {
             this.rental = null;
@@ -45956,19 +46013,78 @@ var render = function() {
           "tbody",
           _vm._l(_vm.pagination.data, function(rental, index) {
             return _c("tr", [
-              _c("td", [_vm._v(_vm._s(_vm.rowNumber(index)))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(rental.dateFrom))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(rental.dateTo))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(rental.total_days))]),
+              _c(
+                "td",
+                [
+                  _c("icon-app", { attrs: { iconImage: "hashtag" } }),
+                  _vm._v(" " + _vm._s(_vm.rowNumber(index)))
+                ],
+                1
+              ),
               _vm._v(" "),
               _c("td", [
-                _vm._v(_vm._s((100 / 30 * rental.cottage_price).toFixed(2)))
+                _c(
+                  "span",
+                  { staticClass: "text-to-14px label label-default" },
+                  [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("DateArg")(
+                          rental.dateFrom,
+                          "YYYY-MM-DD",
+                          "DD/MM/YYYY"
+                        )
+                      )
+                    )
+                  ]
+                )
               ]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(rental.dateReservationPayment))]),
+              _c("td", [
+                _c(
+                  "span",
+                  { staticClass: "text-to-14px label label-default" },
+                  [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("DateArg")(
+                          rental.dateTo,
+                          "YYYY-MM-DD",
+                          "DD/MM/YYYY"
+                        )
+                      )
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "span",
+                  { staticClass: "text-to-14px label label-primary" },
+                  [_vm._v(_vm._s(rental.total_days))]
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "span",
+                  { staticClass: "text-to-14px label label-warning" },
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v("  " + _vm._s(_vm.setSenia(rental.cottage_price)))
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c("span", { staticClass: "text-to-14px label label-danger" }, [
+                  _vm._v(
+                    _vm._s(_vm._f("DateArg")(rental.dateReservationPayment))
+                  )
+                ])
+              ]),
               _vm._v(" "),
               _c("td", [
                 _c("div", { staticClass: "row" }, [
@@ -45982,9 +46098,10 @@ var render = function() {
                           directives: [
                             {
                               name: "tooltip",
-                              rawName: "v-tooltip",
+                              rawName: "v-tooltip.left",
                               value: "Ver reserva: " + _vm.rowNumber(index),
-                              expression: "'Ver reserva: ' + rowNumber(index)"
+                              expression: "'Ver reserva: ' + rowNumber(index)",
+                              modifiers: { left: true }
                             }
                           ],
                           staticClass: "btn btn-info",
@@ -46122,6 +46239,53 @@ var render = function() {
                                   }
                                 },
                                 [
+                                  _c(
+                                    "div",
+                                    {
+                                      class: [
+                                        "alert",
+                                        "alert-dismissible",
+                                        _vm.setClassPenalty(_vm.rental.dateFrom)
+                                      ],
+                                      attrs: { role: "alert" }
+                                    },
+                                    [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "close",
+                                          attrs: {
+                                            type: "button",
+                                            "data-dismiss": "alert",
+                                            "aria-label": "Close"
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "span",
+                                            {
+                                              attrs: { "aria-hidden": "true" }
+                                            },
+                                            [_vm._v("×")]
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("h5", {
+                                        domProps: {
+                                          innerHTML: _vm._s(
+                                            _vm.setMsgPenalty(
+                                              _vm.rental.dateFrom,
+                                              _vm.setSenia(
+                                                +_vm.rental.cottage_price
+                                              )
+                                            )
+                                          )
+                                        }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
                                   _c("div", { staticClass: "form-group" }, [
                                     _c(
                                       "label",
@@ -46923,7 +47087,13 @@ var render = function() {
           attrs: { role: "button" },
           on: { click: _vm.toggleLeft }
         },
-        [_vm._v(_vm._s(_vm.textLeft))]
+        [
+          _vm.iconTextLeft
+            ? _c("icon-app", { attrs: { iconImage: _vm.iconTextLeft } })
+            : _vm._e(),
+          _vm._v(" " + _vm._s(_vm.textLeft) + "\n        ")
+        ],
+        1
       ),
       _vm._v(" \n        "),
       _c(
@@ -46949,7 +47119,13 @@ var render = function() {
           attrs: { role: "button" },
           on: { click: _vm.toggleRight }
         },
-        [_vm._v(_vm._s(_vm.textRight))]
+        [
+          _vm._v("\n            " + _vm._s(_vm.textRight) + " "),
+          _vm.iconTextRight
+            ? _c("icon-app", { attrs: { iconImage: _vm.iconTextRight } })
+            : _vm._e()
+        ],
+        1
       )
     ])
   ])
@@ -46974,7 +47150,17 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "panel" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "panel-heading" }, [
+      _c(
+        "h1",
+        { staticClass: "text-center" },
+        [
+          _c("icon-app", { attrs: { iconImage: "dashboard" } }),
+          _vm._v(" Panel de asministración")
+        ],
+        1
+      )
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -46984,7 +47170,9 @@ var render = function() {
           attrs: {
             initLeft: _vm.seeRentals,
             textLeft: "Reservas",
+            iconTextLeft: "handshake-o",
             textRight: "Pedidos",
+            iconTextRight: "cutlery",
             classOnActive: "text-primary",
             classOnInactive: "text-muted",
             textDeleted: true
@@ -47305,18 +47493,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "panel-heading" }, [
-      _c("h1", { staticClass: "text-center" }, [
-        _vm._v("Panel de asministración")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
