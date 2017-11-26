@@ -33515,6 +33515,23 @@ exports.default = {
                 reject(err);
             });
         });
+    },
+    updateRental: function updateRental(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('rentals/update/' + payload.id, {
+                description: payload.description,
+                state: payload.state,
+                side: payload.side
+            }).then(function (response) {
+                response.data.title = "¡Actualizción Ok!";
+                response.data.useSwal = true;
+                resolve(response.data);
+            }).catch(function (error) {
+                var err = (0, _appAxios.handlingXhrErrors)(error);
+                err.useSwal = true;
+                reject(err);
+            });
+        });
     }
 };
 

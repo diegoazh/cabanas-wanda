@@ -137,6 +137,11 @@ body .container-backend #content #main_menu .menu > li > a.active {
 body .container-backend #content #main_menu .menu > li > a.active {
   border-bottom: 1px solid #1a638f;
 }
+body .container-backend #content #main_menu .menu > li > a.panel-dash:before {
+  content: '\f0e4';
+  font-family: 'FontAwesome';
+  margin-right: 5px;
+}
 body .container-backend #content #main_menu .menu > li > a.frontend:before {
   content: '\f108';
   font-family: 'FontAwesome';
@@ -144,6 +149,21 @@ body .container-backend #content #main_menu .menu > li > a.frontend:before {
 }
 body .container-backend #content #main_menu .menu > li > a.cottage:before {
   content: '\f015';
+  font-family: 'FontAwesome';
+  margin-right: 5px;
+}
+body .container-backend #content #main_menu .menu > li > a.promotion:before {
+  content: '\f06b';
+  font-family: 'FontAwesome';
+  margin-right: 5px;
+}
+body .container-backend #content #main_menu .menu > li > a.claims:before {
+  content: '\f071';
+  font-family: 'FontAwesome';
+  margin-right: 5px;
+}
+body .container-backend #content #main_menu .menu > li > a.passenger:before {
+  content: '\f21b';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }

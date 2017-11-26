@@ -48,6 +48,11 @@ class Rental extends Model
         return $this->hasMany('App\Order');
     }
 
+    public function devolution()
+    {
+        return $this->hasOne('App\Devolution');
+    }
+
     /**
      * Mutators
      **/

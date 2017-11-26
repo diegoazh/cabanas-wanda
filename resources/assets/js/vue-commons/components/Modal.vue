@@ -14,10 +14,10 @@
                 <div class="modal-footer">
                     <slot name="b3-modal-footer">
                         <button v-if="showBtnClose" type="button" :class="['btn', typeBtnClose]" data-dismiss="modal" @click="setActionClose">
-                            {{ txtBtnClose }}
+                            <icon-app :iconImage="iconBtnClose" v-if="iconBtnClose"></icon-app> {{ txtBtnClose }}
                         </button>
                         <button v-if="showBtnSave" type="button" :class="['btn', typeBtnSave]" @click="setActionSave">
-                            {{ txtBtnSave }}
+                            <icon-app :iconImage="iconBtnSave" v-if="iconBtnSave"></icon-app> {{ txtBtnSave }}
                         </button>
                     </slot>
                 </div>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+    import Icon from './Icon.vue';
+
     export default {
         name: 'b3-modal-app',
         data() {
@@ -36,6 +38,9 @@
         },
         mounted() {
             this.handledEventsToModal();
+        },
+        components: {
+            'icon-app': Icon
         },
         props: {
             modalId:{
@@ -59,6 +64,10 @@
                 type: String,
                 default: 'Guardar',
             },
+            iconBtnSave: {
+                type: String,
+                default: ''
+            },
             actionBtnSave: {
                 type: Function,
                 default: null
@@ -74,6 +83,10 @@
             txtBtnClose: {
                 type: String,
                 default: 'Cerrar',
+            },
+            iconBtnClose: {
+                type: String,
+                default: ''
             },
             actionBtnClose: {
                 type: Function,

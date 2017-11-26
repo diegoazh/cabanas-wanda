@@ -37,7 +37,7 @@
             </tr>
             </tfoot>
         </table>
-        <modal-app :modalTitle="modalAppTitle" modalSize="lg" :onModalHidden="clearRental">
+        <modal-app :modalTitle="modalAppTitle" modalSize="lg" :onModalHidden="clearRental" iconBtnSave="save" :actionBtnSave="saveNewInfo" iconBtnClose="times">
             <div class="container-fluid" v-if="rental">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -50,7 +50,7 @@
                                 Hasta: <span class="label label-default">{{ rental.dateTo | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span>
                                 <br>
                                 <span class="label label-warning text-uppercase" v-if="!editState">{{ rental.state }}</span>&nbsp;
-                                <a role="button" @click.prevent="editState = true" v-tooltip.hover="'Editar estado'" v-if="!editState"><icon-app iconImage="edit"></icon-app></a>
+                                <a role="button" @click.prevent="editState = true; trash.state = rental.state;" v-tooltip.hover="'Editar estado'" v-if="!editState"><icon-app iconImage="edit"></icon-app></a>
                                 <form @submit.prevent="" class="form-inline" v-if="editState">
                                     <div :class="['alert', 'alert-dismissible', setClassPenalty(rental.dateFrom)]" role="alert">
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -62,7 +62,7 @@
                                         <label for="state" class="sr-only">Estado: </label>
                                         <div class="input-group">
                                             <div class="input-group-addon">Estado</div>
-                                            <select name="state" id="state" class="form-control" v-model="rental.state">
+                                            <select name="state" id="state" class="form-control" v-model="trash.state">
                                                 <option value="pendiente" :selected="rental.state === 'pendiente'">Pendiente</option>
                                                 <option value="confirmada" :selected="rental.state === 'confirmada'">Confirmada</option>
                                                 <option value="en curso" :selected="rental.state === 'en curso'">En curso</option>
@@ -71,8 +71,8 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <button class="btn btn-default" @click.prevent="editState = false">Cancelar</button>
-                                            <button class="btn btn-primary">Actualizar</button>
+                                            <button class="btn btn-default" @click.prevent="editState = false; trash.state = '';">Cancelar</button>
+                                            <button class="btn btn-primary" @click.prevent="saveNewState">Actualizar</button>
                                         </div>
                                     </div>
                                 </form>
@@ -196,6 +196,9 @@
                 modalAppTitle: '',
                 editState: false,
                 editDescription: false,
+                trash: {
+                    state: ''
+                }
             }
         },
         computed: {
@@ -243,6 +246,10 @@
                 this.editDescription = false;
                 delete window.appDash;
             },
+            saveNewState() {
+                this.rental.state = this.trash.state;
+                this.editState = !this.editState;
+            },
             initEditorMd() {
                 this.editDescription = !this.editDescription;
                 const module = this;
@@ -275,6 +282,7 @@
                     id: id
                 }).then(rental => {
                     this.rental = rental;
+                    this.modalAppTitle = 'Detalles reserva: cabaña ' + this.rental.cottage.name;
                     VueNoti.success({
                         title: 'OK!',
                         message: 'Reserva cargada con éxito',
@@ -284,7 +292,26 @@
                     VueNoti.error(error);
                 });
             },
-            ...mapActions('dash', ['rentalsOrOrdersForId'])
+            saveNewInfo() {
+                this.updateRental({
+                    id: this.rental.id,
+                    description: this.rental.description,
+                    state: this.rental.state,
+                    side: true
+                }).then(response => {
+                    if (/sin cambios/.test(response.message)) {
+                        response.title = '¡Sin actualización!';
+                        VueNoti.warn(response);
+                    } else {
+                        VueNoti.success(response);
+                    }
+                    window.EventBus.$emit('page-change', this.page);
+                }).catch(error => {
+                    VueNoti.error(error);
+                });
+                window.jQuery('#b3-modal-id').modal('hide');
+            },
+            ...mapActions('dash', ['rentalsOrOrdersForId', 'updateRental'])
         },
         filters: {},
         created() {

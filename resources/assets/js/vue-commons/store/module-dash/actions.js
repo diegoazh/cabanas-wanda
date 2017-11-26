@@ -39,5 +39,22 @@ export default {
                 reject(err);
             })
         });
-    }
+    },
+    updateRental(cntx, payload) {
+        return new Promise((resolve, reject) => {
+            http.post('rentals/update/' + payload.id, {
+                description: payload.description,
+                state: payload.state,
+                side: payload.side
+            }).then(response => {
+                response.data.title = "¡Actualizción Ok!";
+                response.data.useSwal = true;
+                resolve(response.data);
+            }).catch(error => {
+                let err = handlingXhrErrors(error);
+                err.useSwal = true;
+                reject(err);
+            });
+        });
+    },
 }

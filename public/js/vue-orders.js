@@ -1673,34 +1673,12 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
     name: 'b3-modal-app',
@@ -1713,6 +1691,9 @@ exports.default = {
         this.handledEventsToModal();
     },
 
+    components: {
+        'icon-app': _Icon2.default
+    },
     props: {
         modalId: {
             type: String,
@@ -1735,6 +1716,10 @@ exports.default = {
             type: String,
             default: 'Guardar'
         },
+        iconBtnSave: {
+            type: String,
+            default: ''
+        },
         actionBtnSave: {
             type: Function,
             default: null
@@ -1750,6 +1735,10 @@ exports.default = {
         txtBtnClose: {
             type: String,
             default: 'Cerrar'
+        },
+        iconBtnClose: {
+            type: String,
+            default: ''
         },
         actionBtnClose: {
             type: Function,
@@ -1800,7 +1789,34 @@ exports.default = {
             });
         }
     }
-};
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 
@@ -2742,7 +2758,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -37123,12 +37139,18 @@ var render = function() {
                           on: { click: _vm.setActionClose }
                         },
                         [
+                          _vm.iconBtnClose
+                            ? _c("icon-app", {
+                                attrs: { iconImage: _vm.iconBtnClose }
+                              })
+                            : _vm._e(),
                           _vm._v(
-                            "\n                        " +
+                            " " +
                               _vm._s(_vm.txtBtnClose) +
                               "\n                    "
                           )
-                        ]
+                        ],
+                        1
                       )
                     : _vm._e(),
                   _vm._v(" "),
@@ -37141,12 +37163,18 @@ var render = function() {
                           on: { click: _vm.setActionSave }
                         },
                         [
+                          _vm.iconBtnSave
+                            ? _c("icon-app", {
+                                attrs: { iconImage: _vm.iconBtnSave }
+                              })
+                            : _vm._e(),
                           _vm._v(
-                            "\n                        " +
+                            " " +
                               _vm._s(_vm.txtBtnSave) +
                               "\n                    "
                           )
-                        ]
+                        ],
+                        1
                       )
                     : _vm._e()
                 ])
@@ -50640,6 +50668,23 @@ exports.default = {
             }).catch(function (error) {
                 var err = (0, _appAxios.handlingXhrErrors)(error);
                 err.timeout = 3000;
+                reject(err);
+            });
+        });
+    },
+    updateRental: function updateRental(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('rentals/update/' + payload.id, {
+                description: payload.description,
+                state: payload.state,
+                side: payload.side
+            }).then(function (response) {
+                response.data.title = "¡Actualizción Ok!";
+                response.data.useSwal = true;
+                resolve(response.data);
+            }).catch(function (error) {
+                var err = (0, _appAxios.handlingXhrErrors)(error);
+                err.useSwal = true;
                 reject(err);
             });
         });

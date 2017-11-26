@@ -1820,34 +1820,12 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
     name: 'b3-modal-app',
@@ -1860,6 +1838,9 @@ exports.default = {
         this.handledEventsToModal();
     },
 
+    components: {
+        'icon-app': _Icon2.default
+    },
     props: {
         modalId: {
             type: String,
@@ -1882,6 +1863,10 @@ exports.default = {
             type: String,
             default: 'Guardar'
         },
+        iconBtnSave: {
+            type: String,
+            default: ''
+        },
         actionBtnSave: {
             type: Function,
             default: null
@@ -1897,6 +1882,10 @@ exports.default = {
         txtBtnClose: {
             type: String,
             default: 'Cerrar'
+        },
+        iconBtnClose: {
+            type: String,
+            default: ''
         },
         actionBtnClose: {
             type: Function,
@@ -1947,7 +1936,34 @@ exports.default = {
             });
         }
     }
-};
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 
@@ -2525,7 +2541,10 @@ exports.default = {
             rental: null,
             modalAppTitle: '',
             editState: false,
-            editDescription: false
+            editDescription: false,
+            trash: {
+                state: ''
+            }
         };
     },
 
@@ -2578,6 +2597,10 @@ exports.default = {
             this.editDescription = false;
             delete window.appDash;
         },
+        saveNewState: function saveNewState() {
+            this.rental.state = this.trash.state;
+            this.editState = !this.editState;
+        },
         initEditorMd: function initEditorMd() {
             this.editDescription = !this.editDescription;
             var module = this;
@@ -2612,6 +2635,7 @@ exports.default = {
                 id: id
             }).then(function (rental) {
                 _this.rental = rental;
+                _this.modalAppTitle = 'Detalles reserva: cabaña ' + _this.rental.cottage.name;
                 _vueNotifications2.default.success({
                     title: 'OK!',
                     message: 'Reserva cargada con éxito',
@@ -2620,8 +2644,29 @@ exports.default = {
             }).catch(function (error) {
                 _vueNotifications2.default.error(error);
             });
+        },
+        saveNewInfo: function saveNewInfo() {
+            var _this2 = this;
+
+            this.updateRental({
+                id: this.rental.id,
+                description: this.rental.description,
+                state: this.rental.state,
+                side: true
+            }).then(function (response) {
+                if (/sin cambios/.test(response.message)) {
+                    response.title = '¡Sin actualización!';
+                    _vueNotifications2.default.warn(response);
+                } else {
+                    _vueNotifications2.default.success(response);
+                }
+                window.EventBus.$emit('page-change', _this2.page);
+            }).catch(function (error) {
+                _vueNotifications2.default.error(error);
+            });
+            window.jQuery('#b3-modal-id').modal('hide');
         }
-    }, (0, _vuex.mapActions)('dash', ['rentalsOrOrdersForId'])),
+    }, (0, _vuex.mapActions)('dash', ['rentalsOrOrdersForId', 'updateRental'])),
     filters: {},
     created: function created() {},
     mounted: function mounted() {}
@@ -5614,7 +5659,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -46135,7 +46180,10 @@ var render = function() {
           attrs: {
             modalTitle: _vm.modalAppTitle,
             modalSize: "lg",
-            onModalHidden: _vm.clearRental
+            onModalHidden: _vm.clearRental,
+            iconBtnSave: "save",
+            actionBtnSave: _vm.saveNewInfo,
+            iconBtnClose: "times"
           }
         },
         [
@@ -46215,6 +46263,7 @@ var render = function() {
                                     click: function($event) {
                                       $event.preventDefault()
                                       _vm.editState = true
+                                      _vm.trash.state = _vm.rental.state
                                     }
                                   }
                                 },
@@ -46310,8 +46359,8 @@ var render = function() {
                                             {
                                               name: "model",
                                               rawName: "v-model",
-                                              value: _vm.rental.state,
-                                              expression: "rental.state"
+                                              value: _vm.trash.state,
+                                              expression: "trash.state"
                                             }
                                           ],
                                           staticClass: "form-control",
@@ -46332,7 +46381,7 @@ var render = function() {
                                                       : o.value
                                                   return val
                                                 })
-                                              _vm.rental.state = $event.target
+                                              _vm.trash.state = $event.target
                                                 .multiple
                                                 ? $$selectedVal
                                                 : $$selectedVal[0]
@@ -46417,6 +46466,7 @@ var render = function() {
                                             click: function($event) {
                                               $event.preventDefault()
                                               _vm.editState = false
+                                              _vm.trash.state = ""
                                             }
                                           }
                                         },
@@ -46425,7 +46475,15 @@ var render = function() {
                                       _vm._v(" "),
                                       _c(
                                         "button",
-                                        { staticClass: "btn btn-primary" },
+                                        {
+                                          staticClass: "btn btn-primary",
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              _vm.saveNewState($event)
+                                            }
+                                          }
+                                        },
                                         [_vm._v("Actualizar")]
                                       )
                                     ])
@@ -46882,12 +46940,18 @@ var render = function() {
                           on: { click: _vm.setActionClose }
                         },
                         [
+                          _vm.iconBtnClose
+                            ? _c("icon-app", {
+                                attrs: { iconImage: _vm.iconBtnClose }
+                              })
+                            : _vm._e(),
                           _vm._v(
-                            "\n                        " +
+                            " " +
                               _vm._s(_vm.txtBtnClose) +
                               "\n                    "
                           )
-                        ]
+                        ],
+                        1
                       )
                     : _vm._e(),
                   _vm._v(" "),
@@ -46900,12 +46964,18 @@ var render = function() {
                           on: { click: _vm.setActionSave }
                         },
                         [
+                          _vm.iconBtnSave
+                            ? _c("icon-app", {
+                                attrs: { iconImage: _vm.iconBtnSave }
+                              })
+                            : _vm._e(),
                           _vm._v(
-                            "\n                        " +
+                            " " +
                               _vm._s(_vm.txtBtnSave) +
                               "\n                    "
                           )
-                        ]
+                        ],
+                        1
                       )
                     : _vm._e()
                 ])
@@ -60499,6 +60569,23 @@ exports.default = {
             }).catch(function (error) {
                 var err = (0, _appAxios.handlingXhrErrors)(error);
                 err.timeout = 3000;
+                reject(err);
+            });
+        });
+    },
+    updateRental: function updateRental(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('rentals/update/' + payload.id, {
+                description: payload.description,
+                state: payload.state,
+                side: payload.side
+            }).then(function (response) {
+                response.data.title = "¡Actualizción Ok!";
+                response.data.useSwal = true;
+                resolve(response.data);
+            }).catch(function (error) {
+                var err = (0, _appAxios.handlingXhrErrors)(error);
+                err.useSwal = true;
                 reject(err);
             });
         });
