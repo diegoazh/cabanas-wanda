@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-
+    {{-- vue toma al <div class="panel"></div> como el elemento raiz --}}
 @endsection
 
 @section('scripts')

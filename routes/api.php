@@ -30,12 +30,18 @@ Route::prefix('rentals')->group(function() {
     Route::post('availables', 'RentalsController@cottagesAvailables')->name('api.rentals.availabels');
     Route::post('find', 'RentalsController@find')->name('api.rentals.find');
     Route::post('store', 'RentalsController@store')->name('api.rentals.store');
+    Route::post('update/{id}', 'RentalsController@update')->name('api.rentals.update');
+
+    Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function() {
+        Route::get('for-state/{state}/{results}', 'RentalsController@rentalsForState')->name('api.rentals.forState');
+        Route::get('for-id/{id}', 'RentalsController@findForId')->name('api.rentals.forId');
+    });
 });
 
 Route::prefix('food')->group(function() {
     Route::get('all', 'Administration\FoodsController@all')->name('api.food.all');
 
-    Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
+    Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function() {
         Route::post('store', 'Administration\FoodsController@store')->name('api.food.store');
         Route::put('update/{id}', 'Administration\FoodsController@update')->name('api.food.update');
         Route::delete('destroy/{id}', 'Administration\FoodsController@destroy')->name('api.food.destroy');
@@ -43,8 +49,9 @@ Route::prefix('food')->group(function() {
 });
 
 Route::prefix('orders')->group(function() {
-    Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
+    Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function() {
         Route::post('store', 'OrdersController@store')->name('api.orders.store');
+        Route::get('for-state/{state}/{results}', 'OrdersController@ordersForState')->name('api.orders.forState');
     });
 });
 

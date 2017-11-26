@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button class="btn btn-primary"><b>{{ !isUpdate? 'Crear plato' : 'Actualizar plato' }} <icon-app :iconImage="toogleeIcon" :aditionalClasses="addAditionalClasses"></icon-app></b></button>
+                        <button class="btn btn-primary"><b>{{ !isUpdate ? 'Crear plato' : 'Actualizar plato' }} <icon-app :iconImage="toogleeIcon" :aditionalClasses="addAditionalClasses"></icon-app></b></button>
                     </div>
                 </div>
             </form>
@@ -176,7 +176,7 @@
             },
             setInfoToUpdate() {
                 if(this.itemToUpdate) {
-                    this.idToUpdate = this.itemToUpdate.id
+                    this.idToUpdate = this.itemToUpdate.id;
                     this.name = this.itemToUpdate.name;
                     this.price = this.itemToUpdate.price;
                     this.type = this.itemToUpdate.type;

@@ -1,6 +1,11 @@
 <h2 class="tt-menu"><i class="fa fa-tachometer" aria-hidden="true"></i> Administraci&oacute;n</h2>
 <div id="wrapper">
     <ul class="menu">
+        <li class="item"><a href="#" class="panel-dash">Panel</a>
+            <ul>
+                <li class="subitem"><a href="{{ route('admin.panel') }}">Panel de administraci&oacute;n</a></li>
+            </ul>
+        </li>
         <li class="item"><a href="#" class="frontend">P&aacute;gina principal</a>
             <ul>
                 <li class="subitem"><a href="{{ route('frontend.create') }}">Configuraci&oacute;n</a></li>
@@ -14,21 +19,21 @@
                 @endif
             </ul>
         </li>
-        <li class="item"><a href="#">Promociones <span>147</span></a>
+        <li class="item"><a href="#" class="promotion">Promociones <span>{{ isset($canPromotions) ? $canPromotions : 0 }}</span></a>
             <ul>
-                <li class="subitem"><a href="#">Listado de promos <span>14</span></a></li>
-                <li class="subitem"><a href="#">Crear promo <span>6</span></a></li>
+                <li class="subitem"><a href="#">Listado de promos <span>{{ isset($canPromotions) ? $canPromotions : 0 }}</span></a></li>
+                <li class="subitem"><a href="#">Crear promo</a></li>
             </ul>
         </li>
-        <li class="item"><a href="#">Reclamos <span>340</span></a>
+        <li class="item"><a href="#" class="claims">Reclamos <span>{{ isset($canClaims) ? $canClaims : 0 }}</span></a>
             <ul>
-                <li class="subitem"><a href="#">Listado de reclamos <span>14</span></a></li>
-                <li class="subitem"><a href="#">Crear reclamo <span>6</span></a></li>
+                <li class="subitem"><a href="#">Listado de reclamos <span>{{ isset($canClaims) ? $canClaims : 0 }}</span></a></li>
+                <li class="subitem"><a href="#">Crear reclamo</a></li>
             </ul>
         </li>
-        <li class="item"><a href="#">Pasajeros <span>222</span></a>
+        <li class="item"><a href="#" class="passenger">Pasajeros <span>{{ isset($canPassengers) ? $canPassengers : 0 }}</span></a>
             <ul>
-                <li class="subitem"><a href="#">Listado de pasajeros <span>14</span></a></li>
+                <li class="subitem"><a href="#">Listado de pasajeros <span>{{ isset($canPassengers) ? $canPassengers : 0 }}</span></a></li>
             </ul>
         </li>
         <li class="item"><a href="#" class="users">Usuarios <span>{{ (isset($cantUsers)) ? $cantUsers : 0 }}</span></a>

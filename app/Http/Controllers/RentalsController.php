@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Cottage;
+use App\Devolution;
 use App\Http\Requests\RequestRental;
 use App\Http\Requests\RequestRentalFind;
 use App\Http\Requests\RequestRentalStore;
+use App\Http\Requests\RequestRentalUpdate;
 use App\Passenger;
 use App\Rental;
 use App\User;
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use JWTAuth;
+use phpDocumentor\Reflection\Types\Integer;
 
 class RentalsController extends Controller
 {
@@ -46,7 +49,7 @@ class RentalsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\RequestRentalStore  $request
      * @return \Illuminate\Http\Response
      */
     public function store(RequestRentalStore $request)
@@ -116,9 +119,42 @@ class RentalsController extends Controller
     }
 
     /**
+     * Find the specified resource in storage by hes id.
+     *
+     * @param  Integer  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function findForId($id)
+    {
+        if (!$reserva = Rental::find($id)) {
+
+            return response()->json(['error' => 'No hemos localizado la reserva'], 404);
+
+        }
+
+        $reserva->cottage;
+        $reserva->user;
+        $reserva->passenger;
+        $reserva->promotion;
+        $reserva->claims;
+
+        foreach ($reserva->orders as $order) {
+
+            foreach ($order->ordersDetail as $detail) {
+
+                $detail->food;
+
+            }
+
+        }
+
+        return response()->json($reserva, 200);
+    }
+
+    /**
      * Find the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\RequestRentalFind  $request
      * @return \Illuminate\Http\Response
      */
     public function find(RequestRentalFind $request)
@@ -193,13 +229,72 @@ class RentalsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Rental  $rental
+     * @param  \App\Http\Requests\RequestRentalUpdate  $request
+     * @param Integer $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rental $rental)
+    public function update(RequestRentalUpdate $request, $id)
     {
-        //
+        $hasChanges = false;
+        $info = $request->only(['description', 'state', 'side']);
+
+        if (!$rental= Rental::find($id)) {
+
+            return response()->json(['error' => 'No hemos localizado la reserva solicitada. Verifique y reintente.'], 404);
+
+        }
+
+        if ($info['description'] && $info['description'] !== $rental->description) {
+
+            $rental->description = $info['description'];
+            $hasChanges = true;
+
+        }
+
+        if ($info['state'] && $info['state'] !== $rental->state) {
+
+            $rental->state = $info['state'];
+            $hasChanges = true;
+
+        }
+
+        if ($hasChanges) {
+
+            try {
+                DB::transaction(function () use ($info, &$rental) {
+
+                    $dF = Carbon::createFromFormat('Y-m-d H:i:s', $rental->dateFrom . ' 10:00:00');
+                    $can = Carbon::now();
+
+                    if ($info['state'] === 'cancelada') {
+
+                        if ($info['side'] || !$info['side'] && $can->diffInDays($dF) >= 2) {
+
+                            $devolution = new Devolution([
+                                'rental_id' => $rental->id,
+                                'from_admin' => isset($info['side']) && $info['side'] ? $info['side'] : false
+                            ]);
+
+                            $devolution->save();
+
+                        }
+
+                    }
+
+                    $rental->save();
+
+                });
+
+            } catch (\Exception $exception) {
+
+                return response()->json(['error' => 'Ha ocurrido un error intentando actualizar la información. Verifiquelo y reintente. Mensaje: ' . $exception->getMessage() . ' - Código: ' . $exception->getCode()], 500);
+
+            }
+
+            return response()->json(['message' => 'La reserva se actualizó correctamente.'], 200);
+        }
+
+        return response()->json(['message' => 'Reserva sin cambios. No se llevó acabo ninguna actualización.'], 200);
     }
 
     /**
@@ -216,7 +311,7 @@ class RentalsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\RequestRental  $request
      * @return \Illuminate\Http\Response
      */
     public function cottagesAvailables(RequestRental $request)
@@ -247,5 +342,19 @@ class RentalsController extends Controller
         }
 
         return response()->json(compact('cottages'), 200);
+    }
+
+    public function rentalsForState($state, $results)
+    {
+        $quantity = $results > 100 ? 100 : $results;
+
+        if (!$rentals = DB::table('rentals')->select('id', 'dateFrom', 'dateTo', 'cottage_price', 'total_days', 'dateReservationPayment', 'state')
+            ->where('state', $state)->orderBy('dateFrom', 'desc')->paginate($quantity)) {
+
+            return response()->json(['error' => 'No hay reservas en estado: ' . $state], 404);
+
+        }
+
+        return response()->json($rentals, 200);
     }
 }

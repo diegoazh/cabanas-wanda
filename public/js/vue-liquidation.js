@@ -33464,6 +33464,180 @@ exports.default = {
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-commons/store/module-dash/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
+
+exports.default = {
+    rentalsOrOrdersForState: function rentalsOrOrdersForState(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            var url = (payload.isRentals ? 'rentals/' : 'orders/') + 'for-state/';
+            _appAxios.http.get(url + payload.state + '/' + cntx.state.per_page, {
+                params: {
+                    page: payload.query || 1,
+                    token: payload.token || ''
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                cntx.commit('setPagination', response.data);
+                cntx.commit('setPerPage', +response.data.per_page);
+                cntx.commit('setTotal', response.data.total);
+                cntx.commit('PAGINATE', response.data.current_page);
+                resolve();
+            }).catch(function (error) {
+                var err = (0, _appAxios.handlingXhrErrors)(error);
+                err.timeout = 3000;
+                reject(err);
+            });
+        });
+    },
+    rentalsOrOrdersForId: function rentalsOrOrdersForId(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            var url = (payload.isRentals ? 'rentals/' : 'orders/') + 'for-id/';
+            _appAxios.http.get(url + payload.id, {
+                params: {
+                    token: cntx.rootState.auth.xhr.token || ''
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve(response.data);
+            }).catch(function (error) {
+                var err = (0, _appAxios.handlingXhrErrors)(error);
+                err.timeout = 3000;
+                reject(err);
+            });
+        });
+    },
+    updateRental: function updateRental(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('rentals/update/' + payload.id, {
+                description: payload.description,
+                state: payload.state,
+                side: payload.side
+            }).then(function (response) {
+                response.data.title = "¡Actualizción Ok!";
+                response.data.useSwal = true;
+                resolve(response.data);
+            }).catch(function (error) {
+                var err = (0, _appAxios.handlingXhrErrors)(error);
+                err.useSwal = true;
+                reject(err);
+            });
+        });
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-dash/getters.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-dash/moduleDash.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.moduleDash = undefined;
+
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-dash/state.js");
+
+var _state2 = _interopRequireDefault(_state);
+
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/module-dash/getters.js");
+
+var _getters2 = _interopRequireDefault(_getters);
+
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/module-dash/mutations.js");
+
+var _mutations2 = _interopRequireDefault(_mutations);
+
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/module-dash/actions.js");
+
+var _actions2 = _interopRequireDefault(_actions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var moduleDash = exports.moduleDash = {
+    namespaced: true,
+    state: _state2.default,
+    getters: _getters2.default,
+    mutations: _mutations2.default,
+    actions: _actions2.default
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-dash/mutations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    PAGINATE: function PAGINATE(state, page) {
+        if (state.page !== page) {
+            window.EventBus.$emit('page-change', page);
+            state.page = page;
+        }
+    },
+    setTotal: function setTotal(state, total) {
+        state.total = total;
+    },
+    setPerPage: function setPerPage(state, per_page) {
+        state.per_page = per_page;
+    },
+    setPagination: function setPagination(state, pagination) {
+        state.data.pagination = pagination;
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-dash/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    page: 1,
+    total: 1,
+    per_page: 15,
+    data: {
+        pagination: null
+    }
+};
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-commons/store/module-food/actions.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34559,6 +34733,8 @@ var _moduleLiquidation = __webpack_require__("./resources/assets/js/vue-commons/
 
 var _moduleReports = __webpack_require__("./resources/assets/js/vue-commons/store/module-reports/moduleReports.js");
 
+var _moduleDash = __webpack_require__("./resources/assets/js/vue-commons/store/module-dash/moduleDash.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vuex2.default);
@@ -34570,7 +34746,8 @@ exports.default = new _vuex2.default.Store({
         food: _moduleFood.moduleFood,
         orders: _moduleOrders.moduleOrders,
         liquidation: _moduleLiquidation.moduleLiquidation,
-        reports: _moduleReports.moduleReports
+        reports: _moduleReports.moduleReports,
+        dash: _moduleDash.moduleDash
     }
 });
 
