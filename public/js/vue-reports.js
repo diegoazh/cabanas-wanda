@@ -70239,6 +70239,7 @@ exports.default = {
                 cntx.commit('PAGINATE', response.data.current_page);
                 resolve();
             }).catch(function (error) {
+                cntx.dispatch('auth/setToken', error, { root: true });
                 var err = (0, _appAxios.handlingXhrErrors)(error);
                 err.timeout = 3000;
                 reject(err);
@@ -70256,6 +70257,7 @@ exports.default = {
                 cntx.dispatch('auth/setToken', response, { root: true });
                 resolve(response.data);
             }).catch(function (error) {
+                cntx.dispatch('auth/setToken', error, { root: true });
                 var err = (0, _appAxios.handlingXhrErrors)(error);
                 err.timeout = 3000;
                 reject(err);
@@ -70264,15 +70266,30 @@ exports.default = {
     },
     updateRental: function updateRental(cntx, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('rentals/update/' + payload.id, {
-                description: payload.description,
-                state: payload.state,
-                side: payload.side
-            }).then(function (response) {
+            _appAxios.http.put('rentals/update/' + payload.id, payload).then(function (response) {
                 response.data.title = "¡Actualizción Ok!";
                 response.data.useSwal = true;
                 resolve(response.data);
             }).catch(function (error) {
+                var err = (0, _appAxios.handlingXhrErrors)(error);
+                err.useSwal = true;
+                reject(err);
+            });
+        });
+    },
+    updateOrder: function updateOrder(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.put('orders/update-states/' + payload.id, payload, {
+                params: {
+                    token: cntx.rootState.auth.xhr.token || ''
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                response.data.title = "¡Actualizción Ok!";
+                response.data.useSwal = true;
+                resolve(response.data);
+            }).catch(function (error) {
+                cntx.dispatch('auth/setToken', error, { root: true });
                 var err = (0, _appAxios.handlingXhrErrors)(error);
                 err.useSwal = true;
                 reject(err);
@@ -70376,7 +70393,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     page: 1,
     total: 1,
-    per_page: 15,
+    per_page: 10,
     data: {
         pagination: null
     }

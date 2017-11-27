@@ -165,6 +165,7 @@
                 this.seeRentals ? this.type = this.trash.rentals : this.type = this.trash.orders;
             },
             setTypeofQuery(newType) {
+                this.setPagination(null);
                 this.savePreviousPage();
                 this.type = newType;
                 this.setNewPage();

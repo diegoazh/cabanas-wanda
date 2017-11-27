@@ -2170,6 +2170,7 @@ exports.default = {
             this.seeRentals ? this.type = this.trash.rentals : this.type = this.trash.orders;
         },
         setTypeofQuery: function setTypeofQuery(newType) {
+            this.setPagination(null);
             this.savePreviousPage();
             this.type = newType;
             this.setNewPage();
@@ -2279,6 +2280,118 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
+
+var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
@@ -2286,14 +2399,27 @@ var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Ic
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
+var _Modal = __webpack_require__("./resources/assets/js/vue-commons/components/Modal.vue");
+
+var _Modal2 = _interopRequireDefault(_Modal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
     components: {
-        'icon-app': _Icon2.default
+        'icon-app': _Icon2.default,
+        'modal-app': _Modal2.default
     },
     data: function data() {
-        return {};
+        return {
+            order: null,
+            modalAppTitle: '',
+            editState: false,
+            trash: {
+                state: '',
+                stateFood: ''
+            }
+        };
     },
 
     computed: _extends({}, (0, _vuex.mapState)('dash', {
@@ -2304,13 +2430,128 @@ exports.default = {
             return state.page;
         }
     })),
-    methods: {
+    methods: _extends({
         rowNumber: function rowNumber(index) {
             var adition = (this.page - 1) * 15;
             return index + 1 + adition;
+        },
+        setClassState: function setClassState(state) {
+            var classString = '';
+
+            switch (state) {
+                case 'pendiente':
+                    classString = 'label-warning';
+                    break;
+                case 'seniado':
+                    classString = 'label-info';
+                    break;
+                case 'pagado':
+                    classString = 'label-success';
+                    break;
+                case 'preparandose':
+                    classString = 'label-info';
+                    break;
+                case 'entregado':
+                    classString = 'label-success';
+                    break;
+                case 'cancelado':
+                    classString = 'label-danger';
+                    break;
+            }
+
+            return classString;
+        },
+        setClassType: function setClassType(type) {
+            var classType = '';
+
+            switch (type) {
+                case 'desayuno':
+                    classType = 'label-desayuno';
+                    break;
+                case 'almuerzo':
+                    classType = 'label-almuerzo';
+                    break;
+                case 'merienda':
+                    classType = 'label-merienda';
+                    break;
+                case 'cena':
+                    classType = 'label-cena';
+                    break;
+            }
+
+            return classType;
+        },
+        clearOrder: function clearOrder() {
+            this.order = null;
+            this.editState = false;
+            this.trash.state = '';
+            this.trash.stateFood = '';
+            this.modalAppTitle = '';
+        },
+        saveNewState: function saveNewState() {
+            this.order.state = this.trash.state;
+            this.editState = !this.editState;
+            this.trash.state = '';
+        },
+        saveNewStateFood: function saveNewStateFood(detail) {
+            var index = this.order.orders_detail.findIndex(function (element) {
+                return element.id === detail.id;
+            });
+            this.order.orders_detail[index].state = this.trash.stateFood;
+            detail.edit = !detail.edit;
+            this.trash.stateFood = '';
+        },
+        findOrder: function findOrder(id) {
+            var _this = this;
+
+            this.rentalsOrOrdersForId({
+                isRentals: false,
+                id: id
+            }).then(function (order) {
+                order.orders_detail.forEach(function (detail) {
+                    return _this.$set(detail, 'edit', false);
+                });
+                _this.order = order;
+                _this.modalAppTitle = 'Detalle pedido, cabaña ' + _this.order.rental.cottage.name;
+                _vueNotifications2.default.success({
+                    title: 'OK!',
+                    message: 'Orden cargada con éxito',
+                    timeout: 3000
+                });
+            }).catch(function (error) {
+                _vueNotifications2.default.error(error);
+            });
+        },
+        seveNewInfo: function seveNewInfo() {
+            var _this2 = this;
+
+            this.updateOrder({
+                id: this.order.id,
+                order_state: this.order.state,
+                orders_detail: this.order.orders_detail
+            }).then(function (response) {
+                if (/sin cambios/.test(response.message.toLowerCase())) {
+                    response.title = '¡Sin actualización!';
+                    _vueNotifications2.default.warn(response);
+                } else {
+                    _vueNotifications2.default.success(response);
+                }
+                window.EventBus.$emit('page-change', _this2.page);
+            }).catch(function (error) {
+                _vueNotifications2.default.error(error);
+            });
+            window.jQuery('#b3-modal-id').modal('hide');
+        }
+    }, (0, _vuex.mapActions)('dash', ['rentalsOrOrdersForId', 'updateOrder'])),
+    filters: {
+        correctState: function correctState(value) {
+            if (!value || typeof value !== 'string') return;
+            if (/seniado/.test(value.toLowerCase())) {
+                return 'señada';
+            }
+            return value;
         }
     },
-    filters: {},
     created: function created() {},
     mounted: function mounted() {}
 };
@@ -2561,6 +2802,29 @@ exports.default = {
             var adition = (this.page - 1) * 15;
             return index + 1 + adition;
         },
+        setClassState: function setClassState(state) {
+            var classString = '';
+
+            switch (state) {
+                case 'pendiente':
+                    classString = 'label-warning';
+                    break;
+                case 'confirmada':
+                    classString = 'label-info';
+                    break;
+                case 'en curso':
+                    classString = 'label-success';
+                    break;
+                case 'finalizada':
+                    classString = 'label-default';
+                    break;
+                case 'cancelada':
+                    classString = 'label-danger';
+                    break;
+            }
+
+            return classString;
+        },
         fullName: function fullName(rental) {
             return rental.user ? rental.user.lastname + ', ' + rental.user.name : rental.passenger.lastname + ', ' + rental.passenger.name;
         },
@@ -2595,11 +2859,14 @@ exports.default = {
             this.rental = null;
             this.editState = false;
             this.editDescription = false;
+            this.modalAppTitle = '';
+            this.trash.state = '';
             delete window.appDash;
         },
         saveNewState: function saveNewState() {
             this.rental.state = this.trash.state;
             this.editState = !this.editState;
+            this.trash.state = '';
         },
         initEditorMd: function initEditorMd() {
             this.editDescription = !this.editDescription;
@@ -5674,7 +5941,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.text-to-14px {\n    font-size: 14px;\n}\n.label-desayuno{\n    background-color: #DBF9F3;\n    color: #333333;\n    border: solid 1px #333333;\n}\n.label-almuerzo{\n    background-color: #CBE9FC;\n    color: #333333;\n    border: solid 1px #333333;\n}\n.label-merienda{\n    background-color: #CBD5FC;\n    color: #333333;\n    border: solid 1px #333333;\n}\n.label-cena{\n    background-color: #DECBFC;\n    color: #333333;\n    border: solid 1px #333333;\n}\n", ""]);
 
 // exports
 
@@ -5719,7 +5986,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -46238,8 +46505,11 @@ var render = function() {
                             ? _c(
                                 "span",
                                 {
-                                  staticClass:
-                                    "label label-warning text-uppercase"
+                                  class: [
+                                    "text-uppercase",
+                                    "label",
+                                    _vm.setClassState(_vm.rental.state)
+                                  ]
                                 },
                                 [_vm._v(_vm._s(_vm.rental.state))]
                               )
@@ -47025,60 +47295,756 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "table-responsive" }, [
-    _c("table", { staticClass: "table table-striped" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.pagination.data, function(orders, index) {
-          return _c("tr", [
-            _c("td", [_vm._v(_vm._s(_vm.rowNumber(index)))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(orders.rental.cottage.name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(orders.senia))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(orders.senia_date))]),
-            _vm._v(" "),
-            _c("td", [
-              _c("div", { staticClass: "row" }, [
+  return _c(
+    "div",
+    { staticClass: "table-responsive" },
+    [
+      _c("table", { staticClass: "table table-striped" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.pagination.data, function(orders, index) {
+            return _c("tr", [
+              _c(
+                "td",
+                [
+                  _c("icon-app", { attrs: { iconImage: "hashtag" } }),
+                  _vm._v(" " + _vm._s(_vm.rowNumber(index)))
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("td", [
                 _c(
-                  "div",
-                  { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" },
+                  "span",
+                  { staticClass: "text-to-14px label label-warning" },
                   [
-                    _c(
-                      "button",
-                      {
-                        directives: [
-                          {
-                            name: "tooltip",
-                            rawName: "v-tooltip",
-                            value:
-                              "Ver pedido " +
-                              _vm.rowNumber(index) +
-                              " de la cabaña " +
-                              orders.rental.cottage.name,
-                            expression:
-                              "'Ver pedido ' + rowNumber(index) + ' de la cabaña ' + orders.rental.cottage.name"
-                          }
-                        ],
-                        staticClass: "btn btn-info"
-                      },
-                      [_c("icon-app", { attrs: { iconImage: "eye" } })],
-                      1
-                    )
-                  ]
+                    _c("icon-app", { attrs: { iconImage: "home" } }),
+                    _vm._v(" " + _vm._s(orders.rental.cottage.name))
+                  ],
+                  1
                 )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "span",
+                  { staticClass: "text-to-14px label label-primary" },
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v(" " + _vm._s(orders.senia))
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "span",
+                  { staticClass: "text-to-14px label label-default" },
+                  [_vm._v(_vm._s(_vm._f("DateArg")(orders.senia_date)))]
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c("div", { staticClass: "row" }, [
+                  _c(
+                    "div",
+                    { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" },
+                    [
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "tooltip",
+                              rawName: "v-tooltip.left",
+                              value:
+                                "Ver pedido " +
+                                _vm.rowNumber(index) +
+                                " cabaña " +
+                                orders.rental.cottage.name,
+                              expression:
+                                "'Ver pedido ' + rowNumber(index) + ' cabaña ' + orders.rental.cottage.name",
+                              modifiers: { left: true }
+                            }
+                          ],
+                          staticClass: "btn btn-info",
+                          attrs: {
+                            "data-toggle": "modal",
+                            "data-target": "#b3-modal-id"
+                          },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.findOrder(orders.id)
+                            }
+                          }
+                        },
+                        [_c("icon-app", { attrs: { iconImage: "eye" } })],
+                        1
+                      )
+                    ]
+                  )
+                ])
               ])
             ])
-          ])
-        })
-      ),
+          })
+        ),
+        _vm._v(" "),
+        _vm._m(1)
+      ]),
       _vm._v(" "),
-      _vm._m(1)
-    ])
-  ])
+      _c(
+        "modal-app",
+        {
+          attrs: {
+            modalSize: "lg",
+            modalTitle: _vm.modalAppTitle,
+            onModalHidden: _vm.clearOrder,
+            actionBtnSave: _vm.seveNewInfo,
+            iconBtnSave: "save",
+            iconBtnClose: "times"
+          }
+        },
+        [
+          _vm.order
+            ? _c("div", { staticClass: "container-fluid" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c(
+                    "div",
+                    { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" },
+                    [
+                      _c("h2", { staticClass: "text-center" }, [
+                        _vm._v("\n                        Pedido cabaña "),
+                        _c("span", { staticClass: "label label-info" }, [
+                          _vm._v(_vm._s(_vm.order.rental.cottage.name))
+                        ]),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("small", [
+                          !_vm.editState
+                            ? _c(
+                                "span",
+                                {
+                                  class: [
+                                    "text-uppercase",
+                                    "label",
+                                    _vm.setClassState(_vm.order.state)
+                                  ]
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm._f("correctState")(_vm.order.state)
+                                    )
+                                  )
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" \n                            "),
+                          !_vm.editState
+                            ? _c(
+                                "a",
+                                {
+                                  directives: [
+                                    {
+                                      name: "tooltip",
+                                      rawName: "v-tooltip.hover",
+                                      value: "Editar estado",
+                                      expression: "'Editar estado'",
+                                      modifiers: { hover: true }
+                                    }
+                                  ],
+                                  attrs: { role: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.editState = true
+                                      _vm.trash.state = _vm.order.state
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("icon-app", {
+                                    attrs: { iconImage: "edit" }
+                                  })
+                                ],
+                                1
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.editState
+                            ? _c(
+                                "form",
+                                {
+                                  staticClass: "form-inline",
+                                  on: {
+                                    submit: function($event) {
+                                      $event.preventDefault()
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "sr-only",
+                                        attrs: { for: "state" }
+                                      },
+                                      [_vm._v("Estado: ")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "input-group" }, [
+                                      _c(
+                                        "div",
+                                        { staticClass: "input-group-addon" },
+                                        [_vm._v("Estado")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "select",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.trash.state,
+                                              expression: "trash.state"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: { name: "state", id: "state" },
+                                          on: {
+                                            change: function($event) {
+                                              var $$selectedVal = Array.prototype.filter
+                                                .call(
+                                                  $event.target.options,
+                                                  function(o) {
+                                                    return o.selected
+                                                  }
+                                                )
+                                                .map(function(o) {
+                                                  var val =
+                                                    "_value" in o
+                                                      ? o._value
+                                                      : o.value
+                                                  return val
+                                                })
+                                              _vm.trash.state = $event.target
+                                                .multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "option",
+                                            {
+                                              attrs: { value: "pendiente" },
+                                              domProps: {
+                                                selected:
+                                                  _vm.order.state ===
+                                                  "pendiente"
+                                              }
+                                            },
+                                            [_vm._v("Pendiente")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "option",
+                                            {
+                                              attrs: { value: "seniado" },
+                                              domProps: {
+                                                selected:
+                                                  _vm.order.state === "seniado"
+                                              }
+                                            },
+                                            [_vm._v("Señada")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "option",
+                                            {
+                                              attrs: { value: "pagado" },
+                                              domProps: {
+                                                selected:
+                                                  _vm.order.state === "pagado"
+                                              }
+                                            },
+                                            [_vm._v("Pagada")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "option",
+                                            {
+                                              attrs: { value: "cancelado" },
+                                              domProps: {
+                                                selected:
+                                                  _vm.order.state ===
+                                                  "cancelado"
+                                              }
+                                            },
+                                            [_vm._v("Cancelada")]
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-default",
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              _vm.editState = false
+                                              _vm.trash.state = ""
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Cancelar")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-primary",
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              _vm.saveNewState($event)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Actualizar")]
+                                      )
+                                    ])
+                                  ])
+                                ]
+                              )
+                            : _vm._e()
+                        ])
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c(
+                    "div",
+                    { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" },
+                    [
+                      _c("div", { staticClass: "table-responsive" }, [
+                        _c("table", { staticClass: "table table-striped" }, [
+                          _c("thead", [
+                            _c("tr", [
+                              _c("th", [_vm._v("Orden")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Plato")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Tipo")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Cantidad")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Precio")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Total")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Fecha entrega")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Estado del plato")])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "tbody",
+                            _vm._l(_vm.order.orders_detail, function(
+                              detail,
+                              index
+                            ) {
+                              return _c("tr", [
+                                _c(
+                                  "td",
+                                  [
+                                    _c("icon-app", {
+                                      attrs: { iconImage: "hashtag" }
+                                    }),
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(index + 1) +
+                                        "\n                                "
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "span",
+                                    { staticClass: "label label-primary" },
+                                    [
+                                      _c("icon-app", {
+                                        attrs: { iconImage: "cutlery" }
+                                      }),
+                                      _vm._v(" " + _vm._s(detail.food.name))
+                                    ],
+                                    1
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "span",
+                                    {
+                                      class: [
+                                        "label",
+                                        _vm.setClassType(detail.food.type)
+                                      ]
+                                    },
+                                    [_vm._v(_vm._s(detail.food.type))]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "span",
+                                    { staticClass: "label label-info" },
+                                    [_vm._v(_vm._s(detail.quantity))]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "span",
+                                    { staticClass: "label label-warning" },
+                                    [
+                                      _c("icon-app", {
+                                        attrs: { iconImage: "dollar" }
+                                      }),
+                                      _vm._v(" " + _vm._s(detail.food.price))
+                                    ],
+                                    1
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "span",
+                                    { staticClass: "label label-danger" },
+                                    [
+                                      _c("icon-app", {
+                                        attrs: { iconImage: "dollar" }
+                                      }),
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(
+                                            (detail.quantity * detail.food.price
+                                            ).toFixed(2)
+                                          ) +
+                                          "\n                                    "
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "span",
+                                    { staticClass: "label label-default" },
+                                    [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm._f("DateArg")(
+                                            detail.delivery,
+                                            "YYYY-MM-DD",
+                                            "DD/MM/YYYY"
+                                          )
+                                        )
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  !detail.edit
+                                    ? _c(
+                                        "span",
+                                        {
+                                          class: [
+                                            "label",
+                                            _vm.setClassState(detail.state)
+                                          ]
+                                        },
+                                        [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm._f("correctState")(
+                                                detail.state
+                                              )
+                                            )
+                                          )
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !detail.edit
+                                    ? _c(
+                                        "a",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "tooltip",
+                                              rawName: "v-tooltip.hover",
+                                              value: "Editar estado",
+                                              expression: "'Editar estado'",
+                                              modifiers: { hover: true }
+                                            }
+                                          ],
+                                          attrs: { role: "button" },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              detail.edit = true
+                                              _vm.trash.stateFood = detail.state
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("icon-app", {
+                                            attrs: { iconImage: "edit" }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  detail.edit
+                                    ? _c(
+                                        "form",
+                                        {
+                                          staticClass: "form-inline",
+                                          on: {
+                                            submit: function($event) {
+                                              $event.preventDefault()
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "form-group" },
+                                            [
+                                              _c(
+                                                "label",
+                                                {
+                                                  staticClass: "sr-only",
+                                                  attrs: { for: "stateFood" }
+                                                },
+                                                [_vm._v("Estado: ")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "input-group input-group-sm"
+                                                },
+                                                [
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "input-group-addon"
+                                                    },
+                                                    [_vm._v("Estado")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "select",
+                                                    {
+                                                      directives: [
+                                                        {
+                                                          name: "model",
+                                                          rawName: "v-model",
+                                                          value:
+                                                            _vm.trash.stateFood,
+                                                          expression:
+                                                            "trash.stateFood"
+                                                        }
+                                                      ],
+                                                      staticClass:
+                                                        "form-control",
+                                                      attrs: {
+                                                        name: "state",
+                                                        id: "stateFood"
+                                                      },
+                                                      on: {
+                                                        change: function(
+                                                          $event
+                                                        ) {
+                                                          var $$selectedVal = Array.prototype.filter
+                                                            .call(
+                                                              $event.target
+                                                                .options,
+                                                              function(o) {
+                                                                return o.selected
+                                                              }
+                                                            )
+                                                            .map(function(o) {
+                                                              var val =
+                                                                "_value" in o
+                                                                  ? o._value
+                                                                  : o.value
+                                                              return val
+                                                            })
+                                                          _vm.trash.stateFood = $event
+                                                            .target.multiple
+                                                            ? $$selectedVal
+                                                            : $$selectedVal[0]
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "option",
+                                                        {
+                                                          attrs: {
+                                                            value: "pendiente"
+                                                          },
+                                                          domProps: {
+                                                            selected:
+                                                              detail.state ===
+                                                              "pendiente"
+                                                          }
+                                                        },
+                                                        [_vm._v("Pendiente")]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "option",
+                                                        {
+                                                          attrs: {
+                                                            value:
+                                                              "preparandose"
+                                                          },
+                                                          domProps: {
+                                                            selected:
+                                                              detail.state ===
+                                                              "preparandose"
+                                                          }
+                                                        },
+                                                        [_vm._v("Preparandose")]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "option",
+                                                        {
+                                                          attrs: {
+                                                            value: "entregado"
+                                                          },
+                                                          domProps: {
+                                                            selected:
+                                                              detail.state ===
+                                                              "entregado"
+                                                          }
+                                                        },
+                                                        [_vm._v("Entregado")]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "option",
+                                                        {
+                                                          attrs: {
+                                                            value: "cancelado"
+                                                          },
+                                                          domProps: {
+                                                            selected:
+                                                              detail.state ===
+                                                              "cancelado"
+                                                          }
+                                                        },
+                                                        [_vm._v("Cancelado")]
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                { staticClass: "form-group" },
+                                                [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "btn btn-default btn-sm",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          $event.preventDefault()
+                                                          detail.edit = false
+                                                          _vm.trash.stateFood =
+                                                            ""
+                                                        }
+                                                      }
+                                                    },
+                                                    [_vm._v("Cancelar")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "btn btn-primary btn-sm",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          $event.preventDefault()
+                                                          _vm.saveNewStateFood(
+                                                            detail
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [_vm._v("Actualizar")]
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    : _vm._e()
+                                ])
+                              ])
+                            })
+                          ),
+                          _vm._v(" "),
+                          _c("tfoot", [
+                            _c("tr", [_c("td", { attrs: { colspan: "8" } })])
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            : _vm._e()
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -60550,6 +61516,7 @@ exports.default = {
                 cntx.commit('PAGINATE', response.data.current_page);
                 resolve();
             }).catch(function (error) {
+                cntx.dispatch('auth/setToken', error, { root: true });
                 var err = (0, _appAxios.handlingXhrErrors)(error);
                 err.timeout = 3000;
                 reject(err);
@@ -60567,6 +61534,7 @@ exports.default = {
                 cntx.dispatch('auth/setToken', response, { root: true });
                 resolve(response.data);
             }).catch(function (error) {
+                cntx.dispatch('auth/setToken', error, { root: true });
                 var err = (0, _appAxios.handlingXhrErrors)(error);
                 err.timeout = 3000;
                 reject(err);
@@ -60575,15 +61543,30 @@ exports.default = {
     },
     updateRental: function updateRental(cntx, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('rentals/update/' + payload.id, {
-                description: payload.description,
-                state: payload.state,
-                side: payload.side
-            }).then(function (response) {
+            _appAxios.http.put('rentals/update/' + payload.id, payload).then(function (response) {
                 response.data.title = "¡Actualizción Ok!";
                 response.data.useSwal = true;
                 resolve(response.data);
             }).catch(function (error) {
+                var err = (0, _appAxios.handlingXhrErrors)(error);
+                err.useSwal = true;
+                reject(err);
+            });
+        });
+    },
+    updateOrder: function updateOrder(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.put('orders/update-states/' + payload.id, payload, {
+                params: {
+                    token: cntx.rootState.auth.xhr.token || ''
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                response.data.title = "¡Actualizción Ok!";
+                response.data.useSwal = true;
+                resolve(response.data);
+            }).catch(function (error) {
+                cntx.dispatch('auth/setToken', error, { root: true });
                 var err = (0, _appAxios.handlingXhrErrors)(error);
                 err.useSwal = true;
                 reject(err);
@@ -60687,7 +61670,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     page: 1,
     total: 1,
-    per_page: 15,
+    per_page: 10,
     data: {
         pagination: null
     }
