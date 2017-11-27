@@ -261,7 +261,7 @@ class RentalsController extends Controller
         if ($hasChanges) {
 
             try {
-                DB::transaction(function () use ($info, &$rental) {
+                DB::transaction(function () use ($info, $rental) {
 
                     $dF = Carbon::createFromFormat('Y-m-d H:i:s', $rental->dateFrom . ' 10:00:00');
                     $can = Carbon::now();

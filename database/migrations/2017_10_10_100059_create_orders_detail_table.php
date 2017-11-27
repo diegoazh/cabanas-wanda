@@ -17,7 +17,7 @@ class CreateOrdersDetailTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('order_id')->unsigned();
             $table->bigInteger('food_id')->unsigned();
-            $table->dateTime('delivery');
+            $table->date('delivery');
             $table->integer('quantity');
             $table->enum('state', ['pendiente', 'preparandose', 'entregado', 'cancelado'])->default('pendiente');
             $table->timestamps();

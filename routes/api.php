@@ -30,7 +30,7 @@ Route::prefix('rentals')->group(function() {
     Route::post('availables', 'RentalsController@cottagesAvailables')->name('api.rentals.availabels');
     Route::post('find', 'RentalsController@find')->name('api.rentals.find');
     Route::post('store', 'RentalsController@store')->name('api.rentals.store');
-    Route::post('update/{id}', 'RentalsController@update')->name('api.rentals.update');
+    Route::put('update/{id}', 'RentalsController@update')->name('api.rentals.update');
 
     Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function() {
         Route::get('for-state/{state}/{results}', 'RentalsController@rentalsForState')->name('api.rentals.forState');
@@ -52,6 +52,8 @@ Route::prefix('orders')->group(function() {
     Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function() {
         Route::post('store', 'OrdersController@store')->name('api.orders.store');
         Route::get('for-state/{state}/{results}', 'OrdersController@ordersForState')->name('api.orders.forState');
+        Route::get('for-id/{id}', 'OrdersController@findForId')->name('api.orders.forId');
+        Route::put('update-states/{id}', 'OrdersController@updateStates')->name('api.orders.updateStates');
     });
 });
 

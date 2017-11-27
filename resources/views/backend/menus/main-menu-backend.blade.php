@@ -3,7 +3,7 @@
     <ul class="menu">
         <li class="item"><a href="#" class="panel-dash">Panel</a>
             <ul>
-                <li class="subitem"><a href="{{ route('admin.panel') }}">Panel de administraci&oacute;n</a></li>
+                <li class="subitem"><a href="{{ route('admin.panel') }}">Administraci&oacute;n</a></li>
             </ul>
         </li>
         <li class="item"><a href="#" class="frontend">P&aacute;gina principal</a>

@@ -49,7 +49,7 @@
                                 &nbsp;|&nbsp;
                                 Hasta: <span class="label label-default">{{ rental.dateTo | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span>
                                 <br>
-                                <span class="label label-warning text-uppercase" v-if="!editState">{{ rental.state }}</span>&nbsp;
+                                <span :class="['text-uppercase', 'label', setClassState(rental.state)]" v-if="!editState">{{ rental.state }}</span>&nbsp;
                                 <a role="button" @click.prevent="editState = true; trash.state = rental.state;" v-tooltip.hover="'Editar estado'" v-if="!editState"><icon-app iconImage="edit"></icon-app></a>
                                 <form @submit.prevent="" class="form-inline" v-if="editState">
                                     <div :class="['alert', 'alert-dismissible', setClassPenalty(rental.dateFrom)]" role="alert">
@@ -212,6 +212,24 @@
                 let adition = (this.page - 1) * 15;
                 return index + 1 + adition;
             },
+            setClassState(state) {
+                let classString = '';
+
+                switch (state) {
+                    case 'pendiente': classString = 'label-warning';
+                        break;
+                    case 'confirmada': classString = 'label-info';
+                        break;
+                    case 'en curso': classString = 'label-success';
+                        break;
+                    case 'finalizada': classString = 'label-default';
+                        break;
+                    case 'cancelada': classString = 'label-danger';
+                        break;
+                }
+
+                return classString;
+            },
             fullName(rental) {
                 return rental.user ? `${rental.user.lastname}, ${rental.user.name}` : `${rental.passenger.lastname}, ${rental.passenger.name}`;
             },
@@ -244,11 +262,14 @@
                 this.rental = null;
                 this.editState = false;
                 this.editDescription = false;
+                this.modalAppTitle = '';
+                this.trash.state = '';
                 delete window.appDash;
             },
             saveNewState() {
                 this.rental.state = this.trash.state;
                 this.editState = !this.editState;
+                this.trash.state = '';
             },
             initEditorMd() {
                 this.editDescription = !this.editDescription;

@@ -17,6 +17,7 @@ export default {
                 cntx.commit('PAGINATE', response.data.current_page);
                 resolve();
             }).catch(error => {
+                cntx.dispatch('auth/setToken', error, {root: true});
                 let err = handlingXhrErrors(error);
                 err.timeout = 3000;
                 reject(err);
@@ -34,6 +35,7 @@ export default {
                 cntx.dispatch('auth/setToken', response, {root: true});
                 resolve(response.data);
             }).catch(error => {
+                cntx.dispatch('auth/setToken', error, {root: true});
                 let err = handlingXhrErrors(error);
                 err.timeout = 3000;
                 reject(err);
@@ -42,19 +44,35 @@ export default {
     },
     updateRental(cntx, payload) {
         return new Promise((resolve, reject) => {
-            http.post('rentals/update/' + payload.id, {
-                description: payload.description,
-                state: payload.state,
-                side: payload.side
-            }).then(response => {
-                response.data.title = "¡Actualizción Ok!";
-                response.data.useSwal = true;
-                resolve(response.data);
-            }).catch(error => {
-                let err = handlingXhrErrors(error);
-                err.useSwal = true;
-                reject(err);
-            });
+            http.put('rentals/update/' + payload.id, payload)
+                .then(response => {
+                    response.data.title = "¡Actualizción Ok!";
+                    response.data.useSwal = true;
+                    resolve(response.data);
+                }).catch(error => {
+                    let err = handlingXhrErrors(error);
+                    err.useSwal = true;
+                    reject(err);
+                });
         });
     },
+    updateOrder(cntx, payload) {
+        return new Promise((resolve, reject) => {
+           http.put('orders/update-states/' + payload.id, payload, {
+               params: {
+                   token: cntx.rootState.auth.xhr.token || ''
+               }
+           }).then(response => {
+               cntx.dispatch('auth/setToken', response, {root: true});
+               response.data.title = "¡Actualizción Ok!";
+               response.data.useSwal = true;
+               resolve(response.data);
+           }).catch(error => {
+               cntx.dispatch('auth/setToken', error, {root: true});
+               let err = handlingXhrErrors(error);
+               err.useSwal = true;
+               reject(err);
+           });
+        });
+    }
 }
