@@ -25,7 +25,7 @@
                                 <i class="fa fa-hashtag" aria-hidden="true"></i> {{ $cottages[$i]->number }}
                             </div>
                             <div class="col-md-12">
-                                <img role="button" src="{{ asset('images/cabanias/' . $images[0]) }}" alt="{{ $images[0] }}" class="img-responsive img-rounded">
+                                <img role="button" src="{{ preg_match('/http:\/\//',$images[0]) ? $images[0] : asset('images/cabanias/' . $images[0]) }}" alt="{{ $images[0] }}" class="img-responsive img-rounded">
                             </div>
                             <div class="col-md-12">
                                 <br>
