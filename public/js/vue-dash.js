@@ -48069,7 +48069,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tfoot", [_c("tr", [_c("td", { attrs: { colspan: "4" } })])])
+    return _c("tfoot", [_c("tr", [_c("td", { attrs: { colspan: "5" } })])])
   }
 ]
 render._withStripped = true
