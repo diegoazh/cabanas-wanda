@@ -102,7 +102,7 @@ class OrdersController extends Controller
     public function updateStates(Request $request, $id)
     {
         $hasChanges = false;
-        $info = $request->only(['order_state', 'orders_detail']);
+        $info = $request->only(['order_senia', 'order_state', 'orders_detail']);
 
         if (!$order = Order::find($id)) {
 
@@ -117,6 +117,12 @@ class OrdersController extends Controller
                 if ($order->state !== $info['order_state']) {
 
                     $order->state = $info['order_state'];
+                    $order->save();
+                    $hasChanges = true;
+
+                } else if ($order->senia !== $info['order_senia']) {
+
+                    $order->senia = $info['order_senia'];
                     $order->save();
                     $hasChanges = true;
 
@@ -234,6 +240,7 @@ class OrdersController extends Controller
 
         foreach ($orders as $order) {
 
+            $order->edit = false;
             $order->rental->cottage;
 
             foreach ($order->ordersDetail as $detail) {
