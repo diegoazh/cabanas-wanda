@@ -59,7 +59,7 @@ class Rental extends Model
      **/
     public function setCodeReservationAttribute($value)
     {
-        $this->attributes['code_reservation'] = Hash::make($value);
+        $this->attributes['code_reservation'] = sha1($value);
     }
 
     /**

@@ -31,6 +31,7 @@ Route::prefix('rentals')->group(function() {
     Route::post('find', 'RentalsController@find')->name('api.rentals.find');
     Route::post('store', 'RentalsController@store')->name('api.rentals.store');
     Route::put('update/{id}', 'RentalsController@update')->name('api.rentals.update');
+    Route::put('update-with-code/{id}', 'RentalsController@updateWithCode')->name('api.rentals.withCode');
 
     Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function() {
         Route::get('for-state/{state}/{results}', 'RentalsController@rentalsForState')->name('api.rentals.forState');
