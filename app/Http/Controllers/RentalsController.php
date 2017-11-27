@@ -16,9 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use JWTAuth;
-use phpDocumentor\Reflection\Types\Integer;
 
 class RentalsController extends Controller
 {
@@ -54,22 +52,7 @@ class RentalsController extends Controller
      */
     public function edit()
     {
-        $administration = 0;
-        $email = 0;
-
-        if (Auth::check()) {
-            if (Auth::user()->isAdmin() || Auth::user()->isEmployed()) {
-                $administration = true;
-                $email = Auth::user()->email;
-            } else {
-                $email = Auth::user()->email;
-            }
-        }
-
-        Cookie::queue('info_one', $administration, 180, null, null, false, false); // el último parametro es importante sino la cookie no es accesible desde el cliente $httpOnly = true es el default
-        Cookie::queue('info_two', $email, 180, null, null, false, false);
-
-        return view('frontend.rentals-index');
+        return view('frontend.rentals-edit');
     }
 
     /**
@@ -149,7 +132,7 @@ class RentalsController extends Controller
     /**
      * Find the specified resource in storage by hes id.
      *
-     * @param  Integer  $id
+     * @param  Number  $id
      * @return \Illuminate\Http\Response
      */
     public function findForId($id)
@@ -187,11 +170,28 @@ class RentalsController extends Controller
      */
     public function find(RequestRentalFind $request)
     {
-        $info = $request->only('reserva', 'dni', 'email');
+        $info = $request->only('reserva', 'dni', 'email', 'fromNow');
 
         if ($info['reserva']) {
 
-            if (!$reserva = Rental::where('code_reservation', Hash::make($info['reserva']))
+            if ($info['fromNow']) {
+
+                if (!$reserva = Rental::where('code_reservation', sha1($info['reserva']))
+                    ->where('dateFrom', '>=', Carbon::now()->toDateString())
+                    ->where('state', '<>', 'finalizada')
+                    ->where('state', '<>', 'cancelada')
+                    ->first()) {
+
+                    return response()->json(['error' => 'No encontramos la reserva asociada a los datos proporcionado.'], 404);
+
+                }
+
+                $reserva->cottage;
+
+                return response()->json($reserva, 200);
+            }
+
+            if (!$reserva = Rental::where('code_reservation', sha1($info['reserva']))
                 ->where('dateFrom', '<=', Carbon::now()->toDateString())
                 ->where('dateTo', '>=', Carbon::now()->toDateString())
                 ->where('state', 'en curso')
@@ -323,6 +323,58 @@ class RentalsController extends Controller
         }
 
         return response()->json(['message' => 'Reserva sin cambios. No se llevó acabo ninguna actualización.'], 200);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param Integer $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateWithCode(Request $request, $id)
+    {
+        $hasChanges = false;
+        $info = $request->only(['cottage_id', 'date_from', 'date_to', 'state']);
+
+        if (!$rental= Rental::find($id)) {
+
+            return response()->json(['error' => 'No hemos localizado la reserva solicitada. Verifique y reintente.'], 404);
+
+        }
+
+        if ($info['cottage_id'] && $rental->cottage_id !== $info['cottage_id']) {
+
+            $rental->cottage_id = $info['cottage_id'];
+            $rental->save();
+            $hasChanges = true;
+
+        }
+
+        if ($info['date_from'] && $rental->dateFrom !== $info['date_from'] && $info['date_to'] && $rental->dateTo !== $info['date_to']) {
+
+            $rental->dateFrom = $info['date_from'];
+            $rental->dateTo = $info['date_to'];
+            $rental->save();
+            $hasChanges = true;
+
+        }
+
+        if ($info['state'] && $rental->state !== $info['state']) {
+
+            $rental->state = $info['state'];
+            $rental->save();
+            $hasChanges = true;
+
+        }
+
+        if (!$hasChanges) {
+
+            return response()->json(['message' => 'Reserva sin cambios. No se llevó acabo ninguna modificación.'], 200);
+
+        }
+
+        return response()->json(['message' => 'La reserva se actualizó correctamente.'], 200);
     }
 
     /**

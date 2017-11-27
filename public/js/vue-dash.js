@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1645,14 +1645,13 @@ exports.default = {
         initLeft: {
             type: Boolean,
             default: true,
-            required: true,
             validator: function validator(value) {
                 return typeof value === 'boolean';
             }
         },
         textLeft: {
             type: String,
-            default: 'Text-left',
+            default: '',
             required: true,
             validator: function validator(value) {
                 return value !== undefined && typeof value === 'string';
@@ -1661,14 +1660,13 @@ exports.default = {
         iconTextLeft: {
             type: String,
             default: '',
-            required: false,
             validator: function validator(value) {
                 return value !== undefined && typeof value === 'string';
             }
         },
         textRight: {
             type: String,
-            default: 'Text-right',
+            default: '',
             required: true,
             validator: function validator(value) {
                 return value !== undefined && typeof value === 'string';
@@ -1677,7 +1675,6 @@ exports.default = {
         iconTextRight: {
             type: String,
             default: '',
-            required: false,
             validator: function validator(value) {
                 return value !== undefined && typeof value === 'string';
             }
@@ -1685,7 +1682,6 @@ exports.default = {
         classOnActive: {
             type: String,
             default: 'text-primary',
-            required: false,
             validator: function validator(value) {
                 return value !== undefined && typeof value === 'string';
             }
@@ -1693,7 +1689,6 @@ exports.default = {
         classOnInactive: {
             type: String,
             default: 'text-muted',
-            required: false,
             validator: function validator(value) {
                 return value !== undefined && typeof value === 'string';
             }
@@ -1701,7 +1696,6 @@ exports.default = {
         textDeleted: {
             type: Boolean,
             default: true,
-            required: false,
             validator: function validator(value) {
                 return typeof value === 'boolean';
             }
@@ -1709,7 +1703,20 @@ exports.default = {
         aditionalClassesForBtn: {
             type: String,
             default: 'text-muted',
-            required: false,
+            validator: function validator(value) {
+                return value !== undefined && typeof value === 'string';
+            }
+        },
+        classTxtLeft: {
+            type: String,
+            default: '',
+            validator: function validator(value) {
+                return value !== undefined && typeof value === 'string';
+            }
+        },
+        classTxtRight: {
+            type: String,
+            default: '',
             validator: function validator(value) {
                 return value !== undefined && typeof value === 'string';
             }
@@ -48222,7 +48229,7 @@ var render = function() {
       _c(
         "span",
         {
-          class: _vm.applyLeftSide,
+          class: [_vm.classTxtLeft, _vm.applyLeftSide],
           attrs: { role: "button" },
           on: { click: _vm.toggleLeft }
         },
@@ -48254,7 +48261,7 @@ var render = function() {
       _c(
         "span",
         {
-          class: _vm.applyRightSide,
+          class: [_vm.classTxtRight, _vm.applyRightSide],
           attrs: { role: "button" },
           on: { click: _vm.toggleRight }
         },
@@ -62331,6 +62338,139 @@ exports.default = {
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-commons/store/module-rentals-edit/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
+
+exports.default = {
+    findRental: function findRental(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('rentals/find', payload).then(function (response) {
+                if (response.data) cntx.commit('setRental', response.data);
+                var res = {
+                    title: '¡Excelente!',
+                    message: 'Encontramos la reserva, ahora puede decidir que deseas realizar.',
+                    useSwal: true
+                };
+                resolve(res);
+            }).catch(function (error) {
+                var err = (0, _appAxios.handlingXhrErrors)(error);
+                err.useSwal = true;
+                reject(err);
+            });
+        });
+    },
+    updateRental: function updateRental(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.put('rentals/update-with-code/' + payload.id, payload).then(function (response) {
+                response.data.title = '¡Actualización exitosa!';
+                response.data.useSwal = true;
+                resolve(response.data);
+            }).catch(function (error) {
+                var err = (0, _appAxios.handlingXhrErrors)(error);
+                err.useSwal = true;
+                reject(err);
+            });
+        });
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-rentals-edit/getters.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-rentals-edit/moduleRentalsEdit.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.moduleRentalsEdit = undefined;
+
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-rentals-edit/state.js");
+
+var _state2 = _interopRequireDefault(_state);
+
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/module-rentals-edit/mutations.js");
+
+var _mutations2 = _interopRequireDefault(_mutations);
+
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/module-rentals-edit/actions.js");
+
+var _actions2 = _interopRequireDefault(_actions);
+
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/module-rentals-edit/getters.js");
+
+var _getters2 = _interopRequireDefault(_getters);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var moduleRentalsEdit = exports.moduleRentalsEdit = {
+    namespaced: true,
+    state: _state2.default,
+    getters: _getters2.default,
+    mutations: _mutations2.default,
+    actions: _actions2.default
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-rentals-edit/mutations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    setRental: function setRental(state, rental) {
+        state.data.rental = rental;
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-rentals-edit/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    data: {
+        rental: null
+    }
+};
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-commons/store/module-rentals/actions.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -62868,6 +63008,8 @@ var _moduleAuth = __webpack_require__("./resources/assets/js/vue-commons/store/m
 
 var _moduleRentals = __webpack_require__("./resources/assets/js/vue-commons/store/module-rentals/moduleRentals.js");
 
+var _moduleRentalsEdit = __webpack_require__("./resources/assets/js/vue-commons/store/module-rentals-edit/moduleRentalsEdit.js");
+
 var _moduleFood = __webpack_require__("./resources/assets/js/vue-commons/store/module-food/moduleFood.js");
 
 var _moduleOrders = __webpack_require__("./resources/assets/js/vue-commons/store/module-orders/moduleOrders.js");
@@ -62886,6 +63028,7 @@ exports.default = new _vuex2.default.Store({
     modules: {
         auth: _moduleAuth.moduleAuth,
         rentals: _moduleRentals.moduleRentals,
+        rentals_edit: _moduleRentalsEdit.moduleRentalsEdit,
         food: _moduleFood.moduleFood,
         orders: _moduleOrders.moduleOrders,
         liquidation: _moduleLiquidation.moduleLiquidation,
@@ -63102,7 +63245,7 @@ var dashApp = new _vue2.default({
 
 /***/ }),
 
-/***/ 7:
+/***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./resources/assets/js/vue-dash-app/vue-dash.js");

@@ -26,7 +26,8 @@ class RequestRentalFind extends FormRequest
         return [
             'reserva' => 'string',
             'dni' => 'numeric',
-            'emal' => 'email'
+            'emal' => 'email',
+            'fromNow' => 'boolean'
         ];
     }
 
@@ -40,7 +41,8 @@ class RequestRentalFind extends FormRequest
         return [
             'reserva.string' => 'El codigo de reserva debe ser una cadena de texto.',
             'dni.numeric' => 'El dni debe ser un número.',
-            'email.email' => 'El email debe tener un formato de email válido.'
+            'email.email' => 'El email debe tener un formato de email válido.',
+            'fromNow.boolean' => 'El parametro enviado en cuarto lugar debe ser verdadero o falso.'
         ];
     }
 }

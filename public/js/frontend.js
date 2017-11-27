@@ -235,6 +235,8 @@ $(document).ready(function (event) {
         backgroundDrawing('dibujo-aguara-guazu', '45%', '100% 100%');
     } else if (/liquidation/.test(path)) {
         backgroundDrawing('dibujo-tapir', '50%', '100% 50%');
+    } else if (/rentals\/edit/.test(path)) {
+        backgroundDrawing('dibujo-yaguarete-2', '50%', '100% 50%');
     } else if (/rentals/.test(path)) {
         backgroundDrawing('dibujo-mono', 'contain', '100% 50%');
     }

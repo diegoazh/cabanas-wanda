@@ -55,6 +55,7 @@ mix.copy([
         'resources/assets/js/frontend/profile-edit.js',
     ], './public/js/frontend.js')
     .js('resources/assets/js/vue-rentals-app/vue-rentals.js', 'public/js')
+    .js('resources/assets/js/vue-rentals-edit-app/vue-rentals-edit.js', 'public/js')
     .js('resources/assets/js/vue-admin-food-app/vue-admin-food.js', 'public/js')
     .js('resources/assets/js/vue-orders-app/vue-orders.js', 'public/js')
     .js('resources/assets/js/vue-liquidation-app/vue-liquidation.js', 'public/js')
