@@ -99,6 +99,69 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function updateStates(Request $request, $id)
+    {
+        $hasChanges = false;
+        $info = $request->only(['order_state', 'orders_detail']);
+
+        if (!$order = Order::find($id)) {
+
+            return response()->json(['error' => 'No hemos encontrado el pedido solicitado. Por favor verifique y reintente.'], 404);
+
+        }
+
+        try {
+
+            DB::transaction(function () use($info, $order, &$hasChanges) {
+
+                if ($order->state !== $info['order_state']) {
+
+                    $order->state = $info['order_state'];
+                    $order->save();
+                    $hasChanges = true;
+
+                }
+
+                foreach ($order->ordersDetail as $detail) {
+
+                    foreach ($info['orders_detail'] as $newDetail) {
+
+                        if ($detail->id === $newDetail['id'] && $detail->state !== $newDetail['state']) {
+
+                            $detail->state = $newDetail['state'];
+                            $detail->save();
+                            $hasChanges = true;
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+        } catch (\Exception $exception) {
+
+            return response()->json(['error' => 'Ha ocurrido un error realizando las actualizaciones. No se harán cambios. Por favor verifique el error y reintente. Error: ' . $exception->getMessage() . ' - Código: ' . $exception->getCode()], 500);
+
+        }
+
+        if (!$hasChanges) {
+
+            return response()->json(['message' => 'No se realizaron cambios en la orden, por lo que hubo modificaciones.'], 200);
+
+        }
+
+        return response()->json(['message' => 'Las modificaciones se realizaron correctamente.'], 200);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -109,9 +172,8 @@ class OrdersController extends Controller
         ]);
 
         $info = $request->all();
-        $pedido = Order::find($id);
 
-        if(!$pedido) {
+        if(!$pedido = Order::find($id)) {
 
             return response()->json(['error', 'No hemos encontrado el pedido solicitado.'], 404);
 
@@ -128,9 +190,7 @@ class OrdersController extends Controller
 
         }
 
-        $message = 'El pedido fue actualizado correctamente';
-
-        return response()->json(compact('message', 'pedido'), 200);
+        return response()->json(['message' => 'El pedido fue actualizado correctamente'], 200);
     }
 
     /**
@@ -166,7 +226,7 @@ class OrdersController extends Controller
     {
         $quantity = $results > 100 ? 100 : $results;
 
-        if (!$orders = Order::where('state', $state)->paginate($quantity)) {
+        if (!$orders = Order::where('state', $state)->orderBy('created_at', 'desc')->paginate($quantity)) {
 
             return response()->json(['error' => 'No hemos encontrado resultados con el estado seleccionado.'], 404);
 
@@ -183,5 +243,30 @@ class OrdersController extends Controller
         }
 
         return response()->json($orders, 200);
+    }
+
+    public function findForId($id)
+    {
+        if (!$order = Order::find($id)) {
+
+            return response()->json(['error' => 'No encontramos la orden solicitada. Por favor verifique y reintente. Gracias'], 404);
+
+        }
+
+        try {
+
+            $order->rental->cottage;
+            $order->user;
+            foreach ($order->ordersDetail as $detail) {
+                $detail->food;
+            }
+
+        } catch(\Exception $exception) {
+
+            return response()->json(['error' => 'Se produjo un error al buscar la información relacionada a la orden solicitada. Verifique y reintente: Mensaje: ' . $exception->getMessage() . ' - Código: ' . $exception->getCode()], 500);
+
+        }
+
+        return response()->json($order, 200);
     }
 }
