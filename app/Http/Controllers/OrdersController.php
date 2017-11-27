@@ -123,6 +123,7 @@ class OrdersController extends Controller
                 } else if ($order->senia !== $info['order_senia']) {
 
                     $order->senia = $info['order_senia'];
+                    $order->senia_date = Carbon::now()->toDateTimeString();
                     $order->save();
                     $hasChanges = true;
 

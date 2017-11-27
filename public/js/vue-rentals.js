@@ -1831,6 +1831,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
@@ -55413,8 +55418,10 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", {}, [
+          _vm._m(0),
+          _vm._v(" "),
           _c("table", { staticClass: "table table-striped table-hover" }, [
-            _vm._m(0),
+            _vm._m(1),
             _vm._v(" "),
             _c(
               "tbody",
@@ -55590,7 +55597,7 @@ var render = function() {
                         _c(
                           "p",
                           { staticClass: "label label-primary text-uppercase" },
-                          [_vm._v(_vm._s(rental.code_reservation))]
+                          [_vm._v(_vm._s(rental.code))]
                         )
                       ])
                     ])
@@ -55606,6 +55613,26 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "alert alert-danger" }, [
+      _c("h3", { staticClass: "text-center" }, [
+        _vm._v(
+          "Por favor tome nota del código de reserva. El mismo es único para su reserva y solo Ud. lo conoce."
+        ),
+        _c("br"),
+        _vm._v(
+          "\n                    Este código le permitirá operar en nuestro sitio web para modificar o cancelar la reserva, asi como también para poder realizar pedidos desde nuestra web."
+        ),
+        _c("br"),
+        _vm._v(
+          "\n                    Por favor tenga en cuenta que no podemos recuperarlo y si lo pierde, para obtener uno nuevo deberá registrarse en nuestro sitio web como usuario."
+        )
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

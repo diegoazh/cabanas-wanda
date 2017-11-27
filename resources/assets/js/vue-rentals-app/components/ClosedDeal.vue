@@ -13,6 +13,11 @@
                 <icon-app iconImage="thumbs-o-up" aditionalClasses="text-success mano-grande"></icon-app>
             </div>
             <div class="">
+                <div class="alert alert-danger">
+                    <h3 class="text-center">Por favor tome nota del código de reserva. El mismo es único para su reserva y solo Ud. lo conoce.<br>
+                        Este código le permitirá operar en nuestro sitio web para modificar o cancelar la reserva, asi como también para poder realizar pedidos desde nuestra web.<br>
+                        Por favor tenga en cuenta que no podemos recuperarlo y si lo pierde, para obtener uno nuevo deberá registrarse en nuestro sitio web como usuario.</h3>
+                </div>
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
@@ -54,7 +59,7 @@
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="barcode"></icon-app> Código de reserva</th>
-                                <td><p class="label label-primary text-uppercase">{{ rental.code_reservation }}</p></td>
+                                <td><p class="label label-primary text-uppercase">{{ rental.code }}</p></td>
                             </tr>
                         </template>
                     </tbody>

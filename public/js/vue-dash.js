@@ -2759,19 +2759,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 var _moment = __webpack_require__("./node_modules/moment/moment.js");
 
@@ -46809,11 +46796,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("tbody", [
                           _c("tr", [
-                            _c("th", [
-                              _vm._v(
-                                "Vto reserva:\n                                "
-                              )
-                            ]),
+                            _c("th", [_vm._v("Vto reserva:")]),
                             _vm._v(" "),
                             _c("td", [
                               _c(
@@ -46836,30 +46819,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("tr", [
-                            _c("th", [
-                              _vm._v(
-                                "Codigo:\n                                "
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "text-to-14px label label-primary"
-                                },
-                                [_vm._v(_vm._s(_vm.rental.code_reservation))]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [
-                              _vm._v(
-                                "Cantidad de días:\n                                "
-                              )
-                            ]),
+                            _c("th", [_vm._v("Cantidad de días:")]),
                             _vm._v(" "),
                             _c("td", [
                               _c(
@@ -46878,7 +46838,7 @@ var render = function() {
                               _vm._v(
                                 _vm._s(
                                   _vm.rental.user ? "Usuario" : "Pasajero"
-                                ) + ":\n                                "
+                                ) + ":"
                               )
                             ]),
                             _vm._v(" "),
@@ -46895,11 +46855,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("tr", [
-                            _c("th", [
-                              _vm._v(
-                                "Precio al reservar:\n                                "
-                              )
-                            ]),
+                            _c("th", [_vm._v("Precio al reservar:")]),
                             _vm._v(" "),
                             _c("td", [
                               _c(
@@ -46919,11 +46875,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("tr", [
-                            _c("th", [
-                              _vm._v(
-                                "Promoción:\n                                "
-                              )
-                            ]),
+                            _c("th", [_vm._v("Promoción:")]),
                             _vm._v(" "),
                             _c("td", [
                               _c(
@@ -46944,11 +46896,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("tr", [
-                            _c("th", [
-                              _vm._v(
-                                "Descuentos:\n                                "
-                              )
-                            ]),
+                            _c("th", [_vm._v("Descuentos:")]),
                             _vm._v(" "),
                             _c("td", [
                               _c(

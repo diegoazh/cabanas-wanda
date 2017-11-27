@@ -91,50 +91,37 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th>Vto reserva:
-                                    </th>
+                                    <th>Vto reserva:</th>
                                     <td>
                                         <span class="text-to-14px label label-default">{{ rental.dateReservationPayment | DateArg }}</span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Codigo:
-                                    </th>
-                                    <td>
-                                        <span class="text-to-14px label label-primary">{{ rental.code_reservation }}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Cantidad de días:
-                                    </th>
+                                    <th>Cantidad de días:</th>
                                     <td>
                                         <span class="text-to-14px label label-default">{{ rental.total_days }}</span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>{{ rental.user ? 'Usuario' : 'Pasajero' }}:
-                                    </th>
+                                    <th>{{ rental.user ? 'Usuario' : 'Pasajero' }}:</th>
                                     <td>
                                         <span class="text-to-14px text-capitatrze label label-info">{{ fullName(rental) }}</span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Precio al reservar:
-                                    </th>
+                                    <th>Precio al reservar:</th>
                                     <td>
                                         <span class="text-to-14px label label-danger"><icon-app iconImage="dollar"></icon-app> {{ rental.cottage_price }}</span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Promoción:
-                                    </th>
+                                    <th>Promoción:</th>
                                     <td>
                                         <span class="text-to-14px label label-warning">{{ rental.promotion || 'Sin promoci&oacute;n' }}</span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Descuentos:
-                                    </th>
+                                    <th>Descuentos:</th>
                                     <td>
                                         <span class="text-to-14px label label-primary"><icon-app iconImage="dollar"></icon-app> {{ rental.deductions || 0 }}</span>
                                     </td>

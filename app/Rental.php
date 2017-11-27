@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Hash;
 
 class Rental extends Model
 {
@@ -56,7 +57,10 @@ class Rental extends Model
     /**
      * Mutators
      **/
-
+    public function setCodeReservationAttribute($value)
+    {
+        $this->attributes['code_reservation'] = Hash::make($value);
+    }
 
     /**
      * Metodos del modelo
