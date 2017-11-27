@@ -25,9 +25,15 @@ class RentalsTableSeeder extends Seeder
             $rental->user_id = $user['id'];
             $rental->cottage_price = \App\Cottage::find($rental->cottage_id)->price;
             $rental->dateReservationPayment = \Carbon\Carbon::createFromFormat('Y-m-d', $rental->dateFrom)->subDay()->addHours(10)->toDateString();
-            $rental->code_reservation = $rental->createCodeReservation();
+            $code = $rental->createCodeReservation();
+            $rental->code_reservation = $code;
             $rental->state = $faker->randomElement(['pendiente', 'confirmada', 'en curso', 'finalizada', 'cancelada']);
             $rental->save();
+
+            \Illuminate\Support\Facades\DB::table('test_code_reservation')->insert([
+                'code' => $code,
+                'date_from' => $rental->dateFrom
+            ]);
         }
     }
 }

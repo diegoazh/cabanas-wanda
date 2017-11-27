@@ -14,7 +14,23 @@
             <tr v-for="(orders, index) in pagination.data">
                 <td><icon-app iconImage="hashtag"></icon-app> {{ rowNumber(index) }}</td>
                 <td><span class="text-to-14px label label-warning"><icon-app iconImage="home"></icon-app> {{ orders.rental.cottage.name }}</span></td>
-                <td><span class="text-to-14px label label-primary"><icon-app iconImage="dollar"></icon-app> {{ orders.senia }}</span></td>
+                <td>
+                    <span class="text-to-14px label label-primary" v-if="!orders.edit"><icon-app iconImage="dollar"></icon-app> {{ orders.senia }}</span>
+                    <a role="button" @click.prevent="orders.edit = true; trash.senia = orders.senia;" v-tooltip.right="'Editar seña'" v-if="!orders.edit"><icon-app iconImage="edit"></icon-app></a>
+                    <form @submit.prevent="" class="form-inline" v-if="orders.edit">
+                        <div class="form-group">
+                            <label for="seniaOrder" class="sr-only">Se&ntilde;a: </label>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-addon"><icon-app iconImage="dollar"></icon-app></div>
+                                <input type="number" name="seniaOrder" id="seniaOrder" class="form-control" v-model="trash.senia">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-default btn-sm" @click.prevent="orders.edit = false; trash.senia = '';">Cancelar</button>
+                                <button class="btn btn-primary btn-sm" @click.prevent="saveNewSenia(orders)">Actualizar</button>
+                            </div>
+                        </div>
+                    </form>
+                </td>
                 <td><span class="text-to-14px label label-default">{{ orders.senia_date | DateArg }}</span></td>
                 <td>
                     <div class="row">
@@ -33,7 +49,7 @@
             </tr>
             </tfoot>
         </table>
-        <modal-app modalSize="lg" :modalTitle="modalAppTitle" :onModalHidden="clearOrder" :actionBtnSave="seveNewInfo" iconBtnSave="save" iconBtnClose="times">
+        <modal-app modalSize="lg" :modalTitle="modalAppTitle" :onModalHidden="clearOrder" :actionBtnSave="saveNewInfo" iconBtnSave="save" iconBtnClose="times">
             <div class="container-fluid" v-if="order">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -161,6 +177,7 @@
                 modalAppTitle: '',
                 editState: false,
                 trash: {
+                    senia: 0,
                     state: '',
                     stateFood: ''
                 }
@@ -220,6 +237,14 @@
                 this.trash.stateFood = '';
                 this.modalAppTitle = '';
             },
+            saveNewSenia(order) {
+                this.order = order;
+                this.order.senia = this.trash.senia;
+                order.edit = false;
+                this.trash.senia = 0;
+                this.saveNewInfo();
+                this.order = null;
+            },
             saveNewState() {
                 this.order.state = this.trash.state;
                 this.editState = !this.editState;
@@ -248,9 +273,10 @@
                     VueNoti.error(error);
                 });
             },
-            seveNewInfo() {
+            saveNewInfo() {
                 this.updateOrder({
                     id: this.order.id,
+                    order_senia: +this.order.senia,
                     order_state: this.order.state,
                     orders_detail: this.order.orders_detail
                 }).then(response => {

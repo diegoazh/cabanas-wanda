@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 use phpDocumentor\Reflection\Types\Integer;
 
@@ -27,6 +28,31 @@ class RentalsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+    {
+        $administration = 0;
+        $email = 0;
+
+        if (Auth::check()) {
+            if (Auth::user()->isAdmin() || Auth::user()->isEmployed()) {
+                $administration = true;
+                $email = Auth::user()->email;
+            } else {
+                $email = Auth::user()->email;
+            }
+        }
+
+        Cookie::queue('info_one', $administration, 180, null, null, false, false); // el último parametro es importante sino la cookie no es accesible desde el cliente $httpOnly = true es el default
+        Cookie::queue('info_two', $email, 180, null, null, false, false);
+
+        return view('frontend.rentals-index');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit()
     {
         $administration = 0;
         $email = 0;
@@ -101,9 +127,11 @@ class RentalsController extends Controller
                     // Fix me: Agregar la promoción y el calculo de su descuento aquí.
                     $rental->deductions = 0;
                     $rental->finalPayment = ($rental->cottage_price * $rental->total_days) - $rental->deductions;
-                    $rental->code_reservation = $rental->createCodeReservation();
+                    $code = $rental->createCodeReservation();
+                    $rental->code_reservation = $code;
                     $rental->save();
                     $rental->cottage;
+                    $rental->code = $code;
 
                     array_push($rentals, $rental);
                 }
@@ -163,7 +191,7 @@ class RentalsController extends Controller
 
         if ($info['reserva']) {
 
-            if (!$reserva = Rental::where('code_reservation', $info['reserva'])
+            if (!$reserva = Rental::where('code_reservation', Hash::make($info['reserva']))
                 ->where('dateFrom', '<=', Carbon::now()->toDateString())
                 ->where('dateTo', '>=', Carbon::now()->toDateString())
                 ->where('state', 'en curso')

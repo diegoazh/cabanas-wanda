@@ -2388,6 +2388,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -2416,6 +2432,7 @@ exports.default = {
             modalAppTitle: '',
             editState: false,
             trash: {
+                senia: 0,
                 state: '',
                 stateFood: ''
             }
@@ -2488,6 +2505,14 @@ exports.default = {
             this.trash.stateFood = '';
             this.modalAppTitle = '';
         },
+        saveNewSenia: function saveNewSenia(order) {
+            this.order = order;
+            this.order.senia = this.trash.senia;
+            order.edit = false;
+            this.trash.senia = 0;
+            this.saveNewInfo();
+            this.order = null;
+        },
         saveNewState: function saveNewState() {
             this.order.state = this.trash.state;
             this.editState = !this.editState;
@@ -2522,11 +2547,12 @@ exports.default = {
                 _vueNotifications2.default.error(error);
             });
         },
-        seveNewInfo: function seveNewInfo() {
+        saveNewInfo: function saveNewInfo() {
             var _this2 = this;
 
             this.updateOrder({
                 id: this.order.id,
+                order_senia: +this.order.senia,
                 order_state: this.order.state,
                 orders_detail: this.order.orders_detail
             }).then(function (response) {
@@ -2569,19 +2595,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -46783,11 +46796,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("tbody", [
                           _c("tr", [
-                            _c("th", [
-                              _vm._v(
-                                "Vto reserva:\n                                "
-                              )
-                            ]),
+                            _c("th", [_vm._v("Vto reserva:")]),
                             _vm._v(" "),
                             _c("td", [
                               _c(
@@ -46810,30 +46819,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("tr", [
-                            _c("th", [
-                              _vm._v(
-                                "Codigo:\n                                "
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "text-to-14px label label-primary"
-                                },
-                                [_vm._v(_vm._s(_vm.rental.code_reservation))]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [
-                              _vm._v(
-                                "Cantidad de días:\n                                "
-                              )
-                            ]),
+                            _c("th", [_vm._v("Cantidad de días:")]),
                             _vm._v(" "),
                             _c("td", [
                               _c(
@@ -46852,7 +46838,7 @@ var render = function() {
                               _vm._v(
                                 _vm._s(
                                   _vm.rental.user ? "Usuario" : "Pasajero"
-                                ) + ":\n                                "
+                                ) + ":"
                               )
                             ]),
                             _vm._v(" "),
@@ -46869,11 +46855,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("tr", [
-                            _c("th", [
-                              _vm._v(
-                                "Precio al reservar:\n                                "
-                              )
-                            ]),
+                            _c("th", [_vm._v("Precio al reservar:")]),
                             _vm._v(" "),
                             _c("td", [
                               _c(
@@ -46893,11 +46875,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("tr", [
-                            _c("th", [
-                              _vm._v(
-                                "Promoción:\n                                "
-                              )
-                            ]),
+                            _c("th", [_vm._v("Promoción:")]),
                             _vm._v(" "),
                             _c("td", [
                               _c(
@@ -46918,11 +46896,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("tr", [
-                            _c("th", [
-                              _vm._v(
-                                "Descuentos:\n                                "
-                              )
-                            ]),
+                            _c("th", [_vm._v("Descuentos:")]),
                             _vm._v(" "),
                             _c("td", [
                               _c(
@@ -47328,15 +47302,144 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [
-                _c(
-                  "span",
-                  { staticClass: "text-to-14px label label-primary" },
-                  [
-                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                    _vm._v(" " + _vm._s(orders.senia))
-                  ],
-                  1
-                )
+                !orders.edit
+                  ? _c(
+                      "span",
+                      { staticClass: "text-to-14px label label-primary" },
+                      [
+                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _vm._v(" " + _vm._s(orders.senia))
+                      ],
+                      1
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                !orders.edit
+                  ? _c(
+                      "a",
+                      {
+                        directives: [
+                          {
+                            name: "tooltip",
+                            rawName: "v-tooltip.right",
+                            value: "Editar seña",
+                            expression: "'Editar seña'",
+                            modifiers: { right: true }
+                          }
+                        ],
+                        attrs: { role: "button" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            orders.edit = true
+                            _vm.trash.senia = orders.senia
+                          }
+                        }
+                      },
+                      [_c("icon-app", { attrs: { iconImage: "edit" } })],
+                      1
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                orders.edit
+                  ? _c(
+                      "form",
+                      {
+                        staticClass: "form-inline",
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                          }
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "sr-only",
+                              attrs: { for: "seniaOrder" }
+                            },
+                            [_vm._v("Seña: ")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "input-group input-group-sm" },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "input-group-addon" },
+                                [
+                                  _c("icon-app", {
+                                    attrs: { iconImage: "dollar" }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.trash.senia,
+                                    expression: "trash.senia"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "number",
+                                  name: "seniaOrder",
+                                  id: "seniaOrder"
+                                },
+                                domProps: { value: _vm.trash.senia },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.trash.senia = $event.target.value
+                                  }
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-default btn-sm",
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    orders.edit = false
+                                    _vm.trash.senia = ""
+                                  }
+                                }
+                              },
+                              [_vm._v("Cancelar")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary btn-sm",
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.saveNewSenia(orders)
+                                  }
+                                }
+                              },
+                              [_vm._v("Actualizar")]
+                            )
+                          ])
+                        ])
+                      ]
+                    )
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("td", [
@@ -47403,7 +47506,7 @@ var render = function() {
             modalSize: "lg",
             modalTitle: _vm.modalAppTitle,
             onModalHidden: _vm.clearOrder,
-            actionBtnSave: _vm.seveNewInfo,
+            actionBtnSave: _vm.saveNewInfo,
             iconBtnSave: "save",
             iconBtnClose: "times"
           }
