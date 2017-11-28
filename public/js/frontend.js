@@ -251,7 +251,7 @@ $(document).ready(function (event) {
     $('#mail, #phone, #cel').click(function (e) {
         var lnk = e.target;
         var body = '';
-        $btn = $(lnk);
+        var $btn = $(lnk);
         if (/mail/.test($btn.data('tt-modal'))) {
             body = '<h2 class="text-center">\n                        <i class="fa fa-envelope-open" aria-hidden="true"></i> ' + $btn.data('tt-modal') + ' a\n                    </h2>\n                    <h3 class="text-center">\n                        <a class="btn btn-danger btn-lg" mailto="' + $btn.data('body-modal') + '@gmail.com">\n                            <i class="fa fa-envelope-open-o" aria-hidden="true"></i> ' + $btn.data('body-modal') + '<i class="fa fa-at" aria-hidden="true"></i>gmail.com\n                        </a>\n                    </h3>';
         } else if (/fijo/.test($btn.data('tt-modal'))) {

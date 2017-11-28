@@ -9,6 +9,7 @@
         "barryvdh/laravel-cors": "^0.9.3",
         "cviebrock/eloquent-sluggable": "^4.1",
         "fzaninotto/faker": "^1.6",
+        "guzzlehttp/guzzle": "^6.3",
         "jenssegers/date": "^3.2",
         "laracasts/flash": "^2.0",
         "laravel/framework": "5.4.*",

@@ -89,7 +89,7 @@ $(document).ready(function (event) {
     $('#mail, #phone, #cel').click(function (e) {
         let lnk = e.target;
         let body = '';
-        $btn = $(lnk);
+        let $btn = $(lnk);
         if(/mail/.test($btn.data('tt-modal'))) {
             body = `<h2 class="text-center">
                         <i class="fa fa-envelope-open" aria-hidden="true"></i> ${$btn.data('tt-modal')} a

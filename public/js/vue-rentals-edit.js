@@ -37434,7 +37434,7 @@ var render = function() {
                           _c(
                             "button",
                             {
-                              staticClass: "btn btn lg btn-danger",
+                              staticClass: "btn btn-lg btn-danger",
                               attrs: {
                                 "data-toggle": "modal",
                                 "data-target": "#b3-modal-id"
@@ -37461,11 +37461,15 @@ var render = function() {
                             }
                           },
                           [
-                            _c("div", { staticClass: "alert alert-danger" }, [
-                              _c("p", [
-                                _vm._v("Esta seguro que desea cancelar?.")
-                              ])
-                            ])
+                            _c(
+                              "div",
+                              { staticClass: "alert alert-danger text-center" },
+                              [
+                                _c("p", [
+                                  _vm._v("¿Esta seguro que desea cancelar?")
+                                ])
+                              ]
+                            )
                           ]
                         )
                       ],
