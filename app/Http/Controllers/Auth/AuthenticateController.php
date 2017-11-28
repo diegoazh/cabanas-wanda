@@ -83,9 +83,9 @@ class AuthenticateController
             }
         }
 
-        if (!empty($logged) || !empty($user)) {
+        if (!empty($passenger) || !empty($user)) {
 
-            $token = JWTAuth::fromUser($logged ? $logged : $user);
+            $token = JWTAuth::fromUser($user ? $user : $passenger);
 
         }
 

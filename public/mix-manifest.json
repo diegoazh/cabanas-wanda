@@ -2,7 +2,7 @@
     "/js/vue-dash.js": "/js/vue-dash.js?id=e7a265bc249d8144b054",
     "/js/vue-admin-food.js": "/js/vue-admin-food.js?id=2fb36328dfd86f13a409",
     "/js/vue-reports.js": "/js/vue-reports.js?id=9aaafa7c27b934a6365a",
-    "/js/vue-rentals.js": "/js/vue-rentals.js?id=efb9a681f3084f5aa6b4",
+    "/js/vue-rentals.js": "/js/vue-rentals.js?id=1e2251af57d54c553a38",
     "/js/vue-orders.js": "/js/vue-orders.js?id=9c575312b7d477a7be83",
     "/js/vue-rentals-edit.js": "/js/vue-rentals-edit.js?id=08bc4796dc521a846e4e",
     "/js/vue-liquidation.js": "/js/vue-liquidation.js?id=6c99fdbc5bb2e3da6193",
@@ -28,5 +28,5 @@
     "js/libraries.js": "js/libraries.js?id=3651bb6442163881d340",
     "js/backend.js": "js/backend.js?id=4960dda8f57cc4db36b2",
     "js/frontend.js": "js/frontend.js?id=3338dd7e76ddd1c1d346",
-    "js/vue-rentals.js": "js/vue-rentals.js?id=efb9a681f3084f5aa6b4"
+    "js/vue-rentals.js": "js/vue-rentals.js?id=1e2251af57d54c553a38"
 }
