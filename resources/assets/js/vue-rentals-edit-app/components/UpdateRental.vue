@@ -78,13 +78,13 @@
                                     <div class="alert alert-danger">
                                         <p>Tenga en cuenta que si cancela la reserva con <b>menos de 48 hs</b> perderá compeltamente la seña.</p>
                                     </div>
-                                    <button class="btn btn lg btn-danger" data-toggle="modal" data-target="#b3-modal-id">
+                                    <button class="btn btn-lg btn-danger" data-toggle="modal" data-target="#b3-modal-id">
                                         <icon-app iconImage="times-circle"></icon-app> Cancelar
                                     </button>
                                 </div>
                                 <modal-app modalTitle="Cancelar reserva" :actionBtnSave="sendChangesToServer">
-                                    <div class="alert alert-danger">
-                                        <p>Esta seguro que desea cancelar?.</p>
+                                    <div class="alert alert-danger text-center">
+                                        <p>¿Esta seguro que desea cancelar?</p>
                                     </div>
                                 </modal-app>
                             </div>

@@ -202,7 +202,7 @@
                 this.authenticateUser({
                     isAdmin: this.isAdmin,
                     userLogged: this.userLogged,
-                    document: this.user.dni ? this.user.dni : this.user.passport,
+                    document: this.document,
                     email: this.email
                 }).then((response) => {
                         this.verifyUser();
