@@ -1,7 +1,7 @@
 @extends('templates.frontend-layout')
 
 @section('title')
-    {{ $user->displayName() }}
+    {{ $user->formalFullname }}
 @endsection
 
 @section('styles')
@@ -15,9 +15,9 @@
                 <a href="{{ route('users.index') }}" class="btn btn-default btn-xs"><i class="fa fa-reply"></i> Volver</a>
             </div>
         @endif
-        <img  id="img_user" src="@if(!empty($user->imageProfile)) {{ asset('images/profiles/' . $user->imageProfile) }} @elseif($user->genre === 'm') {{ asset('images/profiles/chico-jopo.png') }} @else {{ asset('images/profiles/chica-rodete.png') }} @endif" alt="{{ $user->displayName() }}" class="img-responsive img-circle img-thumbnail">
+        <img  id="img_user" src="@if(!empty($user->imageProfile)) {{ asset('images/profiles/' . $user->imageProfile) }} @elseif($user->genre === 'm') {{ asset('images/profiles/chico-jopo.png') }} @else {{ asset('images/profiles/chica-rodete.png') }} @endif" alt="{{ $user->formalFullname }}" class="img-responsive img-circle img-thumbnail">
         <h2 class="text-right page-header">
-            {{ $user->displayName() }}
+            {{ $user->formalFullname }}
             @if(Auth::check() && Auth::user()->dni === $user->dni)
                 <a href="{{ route('home.profile.edit', $user->slug) }}" class="btn btn-warning btn-xs">Editar <i class="fa fa-edit"></i></a>
             @endif

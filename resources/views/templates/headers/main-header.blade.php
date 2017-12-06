@@ -65,7 +65,7 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle img-user-profile" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <img class="img-responsive img-circle" src="@if(!empty(Auth::user()->imageProfile)) {{ asset('images/profiles/' . Auth::user()->imageProfile) }} @elseif(Auth::user()->genre === 'm') {{ asset('images/profiles/chico-jopo.png') }} @else {{ asset('images/profiles/chica-rodete.png') }} @endif" alt="{{ Auth::user()->displayName() }}" alt="{{ Auth::user()->imageProfile }}"> {{ Auth::user()->name }} <span class="caret"></span>
+                                <img class="img-responsive img-circle" src="@if(!empty(Auth::user()->imageProfile)) {{ asset('images/profiles/' . Auth::user()->imageProfile) }} @elseif(Auth::user()->genre === 'm') {{ asset('images/profiles/chico-jopo.png') }} @else {{ asset('images/profiles/chica-rodete.png') }} @endif" alt="{{ Auth::user()->formalFullname }}" alt="{{ Auth::user()->imageProfile }}"> {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">

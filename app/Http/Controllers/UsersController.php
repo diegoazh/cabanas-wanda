@@ -102,7 +102,7 @@ class UsersController extends Controller
             $user->imageProfile = $user->addAndRemoveImageProfile($fields['imageProfile'], $user);
         }
         $user->save();
-        flash('El usuario <strong>' . $user->displayName() . '</strong> se actualizó correctamente.', 'success');
+        flash('El usuario <strong>' . $user->formalFullname . '</strong> se actualizó correctamente.', 'success');
         return redirect()->route('home.profile.show', $user->slug);
     }
 

@@ -1,6 +1,6 @@
 @if (session()->has('flash_notification.message') || count($errors) > 0)
     <div class="row">
-        <div class="col-md-offset-2 col-md-8">
+        <div class="col-md-offset-3 col-md-6">
             @include('messages_alerts.flash-and-errors')
         </div>
     </div>

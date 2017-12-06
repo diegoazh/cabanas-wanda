@@ -21,7 +21,7 @@ class User extends Authenticatable
      */
     protected $table = 'users';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['name', 'lastname', 'dateOfBirth', 'country_id', 'dni', 'passport', 'email', 'celphone', 'phone', 'address', 'destination', 'password', 'type', 'imageProfile', 'slug', 'genre', 'confirmed'];
+    protected $fillable = ['name', 'lastname', 'dateOfBirth', 'country_id', 'dni', 'passport', 'email', 'celphone', 'phone', 'address', 'destination', 'password', 'imageProfile', 'slug', 'genre'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -70,9 +70,14 @@ class User extends Authenticatable
         return $this->isAdmin() || $this->isEmployed();
     }
 
-    public function displayName()
+    public function getFormalFullnameAttribute()
     {
         return $this->lastname . ', ' . $this->name;
+    }
+
+    public function getFullnameAttribute()
+    {
+        return $this->name . ', ' . $this->lastname;
     }
 
     public function addAndRemoveImageProfile($newImage, User $user)

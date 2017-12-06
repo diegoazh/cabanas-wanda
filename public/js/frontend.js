@@ -239,6 +239,8 @@ $(document).ready(function (event) {
         backgroundDrawing('dibujo-yaguarete-2', '50%', '100% 50%');
     } else if (/rentals/.test(path)) {
         backgroundDrawing('dibujo-mono', 'contain', '100% 50%');
+    } else if (/new_email_confirmation/.test(path)) {
+        backgroundDrawing('dibujo-yacare', 'contain', '100% 50%');
     }
 
     function setFrontendModal(ttModal, bodyModal) {

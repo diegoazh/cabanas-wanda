@@ -27,11 +27,12 @@ class CreateUsersTable extends Migration
             $table->bigInteger('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('destination')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->enum('type', ['frecuente', 'empleado', 'administrador', 'sysadmin'])->default('frecuente');
             $table->string('imageProfile')->nullable();
             $table->string('slug')->nullable();
             $table->boolean('confirmed')->default(false);
+            $table->string('confirmation_code', 150);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -21,16 +21,16 @@
             <tbody>
             @foreach($users as $user)
                 <tr data-object="{{ $user->id }}">
-                    <td><a href="{{ route('home.profile.show', $user->slug) }}" class="btn btn-link">{{ $user->displayName() }}</a></td>
+                    <td><a href="{{ route('home.profile.show', $user->slug) }}" class="btn btn-link">{{ $user->formalFullname }}</a></td>
                     <td class="email-lower">{{ $user->email }}</td>
                     <td><span class="label @if($user->country->abbreviation === 'AR') label-default @else label-success @endif">{{ $user->country->abbreviation }}</span></td>
                     <td><span class="label @if($user->type === 'administrador' || $user->type === 'sysadmin') label-primary @elseif($user->type === 'frecuente') label-info @elseif($user->type === 'empleado') label-default @endif">{{ strtoupper($user->type) }}</span></td>
                     @if(Auth::user()->type === 'administrador' || Auth::user()->type === 'sysadmin')
                         <td>
-                            <a role="button" class="btn btn-warning btn-xs btn-edit-type" data-toggle="modal" data-target="#modalForms" data-object-display="{{ $user->displayName() }}" data-object-value="{{ $user->type }}">
+                            <a role="button" class="btn btn-warning btn-xs btn-edit-type" data-toggle="modal" data-target="#modalForms" data-object-display="{{ $user->formalFullname }}" data-object-value="{{ $user->type }}">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar rol
                             </a>
-                            <a role="button" class="btn btn-danger btn-xs btn-delete-user" data-toggle="modal" data-target="#modalForms" data-object-display="{{ $user->displayName() }}" data-object-value="{{ $user->displayName() }}">
+                            <a role="button" class="btn btn-danger btn-xs btn-delete-user" data-toggle="modal" data-target="#modalForms" data-object-display="{{ $user->formalFullname }}" data-object-value="{{ $user->formalFullname }}">
                                 <i class="fa fa-user-times" aria-hidden="true"></i> Eliminar
                             </a>
                         </td>
