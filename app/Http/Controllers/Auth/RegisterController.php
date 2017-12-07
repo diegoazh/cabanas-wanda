@@ -78,8 +78,10 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'country_id' => $data['country_id'],
             'password' => bcrypt($data['password']),
-            'confirmation_code' => str_random(150)
         ]);
+
+        $user->confirmation_code = str_random(150);
+        $user->save();
 
         Mail::to($user->email, $user->formalFullname)
             ->send(new ConfirmAccount($user));

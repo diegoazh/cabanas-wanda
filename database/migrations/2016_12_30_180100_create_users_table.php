@@ -32,7 +32,7 @@ class CreateUsersTable extends Migration
             $table->string('imageProfile')->nullable();
             $table->string('slug')->nullable();
             $table->boolean('confirmed')->default(false);
-            $table->string('confirmation_code', 150);
+            $table->string('confirmation_code', 150)->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
