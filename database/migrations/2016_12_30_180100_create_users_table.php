@@ -28,7 +28,7 @@ class CreateUsersTable extends Migration
             $table->string('address')->nullable();
             $table->string('destination')->nullable();
             $table->string('password')->nullable();
-            $table->enum('type', ['frecuente', 'empleado', 'administrador', 'sysadmin'])->default('frecuente');
+            $table->enum('type', ['frecuente', 'usuario', 'empleado', 'administrador', 'sysadmin'])->default('frecuente');
             $table->string('imageProfile')->nullable();
             $table->string('slug')->nullable();
             $table->boolean('confirmed')->default(false);
