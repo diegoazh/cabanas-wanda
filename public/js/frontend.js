@@ -219,7 +219,7 @@ $(document).ready(function (event) {
         $('#content').css('background-image', 'url("http://' + window.location.host + '/images/frontend/' + dibujo + '.jpg")').css('background-repeat', repeat).css('background-size', size).css('background-position', position);
     }
 
-    if (/register/.test(path)) {
+    if (/register/.test(path) || /new_email_confirmation/.test(path)) {
         backgroundDrawing('dibujo-carpincho', 'contain', '100% 50%');
         $('.panel-default').css('box-shadow', '3px 3px 17px 6px #333333');
         $('.panel-heading').css('background-color', '#fd7500');

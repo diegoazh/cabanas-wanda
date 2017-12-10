@@ -2,6 +2,7 @@
 /public/lib
 /public/storage
 /public/images
+/resources/nginx-ssl
 /storage/*.key
 /vendor
 /.idea

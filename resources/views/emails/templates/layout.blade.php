@@ -277,13 +277,12 @@
                                 <td align="center" class="footercopy">
                                     @section('footer')
                                         ® Hotel Cabañas de Wanda <br>
+                                        Copyright &copy; 2010 - {{ \Carbon\Carbon::now()->year }}. All right reserved.<br>
                                         @if(isset($unsuscribe) && $unsuscribe)
                                             <a href="#" class="unsubscribe"><font color="#ffffff">Unsubscribe</font></a>
                                             <span class="hide">from this newsletter instantly</span>
                                         @endif
                                         <span class="hide">Ruta Nacional 12 Km 1594, Colonia Wanda, Misiones, Argentina</span>
-                                        <br>
-                                        Copyright  2010 - {{ \Carbon\Carbon::now()->year }}. All right reserved.<br>
                                     @show
                                 </td>
                             </tr>

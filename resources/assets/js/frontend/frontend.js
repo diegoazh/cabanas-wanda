@@ -57,7 +57,7 @@ $(document).ready(function (event) {
             .css('background-position', position);
     }
 
-    if (/register/.test(path)) {
+    if (/register/.test(path) || /new_email_confirmation/.test(path)) {
         backgroundDrawing('dibujo-carpincho', 'contain', '100% 50%');
         $('.panel-default').css('box-shadow', '3px 3px 17px 6px #333333');
         $('.panel-heading').css('background-color', '#fd7500');
