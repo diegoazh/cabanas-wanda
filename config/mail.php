@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'postmaster@cabaniasdewanda.com.ar'),
+        'address' => env('MAIL_FROM_ADDRESS', 'administracion@cabaniasdewanda.com.ar'),
         'name' => env('MAIL_FROM_NAME', 'Cabañas de Wanda'),
     ],
 

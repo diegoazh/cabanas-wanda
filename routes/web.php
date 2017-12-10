@@ -17,6 +17,9 @@
  * Aquí pondremos las rutas del frontend divididas por secciones.
  *
  */
+
+use App\Mail\ConfirmAccount;
+
 Route::group(['middleware' => 'web'], function () {
     /**************************************
      * Base route app
@@ -59,4 +62,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Administration', 'middleware'
     Route::get('food', 'FoodsController@index')->name('comidas.index');
     Route::get('reports', 'ReportsController@index')->name('reports.index');
     //Route::resource('promotions', 'PromotionsController');
+});
+
+Route::prefix('test')->group(function() {
+    Route::get('mail-welcome', function() {
+        return new ConfirmAccount(\App\User::find(158));
+    });
 });

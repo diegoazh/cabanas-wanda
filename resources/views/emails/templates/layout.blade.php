@@ -260,7 +260,7 @@
                 <tr>
                     <td class="innerpadding borderbottom">
                         @section('image-brand')
-                            <img class="fix" src="{{ asset('images/frontend/cabanas2.jpg') }}" width="100%" border="0" alt="">
+                            <img class="fix" src="{{ asset('images/frontend/cabanas2.jpg') }}" width="100%" height="auto" border="0" alt="">
                         @show
                     </td>
                 </tr>
