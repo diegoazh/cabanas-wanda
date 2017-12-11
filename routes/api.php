@@ -33,9 +33,14 @@ Route::prefix('rentals')->group(function() {
     Route::put('update/{id}', 'RentalsController@update')->name('api.rentals.update');
     Route::put('update-with-code/{id}', 'RentalsController@updateWithCode')->name('api.rentals.withCode');
 
+    Route::get('for-state/{state}/{results}', 'RentalsController@rentalsForState')
+        ->where('state', '[a-z]+')->where('results', '\d+')->name('api.rentals.forState');
+
     Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function() {
-        Route::get('for-state/{state}/{results}', 'RentalsController@rentalsForState')->name('api.rentals.forState');
-        Route::get('for-id/{id}', 'RentalsController@findForId')->name('api.rentals.forId');
+        Route::get('for-state/{state}/{results}', 'RentalsController@rentalsForState')
+            ->where('state', '\w+')->where('results', '\d+')->name('api.rentals.forState');
+        Route::get('for-id/{id}', 'RentalsController@findForId')
+            ->where('id', '\d+')->name('api.rentals.forId');
     });
 });
 

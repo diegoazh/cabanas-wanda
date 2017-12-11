@@ -50299,7 +50299,7 @@ var _axios2 = _interopRequireDefault(_axios);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var http = exports.http = _axios2.default.create({
-    baseURL: 'http://homestead.app/api/',
+    baseURL: window.location.origin + '/api/',
     timeout: 60000,
     headers: {
         'Content-Type': 'application/json',

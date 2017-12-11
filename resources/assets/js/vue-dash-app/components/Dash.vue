@@ -1,7 +1,7 @@
 <template>
     <div class="panel">
         <div class="panel-heading">
-            <h1 class="text-center"><icon-app iconImage="dashboard"></icon-app> Panel de asministración</h1>
+            <h1 class="text-center"><icon-app iconImage="dashboard"></icon-app> Panel de administración</h1>
         </div>
         <div class="panel-body">
             <btn-switch-app :initLeft="seeRentals" textLeft="Reservas" iconTextLeft="handshake-o" textRight="Pedidos" iconTextRight="cutlery" classOnActive="text-primary" classOnInactive="text-muted" :textDeleted="true"></btn-switch-app>
@@ -15,8 +15,8 @@
                         <li role="presentation" :class="{'active': this.type === 'confirmada'}">
                             <a href="#confirmadas" aria-controls="confirmadas" role="tab" data-toggle="tab" @click="setTypeofQuery('confirmada')">Confirmadas</a>
                         </li>
-                        <li role="presentation" :class="{'active': this.type === 'en curso'}">
-                            <a href="#en_curso" aria-controls="en_curso" role="tab" data-toggle="tab" @click="setTypeofQuery('en curso')">En curso</a>
+                        <li role="presentation" :class="{'active': this.type === 'en_curso'}">
+                            <a href="#en_curso" aria-controls="en_curso" role="tab" data-toggle="tab" @click="setTypeofQuery('en_curso')">En curso</a>
                         </li>
                         <li role="presentation" :class="{'active': this.type === 'cancelada'}">
                             <a href="#canceladas" aria-controls="finalizadas_canceladas" role="tab" data-toggle="tab" @click="setTypeofQuery('cancelada')">Canceladas</a>
@@ -121,7 +121,7 @@
                     this.trash.pendiente2 = this.page;
                 } else if (this.type === 'confirmada') {
                     this.trash.confirmada = this.page;
-                } else if (this.type === 'en curso') {
+                } else if (this.type === 'en_curso') {
                     this.trash.en_curso = this.page;
                 } else if (this.type === 'cancelada') {
                     this.trash.cancelada = this.page;
@@ -142,7 +142,7 @@
                     this.PAGINATE(this.trash.pendiente2);
                 } else if (this.type === 'confirmada' && this.page !== this.trash.confirmada) {
                     this.PAGINATE(this.trash.confirmada);
-                } else if (this.type === 'en curso' && this.page !== this.trash.en_curso) {
+                } else if (this.type === 'en_curso' && this.page !== this.trash.en_curso) {
                     this.PAGINATE(this.trash.en_curso);
                 } else if (this.type === 'cancelada' && this.page !== this.trash.cancelada) {
                     this.PAGINATE(this.trash.cancelada);

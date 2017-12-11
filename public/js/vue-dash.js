@@ -2133,7 +2133,7 @@ exports.default = {
                 this.trash.pendiente2 = this.page;
             } else if (this.type === 'confirmada') {
                 this.trash.confirmada = this.page;
-            } else if (this.type === 'en curso') {
+            } else if (this.type === 'en_curso') {
                 this.trash.en_curso = this.page;
             } else if (this.type === 'cancelada') {
                 this.trash.cancelada = this.page;
@@ -2154,7 +2154,7 @@ exports.default = {
                 this.PAGINATE(this.trash.pendiente2);
             } else if (this.type === 'confirmada' && this.page !== this.trash.confirmada) {
                 this.PAGINATE(this.trash.confirmada);
-            } else if (this.type === 'en curso' && this.page !== this.trash.en_curso) {
+            } else if (this.type === 'en_curso' && this.page !== this.trash.en_curso) {
                 this.PAGINATE(this.trash.en_curso);
             } else if (this.type === 'cancelada' && this.page !== this.trash.cancelada) {
                 this.PAGINATE(this.trash.cancelada);
@@ -48302,7 +48302,7 @@ var render = function() {
         { staticClass: "text-center" },
         [
           _c("icon-app", { attrs: { iconImage: "dashboard" } }),
-          _vm._v(" Panel de asministración")
+          _vm._v(" Panel de administración")
         ],
         1
       )
@@ -48391,7 +48391,7 @@ var render = function() {
                       _c(
                         "li",
                         {
-                          class: { active: this.type === "en curso" },
+                          class: { active: this.type === "en_curso" },
                           attrs: { role: "presentation" }
                         },
                         [
@@ -48406,7 +48406,7 @@ var render = function() {
                               },
                               on: {
                                 click: function($event) {
-                                  _vm.setTypeofQuery("en curso")
+                                  _vm.setTypeofQuery("en_curso")
                                 }
                               }
                             },
@@ -61194,7 +61194,7 @@ var _axios2 = _interopRequireDefault(_axios);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var http = exports.http = _axios2.default.create({
-    baseURL: 'http://homestead.app/api/',
+    baseURL: window.location.origin + '/api/',
     timeout: 60000,
     headers: {
         'Content-Type': 'application/json',

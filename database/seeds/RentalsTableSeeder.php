@@ -27,7 +27,7 @@ class RentalsTableSeeder extends Seeder
             $rental->dateReservationPayment = \Carbon\Carbon::createFromFormat('Y-m-d', $rental->dateFrom)->subDay()->addHours(10)->toDateString();
             $code = $rental->createCodeReservation();
             $rental->code_reservation = $code;
-            $rental->state = $faker->randomElement(['pendiente', 'confirmada', 'en curso', 'finalizada', 'cancelada']);
+            $rental->state = $faker->randomElement(['pendiente', 'confirmada', 'en_curso', 'finalizada', 'cancelada']);
             $rental->save();
 
             \Illuminate\Support\Facades\DB::table('test_code_reservation')->insert([
