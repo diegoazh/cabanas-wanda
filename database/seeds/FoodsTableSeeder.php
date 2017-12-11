@@ -21,6 +21,7 @@ class FoodsTableSeeder extends Seeder
             $plato->price = $faker->numberBetween(30, 250);
             $plato->description = $faker->text(150);
             $plato->image = $faker->imageUrl();
+            $plato->available = true;
             $plato->save();
         }
     }
