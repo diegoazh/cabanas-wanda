@@ -17,8 +17,4 @@ class Country extends Model
     {
       return $this->hasMany('App\User');
     }
-    public function passengers()
-    {
-      return $this->hasMany('App\Passenger');
-    }
 }

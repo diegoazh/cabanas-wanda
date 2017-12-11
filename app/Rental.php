@@ -14,7 +14,7 @@ class Rental extends Model
 
     protected $table = 'rentals';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['code_reservation', 'cottage_id', 'dateFrom', 'dateTo', 'own', 'description', 'user_id', 'passenger_id', 'promotion_id', 'cottage_price', 'total_days', 'dateReservationPayment', 'deductions', 'deductionsDescription', 'finalPayment', 'dateFinalPayment', 'state', 'wasRated'];
+    protected $fillable = ['code_reservation', 'cottage_id', 'dateFrom', 'dateTo', 'own', 'description', 'user_id', 'promotion_id', 'cottage_price', 'total_days', 'dateReservationPayment', 'deductions', 'deductionsDescription', 'finalPayment', 'dateFinalPayment', 'state', 'wasRated'];
 
     /**
      * Relaciones del modelo
@@ -27,11 +27,6 @@ class Rental extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
-    }
-
-    public function passenger()
-    {
-        return $this->belongsTo('App\Passenger');
     }
 
     public function promotion()
@@ -68,7 +63,7 @@ class Rental extends Model
     public function createCodeReservation()
     {
         $faker = Faker::create();
-        $idUser = (!empty($this->attributes['user_id'])) ? $this->attributes['user_id'] : $this->attributes['passenger_id'];
+        $idUser = $this->attributes['user_id'];
         return strtoupper($faker->lexify('??')) . $this->attributes['cottage_id'] . $idUser . strtoupper($faker->lexify('???')) . time();
     }
 

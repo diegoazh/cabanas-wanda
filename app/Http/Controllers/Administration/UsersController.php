@@ -30,6 +30,30 @@ class UsersController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $info = $request->all();
+
+        $cliente = new User([
+            'name' => $info['name'],
+            'lastname' => $info['lastname'],
+            'dni' => $info['dni'],
+            'passport' => $info['passport'],
+            'email' => $info['email'],
+            'genre' => $info['genre'],
+            'country_id' => $info['country']
+        ]);
+        $cliente->save();
+
+        return response()->json(compact('cliente'), 200);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

@@ -183,7 +183,7 @@
         },
         computed: {
             ownerNames() {
-                return this.rental.user ? `${this.rental.user.name}, ${this.rental.user.lastname}` : `${this.rental.passenger.name}, ${this.rental.passenger.lastname}`
+                return `${this.rental.user.name}, ${this.rental.user.lastname}`;
             },
             totalAmount() {
                 let amount = 0;

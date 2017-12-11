@@ -2034,7 +2034,7 @@ exports.default = {
     },
     computed: _extends({
         ownerNames: function ownerNames() {
-            return this.rental.user ? this.rental.user.name + ', ' + this.rental.user.lastname : this.rental.passenger.name + ', ' + this.rental.passenger.lastname;
+            return this.rental.user.name + ', ' + this.rental.user.lastname;
         },
         totalAmount: function totalAmount() {
             var amount = 0;
@@ -51606,10 +51606,10 @@ exports.default = {
                 email: payload.email
             }).then(function (response) {
                 var obj = {};
-                dispatch('setUserData', response.data.user || response.data.passenger);
+                dispatch('setUserData', response.data.user);
                 dispatch('auth/setToken', response, { root: true });
                 dispatch('setCountries', response.data.countries);
-                if (response.data.token || response.data.passenger) {
+                if (response.data.token) {
                     obj = {
                         title: 'ClIENTE IDENTIFICADO',
                         message: 'Hemos identificado tus datos. Por favor verifica que sean correctos.',

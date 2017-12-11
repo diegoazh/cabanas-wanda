@@ -159,11 +159,6 @@ body .container-backend #content #main_menu .menu > li > a.claims:before {
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-backend #content #main_menu .menu > li > a.passenger:before {
-  content: '\F21B';
-  font-family: 'FontAwesome';
-  margin-right: 5px;
-}
 body .container-backend #content #main_menu .menu > li > a.users:before {
   content: '\F0C0';
   font-family: 'FontAwesome';

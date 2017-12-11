@@ -2846,7 +2846,7 @@ exports.default = {
             return classString;
         },
         fullName: function fullName(rental) {
-            return rental.user ? rental.user.lastname + ', ' + rental.user.name : rental.passenger.lastname + ', ' + rental.passenger.name;
+            return rental.user.lastname + ', ' + rental.user.name;
         },
         setSenia: function setSenia(price) {
             return +(30 / 100 * +price).toFixed(2);
@@ -62583,10 +62583,10 @@ exports.default = {
                 email: payload.email
             }).then(function (response) {
                 var obj = {};
-                dispatch('setUserData', response.data.user || response.data.passenger);
+                dispatch('setUserData', response.data.user);
                 dispatch('auth/setToken', response, { root: true });
                 dispatch('setCountries', response.data.countries);
-                if (response.data.token || response.data.passenger) {
+                if (response.data.token) {
                     obj = {
                         title: 'ClIENTE IDENTIFICADO',
                         message: 'Hemos identificado tus datos. Por favor verifica que sean correctos.',

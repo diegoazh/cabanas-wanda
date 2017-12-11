@@ -1933,7 +1933,7 @@ exports.default = {
             return (total - reserva - deductions).toFixed(2);
         },
         defineOwner: function defineOwner() {
-            return this.rental.user ? this.rental.user.lastname + ', ' + this.rental.user.name : this.rental.passenger.lastname + ', ' + this.rental.passenger.name;
+            return this.rental.user.lastname + ', ' + this.rental.user.name;
         },
         toggleIcon: function toggleIcon() {
             return this.queryFinished ? 'credit-card' : 'spinner';
@@ -34450,10 +34450,10 @@ exports.default = {
                 email: payload.email
             }).then(function (response) {
                 var obj = {};
-                dispatch('setUserData', response.data.user || response.data.passenger);
+                dispatch('setUserData', response.data.user);
                 dispatch('auth/setToken', response, { root: true });
                 dispatch('setCountries', response.data.countries);
-                if (response.data.token || response.data.passenger) {
+                if (response.data.token) {
                     obj = {
                         title: 'ClIENTE IDENTIFICADO',
                         message: 'Hemos identificado tus datos. Por favor verifica que sean correctos.',

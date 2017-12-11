@@ -245,7 +245,7 @@
                 return (total - reserva - deductions).toFixed(2);
             },
             defineOwner() {
-                return this.rental.user ? this.rental.user.lastname + ', ' + this.rental.user.name : this.rental.passenger.lastname + ', ' + this.rental.passenger.name;
+                return `${this.rental.user.lastname}, ${this.rental.user.name}`;
             },
             toggleIcon() {
                 return this.queryFinished ? 'credit-card' : 'spinner';

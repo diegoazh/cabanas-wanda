@@ -8,7 +8,6 @@ use App\Http\Requests\RequestRental;
 use App\Http\Requests\RequestRentalFind;
 use App\Http\Requests\RequestRentalStore;
 use App\Http\Requests\RequestRentalUpdate;
-use App\Passenger;
 use App\Rental;
 use App\User;
 use Carbon\Carbon;
@@ -73,11 +72,7 @@ class RentalsController extends Controller
 
                 if (!$cliente = User::where('name', $info['name'])->where('lastname', $info['lastname'])->where('email', $info['email'])->first()) {
 
-                    if(!$cliente = Passenger::where('name', $info['name'])->where('lastname', $info['lastname'])->where('email', $info['email'])->first()) {
-
-                        throw new \Exception('No se ha encontrado ni usuario ni pasajero que corresponda a los datos brindados.', 404);
-
-                    }
+                    throw new \Exception('No se ha encontrado ni usuario ni pasajero que corresponda a los datos brindados.', 404);
 
                 }
 
@@ -103,7 +98,7 @@ class RentalsController extends Controller
                     $rental->cottage_id = $cottage->id;
                     $rental->dateFrom = $dateFrom->toDateString();
                     $rental->dateTo = $dateTo->toDateString();
-                    ($cliente->getTable() === 'users') ? $rental->user_id = $cliente->id : $rental->passenger_id = $cliente->id;
+                    $rental->user_id = $cliente->id;
                     $rental->cottage_price = $cottage->price;
                     $rental->total_days = $dateFrom->diffInDays($dateTo);
                     $rental->dateReservationPayment = Carbon::now()->addDays(1)->toDateTimeString();
@@ -145,7 +140,6 @@ class RentalsController extends Controller
 
         $reserva->cottage;
         $reserva->user;
-        $reserva->passenger;
         $reserva->promotion;
         $reserva->claims;
 
@@ -201,23 +195,19 @@ class RentalsController extends Controller
 
             }
 
-            $owner = !empty($reserva->user_id) ? User::find($reserva->user_id) : Passenger::find($reserva->passenger_id);
+            $owner = !empty($reserva->user_id) ? User::find($reserva->user_id) : null;
 
-            $token = JWTAuth::fromUser($owner);
+            $owner ? $token = JWTAuth::fromUser($owner) : null;
 
         } else if ($info['dni'] && $info['email']) {
 
             if (!$user = User::where('dni', $info['dni'])->where('email', $info['email'])->first()) {
 
-                if (!$passenger = Passenger::where('dni', $info['dni'])->where('email', $info['email'])->first()) {
-
-                    return response()->json(['error' => 'No se encontraron ni usuarios ni pasajeros con los datos proporcionados.'], 404);
-
-                }
+                return response()->json(['error' => 'No se encontraron ni usuarios ni pasajeros con los datos proporcionados.'], 404);
 
             }
 
-            if (!$reserva = Rental::where((isset($user) && !empty($user)) ? 'user_id' : 'passenger_id', (isset($user) && !empty($user)) ? $user->id : $passenger->id)
+            if (!$reserva = Rental::where('user_id', $user->id)
                 ->where('dateFrom', '<=', Carbon::now()->toDateString())
                 ->where('dateTo', '>=', Carbon::now()->toDateString())
                 ->where('state', 'en curso')
@@ -227,7 +217,7 @@ class RentalsController extends Controller
 
             }
 
-            $token = JWTAuth::fromUser(!empty($user) ? $user : $passenger);
+            $token = JWTAuth::fromUser($user);
 
         } else {
 
@@ -237,7 +227,6 @@ class RentalsController extends Controller
 
         $reserva->cottage;
         $reserva->user;
-        $reserva->passenger;
         $reserva->promotion;
         $reserva->claims;
 

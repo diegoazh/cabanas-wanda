@@ -76,10 +76,10 @@ export default {
                 email: payload.email
             }).then(response => {
                 let obj = {};
-                dispatch('setUserData', response.data.user || response.data.passenger);
+                dispatch('setUserData', response.data.user);
                 dispatch('auth/setToken', response, {root: true});
                 dispatch('setCountries', response.data.countries);
-                if (response.data.token || response.data.passenger) {
+                if (response.data.token) {
                     obj = {
                         title: 'ClIENTE IDENTIFICADO',
                         message: 'Hemos identificado tus datos. Por favor verifica que sean correctos.',
