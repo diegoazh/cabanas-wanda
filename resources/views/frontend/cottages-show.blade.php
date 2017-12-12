@@ -29,7 +29,7 @@
                 @for($b = 0; $b <= count($images) -1; $b++)
                     @if(!empty($images[$b]))
                         <div class="item @if($b === 0) active @endif">
-                            <img src="{{ preg_match('/http:\/\//',$images[$b]) ? $images[$b] : asset('images/cabanias/' . $images[$b]) }}" alt="{{ $images[$b] }}" class="img-responsive">
+                            <img src="{{ preg_match('/https?:\/\//',$images[$b]) ? $images[$b] : asset('images/cabanias/' . $images[$b]) }}" alt="{{ $images[$b] }}" class="img-responsive">
                         </div>
                     @endif
                 @endfor

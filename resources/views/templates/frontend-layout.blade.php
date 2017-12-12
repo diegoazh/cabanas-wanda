@@ -34,6 +34,7 @@
     <div id="footer" class="row">
         @section('footer')
         @show
+        @include('templates.footers.main-footer')
         <div id="footer_rights" class="col-md-12 text-center">
             <i class="fa fa-registered" aria-hidden="true"></i> Hotel Cabañas de Wanda. Copyright <i class="fa fa-copyright" aria-hidden="true"></i> 2010 - {{ (isset($year)) ? $year : 2017 }}. All right reserved.
             <br>

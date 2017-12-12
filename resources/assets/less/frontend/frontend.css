@@ -149,9 +149,6 @@ body .container-frontend #content {
   background-image: url('../../../../public/images/frontend/dibujo-tucan.jpg');
   background-repeat: no-repeat;
   background-position: 5% 15%;
-  height: 980px;
-  min-height: 980px;
-  max-height: 100%;
 }
 body .container-frontend #content hr.division {
   width: 70%;
@@ -378,7 +375,7 @@ body .container-frontend #content #testimonies div .overlay-testimony .testimony
   height: 400px;
   overflow: hidden;
 }
-body .container-frontend #terms_and_conditions {
+body .container-frontend #footer #terms_and_conditions {
   margin: 0;
   background-color: #333333;
   padding-top: 30px;
@@ -387,17 +384,17 @@ body .container-frontend #terms_and_conditions {
   border-top: 5px solid #d4dfc4;
   border-bottom: 5px solid #d4dfc4;
 }
-body .container-frontend #terms_and_conditions div ul li a {
+body .container-frontend #footer #terms_and_conditions div ul li a {
   color: #d4dfc4;
 }
-body .container-frontend #terms_and_conditions div ul li a:hover {
+body .container-frontend #footer #terms_and_conditions div ul li a:hover {
   color: #f99418;
 }
-body .container-frontend #terms_and_conditions div a {
+body .container-frontend #footer #terms_and_conditions div a {
   display: block;
   color: #d4dfc4;
 }
-body .container-frontend #terms_and_conditions div a:hover {
+body .container-frontend #footer #terms_and_conditions div a:hover {
   color: #f99418;
 }
 body .container-frontend #footer #footer_rights {
