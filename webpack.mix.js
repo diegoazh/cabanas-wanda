@@ -12,12 +12,11 @@ const { mix } = require('laravel-mix');
  */
 
 mix.copy([
-        './public/lib/bootstrap/fonts',
         './public/lib/dashicons/fonts',
         './public/lib/font-awesome/fonts'
     ], './public/fonts')
     .styles([
-        './public/lib/bootstrap/dist/css/bootstrap.css',
+        './node_modules/bootstrap/dist/css/bootstrap.css',
         './public/lib/animate.css/animate.css',
         './public/lib/dashicons/css/dashicons.css',
         './public/lib/font-awesome/css/font-awesome.css',
@@ -37,9 +36,10 @@ mix.copy([
     .less('resources/assets/less/backend/backend.less', './public/css/backend.css')
     .combine([
         './node_modules/lodash/lodash.min.js',
-        './public/lib/jquery/dist/jquery.min.js',
         './public/lib/moment/min/moment-with-locales.min.js',
-        './public/lib/bootstrap/dist/js/bootstrap.min.js',
+        './public/lib/jquery/dist/jquery.min.js',
+        './node_modules/popper.js/dist/umd/popper.min.js',
+        './node_modules/bootstrap/dist/js/bootstrap.min.js',
         './public/lib/clndr/clndr.min.js',
         './public/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
         './public/lib/selectize/dist/js/standalone/selectize.min.js'

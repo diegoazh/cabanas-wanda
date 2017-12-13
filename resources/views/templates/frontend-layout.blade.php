@@ -24,18 +24,24 @@
     <div id="header" class="row">
         @include('templates.headers.main-header')
         @section('header')
-            <div id="overlay"></div>
-            <div class="col-md-8 col-md-offset-3 container-logo"></div>
+            <div class="col col-12 mx-0 px-0">
+                <div id="overlay"></div>
+                <div id="container_logo" class="col col-9 ml-auto">
+                    <img class="img-fluid" src="{{ asset('images/logos/logo-cabanas-wanda-390x380.png') }}" alt="">
+                </div>
+            </div>
         @show
-        <div id="arrow_left" class="col-md-6"></div>
-        <div id="arrow_right" class="col-md-6"></div>
+    </div>
+    <div class="row">
+        <div id="arrow_left" class="col col-6"></div>
+        <div id="arrow_right" class="col col-6"></div>
     </div>
     @include('templates.contents.frontend-content')
     <div id="footer" class="row">
         @section('footer')
         @show
         @include('templates.footers.main-footer')
-        <div id="footer_rights" class="col-md-12 text-center">
+        <div id="footer_rights" class="col col-12 text-center">
             <i class="fa fa-registered" aria-hidden="true"></i> Hotel Cabañas de Wanda. Copyright <i class="fa fa-copyright" aria-hidden="true"></i> 2010 - {{ (isset($year)) ? $year : 2017 }}. All right reserved.
             <br>
             Developed by Diego A. Zapata Häntsch

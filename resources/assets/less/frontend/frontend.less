@@ -57,24 +57,58 @@ body {
       background-size: cover;
       background-position: center 55%;
 
-      #overlay {
-        position: absolute;
-        width: 100%;
-        height: inherit;
-        opacity: 0;
-        background-color: #333333;
-        background-image: url('../../../../public/images/frontend/jaguar.jpg');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: left 35%;
+      div {
+        #overlay {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          background-color: #333333;
+          background-image: url('../../../../public/images/frontend/jaguar.jpg');
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: left 35%;
+        }
+
+        #container_logo {
+          text-align: center;
+          height: inherit;
+
+          h1 {
+            display: inline-block;
+            font-family: 'Gravitas One', cursive;
+            color: @granito-pastel;
+            font-size: 65px;
+            font-weight: normal;
+            text-align: right;
+            text-shadow: 3px 3px 2px #262626;
+            margin-top: 5%;
+
+            small {
+              font-family: 'Pinyon Script', cursive;
+              text-shadow: 2px 2px 1px #262626;
+              color: @granito-pastel;
+              font-size: 87%;
+            }
+          }
+        }
+        #container_logo > img {
+          //content: url('../../../../public/images/logos/logo-cabanas-wanda-390x380.png');
+          position: relative;
+          top: 8rem;
+          left: 6%;
+        }
       }
-      
+    }
+
+    .row {
       #arrow_left, #arrow_right {
+        position: relative;
         z-index: 100;
         width: 50%;
         height: 0;
-        border-bottom: 38px solid #fff;
-        top: -37px;
+        border-bottom: 41px solid #fff;
+        top: -41px;
       }
       #arrow_left {
         border-right: 55px solid transparent;
@@ -82,106 +116,8 @@ body {
       #arrow_right {
         border-left: 55px solid transparent;
       }
-
-      nav.navbar {
-        background-color: @naranja-amarronado;
-        margin-bottom: 0px;
-
-        .container {
-          .navbar-header {
-            a {
-              color: lighten(@negro, 15%);
-              padding: 0;
-
-              span#app_name {
-                position: relative;
-                top: -25%;
-              }
-            }
-            a:before {
-              content: url('../../../../public/images/logos/logo-cabanas-wanda-45x44.png');
-              width: 50%;
-              height: auto;
-              margin-right: 5px;
-            }
-          }
-          .navbar-collapse {
-            ul.navbar-nav {
-              margin-left: 8px;
-              li.dropdown {
-                height: 100%;
-              }
-              li.open {
-                a, ul {
-                  background-color: @naranja;
-                }
-                ul {
-                  li {
-                    a:hover {
-                      background-color: @naranja-amarronado;
-                    }
-                  }
-                }
-              }
-              li {
-                a:hover {
-                  background-color: @naranja;
-                }
-              }
-            }
-            ul {
-              li {
-                a {
-                  color: lighten(@negro, 15%);
-                }
-              }
-            }
-            ul.navbar-right {
-              li {
-                a.img-user-profile{
-                  padding: 5px;
-                  color: lighten(@negro, 15%);
-
-                  img {
-                    display: inline-block;
-                    width: 40px;
-                    height: auto;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      div.col-md-8 {
-        text-align: center;
-        height: inherit;
-
-        h1 {
-          display: inline-block;
-          font-family: 'Gravitas One', cursive;
-          color: @granito-pastel;
-          font-size: 65px;
-          font-weight: normal;
-          text-align: right;
-          text-shadow: 3px 3px 2px #262626;
-          margin-top: 5%;
-
-          small {
-            font-family: 'Pinyon Script', cursive;
-            text-shadow: 2px 2px 1px #262626;
-            color: @granito-pastel;
-            font-size: 87%;
-          }
-        }
-      }
-      div.col-md-8:after {
-        content: url('../../../../public/images/logos/logo-cabanas-wanda-390x380.png');
-        position: relative;
-        top: 4%;
-        left: 6%;
-      }
     }
+
     .row {
       div {
         .alert {
@@ -397,9 +333,9 @@ body {
         div {
           text-align: left;
 
-          #carousel-example-generic {
+          #carouselExampleIndicators {
             .carousel-inner {
-              .item {
+              .carousel-item {
                 height: 305px;
                 min-height: 305px;
                 padding: 0 12%;
@@ -440,7 +376,7 @@ body {
     }
     #footer {
       #terms_and_conditions {
-        margin: 0;
+        //margin: 0;
         background-color: lighten(@negro, 20%);
         padding-top: 30px;
         padding-bottom: 30px;
