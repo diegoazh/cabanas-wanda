@@ -1,14 +1,10 @@
 @if (session()->has('flash_notification.message') || count($errors) > 0)
     <div class="row">
-        <div class="col col-6 col-md-offset-3">
+        <div class="col-12 col-md-6 offset-md-3">
             @include('messages_alerts.flash-and-errors')
         </div>
     </div>
 @endif
-@if(isset($customContent) && $customContent)
+<div id="content">
     @yield('content')
-@else
-    <div id="content" class="row">
-        @yield('content')
-    </div>
-@endif
+</div>

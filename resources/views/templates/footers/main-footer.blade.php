@@ -11,9 +11,11 @@
                 <li><a href="#"><i class="fa-li fa fa-check-square-o" aria-hidden="true"></i> Términos y condiciones</a></li>
             </ul>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-4 pl-md-5">
             <h2><i class="fa fa-youtube-square" aria-hidden="true"></i> Una peque&ntilde;a muestra</h2>
-            <iframe width="560" height="315" src="@if(isset($content)) {{ $content->link_video }} @else https://www.youtube.com/embed/GktQFL-jAvs @endif" frameborder="0" allowfullscreen></iframe>
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe width="560" height="315" src="@if(isset($content)) {{ $content->link_video }} @else https://www.youtube.com/embed/GktQFL-jAvs @endif" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
         <div class="col-12 col-md-4 pl-md-5">
             <h2><i class="fa fa-user-circle" aria-hidden="true"></i> Redes Sociales</h2>

@@ -24,16 +24,10 @@
 *****************************/
 * {
   font-family: "Raleway", sans-serif;
-  /*font-size: 16px;
-  min-font-size: 16px;*/
   line-height: 1.6;
 }
 body {
   background-color: #ffffff;
-}
-body .container-frontend {
-  height: 980px;
-  min-height: 980px;
 }
 body .container-frontend #header {
   height: 606.5px;
@@ -87,7 +81,7 @@ body .container-frontend .row #arrow_right {
   width: 50%;
   height: 0;
   border-bottom: 41px solid #fff;
-  top: -41px;
+  top: -40px;
 }
 body .container-frontend .row #arrow_left {
   border-right: 55px solid transparent;
@@ -98,13 +92,7 @@ body .container-frontend .row #arrow_right {
 body .container-frontend .row div .alert {
   margin-top: 1.5%;
 }
-body .container-frontend #content {
-  background-image: url(/images/dibujo-tucan.jpg?e20d6be01100e58edd0eab913446f14c);
-  background-repeat: no-repeat;
-  background-position: 5% 15%;
-}
-body .container-frontend #content hr.division {
-  width: 70%;
+body .container-frontend #content .row div.division {
   height: 7px;
   margin: 20px auto;
   margin-bottom: 100px;
@@ -112,18 +100,14 @@ body .container-frontend #content hr.division {
   border-bottom: 1px solid #d4dfc4;
   overflow: visible;
 }
-body .container-frontend #content hr.division:before {
-  content: "\F313";
-  font-family: 'Dashicons';
+body .container-frontend #content .row div.division span:before {
   position: relative;
-  font-size: 7em;
-  left: 45%;
-  top: -0.6em;
+  font-size: 7rem;
+  top: -2.6rem;
   z-index: 1;
   background-color: #ffffff;
 }
-body .container-frontend #content hr.handicon {
-  width: 50%;
+body .container-frontend #content .row div.handsicon {
   height: 0px;
   margin: 5em auto;
   border-top: 13px solid #333333;
@@ -131,30 +115,28 @@ body .container-frontend #content hr.handicon {
   border-right: 20px solid transparent;
   border-left: 20px solid transparent;
 }
-body .container-frontend #content hr.handicon:before {
-  content: "\F2B5";
-  font-family: 'FontAwesome';
+body .container-frontend #content .row div.handsicon i:before {
   position: relative;
-  font-size: 7em;
-  left: 40%;
-  top: -0.78em;
+  font-size: 7rem;
+  top: -3.4rem;
   z-index: 1;
   background-color: #ffffff;
 }
-body .container-frontend #content section {
-  width: 100%;
+body .container-frontend #content section#first_section {
+  background-image: url(/images/dibujo-tucan.jpg?e20d6be01100e58edd0eab913446f14c);
+  background-repeat: no-repeat;
 }
-body .container-frontend #content section .description #main_message h2,
-body .container-frontend #content section .description #main_message p {
+body .container-frontend #content section#first_section .description #main_message h2,
+body .container-frontend #content section#first_section .description #main_message p {
   text-align: justify;
 }
-body .container-frontend #content section .description #main_message p {
+body .container-frontend #content section#first_section .description #main_message p {
   padding-left: 12px;
   border-left: 4px solid #666666;
   border-top: 4px solid transparent;
   border-bottom: 4px solid transparent;
 }
-body .container-frontend #content section .description #main_message div .link-button {
+body .container-frontend #content section#first_section .description #main_message div .link-button {
   color: #ffffff;
   font-size: 20px;
   font-weight: bolder;
@@ -165,67 +147,67 @@ body .container-frontend #content section .description #main_message div .link-b
   border: 3px solid #b8b8b8;
   background-color: #262626;
 }
-body .container-frontend #content section .description #main_message div .link-button a {
+body .container-frontend #content section#first_section .description #main_message div .link-button a {
   color: #ffffff;
   text-decoration: none;
 }
-body .container-frontend #content section .description #main_message div .link-button:hover {
+body .container-frontend #content section#first_section .description #main_message div .link-button:hover {
   color: #000000;
   border: 3px solid #2e2e2e;
   background-color: #f2f2f2;
 }
-body .container-frontend #content section .description #main_message div .link-button:hover a {
+body .container-frontend #content section#first_section .description #main_message div .link-button:hover a {
   color: #000000;
 }
-body .container-frontend #content section .description #short_messeges {
+body .container-frontend #content section#first_section .description #short_messeges {
   margin-bottom: 30px;
 }
-body .container-frontend #content section .description #short_messeges div #first_slogan {
+body .container-frontend #content section#first_section .description #short_messeges div #first_slogan {
   background-color: #9fd7db;
   border: 3px solid #d4dfc4;
   -webkit-box-shadow: 3px 3px 25px 5px #8c8c8c;
           box-shadow: 3px 3px 25px 5px #8c8c8c;
   min-height: 490px;
 }
-body .container-frontend #content section .description #short_messeges div #first_slogan h2,
-body .container-frontend #content section .description #short_messeges div #first_slogan p {
+body .container-frontend #content section#first_section .description #short_messeges div #first_slogan h2,
+body .container-frontend #content section#first_section .description #short_messeges div #first_slogan p {
   padding-left: 9px;
   padding-right: 9px;
 }
-body .container-frontend #content section .description #short_messeges div #first_slogan h2 {
+body .container-frontend #content section#first_section .description #short_messeges div #first_slogan h2 {
   text-align: center;
 }
-body .container-frontend #content section .description #short_messeges div #first_slogan p {
+body .container-frontend #content section#first_section .description #short_messeges div #first_slogan p {
   text-align: justify;
 }
-body .container-frontend #content section .description #short_messeges div div {
+body .container-frontend #content section#first_section .description #short_messeges div div {
   margin-bottom: 5px;
 }
-body .container-frontend #content section .description #short_messeges div div #second_slogan,
-body .container-frontend #content section .description #short_messeges div div #third_slogan {
+body .container-frontend #content section#first_section .description #short_messeges div div #second_slogan,
+body .container-frontend #content section#first_section .description #short_messeges div div #third_slogan {
   min-height: 242px;
 }
-body .container-frontend #content section .description #short_messeges div div #second_slogan h2,
-body .container-frontend #content section .description #short_messeges div div #third_slogan h2,
-body .container-frontend #content section .description #short_messeges div div #second_slogan p,
-body .container-frontend #content section .description #short_messeges div div #third_slogan p {
+body .container-frontend #content section#first_section .description #short_messeges div div #second_slogan h2,
+body .container-frontend #content section#first_section .description #short_messeges div div #third_slogan h2,
+body .container-frontend #content section#first_section .description #short_messeges div div #second_slogan p,
+body .container-frontend #content section#first_section .description #short_messeges div div #third_slogan p {
   padding: 7px 12px;
   margin: 0;
   color: #000000;
   background-color: rgba(212, 223, 196, 0.15);
   text-shadow: 2px 2px 2px #666666;
 }
-body .container-frontend #content section .description #short_messeges div div #second_slogan h2,
-body .container-frontend #content section .description #short_messeges div div #third_slogan h2 {
+body .container-frontend #content section#first_section .description #short_messeges div div #second_slogan h2,
+body .container-frontend #content section#first_section .description #short_messeges div div #third_slogan h2 {
   text-align: center;
   text-decoration: underline;
 }
-body .container-frontend #content section .description #short_messeges div div #second_slogan p,
-body .container-frontend #content section .description #short_messeges div div #third_slogan p {
+body .container-frontend #content section#first_section .description #short_messeges div div #second_slogan p,
+body .container-frontend #content section#first_section .description #short_messeges div div #third_slogan p {
   font-size: 20px;
   text-align: justify;
 }
-body .container-frontend #content section .description #short_messeges div div #second_slogan {
+body .container-frontend #content section#first_section .description #short_messeges div div #second_slogan {
   background-color: #99cbc0;
   background-image: url(/images/cabanas8.jpg?5e668287ac3e39e6518b0429fa83d870);
   background-repeat: no-repeat;
@@ -234,7 +216,7 @@ body .container-frontend #content section .description #short_messeges div div #
   -webkit-box-shadow: 3px 3px 25px 5px #8c8c8c;
           box-shadow: 3px 3px 25px 5px #8c8c8c;
 }
-body .container-frontend #content section .description #short_messeges div div #third_slogan {
+body .container-frontend #content section#first_section .description #short_messeges div div #third_slogan {
   background-color: #99cbc0;
   background-image: url(/images/cabanas12.jpg?6baf81e3c3c7e715f2acb393b3b069ff);
   background-repeat: no-repeat;
@@ -243,91 +225,90 @@ body .container-frontend #content section .description #short_messeges div div #
   -webkit-box-shadow: 3px 3px 25px 5px #8c8c8c;
           box-shadow: 3px 3px 25px 5px #8c8c8c;
 }
-body .container-frontend #content section .description #short_messages_2 {
+body .container-frontend #content section#first_section .description #short_messages_2 {
   margin-bottom: 30px;
 }
-body .container-frontend #content section .description #short_messages_2 div #fourth_slogan,
-body .container-frontend #content section .description #short_messages_2 div #fifth_slogan,
-body .container-frontend #content section .description #short_messages_2 div #sixth_slogan {
+body .container-frontend #content section#first_section .description #short_messages_2 div #fourth_slogan,
+body .container-frontend #content section#first_section .description #short_messages_2 div #fifth_slogan,
+body .container-frontend #content section#first_section .description #short_messages_2 div #sixth_slogan {
   background-color: #e0ba79;
   border: 3px solid #d4dfc4;
   -webkit-box-shadow: 3px 3px 25px 5px #8c8c8c;
           box-shadow: 3px 3px 25px 5px #8c8c8c;
 }
-body .container-frontend #content section .description #short_messages_2 div #fourth_slogan h2,
-body .container-frontend #content section .description #short_messages_2 div #fifth_slogan h2,
-body .container-frontend #content section .description #short_messages_2 div #sixth_slogan h2,
-body .container-frontend #content section .description #short_messages_2 div #fourth_slogan p,
-body .container-frontend #content section .description #short_messages_2 div #fifth_slogan p,
-body .container-frontend #content section .description #short_messages_2 div #sixth_slogan p {
+body .container-frontend #content section#first_section .description #short_messages_2 div #fourth_slogan h2,
+body .container-frontend #content section#first_section .description #short_messages_2 div #fifth_slogan h2,
+body .container-frontend #content section#first_section .description #short_messages_2 div #sixth_slogan h2,
+body .container-frontend #content section#first_section .description #short_messages_2 div #fourth_slogan p,
+body .container-frontend #content section#first_section .description #short_messages_2 div #fifth_slogan p,
+body .container-frontend #content section#first_section .description #short_messages_2 div #sixth_slogan p {
   padding-left: 9px;
   padding-right: 9px;
 }
-body .container-frontend #content section .description #short_messages_2 div #fourth_slogan h2,
-body .container-frontend #content section .description #short_messages_2 div #fifth_slogan h2,
-body .container-frontend #content section .description #short_messages_2 div #sixth_slogan h2 {
+body .container-frontend #content section#first_section .description #short_messages_2 div #fourth_slogan h2,
+body .container-frontend #content section#first_section .description #short_messages_2 div #fifth_slogan h2,
+body .container-frontend #content section#first_section .description #short_messages_2 div #sixth_slogan h2 {
   text-align: center;
 }
-body .container-frontend #content section .description #short_messages_2 div #fourth_slogan p,
-body .container-frontend #content section .description #short_messages_2 div #fifth_slogan p,
-body .container-frontend #content section .description #short_messages_2 div #sixth_slogan p {
+body .container-frontend #content section#first_section .description #short_messages_2 div #fourth_slogan p,
+body .container-frontend #content section#first_section .description #short_messages_2 div #fifth_slogan p,
+body .container-frontend #content section#first_section .description #short_messages_2 div #sixth_slogan p {
   text-align: justify;
 }
-body .container-frontend #content section .description #short_messages_2 div #fourth_slogan {
+body .container-frontend #content section#first_section .description #short_messages_2 div #fourth_slogan {
   min-height: 300px;
   background-image: url(/images/cabanas7.jpg?7a8e3c1b0af282d550a3f3c0f6ac4e02);
   background-repeat: no-repeat;
   background-size: cover;
 }
-body .container-frontend #content section .description #short_messages_2 div #fourth_slogan h2,
-body .container-frontend #content section .description #short_messages_2 div #fourth_slogan p {
+body .container-frontend #content section#first_section .description #short_messages_2 div #fourth_slogan h2,
+body .container-frontend #content section#first_section .description #short_messages_2 div #fourth_slogan p {
   padding: 7px 12px;
   margin: 0;
   color: #ffffff;
   background-color: rgba(212, 223, 196, 0.15);
   text-shadow: 2px 2px 2px #666666;
 }
-body .container-frontend #content section .description #short_messages_2 div #fourth_slogan h2 {
+body .container-frontend #content section#first_section .description #short_messages_2 div #fourth_slogan h2 {
   text-decoration: underline;
 }
-body .container-frontend #content section .description #short_messages_2 div #fifth_slogan,
-body .container-frontend #content section .description #short_messages_2 div #sixth_slogan {
+body .container-frontend #content section#first_section .description #short_messages_2 div #fifth_slogan,
+body .container-frontend #content section#first_section .description #short_messages_2 div #sixth_slogan {
   margin-top: 28px;
   min-height: 450px;
 }
-body .container-frontend #content #testimonies {
+body .container-frontend #content section#testimonies {
   background-color: #9fd7db;
-  margin: 0;
   margin-top: 25px;
 }
-body .container-frontend #content #testimonies hr.division:before {
+body .container-frontend #content section#testimonies hr.division:before {
   background-color: #9fd7db;
 }
-body .container-frontend #content #testimonies div {
+body .container-frontend #content section#testimonies div {
   text-align: left;
 }
-body .container-frontend #content #testimonies div #carouselExampleIndicators .carousel-inner .carousel-item {
+body .container-frontend #content section#testimonies div #carouselExampleIndicators .carousel-inner .carousel-item {
   height: 305px;
   min-height: 305px;
   padding: 0 12%;
 }
-body .container-frontend #content #testimonies div #carouselExampleIndicators .carousel-inner .carousel-item img {
+body .container-frontend #content section#testimonies div #carouselExampleIndicators .carousel-inner .carousel-item img {
   position: relative;
   display: inline-block;
   width: 18%;
   top: 3.5em;
 }
-body .container-frontend #content #testimonies div #carouselExampleIndicators .carousel-inner .carousel-item blockquote {
+body .container-frontend #content section#testimonies div #carouselExampleIndicators .carousel-inner .carousel-item blockquote {
   position: relative;
   left: 20%;
   top: -45%;
   width: 80%;
   text-align: justify;
 }
-body .container-frontend #content #testimonies div #carouselExampleIndicators a.carousel-control {
+body .container-frontend #content section#testimonies div #carouselExampleIndicators a.carousel-control {
   background-image: none;
 }
-body .container-frontend #content #testimonies div .overlay-testimony .testimony {
+body .container-frontend #content section#testimonies div .overlay-testimony .testimony {
   width: auto;
   height: 400px;
   overflow: hidden;

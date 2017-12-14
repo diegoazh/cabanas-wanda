@@ -37,18 +37,7 @@
 body {
   .container-fluid {
     #header {
-      min-height: 30%;
-      max-height: 30%;
-
-      #overlay {
-        min-height: 25.2%;
-        max-height: 25.2%;
-      }
-      div.col-md-8 {
-        height: 242px;
-        min-height: 242px;
-      }
-      div.col-md-8:after {
+      div.col-8:after {
         content: url('../../../../public/images/logos/logo-cabanas-wanda-190x185.png');
       }
     }
@@ -56,10 +45,6 @@ body {
     .content {
       div.col-md-4 {
         .row {
-          min-height: 600px;
-          max-height: 600px;
-          margin: 5px;
-          margin-bottom: 10px;
           box-shadow: 3px 3px 7px @negro;
           border: 5px solid @gris-clarito;
 
@@ -81,11 +66,12 @@ body {
             text-shadow: 2px 2px 2px @gris-oscuro;
             box-shadow: 5px 5px 3px @gris-oscuro;
           }
-          div.col-md-12 {
-            height: 250px;
+          div.col-12 {
             img {
               width: 100%;
               height: 100%;
+              border: 2px solid #999;
+              cursor: pointer;
             }
             table {
               tbody {
@@ -103,8 +89,7 @@ body {
           }
         }
         .row:hover {
-          border: 8px solid @celeste-suave-pastel;
-          box-shadow: 9px 9px 7px @gris-oscuro;
+          border-color: @celeste-suave-pastel;
         }
       }
     }
