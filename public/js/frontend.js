@@ -182,14 +182,15 @@ $(document).ready(function (event) {
 
     if (/register/.test(path) || /new_email_confirmation/.test(path)) {
         backgroundDrawing('dibujo-carpincho', 'contain', '100% 50%');
-        $('.panel-default').css('box-shadow', '3px 3px 17px 6px #333333');
-        $('.panel-heading').css('background-color', '#fd7500');
+        $('.card').css('box-shadow', '3px 3px 17px 6px #333333');
     } else if (/login/.test(path)) {
         backgroundDrawing('dibujo-yaguarete', 'contain', '0% 50%');
         $('#content').css('background-color', '#f9f9f9');
         $('#arrow_left, #arrow_right').css('border-bottom-color', '#f9f9f9');
-        $('.panel-default').css('box-shadow', '3px 3px 17px 6px #333333');
-        $('.panel-heading').css('background-color', '#fd7500');
+        $('.card').css('box-shadow', '3px 3px 17px 6px #333333');
+    } else if (/reset/.test(path)) {
+        backgroundDrawing('dibujo-jabali', 'contain', '85% 50%');
+        $('.card').css('box-shadow', '3px 3px 17px 6px #333333');
     } else if (/profile/.test(path)) {
         backgroundDrawing('dibujo-coati-2', 'contain', '100% 50%');
     } else if (/order/.test(path)) {

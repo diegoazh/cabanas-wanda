@@ -9,7 +9,7 @@
     <div class="row justify-content-center">
         <div class="col-12 col-md-8">
             <div class="card mb-5">
-                <div class="card-header bg-secondary text-light h3">Registrarse como miembro</div>
+                <div class="card-header bg-secondary text-light h3"><i class="fa fa-address-book" aria-hidden="true"></i> Registrarse como miembro</div>
                 <div class="card-body">
                     @if(count($errors) > 0)
                         <div class="alert alert-warning" role="alert">
@@ -31,7 +31,7 @@
 
                                 @if ($errors->has('name'))
                                     <span class="form-text">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong class="text-muted">{{ $errors->first('name') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -45,7 +45,7 @@
 
                                 @if ($errors->has('lastname'))
                                     <span class="form-text">
-                                        <strong>{{ $errors->first('lastname') }}</strong>
+                                        <strong class="text-muted">{{ $errors->first('lastname') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -59,7 +59,7 @@
 
                                 @if ($errors->has('dni'))
                                     <span class="form-text">
-                                        <strong>{{ $errors->first('dni') }}</strong>
+                                        <strong class="text-muted">{{ $errors->first('dni') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -73,7 +73,7 @@
 
                                 @if ($errors->has('passport'))
                                     <span class="form-text">
-                                        <strong>{{ $errors->first('passport') }}</strong>
+                                        <strong class="text-muted">{{ $errors->first('passport') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -87,7 +87,7 @@
 
                                 @if ($errors->has('email'))
                                     <span class="form-text">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong class="text-muted">{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -106,7 +106,7 @@
 
                                 @if ($errors->has('genre'))
                                     <span class="form-text">
-                                        <strong>{{ $errors->first('genre') }}</strong>
+                                        <strong class="text-muted">{{ $errors->first('genre') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -125,7 +125,7 @@
 
                                 @if ($errors->has('country_id'))
                                     <span class="form-text">
-                                        <strong>{{ $errors->first('country_id') }}</strong>
+                                        <strong class="text-muted">{{ $errors->first('country_id') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -139,7 +139,7 @@
 
                                 @if ($errors->has('password'))
                                     <span class="form-text">
-                                        <strong>{{ $errors->first('password') }}</strong>
+                                        <strong class="text-muted">{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -156,7 +156,7 @@
                         <div class="form-group row justify-content-center mt-4">
                             <div class="col-12 col-md-6 text-center">
                                 <button type="submit" class="btn btn-outline-primary">
-                                    Register
+                                    Registrarme
                                 </button>
                             </div>
                         </div>

@@ -33,7 +33,7 @@
             </div>
         @show
     </div>
-    <div class="row">
+    <div id="app_messages_alert" class="row">
         <div id="arrow_left" class="col-6"></div>
         <div id="arrow_right" class="col-6"></div>
     </div>
