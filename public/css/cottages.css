@@ -65,9 +65,6 @@ body .container-fluid .content div.col-md-4 .row div.col-12 table tbody tr td i.
 body .container-fluid .content div.col-md-4 .row:hover {
   border-color: #9fd7db;
 }
-body .container-fluid #content .col-md-8 {
-  padding-top: 25px;
-}
 body .container-fluid #content .col-md-8 div.cottage-number {
   position: absolute;
   display: inline-block;
@@ -94,17 +91,9 @@ body .container-fluid #content .col-md-8 h1 span {
   font-size: inherit;
   text-decoration: underline;
 }
-body .container-fluid #content .col-md-8 #carousel-example-generic {
-  border: 10px solid #bfbfbf;
+body .container-fluid #content .col-md-8 #carouselExampleIndicators {
+  border: 5px solid #bfbfbf;
   border-radius: 7px;
-}
-body .container-fluid #content .col-md-8 #carousel-example-generic .carousel-inner .item {
-  height: 700px;
-}
-body .container-fluid #content .col-md-8 #carousel-example-generic .carousel-inner .item img {
-  width: 100%;
-  height: 700px;
-  position: relative;
 }
 body .container-fluid #content .col-md-8 #cottage_description table {
   font-size: 16px;
@@ -121,7 +110,7 @@ body .container-fluid #content .col-md-8 #cottage_description table tbody tr td 
 }
 body .container-fluid #content .col-md-8 #cottage_description table tbody tr td span {
   font-family: "Raleway", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.6;
 }
 body .container-fluid #content .col-md-8 div.reservation-section {
@@ -279,7 +268,4 @@ body .container-fluid #content .col-md-8 div.reservation-section div .clndr-next
 body .container-fluid #content .col-md-8 div.reservation-section div .clndr-previous-year-button.inactive {
   opacity: 0.5;
   cursor: default;
-}
-body .container-fluid #content #footer {
-  margin-top: 5px;
 }

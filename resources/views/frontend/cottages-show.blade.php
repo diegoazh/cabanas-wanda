@@ -46,7 +46,7 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-            <h2 class="title-sections" role="button"><i role="button" class="fa fa-caret-down" aria-hidden="true"></i> Informaci&oacute;n de la caba&ntilde;a</h2>
+            <h2 class="title-sections" style="cursor:pointer;"><i role="button" class="fa fa-caret-down" aria-hidden="true"></i> Informaci&oacute;n de la caba&ntilde;a</h2>
             <div id="cottage_description" class="element-slide">
                 <table class="table table-responsive table-striped table-hover">
                     <thead class="thead-dark">
@@ -58,15 +58,15 @@
                     <tbody>
                         <tr>
                             <th scope="row"><i class="fa fa-bed" aria-hidden="true"></i> Tipo</th>
-                            <td><span class="label @if($cottage->type === 'simple') label-info @else label-success @endif">{{ $cottage->type }}</span></td>
+                            <td><span class="badge @if($cottage->type === 'simple') badge-info @else badge-success @endif text-capitalize">{{ $cottage->type }}</span></td>
                         </tr>
                         <tr>
                             <th scope="row"><i class="fa fa-users" aria-hidden="true"></i> Capacidad</th>
-                            <td><span class="label label-default"><i class="fa fa-hashtag" aria-hidden="true"> {{ $cottage->accommodation }}</i></span></td>
+                            <td><span class="badge badge-secondary"><i class="fa fa-hashtag" aria-hidden="true"> {{ $cottage->accommodation }}</i></span></td>
                         </tr>
                         <tr>
                             <th scope="row"><i class="fa fa-usd" aria-hidden="true"></i> Precio</th>
-                            <td><span class="label label-danger"><i class="fa fa-dollar" aria-hidden="true"> {{ $cottage->price }}</i></span></td>
+                            <td><span class="badge badge-danger"><i class="fa fa-dollar" aria-hidden="true"> {{ $cottage->price }}</i></span></td>
                         </tr>
                         <tr>
                             <th scope="row"><i class="fa fa-commenting-o" aria-hidden="true"></i> Calificación</th>
@@ -135,9 +135,10 @@
                 </table>
             </div>
             <div class="row justify-content-center reservation-section">
-                <h2 class="title-sections text-left" role="button"><i role="button" class="fa fa-caret-down" aria-hidden="true"></i> Reservas</h2>
-                <div id="calendar" class="col-12 col-md-8 element-slide"></div>
+                <h2 class="title-sections text-left" style="cursor: pointer;"><i role="button" class="fa fa-caret-down" aria-hidden="true"></i> Reservas</h2>
+                <div id="calendar" class="col-12 col-md-8 my-5 element-slide"></div>
             </div>
+            <div class="w-100"></div>
         </div>
     </div>
 @endsection
