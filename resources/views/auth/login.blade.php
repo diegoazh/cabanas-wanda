@@ -2,7 +2,7 @@
 
 @section('styles')
     <style>
-        #app_messages_alert {
+        #arrows_div, #alerts_errors_messages {
             background-color: rgb(249,249,249);
         }
         #content {
@@ -22,7 +22,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group row{{ $errors->has('email') ? ' has-warning' : '' }}">
-                            <label for="email" class="col-md-4 col-form-label">E-Mail</label>
+                            <label for="email" class="col-md-4 col-form-label text-right">E-Mail</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="form-group row{{ $errors->has('password') ? ' has-warning' : '' }}">
-                            <label for="password" class="col-md-4 col-form-label">Contrase&ntilde;a</label>
+                            <label for="password" class="col-md-4 col-form-label text-right">Contrase&ntilde;a</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" required>
@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-md-6 col-md-offset-4">
+                            <div class="col-md-6 offset-md-4">
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : ''}}> Recordarme

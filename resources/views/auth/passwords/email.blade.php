@@ -17,7 +17,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group row{{ $errors->has('email') ? ' has-warning' : '' }}">
-                            <label for="email" class="col-md-4 col-form-label"><i class="fa fa-envelope" aria-hidden="true"></i> Email</label>
+                            <label for="email" class="col-md-4 col-form-label text-right"><i class="fa fa-envelope text-muted" aria-hidden="true"></i> E-Mail</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>

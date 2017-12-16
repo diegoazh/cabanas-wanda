@@ -156,21 +156,19 @@ class RegisterController extends Controller
      */
     public function sendNewEmailConfirmation(Request $request)
     {
-        $info = $request->only('name', 'lastname', 'email');
+        $info = $request->only('email');
 
-        if (!$user = User::where('name', $info['name'])->where('lastname', $info['lastname'])
-            ->where('email', $info['email'])->where('confirmed', false)->first()) {
+        if (!$user = User::where('email', $info['email'])->where('confirmed', false)->first()) {
 
-            if ($user = User::where('name', $info['name'])->where('lastname', $info['lastname'])
-                ->where('email', $info['email'])->where('confirmed', true)->first()) {
+            if ($user = User::where('email', $info['email'])->where('confirmed', true)->first()) {
 
-                flash('<h3>Su cuenta ya fué confirmada por favor logueese para comenzar a operar en el sitio. Gracias.</h3>', 'info');
+                flash('<h3>Su cuenta ya fué confirmada por favor logueese para comenzar a operar en el sitio. Gracias.</h3>')->important();
 
                 return redirect(route('login'));
 
             }
 
-            flash('<h4>Los datos proporcionados no coinciden con ninguno de nuestros registros. Por favor reintente, gracias.</h4>', 'danger');
+            flash('<h4>Los datos proporcionados no coinciden con ninguno de nuestros registros. Por favor registrese como usuario primero, gracias.</h4>')->warning()->important();
 
             return redirect(route('home.register.newEmail'));
 
@@ -181,8 +179,8 @@ class RegisterController extends Controller
 
         Mail::to($user->email, $user->formalFullname)->send(new ConfirmAccount($user));
 
-        flash('<h3>Hemos reenviado el email de confirmación. Por favor verifique su casilla de correo, no olvide revisar la casilla de spam. Muchas gracias.', 'success');
+        flash('<h3>Hemos reenviado el email de confirmación. Por favor verifique su casilla de correo, no olvide revisar la casilla de spam. Muchas gracias.')->success()->important();
 
-        return redirect(route('home'));
+        return redirect(route('login'));
     }
 }

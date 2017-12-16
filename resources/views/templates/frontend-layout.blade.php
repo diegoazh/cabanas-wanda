@@ -33,7 +33,7 @@
             </div>
         @show
     </div>
-    <div id="app_messages_alert" class="row">
+    <div id="arrows_div" class="row">
         <div id="arrow_left" class="col-6"></div>
         <div id="arrow_right" class="col-6"></div>
     </div>
@@ -52,6 +52,10 @@
 <!-- Scripts -->
 <script src="{{ asset('js/libraries.js') }}"></script>
 <script src="{{ asset('js/frontend.js') }}"></script>
+<script>
+    $('#flash-overlay-modal').modal();
+    $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+</script>
 @yield('scripts')
 </body>
 </html>

@@ -25,39 +25,11 @@
 
                         <p class="text-center">Por favor ingrese los datos con los que se registró previamente.</p>
 
-                        <div class="form-group row{{ $errors->has('name') ? ' has-warning' : '' }}">
-                            <label for="name" class="col-md-4 col-col-form-label">Nombre</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
-
-                                @if ($errors->has('name'))
-                                    <span class="form-text">
-                                        <strong class="text-muted">{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row{{ $errors->has('lastname') ? ' has-warning' : '' }}">
-                            <label for="lastname" class="col-md-4 control-label">Apellido</label>
-
-                            <div class="col-md-6">
-                                <input id="lastname" type="text" class="form-control" name="lastname" value="{{ old('lastname') }}" required autofocus>
-
-                                @if ($errors->has('lastname'))
-                                    <span class="form-text">
-                                        <strong class="text-muted">{{ $errors->first('lastname') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
                         <div class="form-group row{{ $errors->has('email') ? ' has-warning' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail</label>
+                            <label for="email" class="col-md-4 col-form-label text-right">E-Mail</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ session()->has('email') ? session('email') : '' }}" required>
 
                                 @if ($errors->has('email'))
                                     <span class="form-text">

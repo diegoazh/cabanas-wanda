@@ -19,7 +19,7 @@
                         <input type="hidden" name="token" value="{{ $token }}">
 
                         <div class="form-group row{{ $errors->has('email') ? ' has-warning' : '' }}">
-                            <label for="email" class="col-md-4 col-form-label"><i class="fa fa-envelope" aria-hidden="true"></i> Email</label>
+                            <label for="email" class="col-md-4 col-form-label text-right"><i class="fa fa-envelope" aria-hidden="true"></i> Email</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
@@ -33,7 +33,7 @@
                         </div>
 
                         <div class="form-group row{{ $errors->has('password') ? ' has-warning' : '' }}">
-                            <label for="password" class="col-md-4 col-form-label"><i class="fa fa-lock"></i> Contrase&ntilde;a</label>
+                            <label for="password" class="col-md-4 col-form-label text-right"><i class="fa fa-lock"></i> Contrase&ntilde;a</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" required>
@@ -47,7 +47,7 @@
                         </div>
 
                         <div class="form-group row{{ $errors->has('password_confirmation') ? ' has-warning' : '' }}">
-                            <label for="password-confirm" class="col-md-4 col-form-label"><i class="fa fa-lock"></i> Confirmar contrase&ntilde;a</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-right"><i class="fa fa-lock"></i> Confirmar contrase&ntilde;a</label>
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
 

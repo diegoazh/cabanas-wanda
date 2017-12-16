@@ -21,7 +21,7 @@
         </div>
         <div id="main_content" class="col-md-offset-1 col-md-4">
             <div class="panel">
-                @include('messages_alerts.flash-and-errors')
+                @include('messages_alerts.messages-and-errors')
                 @yield('content')
             </div>
         </div>

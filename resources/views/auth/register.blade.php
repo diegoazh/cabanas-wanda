@@ -24,7 +24,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group row{{ $errors->has('name') ? ' has-warning' : '' }}">
-                            <label for="name" class="col-md-4 col-form-label">Nombre</label>
+                            <label for="name" class="col-md-4 col-form-label text-right">Nombre</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
@@ -38,7 +38,7 @@
                         </div>
 
                         <div class="form-group row{{ $errors->has('lastname') ? ' has-warning' : '' }}">
-                            <label for="lastname" class="col-md-4 col-form-label">Apellido</label>
+                            <label for="lastname" class="col-md-4 col-form-label text-right">Apellido</label>
 
                             <div class="col-md-6">
                                 <input id="lastname" type="text" class="form-control" name="lastname" value="{{ old('lastname') }}" required autofocus>
@@ -52,7 +52,7 @@
                         </div>
 
                         <div class="form-group row{{ $errors->has('dni') ? ' has-warning' : '' }}">
-                            <label for="dni" class="col-md-4 col-form-label">DNI</label>
+                            <label for="dni" class="col-md-4 col-form-label text-right">DNI</label>
 
                             <div class="col-md-6">
                                 <input id="dni" type="text" class="form-control" name="dni" value="{{ old('dni') }}" required autofocus>
@@ -66,7 +66,7 @@
                         </div>
 
                         <div class="form-group row{{ $errors->has('passport') ? ' has-warning' : '' }}">
-                            <label for="passport" class="col-md-4 col-form-label">Pasaporte <br><small class="text-info">Solo si es extranjero.</small></label>
+                            <label for="passport" class="col-md-4 col-form-label text-right">Pasaporte <br><small class="text-info">Solo si es extranjero.</small></label>
 
                             <div class="col-md-6">
                                 <input id="passport" type="text" class="form-control" name="passport" value="{{ old('passport') }}" autofocus>
@@ -80,7 +80,7 @@
                         </div>
 
                         <div class="form-group row{{ $errors->has('email') ? ' has-warning' : '' }}">
-                            <label for="email" class="col-md-4 col-form-label">E-Mail</label>
+                            <label for="email" class="col-md-4 col-form-label text-right">E-Mail</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
@@ -94,7 +94,7 @@
                         </div>
 
                         <div class="form-group row{{ $errors->has('genre') ? ' has-warning' : '' }}">
-                            <label for="genre" class="col-md-4 col-form-label">Genero</label>
+                            <label for="genre" class="col-md-4 col-form-label text-right">Genero</label>
 
                             <div class="col-md-6">
                                 <select id="genre" class="form-control" name="genre" value="{{ old('genre') }}" required>
@@ -113,7 +113,7 @@
                         </div>
 
                         <div class="form-group row{{ $errors->has('country_id') ? ' has-warning' : '' }}">
-                            <label for="country_id" class="col-md-4 col-form-label">País</label>
+                            <label for="country_id" class="col-md-4 col-form-label text-right">País</label>
 
                             <div class="col-md-6">
                                 <select id="country_id" type="country_id" class="form-control" name="country_id" required>
@@ -132,7 +132,7 @@
                         </div>
 
                         <div class="form-group row{{ $errors->has('password') ? ' has-warning' : '' }}">
-                            <label for="password" class="col-md-4 col-form-label">Password</label>
+                            <label for="password" class="col-md-4 col-form-label text-right">Password</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" required>
@@ -146,7 +146,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label">Confirm Password</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-right">Confirm Password</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>

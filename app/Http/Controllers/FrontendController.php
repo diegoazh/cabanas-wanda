@@ -13,6 +13,7 @@ class FrontendController extends Controller
         $content = Frontend::where('deleted_at', null)->first();
         $carbon = new Carbon();
         $year = $carbon->year;
+
         return view('frontend.home')->with(compact('year', 'content'));
     }
 }
