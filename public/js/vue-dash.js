@@ -2051,6 +2051,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -6006,7 +6008,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48295,8 +48297,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "panel" }, [
-    _c("div", { staticClass: "panel-heading" }, [
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-header bg-dark text-light" }, [
       _c(
         "h1",
         { staticClass: "text-center" },
@@ -48310,7 +48312,7 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "panel-body" },
+      { staticClass: "card-body" },
       [
         _c("btn-switch-app", {
           attrs: {
@@ -48337,13 +48339,17 @@ var render = function() {
                       _c(
                         "li",
                         {
-                          class: { active: this.type === "pendiente" },
+                          staticClass: "nav-item",
                           attrs: { role: "presentation" }
                         },
                         [
                           _c(
                             "a",
                             {
+                              class: [
+                                "nav-link",
+                                { active: this.type === "pendiente" }
+                              ],
                               attrs: {
                                 href: "#pendientes",
                                 "aria-controls": "pendientes",
@@ -48364,13 +48370,17 @@ var render = function() {
                       _c(
                         "li",
                         {
-                          class: { active: this.type === "confirmada" },
+                          staticClass: "nav-item",
                           attrs: { role: "presentation" }
                         },
                         [
                           _c(
                             "a",
                             {
+                              class: [
+                                "nav-link",
+                                { active: this.type === "confirmada" }
+                              ],
                               attrs: {
                                 href: "#confirmadas",
                                 "aria-controls": "confirmadas",
@@ -48391,13 +48401,17 @@ var render = function() {
                       _c(
                         "li",
                         {
-                          class: { active: this.type === "en_curso" },
+                          staticClass: "nav-item",
                           attrs: { role: "presentation" }
                         },
                         [
                           _c(
                             "a",
                             {
+                              class: [
+                                "nav-link",
+                                { active: this.type === "en_curso" }
+                              ],
                               attrs: {
                                 href: "#en_curso",
                                 "aria-controls": "en_curso",
@@ -48418,13 +48432,17 @@ var render = function() {
                       _c(
                         "li",
                         {
-                          class: { active: this.type === "cancelada" },
+                          staticClass: "nav-item",
                           attrs: { role: "presentation" }
                         },
                         [
                           _c(
                             "a",
                             {
+                              class: [
+                                "nav-link",
+                                { active: this.type === "cancelada" }
+                              ],
                               attrs: {
                                 href: "#canceladas",
                                 "aria-controls": "finalizadas_canceladas",
@@ -48445,13 +48463,17 @@ var render = function() {
                       _c(
                         "li",
                         {
-                          class: { active: this.type === "finalizada" },
+                          staticClass: "nav-item",
                           attrs: { role: "presentation" }
                         },
                         [
                           _c(
                             "a",
                             {
+                              class: [
+                                "nav-link",
+                                { active: this.type === "finalizada" }
+                              ],
                               attrs: {
                                 href: "#finalizadas",
                                 "aria-controls": "finalizadas",
@@ -48491,13 +48513,17 @@ var render = function() {
                       _c(
                         "li",
                         {
-                          class: { active: this.type === "pendiente" },
+                          staticClass: "nav-item",
                           attrs: { role: "presentation" }
                         },
                         [
                           _c(
                             "a",
                             {
+                              class: [
+                                "nav-link",
+                                { active: this.type === "pendiente" }
+                              ],
                               attrs: {
                                 href: "#pendientes2",
                                 "aria-controls": "pendientes2",
@@ -48518,13 +48544,17 @@ var render = function() {
                       _c(
                         "li",
                         {
-                          class: { active: this.type === "seniado" },
+                          staticClass: "nav-item",
                           attrs: { role: "presentation" }
                         },
                         [
                           _c(
                             "a",
                             {
+                              class: [
+                                "nav-link",
+                                { active: this.type === "seniado" }
+                              ],
                               attrs: {
                                 href: "#seniadas",
                                 "aria-controls": "seniadas",
@@ -48545,13 +48575,17 @@ var render = function() {
                       _c(
                         "li",
                         {
-                          class: { active: this.type === "pagado" },
+                          staticClass: "nav-item",
                           attrs: { role: "presentation" }
                         },
                         [
                           _c(
                             "a",
                             {
+                              class: [
+                                "nav-link",
+                                { active: this.type === "pagado" }
+                              ],
                               attrs: {
                                 href: "#pagadas",
                                 "aria-controls": "pagadas",
@@ -48572,13 +48606,17 @@ var render = function() {
                       _c(
                         "li",
                         {
-                          class: { active: this.type === "cancelado" },
+                          staticClass: "nav-item",
                           attrs: { role: "presentation" }
                         },
                         [
                           _c(
                             "a",
                             {
+                              class: [
+                                "nav-link",
+                                { active: this.type === "cancelado" }
+                              ],
                               attrs: {
                                 href: "#canceladas2",
                                 "aria-controls": "canceladas2",
@@ -48611,26 +48649,28 @@ var render = function() {
                   ])
                 ],
             _vm._v(" "),
-            _vm.pagination
-              ? _c(
-                  "div",
-                  { staticClass: "text-center" },
-                  [
-                    _c("pagination", {
-                      attrs: {
-                        for: "dash",
-                        records: _vm.total,
-                        "per-page": _vm.per_page,
-                        chunk: _vm.pagChunk,
-                        vuex: true,
-                        "count-text":
-                          "Listando {from} a {to} de {count} items|{count} items|Un item"
-                      }
-                    })
-                  ],
-                  1
-                )
-              : _vm._e()
+            _c("div", { staticClass: "row justify-content-center" }, [
+              _vm.pagination
+                ? _c(
+                    "div",
+                    { staticClass: "text-center pt-3" },
+                    [
+                      _c("pagination", {
+                        attrs: {
+                          for: "dash",
+                          records: _vm.total,
+                          "per-page": _vm.per_page,
+                          chunk: _vm.pagChunk,
+                          vuex: true,
+                          "count-text":
+                            "Listando {from} a {to} de {count} items|{count} items|Un item"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                : _vm._e()
+            ])
           ],
           2
         )
@@ -63236,7 +63276,7 @@ _vue2.default.filter('DateArg', _DateGlobalFilter.DateArgFilter);
 window.EventBus = new _vue2.default();
 
 var dashApp = new _vue2.default({
-    el: '.panel',
+    el: '#content_backend',
     store: _store2.default,
     render: function render(h) {
         return h(_Dash2.default);

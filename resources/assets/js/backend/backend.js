@@ -269,22 +269,4 @@ $(document).ready(function(e) {
         };
         setModalForms($(this), 'DELETE', false, 'users', texts);
     });
-
-    /******************************************************************
-     *  Menú pegajoso
-     * *****************************************************************/
-    $(document).ready(function(){
-        var altura = $('.general-menu').offset().top;
-
-        $(window).on('scroll', function(){
-            if ( $(window).scrollTop() > altura ){
-                $('.general-menu').addClass('menu-fixed');
-                $('#main_menu, #main_content').css('margin-top', '50px');
-            } else {
-                $('.general-menu').removeClass('menu-fixed');
-                $('#main_menu, #main_content').removeAttr('style');
-            }
-        });
-
-    });
 });
