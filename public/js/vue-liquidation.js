@@ -20556,7 +20556,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-primary btn-xs pull-right",
+              staticClass: "btn btn-primary btn-sm pull-right",
               on: { click: _vm.changeReserva }
             },
             [
@@ -20876,7 +20876,7 @@ var render = function() {
                               class: [
                                 "pull-right",
                                 "btn",
-                                "btn-xs",
+                                "btn-sm",
                                 {
                                   "btn-info": !order.show,
                                   "btn-warning": order.show
@@ -21390,7 +21390,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-primary btn-xs pull-right",
+              staticClass: "btn btn-primary btn-sm pull-right",
               on: { click: _vm.changeReserva }
             },
             [

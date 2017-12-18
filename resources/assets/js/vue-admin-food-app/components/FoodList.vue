@@ -1,8 +1,8 @@
 <template>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <table class="table table-striped table-hover table-responsive">
-                <thead>
+            <table class="table table-striped table-hover mt-4">
+                <thead class="thead bg-dark text-light">
                 <tr>
                     <th>Nombre</th>
                     <th>Descripción</th>
@@ -19,58 +19,60 @@
                             <b class="text-capitalize">{{ comida.name }}</b>
                         </td>
                         <td>
-                            <a class="btn btn-link" role="button" @click="showDescription(comida)" data-toggle="modal" data-target="#ModalDescriptionFood">
+                            <a href="#" class="btn btn-link" role="button" @click="showDescription(comida)" data-toggle="modal" data-target="#ModalDescriptionFood">
                                 <b><icon-app iconImage="eye"></icon-app> ver descripción</b>
                             </a>
                         </td>
                         <td>
-                            <span class="label label-primary"><b>{{ comida.type }}</b></span>
+                            <span class="badge badge-primary text-capitalize"><b>{{ comida.type }}</b></span>
                         </td>
                         <td>
-                            <span class="label label-info"><b>{{ comida.available ? 'Si' : 'No' }}</b></span>
+                            <span class="badge badge-info text-capitalize"><b>{{ comida.available ? 'Si' : 'No' }}</b></span>
                         </td>
                         <td>
                             <b><icon-app iconImage="dollar"></icon-app> {{ comida.price }}</b>
                         </td>
                         <td>
-                            <button class="btn btn-warning btn-sm" @click="setEditItem(comida)">
+                            <button class="btn btn-outline-warning btn-sm" @click="setEditItem(comida)">
                                 <icon-app iconImage="edit"></icon-app> Editar
                             </button>
-                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#ModalDeleteFood" @click="setIdToDelete(comida)">
+                            <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#ModalDeleteFood" @click="setIdToDelete(comida)">
                                 <icon-app iconImage="trash"></icon-app> Eliminar
                             </button>
                         </td>
                     </tr>
                 </template>
                 </tbody>
-                <tfoot>
+                <tfoot class="bg-light">
                 <tr>
                     <td colspan="6">
-                        <p class="text-right">Lista de platos disponibles a la fecha</p>
+                        <p class="text-right"><small class="text-muted">Lista de platos disponibles a la fecha</small></p>
                     </td>
                 </tr>
                 </tfoot>
             </table>
-            <div class="text-center">
-                <pagination for="food" :records="food.length" :per-page="itemsPerPage" :chunk="pagChunk" :vuex="true"
-                            count-text="Listando {from} a {to} de {count} items|{count} items|Un item">
-                </pagination>
+            <div class="row justify-content-center">
+                <div class="text-center">
+                    <pagination for="food" :records="food.length" :per-page="itemsPerPage" :chunk="pagChunk" :vuex="true"
+                                count-text="Listando {from} a {to} de {count} items|{count} items|Un item">
+                    </pagination>
+                </div>
             </div>
-            <modal-app modalId="ModalDescriptionFood" :modalTitle="titleModal" :showBtnSave="false" txtBtnClose="Cerrar">
+            <modal-app modalId="ModalDescriptionFood" :modalTitle="titleModal" modalHeaderClasses="bg-info text-light" modalFooterClasses="bg-light" :showBtnSave="false" txtBtnClose="Cerrar" typeBtnClose="btn-outline-secondary">
                 <vue-markdown :source="textContentModal"></vue-markdown>
             </modal-app>
-            <modal-app modalId="ModalDeleteFood" :modalTitle="titleModal">
-                <div class="alert alert-warning">
+            <modal-app modalId="ModalDeleteFood" :modalTitle="titleModal" modalHeaderClasses="bg-danger text-light" modalFooterClasses="bg-light">
+                <div class="alert alert-info">
                     <p>
                         <icon-app iconImage="exclamation-triangle"></icon-app> <icon-app iconImage="question" aditionalClasses="fa-rotate-180"></icon-app>Esta seguro que desea realizar esta operación<icon-app iconImage="question"></icon-app>
                     </p>
                 </div>
                 <p class="text-danger">Esto eliminará de manera permanente el plato.</p>
                 <div slot="b3-modal-footer">
-                    <button class="btn btn-danger" @click="deleteItem()">
+                    <button class="btn btn-outline-danger" @click="deleteItem()">
                         <icon-app :iconImage="toogleIcon" :aditionalClasses="adiotionalClasses"></icon-app> Eliminar
                     </button>
-                    <button class="btn btn-dfault" data-dismiss="modal">
+                    <button class="btn btn-outline-secondary" data-dismiss="modal">
                         <icon-app iconImage="close"></icon-app> Cerrar
                     </button>
                 </div>

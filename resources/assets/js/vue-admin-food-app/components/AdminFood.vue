@@ -1,25 +1,35 @@
 <template>
-    <div class="container-fluid panel panel-body">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header bg-dark text-light">
                 <h1 class="text-center">Administración de platos</h1>
-                <div class="col-xs-12 col-sm-12 col-md-offset-9 col-md-3" v-if="!create">
-                    <div class="form-group">
-                        <label for="perPage" role="button">Por página</label>
-                        <input id="perPage" type="number" class="form-control" v-model="userItemsPerPage" @change="refreshItemsPerPage">
-                        <small class="text-primary">Presiona <kbd>Enter ↵</kbd></small>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <transition name="quantity-animation"
+                            enter-active-class="animated bounceIn"
+                            leave-active-class="animated bounceOut">
+                            <div class="col-12 offset-md-9 col-md-3" v-if="!create">
+                                <div class="form-group">
+                                    <label class="col-form-label" for="perPage" role="button">Por página</label>
+                                    <input id="perPage" type="number" class="form-control-sm" v-model="userItemsPerPage" @change="refreshItemsPerPage">
+                                    <small class="text-muted">Presiona <kbd>Enter ↵</kbd></small>
+                                </div>
+                            </div>
+                        </transition>
+                        <div class="text-center">
+                            <ul class="nav nav-tabs">
+                                <li role="presentation" class="nav-item"><a href="#" @click="toogleCreate" role="button" :class="['nav-link', {'active': !create}]">Lista de platos</a></li>
+                                <li role="presentation" class="nav-item"><a href="#" @click="toogleCreate" role="button" :class="['nav-link', {'active': create}]">Crear platos</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="text-center">
-                    <ul class="nav nav-tabs">
-                        <li role="presentation" :class="{'active': !create}"><a @click="toogleCreate" role="button">Lista de platos</a></li>
-                        <li role="presentation" :class="{'active': create}"><a @click="toogleCreate" role="button">Crear platos</a></li>
-                    </ul>
-                </div>
+                <food-list-app v-if="!create"></food-list-app>
+                <food-create-app v-else></food-create-app>
             </div>
         </div>
-        <food-list-app v-if="!create"></food-list-app>
-        <food-create-app v-else></food-create-app>
     </div>
 </template>
 

@@ -122,12 +122,12 @@ $(document).ready(function (e) {
     /*****************************************************************************************************************
      *  Function to set modals with forms
      *  ---------------------------------
-     *  @param $this Objec jQuery - Boton que llama al modal y del cual se tama la clase.
+     *  @param $this Objec jQuery - Boton que llama al modal y del cual se toma la clase.
      *  @param method - string - El metodo del formulario POST, PUT, etc.
      *  @param files - boolean or string - Indica si el form sube archivos, pude contener 'multipart/form-data'
      *  @param replaceInAction - string - String con que se reemplazará el texto subdir en el atributo action del form.
-     *  @param textsToDisplay - Object or Array - Debe contener los textos a cargar en el modal.
-     *         Con los siguientes indices o atributos:
+     *  @param textsToDisplay - Object - Debe contener los textos a cargar en el modal.
+     *         Con los siguientes atributos:
      *         name - boolean -> indica si se mostrara en el título el nombre del objeto a modificar o el atributo que se modificará.
      *         tile - string -> El texto que se mostrará en el título del modal.
      *         infoText - string -> Texto que se mostrará en la etiqueta small dentro del titulo del modal.
@@ -354,23 +354,24 @@ $(document).ready(function (e) {
 
     menu_ul.hide();
 
+    var $menu = $('#main_content');
+
     if (/cottages/.test(path)) {
         activeMenu(/cabañas/, menu_a);
-        path[2] ? null : $('#main_content').removeClass('col-md-4').addClass('col-md-6');
-        /create/.test(path) || /edit/.test(path) ? $('.panel').addClass('form-panel') : null;
+        if (path[2]) $menu.removeClass('col-md-4').addClass('col-md-6 offset-md-1');else $menu.removeClass('col-md-4').addClass('col-md-8');
     } else if (/users/.test(path)) {
         activeMenu(/usuarios/, menu_a);
-        $('#main_content').removeClass('col-md-4').addClass('col-md-6');
+        $menu.removeClass('col-md-4').addClass('col-md-8');
     } else if (/frontend/.test(path)) {
         activeMenu(/página principal/, menu_a);
-        $('#main_content').removeClass('col-md-4').addClass('col-md-6');
+        $menu.removeClass('col-md-4').addClass('col-md-6 offset-md-1');
     } else if (/food/.test(path)) {
-        $('#main_content').removeClass('col-md-4').addClass('col-md-6');
+        $menu.removeClass('col-md-4').addClass('col-md-8');
     } else if (/reports/.test(path)) {
-        $('#main_content').removeClass('col-md-offset-1 col-md-4').addClass('col-md-12');
+        $menu.removeClass('col-md-4').addClass('col-md-12');
     } else {
         activeMenu(/panel/, menu_a);
-        $('#main_content').removeClass('col-md-4').addClass('col-md-8');
+        $menu.removeClass('col-md-4').addClass('col-md-8');
     }
 
     menu_a.click(function (e) {

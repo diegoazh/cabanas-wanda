@@ -1,7 +1,7 @@
 <template>
     <div class="row" v-if="!liquidationOk">
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <button class="btn btn-primary btn-xs pull-right" @click="changeReserva">
+            <button class="btn btn-primary btn-sm pull-right" @click="changeReserva">
                 <icon-app iconImage="refresh" :aditionalClasses="activeReload ? 'fa-spin fa-fw' : ''"></icon-app>
                 Cambiar reserva
             </button>
@@ -75,7 +75,7 @@
                 <thead>
                     <tr>
                         <th colspan="6" class="text-center">
-                            <button :class="['pull-right', 'btn', 'btn-xs', {'btn-info': !order.show, 'btn-warning': order.show}]" @click="order.show = !order.show">
+                            <button :class="['pull-right', 'btn', 'btn-sm', {'btn-info': !order.show, 'btn-warning': order.show}]" @click="order.show = !order.show">
                                 <icon-app :iconImage="toggleCaret(order.show)"></icon-app> {{ order.show ? 'Ocultar detalle' : 'Mostrar detalle' }}
                             </button>
                             Pedido {{ index + 1 }}
@@ -195,7 +195,7 @@
     </div>
     <div class="row" v-else>
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <button class="btn btn-primary btn-xs pull-right" @click="changeReserva">
+            <button class="btn btn-primary btn-sm pull-right" @click="changeReserva">
                 <icon-app iconImage="refresh" :aditionalClasses="activeReload ? 'fa-spin fa-fw' : ''"></icon-app>
                 Volver a buscar reserva
             </button>

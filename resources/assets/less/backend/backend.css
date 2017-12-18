@@ -32,67 +32,34 @@
   font-family: Raleway, sans-serif;
 }
 body .container-backend #content {
-  height: 980px;
-  min-height: 980px;
-  max-height: 100%;
+  min-height: 45.4rem;
 }
-body .container-backend #content #main_content .panel {
-  margin-top: 10%;
-}
-body .container-backend #content #main_content .panel .tt-users,
-body .container-backend #content #main_content .panel .tt-cottages {
-  margin-left: 10px;
-}
-body .container-backend #content #main_content .panel .tt-users:before {
+body .container-backend #content #main_content .card .tt-users:before {
   content: '\f0c0';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-backend #content #main_content .panel .tt-cottages:before {
+body .container-backend #content #main_content .card .tt-cottages:before {
   content: '\f015';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-backend #content #main_content .panel .table-responsive {
-  margin: 7px 10px;
+body .container-backend #content #main_content .card .selectize-input {
+  line-height: inherit;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
-body .container-backend #content #main_content .panel .table-responsive table tbody tr td {
-  text-transform: capitalize;
-}
-body .container-backend #content #main_content .panel .table-responsive table tbody tr td.email-lower {
-  text-transform: none;
-}
-body .container-backend #content #main_content .panel.form-panel {
-  border: 2px dashed #808080;
-}
-body .container-backend #content #main_content .panel.form-panel .panel-heading {
-  background-image: none;
-  background-color: #A0522D;
-  color: #ffffff;
-  border-bottom: 2px dashed #ffffff;
-}
-body .container-backend #content #main_content .panel.form-panel .panel-heading h3.tt-cottages:before {
-  content: '\f015';
-  font-family: 'FontAwesome';
-  margin-right: 5px;
-}
-body .container-backend #content #main_content .panel.form-panel .help-info {
-  display: block;
-}
-body .container-backend #content #main_content .panel.form-panel .help-info .help-icon {
+body .container-backend #content #main_content .card .help-info .help-icon {
   position: relative;
   float: right;
   top: -5px;
   left: 7px;
   z-index: 10;
 }
-body .container-backend #content #optional_content .panel {
-  margin-top: 10%;
-}
-body .container-backend #content #optional_content .panel .tt-actual-images span {
+body .container-backend #content #optional_content .card .tt-actual-images span {
   text-decoration: underline;
 }
-body .container-backend #content #optional_content .panel .cottage-images div img {
+body .container-backend #content #optional_content .card .cottage-images div img {
   margin-bottom: 15px;
 }
 body .container-backend #content #lateral_menu a {

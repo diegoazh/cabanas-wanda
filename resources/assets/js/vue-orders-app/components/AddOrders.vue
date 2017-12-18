@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <button class="btn btn-primary btn-xs pull-right" @click="changeReserva">
+            <button class="btn btn-primary btn-sm pull-right" @click="changeReserva">
                 <icon-app iconImage="refresh" :aditionalClasses="activeReload ? 'fa-spin fa-fw' : ''"></icon-app>
                 Cambiar reserva
             </button>
@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-md-3 pull-right">
                     <caption class="text-right">
-                        <a class="btn btn-danger btn-xs" role="button" data-toggle="modal"
+                        <a class="btn btn-danger btn-sm" role="button" data-toggle="modal"
                            data-target="#aclaraciones-pedidos">
                             <icon-app iconImage="exclamation-triangle"></icon-app>
                             Por favor tenga en cuenta lo siguiente...

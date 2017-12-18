@@ -47,17 +47,9 @@
 body {
   .container-backend {
     #content {
-      height: 980px;
-      min-height: 980px;
-      max-height: 100%;
-
+      min-height: 45.4rem;
       #main_content {
-        .panel {
-          margin-top: 10%;
-
-          .tt-users, .tt-cottages {
-            margin-left: 10px;
-          }
+        .card {
           .tt-users:before {
             content: '\f0c0';
             font-family: 'FontAwesome';
@@ -68,42 +60,14 @@ body {
             font-family: 'FontAwesome';
             margin-right: 5px;
           }
-          .table-responsive {
-            margin: 7px 10px;
-
-            table {
-              tbody {
-                tr {
-                  td {
-                    text-transform: capitalize;
-                  }
-                  td.email-lower {
-                    text-transform: none;
-                  }
-                }
-              }
-            }
-          }
         }
-        .panel.form-panel {
-          border: 2px dashed #808080;
-
-          .panel-heading {
-            background-image: none;
-            background-color: #A0522D;
-            color: #ffffff;
-            border-bottom: 2px dashed #ffffff;
-
-            h3.tt-cottages:before {
-              content: '\f015';
-              font-family: 'FontAwesome';
-              margin-right: 5px;
-            }
+        .card {
+          .selectize-input {
+            line-height: inherit;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
           }
-
           .help-info {
-            display: block;
-
             .help-icon {
               position: relative;
               float: right;
@@ -115,9 +79,7 @@ body {
         }
       }
       #optional_content{
-        .panel {
-          margin-top: 10%;
-
+        .card {
           .tt-actual-images{
             span {
               text-decoration: underline;

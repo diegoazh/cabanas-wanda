@@ -49,12 +49,12 @@ $(document).ready(function(e) {
     /*****************************************************************************************************************
      *  Function to set modals with forms
      *  ---------------------------------
-     *  @param $this Objec jQuery - Boton que llama al modal y del cual se tama la clase.
+     *  @param $this Objec jQuery - Boton que llama al modal y del cual se toma la clase.
      *  @param method - string - El metodo del formulario POST, PUT, etc.
      *  @param files - boolean or string - Indica si el form sube archivos, pude contener 'multipart/form-data'
      *  @param replaceInAction - string - String con que se reemplazará el texto subdir en el atributo action del form.
-     *  @param textsToDisplay - Object or Array - Debe contener los textos a cargar en el modal.
-     *         Con los siguientes indices o atributos:
+     *  @param textsToDisplay - Object - Debe contener los textos a cargar en el modal.
+     *         Con los siguientes atributos:
      *         name - boolean -> indica si se mostrara en el título el nombre del objeto a modificar o el atributo que se modificará.
      *         tile - string -> El texto que se mostrará en el título del modal.
      *         infoText - string -> Texto que se mostrará en la etiqueta small dentro del titulo del modal.

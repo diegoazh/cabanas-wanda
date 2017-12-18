@@ -1,13 +1,13 @@
 <template>
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <h3 class="text-center">Alta de platos</h3>
+        <div class="col-12 col-md-12">
+            <h3 class="text-center mt-4 mb-3">Alta de platos</h3>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-12 col-md-12">
             <form @submit.prevent="sendDatatoBackend">
-                <div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8">
+                <div class="col-12 offset-md-2 col-md-8">
                     <div class="form-group">
-                        <label for="name" class="sr-only">Nombre:</label>
+                        <label for="name" class="col-form-label sr-only">Nombre:</label>
                         <div class="input-group">
                             <div class="input-group-addon">Nombre</div>
                             <input id="name" name="name" type="text" class="form-control" placeholder="Ej: Desayuno americano" v-model="name">
@@ -33,7 +33,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="col-12 col-md-12">
                     <div class="form-group">
                         <label for="description" class="sr-only">Descripión:</label>
                         <div id="editormd">
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button class="btn btn-primary"><b>{{ !isUpdate ? 'Crear plato' : 'Actualizar plato' }} <icon-app :iconImage="toogleeIcon" :aditionalClasses="addAditionalClasses"></icon-app></b></button>
+                        <button class="btn btn-outline-success"><b>{{ !isUpdate ? 'Crear plato' : 'Actualizar plato' }} <icon-app :iconImage="toogleeIcon" :aditionalClasses="addAditionalClasses"></icon-app></b></button>
                     </div>
                 </div>
             </form>
@@ -100,7 +100,7 @@
                 window.appFood.editor = editormd({
                     id      : 'editormd',
                     width   : '100%',
-                    height  : '400px',
+                    height  : '600px',
                     path    : '/lib/editor.md/lib/',
                     theme: 'dark',
                     previweTheme: 'default',

@@ -1,261 +1,269 @@
 <template>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <h1 class="text-center">
-                    <a href="/admin" class="btn btn-primary btn-xs pull-left"><icon-app iconImage="hand-o-left"></icon-app> volver al panel</a>
-                    REPORTES
-                    <transition name="loader"
-                                enter-active-class="animated fadeIn"
-                                leave-active-class="animated fadeOut">
-                        <icon-app :iconImage="!queryFinished || !queryEnd ? 'spinner' : 'line-chart'"
-                                  :aditionalClasses="!queryFinished || !queryEnd ? 'fa-pulse fa-fw' : ''"></icon-app>
-                    </transition>
-                </h1>
+    <div>
+        <div class="card-header bg-dark text-light">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <h1 class="text-center">
+                            <a href="/admin" class="btn btn-outline-warning btn-sm pull-left"><icon-app iconImage="hand-o-left"></icon-app> volver al panel</a>
+                            REPORTES
+                            <transition name="loader"
+                                        enter-active-class="animated fadeIn"
+                                        leave-active-class="animated fadeOut">
+                                <icon-app :iconImage="!queryFinished || !queryEnd ? 'spinner' : 'line-chart'"
+                                          :aditionalClasses="!queryFinished || !queryEnd ? 'fa-pulse fa-fw' : ''"></icon-app>
+                            </transition>
+                        </h1>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active">
-                        <a href="#reservas" aria-controls="reservas" role="tab" data-toggle="tab" @click="setPreviousTab">Reservas</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#consumos" aria-controls="consumos" role="tab" data-toggle="tab" @click="setPreviousTab">Consumos</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="reservas">
-                        <div class="padding-div-radios">
-                            <ul class="list-inline">
-                                <li>
-                                    <label for="forYear" role="button">
-                                        <input type="radio" name="forms" id="forYear" v-model="forms"
-                                               value="year"> Anual en meses
-                                    </label>
-                                </li>
-                                <li>
-                                    <label for="forMonth" role="button">
-                                        <input type="radio" name="forms" id="forMonth" v-model="forms"
-                                               value="month"> Mensual por cabaña
-                                    </label>
-                                </li>
-                                <li>
-                                    <label for="forDecade" role="button">
-                                        <input type="radio" name="forms" id="forDecade" v-model="forms"
-                                               value="decade"> Decenio por años
-                                    </label>
-                                </li>
-                                <li>
-                                    <label for="forPeriod" role="button">
-                                        <input type="radio" name="forms" id="forPeriod" v-model="forms"
-                                               value="period"> Periodo seleccionado
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <fieldset v-if="forms === 'year' || forms === 'decade'">
-                                <legend>{{ forms === 'year' ? 'Por año' : 'Por decada' }}</legend>
-                                <div class="form-group">
-                                    <label for="anio" class="sr-only">Año:</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">Año</div>
-                                        <date-picker placeholder="Seleccione el año..."
-                                                     :config="cnfgYear"
-                                                     id="anio"
-                                                     name="anio" v-model="anio"></date-picker>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="estado" class="sr-only"></label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">Estado</div>
-                                        <select name="estado" id="estado" class="form-control" v-model="estado">
-                                            <option value="pendiente">Pendiente</option>
-                                            <option value="confirmada">Confirmada</option>
-                                            <option value="en curso">En curso</option>
-                                            <option value="finalizada">Finalizada</option>
-                                            <option value="cancelada">Cancelada</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset v-if="forms === 'month'">
-                                <legend>Por mes</legend>
-                                <div class="form-group">
-                                    <label for="mes" class="sr-only">Mes:</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">Mes</div>
-                                        <date-picker placeholder="Seleccione el mes..."
-                                                     :config="cnfgMonth"
-                                                     id="mes"
-                                                     class="text-capitalize"
-                                                     name="mes" v-model="mes"></date-picker>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="estado2" class="sr-only"></label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">Estado</div>
-                                        <select name="estado2" id="estado2" class="form-control" v-model="estado">
-                                            <option value="pendiente">Pendiente</option>
-                                            <option value="confirmada">Confirmada</option>
-                                            <option value="en curso">En curso</option>
-                                            <option value="finalizada">Finalizada</option>
-                                            <option value="cancelada">Cancelada</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset v-if="forms === 'period'">
-                                <legend>Período</legend>
-                                <div class="form-group">
+        <div class="card-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-md-3">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="nav-item">
+                                <a class="nav-link active" href="#reservas" aria-controls="reservas" role="tab" data-toggle="tab" @click="setPreviousTab">Reservas</a>
+                            </li>
+                            <li role="presentation" class="nav-item">
+                                <a class="nav-link" href="#consumos" aria-controls="consumos" role="tab" data-toggle="tab" @click="setPreviousTab">Consumos</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="reservas">
+                                <div class="padding-div-radios">
                                     <ul class="list-inline">
                                         <li>
-                                            <label for="periodYear" role="button">
-                                                <input type="radio" name="periodTime" id="periodYear" v-model="periodTime"
-                                                       value="year"> por año
+                                            <label for="forYear" role="button" class="cursorPointer">
+                                                <input type="radio" name="forms" id="forYear" v-model="forms"
+                                                       value="year"> Anual en meses
                                             </label>
                                         </li>
                                         <li>
-                                            <label for="periodMonth" role="button">
-                                                <input type="radio" name="periodTime" id="periodMonth" v-model="periodTime"
-                                                       value="month"> por meses
+                                            <label for="forMonth" role="button" class="cursorPointer">
+                                                <input type="radio" name="forms" id="forMonth" v-model="forms"
+                                                       value="month"> Mensual por cabaña
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label for="forDecade" role="button" class="cursorPointer">
+                                                <input type="radio" name="forms" id="forDecade" v-model="forms"
+                                                       value="decade"> Decenio por años
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label for="forPeriod" role="button" class="cursorPointer">
+                                                <input type="radio" name="forms" id="forPeriod" v-model="forms"
+                                                       value="period"> Periodo seleccionado
                                             </label>
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="form-group">
-                                    <label for="periodFrom" class="sr-only">Desde:</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">Desde</div>
-                                        <date-picker placeholder="Seleccione la fecha..."
-                                                     :config="cnfgPeriod"
-                                                     id="periodFrom"
-                                                     name="periodFrom" v-model="periodFrom"></date-picker>
-                                    </div>
+                                <div>
+                                    <fieldset v-if="forms === 'year' || forms === 'decade'">
+                                        <legend>{{ forms === 'year' ? 'Por año' : 'Por decada' }}</legend>
+                                        <div class="form-group">
+                                            <label for="anio" class="sr-only">Año:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">Año</div>
+                                                <date-picker placeholder="Seleccione el año..."
+                                                             :config="cnfgYear"
+                                                             id="anio"
+                                                             name="anio" v-model="anio"></date-picker>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="estado" class="sr-only"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">Estado</div>
+                                                <select name="estado" id="estado" class="form-control" v-model="estado">
+                                                    <option value="pendiente">Pendiente</option>
+                                                    <option value="confirmada">Confirmada</option>
+                                                    <option value="en curso">En curso</option>
+                                                    <option value="finalizada">Finalizada</option>
+                                                    <option value="cancelada">Cancelada</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset v-if="forms === 'month'">
+                                        <legend>Por mes</legend>
+                                        <div class="form-group">
+                                            <label for="mes" class="sr-only">Mes:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">Mes</div>
+                                                <date-picker placeholder="Seleccione el mes..."
+                                                             :config="cnfgMonth"
+                                                             id="mes"
+                                                             class="text-capitalize"
+                                                             name="mes" v-model="mes"></date-picker>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="estado2" class="sr-only"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">Estado</div>
+                                                <select name="estado2" id="estado2" class="form-control" v-model="estado">
+                                                    <option value="pendiente">Pendiente</option>
+                                                    <option value="confirmada">Confirmada</option>
+                                                    <option value="en curso">En curso</option>
+                                                    <option value="finalizada">Finalizada</option>
+                                                    <option value="cancelada">Cancelada</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset v-if="forms === 'period'">
+                                        <legend>Período</legend>
+                                        <div class="form-group">
+                                            <ul class="list-inline">
+                                                <li>
+                                                    <label for="periodYear" role="button" class="cursorPointer">
+                                                        <input type="radio" name="periodTime" id="periodYear" v-model="periodTime"
+                                                               value="year"> por año
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="periodMonth" role="button" class="cursorPointer">
+                                                        <input type="radio" name="periodTime" id="periodMonth" v-model="periodTime"
+                                                               value="month"> por meses
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="periodFrom" class="sr-only">Desde:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">Desde</div>
+                                                <date-picker placeholder="Seleccione la fecha..."
+                                                             :config="cnfgPeriod"
+                                                             id="periodFrom"
+                                                             name="periodFrom" v-model="periodFrom"></date-picker>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="periodTo" class="sr-only">Hasta:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">Hasta</div>
+                                                <date-picker placeholder="Seleccione la fecha..."
+                                                             :config="cnfgPeriod"
+                                                             id="periodTo"
+                                                             name="periodTo" v-model="periodTo"></date-picker>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="estado3" class="sr-only">Estado:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">Estado</div>
+                                                <select name="estado3" id="estado3" class="form-control" v-model="estado">
+                                                    <option value="pendiente">Pendiente</option>
+                                                    <option value="confirmada">Confirmada</option>
+                                                    <option value="en curso">En curso</option>
+                                                    <option value="finalizada">Finalizada</option>
+                                                    <option value="cancelada">Cancelada</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </fieldset>
                                 </div>
-                                <div class="form-group">
-                                    <label for="periodTo" class="sr-only">Hasta:</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">Hasta</div>
-                                        <date-picker placeholder="Seleccione la fecha..."
-                                                     :config="cnfgPeriod"
-                                                     id="periodTo"
-                                                     name="periodTo" v-model="periodTo"></date-picker>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="estado3" class="sr-only">Estado:</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">Estado</div>
-                                        <select name="estado3" id="estado3" class="form-control" v-model="estado">
-                                            <option value="pendiente">Pendiente</option>
-                                            <option value="confirmada">Confirmada</option>
-                                            <option value="en curso">En curso</option>
-                                            <option value="finalizada">Finalizada</option>
-                                            <option value="cancelada">Cancelada</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="consumos">
-                        <div class="padding-div-radios">
-                            <ul class="list-inline">
-                                <li>
-                                    <label for="forDate" role="button">
-                                        <input type="radio" name="forms2" id="forDate" v-model="forms"
-                                               value="date"> Por fecha
-                                    </label>
-                                </li>
-                                <li>
-                                    <label for="forCottage" role="button">
-                                        <input type="radio" name="forms2" id="forCottage" v-model="forms"
-                                               value="cottage"> Por cabaña
-                                    </label>
-                                </li>
-                                <li>
-                                    <label for="forUser" role="button">
-                                        <input type="radio" name="forms2" id="forUser" v-model="forms"
-                                               value="user"> Por usuario
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <fieldset>
-                                <legend>{{ forms === 'date' ? 'Por fecha' : forms === 'cottage' ? 'Por cabaña' : 'Por usuario' }}</legend>
-                                <div class="form-group">
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="consumos">
+                                <div class="padding-div-radios">
                                     <ul class="list-inline">
                                         <li>
-                                            <label for="filterYear" role="button">
-                                                <input type="radio" name="filterType" id="filterYear" v-model="filterFor"
-                                                       value="year"> por año
+                                            <label for="forDate" role="button" class="cursorPointer">
+                                                <input type="radio" name="forms2" id="forDate" v-model="forms"
+                                                       value="date"> Por fecha
                                             </label>
                                         </li>
                                         <li>
-                                            <label for="filterMonth" role="button">
-                                                <input type="radio" name="filterType" id="filterMonth" v-model="filterFor"
-                                                       value="month"> por meses
+                                            <label for="forCottage" role="button" class="cursorPointer">
+                                                <input type="radio" name="forms2" id="forCottage" v-model="forms"
+                                                       value="cottage"> Por cabaña
                                             </label>
                                         </li>
                                         <li>
-                                            <label for="filterDay" role="button">
-                                                <input type="radio" name="filterType" id="filterDay" v-model="filterFor"
-                                                       value="day"> por dias
+                                            <label for="forUser" role="button" class="cursorPointer">
+                                                <input type="radio" name="forms2" id="forUser" v-model="forms"
+                                                       value="user"> Por usuario
                                             </label>
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="form-group">
-                                    <label for="filterFrom" class="sr-only">Desde:</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">Desde</div>
-                                        <date-picker placeholder="Seleccione la fecha..."
-                                                     :config="cnfgPeriod"
-                                                     id="filterFrom"
-                                                     name="filterFrom" v-model="filterFrom"></date-picker>
-                                    </div>
+                                <div>
+                                    <fieldset>
+                                        <legend>{{ forms === 'date' ? 'Por fecha' : forms === 'cottage' ? 'Por cabaña' : 'Por usuario' }}</legend>
+                                        <div class="form-group">
+                                            <ul class="list-inline">
+                                                <li>
+                                                    <label for="filterYear" role="button" class="cursorPointer">
+                                                        <input type="radio" name="filterType" id="filterYear" v-model="filterFor"
+                                                               value="year"> por año
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="filterMonth" role="button" class="cursorPointer">
+                                                        <input type="radio" name="filterType" id="filterMonth" v-model="filterFor"
+                                                               value="month"> por meses
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="filterDay" role="button" class="cursorPointer">
+                                                        <input type="radio" name="filterType" id="filterDay" v-model="filterFor"
+                                                               value="day"> por dias
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="filterFrom" class="sr-only">Desde:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">Desde</div>
+                                                <date-picker placeholder="Seleccione la fecha..."
+                                                             :config="cnfgPeriod"
+                                                             id="filterFrom"
+                                                             name="filterFrom" v-model="filterFrom"></date-picker>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="filterTo" class="sr-only">Hasta:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">Hasta</div>
+                                                <date-picker placeholder="Seleccione la fecha..."
+                                                             :config="cnfgPeriod"
+                                                             id="filterTo"
+                                                             name="filterTo" v-model="filterTo"></date-picker>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="estado4" class="sr-only">Estado:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">Estado</div>
+                                                <select name="estado4" id="estado4" class="form-control" v-model="estado">
+                                                    <option value="pendiente">Pendiente</option>
+                                                    <option value="confirmada">Confirmada</option>
+                                                    <option value="en curso">En curso</option>
+                                                    <option value="finalizada">Finalizada</option>
+                                                    <option value="cancelada">Cancelada</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </fieldset>
                                 </div>
-                                <div class="form-group">
-                                    <label for="filterTo" class="sr-only">Hasta:</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">Hasta</div>
-                                        <date-picker placeholder="Seleccione la fecha..."
-                                                     :config="cnfgPeriod"
-                                                     id="filterTo"
-                                                     name="filterTo" v-model="filterTo"></date-picker>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="estado4" class="sr-only">Estado:</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">Estado</div>
-                                        <select name="estado4" id="estado4" class="form-control" v-model="estado">
-                                            <option value="pendiente">Pendiente</option>
-                                            <option value="confirmada">Confirmada</option>
-                                            <option value="en curso">En curso</option>
-                                            <option value="finalizada">Finalizada</option>
-                                            <option value="cancelada">Cancelada</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </fieldset>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-success" @click="btnUpateRp">
+                                <icon-app iconImage="refresh" :aditionalClasses="(!queryFinished || !queryEnd) ? 'fa-spin fa-fw': ''"></icon-app> Actualizar
+                            </button>
                         </div>
                     </div>
-                </div>
-                <div class="text-center">
-                    <button class="btn btn-success" @click="btnUpateRp">
-                        <icon-app iconImage="refresh" :aditionalClasses="(!queryFinished || !queryEnd) ? 'fa-spin fa-fw': ''"></icon-app> Actualizar
-                    </button>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                <div class="chart-container" style="position: relative;">
-                    <canvas id="reports_container"></canvas>
+                    <div class="col-12 col-md-9">
+                        <div class="chart-container" style="position: relative;">
+                            <canvas id="reports_container"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -790,8 +798,7 @@
 </script>
 
 <style>
-    div.panel {
-        margin-top: 2% !important;
+    div.card {
         min-height: 85vh;
     }
 

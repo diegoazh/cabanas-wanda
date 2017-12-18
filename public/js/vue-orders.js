@@ -1703,6 +1703,14 @@ exports.default = {
             type: String,
             default: ''
         },
+        modalHeaderClasses: {
+            type: String,
+            default: ''
+        },
+        modalFooterClasses: {
+            type: String,
+            default: ''
+        },
         modalTitle: {
             type: String,
             default: '',
@@ -1746,7 +1754,7 @@ exports.default = {
         },
         typeBtnClose: {
             type: String,
-            default: 'btn-default'
+            default: 'btn-secondary'
         },
         onModalShown: {
             type: Function,
@@ -2758,7 +2766,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -37105,11 +37113,9 @@ var render = function() {
           _c("div", { staticClass: "modal-content" }, [
             _c(
               "div",
-              { staticClass: "modal-header" },
+              { class: ["modal-header", _vm.modalHeaderClasses] },
               [
                 _vm._t("b3-modal-header", [
-                  _vm._m(0),
-                  _vm._v(" "),
                   _c(
                     "h4",
                     {
@@ -37117,7 +37123,9 @@ var render = function() {
                       attrs: { id: "myModalLabel" }
                     },
                     [_vm._v(_vm._s(_vm.modalTitle))]
-                  )
+                  ),
+                  _vm._v(" "),
+                  _vm._m(0)
                 ])
               ],
               2
@@ -37127,7 +37135,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "modal-footer" },
+              { class: ["modal-footer", _vm.modalFooterClasses] },
               [
                 _vm._t("b3-modal-footer", [
                   _vm.showBtnClose
@@ -37680,7 +37688,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "btn btn-primary btn-xs pull-right",
+          staticClass: "btn btn-primary btn-sm pull-right",
           on: { click: _vm.changeReserva }
         },
         [
@@ -37744,7 +37752,7 @@ var render = function() {
             _c(
               "a",
               {
-                staticClass: "btn btn-danger btn-xs",
+                staticClass: "btn btn-danger btn-sm",
                 attrs: {
                   role: "button",
                   "data-toggle": "modal",

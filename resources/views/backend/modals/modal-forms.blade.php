@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="modalFormsLabel">
-                    &iquest; Title of modal <span class="label label-danger span-delete"></span> ?
+                    &iquest;Title of modal <span class="label label-danger span-delete"></span>?
                     <br>
                     <small class="text-danger">*Text to info alert.</small>
                 </h4>

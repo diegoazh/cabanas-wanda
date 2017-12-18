@@ -7541,6 +7541,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _chart = __webpack_require__("./node_modules/chart.js/src/chart.js");
 
@@ -22650,7 +22658,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\ndiv.panel {\n    margin-top: 2% !important;\n    min-height: 85vh;\n}\ncanvas {\n    border: 1px dotted red;\n}\n.chart-container {\n    position: relative;\n    margin: auto;\n    height: 55vh;\n    width: 70vw;\n}\n.padding-div-radios {\n    padding: 8px 8px;\n}\n", ""]);
+exports.push([module.i, "\ndiv.card {\n    min-height: 85vh;\n}\ncanvas {\n    border: 1px dotted red;\n}\n.chart-container {\n    position: relative;\n    margin: auto;\n    height: 55vh;\n    width: 70vw;\n}\n.padding-div-radios {\n    padding: 8px 8px;\n}\n", ""]);
 
 // exports
 
@@ -57172,496 +57180,962 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container-fluid" }, [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" }, [
-        _c(
-          "h1",
-          { staticClass: "text-center" },
-          [
+  return _c("div", [
+    _c("div", { staticClass: "card-header bg-dark text-light" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12 col-md-12" }, [
             _c(
-              "a",
-              {
-                staticClass: "btn btn-primary btn-xs pull-left",
-                attrs: { href: "/admin" }
-              },
+              "h1",
+              { staticClass: "text-center" },
               [
-                _c("icon-app", { attrs: { iconImage: "hand-o-left" } }),
-                _vm._v(" volver al panel")
-              ],
-              1
-            ),
-            _vm._v("\n                REPORTES\n                "),
-            _c(
-              "transition",
-              {
-                attrs: {
-                  name: "loader",
-                  "enter-active-class": "animated fadeIn",
-                  "leave-active-class": "animated fadeOut"
-                }
-              },
-              [
-                _c("icon-app", {
-                  attrs: {
-                    iconImage:
-                      !_vm.queryFinished || !_vm.queryEnd
-                        ? "spinner"
-                        : "line-chart",
-                    aditionalClasses:
-                      !_vm.queryFinished || !_vm.queryEnd
-                        ? "fa-pulse fa-fw"
-                        : ""
-                  }
-                })
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-outline-warning btn-sm pull-left",
+                    attrs: { href: "/admin" }
+                  },
+                  [
+                    _c("icon-app", { attrs: { iconImage: "hand-o-left" } }),
+                    _vm._v(" volver al panel")
+                  ],
+                  1
+                ),
+                _vm._v(
+                  "\n                        REPORTES\n                        "
+                ),
+                _c(
+                  "transition",
+                  {
+                    attrs: {
+                      name: "loader",
+                      "enter-active-class": "animated fadeIn",
+                      "leave-active-class": "animated fadeOut"
+                    }
+                  },
+                  [
+                    _c("icon-app", {
+                      attrs: {
+                        iconImage:
+                          !_vm.queryFinished || !_vm.queryEnd
+                            ? "spinner"
+                            : "line-chart",
+                        aditionalClasses:
+                          !_vm.queryFinished || !_vm.queryEnd
+                            ? "fa-pulse fa-fw"
+                            : ""
+                      }
+                    })
+                  ],
+                  1
+                )
               ],
               1
             )
-          ],
-          1
-        )
+          ])
+        ])
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-3 col-lg-3" }, [
-        _c("ul", { staticClass: "nav nav-tabs", attrs: { role: "tablist" } }, [
-          _c("li", { staticClass: "active", attrs: { role: "presentation" } }, [
+    _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12 col-md-3" }, [
             _c(
-              "a",
-              {
-                attrs: {
-                  href: "#reservas",
-                  "aria-controls": "reservas",
-                  role: "tab",
-                  "data-toggle": "tab"
-                },
-                on: { click: _vm.setPreviousTab }
-              },
-              [_vm._v("Reservas")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", { attrs: { role: "presentation" } }, [
-            _c(
-              "a",
-              {
-                attrs: {
-                  href: "#consumos",
-                  "aria-controls": "consumos",
-                  role: "tab",
-                  "data-toggle": "tab"
-                },
-                on: { click: _vm.setPreviousTab }
-              },
-              [_vm._v("Consumos")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "tab-content" }, [
-          _c(
-            "div",
-            {
-              staticClass: "tab-pane active",
-              attrs: { role: "tabpanel", id: "reservas" }
-            },
-            [
-              _c("div", { staticClass: "padding-div-radios" }, [
-                _c("ul", { staticClass: "list-inline" }, [
-                  _c("li", [
-                    _c("label", { attrs: { for: "forYear", role: "button" } }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.forms,
-                            expression: "forms"
-                          }
-                        ],
+              "ul",
+              { staticClass: "nav nav-tabs", attrs: { role: "tablist" } },
+              [
+                _c(
+                  "li",
+                  { staticClass: "nav-item", attrs: { role: "presentation" } },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link active",
                         attrs: {
-                          type: "radio",
-                          name: "forms",
-                          id: "forYear",
-                          value: "year"
+                          href: "#reservas",
+                          "aria-controls": "reservas",
+                          role: "tab",
+                          "data-toggle": "tab"
                         },
-                        domProps: { checked: _vm._q(_vm.forms, "year") },
-                        on: {
-                          __c: function($event) {
-                            _vm.forms = "year"
-                          }
-                        }
-                      }),
-                      _vm._v(
-                        " Anual en meses\n                                "
-                      )
+                        on: { click: _vm.setPreviousTab }
+                      },
+                      [_vm._v("Reservas")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  { staticClass: "nav-item", attrs: { role: "presentation" } },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link",
+                        attrs: {
+                          href: "#consumos",
+                          "aria-controls": "consumos",
+                          role: "tab",
+                          "data-toggle": "tab"
+                        },
+                        on: { click: _vm.setPreviousTab }
+                      },
+                      [_vm._v("Consumos")]
+                    )
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "tab-content" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane active",
+                  attrs: { role: "tabpanel", id: "reservas" }
+                },
+                [
+                  _c("div", { staticClass: "padding-div-radios" }, [
+                    _c("ul", { staticClass: "list-inline" }, [
+                      _c("li", [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "cursorPointer",
+                            attrs: { for: "forYear", role: "button" }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.forms,
+                                  expression: "forms"
+                                }
+                              ],
+                              attrs: {
+                                type: "radio",
+                                name: "forms",
+                                id: "forYear",
+                                value: "year"
+                              },
+                              domProps: { checked: _vm._q(_vm.forms, "year") },
+                              on: {
+                                __c: function($event) {
+                                  _vm.forms = "year"
+                                }
+                              }
+                            }),
+                            _vm._v(
+                              " Anual en meses\n                                        "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "cursorPointer",
+                            attrs: { for: "forMonth", role: "button" }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.forms,
+                                  expression: "forms"
+                                }
+                              ],
+                              attrs: {
+                                type: "radio",
+                                name: "forms",
+                                id: "forMonth",
+                                value: "month"
+                              },
+                              domProps: { checked: _vm._q(_vm.forms, "month") },
+                              on: {
+                                __c: function($event) {
+                                  _vm.forms = "month"
+                                }
+                              }
+                            }),
+                            _vm._v(
+                              " Mensual por cabaña\n                                        "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "cursorPointer",
+                            attrs: { for: "forDecade", role: "button" }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.forms,
+                                  expression: "forms"
+                                }
+                              ],
+                              attrs: {
+                                type: "radio",
+                                name: "forms",
+                                id: "forDecade",
+                                value: "decade"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.forms, "decade")
+                              },
+                              on: {
+                                __c: function($event) {
+                                  _vm.forms = "decade"
+                                }
+                              }
+                            }),
+                            _vm._v(
+                              " Decenio por años\n                                        "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "cursorPointer",
+                            attrs: { for: "forPeriod", role: "button" }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.forms,
+                                  expression: "forms"
+                                }
+                              ],
+                              attrs: {
+                                type: "radio",
+                                name: "forms",
+                                id: "forPeriod",
+                                value: "period"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.forms, "period")
+                              },
+                              on: {
+                                __c: function($event) {
+                                  _vm.forms = "period"
+                                }
+                              }
+                            }),
+                            _vm._v(
+                              " Periodo seleccionado\n                                        "
+                            )
+                          ]
+                        )
+                      ])
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("li", [
-                    _c(
-                      "label",
-                      { attrs: { for: "forMonth", role: "button" } },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.forms,
-                              expression: "forms"
-                            }
-                          ],
-                          attrs: {
-                            type: "radio",
-                            name: "forms",
-                            id: "forMonth",
-                            value: "month"
-                          },
-                          domProps: { checked: _vm._q(_vm.forms, "month") },
-                          on: {
-                            __c: function($event) {
-                              _vm.forms = "month"
-                            }
-                          }
-                        }),
-                        _vm._v(
-                          " Mensual por cabaña\n                                "
-                        )
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("li", [
-                    _c(
-                      "label",
-                      { attrs: { for: "forDecade", role: "button" } },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.forms,
-                              expression: "forms"
-                            }
-                          ],
-                          attrs: {
-                            type: "radio",
-                            name: "forms",
-                            id: "forDecade",
-                            value: "decade"
-                          },
-                          domProps: { checked: _vm._q(_vm.forms, "decade") },
-                          on: {
-                            __c: function($event) {
-                              _vm.forms = "decade"
-                            }
-                          }
-                        }),
-                        _vm._v(
-                          " Decenio por años\n                                "
-                        )
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("li", [
-                    _c(
-                      "label",
-                      { attrs: { for: "forPeriod", role: "button" } },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.forms,
-                              expression: "forms"
-                            }
-                          ],
-                          attrs: {
-                            type: "radio",
-                            name: "forms",
-                            id: "forPeriod",
-                            value: "period"
-                          },
-                          domProps: { checked: _vm._q(_vm.forms, "period") },
-                          on: {
-                            __c: function($event) {
-                              _vm.forms = "period"
-                            }
-                          }
-                        }),
-                        _vm._v(
-                          " Periodo seleccionado\n                                "
-                        )
-                      ]
-                    )
+                  _c("div", [
+                    _vm.forms === "year" || _vm.forms === "decade"
+                      ? _c("fieldset", [
+                          _c("legend", [
+                            _vm._v(
+                              _vm._s(
+                                _vm.forms === "year" ? "Por año" : "Por decada"
+                              )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "sr-only",
+                                attrs: { for: "anio" }
+                              },
+                              [_vm._v("Año:")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "input-group" },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "input-group-addon" },
+                                  [_vm._v("Año")]
+                                ),
+                                _vm._v(" "),
+                                _c("date-picker", {
+                                  attrs: {
+                                    placeholder: "Seleccione el año...",
+                                    config: _vm.cnfgYear,
+                                    id: "anio",
+                                    name: "anio"
+                                  },
+                                  model: {
+                                    value: _vm.anio,
+                                    callback: function($$v) {
+                                      _vm.anio = $$v
+                                    },
+                                    expression: "anio"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", {
+                              staticClass: "sr-only",
+                              attrs: { for: "estado" }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "input-group" }, [
+                              _c("div", { staticClass: "input-group-addon" }, [
+                                _vm._v("Estado")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.estado,
+                                      expression: "estado"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { name: "estado", id: "estado" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.estado = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "pendiente" } },
+                                    [_vm._v("Pendiente")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "confirmada" } },
+                                    [_vm._v("Confirmada")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "en curso" } },
+                                    [_vm._v("En curso")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "finalizada" } },
+                                    [_vm._v("Finalizada")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "cancelada" } },
+                                    [_vm._v("Cancelada")]
+                                  )
+                                ]
+                              )
+                            ])
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.forms === "month"
+                      ? _c("fieldset", [
+                          _c("legend", [_vm._v("Por mes")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { staticClass: "sr-only", attrs: { for: "mes" } },
+                              [_vm._v("Mes:")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "input-group" },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "input-group-addon" },
+                                  [_vm._v("Mes")]
+                                ),
+                                _vm._v(" "),
+                                _c("date-picker", {
+                                  staticClass: "text-capitalize",
+                                  attrs: {
+                                    placeholder: "Seleccione el mes...",
+                                    config: _vm.cnfgMonth,
+                                    id: "mes",
+                                    name: "mes"
+                                  },
+                                  model: {
+                                    value: _vm.mes,
+                                    callback: function($$v) {
+                                      _vm.mes = $$v
+                                    },
+                                    expression: "mes"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", {
+                              staticClass: "sr-only",
+                              attrs: { for: "estado2" }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "input-group" }, [
+                              _c("div", { staticClass: "input-group-addon" }, [
+                                _vm._v("Estado")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.estado,
+                                      expression: "estado"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { name: "estado2", id: "estado2" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.estado = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "pendiente" } },
+                                    [_vm._v("Pendiente")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "confirmada" } },
+                                    [_vm._v("Confirmada")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "en curso" } },
+                                    [_vm._v("En curso")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "finalizada" } },
+                                    [_vm._v("Finalizada")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "cancelada" } },
+                                    [_vm._v("Cancelada")]
+                                  )
+                                ]
+                              )
+                            ])
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.forms === "period"
+                      ? _c("fieldset", [
+                          _c("legend", [_vm._v("Período")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("ul", { staticClass: "list-inline" }, [
+                              _c("li", [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "cursorPointer",
+                                    attrs: { for: "periodYear", role: "button" }
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.periodTime,
+                                          expression: "periodTime"
+                                        }
+                                      ],
+                                      attrs: {
+                                        type: "radio",
+                                        name: "periodTime",
+                                        id: "periodYear",
+                                        value: "year"
+                                      },
+                                      domProps: {
+                                        checked: _vm._q(_vm.periodTime, "year")
+                                      },
+                                      on: {
+                                        __c: function($event) {
+                                          _vm.periodTime = "year"
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(
+                                      " por año\n                                                "
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "cursorPointer",
+                                    attrs: {
+                                      for: "periodMonth",
+                                      role: "button"
+                                    }
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.periodTime,
+                                          expression: "periodTime"
+                                        }
+                                      ],
+                                      attrs: {
+                                        type: "radio",
+                                        name: "periodTime",
+                                        id: "periodMonth",
+                                        value: "month"
+                                      },
+                                      domProps: {
+                                        checked: _vm._q(_vm.periodTime, "month")
+                                      },
+                                      on: {
+                                        __c: function($event) {
+                                          _vm.periodTime = "month"
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(
+                                      " por meses\n                                                "
+                                    )
+                                  ]
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "sr-only",
+                                attrs: { for: "periodFrom" }
+                              },
+                              [_vm._v("Desde:")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "input-group" },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "input-group-addon" },
+                                  [_vm._v("Desde")]
+                                ),
+                                _vm._v(" "),
+                                _c("date-picker", {
+                                  attrs: {
+                                    placeholder: "Seleccione la fecha...",
+                                    config: _vm.cnfgPeriod,
+                                    id: "periodFrom",
+                                    name: "periodFrom"
+                                  },
+                                  model: {
+                                    value: _vm.periodFrom,
+                                    callback: function($$v) {
+                                      _vm.periodFrom = $$v
+                                    },
+                                    expression: "periodFrom"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "sr-only",
+                                attrs: { for: "periodTo" }
+                              },
+                              [_vm._v("Hasta:")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "input-group" },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "input-group-addon" },
+                                  [_vm._v("Hasta")]
+                                ),
+                                _vm._v(" "),
+                                _c("date-picker", {
+                                  attrs: {
+                                    placeholder: "Seleccione la fecha...",
+                                    config: _vm.cnfgPeriod,
+                                    id: "periodTo",
+                                    name: "periodTo"
+                                  },
+                                  model: {
+                                    value: _vm.periodTo,
+                                    callback: function($$v) {
+                                      _vm.periodTo = $$v
+                                    },
+                                    expression: "periodTo"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "sr-only",
+                                attrs: { for: "estado3" }
+                              },
+                              [_vm._v("Estado:")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "input-group" }, [
+                              _c("div", { staticClass: "input-group-addon" }, [
+                                _vm._v("Estado")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.estado,
+                                      expression: "estado"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { name: "estado3", id: "estado3" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.estado = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "pendiente" } },
+                                    [_vm._v("Pendiente")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "confirmada" } },
+                                    [_vm._v("Confirmada")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "en curso" } },
+                                    [_vm._v("En curso")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "finalizada" } },
+                                    [_vm._v("Finalizada")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "cancelada" } },
+                                    [_vm._v("Cancelada")]
+                                  )
+                                ]
+                              )
+                            ])
+                          ])
+                        ])
+                      : _vm._e()
                   ])
-                ])
-              ]),
+                ]
+              ),
               _vm._v(" "),
-              _c("div", [
-                _vm.forms === "year" || _vm.forms === "decade"
-                  ? _c("fieldset", [
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane",
+                  attrs: { role: "tabpanel", id: "consumos" }
+                },
+                [
+                  _c("div", { staticClass: "padding-div-radios" }, [
+                    _c("ul", { staticClass: "list-inline" }, [
+                      _c("li", [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "cursorPointer",
+                            attrs: { for: "forDate", role: "button" }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.forms,
+                                  expression: "forms"
+                                }
+                              ],
+                              attrs: {
+                                type: "radio",
+                                name: "forms2",
+                                id: "forDate",
+                                value: "date"
+                              },
+                              domProps: { checked: _vm._q(_vm.forms, "date") },
+                              on: {
+                                __c: function($event) {
+                                  _vm.forms = "date"
+                                }
+                              }
+                            }),
+                            _vm._v(
+                              " Por fecha\n                                        "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "cursorPointer",
+                            attrs: { for: "forCottage", role: "button" }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.forms,
+                                  expression: "forms"
+                                }
+                              ],
+                              attrs: {
+                                type: "radio",
+                                name: "forms2",
+                                id: "forCottage",
+                                value: "cottage"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.forms, "cottage")
+                              },
+                              on: {
+                                __c: function($event) {
+                                  _vm.forms = "cottage"
+                                }
+                              }
+                            }),
+                            _vm._v(
+                              " Por cabaña\n                                        "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "cursorPointer",
+                            attrs: { for: "forUser", role: "button" }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.forms,
+                                  expression: "forms"
+                                }
+                              ],
+                              attrs: {
+                                type: "radio",
+                                name: "forms2",
+                                id: "forUser",
+                                value: "user"
+                              },
+                              domProps: { checked: _vm._q(_vm.forms, "user") },
+                              on: {
+                                __c: function($event) {
+                                  _vm.forms = "user"
+                                }
+                              }
+                            }),
+                            _vm._v(
+                              " Por usuario\n                                        "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("fieldset", [
                       _c("legend", [
                         _vm._v(
                           _vm._s(
-                            _vm.forms === "year" ? "Por año" : "Por decada"
+                            _vm.forms === "date"
+                              ? "Por fecha"
+                              : _vm.forms === "cottage"
+                                ? "Por cabaña"
+                                : "Por usuario"
                           )
                         )
                       ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c(
-                          "label",
-                          { staticClass: "sr-only", attrs: { for: "anio" } },
-                          [_vm._v("Año:")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "input-group" },
-                          [
-                            _c("div", { staticClass: "input-group-addon" }, [
-                              _vm._v("Año")
-                            ]),
-                            _vm._v(" "),
-                            _c("date-picker", {
-                              attrs: {
-                                placeholder: "Seleccione el año...",
-                                config: _vm.cnfgYear,
-                                id: "anio",
-                                name: "anio"
-                              },
-                              model: {
-                                value: _vm.anio,
-                                callback: function($$v) {
-                                  _vm.anio = $$v
-                                },
-                                expression: "anio"
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", {
-                          staticClass: "sr-only",
-                          attrs: { for: "estado" }
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "input-group" }, [
-                          _c("div", { staticClass: "input-group-addon" }, [
-                            _vm._v("Estado")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.estado,
-                                  expression: "estado"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: { name: "estado", id: "estado" },
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.estado = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                }
-                              }
-                            },
-                            [
-                              _c("option", { attrs: { value: "pendiente" } }, [
-                                _vm._v("Pendiente")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "confirmada" } }, [
-                                _vm._v("Confirmada")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "en curso" } }, [
-                                _vm._v("En curso")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "finalizada" } }, [
-                                _vm._v("Finalizada")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "cancelada" } }, [
-                                _vm._v("Cancelada")
-                              ])
-                            ]
-                          )
-                        ])
-                      ])
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.forms === "month"
-                  ? _c("fieldset", [
-                      _c("legend", [_vm._v("Por mes")]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c(
-                          "label",
-                          { staticClass: "sr-only", attrs: { for: "mes" } },
-                          [_vm._v("Mes:")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "input-group" },
-                          [
-                            _c("div", { staticClass: "input-group-addon" }, [
-                              _vm._v("Mes")
-                            ]),
-                            _vm._v(" "),
-                            _c("date-picker", {
-                              staticClass: "text-capitalize",
-                              attrs: {
-                                placeholder: "Seleccione el mes...",
-                                config: _vm.cnfgMonth,
-                                id: "mes",
-                                name: "mes"
-                              },
-                              model: {
-                                value: _vm.mes,
-                                callback: function($$v) {
-                                  _vm.mes = $$v
-                                },
-                                expression: "mes"
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", {
-                          staticClass: "sr-only",
-                          attrs: { for: "estado2" }
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "input-group" }, [
-                          _c("div", { staticClass: "input-group-addon" }, [
-                            _vm._v("Estado")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.estado,
-                                  expression: "estado"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: { name: "estado2", id: "estado2" },
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.estado = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                }
-                              }
-                            },
-                            [
-                              _c("option", { attrs: { value: "pendiente" } }, [
-                                _vm._v("Pendiente")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "confirmada" } }, [
-                                _vm._v("Confirmada")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "en curso" } }, [
-                                _vm._v("En curso")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "finalizada" } }, [
-                                _vm._v("Finalizada")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "cancelada" } }, [
-                                _vm._v("Cancelada")
-                              ])
-                            ]
-                          )
-                        ])
-                      ])
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.forms === "period"
-                  ? _c("fieldset", [
-                      _c("legend", [_vm._v("Período")]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group" }, [
                         _c("ul", { staticClass: "list-inline" }, [
                           _c("li", [
                             _c(
                               "label",
-                              { attrs: { for: "periodYear", role: "button" } },
+                              {
+                                staticClass: "cursorPointer",
+                                attrs: { for: "filterYear", role: "button" }
+                              },
                               [
                                 _c("input", {
                                   directives: [
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.periodTime,
-                                      expression: "periodTime"
+                                      value: _vm.filterFor,
+                                      expression: "filterFor"
                                     }
                                   ],
                                   attrs: {
                                     type: "radio",
-                                    name: "periodTime",
-                                    id: "periodYear",
+                                    name: "filterType",
+                                    id: "filterYear",
                                     value: "year"
                                   },
                                   domProps: {
-                                    checked: _vm._q(_vm.periodTime, "year")
+                                    checked: _vm._q(_vm.filterFor, "year")
                                   },
                                   on: {
                                     __c: function($event) {
-                                      _vm.periodTime = "year"
+                                      _vm.filterFor = "year"
                                     }
                                   }
                                 }),
                                 _vm._v(
-                                  " por año\n                                        "
+                                  " por año\n                                                "
                                 )
                               ]
                             )
@@ -57670,34 +58144,76 @@ var render = function() {
                           _c("li", [
                             _c(
                               "label",
-                              { attrs: { for: "periodMonth", role: "button" } },
+                              {
+                                staticClass: "cursorPointer",
+                                attrs: { for: "filterMonth", role: "button" }
+                              },
                               [
                                 _c("input", {
                                   directives: [
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.periodTime,
-                                      expression: "periodTime"
+                                      value: _vm.filterFor,
+                                      expression: "filterFor"
                                     }
                                   ],
                                   attrs: {
                                     type: "radio",
-                                    name: "periodTime",
-                                    id: "periodMonth",
+                                    name: "filterType",
+                                    id: "filterMonth",
                                     value: "month"
                                   },
                                   domProps: {
-                                    checked: _vm._q(_vm.periodTime, "month")
+                                    checked: _vm._q(_vm.filterFor, "month")
                                   },
                                   on: {
                                     __c: function($event) {
-                                      _vm.periodTime = "month"
+                                      _vm.filterFor = "month"
                                     }
                                   }
                                 }),
                                 _vm._v(
-                                  " por meses\n                                        "
+                                  " por meses\n                                                "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "cursorPointer",
+                                attrs: { for: "filterDay", role: "button" }
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.filterFor,
+                                      expression: "filterFor"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "radio",
+                                    name: "filterType",
+                                    id: "filterDay",
+                                    value: "day"
+                                  },
+                                  domProps: {
+                                    checked: _vm._q(_vm.filterFor, "day")
+                                  },
+                                  on: {
+                                    __c: function($event) {
+                                      _vm.filterFor = "day"
+                                    }
+                                  }
+                                }),
+                                _vm._v(
+                                  " por dias\n                                                "
                                 )
                               ]
                             )
@@ -57710,7 +58226,7 @@ var render = function() {
                           "label",
                           {
                             staticClass: "sr-only",
-                            attrs: { for: "periodFrom" }
+                            attrs: { for: "filterFrom" }
                           },
                           [_vm._v("Desde:")]
                         ),
@@ -57727,15 +58243,15 @@ var render = function() {
                               attrs: {
                                 placeholder: "Seleccione la fecha...",
                                 config: _vm.cnfgPeriod,
-                                id: "periodFrom",
-                                name: "periodFrom"
+                                id: "filterFrom",
+                                name: "filterFrom"
                               },
                               model: {
-                                value: _vm.periodFrom,
+                                value: _vm.filterFrom,
                                 callback: function($$v) {
-                                  _vm.periodFrom = $$v
+                                  _vm.filterFrom = $$v
                                 },
-                                expression: "periodFrom"
+                                expression: "filterFrom"
                               }
                             })
                           ],
@@ -57748,7 +58264,7 @@ var render = function() {
                           "label",
                           {
                             staticClass: "sr-only",
-                            attrs: { for: "periodTo" }
+                            attrs: { for: "filterTo" }
                           },
                           [_vm._v("Hasta:")]
                         ),
@@ -57765,15 +58281,15 @@ var render = function() {
                               attrs: {
                                 placeholder: "Seleccione la fecha...",
                                 config: _vm.cnfgPeriod,
-                                id: "periodTo",
-                                name: "periodTo"
+                                id: "filterTo",
+                                name: "filterTo"
                               },
                               model: {
-                                value: _vm.periodTo,
+                                value: _vm.filterTo,
                                 callback: function($$v) {
-                                  _vm.periodTo = $$v
+                                  _vm.filterTo = $$v
                                 },
-                                expression: "periodTo"
+                                expression: "filterTo"
                               }
                             })
                           ],
@@ -57784,7 +58300,7 @@ var render = function() {
                       _c("div", { staticClass: "form-group" }, [
                         _c(
                           "label",
-                          { staticClass: "sr-only", attrs: { for: "estado3" } },
+                          { staticClass: "sr-only", attrs: { for: "estado4" } },
                           [_vm._v("Estado:")]
                         ),
                         _vm._v(" "),
@@ -57805,7 +58321,7 @@ var render = function() {
                                 }
                               ],
                               staticClass: "form-control",
-                              attrs: { name: "estado3", id: "estado3" },
+                              attrs: { name: "estado4", id: "estado4" },
                               on: {
                                 change: function($event) {
                                   var $$selectedVal = Array.prototype.filter
@@ -57848,397 +58364,38 @@ var render = function() {
                         ])
                       ])
                     ])
-                  : _vm._e()
-              ])
-            ]
-          ),
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-center" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  on: { click: _vm.btnUpateRp }
+                },
+                [
+                  _c("icon-app", {
+                    attrs: {
+                      iconImage: "refresh",
+                      aditionalClasses:
+                        !_vm.queryFinished || !_vm.queryEnd
+                          ? "fa-spin fa-fw"
+                          : ""
+                    }
+                  }),
+                  _vm._v(" Actualizar\n                        ")
+                ],
+                1
+              )
+            ])
+          ]),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "tab-pane",
-              attrs: { role: "tabpanel", id: "consumos" }
-            },
-            [
-              _c("div", { staticClass: "padding-div-radios" }, [
-                _c("ul", { staticClass: "list-inline" }, [
-                  _c("li", [
-                    _c("label", { attrs: { for: "forDate", role: "button" } }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.forms,
-                            expression: "forms"
-                          }
-                        ],
-                        attrs: {
-                          type: "radio",
-                          name: "forms2",
-                          id: "forDate",
-                          value: "date"
-                        },
-                        domProps: { checked: _vm._q(_vm.forms, "date") },
-                        on: {
-                          __c: function($event) {
-                            _vm.forms = "date"
-                          }
-                        }
-                      }),
-                      _vm._v(" Por fecha\n                                ")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("li", [
-                    _c(
-                      "label",
-                      { attrs: { for: "forCottage", role: "button" } },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.forms,
-                              expression: "forms"
-                            }
-                          ],
-                          attrs: {
-                            type: "radio",
-                            name: "forms2",
-                            id: "forCottage",
-                            value: "cottage"
-                          },
-                          domProps: { checked: _vm._q(_vm.forms, "cottage") },
-                          on: {
-                            __c: function($event) {
-                              _vm.forms = "cottage"
-                            }
-                          }
-                        }),
-                        _vm._v(" Por cabaña\n                                ")
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("li", [
-                    _c("label", { attrs: { for: "forUser", role: "button" } }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.forms,
-                            expression: "forms"
-                          }
-                        ],
-                        attrs: {
-                          type: "radio",
-                          name: "forms2",
-                          id: "forUser",
-                          value: "user"
-                        },
-                        domProps: { checked: _vm._q(_vm.forms, "user") },
-                        on: {
-                          __c: function($event) {
-                            _vm.forms = "user"
-                          }
-                        }
-                      }),
-                      _vm._v(" Por usuario\n                                ")
-                    ])
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", [
-                _c("fieldset", [
-                  _c("legend", [
-                    _vm._v(
-                      _vm._s(
-                        _vm.forms === "date"
-                          ? "Por fecha"
-                          : _vm.forms === "cottage"
-                            ? "Por cabaña"
-                            : "Por usuario"
-                      )
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("ul", { staticClass: "list-inline" }, [
-                      _c("li", [
-                        _c(
-                          "label",
-                          { attrs: { for: "filterYear", role: "button" } },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.filterFor,
-                                  expression: "filterFor"
-                                }
-                              ],
-                              attrs: {
-                                type: "radio",
-                                name: "filterType",
-                                id: "filterYear",
-                                value: "year"
-                              },
-                              domProps: {
-                                checked: _vm._q(_vm.filterFor, "year")
-                              },
-                              on: {
-                                __c: function($event) {
-                                  _vm.filterFor = "year"
-                                }
-                              }
-                            }),
-                            _vm._v(
-                              " por año\n                                        "
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c(
-                          "label",
-                          { attrs: { for: "filterMonth", role: "button" } },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.filterFor,
-                                  expression: "filterFor"
-                                }
-                              ],
-                              attrs: {
-                                type: "radio",
-                                name: "filterType",
-                                id: "filterMonth",
-                                value: "month"
-                              },
-                              domProps: {
-                                checked: _vm._q(_vm.filterFor, "month")
-                              },
-                              on: {
-                                __c: function($event) {
-                                  _vm.filterFor = "month"
-                                }
-                              }
-                            }),
-                            _vm._v(
-                              " por meses\n                                        "
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c(
-                          "label",
-                          { attrs: { for: "filterDay", role: "button" } },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.filterFor,
-                                  expression: "filterFor"
-                                }
-                              ],
-                              attrs: {
-                                type: "radio",
-                                name: "filterType",
-                                id: "filterDay",
-                                value: "day"
-                              },
-                              domProps: {
-                                checked: _vm._q(_vm.filterFor, "day")
-                              },
-                              on: {
-                                __c: function($event) {
-                                  _vm.filterFor = "day"
-                                }
-                              }
-                            }),
-                            _vm._v(
-                              " por dias\n                                        "
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      { staticClass: "sr-only", attrs: { for: "filterFrom" } },
-                      [_vm._v("Desde:")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "input-group" },
-                      [
-                        _c("div", { staticClass: "input-group-addon" }, [
-                          _vm._v("Desde")
-                        ]),
-                        _vm._v(" "),
-                        _c("date-picker", {
-                          attrs: {
-                            placeholder: "Seleccione la fecha...",
-                            config: _vm.cnfgPeriod,
-                            id: "filterFrom",
-                            name: "filterFrom"
-                          },
-                          model: {
-                            value: _vm.filterFrom,
-                            callback: function($$v) {
-                              _vm.filterFrom = $$v
-                            },
-                            expression: "filterFrom"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      { staticClass: "sr-only", attrs: { for: "filterTo" } },
-                      [_vm._v("Hasta:")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "input-group" },
-                      [
-                        _c("div", { staticClass: "input-group-addon" }, [
-                          _vm._v("Hasta")
-                        ]),
-                        _vm._v(" "),
-                        _c("date-picker", {
-                          attrs: {
-                            placeholder: "Seleccione la fecha...",
-                            config: _vm.cnfgPeriod,
-                            id: "filterTo",
-                            name: "filterTo"
-                          },
-                          model: {
-                            value: _vm.filterTo,
-                            callback: function($$v) {
-                              _vm.filterTo = $$v
-                            },
-                            expression: "filterTo"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      { staticClass: "sr-only", attrs: { for: "estado4" } },
-                      [_vm._v("Estado:")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "input-group" }, [
-                      _c("div", { staticClass: "input-group-addon" }, [
-                        _vm._v("Estado")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.estado,
-                              expression: "estado"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { name: "estado4", id: "estado4" },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.estado = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            }
-                          }
-                        },
-                        [
-                          _c("option", { attrs: { value: "pendiente" } }, [
-                            _vm._v("Pendiente")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "confirmada" } }, [
-                            _vm._v("Confirmada")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "en curso" } }, [
-                            _vm._v("En curso")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "finalizada" } }, [
-                            _vm._v("Finalizada")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "cancelada" } }, [
-                            _vm._v("Cancelada")
-                          ])
-                        ]
-                      )
-                    ])
-                  ])
-                ])
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "text-center" }, [
-          _c(
-            "button",
-            { staticClass: "btn btn-success", on: { click: _vm.btnUpateRp } },
-            [
-              _c("icon-app", {
-                attrs: {
-                  iconImage: "refresh",
-                  aditionalClasses:
-                    !_vm.queryFinished || !_vm.queryEnd ? "fa-spin fa-fw" : ""
-                }
-              }),
-              _vm._v(" Actualizar\n                ")
-            ],
-            1
-          )
+          _vm._m(0)
         ])
-      ]),
-      _vm._v(" "),
-      _vm._m(0)
+      ])
     ])
   ])
 }
@@ -58247,7 +58404,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-9 col-lg-9" }, [
+    return _c("div", { staticClass: "col-12 col-md-9" }, [
       _c(
         "div",
         {
