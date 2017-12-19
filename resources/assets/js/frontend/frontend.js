@@ -68,7 +68,7 @@ $(document).ready(function (event) {
     } else if (/profile/.test(path)) {
         backgroundDrawing('dibujo-coati-2', 'contain', '100% 50%');
     } else if (/order/.test(path)) {
-        backgroundDrawing('dibujo-aguara-guazu', '45%', '100% 100%');
+        backgroundDrawing('dibujo-aguara-guazu', '45%', '100% 0%');
     } else if (/liquidation/.test(path)) {
         backgroundDrawing('dibujo-tapir', '50%', '100% 50%')
     } else if (/rentals\/edit/.test(path)) {

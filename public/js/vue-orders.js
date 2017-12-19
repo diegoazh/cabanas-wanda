@@ -1989,6 +1989,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -2263,6 +2268,10 @@ exports.default = {
                 maxDate: food.type === 'desayuno' ? (0, _moment2.default)((0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY') : (0, _moment2.default)((0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').subtract(1, 'd').format('DD/MM/YYYY'), 'DD/MM/YYYY')
             };
         },
+        fireReplacesInShowDp: function fireReplacesInShowDp(id) {
+            window.jQuery('.table-condensed').removeClass('table-condensed').addClass('table-sm');
+            //window.jQuery('.table-sm > thead').addClass('bg-dark text-light');
+        },
         findInOrders: function findInOrders(food) {
             this.orders.find(function (element) {
                 return element.name === food.name;
@@ -2530,6 +2539,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
 //
 //
 //
@@ -37257,11 +37268,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+    _c("div", { staticClass: "col-12 col-md-12" }, [
       _c(
         "button",
         {
-          staticClass: "btn btn-info pull-right",
+          staticClass: "btn btn-outline-info btn-sm pull-right my-3",
           on: { click: _vm.backToItems }
         },
         [
@@ -37278,10 +37289,10 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+    _c("div", { staticClass: "col-12 col-md-12" }, [
       _c("table", { staticClass: "table table-striped" }, [
-        _c("thead", [
-          _c("tr", { staticClass: "dafault" }, [
+        _c("thead", { staticClass: "thead bg-dark text-light" }, [
+          _c("tr", [
             _c("th", [_vm._v("Fecha de entrega")]),
             _vm._v(" "),
             _c("th", [_vm._v("Plato")]),
@@ -37341,8 +37352,8 @@ var render = function() {
           })
         ),
         _vm._v(" "),
-        _c("tfoot", [
-          _c("tr", { staticClass: "danger" }, [
+        _c("tfoot", { staticClass: "bg-danger text-light" }, [
+          _c("tr", [
             _c("td", [_vm._v("Monto final")]),
             _vm._v(" "),
             _c("td"),
@@ -37367,7 +37378,7 @@ var render = function() {
         _c(
           "button",
           {
-            staticClass: "btn btn-lg btn-success",
+            staticClass: "btn btn-lg btn-outline-success",
             on: { click: _vm.setOrderToSend }
           },
           [
@@ -37430,7 +37441,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12 page-header" }, [
+      _c("div", { staticClass: "col-12 col-md-12 page-header" }, [
         _c("h1", { staticClass: "text-center" }, [_vm._v("Ordenes")]),
         _vm._v(" "),
         _c("p", { staticClass: "text-center" }, [
@@ -37463,9 +37474,9 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _vm._m(0),
     _vm._v(" "),
-    _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-8 col-md-offset-2" }, [
+    _c("div", { staticClass: "col-12 col-md-8 offset-md-2" }, [
       _c("div", { staticClass: "text-center" }, [
-        _c("p", { attrs: { id: "p-for-code" } }, [
+        _c("p", { staticClass: "text-center", attrs: { id: "p-for-code" } }, [
           _c(
             "span",
             {
@@ -37524,30 +37535,32 @@ var render = function() {
               _vm._v(_vm._s(_vm.forCode ? "Código de reserva" : "DNI + email"))
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
+            _c("div", { staticClass: "form-group form-row" }, [
               _c(
                 "label",
                 {
-                  staticClass: "sr-only",
+                  staticClass: "col-form-label sr-only",
                   attrs: { for: _vm.forCode ? "codigo-reserva" : "dni-reseva" }
                 },
                 [_vm._v("Código de reserva")]
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "input-group" }, [
-                _c(
-                  "div",
-                  { staticClass: "input-group-addon" },
-                  [
-                    _c("icon-app", {
-                      attrs: { iconImage: _vm.forCode ? "barcode" : "hashtag" }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _vm.forCode
-                  ? _c("input", {
+              _vm.forCode
+                ? _c("div", { staticClass: "input-group mr-2" }, [
+                    _c(
+                      "div",
+                      { staticClass: "input-group-addon" },
+                      [
+                        _c("icon-app", {
+                          attrs: {
+                            iconImage: _vm.forCode ? "barcode" : "hashtag"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
                       directives: [
                         {
                           name: "model",
@@ -37568,7 +37581,34 @@ var render = function() {
                         }
                       }
                     })
-                  : _c("input", {
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "col-form-label sr-only",
+                  attrs: { for: _vm.forCode ? "codigo-reserva" : "dni-reseva" }
+                },
+                [_vm._v("Código de reserva")]
+              ),
+              _vm._v(" "),
+              !_vm.forCode
+                ? _c("div", { staticClass: "input-group mr-2" }, [
+                    _c(
+                      "div",
+                      { staticClass: "input-group-addon" },
+                      [
+                        _c("icon-app", {
+                          attrs: {
+                            iconImage: _vm.forCode ? "barcode" : "hashtag"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
                       directives: [
                         {
                           name: "model",
@@ -37589,18 +37629,20 @@ var render = function() {
                         }
                       }
                     })
-              ])
-            ]),
-            _vm._v(" "),
-            !_vm.forCode
-              ? _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "label",
-                    { staticClass: "sr-only", attrs: { for: "emal-reserva" } },
-                    [_vm._v("Email")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "input-group" }, [
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "col-form-label sr-only",
+                  attrs: { for: "emal-reserva" }
+                },
+                [_vm._v("Email")]
+              ),
+              _vm._v(" "),
+              !_vm.forCode
+                ? _c("div", { staticClass: "input-group mr-2" }, [
                     _c(
                       "div",
                       { staticClass: "input-group-addon" },
@@ -37630,23 +37672,23 @@ var render = function() {
                       }
                     })
                   ])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "btn btn-primary" },
-              [
-                _c("icon-app", {
-                  attrs: {
-                    iconImage: _vm.toggleBtnIcon,
-                    aditionalClasses: _vm.toggleBtnClasses
-                  }
-                }),
-                _vm._v(" Buscar")
-              ],
-              1
-            )
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-outline-primary pull-right" },
+                [
+                  _c("icon-app", {
+                    attrs: {
+                      iconImage: _vm.toggleBtnIcon,
+                      aditionalClasses: _vm.toggleBtnClasses
+                    }
+                  }),
+                  _vm._v(" Buscar")
+                ],
+                1
+              )
+            ])
           ])
         ]
       )
@@ -37658,7 +37700,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+    return _c("div", { staticClass: "col-12 col-md-12" }, [
       _c("h3", { staticClass: "text-center" }, [
         _vm._v("Primero necesitamos saber a que reserva pertenecerá")
       ])
@@ -37684,11 +37726,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+    _c("div", { staticClass: "col-12 col-md-12" }, [
       _c(
         "button",
         {
-          staticClass: "btn btn-primary btn-sm pull-right",
+          staticClass: "btn btn-light text-dark btn-sm pull-right mt-1 mr-1",
           on: { click: _vm.changeReserva }
         },
         [
@@ -37703,24 +37745,26 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("h2", { staticClass: "text-center" }, [_vm._v("Reserva")]),
+      _c("h2", { staticClass: "text-center py-3 bg-dark text-light rounded" }, [
+        _vm._v("Reserva")
+      ]),
       _vm._v(" "),
       _c(
         "h3",
         { staticClass: "text-center", attrs: { id: "details_reservation" } },
         [
           _vm._v("\n            Titular: "),
-          _c("span", { staticClass: "label label-info" }, [
+          _c("span", { staticClass: "badge badge-info" }, [
             _vm._v(_vm._s(_vm.ownerNames))
           ]),
           _vm._v(" |\n            Cabaña: "),
-          _c("span", { staticClass: "label label-default" }, [
+          _c("span", { staticClass: "badge badge-default" }, [
             _vm._v(_vm._s("" + _vm.rental.cottage.name))
           ]),
           _vm._v(" |\n            "),
           _c("icon-app", { attrs: { iconImage: "hashtag" } }),
           _vm._v(" "),
-          _c("span", { staticClass: "label label-default" }, [
+          _c("span", { staticClass: "badge badge-default" }, [
             _vm._v(_vm._s("" + _vm.rental.cottage.number))
           ])
         ],
@@ -37731,13 +37775,13 @@ var render = function() {
       _vm._v(" "),
       _c("h4", { staticClass: "text-center" }, [
         _vm._v("Desde: "),
-        _c("span", { staticClass: "label label-success" }, [
+        _c("span", { staticClass: "badge badge-success" }, [
           _vm._v(
             _vm._s(_vm._f("argentineDate")(_vm.rental.dateFrom)) + " 10:00:00"
           )
         ]),
         _vm._v(" | Hasta: "),
-        _c("span", { staticClass: "label label-danger" }, [
+        _c("span", { staticClass: "badge badge-danger" }, [
           _vm._v(
             _vm._s(_vm._f("argentineDate")(_vm.rental.dateTo)) + " 10:00:00"
           )
@@ -37752,8 +37796,9 @@ var render = function() {
             _c(
               "a",
               {
-                staticClass: "btn btn-danger btn-sm",
+                staticClass: "btn btn-danger btn-sm text-light",
                 attrs: {
+                  href: "#",
                   role: "button",
                   "data-toggle": "modal",
                   "data-target": "#aclaraciones-pedidos"
@@ -37779,7 +37824,7 @@ var render = function() {
         [
           _c("icon-app", { attrs: { iconImage: "shopping-basket" } }),
           _vm._v(" "),
-          _c("span", { staticClass: "label label-info img-circle" }, [
+          _c("span", { staticClass: "badge badge-info img-circle" }, [
             _vm._v(_vm._s(_vm.totalQuantity))
           ]),
           _vm._v(" "),
@@ -37787,7 +37832,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "span",
-            { staticClass: "label label-warning img-circle" },
+            { staticClass: "badge badge-warning img-circle" },
             [
               _c("icon-app", { attrs: { iconImage: "dollar" } }),
               _vm._v(" " + _vm._s(_vm.totalAmount))
@@ -37801,88 +37846,108 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "col-xs-12 col-sm-12 col-md-12" },
+      { staticClass: "col-12 col-md-12" },
       [
         _c("ul", { staticClass: "nav nav-tabs", attrs: { role: "tablist" } }, [
-          _c("li", { staticClass: "active", attrs: { role: "presentation" } }, [
-            _c(
-              "a",
-              {
-                attrs: {
-                  href: "#tab1",
-                  "aria-controls": "tab1",
-                  role: "tab",
-                  "data-toggle": "tab"
-                },
-                on: {
-                  click: function($event) {
-                    _vm.savePreviousPage("desayuno")
+          _c(
+            "li",
+            { staticClass: "nav-item", attrs: { role: "presentation" } },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link active",
+                  attrs: {
+                    href: "#tab1",
+                    "aria-controls": "tab1",
+                    role: "tab",
+                    "data-toggle": "tab"
+                  },
+                  on: {
+                    click: function($event) {
+                      _vm.savePreviousPage("desayuno")
+                    }
                   }
-                }
-              },
-              [_vm._v("Desayuno")]
-            )
-          ]),
+                },
+                [_vm._v("Desayuno")]
+              )
+            ]
+          ),
           _vm._v(" "),
-          _c("li", { attrs: { role: "presentation" } }, [
-            _c(
-              "a",
-              {
-                attrs: {
-                  href: "#tab2",
-                  "aria-controls": "tab2",
-                  role: "tab",
-                  "data-toggle": "tab"
-                },
-                on: {
-                  click: function($event) {
-                    _vm.savePreviousPage("almuerzo")
+          _c(
+            "li",
+            { staticClass: "nav-item", attrs: { role: "presentation" } },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link",
+                  attrs: {
+                    href: "#tab2",
+                    "aria-controls": "tab2",
+                    role: "tab",
+                    "data-toggle": "tab"
+                  },
+                  on: {
+                    click: function($event) {
+                      _vm.savePreviousPage("almuerzo")
+                    }
                   }
-                }
-              },
-              [_vm._v("Almuerzo")]
-            )
-          ]),
+                },
+                [_vm._v("Almuerzo")]
+              )
+            ]
+          ),
           _vm._v(" "),
-          _c("li", { attrs: { role: "presentation" } }, [
-            _c(
-              "a",
-              {
-                attrs: {
-                  href: "#tab3",
-                  "aria-controls": "tab3",
-                  role: "tab",
-                  "data-toggle": "tab"
-                },
-                on: {
-                  click: function($event) {
-                    _vm.savePreviousPage("merienda")
+          _c(
+            "li",
+            { staticClass: "nav-item", attrs: { role: "presentation" } },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link",
+                  attrs: {
+                    href: "#tab3",
+                    "aria-controls": "tab3",
+                    role: "tab",
+                    "data-toggle": "tab"
+                  },
+                  on: {
+                    click: function($event) {
+                      _vm.savePreviousPage("merienda")
+                    }
                   }
-                }
-              },
-              [_vm._v("Merienda")]
-            )
-          ]),
+                },
+                [_vm._v("Merienda")]
+              )
+            ]
+          ),
           _vm._v(" "),
-          _c("li", { attrs: { role: "presentation" } }, [
-            _c(
-              "a",
-              {
-                attrs: {
-                  href: "#tab4",
-                  "aria-controls": "tab4",
-                  role: "tab",
-                  "data-toggle": "tab"
-                },
-                on: {
-                  click: function($event) {
-                    _vm.savePreviousPage("cena")
+          _c(
+            "li",
+            { staticClass: "nav-item", attrs: { role: "presentation" } },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link",
+                  attrs: {
+                    href: "#tab4",
+                    "aria-controls": "tab4",
+                    role: "tab",
+                    "data-toggle": "tab"
+                  },
+                  on: {
+                    click: function($event) {
+                      _vm.savePreviousPage("cena")
+                    }
                   }
-                }
-              },
-              [_vm._v("Cena")]
-            )
-          ])
+                },
+                [_vm._v("Cena")]
+              )
+            ]
+          )
         ]),
         _vm._v(" "),
         _c(
@@ -37896,100 +37961,40 @@ var render = function() {
                 attrs: { role: "tabpanel", id: "tab" + number }
               },
               [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c("table", { staticClass: "table table-striped" }, [
-                    _vm._m(0, true),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.elementsPerPage(number), function(
-                        food,
-                        index
-                      ) {
-                        return _c("tr", [
-                          _c("td", [
-                            _c(
-                              "p",
-                              [
-                                _c("icon-app", {
-                                  attrs: {
-                                    iconImage: food.checked
-                                      ? "check-square-o"
-                                      : "square-o",
-                                    aditionalClasses: food.checked
-                                      ? "text-primary"
-                                      : "text-default"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(food.name))]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("div", { staticClass: "form-group" }, [
-                              _c(
-                                "div",
-                                { staticClass: "input-group" },
-                                [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "input-group-addon date-piker"
-                                    },
-                                    [
-                                      _c("icon-app", {
-                                        attrs: { iconImage: "calendar" }
-                                      })
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c("date-picker", {
-                                    attrs: {
-                                      placeholder: "Seleccione la fecha...",
-                                      config: _vm.defineConfDateTimePiker(
-                                        _vm.rental,
-                                        food
-                                      ),
-                                      id: "delivery" + index,
-                                      name: "delivery" + index
-                                    },
-                                    model: {
-                                      value: food.delivery,
-                                      callback: function($$v) {
-                                        food.delivery = $$v
-                                      },
-                                      expression: "food.delivery"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
+                _c("table", { staticClass: "table table-striped" }, [
+                  _vm._m(0, true),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.elementsPerPage(number), function(food, index) {
+                      return _c("tr", [
+                        _c("td", [
                           _c(
-                            "td",
+                            "p",
                             [
                               _c("icon-app", {
-                                attrs: { iconImage: "dollar" }
-                              }),
-                              _vm._v(
-                                "\n                                " +
-                                  _vm._s(food.price) +
-                                  "\n                            "
-                              )
+                                attrs: {
+                                  iconImage: food.checked
+                                    ? "check-square-o"
+                                    : "square-o",
+                                  aditionalClasses: food.checked
+                                    ? "text-primary"
+                                    : "text-default"
+                                }
+                              })
                             ],
                             1
-                          ),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("div", { staticClass: "form-group" }, [
-                              _c("div", { staticClass: "input-group" }, [
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(food.name))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "div",
+                              { staticClass: "input-group" },
+                              [
                                 _c(
                                   "div",
                                   {
@@ -37997,135 +38002,190 @@ var render = function() {
                                   },
                                   [
                                     _c("icon-app", {
-                                      attrs: { iconImage: "hashtag" }
+                                      attrs: { iconImage: "calendar" }
                                     })
                                   ],
                                   1
                                 ),
                                 _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: food.quantity,
-                                      expression: "food.quantity"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
+                                _c("date-picker", {
                                   attrs: {
-                                    type: "number",
-                                    id: "cantidad" + index,
-                                    name: "cantidad" + index,
-                                    placeholder: "Seleccione la cantidad..."
+                                    placeholder: "Seleccione la fecha...",
+                                    config: _vm.defineConfDateTimePiker(
+                                      _vm.rental,
+                                      food
+                                    ),
+                                    id: "delivery" + index,
+                                    name: "delivery" + index
                                   },
-                                  domProps: { value: food.quantity },
                                   on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      food.quantity = $event.target.value
+                                    "dp-show": function($event) {
+                                      _vm.fireReplacesInShowDp(
+                                        "#delivery" + index
+                                      )
                                     }
-                                  }
-                                })
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "text-right" }, [
-                            _c(
-                              "button",
-                              {
-                                class: [
-                                  "btn",
-                                  {
-                                    "btn-success": !food.checked,
-                                    "btn-danger": food.checked
-                                  }
-                                ],
-                                on: {
-                                  click: function($event) {
-                                    _vm.toggelAddRemoveFood(food)
-                                  }
-                                }
-                              },
-                              [
-                                _c("icon-app", {
-                                  attrs: {
-                                    iconImage: food.checked ? "minus" : "plus"
+                                  },
+                                  model: {
+                                    value: food.delivery,
+                                    callback: function($$v) {
+                                      food.delivery = $$v
+                                    },
+                                    expression: "food.delivery"
                                   }
                                 })
                               ],
                               1
                             )
                           ])
-                        ])
-                      })
-                    ),
-                    _vm._v(" "),
-                    _c("tfoot", [
-                      _c("tr", [
+                        ]),
+                        _vm._v(" "),
                         _c(
                           "td",
-                          {
-                            staticClass: "text-center",
-                            attrs: { colspan: "6" }
-                          },
                           [
-                            _c(
-                              "h3",
-                              { staticClass: "text-right" },
-                              [
-                                _c("icon-app", {
-                                  attrs: { iconImage: "shopping-basket" }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "span",
-                                  {
-                                    staticClass: "label label-info img-circle"
-                                  },
-                                  [_vm._v(_vm._s(_vm.totalQuantity))]
-                                ),
-                                _vm._v(" "),
-                                _c("icon-app", {
-                                  attrs: { iconImage: "money" }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "span",
-                                  {
-                                    staticClass:
-                                      "label label-warning img-circle"
-                                  },
-                                  [
-                                    _c("icon-app", {
-                                      attrs: { iconImage: "dollar" }
-                                    }),
-                                    _vm._v(" " + _vm._s(_vm.totalAmount))
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c("pagination", {
-                              attrs: {
-                                for: "orders",
-                                records: _vm.quantityForType(number),
-                                "per-page": _vm.itemsPerPage,
-                                chunk: 7,
-                                vuex: true,
-                                "count-text":
-                                  "Mostrando {from} a {to} de {count} items|{count} items|Un item"
-                              }
-                            })
+                            _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(food.price) +
+                                "\n                        "
+                            )
                           ],
                           1
-                        )
+                        ),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("div", { staticClass: "input-group" }, [
+                              _c(
+                                "div",
+                                { staticClass: "input-group-addon date-piker" },
+                                [
+                                  _c("icon-app", {
+                                    attrs: { iconImage: "hashtag" }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: food.quantity,
+                                    expression: "food.quantity"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "number",
+                                  id: "cantidad" + index,
+                                  name: "cantidad" + index,
+                                  placeholder: "Seleccione la cantidad..."
+                                },
+                                domProps: { value: food.quantity },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    food.quantity = $event.target.value
+                                  }
+                                }
+                              })
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-right" }, [
+                          _c(
+                            "button",
+                            {
+                              class: [
+                                "btn",
+                                {
+                                  "btn-success": !food.checked,
+                                  "btn-danger": food.checked
+                                }
+                              ],
+                              on: {
+                                click: function($event) {
+                                  _vm.toggelAddRemoveFood(food)
+                                }
+                              }
+                            },
+                            [
+                              _c("icon-app", {
+                                attrs: {
+                                  iconImage: food.checked ? "minus" : "plus"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ])
                       ])
+                    })
+                  ),
+                  _vm._v(" "),
+                  _c("tfoot", [
+                    _c("tr", [
+                      _c(
+                        "td",
+                        { staticClass: "text-center", attrs: { colspan: "6" } },
+                        [
+                          _c(
+                            "h3",
+                            { staticClass: "text-right" },
+                            [
+                              _c("icon-app", {
+                                attrs: { iconImage: "shopping-basket" }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                { staticClass: "badge badge-info img-circle" },
+                                [_vm._v(_vm._s(_vm.totalQuantity))]
+                              ),
+                              _vm._v(" "),
+                              _c("icon-app", { attrs: { iconImage: "money" } }),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                {
+                                  staticClass: "badge badge-warning img-circle"
+                                },
+                                [
+                                  _c("icon-app", {
+                                    attrs: { iconImage: "dollar" }
+                                  }),
+                                  _vm._v(" " + _vm._s(_vm.totalAmount))
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "row justify-content-center" },
+                            [
+                              _c("pagination", {
+                                attrs: {
+                                  for: "orders",
+                                  records: _vm.quantityForType(number),
+                                  "per-page": _vm.itemsPerPage,
+                                  chunk: 7,
+                                  vuex: true,
+                                  "count-text":
+                                    "Mostrando {from} a {to} de {count} items|{count} items|Un item"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ]
+                      )
                     ])
                   ])
                 ])
@@ -38138,7 +38198,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-success btn-lg",
+              staticClass: "btn btn-outline-success btn-lg",
               on: { click: _vm.btnCloseOrder }
             },
             [
@@ -38155,7 +38215,11 @@ var render = function() {
             attrs: {
               modalTitle: "Aclaraciones de la cocina",
               modalId: "aclaraciones-pedidos",
-              showBtnSave: false
+              showBtnSave: false,
+              modalHeaderClasses: "bg-info text-light",
+              modalFooterClasses: "bg-light",
+              iconBtnClose: "times",
+              typeBtnClose: "btn-outline-secondary"
             }
           },
           [
@@ -38204,7 +38268,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
+    return _c("thead", { staticClass: "thead bg-dark text-light" }, [
       _c("tr", [
         _c("th", [_vm._v("Estado")]),
         _vm._v(" "),

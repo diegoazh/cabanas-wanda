@@ -2243,6 +2243,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -20330,9 +20332,9 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _vm._m(0),
     _vm._v(" "),
-    _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-8 col-md-offset-2" }, [
+    _c("div", { staticClass: "col-12 col-md-8 offset-md-2" }, [
       _c("div", { staticClass: "text-center" }, [
-        _c("p", { attrs: { id: "p-for-code" } }, [
+        _c("p", { staticClass: "text-center", attrs: { id: "p-for-code" } }, [
           _c(
             "span",
             {
@@ -20391,30 +20393,32 @@ var render = function() {
               _vm._v(_vm._s(_vm.forCode ? "Código de reserva" : "DNI + email"))
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
+            _c("div", { staticClass: "form-group form-row" }, [
               _c(
                 "label",
                 {
-                  staticClass: "sr-only",
+                  staticClass: "col-form-label sr-only",
                   attrs: { for: _vm.forCode ? "codigo-reserva" : "dni-reseva" }
                 },
                 [_vm._v("Código de reserva")]
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "input-group" }, [
-                _c(
-                  "div",
-                  { staticClass: "input-group-addon" },
-                  [
-                    _c("icon-app", {
-                      attrs: { iconImage: _vm.forCode ? "barcode" : "hashtag" }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _vm.forCode
-                  ? _c("input", {
+              _vm.forCode
+                ? _c("div", { staticClass: "input-group mr-2" }, [
+                    _c(
+                      "div",
+                      { staticClass: "input-group-addon" },
+                      [
+                        _c("icon-app", {
+                          attrs: {
+                            iconImage: _vm.forCode ? "barcode" : "hashtag"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
                       directives: [
                         {
                           name: "model",
@@ -20435,7 +20439,34 @@ var render = function() {
                         }
                       }
                     })
-                  : _c("input", {
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "col-form-label sr-only",
+                  attrs: { for: _vm.forCode ? "codigo-reserva" : "dni-reseva" }
+                },
+                [_vm._v("Código de reserva")]
+              ),
+              _vm._v(" "),
+              !_vm.forCode
+                ? _c("div", { staticClass: "input-group mr-2" }, [
+                    _c(
+                      "div",
+                      { staticClass: "input-group-addon" },
+                      [
+                        _c("icon-app", {
+                          attrs: {
+                            iconImage: _vm.forCode ? "barcode" : "hashtag"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
                       directives: [
                         {
                           name: "model",
@@ -20456,18 +20487,20 @@ var render = function() {
                         }
                       }
                     })
-              ])
-            ]),
-            _vm._v(" "),
-            !_vm.forCode
-              ? _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "label",
-                    { staticClass: "sr-only", attrs: { for: "emal-reserva" } },
-                    [_vm._v("Email")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "input-group" }, [
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "col-form-label sr-only",
+                  attrs: { for: "emal-reserva" }
+                },
+                [_vm._v("Email")]
+              ),
+              _vm._v(" "),
+              !_vm.forCode
+                ? _c("div", { staticClass: "input-group mr-2" }, [
                     _c(
                       "div",
                       { staticClass: "input-group-addon" },
@@ -20497,23 +20530,23 @@ var render = function() {
                       }
                     })
                   ])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "btn btn-primary" },
-              [
-                _c("icon-app", {
-                  attrs: {
-                    iconImage: _vm.toggleBtnIcon,
-                    aditionalClasses: _vm.toggleBtnClasses
-                  }
-                }),
-                _vm._v(" Buscar")
-              ],
-              1
-            )
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-outline-primary pull-right" },
+                [
+                  _c("icon-app", {
+                    attrs: {
+                      iconImage: _vm.toggleBtnIcon,
+                      aditionalClasses: _vm.toggleBtnClasses
+                    }
+                  }),
+                  _vm._v(" Buscar")
+                ],
+                1
+              )
+            ])
           ])
         ]
       )
@@ -20525,7 +20558,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+    return _c("div", { staticClass: "col-12 col-md-12" }, [
       _c("h3", { staticClass: "text-center" }, [
         _vm._v("Primero necesitamos saber a que reserva pertenecerá")
       ])

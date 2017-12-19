@@ -166,9 +166,9 @@ class RentalsController extends Controller
     {
         $info = $request->only('reserva', 'dni', 'email', 'fromNow');
 
-        if ($info['reserva']) {
+        if (isset($info['reserva']) && $info['reserva']) {
 
-            if ($info['fromNow']) {
+            if (isset($info['fromNow']) && $info['fromNow']) {
 
                 if (!$reserva = Rental::where('code_reservation', sha1($info['reserva']))
                     ->where('dateFrom', '>=', Carbon::now()->toDateString())
@@ -188,7 +188,7 @@ class RentalsController extends Controller
             if (!$reserva = Rental::where('code_reservation', sha1($info['reserva']))
                 ->where('dateFrom', '<=', Carbon::now()->toDateString())
                 ->where('dateTo', '>=', Carbon::now()->toDateString())
-                ->where('state', 'en curso')
+                ->where('state', 'en_curso')
                 ->first()) {
 
                 return response()->json(['error' => 'No encontramos una reserva activa a la fecha para los datos proporcionado.'], 404);
@@ -199,7 +199,7 @@ class RentalsController extends Controller
 
             $owner ? $token = JWTAuth::fromUser($owner) : null;
 
-        } else if ($info['dni'] && $info['email']) {
+        } else if (isset($info['dni']) && $info['dni'] && isset($info['email']) && $info['email']) {
 
             if (!$user = User::where('dni', $info['dni'])->where('email', $info['email'])->first()) {
 
@@ -418,7 +418,7 @@ class RentalsController extends Controller
         $quantity = $results > 100 ? 100 : $results;
 
         if (!$rentals = DB::table('rentals')->select('id', 'dateFrom', 'dateTo', 'cottage_price', 'total_days', 'dateReservationPayment', 'state')
-            ->where('state', $state)->orderBy('dateFrom', 'desc')->paginate($quantity)) {
+            ->where('state', $state)->orderBy('dateFrom', 'asc')->paginate($quantity)) {
 
             return response()->json(['error' => 'No hay reservas en estado: ' . $state], 404);
 

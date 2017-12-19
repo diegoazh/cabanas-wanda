@@ -1,25 +1,25 @@
 <template>
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <button class="btn btn-primary btn-sm pull-right" @click="changeReserva">
+        <div class="col-12 col-md-12">
+            <button class="btn btn-light text-dark btn-sm pull-right mt-1 mr-1" @click="changeReserva">
                 <icon-app iconImage="refresh" :aditionalClasses="activeReload ? 'fa-spin fa-fw' : ''"></icon-app>
                 Cambiar reserva
             </button>
-            <h2 class="text-center">Reserva</h2>
+            <h2 class="text-center py-3 bg-dark text-light rounded">Reserva</h2>
             <h3 id="details_reservation" class="text-center">
-                Titular: <span class="label label-info">{{ ownerNames }}</span> |
-                Cabaña: <span class="label label-default">{{ `${rental.cottage.name}` }}</span> |
+                Titular: <span class="badge badge-info">{{ ownerNames }}</span> |
+                Cabaña: <span class="badge badge-default">{{ `${rental.cottage.name}` }}</span> |
                 <icon-app iconImage="hashtag"></icon-app>
-                <span class="label label-default">{{ `${rental.cottage.number}` }}</span>
+                <span class="badge badge-default">{{ `${rental.cottage.number}` }}</span>
             </h3>
             <br>
-            <h4 class="text-center">Desde: <span class="label label-success">{{ rental.dateFrom | argentineDate
-                }} 10:00:00</span> | Hasta: <span class="label label-danger">{{ rental.dateTo | argentineDate }} 10:00:00</span></h4>
+            <h4 class="text-center">Desde: <span class="badge badge-success">{{ rental.dateFrom | argentineDate
+                }} 10:00:00</span> | Hasta: <span class="badge badge-danger">{{ rental.dateTo | argentineDate }} 10:00:00</span></h4>
             <hr>
             <div class="row">
                 <div class="col-md-3 pull-right">
                     <caption class="text-right">
-                        <a class="btn btn-danger btn-sm" role="button" data-toggle="modal"
+                        <a href="#" class="btn btn-danger btn-sm text-light" role="button" data-toggle="modal"
                            data-target="#aclaraciones-pedidos">
                             <icon-app iconImage="exclamation-triangle"></icon-app>
                             Por favor tenga en cuenta lo siguiente...
@@ -29,110 +29,115 @@
             </div>
             <h3 class="text-right">
                 <icon-app iconImage="shopping-basket"></icon-app>
-                <span class="label label-info img-circle">{{ totalQuantity }}</span>
+                <span class="badge badge-info img-circle">{{ totalQuantity }}</span>
                 <icon-app iconImage="money"></icon-app>
-                <span class="label label-warning img-circle"><icon-app iconImage="dollar"></icon-app> {{ totalAmount }}</span>
+                <span class="badge badge-warning img-circle"><icon-app iconImage="dollar"></icon-app> {{ totalAmount }}</span>
             </h3>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="col-12 col-md-12">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab"
-                                                          @click="savePreviousPage('desayuno')">Desayuno</a></li>
-                <li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab"
-                                           @click="savePreviousPage('almuerzo')">Almuerzo</a></li>
-                <li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab"
-                                           @click="savePreviousPage('merienda')">Merienda</a></li>
-                <li role="presentation"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab"
-                                           @click="savePreviousPage('cena')">Cena</a></li>
+                <li role="presentation" class="nav-item">
+                    <a class="nav-link active" href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab" @click="savePreviousPage('desayuno')">Desayuno</a>
+                </li>
+                <li role="presentation" class="nav-item">
+                    <a class="nav-link" href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab" @click="savePreviousPage('almuerzo')">Almuerzo</a>
+                </li>
+                <li role="presentation" class="nav-item">
+                    <a class="nav-link" href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab" @click="savePreviousPage('merienda')">Merienda</a>
+                </li>
+                <li role="presentation" class="nav-item">
+                    <a class="nav-link" href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab" @click="savePreviousPage('cena')">Cena</a>
+                </li>
             </ul>
             <div class="tab-content">
                 <div role="tabpanel" :class="['tab-pane', {'active': number === 1}]" :id="'tab'+number"
                      v-for="number in 4">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>Estado</th>
-                                <th>Plato</th>
-                                <th>Fecha de entrega</th>
-                                <th>Precio</th>
-                                <th>Cantidad</th>
-                                <th>Agregar/Quitar</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="(food, index) in elementsPerPage(number)">
-                                <td>
-                                    <p>
-                                        <icon-app :iconImage="food.checked ? 'check-square-o' : 'square-o'"
-                                                  :aditionalClasses="food.checked ? 'text-primary' : 'text-default'"></icon-app>
-                                    </p>
-                                </td>
-                                <td>{{ food.name }}</td>
-                                <td>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-addon date-piker">
-                                                <icon-app iconImage="calendar"></icon-app>
-                                            </div>
-                                            <date-picker placeholder="Seleccione la fecha..."
-                                                         :config="defineConfDateTimePiker(rental, food)"
-                                                         :id="'delivery'+index"
-                                                         :name="'delivery'+index" v-model="food.delivery"></date-picker>
+                    <table class="table table-striped">
+                        <thead class="thead bg-dark text-light">
+                        <tr>
+                            <th>Estado</th>
+                            <th>Plato</th>
+                            <th>Fecha de entrega</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Agregar/Quitar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(food, index) in elementsPerPage(number)">
+                            <td>
+                                <p>
+                                    <icon-app :iconImage="food.checked ? 'check-square-o' : 'square-o'"
+                                              :aditionalClasses="food.checked ? 'text-primary' : 'text-default'"></icon-app>
+                                </p>
+                            </td>
+                            <td>{{ food.name }}</td>
+                            <td>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon date-piker">
+                                            <icon-app iconImage="calendar"></icon-app>
                                         </div>
+                                        <date-picker placeholder="Seleccione la fecha..."
+                                                     :config="defineConfDateTimePiker(rental, food)"
+                                                     :id="'delivery'+index"
+                                                     :name="'delivery'+index" v-model="food.delivery"
+                                                     @dp-show="fireReplacesInShowDp(`#delivery${index}`)"></date-picker>
                                     </div>
-                                </td>
-                                <td>
-                                    <icon-app iconImage="dollar"></icon-app>
-                                    {{ food.price }}
-                                </td>
-                                <td>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-addon date-piker">
-                                                <icon-app iconImage="hashtag"></icon-app>
-                                            </div>
-                                            <input type="number" :id="'cantidad'+index" :name="'cantidad'+index"
-                                                   class="form-control" placeholder="Seleccione la cantidad..."
-                                                   v-model="food.quantity">
+                                </div>
+                            </td>
+                            <td>
+                                <icon-app iconImage="dollar"></icon-app>
+                                {{ food.price }}
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon date-piker">
+                                            <icon-app iconImage="hashtag"></icon-app>
                                         </div>
+                                        <input type="number" :id="'cantidad'+index" :name="'cantidad'+index"
+                                               class="form-control" placeholder="Seleccione la cantidad..."
+                                               v-model="food.quantity">
                                     </div>
-                                </td>
-                                <td class="text-right">
-                                    <button :class="['btn', {'btn-success': !food.checked, 'btn-danger': food.checked}]"
-                                            @click="toggelAddRemoveFood(food)">
-                                        <icon-app :iconImage="food.checked ? 'minus' : 'plus'"></icon-app>
-                                    </button>
-                                </td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td colspan="6" class="text-center">
-                                    <h3 class="text-right">
-                                        <icon-app iconImage="shopping-basket"></icon-app>
-                                        <span class="label label-info img-circle">{{ totalQuantity }}</span>
-                                        <icon-app iconImage="money"></icon-app>
-                                        <span class="label label-warning img-circle"><icon-app
-                                                iconImage="dollar"></icon-app> {{ totalAmount }}</span>
-                                    </h3>
+                                </div>
+                            </td>
+                            <td class="text-right">
+                                <button :class="['btn', {'btn-success': !food.checked, 'btn-danger': food.checked}]"
+                                        @click="toggelAddRemoveFood(food)">
+                                    <icon-app :iconImage="food.checked ? 'minus' : 'plus'"></icon-app>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="6" class="text-center">
+                                <h3 class="text-right">
+                                    <icon-app iconImage="shopping-basket"></icon-app>
+                                    <span class="badge badge-info img-circle">{{ totalQuantity }}</span>
+                                    <icon-app iconImage="money"></icon-app>
+                                    <span class="badge badge-warning img-circle"><icon-app
+                                            iconImage="dollar"></icon-app> {{ totalAmount }}</span>
+                                </h3>
+                                <div class="row justify-content-center">
                                     <pagination for="orders" :records="quantityForType(number)" :per-page="itemsPerPage"
                                                 :chunk="7" :vuex="true"
                                                 count-text="Mostrando {from} a {to} de {count} items|{count} items|Un item"></pagination>
-                                </td>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
             <div class="text-center padding-bottom-20">
-                <button class="btn btn-success btn-lg" @click="btnCloseOrder">
+                <button class="btn btn-outline-success btn-lg" @click="btnCloseOrder">
                     <icon-app iconImage="handshake-o"></icon-app>
                     Cerrar pedido
                 </button>
             </div>
-            <modal-app modalTitle="Aclaraciones de la cocina" modalId="aclaraciones-pedidos" :showBtnSave="false">
+            <modal-app modalTitle="Aclaraciones de la cocina" modalId="aclaraciones-pedidos" :showBtnSave="false" modalHeaderClasses="bg-info text-light" modalFooterClasses="bg-light" iconBtnClose="times" typeBtnClose="btn-outline-secondary">
                 <ul>
                     <li>El desayuno se sirve hasta las 10:00 hs</li>
                     <li>El almuerzo se sirve desde las 12:00 hs hasta las 15:00 hs</li>
@@ -319,6 +324,10 @@
                     minDate: min.isBefore(moment.now()) ? moment(moment().add(3, 'h').format('DD/MM/YYYY'), 'DD/MM/YYYY') : min,
                     maxDate: food.type === 'desayuno' ? moment(moment(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY') : moment(moment(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').subtract(1, 'd').format('DD/MM/YYYY'), 'DD/MM/YYYY')
                 }
+            },
+            fireReplacesInShowDp(id) {
+                window.jQuery('.table-condensed').removeClass('table-condensed').addClass('table-sm');
+                //window.jQuery('.table-sm > thead').addClass('bg-dark text-light');
             },
             findInOrders(food) {
                 this.orders.find((element) => {
