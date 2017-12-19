@@ -1664,7 +1664,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/CardItem.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1675,14 +1675,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -1720,10 +1712,6 @@ var _moment2 = _interopRequireDefault(_moment);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _createNamespacedHelp = (0, _vuex.createNamespacedHelpers)('rentals'),
-    mapActions = _createNamespacedHelp.mapActions,
-    mapState = _createNamespacedHelp.mapState;
-
 exports.default = {
     components: {
         'icon-app': _Icon2.default
@@ -1738,19 +1726,26 @@ exports.default = {
         deliveryDay: function deliveryDay() {
             return (0, _moment2.default)(this.dateTo + ' 10:00:00', 'DD/MM/YYYY HH:mm:ss').add(1, 'day').format('DD/MM/YYYY HH:mm');
         }
-    }, mapState({
+    }, (0, _vuex.mapState)('rentals', {
         dateFrom: function dateFrom(state) {
             return state.lastQueryData.dateFrom;
         },
         dateTo: function dateTo(state) {
             return state.lastQueryData.dateTo;
+        },
+        toRentals: function toRentals(state) {
+            return state.data.toRentals;
         }
     })),
     methods: _extends({
         calcularMonto: function calcularMonto(dias, precio) {
             return _lodash2.default.round(dias * precio, 2); // tambien se puede usar .toFixed(2) es de JS puro
+        },
+        prepareDeal: function prepareDeal(index) {
+            this.setToRentals(this.toRentals.splice(index, 1));
+            this.setDeal(true);
         }
-    }, mapActions(['deleteItemToRentals']))
+    }, (0, _vuex.mapActions)('rentals', ['deleteItemToRentals', 'setToRentals', 'setDeal']))
 };
 
 /***/ }),
@@ -2000,9 +1995,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
@@ -2041,7 +2033,7 @@ exports.default = {
 
     computed: _extends({
         documentOrEmail: function documentOrEmail() {
-            return this.isNullOrUndefined(this.document) || this.isNullOrUndefined(this.email);
+            return this.isNullOrUndefined(this.document) && this.isNullOrUndefined(this.email);
         },
         toggleIconImage: function toggleIconImage() {
             return !this.queryFinished ? 'spinner' : 'search';
@@ -2158,6 +2150,8 @@ exports.default = {
         closeDeal: function closeDeal() {
             var _this2 = this;
 
+            if (this.btnCreateNewUser) return;
+
             var deal = {
                 name: this.name,
                 lastname: this.lastname,
@@ -2233,29 +2227,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
@@ -2295,10 +2266,6 @@ exports.default = {
     },
     data: function data() {
         return {
-            choice: 1,
-            bedSimple: false,
-            drafQuantity: 0,
-            draftCottage: 0,
             dateFrom: null,
             dateTo: null,
             dtpConfig: {},
@@ -2322,9 +2289,6 @@ exports.default = {
     }, (0, _vuex.mapState)('rentals', {
         cottages: function cottages(state) {
             return state.data.cottages;
-        },
-        isForCottage: function isForCottage(state) {
-            return state.frmCmp.isForCottage;
         }
     }), (0, _vuex.mapState)('auth', {
         queryFinished: function queryFinished(state) {
@@ -2332,21 +2296,6 @@ exports.default = {
         }
     }), (0, _vuex.mapGetters)('rentals', ['toggleConfig'])),
     methods: _extends({
-        initChoice: function initChoice() {
-            if (!this.draftCottage) {
-                this.draftCottage = this.cottages[0].number;
-            }
-        },
-        previousChoice: function previousChoice() {
-            if (this.isForCottage) {
-                this.initChoice();
-                this.drafQuantity = this.choice;
-                this.choice = this.draftCottage;
-            } else {
-                this.draftCottage = this.choice;
-                this.choice = this.drafQuantity;
-            }
-        },
         defineDate: function defineDate() {
             if (this.$cookies.isKey('info_one')) {
                 this.setBasicInfo({
@@ -2357,18 +2306,12 @@ exports.default = {
             }
         },
         hasErrorsInForm: function hasErrorsInForm() {
-            if (this.dateFrom && this.dateTo) {
-                this.hasErrors = false;
-            }
+            if (this.dateFrom && this.dateTo) this.hasErrors = this.dateFrom.isAfter(this.dateTo);else this.hasErrors = true;
         },
         selectQuery: function selectQuery() {
             if (this.hasErrors) return;
             this.setQueryFinished(false);
             this.queryCottagesAvailables({
-                /* Evaluar que dateTo sea mayor a dateFrom */
-                isForCottage: this.isForCottage,
-                choice: this.choice,
-                simple: this.bedSimple,
                 dateFrom: (0, _moment2.default)(this.dateFrom).format('DD/MM/YYYY'),
                 dateTo: (0, _moment2.default)(this.dateTo).format('DD/MM/YYYY')
             }).then(function (response) {}).catch(function (error) {
@@ -2419,17 +2362,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
-var _ButtonListItem = __webpack_require__("./resources/assets/js/vue-rentals-app/components/Button-list-item.vue");
+var _CardItem = __webpack_require__("./resources/assets/js/vue-rentals-app/components/CardItem.vue");
 
-var _ButtonListItem2 = _interopRequireDefault(_ButtonListItem);
+var _CardItem2 = _interopRequireDefault(_CardItem);
 
 var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
 
@@ -2437,21 +2375,16 @@ var _Icon2 = _interopRequireDefault(_Icon);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _createNamespacedHelp = (0, _vuex.createNamespacedHelpers)('rentals'),
-    mapState = _createNamespacedHelp.mapState,
-    mapActions = _createNamespacedHelp.mapActions;
-
 exports.default = {
     components: {
-        'button-item': _ButtonListItem2.default,
+        'card-item-app': _CardItem2.default,
         'icon-app': _Icon2.default
     },
-    computed: _extends({}, mapState({
+    computed: _extends({}, (0, _vuex.mapState)('rentals', {
         toRentals: function toRentals(state) {
             return state.data.toRentals;
         }
-    })),
-    methods: _extends({}, mapActions(['setDeal']))
+    }))
 };
 
 /***/ }),
@@ -2467,22 +2400,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2614,21 +2531,6 @@ exports.push([module.i, ".vue-tooltip{background-color:#000;box-sizing:border-bo
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1be0f91a\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\n.img-btn-item {\n    max-width: 75%;\n    display: inline-block;\n    -webkit-box-shadow: inset 2px 3px 3px #333333;\n    -moz-box-shadow: inset 2px 3px 3px #333333;\n    box-shadow: inset 2px 3px 3px #333333;\n    border-color: #333d53;\n}\n.tt-btn-item {\n    display: inline-block;\n    margin-left: 1.5%;\n    font-size: 14px;\n    font-weight: bolder;\n    text-transform: uppercase;\n}\n.capacity-btn-item {\n    display: inline-block;\n    margin-left: 1.5%;\n    font-size: 14px !important;\n}\n.number-btn-item {\n    display: inline-block;\n    margin-left: 1.5%;\n    font-size: 14px !important;\n}\n.icon-btn-item:before {\n    font-size: 220%;\n    position: relative;\n    top: 32px;\n}\n.btn-item {\n    -webkit-box-shadow: 2px 2px 5px #333333;\n    -moz-box-shadow: 2px 2px 5px #333333;\n    box-shadow: 2px 2px 5px #333333;\n}\n.btn-item i.icon-btn-item:before {\n    color: #5cb85c;\n}\n.btn-item:hover i.icon-btn-item:before {\n    color: #d9534f;\n    content: '\\F057';\n    font-family: FontAwesome;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1edc32ac\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/Icon.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2674,6 +2576,21 @@ exports.push([module.i, "\n.text-deleted {\n    text-decoration: line-through;\n
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7313aca2\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/CardItem.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.cottage-card {\n    -webkit-box-shadow: 3px 3px 8px #333333;\n    -moz-box-shadow: 3px 3px 8px #333333;\n    box-shadow: 3px 3px 8px #333333;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-75005213\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/Rentals.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2712,7 +2629,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.mano-grande {\n    font-size: 25em;\n}\n", ""]);
+exports.push([module.i, "\n.big-hand {\n    font-size: 20rem;\n}\n", ""]);
 
 // exports
 
@@ -54042,159 +53959,6 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1be0f91a\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "button",
-    {
-      staticClass: "list-group-item btn-item",
-      attrs: { type: "button" },
-      on: {
-        click: function($event) {
-          _vm.deleteItemToRentals(_vm.index)
-        }
-      }
-    },
-    [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-3 col-lg-3" }, [
-          _c("img", {
-            staticClass: "img-responsive img-thumbnail img-circle img-btn-item",
-            attrs: { src: _vm.cottage.images, alt: "" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4" }, [
-          _c("ul", [
-            _c("li", [
-              _c("b", [_vm._v("Nombre: ")]),
-              _c(
-                "h5",
-                { staticClass: "text-capitalize label label-info tt-btn-item" },
-                [_vm._v(_vm._s(_vm.cottage.name))]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("b", { staticClass: "capacity-btn-item" }, [
-                _vm._v("Capacidad: "),
-                _c("b", [_vm._v(_vm._s(_vm.cottage.accommodation))])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("b", { staticClass: "number-btn-item" }, [
-                _vm._v("Número: "),
-                _c("b", [_vm._v(_vm._s(_vm.cottage.number))])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("b", [
-                _vm._v("Entrega: "),
-                _c("span", { staticClass: "label label-default" }, [
-                  _vm._v(_vm._s(_vm.deliveryDay))
-                ])
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4" }, [
-          _c("ul", [
-            _c("li", [
-              _c(
-                "span",
-                {
-                  class: [
-                    "label",
-                    {
-                      "label-primary": _vm.cottage.type === "simple",
-                      "label-success": _vm.cottage.type === "matrimonial"
-                    }
-                  ]
-                },
-                [
-                  _c("b", { staticClass: "text-capitalize" }, [
-                    _vm._v(_vm._s(_vm.cottage.type))
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [_c("b", [_vm._v("Días: " + _vm._s(_vm.calcularDias))])]),
-            _vm._v(" "),
-            _c("li", [
-              _c("b", [
-                _vm._v("Precio: "),
-                _c(
-                  "span",
-                  { staticClass: "label label-primary" },
-                  [
-                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                    _vm._v(_vm._s(_vm.cottage.price))
-                  ],
-                  1
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("b", [
-                _vm._v("Precio final: "),
-                _c(
-                  "span",
-                  { staticClass: "label label-danger" },
-                  [
-                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                    _vm._v(
-                      _vm._s(
-                        _vm.calcularMonto(_vm.calcularDias, _vm.cottage.price)
-                      )
-                    )
-                  ],
-                  1
-                )
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-xs-12 col-sm-12 col-md-1 col-lg-1" },
-          [
-            _c("icon-app", {
-              attrs: {
-                iconImage: "check-square-o",
-                aditionalClasses: "pull-right icon-btn-item"
-              }
-            })
-          ],
-          1
-        )
-      ]),
-      _vm._v("         \n")
-    ]
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-1be0f91a", module.exports)
-  }
-}
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1edc32ac\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-commons/components/Icon.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -54226,131 +53990,47 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "form",
-    {
-      on: {
-        submit: function($event) {
-          $event.preventDefault()
-          _vm.selectQuery($event)
+  return _c("div", { staticClass: "col-12 col-md-7" }, [
+    _c("h4", { staticClass: "mt-3" }, [
+      _vm._v("Ingrese las fechas para la reserva")
+    ]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticClass: "form-inline",
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            _vm.selectQuery($event)
+          }
         }
-      }
-    },
-    [
-      _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4" }, [
+      },
+      [
         _c("div", { staticClass: "form-group" }, [
-          _c("label", {
-            attrs: {
-              for: _vm.isForCottage ? "capacidad-select" : "capacidad-number"
-            }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group" }, [
-            _c(
-              "div",
-              { staticClass: "input-group-addon" },
-              [
-                _c("icon-app", {
-                  attrs: { iconImage: _vm.isForCottage ? "home" : "users" }
-                }),
-                _vm._v(
-                  " " +
-                    _vm._s(
-                      _vm.isForCottage
-                        ? "¿Que cabaña desea?"
-                        : "¿Cuantas personas son?"
-                    )
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            !_vm.isForCottage
-              ? _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.choice,
-                      expression: "choice"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "number",
-                    name: "capacidad",
-                    id: "capacidad-number"
-                  },
-                  domProps: { value: _vm.choice },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.choice = $event.target.value
-                    }
-                  }
-                })
-              : _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.choice,
-                        expression: "choice"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { name: "capacidad", id: "capacidad-select" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.choice = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
-                    }
-                  },
-                  _vm._l(_vm.cottages, function(value) {
-                    return _c("option", { domProps: { value: value.number } }, [
-                      _vm._v(_vm._s(value.name))
-                    ])
-                  })
-                )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4" }, [
-        _c("div", { class: ["form-group", { "has-error": !_vm.dateFrom }] }, [
-          _c("label", { attrs: { for: "dateFrom" } }),
+          _c(
+            "label",
+            {
+              staticClass: "col-form-label sr-only",
+              attrs: { for: "dateFrom" }
+            },
+            [_vm._v("Desde")]
+          ),
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "input-group" },
+            { staticClass: "input-group mr-3" },
             [
               _c(
                 "div",
                 { staticClass: "input-group-addon date-piker" },
-                [
-                  _vm._v("Desde "),
-                  _c("icon-app", { attrs: { iconImage: "calendar" } })
-                ],
+                [_c("icon-app", { attrs: { iconImage: "calendar" } })],
                 1
               ),
               _vm._v(" "),
               _c("date-picker", {
                 attrs: {
-                  placeholder: "Seleccione la fecha...",
+                  placeholder: "Seleccione la fecha desde...",
                   config: _vm.dtpConfig,
                   id: "dateFrom",
                   name: "dateFrom"
@@ -54365,53 +54045,28 @@ var render = function() {
               })
             ],
             1
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
+          ),
+          _vm._v(" "),
           _c(
-            "a",
-            {
-              attrs: { id: "link-simple", role: "button" },
-              on: { click: _vm.toggleBedSimple }
-            },
-            [
-              _c("icon-app", {
-                attrs: {
-                  iconId: "icon-check-simple",
-                  iconImage: _vm.checkSimple
-                }
-              }),
-              _vm._v(" "),
-              _c("icon-app", { attrs: { iconImage: "bed" } }),
-              _vm._v(" ¿Solo camas simples?\n            ")
-            ],
-            1
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4" }, [
-        _c("div", { class: ["form-group", { "has-error": !_vm.dateTo }] }, [
-          _c("label", { attrs: { for: "dateTo" } }),
+            "label",
+            { staticClass: "col-form-label sr-only", attrs: { for: "dateTo" } },
+            [_vm._v("Hasta")]
+          ),
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "input-group" },
+            { staticClass: "input-group mr-3" },
             [
               _c(
                 "div",
                 { staticClass: "input-group-addon date-piker" },
-                [
-                  _vm._v("Hasta "),
-                  _c("icon-app", { attrs: { iconImage: "calendar" } })
-                ],
+                [_c("icon-app", { attrs: { iconImage: "calendar" } })],
                 1
               ),
               _vm._v(" "),
               _c("date-picker", {
                 attrs: {
-                  placeholder: "Seleccione la fecha...",
+                  placeholder: "Seleccione la fecha hasta...",
                   config: _vm.dtpConfig,
                   id: "dateTo",
                   name: "dateTo"
@@ -54426,25 +54081,22 @@ var render = function() {
               })
             ],
             1
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" },
-        [
-          _c("br"),
-          _c("br"),
+          ),
           _vm._v(" "),
           _c(
             "button",
             {
-              staticClass: "btn btn-primary btn-lg",
-              attrs: { disabled: _vm.hasErrors }
+              class: [
+                "btn",
+                {
+                  "btn-outline-primary": !_vm.hasErrors,
+                  "btn-outline-secondary": _vm.hasErrors
+                }
+              ],
+              attrs: { disabled: _vm.hasErrors, role: "button" }
             },
             [
-              _vm._v("\n            Consultar disponibilidad "),
+              _vm._v("\n                Consultar "),
               _c("icon-app", {
                 attrs: {
                   iconImage: _vm.btnIconImg,
@@ -54454,10 +54106,10 @@ var render = function() {
             ],
             1
           )
-        ]
-      )
-    ]
-  )
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -54478,13 +54130,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" }, [
+  return _c("div", { staticClass: "row justify-content-around" }, [
+    _c("div", { staticClass: "col-12 col-md-12" }, [
       !_vm.dataForm
         ? _c(
             "button",
             {
-              staticClass: "btn btn-link pull-right",
+              staticClass: "btn btn-outline-secondary btn-sm pull-right",
               on: { click: _vm.goBackToReservas }
             },
             [
@@ -54500,7 +54152,7 @@ var render = function() {
         ? _c(
             "button",
             {
-              staticClass: "btn btn-link pull-right",
+              staticClass: "btn btn-outline-secondary btn-sm pull-right",
               on: { click: _vm.goBackToFindUser }
             },
             [
@@ -54514,14 +54166,56 @@ var render = function() {
     ]),
     _vm._v(" "),
     !_vm.dataForm
-      ? _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" }, [
+      ? _c("div", { staticClass: "col-12 col-md-8" }, [
           _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "text-center" }, [
             _c(
+              "h3",
+              {
+                staticClass: "text-center",
+                attrs: { id: "tt-find-btn-document", role: "button" },
+                on: { click: _vm.onOffImg }
+              },
+              [
+                _c(
+                  "span",
+                  {
+                    class: {
+                      "text-mutted": _vm.onOff,
+                      "text-deleted": _vm.onOff,
+                      "text-primary": !_vm.onOff
+                    }
+                  },
+                  [_vm._v("DNI")]
+                ),
+                _vm._v(" "),
+                _c("icon-app", {
+                  attrs: {
+                    iconImage: _vm.onOffBtn,
+                    aditionalClasses: _vm.changeToogle
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    class: {
+                      "text-mutted": !_vm.onOff,
+                      "text-deleted": !_vm.onOff,
+                      "text-primary": _vm.onOff
+                    }
+                  },
+                  [_vm._v("Pasaporte")]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
               "form",
               {
-                staticClass: "form-inline",
+                staticClass: "form-inline text-center",
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
@@ -54531,50 +54225,14 @@ var render = function() {
               },
               [
                 _c(
-                  "h3",
-                  {
-                    staticClass: "text-center",
-                    attrs: { id: "tt-find-btn-document", role: "button" },
-                    on: { click: _vm.onOffImg }
-                  },
-                  [
-                    _c(
-                      "span",
-                      {
-                        class: {
-                          "text-mutted": _vm.onOff,
-                          "text-deleted": _vm.onOff,
-                          "text-primary": !_vm.onOff
-                        }
-                      },
-                      [_vm._v("DNI")]
-                    ),
-                    _vm._v(" "),
-                    _c("icon-app", {
-                      attrs: {
-                        iconImage: _vm.onOffBtn,
-                        aditionalClasses: _vm.changeToogle
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        class: {
-                          "text-mutted": !_vm.onOff,
-                          "text-deleted": !_vm.onOff,
-                          "text-primary": _vm.onOff
-                        }
-                      },
-                      [_vm._v("Pasaporte")]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
                   "div",
-                  { class: ["form-group", { "has-error": !_vm.document }] },
+                  {
+                    class: [
+                      "form-group",
+                      { "has-warning": !_vm.document },
+                      "mr-2"
+                    ]
+                  },
                   [
                     _c(
                       "label",
@@ -54621,7 +54279,9 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { class: ["form-group", { "has-error": !_vm.email }] },
+                  {
+                    class: ["form-group", { "has-warning": !_vm.email }, "mr-2"]
+                  },
                   [
                     _c(
                       "label",
@@ -54666,28 +54326,29 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c("br"),
-                _c("br"),
-                _vm._v(" "),
-                _c("div", { staticClass: "text-center" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary btn-lg",
-                      attrs: { disabled: _vm.documentOrEmail }
-                    },
-                    [
-                      _vm._v("Buscar información "),
-                      _c("icon-app", {
-                        attrs: {
-                          iconImage: _vm.toggleIconImage,
-                          aditionalClasses: _vm.btnClasses
-                        }
-                      })
+                _c(
+                  "button",
+                  {
+                    class: [
+                      "btn",
+                      {
+                        "btn-outline-primary": !_vm.documentOrEmail,
+                        "btn-outline-secondary": _vm.documentOrEmail
+                      }
                     ],
-                    1
-                  )
-                ])
+                    attrs: { disabled: _vm.documentOrEmail }
+                  },
+                  [
+                    _vm._v("Buscar información "),
+                    _c("icon-app", {
+                      attrs: {
+                        iconImage: _vm.toggleIconImage,
+                        aditionalClasses: _vm.btnClasses
+                      }
+                    })
+                  ],
+                  1
+                )
               ]
             )
           ])
@@ -54696,7 +54357,7 @@ var render = function() {
           "div",
           {
             staticClass:
-              "col-xs-12 col-sm-12 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6"
+              "col-12 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6"
           },
           [
             !_vm.userNotFound
@@ -54733,7 +54394,7 @@ var render = function() {
               [
                 _c(
                   "div",
-                  { class: ["form-group", { "has-error": !_vm.name }] },
+                  { class: ["form-group", { "has-warning": !_vm.name }] },
                   [
                     _c(
                       "label",
@@ -54773,7 +54434,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { class: ["form-group", { "has-error": !_vm.lastname }] },
+                  { class: ["form-group", { "has-warning": !_vm.lastname }] },
                   [
                     _c(
                       "label",
@@ -54817,7 +54478,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { class: ["form-group", { "has-error": !_vm.email }] },
+                  { class: ["form-group", { "has-warning": !_vm.email }] },
                   [
                     _c(
                       "label",
@@ -54857,7 +54518,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { class: ["form-group", { "has-error": !_vm.document }] },
+                  { class: ["form-group", { "has-warning": !_vm.document }] },
                   [
                     _c(
                       "label",
@@ -54943,7 +54604,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { class: ["form-group", { "has-error": !_vm.genre }] },
+                  { class: ["form-group", { "has-warning": !_vm.genre }] },
                   [
                     _c(
                       "label",
@@ -55009,7 +54670,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { class: ["form-group", { "has-error": !_vm.country }] },
+                  { class: ["form-group", { "has-warning": !_vm.country }] },
                   [
                     _c(
                       "label",
@@ -55073,8 +54734,9 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-success btn-lg",
-                      attrs: { disabled: _vm.btnCreateNewUser }
+                      staticClass:
+                        "btn btn-outline-success btn-lg cursorPointer",
+                      attrs: { disabled: _vm.btnCreateNewUser, type: "submit" }
                     },
                     [
                       _vm._v("\n                    Finalizar reserva "),
@@ -55099,11 +54761,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h2", { staticClass: "text-center" }, [
+    return _c("h3", { staticClass: "text-center" }, [
       _vm._v("\n            Por favor ingrese sus sus datos\n            "),
       _c("br"),
       _vm._v(" "),
-      _c("small", [
+      _c("small", { staticClass: "text-muted" }, [
         _vm._v(
           "\n                Si ya fué nuestro huesped o es un usuario del sitio\n                "
         ),
@@ -55126,6 +54788,138 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7313aca2\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/CardItem.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "col-12 col-md-6" }, [
+    _c("div", { staticClass: "card cottage-card" }, [
+      _c("img", {
+        staticClass: "card-img-top",
+        attrs: { src: _vm.cottage.images, alt: "" }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c(
+          "h4",
+          {
+            staticClass:
+              "card-title text-capitalize bg-info text-light px-3 py-2 rounded"
+          },
+          [_vm._v(_vm._s(_vm.cottage.name))]
+        ),
+        _vm._v(" "),
+        _c("ul", [
+          _c("li", [
+            _c("b", { staticClass: "number-btn-item" }, [
+              _vm._v("Número: " + _vm._s(_vm.cottage.number))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("b", { staticClass: "capacity-btn-item" }, [
+              _vm._v("Capacidad: " + _vm._s(_vm.cottage.accommodation))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("b", [
+              _vm._v("Entrega: "),
+              _c("span", { staticClass: "badge badge-secondary" }, [
+                _vm._v(_vm._s(_vm.deliveryDay))
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c(
+              "span",
+              {
+                class: [
+                  "label",
+                  {
+                    "label-primary": _vm.cottage.type === "simple",
+                    "label-success": _vm.cottage.type === "matrimonial"
+                  }
+                ]
+              },
+              [
+                _c("b", { staticClass: "text-capitalize" }, [
+                  _vm._v(_vm._s(_vm.cottage.type))
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", [_c("b", [_vm._v("Días: " + _vm._s(_vm.calcularDias))])]),
+          _vm._v(" "),
+          _c("li", [
+            _c("b", [
+              _vm._v("Precio: "),
+              _c(
+                "span",
+                { staticClass: "badge badge-primary" },
+                [
+                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                  _vm._v(_vm._s(_vm.cottage.price))
+                ],
+                1
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("b", [
+              _vm._v("Precio final: "),
+              _c(
+                "span",
+                { staticClass: "badge badge-danger" },
+                [
+                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                  _vm._v(
+                    _vm._s(
+                      _vm.calcularMonto(_vm.calcularDias, _vm.cottage.price)
+                    )
+                  )
+                ],
+                1
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-block btn-outline-success cursorPointer",
+            on: {
+              click: function($event) {
+                _vm.prepareDeal(_vm.index)
+              }
+            }
+          },
+          [_vm._v("RESERVAR")]
+        )
+      ])
+    ]),
+    _vm._v("         \n")
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7313aca2", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-75005213\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/Rentals.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -55141,68 +54935,14 @@ var render = function() {
           attrs: { id: "reservas-component" }
         },
         [
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" },
-              [
-                _c("h1", { staticClass: "text-center" }, [_vm._v("Reservas")]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "alert alert-info text-center" },
-                  [
-                    _c("icon-app", { attrs: { iconImage: "info-circle" } }),
-                    _vm._v(" Esta consultando por: "),
-                    _c("b", [
-                      _vm._v(_vm._s(_vm.stateButton ? "Cabaña" : "Capacidad"))
-                    ])
-                  ],
-                  1
-                )
-              ]
-            )
-          ]),
+          _vm._m(0),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-xs-12 col-sm-12 col-md-1 col-lg-1" },
-              [
-                _c("h1", [
-                  _c(
-                    "a",
-                    {
-                      class: {
-                        "text-muted": !_vm.stateButton,
-                        "text-primary": _vm.stateButton
-                      },
-                      attrs: { id: "link-onOff", role: "button" },
-                      on: { click: _vm.toggleButton }
-                    },
-                    [
-                      _c("icon-app", {
-                        attrs: {
-                          iconId: "iconImage",
-                          iconImage: _vm.stateButton
-                            ? "toggle-on"
-                            : "toggle-off"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [_c("form-app")], 1),
-          _vm._v(" "),
-          _c("br"),
-          _c("br"),
+          _c(
+            "div",
+            { staticClass: "row justify-content-center" },
+            [_c("form-app")],
+            1
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [_c("list-group-app")], 1)
         ]
@@ -55226,32 +54966,27 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "col-xs-12 col-sm-12 col-md-offset-1 col-md-7 col-lg-offset-1 col-lg-7 text-right"
-      },
-      [
-        _c("h4", { staticClass: "text-info", attrs: { id: "text-onOff" } }, [
-          _vm._v(
-            "Para consultar la disponibilidad por cabaña utilice este boton "
-          ),
-          _c("i", {
-            staticClass: "fa fa-hand-o-right",
-            attrs: { "aria-hidden": "true" }
-          })
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 col-md-12" }, [
+        _c(
+          "h1",
+          { staticClass: "text-center bg-dark text-light rounded p-2" },
+          [_vm._v("Reservas")]
+        )
+      ])
+    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" }, [
-        _c("h1", { staticClass: "text-center" }, [_vm._v("Reservas")])
+      _c("div", { staticClass: "col-12 col-md-12" }, [
+        _c(
+          "h1",
+          { staticClass: "text-center bg-dark text-light rounded p-2" },
+          [_vm._v("Reservas")]
+        )
       ])
     ])
   }
@@ -55274,87 +55009,53 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass:
-        "col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-10 col-lg-offset-1"
-    },
-    [
-      _vm.toRentals.length
-        ? _c("h3", { staticClass: "text-center" }, [
-            _vm._v("Cabañas disponibles")
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.toRentals.length
-        ? _c(
-            "div",
-            {
-              class: [
-                "text-center",
-                "alert",
-                {
-                  "alert-danger": _vm.toRentals.length,
-                  "alert-info": _vm.toRentals.length
-                }
-              ]
-            },
-            [
-              _c("icon-app", { attrs: { iconImage: "warning" } }),
-              _vm._v(
-                "\n        " +
-                  _vm._s(
-                    _vm.toRentals.length
-                      ? "Cabañas disponibles según los parametros elegidos"
-                      : "Lamentablemente no tenemos cabañas disponibles."
-                  ) +
-                  "\n        "
-              ),
-              _c("br"),
-              _vm._v(" "),
-              _c("icon-app", { attrs: { iconImage: "trash" } }),
-              _vm._v(" Si desea eliminar alguna de las opciones "),
-              _c("b", [_vm._v("haga clic en ella")])
-            ],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "list-group" },
-        _vm._l(_vm.toRentals, function(rental, index) {
-          return _c("button-item", {
-            key: rental.id,
-            attrs: { cottage: rental, index: index }
-          })
-        })
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "text-center" }, [
-        _vm.toRentals.length
-          ? _c(
-              "button",
+  return _c("div", { staticClass: "col-12 col-md-12" }, [
+    _vm.toRentals.length
+      ? _c("h3", { staticClass: "text-center" }, [
+          _vm._v("Cabañas disponibles")
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.toRentals.length
+      ? _c(
+          "div",
+          {
+            class: [
+              "text-center",
+              "alert",
               {
-                staticClass: "btn btn-success btn-lg",
-                attrs: { id: "btn-reservas" },
-                on: {
-                  click: function($event) {
-                    _vm.setDeal(true)
-                  }
-                }
-              },
-              [
-                _vm._v("Reservar "),
-                _c("icon-app", { attrs: { iconImage: "handshake-o" } })
-              ],
-              1
+                "alert-info": _vm.toRentals.length > 0,
+                "alert-warning": _vm.toRentals.length === 0
+              }
+            ]
+          },
+          [
+            _c("icon-app", { attrs: { iconImage: "warning" } }),
+            _vm._v(
+              "\n        " +
+                _vm._s(
+                  _vm.toRentals.length
+                    ? "Cabañas disponibles según el rango de fechas elegido"
+                    : "Lamentablemente no tenemos cabañas disponibles."
+                ) +
+                "\n    "
             )
-          : _vm._e()
-      ])
-    ]
-  )
+          ],
+          1
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row" },
+      _vm._l(_vm.toRentals, function(rental, index) {
+        return _c("card-item-app", {
+          key: rental.id,
+          attrs: { cottage: rental, index: index }
+        })
+      })
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -55375,12 +55076,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" }, [
+  return _c("div", { staticClass: "row justify-content-around" }, [
+    _c("div", { staticClass: "col-12 col-md-12" }, [
       _c(
         "button",
         {
-          staticClass: "btn btn-link pull-right",
+          staticClass: "btn btn-outline-secondary btn-sm pull-right",
           on: { click: _vm.goBackToReservas }
         },
         [
@@ -55392,224 +55093,215 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass:
-          "col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8"
-      },
-      [
-        _c("h2", { staticClass: "text-center" }, [
-          _vm._v("Se contretó con éxito la reserva!")
-        ]),
+    _c("div", { staticClass: "col-12 col-md-12" }, [
+      _c("h2", { staticClass: "text-center" }, [
+        _vm._v("Se contretó con éxito la reserva!")
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "text-center" },
+        [
+          _c("icon-app", {
+            attrs: {
+              iconImage: "thumbs-o-up",
+              aditionalClasses: "text-success big-hand"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", {}, [
+        _vm._m(0),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "text-center" },
-          [
-            _c("icon-app", {
-              attrs: {
-                iconImage: "thumbs-o-up",
-                aditionalClasses: "text-success mano-grande"
-              }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", {}, [
-          _vm._m(0),
+        _c("table", { staticClass: "table table-striped" }, [
+          _vm._m(1),
           _vm._v(" "),
-          _c("table", { staticClass: "table table-striped table-hover" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "tbody",
+          _c(
+            "tbody",
+            [
               [
-                _vm._l(_vm.infoDeal, function(rental) {
-                  return [
-                    _c("tr", [
-                      _c(
-                        "th",
-                        { attrs: { rowspan: "8" } },
-                        [
-                          _c("icon-app", { attrs: { iconImage: "home" } }),
-                          _vm._v(" " + _vm._s(rental.cottage.name))
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "th",
-                        [
-                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                          _vm._v(" Precio")
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                          _vm._v(" " + _vm._s(rental.cottage_price))
-                        ],
-                        1
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "th",
-                        [
-                          _c("icon-app", { attrs: { iconImage: "calendar" } }),
-                          _vm._v(" Dias")
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("p", { staticClass: "label label-success" }, [
-                          _c("b", [_vm._v(_vm._s(rental.total_days))])
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "th",
-                        [
-                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                          _vm._v(" Descuentos")
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                          _vm._v(" " + _vm._s(rental.deductions))
-                        ],
-                        1
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "th",
-                        [
-                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                          _vm._v("Precio total")
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "p",
-                          { staticClass: "label label-info" },
-                          [
-                            _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                            _vm._v(" " + _vm._s(rental.finalPayment))
-                          ],
-                          1
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "th",
-                        [
-                          _c("icon-app", { attrs: { iconImage: "calendar" } }),
-                          _vm._v(" Desde")
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          _vm._s(
-                            _vm._f("argentineDateTime")(
-                              rental.dateFrom + " 10:00:00"
-                            )
-                          )
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "th",
-                        [
-                          _c("icon-app", { attrs: { iconImage: "calendar" } }),
-                          _vm._v(" Hasta")
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          _vm._s(
-                            _vm._f("argentineDateTime")(
-                              rental.dateTo + " 10:00:00"
-                            )
-                          )
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "th",
-                        [
-                          _c("icon-app", { attrs: { iconImage: "calendar" } }),
-                          _vm._v(" Vto. reserva")
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("p", { staticClass: "label label-warning" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm._f("argentineDateTime")(
-                                rental.dateReservationPayment
-                              )
-                            )
-                          )
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "th",
-                        [
-                          _c("icon-app", { attrs: { iconImage: "barcode" } }),
-                          _vm._v(" Código de reserva")
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "p",
-                          { staticClass: "label label-primary text-uppercase" },
-                          [_vm._v(_vm._s(rental.code))]
-                        )
-                      ])
+                _c("tr", [
+                  _c(
+                    "th",
+                    { attrs: { rowspan: "8" } },
+                    [
+                      _c("icon-app", { attrs: { iconImage: "home" } }),
+                      _vm._v(" " + _vm._s(_vm.infoDeal.cottage.name))
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    [
+                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _vm._v(" Precio")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _vm._v(" " + _vm._s(_vm.infoDeal.cottage_price))
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c(
+                    "th",
+                    [
+                      _c("icon-app", { attrs: { iconImage: "calendar" } }),
+                      _vm._v(" Dias")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("p", { staticClass: "badge badge-success" }, [
+                      _c("b", [_vm._v(_vm._s(_vm.infoDeal.total_days))])
                     ])
-                  ]
-                })
-              ],
-              2
-            )
-          ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c(
+                    "th",
+                    [
+                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _vm._v(" Descuentos")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _vm._v(" " + _vm._s(_vm.infoDeal.deductions))
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c(
+                    "th",
+                    [
+                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _vm._v("Precio total")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "p",
+                      { staticClass: "badge badge-info" },
+                      [
+                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _vm._v(" " + _vm._s(_vm.infoDeal.finalPayment))
+                      ],
+                      1
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c(
+                    "th",
+                    [
+                      _c("icon-app", { attrs: { iconImage: "calendar" } }),
+                      _vm._v(" Desde")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("argentineDateTime")(
+                          _vm.infoDeal.dateFrom + " 10:00:00"
+                        )
+                      )
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c(
+                    "th",
+                    [
+                      _c("icon-app", { attrs: { iconImage: "calendar" } }),
+                      _vm._v(" Hasta")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("argentineDateTime")(
+                          _vm.infoDeal.dateTo + " 10:00:00"
+                        )
+                      )
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c(
+                    "th",
+                    [
+                      _c("icon-app", { attrs: { iconImage: "calendar" } }),
+                      _vm._v(" Vto. reserva")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("p", { staticClass: "badge badge-warning" }, [
+                      _vm._v(
+                        _vm._s(
+                          _vm._f("argentineDateTime")(
+                            _vm.infoDeal.dateReservationPayment
+                          )
+                        )
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c(
+                    "th",
+                    [
+                      _c("icon-app", { attrs: { iconImage: "barcode" } }),
+                      _vm._v(" Código de reserva")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "p",
+                      { staticClass: "badge badge-primary text-uppercase" },
+                      [_vm._v(_vm._s(_vm.infoDeal.code))]
+                    )
+                  ])
+                ])
+              ]
+            ],
+            2
+          )
         ])
-      ]
-    )
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -55617,8 +55309,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "alert alert-danger" }, [
-      _c("h3", { staticClass: "text-center" }, [
+    return _c("div", { staticClass: "alert alert-info" }, [
+      _c("p", { staticClass: "text-center" }, [
         _vm._v(
           "Por favor tome nota del código de reserva. El mismo es único para su reserva y solo Ud. lo conoce."
         ),
@@ -55637,7 +55329,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
+    return _c("thead", { staticClass: "thead bg-dark text-light" }, [
       _c("tr", [
         _c("th", [_vm._v("Cabaña")]),
         _vm._v(" "),
@@ -55831,33 +55523,6 @@ return VueNotifications;
 
 /***/ }),
 
-/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1be0f91a\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1be0f91a\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue");
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("7e33607f", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1be0f91a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Button-list-item.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1be0f91a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Button-list-item.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
 /***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1edc32ac\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/Icon.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -55929,6 +55594,33 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38c8d158\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Deal.vue", function() {
      var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38c8d158\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Deal.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7313aca2\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/CardItem.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7313aca2\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/CardItem.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("69f58fb5", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7313aca2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CardItem.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7313aca2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CardItem.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -68692,11 +68384,8 @@ exports.default = {
 
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('rentals/availables/', {
-                query: payload.choice,
-                simple: payload.simple,
                 dateFrom: payload.dateFrom,
-                dateTo: payload.dateTo,
-                isForCottage: payload.isForCottage
+                dateTo: payload.dateTo
             }).then(function (response) {
                 dispatch('setToRentals', response.data.cottages);
                 dispatch('auth/setQueryFinished', true, { root: true });
@@ -68753,7 +68442,7 @@ exports.default = {
                     _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
                         context.dispatch('auth/setToken', response, { root: true });
                         context.commit('setClosedDeal', true);
-                        context.commit('setInfoDeal', response.data.rentals);
+                        context.commit('setInfoDeal', response.data.finalRental);
                         resolve({
                             title: 'RESERVA EXITOSA',
                             message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
@@ -68769,7 +68458,7 @@ exports.default = {
                 _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
                     context.dispatch('auth/setToken', response, { root: true });
                     context.commit('setClosedDeal', true);
-                    context.commit('setInfoDeal', response.data.rentals);
+                    context.commit('setInfoDeal', response.data.finalRental);
                     resolve({
                         title: 'RESERVA EXITOSA',
                         message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
@@ -68877,9 +68566,6 @@ exports.default = {
             state.data.countries = new Array(countries);
         }
     },
-    setIsForCottage: function setIsForCottage(state, bool) {
-        state.frmCmp.isForCottage = bool;
-    },
     setIsAdmin: function setIsAdmin(state, admin) {
         state.data.isAdmin = admin;
     },
@@ -68942,7 +68628,6 @@ exports.default = {
         dateTo: ''
     },
     frmCmp: {
-        isForCottage: false,
         configForAdmin: {
             locale: 'es',
             format: 'DD/MM/YYYY',
@@ -69176,19 +68861,19 @@ exports.default = new _vuex2.default.Store({
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-rentals-app/components/Button-list-item.vue":
+/***/ "./resources/assets/js/vue-rentals-app/components/CardItem.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1be0f91a\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue")
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7313aca2\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/CardItem.vue")
 }
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/CardItem.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1be0f91a\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/Button-list-item.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7313aca2\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/CardItem.vue")
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
@@ -69202,9 +68887,9 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/vue-rentals-app/components/Button-list-item.vue"
+Component.options.__file = "resources/assets/js/vue-rentals-app/components/CardItem.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Button-list-item.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] CardItem.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -69213,9 +68898,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1be0f91a", Component.options)
+    hotAPI.createRecord("data-v-7313aca2", Component.options)
   } else {
-    hotAPI.reload("data-v-1be0f91a", Component.options)
+    hotAPI.reload("data-v-7313aca2", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -69535,13 +69220,7 @@ var rentalsApp = new _vue2.default({
     render: function render(h) {
         return h(_Rentals2.default);
     },
-    created: function created() {
-        this.setCottages().then(function (response) {
-            return _vueNotifications2.default.success({ title: response.title, message: response.message, timeout: 4000, useSwal: false });
-        }).catch(function (error) {
-            return _vueNotifications2.default.error({ title: error.title, message: error.message, timeout: 4000, useSwal: false });
-        });
-    },
+    created: function created() {},
 
     methods: _extends({}, mapActions(['setCottages']))
 });

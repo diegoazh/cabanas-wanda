@@ -8,6 +8,7 @@ use App\Http\Requests\RequestRental;
 use App\Http\Requests\RequestRentalFind;
 use App\Http\Requests\RequestRentalStore;
 use App\Http\Requests\RequestRentalUpdate;
+use App\Mail\RentalSuccess;
 use App\Rental;
 use App\User;
 use Carbon\Carbon;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use JWTAuth;
 
 class RentalsController extends Controller
@@ -62,11 +64,11 @@ class RentalsController extends Controller
      */
     public function store(RequestRentalStore $request)
     {
-        $rentals = [];
+        $finalRental = null;
 
         try {
 
-            DB::transaction(function () use ($request, &$rentals) {
+            DB::transaction(function () use ($request, &$finalRental) {
 
                 $info = $request->all();
 
@@ -89,7 +91,7 @@ class RentalsController extends Controller
 
                     $rental = new Rental();
 
-                    if (empty($cottages = Rental::cottageForNumber($cottage->number, false, $dateFrom->toDateString(), $dateTo->toDateString()))) {
+                    if (!empty(Rental::notAvailable($cottage->number, $dateFrom->toDateString(), $dateTo->toDateString()))) {
 
                         throw new \Exception('La cabaña ya ha sido reservada.');
 
@@ -109,9 +111,10 @@ class RentalsController extends Controller
                     $rental->code_reservation = $code;
                     $rental->save();
                     $rental->cottage;
+                    $rental->user;
                     $rental->code = $code;
 
-                    array_push($rentals, $rental);
+                    $finalRental = $rental;
                 }
             });
 
@@ -121,7 +124,9 @@ class RentalsController extends Controller
 
         }
 
-        return response()->json(compact('rentals'), 200);
+        Mail::to($finalRental->user->email, $finalRental->user->formalFullName)->send(new RentalSuccess($finalRental));
+
+        return response()->json(compact('finalRental'), 200);
     }
 
     /**
@@ -385,26 +390,22 @@ class RentalsController extends Controller
      */
     public function cottagesAvailables(RequestRental $request)
     {
-        $info = $request->all();
+        $info = $request->only('dateFrom', 'dateTo');
         $cottages = null;
 
         // cambiamos las fechas con Carbon ya que sino nos da error al consultar en la DB.
-        $info['dateFrom'] = Carbon::createFromFormat('d/m/Y', $info['dateFrom'])->toDateString();
-        $info['dateTo'] = Carbon::createFromFormat('d/m/Y', $info['dateTo'])->toDateString();
+        $dateFrom = Carbon::createFromFormat('d/m/Y', $info['dateFrom']);
+        $dateTo = Carbon::createFromFormat('d/m/Y', $info['dateTo']);
 
-        if ($info['isForCottage']) {
+        if ($dateTo->lt($dateFrom)) {
 
-            $cottages = Rental::cottageForNumber($info['query'], $info['simple'], $info['dateFrom'], $info['dateTo']);
-
-        } else {
-
-            $cottages = Rental::cottageForCapacity($info['query'], $info['simple'], $info['dateFrom'], $info['dateTo']);
+            return response()->json(['title' => 'RANGO DE FECHAS INVALIDO', 'error' => 'La fecha final (o fecha hasta) no puede ser menor que la fecha de inicio (o fecha desde). Por favor corrija esto y reintente. Muchas gracias.'], 500);
 
         }
 
-        if (empty($cottages)) {
+        if (!$cottages = Rental::availables($dateFrom->toDateString(), $dateTo->toDateString())) {
 
-            $message = $info['isForCottage'] ? 'Lo sentimos la cabaña no está disponible en esa fecha. Por favor intenta con otra cabaña o con una fecha diferente.' : 'No tenemos cabañas disponibles en esa fecha para la capacidad indicada. Lo sentimos mucho, por favor prueba con otra fecha o varía la capacidad.';
+            $message = 'Lo sentimos mucho pero no tenemos cabañas disponibles en esas fechas.';
 
             return response()->json(['title' => 'SIN DISPONIBILIDAD', 'error' => $message], 404);
 

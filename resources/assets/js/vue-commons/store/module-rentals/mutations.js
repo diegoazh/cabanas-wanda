@@ -23,9 +23,6 @@ export default {
             state.data.countries = new Array(countries);
         }
     },
-    setIsForCottage(state, bool) {
-        state.frmCmp.isForCottage = bool;
-    },
     setIsAdmin(state, admin) {
         state.data.isAdmin = admin;
     },

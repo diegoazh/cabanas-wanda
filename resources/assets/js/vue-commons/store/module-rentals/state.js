@@ -17,7 +17,6 @@ export default {
         dateTo: '',
     },
     frmCmp: {
-        isForCottage: false,
         configForAdmin: {
             locale: 'es',
             format: 'DD/MM/YYYY',

@@ -1,37 +1,21 @@
 <template>
     <div v-if="!deal" id="reservas-component" class="container jumbotron">
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <h1 class="text-center">Reservas</h1>
-                <div class="alert alert-info text-center">
-                    <icon-app iconImage="info-circle"></icon-app> Esta consultando por: <b>{{ stateButton ? 'Cabaña' : 'Capacidad' }}</b>
-                </div>
+            <div class="col-12 col-md-12">
+                <h1 class="text-center bg-dark text-light rounded p-2">Reservas</h1>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-7 col-lg-offset-1 col-lg-7 text-right">
-                <h4 id="text-onOff" class="text-info">Para consultar la disponibilidad por cabaña utilice este boton <i class="fa fa-hand-o-right" aria-hidden="true"></i></h4>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
-                <h1>
-                    <a id="link-onOff" :class="{'text-muted': !stateButton, 'text-primary': stateButton}" role="button" @click="toggleButton">
-                        <icon-app iconId="iconImage" :iconImage="stateButton ? 'toggle-on' : 'toggle-off'"></icon-app>
-                    </a>
-                </h1>
-            </div>
-        </div>
-        <div class="row">
+        <div class="row justify-content-center">
             <form-app></form-app>
         </div>
-        <br><br>
         <div class="row">
             <list-group-app></list-group-app>
         </div>
     </div>
     <div id="reservas-component2" class="container jumbotron" v-else>
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <h1 class="text-center">Reservas</h1>
+            <div class="col-12 col-md-12">
+                <h1 class="text-center bg-dark text-light rounded p-2">Reservas</h1>
             </div>
         </div>
         <deal-app v-if="!closedDeal"></deal-app>

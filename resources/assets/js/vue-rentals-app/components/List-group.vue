@@ -1,40 +1,30 @@
 <template>
-    <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-10 col-lg-offset-1">
+    <div class="col-12 col-md-12">
         <h3 v-if="toRentals.length" class="text-center">Cabañas disponibles</h3>
-        <div v-if="toRentals.length" :class="['text-center', 'alert', {'alert-danger': toRentals.length, 'alert-info': toRentals.length}]">
+        <div v-if="toRentals.length" :class="['text-center', 'alert', {'alert-info': toRentals.length > 0, 'alert-warning': toRentals.length === 0}]">
             <icon-app iconImage="warning"></icon-app>
-            {{ toRentals.length ? 'Cabañas disponibles según los parametros elegidos' : 'Lamentablemente no tenemos cabañas disponibles.'}}
-            <br>
-            <icon-app iconImage="trash"></icon-app> Si desea eliminar alguna de las opciones <b>haga clic en ella</b>
+            {{ toRentals.length ? 'Cabañas disponibles según el rango de fechas elegido' : 'Lamentablemente no tenemos cabañas disponibles.'}}
         </div>
-        <div class="list-group">
-            <button-item v-for="(rental, index) in toRentals" :key="rental.id" :cottage="rental" :index="index"></button-item>
-        </div>
-        <div class="text-center">
-            <button @click="setDeal(true)" id="btn-reservas" v-if="toRentals.length" class="btn btn-success btn-lg">Reservar <icon-app iconImage="handshake-o"></icon-app></button>
+        <div class="row">
+            <card-item-app v-for="(rental, index) in toRentals" :key="rental.id" :cottage="rental" :index="index"></card-item-app>
         </div>
     </div>
 </template>
 
 <script>
-    import { createNamespacedHelpers } from 'vuex'
-    import Item from './Button-list-item.vue'
+    import { mapState } from 'vuex'
+    import Card from './CardItem.vue'
     import Icon from '../../vue-commons/components/Icon.vue'
-
-    const { mapState, mapActions } = createNamespacedHelpers('rentals');
 
     export default {
         components: {
-            'button-item': Item,
+            'card-item-app': Card,
             'icon-app': Icon
         },
         computed: {
-            ...mapState({
+            ...mapState('rentals', {
                 toRentals: state => state.data.toRentals
             })
-        },
-        methods: {
-            ...mapActions(['setDeal'])
         }
     }
 </script>

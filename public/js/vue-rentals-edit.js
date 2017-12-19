@@ -50738,11 +50738,8 @@ exports.default = {
 
         return new Promise(function (resolve, reject) {
             _appAxios.http.post('rentals/availables/', {
-                query: payload.choice,
-                simple: payload.simple,
                 dateFrom: payload.dateFrom,
-                dateTo: payload.dateTo,
-                isForCottage: payload.isForCottage
+                dateTo: payload.dateTo
             }).then(function (response) {
                 dispatch('setToRentals', response.data.cottages);
                 dispatch('auth/setQueryFinished', true, { root: true });
@@ -50799,7 +50796,7 @@ exports.default = {
                     _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
                         context.dispatch('auth/setToken', response, { root: true });
                         context.commit('setClosedDeal', true);
-                        context.commit('setInfoDeal', response.data.rentals);
+                        context.commit('setInfoDeal', response.data.finalRental);
                         resolve({
                             title: 'RESERVA EXITOSA',
                             message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
@@ -50815,7 +50812,7 @@ exports.default = {
                 _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
                     context.dispatch('auth/setToken', response, { root: true });
                     context.commit('setClosedDeal', true);
-                    context.commit('setInfoDeal', response.data.rentals);
+                    context.commit('setInfoDeal', response.data.finalRental);
                     resolve({
                         title: 'RESERVA EXITOSA',
                         message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
@@ -50923,9 +50920,6 @@ exports.default = {
             state.data.countries = new Array(countries);
         }
     },
-    setIsForCottage: function setIsForCottage(state, bool) {
-        state.frmCmp.isForCottage = bool;
-    },
     setIsAdmin: function setIsAdmin(state, admin) {
         state.data.isAdmin = admin;
     },
@@ -50988,7 +50982,6 @@ exports.default = {
         dateTo: ''
     },
     frmCmp: {
-        isForCottage: false,
         configForAdmin: {
             locale: 'es',
             format: 'DD/MM/YYYY',

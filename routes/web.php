@@ -19,6 +19,8 @@
  */
 
 use App\Mail\ConfirmAccount;
+use App\Mail\RentalSuccess;
+use App\Rental;
 
 Route::group(['middleware' => 'web'], function () {
     /**************************************
@@ -56,8 +58,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Administration', 'middleware'
     Route::get('/', 'BackendController@showPanel')->name('admin.panel');
     Route::resource('frontend', 'FrontendController');
     Route::get('users', 'UsersController@index')->name('users.index');
-    Route::put('users/{user}', 'UsersController@update')->name('users.update');
-    Route::delete('users/{user}', 'UsersController@destroy')->name('users.destroy');
+    Route::put('users/{user}', 'UsersController@update')->name('users.update')->middleware('isEmployed');
+    Route::delete('users/{user}', 'UsersController@destroy')->name('users.destroy')->middleware('isEmployed');
     Route::resource('cottages', 'CottagesController');
     Route::get('food', 'FoodsController@index')->name('comidas.index');
     Route::get('reports', 'ReportsController@index')->name('reports.index');
@@ -66,6 +68,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Administration', 'middleware'
 
 Route::prefix('test')->group(function() {
     Route::get('mail-welcome', function() {
-        return new ConfirmAccount(\App\User::find(158));
+        return new ConfirmAccount(User::find(158));
+    });
+    Route::get('mail-success', function() {
+        return new RentalSuccess(Rental::find(25));
     });
 });

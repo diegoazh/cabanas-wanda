@@ -17,6 +17,10 @@
 .menu-background {
   background-color: #00A0B0;
 }
+*:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
 /*.menu-fixed {
   position:fixed;
   z-index:1000;
