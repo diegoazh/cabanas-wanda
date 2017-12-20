@@ -31,8 +31,8 @@
                         <i class="fa fa-cutlery" aria-hidden="true"></i> Comidas <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Ver carta</a>
                         <a class="dropdown-item" href="{{ route('home.order.index') }}">Realizar pedido</a>
+                        <a class="dropdown-item" href="#">Modificar pedido</a>
                         @if(Auth::check())
                             @if(Auth::user()->isAdminOrEmployed())
                                 <div role="separator" class="dropdown-divider"></div>

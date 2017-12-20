@@ -30,7 +30,7 @@
     import { optionsIzi } from '../../vue-commons/notifications/notifications'
     import Icon from '../../vue-commons/components/Icon.vue'
     import Form from './Form.vue'
-    import List from './List-group.vue'
+    import List from './ListGroup.vue'
     import Deal from './Deal.vue'
     import CloseDeal from './ClosedDeal.vue'
 

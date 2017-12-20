@@ -1888,6 +1888,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -20277,7 +20281,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12 page-header" }, [
+      _c("div", { staticClass: "col-12 col-md-12 page-header" }, [
         _c("h1", { staticClass: "text-center" }, [_vm._v("Liquidación final")]),
         _vm._v(" "),
         _c("p", { staticClass: "text-center" }, [
@@ -20585,11 +20589,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return !_vm.liquidationOk
     ? _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+        _c("div", { staticClass: "col-12 col-md-12 mb-3" }, [
           _c(
             "button",
             {
-              staticClass: "btn btn-primary btn-sm pull-right",
+              staticClass: "btn btn-outline-secondary btn-sm pull-right",
               on: { click: _vm.changeReserva }
             },
             [
@@ -20607,7 +20611,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-xs-12 col-sm-12 col-md-12" },
+          { staticClass: "col-12 col-md-12" },
           [
             _c("table", { staticClass: "table table-striped" }, [
               _vm._m(0),
@@ -20619,7 +20623,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("td", [
-                    _c("span", { staticClass: "label label-primary" }, [
+                    _c("span", { staticClass: "badge badge-primary" }, [
                       _vm._v(_vm._s(_vm.defineOwner))
                     ])
                   ]),
@@ -20629,7 +20633,7 @@ var render = function() {
                   _c("td", [
                     _c(
                       "span",
-                      { staticClass: "label label-info text-capitalize" },
+                      { staticClass: "badge badge-info text-capitalize" },
                       [_vm._v(_vm._s(_vm.rental.state))]
                     )
                   ]),
@@ -20639,7 +20643,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("td", [
-                    _c("span", { staticClass: "label label-default" }, [
+                    _c("span", { staticClass: "badge badge-secondary" }, [
                       _vm._v(
                         _vm._s(_vm._f("displayArgDate")(_vm.rental.created_at))
                       )
@@ -20651,7 +20655,7 @@ var render = function() {
                   _c("th", { attrs: { scope: "row" } }, [_vm._v("Cabaña")]),
                   _vm._v(" "),
                   _c("td", [
-                    _c("span", { staticClass: "label label-warning" }, [
+                    _c("span", { staticClass: "badge badge-warning" }, [
                       _vm._v(_vm._s(_vm.rental.cottage.name))
                     ])
                   ]),
@@ -20659,7 +20663,7 @@ var render = function() {
                   _c("th", { attrs: { scope: "row" } }, [_vm._v("Número")]),
                   _vm._v(" "),
                   _c("td", [
-                    _c("span", { staticClass: "label label-default" }, [
+                    _c("span", { staticClass: "badge badge-secondary" }, [
                       _vm._v(_vm._s(_vm.rental.cottage.number))
                     ])
                   ]),
@@ -20669,7 +20673,7 @@ var render = function() {
                   _c("td", [
                     _c(
                       "span",
-                      { staticClass: "label label-warning" },
+                      { staticClass: "badge badge-warning" },
                       [
                         _c("icon-app", { attrs: { iconImage: "dollar" } }),
                         _vm._v(" " + _vm._s(_vm.rental.cottage_price))
@@ -20683,7 +20687,7 @@ var render = function() {
                   _c("th", { attrs: { scope: "row" } }, [_vm._v("Desde")]),
                   _vm._v(" "),
                   _c("td", [
-                    _c("span", { staticClass: "label label-info" }, [
+                    _c("span", { staticClass: "badge badge-info" }, [
                       _vm._v(
                         _vm._s(_vm._f("displayArgDate")(_vm.rental.dateFrom))
                       )
@@ -20693,7 +20697,7 @@ var render = function() {
                   _c("th", { attrs: { scope: "row" } }, [_vm._v("Hasta")]),
                   _vm._v(" "),
                   _c("td", [
-                    _c("span", { staticClass: "label label-info" }, [
+                    _c("span", { staticClass: "badge badge-info" }, [
                       _vm._v(
                         _vm._s(_vm._f("displayArgDate")(_vm.rental.dateTo))
                       )
@@ -20705,7 +20709,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("td", [
-                    _c("span", { staticClass: "label label-primary" }, [
+                    _c("span", { staticClass: "badge badge-primary" }, [
                       _vm._v(_vm._s(_vm.rental.total_days))
                     ])
                   ])
@@ -20719,7 +20723,7 @@ var render = function() {
                   _c("td", [
                     _c(
                       "span",
-                      { staticClass: "label label-danger" },
+                      { staticClass: "badge badge-danger" },
                       [
                         _c("icon-app", { attrs: { iconImage: "dollar" } }),
                         _vm._v(" " + _vm._s(_vm.rentalTotalAmount))
@@ -20735,7 +20739,7 @@ var render = function() {
                   _c("td", [
                     _c(
                       "span",
-                      { staticClass: "label label-success" },
+                      { staticClass: "badge badge-success" },
                       [
                         _c("icon-app", { attrs: { iconImage: "dollar" } }),
                         _vm._v(" " + _vm._s(_vm.reservaAmount))
@@ -20749,7 +20753,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("td", [
-                    _c("span", { staticClass: "label label-default" }, [
+                    _c("span", { staticClass: "badge badge-secondary" }, [
                       _vm._v(
                         _vm._s(
                           _vm._f("displayArgDate")(
@@ -20765,7 +20769,7 @@ var render = function() {
                   _c("th", { attrs: { scope: "row" } }, [_vm._v("Promocion")]),
                   _vm._v(" "),
                   _c("td", [
-                    _c("span", { staticClass: "label label-info" }, [
+                    _c("span", { staticClass: "badge badge-info" }, [
                       _vm._v(
                         _vm._s(
                           _vm.rental.promotion
@@ -20781,7 +20785,7 @@ var render = function() {
                   _c("td", [
                     _c(
                       "span",
-                      { staticClass: "label label-success" },
+                      { staticClass: "badge badge-success" },
                       [
                         _c("icon-app", { attrs: { iconImage: "dollar" } }),
                         _vm._v(
@@ -20799,7 +20803,7 @@ var render = function() {
                   _c("td", [
                     _c(
                       "span",
-                      { staticClass: "label label-danger" },
+                      { staticClass: "badge badge-danger" },
                       [
                         _c("icon-app", { attrs: { iconImage: "dollar" } }),
                         _vm._v(" " + _vm._s(_vm.finalAmountWithDeductions))
@@ -20811,7 +20815,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("tfoot", [
-                _c("tr", { staticClass: "warning" }, [
+                _c("tr", { staticClass: "bg-warning text-dark" }, [
                   _c("th", { attrs: { scope: "row", colspan: "5" } }, [
                     _vm._v("Seña")
                   ]),
@@ -20819,7 +20823,7 @@ var render = function() {
                   _c("td", [
                     _c(
                       "span",
-                      { staticClass: "label label-success" },
+                      { staticClass: "badge badge-success" },
                       [
                         _c("icon-app", { attrs: { iconImage: "minus" } }),
                         _vm._v(" "),
@@ -20835,8 +20839,8 @@ var render = function() {
                   "tr",
                   {
                     class: {
-                      danger: !_vm.rental.dateFinalPayment,
-                      success: _vm.rental.dateFinalPayment
+                      "bg-danger text-white": !_vm.rental.dateFinalPayment,
+                      "bg-success": _vm.rental.dateFinalPayment
                     }
                   },
                   [
@@ -20849,7 +20853,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("td", [
-                      _c("span", { staticClass: "label label-default" }, [
+                      _c("span", { staticClass: "badge badge-secondary" }, [
                         _vm._v(
                           _vm._s(
                             _vm._f("displayArgDate")(
@@ -20898,7 +20902,7 @@ var render = function() {
                 { staticClass: "table table-striped" },
                 [
                   _c("thead", [
-                    _c("tr", [
+                    _c("tr", { staticClass: "bg-dark text-light" }, [
                       _c(
                         "th",
                         { staticClass: "text-center", attrs: { colspan: "6" } },
@@ -20949,13 +20953,20 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("tr", [
-                      _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha")]),
+                      _c(
+                        "th",
+                        {
+                          staticClass: "bg-secondary text-white",
+                          attrs: { scope: "col" }
+                        },
+                        [_vm._v("Fecha")]
+                      ),
                       _vm._v(" "),
                       _c(
                         "td",
                         { staticClass: "text-center", attrs: { colspan: "2" } },
                         [
-                          _c("span", { staticClass: "label label-default" }, [
+                          _c("span", { staticClass: "badge badge-secondary" }, [
                             _vm._v(
                               _vm._s(_vm._f("displayArgDate")(order.created_at))
                             )
@@ -20963,7 +20974,14 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
+                      _c(
+                        "th",
+                        {
+                          staticClass: "bg-secondary text-white",
+                          attrs: { scope: "col" }
+                        },
+                        [_vm._v("Estado")]
+                      ),
                       _vm._v(" "),
                       _c(
                         "td",
@@ -20972,7 +20990,7 @@ var render = function() {
                           _c(
                             "span",
                             {
-                              staticClass: "label label-warning text-capitalize"
+                              staticClass: "badge badge-warning text-capitalize"
                             },
                             [_vm._v(_vm._s(order.state))]
                           )
@@ -20980,7 +20998,7 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("tr", { staticClass: "dafault" }, [
+                    _c("tr", { staticClass: "bg-secondary text-white" }, [
                       _c("th", [_vm._v("Fecha de entrega")]),
                       _vm._v(" "),
                       _c("th", [_vm._v("Plato")]),
@@ -21039,7 +21057,7 @@ var render = function() {
                                     "span",
                                     {
                                       staticClass:
-                                        "label label-info text-capitalize"
+                                        "badge badge-info text-capitalize"
                                     },
                                     [_vm._v(_vm._s(item.food.type))]
                                   )
@@ -21079,7 +21097,7 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("tfoot", [
-                    _c("tr", { staticClass: "info" }, [
+                    _c("tr", { staticClass: "bg-info" }, [
                       _c("th", [_vm._v("Monto parcial")]),
                       _vm._v(" "),
                       _c("td", { attrs: { colspan: "2" } }),
@@ -21098,7 +21116,7 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("tr", { staticClass: "warning" }, [
+                    _c("tr", { staticClass: "bg-warning" }, [
                       _c("th", [_vm._v("Seña")]),
                       _vm._v(" "),
                       _c("td", { attrs: { colspan: "4" } }),
@@ -21115,7 +21133,7 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("tr", { staticClass: "danger" }, [
+                    _c("tr", { staticClass: "bg-danger text-white" }, [
                       _c("th", [_vm._v("Monto final")]),
                       _vm._v(" "),
                       _c("td", { attrs: { colspan: "4" } }),
@@ -21198,7 +21216,7 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("tfoot", [
-                _c("tr", { staticClass: "danger" }, [
+                _c("tr", { staticClass: "bg-danger text-white" }, [
                   _c("th", { attrs: { scope: "row" } }, [_vm._v("Saldo")]),
                   _vm._v(" "),
                   _c(
@@ -21235,7 +21253,7 @@ var render = function() {
                           _c(
                             "button",
                             {
-                              staticClass: "btn btn-lg btn-success",
+                              staticClass: "btn btn-lg btn-outline-success",
                               attrs: { id: "btn-liquidation" },
                               on: {
                                 click: function($event) {
@@ -21262,148 +21280,194 @@ var render = function() {
                         ]
                       : [
                           _c(
-                            "form",
-                            {
-                              staticClass: "form-inline",
-                              on: {
-                                submit: function($event) {
-                                  $event.preventDefault()
-                                  _vm.sendLiquidation($event)
-                                }
-                              }
-                            },
+                            "div",
+                            { staticClass: "row justify-content-center" },
                             [
-                              _c("fieldset", [
-                                _c("legend", [
-                                  _vm._v(
-                                    "Ingrese sus credenciales de administrador"
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    {
-                                      staticClass: "sr-only",
-                                      attrs: { for: "admin-email" }
-                                    },
-                                    [_vm._v("Email")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "input-group" }, [
-                                    _c(
-                                      "div",
-                                      { staticClass: "input-group-addon" },
-                                      [
-                                        _c("icon-app", {
-                                          attrs: { iconImage: "at" }
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.adminEmail,
-                                          expression: "adminEmail"
-                                        }
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        type: "text",
-                                        id: "admin-email",
-                                        name: "admin-email"
-                                      },
-                                      domProps: { value: _vm.adminEmail },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.adminEmail = $event.target.value
-                                        }
+                              _c("div", { staticClass: "col-8" }, [
+                                _c(
+                                  "form",
+                                  {
+                                    staticClass: "form-inline",
+                                    on: {
+                                      submit: function($event) {
+                                        $event.preventDefault()
+                                        _vm.sendLiquidation($event)
                                       }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "input-group" }, [
-                                    _c(
-                                      "div",
-                                      { staticClass: "input-group-addon" },
-                                      [
-                                        _c("icon-app", {
-                                          attrs: { iconImage: "asterisk" }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("icon-app", {
-                                          attrs: { iconImage: "asterisk" }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("icon-app", {
-                                          attrs: { iconImage: "asterisk" }
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.adminPass,
-                                          expression: "adminPass"
-                                        }
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        type: "password",
-                                        id: "admin-password",
-                                        name: "admin-password"
-                                      },
-                                      domProps: { value: _vm.adminPass },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.adminPass = $event.target.value
-                                        }
-                                      }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-primary",
-                                      attrs: {
-                                        role: "button",
-                                        type: "submit",
-                                        disabled: !_vm.adminPass
-                                      }
-                                    },
-                                    [
-                                      _c("icon-app", {
-                                        attrs: {
-                                          iconImage: _vm.queryFinished
-                                            ? "credit-card"
-                                            : "spinner",
-                                          aditionalClasses: _vm.queryFinished
-                                            ? "fa-spin fa-fw"
-                                            : ""
-                                        }
-                                      }),
-                                      _vm._v(
-                                        " Liquidar!\n                                "
+                                    }
+                                  },
+                                  [
+                                    _c("fieldset", [
+                                      _c("legend", [
+                                        _vm._v(
+                                          "Ingrese sus credenciales de administrador"
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        { staticClass: "form-group form-row" },
+                                        [
+                                          _c(
+                                            "label",
+                                            {
+                                              staticClass:
+                                                "col-form-label sr-only",
+                                              attrs: { for: "admin-email" }
+                                            },
+                                            [_vm._v("Email")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            { staticClass: "input-group mr-2" },
+                                            [
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "input-group-addon"
+                                                },
+                                                [
+                                                  _c("icon-app", {
+                                                    attrs: { iconImage: "at" }
+                                                  })
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value: _vm.adminEmail,
+                                                    expression: "adminEmail"
+                                                  }
+                                                ],
+                                                staticClass: "form-control",
+                                                attrs: {
+                                                  type: "text",
+                                                  id: "admin-email",
+                                                  name: "admin-email"
+                                                },
+                                                domProps: {
+                                                  value: _vm.adminEmail
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.adminEmail =
+                                                      $event.target.value
+                                                  }
+                                                }
+                                              })
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            { staticClass: "input-group mr-2" },
+                                            [
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "input-group-addon"
+                                                },
+                                                [
+                                                  _c("icon-app", {
+                                                    attrs: {
+                                                      iconImage: "asterisk"
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("icon-app", {
+                                                    attrs: {
+                                                      iconImage: "asterisk"
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("icon-app", {
+                                                    attrs: {
+                                                      iconImage: "asterisk"
+                                                    }
+                                                  })
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value: _vm.adminPass,
+                                                    expression: "adminPass"
+                                                  }
+                                                ],
+                                                staticClass: "form-control",
+                                                attrs: {
+                                                  type: "password",
+                                                  id: "admin-password",
+                                                  name: "admin-password"
+                                                },
+                                                domProps: {
+                                                  value: _vm.adminPass
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.adminPass =
+                                                      $event.target.value
+                                                  }
+                                                }
+                                              })
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "btn btn-outline-primary",
+                                              attrs: {
+                                                role: "button",
+                                                type: "submit",
+                                                disabled:
+                                                  !_vm.adminEmail ||
+                                                  !_vm.adminPass
+                                              }
+                                            },
+                                            [
+                                              _c("icon-app", {
+                                                attrs: {
+                                                  iconImage: _vm.queryFinished
+                                                    ? "credit-card"
+                                                    : "spinner",
+                                                  aditionalClasses: !_vm.queryFinished
+                                                    ? "fa-spin fa-fw"
+                                                    : ""
+                                                }
+                                              }),
+                                              _vm._v(
+                                                " Liquidar!\n                                        "
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ]
                                       )
-                                    ],
-                                    1
-                                  )
-                                ])
+                                    ])
+                                  ]
+                                )
                               ])
                             ]
                           )
@@ -21419,11 +21483,11 @@ var render = function() {
         )
       ])
     : _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-xs-12 col-sm-12 col-md-12" }, [
+        _c("div", { staticClass: "col-12 col-md-12 mb-3" }, [
           _c(
             "button",
             {
-              staticClass: "btn btn-primary btn-sm pull-right",
+              staticClass: "btn btn-secondary btn-sm pull-right",
               on: { click: _vm.changeReserva }
             },
             [
@@ -21447,7 +21511,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
+    return _c("thead", { staticClass: "thead-dark" }, [
       _c("tr", [
         _c("th", { staticClass: "text-center", attrs: { colspan: "6" } }, [
           _vm._v("Reserva")
@@ -21459,7 +21523,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
+    return _c("thead", { staticClass: "thead-dark" }, [
       _c("tr", [
         _c("th", { staticClass: "text-center", attrs: { colspan: "6" } }, [
           _vm._v("Detalle final")
@@ -21471,25 +21535,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" },
-      [
-        _c("div", { staticClass: "text-center" }, [
-          _c("span", { staticClass: "fa-stack fa-lg fa-5x text-success" }, [
-            _c("i", { staticClass: "fa fa-circle-o fa-stack-2x" }),
-            _vm._v(" "),
-            _c("i", { staticClass: "fa fa-check fa-stack-1x" })
-          ]),
+    return _c("div", { staticClass: "col-12 col-md-12" }, [
+      _c("div", { staticClass: "text-center" }, [
+        _c("span", { staticClass: "fa-stack fa-lg fa-5x text-success" }, [
+          _c("i", { staticClass: "fa fa-circle-o fa-stack-2x" }),
           _vm._v(" "),
-          _c("h2", [
-            _vm._v("La liquidación se realizó correctamente. "),
-            _c("br"),
-            _vm._v(" ¡Muchas gracias por elegirnos!")
-          ])
+          _c("i", { staticClass: "fa fa-check fa-stack-1x" })
+        ]),
+        _vm._v(" "),
+        _c("h2", { staticClass: "h2" }, [
+          _vm._v("La liquidación se realizó correctamente. "),
+          _c("br"),
+          _vm._v(" ¡Muchas gracias por elegirnos!")
         ])
-      ]
-    )
+      ])
+    ])
   }
 ]
 render._withStripped = true

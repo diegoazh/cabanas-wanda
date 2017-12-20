@@ -2339,7 +2339,7 @@ $('#capacidad').selectize({
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/ListGroup.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2445,7 +2445,7 @@ var _Form = __webpack_require__("./resources/assets/js/vue-rentals-app/component
 
 var _Form2 = _interopRequireDefault(_Form);
 
-var _ListGroup = __webpack_require__("./resources/assets/js/vue-rentals-app/components/List-group.vue");
+var _ListGroup = __webpack_require__("./resources/assets/js/vue-rentals-app/components/ListGroup.vue");
 
 var _ListGroup2 = _interopRequireDefault(_ListGroup);
 
@@ -2606,7 +2606,7 @@ exports.push([module.i, "\n#reservas-component,\n#reservas-component2 {\n    mar
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b43e3f08\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue":
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a8632276\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/ListGroup.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(undefined);
@@ -54537,11 +54537,14 @@ var render = function() {
                         _c(
                           "span",
                           {
-                            class: {
-                              "text-mutted": _vm.onOff,
-                              "text-deleted": _vm.onOff,
-                              "text-primary": !_vm.onOff
-                            }
+                            class: [
+                              "cursorPointer",
+                              {
+                                "text-mutted": _vm.onOff,
+                                "text-deleted": _vm.onOff,
+                                "text-primary": !_vm.onOff
+                              }
+                            ]
                           },
                           [_vm._v("DNI")]
                         ),
@@ -54549,18 +54552,22 @@ var render = function() {
                         _c("icon-app", {
                           attrs: {
                             iconImage: _vm.onOffBtn,
-                            aditionalClasses: _vm.changeToogle
+                            aditionalClasses:
+                              _vm.changeToogle + " cursorPointer"
                           }
                         }),
                         _vm._v(" "),
                         _c(
                           "span",
                           {
-                            class: {
-                              "text-mutted": !_vm.onOff,
-                              "text-deleted": !_vm.onOff,
-                              "text-primary": _vm.onOff
-                            }
+                            class: [
+                              "cursorPointer",
+                              {
+                                "text-mutted": !_vm.onOff,
+                                "text-deleted": !_vm.onOff,
+                                "text-primary": _vm.onOff
+                              }
+                            ]
                           },
                           [_vm._v("Pasaporte")]
                         )
@@ -55002,7 +55009,7 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-b43e3f08\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a8632276\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/ListGroup.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -55063,7 +55070,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-b43e3f08", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-a8632276", module.exports)
   }
 }
 
@@ -55163,7 +55170,7 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("td", [
-                    _c("p", { staticClass: "badge badge-success" }, [
+                    _c("span", { staticClass: "badge badge-success" }, [
                       _c("b", [_vm._v(_vm._s(_vm.infoDeal.total_days))])
                     ])
                   ])
@@ -55201,7 +55208,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _c(
-                      "p",
+                      "span",
                       { staticClass: "badge badge-info" },
                       [
                         _c("icon-app", { attrs: { iconImage: "dollar" } }),
@@ -55265,7 +55272,7 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("td", [
-                    _c("p", { staticClass: "badge badge-warning" }, [
+                    _c("span", { staticClass: "badge badge-warning" }, [
                       _vm._v(
                         _vm._s(
                           _vm._f("argentineDateTime")(
@@ -55289,7 +55296,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _c(
-                      "p",
+                      "span",
                       { staticClass: "badge badge-primary text-uppercase" },
                       [_vm._v(_vm._s(_vm.infoDeal.code))]
                     )
@@ -55310,17 +55317,25 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "alert alert-info" }, [
-      _c("p", { staticClass: "text-center" }, [
+      _c("p", { staticClass: "text-justify" }, [
         _vm._v(
-          "Por favor tome nota del código de reserva. El mismo es único para su reserva y solo Ud. lo conoce."
+          "Enviamos un email al correo electronico ingresado en la reserva. Este contiene toda la información de la misma y el código de reserva que "
         ),
+        _c("span", { staticClass: "text-danger" }, [
+          _vm._v("es único y solo Ud. lo conoce")
+        ]),
+        _vm._v("."),
         _c("br"),
         _vm._v(
-          "\n                    Este código le permitirá operar en nuestro sitio web para modificar o cancelar la reserva, asi como también para poder realizar pedidos desde nuestra web."
+          "\n                    Este código le permitirá operar en nuestro sitio web para modificar o cancelar la reserva, asi como también para poder realizar pedidos y otras operaciones desde nuestra web."
         ),
         _c("br"),
+        _vm._v("\n                    Por favor tenga en cuenta que "),
+        _c("span", { staticClass: "text-danger" }, [
+          _vm._v("no podemos recuperarlo")
+        ]),
         _vm._v(
-          "\n                    Por favor tenga en cuenta que no podemos recuperarlo y si lo pierde, para obtener uno nuevo deberá registrarse en nuestro sitio web como usuario."
+          " y si lo pierde, deberá generar un nuevo código desde nuestra web, registrandose como usuario."
         )
       ])
     ])
@@ -55658,23 +55673,23 @@ if(false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b43e3f08\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue":
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a8632276\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/ListGroup.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b43e3f08\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue");
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a8632276\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/ListGroup.vue");
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("ded58c14", content, false);
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("c89c40ce", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b43e3f08\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./List-group.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b43e3f08\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./List-group.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a8632276\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ListGroup.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a8632276\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ListGroup.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -69065,19 +69080,19 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-rentals-app/components/List-group.vue":
+/***/ "./resources/assets/js/vue-rentals-app/components/ListGroup.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b43e3f08\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue")
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a8632276\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-rentals-app/components/ListGroup.vue")
 }
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-rentals-app/components/ListGroup.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-b43e3f08\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/List-group.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a8632276\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-rentals-app/components/ListGroup.vue")
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
@@ -69091,9 +69106,9 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/vue-rentals-app/components/List-group.vue"
+Component.options.__file = "resources/assets/js/vue-rentals-app/components/ListGroup.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] List-group.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] ListGroup.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -69102,9 +69117,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-b43e3f08", Component.options)
+    hotAPI.createRecord("data-v-a8632276", Component.options)
   } else {
-    hotAPI.reload("data-v-b43e3f08", Component.options)
+    hotAPI.reload("data-v-a8632276", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
