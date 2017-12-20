@@ -1,77 +1,41 @@
 <template>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-12">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-12">
                     <btn-switch textLeft="Editar" textRight="Cancelar"></btn-switch>
-                    <div class="alert alert-warning alert-dismissable text-center">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <icon-app iconImage="times"></icon-app>
-                        </button>
-                        <span>Si desea cambiar todo, deberá cancelar la reserva actual y generar una nueva reserva.</span>
-                    </div>
                 </div>
             </div>
-            <div class="row" v-if="seeLeft">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row justify-content-center" v-if="seeLeft">
+                <div class="col-12 col-md-12">
                     <div>
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active">
-                                <a href="#cottage" aria-controls="cottage" role="tab" data-toggle="tab" @click="clearTrash('id')">Cambiar cabaña</a>
+                            <li role="presentation" class="nav-item">
+                                <a class="nav-link active" href="#dates" aria-controls="dates" role="tab" data-toggle="tab" @click="clearTrash('date')">Cambiar fecha</a>
                             </li>
-                            <li role="presentation">
-                                <a href="#dates" aria-controls="dates" role="tab" data-toggle="tab" @click="clearTrash('date')">Cambiar fecha</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#cancelar" aria-controls="cancelar" role="tab" data-toggle="tab" @click="clearTrash('state')">Cancelar</a>
+                            <li role="presentation" class="nav-item">
+                                <a class="nav-link" href="#cancelar" aria-controls="cancelar" role="tab" data-toggle="tab" @click="clearTrash('state')">Cancelar</a>
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="cottage">
-                                <div class="text-center">
-                                    <h3>Cambiar la cabaña manteniendo las fechas</h3>
-                                    <form action="" class="form-inline">
-                                        <div class="form-group">
-                                            <label for="cottages" class="sr-only">Cabañas:</label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon"><icon-app iconImage="home"></icon-app></div>
-                                                <select name="cottages" id="cottages" class="form-control" v-model="trash.cottage" @change="trash.cottage_id = 0;">
-                                                    <option v-for="cottage in cottages" :value="cottage.number">{{ cottage.name.toUpperCase() + ' - (' + cottage.type.toUpperCase() + ')'}}</option>
-                                                </select>
-                                            </div>
-                                            <button class="btn btn-primary" @click.prevent="isAvailable"><icon-app iconImage="search"></icon-app></button>
-                                        </div>
-                                    </form>
-                                    <br>
-                                    <div class="text-center">
-                                        <button class="btn btn-lg btn-success" v-if="trash.cottage_id !== 0" @click="sendChangesToServer">Cambiar cabaña <icon-app iconImage="exchange"></icon-app></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="dates">
-                                <div class="text-center">
-                                    <div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-4 col-lg-offset-2 col-lg-4">
-                                        <div :class="['form-group', {'has-error': !trash.date_from}]">
-                                            <label for="dateFrom"></label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon date-piker">Desde <icon-app iconImage="calendar"></icon-app></div>
-                                                <date-picker placeholder="Seleccione la fecha..." :config="dtpConfg" id="dateFrom" name="dateFrom" v-model="trash.date_from"></date-picker>
-                                            </div>
+                            <div role="tabpanel" class="tab-pane active pt-3" id="dates">
+                                <form class="form-inline justify-content-center">
+                                    <div :class="['form-group', 'form-row', {'has-error': !trash.date_from}, 'mr-2']">
+                                        <label for="dateFrom" class="col-form-label sr-only">Desde</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon date-piker">Desde <icon-app iconImage="calendar"></icon-app></div>
+                                            <date-picker placeholder="Seleccione la fecha..." :config="dtpConfg" id="dateFrom" name="dateFrom" v-model="trash.date_from"></date-picker>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                        <div :class="['form-group', {'has-error': !trash.date_to}]">
-                                            <label for="dateTo"></label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon date-piker">Hasta <icon-app iconImage="calendar"></icon-app></div>
-                                                <date-picker placeholder="Seleccione la fecha..." :config="dtpConfg" id="dateTo" name="dateTo" v-model="trash.date_to"></date-picker>
-                                            </div>
+                                    <div :class="['form-group', 'form-row', {'has-error': !trash.date_to}, 'mr-2']">
+                                        <label for="dateTo" class="col-form-label sr-only">Hasta</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon date-piker">Hasta <icon-app iconImage="calendar"></icon-app></div>
+                                            <date-picker placeholder="Seleccione la fecha..." :config="dtpConfg" id="dateTo" name="dateTo" v-model="trash.date_to"></date-picker>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8 text-center">
-                                        <button class="btn btn-lg btn-primary" v-if="trash.cottage_id !== 0" @click="isAvailable">Consultar fechas <icon-app iconImage="exchange"></icon-app></button>
-                                    </div>
-                                </div>
+                                    <button class="btn btn-outline-primary" @click="isAvailable">Consultar fechas <icon-app iconImage="exchange"></icon-app></button>
+                                </form>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="cancelar">
                                 <div class="text-center">

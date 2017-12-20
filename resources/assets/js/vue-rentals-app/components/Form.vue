@@ -17,6 +17,13 @@
                     Consultar <icon-app :iconImage="btnIconImg" :aditionalClasses="btnClasses"></icon-app>
                 </button>
             </div>
+            <transition name="invalid-date"
+                enter-active-class="animated rubberBand"
+                leave-active-class="animated bounceOutRight">
+                <div class="alert alert-warning" v-if="invalidDate">
+                    <small> <icon-app icon-image="exclamation-triangle"></icon-app> La fecha de desde o de inicio no puede ser menor a la fecha hasta o de finalización.</small>
+                </div>
+            </transition>
         </form>
     </div>
 </template>
@@ -60,6 +67,9 @@
             },
             checkSimple() {
                 return this.bedSimple ? 'check-square-o' : 'square-o';
+            },
+            invalidDate() {
+                if (this.dateFrom && this.dateTo) return this.dateFrom.isAfter(this.dateTo);
             },
             ...mapState('rentals', {
                 cottages: state => state.data.cottages,

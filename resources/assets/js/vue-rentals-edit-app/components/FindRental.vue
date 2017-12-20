@@ -1,19 +1,17 @@
 <template>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="row justify-content-around">
+        <div class="col-12 col-md-12">
             <h2 class="text-center"><icon-app iconImage="search"></icon-app> Buscar reserva</h2>
-            <div class="text-center">
-                <form action="" class="form-inline">
-                    <div class="form-group">
-                        <label for="search_code" class="sr-only">Código:</label>
-                        <div class="input-group">
-                            <div class="input-group-addon"><icon-app iconImage="barcode"></icon-app></div>
-                            <input name="search_code" id="search_code" type="text" class="form-control" v-model="code">
-                        </div>
-                        <button class="btn btn-primary" @click.prevent="findRentalForCode"><icon-app iconImage="search"></icon-app></button>
+            <form action="" class="form-inline justify-content-center mt-3">
+                <div class="form-group form-row">
+                    <label for="search_code" class="col-form-label sr-only">Código:</label>
+                    <div class="input-group mr-2">
+                        <div class="input-group-addon"><icon-app iconImage="barcode"></icon-app></div>
+                        <input name="search_code" id="search_code" type="text" class="form-control" v-model="code">
                     </div>
-                </form>
-            </div>
+                    <button class="btn btn-outline-primary" @click.prevent="findRentalForCode"><icon-app iconImage="search"></icon-app></button>
+                </div>
+            </form>
         </div>
     </div>
 </template>

@@ -1831,6 +1831,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
@@ -2227,6 +2228,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
@@ -2285,6 +2293,9 @@ exports.default = {
         },
         checkSimple: function checkSimple() {
             return this.bedSimple ? 'check-square-o' : 'square-o';
+        },
+        invalidDate: function invalidDate() {
+            if (this.dateFrom && this.dateTo) return this.dateFrom.isAfter(this.dateTo);
         }
     }, (0, _vuex.mapState)('rentals', {
         cottages: function cottages(state) {
@@ -54106,8 +54117,38 @@ var render = function() {
             ],
             1
           )
-        ])
-      ]
+        ]),
+        _vm._v(" "),
+        _c(
+          "transition",
+          {
+            attrs: {
+              name: "invalid-date",
+              "enter-active-class": "animated rubberBand",
+              "leave-active-class": "animated bounceOutRight"
+            }
+          },
+          [
+            _vm.invalidDate
+              ? _c("div", { staticClass: "alert alert-warning" }, [
+                  _c(
+                    "small",
+                    [
+                      _c("icon-app", {
+                        attrs: { "icon-image": "exclamation-triangle" }
+                      }),
+                      _vm._v(
+                        " La fecha de desde o de inicio no puede ser menor a la fecha hasta o de finalización."
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e()
+          ]
+        )
+      ],
+      1
     )
   ])
 }
@@ -55330,7 +55371,9 @@ var staticRenderFns = [
           "\n                    Este código le permitirá operar en nuestro sitio web para modificar o cancelar la reserva, asi como también para poder realizar pedidos y otras operaciones desde nuestra web."
         ),
         _c("br"),
-        _vm._v("\n                    Por favor tenga en cuenta que "),
+        _vm._v(
+          "\n                    Tenga en cuenta que la reserva aún no está confirmada, para ello debe hacer el deposito de la seña indicada más abajo. Los datos para realizarlo se encuentran en el mail que le enviamos. El vencimiendo de la reserva se indica más abajo, si para esa fecha y hora la reserva no se confirmó, automáticamente se cae y la cabaña vuelve a quedar disponible para esa fecha.\n                    Por favor tenga en cuenta que "
+        ),
         _c("span", { staticClass: "text-danger" }, [
           _vm._v("no podemos recuperarlo")
         ]),

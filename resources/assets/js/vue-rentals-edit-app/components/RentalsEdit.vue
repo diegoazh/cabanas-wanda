@@ -1,6 +1,6 @@
 <template>
     <div id="reservas-edit-component" class="container jumbotron">
-        <div class="alert alert-danger">
+        <div class="alert alert-danger" v-if="!rental">
             <p>Por su seguridad solo podrá realizar modificaciones si tiene el código de la reserva. De no ser así registrese como usuario del sitio y genere un nuevo código.</p>
         </div>
         <find-app v-if="!rental"></find-app>

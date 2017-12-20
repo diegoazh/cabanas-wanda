@@ -16,6 +16,7 @@
                 <div class="alert alert-info">
                     <p class="text-justify">Enviamos un email al correo electronico ingresado en la reserva. Este contiene toda la información de la misma y el código de reserva que <span class="text-danger">es único y solo Ud. lo conoce</span>.<br>
                         Este código le permitirá operar en nuestro sitio web para modificar o cancelar la reserva, asi como también para poder realizar pedidos y otras operaciones desde nuestra web.<br>
+                        Tenga en cuenta que la reserva aún no está confirmada, para ello debe hacer el deposito de la seña indicada más abajo. Los datos para realizarlo se encuentran en el mail que le enviamos. El vencimiendo de la reserva se indica más abajo, si para esa fecha y hora la reserva no se confirmó, automáticamente se cae y la cabaña vuelve a quedar disponible para esa fecha.
                         Por favor tenga en cuenta que <span class="text-danger">no podemos recuperarlo</span> y si lo pierde, deberá generar un nuevo código desde nuestra web, registrandose como usuario.</p>
                 </div>
                 <table class="table table-striped">
