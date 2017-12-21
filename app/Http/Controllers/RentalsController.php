@@ -374,12 +374,20 @@ class RentalsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Rental  $rental
+     * @param  Integer  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rental $rental)
+    public function destroy($id)
     {
-        //
+        if (!$rental = Rental::find($id)) {
+
+            return response()->json(['error' => 'La reserva buscada no existe o ya fué eliminada.'], 404);
+
+        }
+
+        $rental->delete();
+
+        return response()->json(['message' => 'La reserva fué eliminada correctamente.'], 200);
     }
 
     /**
@@ -390,7 +398,7 @@ class RentalsController extends Controller
      */
     public function cottagesAvailables(RequestRental $request)
     {
-        $info = $request->only('dateFrom', 'dateTo');
+        $info = $request->all('dateFrom', 'dateTo', 'update', 'cottage_id', 'rental_id');
         $cottages = null;
 
         // cambiamos las fechas con Carbon ya que sino nos da error al consultar en la DB.
@@ -400,6 +408,18 @@ class RentalsController extends Controller
         if ($dateTo->lt($dateFrom)) {
 
             return response()->json(['title' => 'RANGO DE FECHAS INVALIDO', 'error' => 'La fecha final (o fecha hasta) no puede ser menor que la fecha de inicio (o fecha desde). Por favor corrija esto y reintente. Muchas gracias.'], 500);
+
+        }
+
+        if ($info['update']) {
+
+            if (!$rentals = Rental::checkForExtendsDate($dateFrom->toDateString(), $dateTo->toDateString(), $info['cottage_id'], $info['rental_id'])) {
+
+                $cottage = Cottage::find($info['cottage_id']);
+
+                return response()->json(compact($cottage), 200);
+
+            }
 
         }
 

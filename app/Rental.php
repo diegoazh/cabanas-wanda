@@ -99,4 +99,18 @@ class Rental extends Model
 
         return $cottages;
     }
+
+    public static function checkForExtendsDate($dateFrom, $dateTo, $cottage_id, $rental_id)
+    {
+        $rentals = Rental::where('id', '<>', $rental_id)
+            ->where('cottage_id', $cottage_id)
+            ->whereBetween('dateFrom', [$dateFrom, $dateTo])
+            ->orWhere(function ($query) use ($dateFrom, $dateTo) {
+                $query->whereBetween('dateTo', [$dateFrom, $dateTo]);
+            })->get();
+
+        if (!$rentals->count()) return [];
+
+        return $rentals->toArray();
+    }
 }

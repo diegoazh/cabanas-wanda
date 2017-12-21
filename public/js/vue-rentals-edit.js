@@ -2188,6 +2188,36 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _moment = __webpack_require__("./node_modules/moment/moment.js");
 
@@ -2237,22 +2267,35 @@ exports.default = {
             dtpConfg: {
                 locale: 'es',
                 format: 'DD/MM/YYYY',
-                minDate: (0, _moment2.default)().add(2, 'd').toDate(),
+                minDate: this.disableDateFrom ? (0, _moment2.default)(this.rental.dateFrom + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss').toDate() : (0, _moment2.default)().add(2, 'd').toDate(),
                 maxDate: (0, _moment2.default)().add(2, 'Y').toDate()
             }
         };
     },
 
-    computed: _extends({}, (0, _vuex.mapState)('rentals_edit', {
+    computed: _extends({
+        disableDateFrom: function disableDateFrom() {
+            return (0, _moment2.default)().add(2, 'd').isAfter((0, _moment2.default)(this.rental.dateFrom, 'YYYY-MM-DD'));
+        }
+    }, (0, _vuex.mapState)('rentals_edit', {
         rental: function rental(state) {
             return state.data.rental;
         }
     }), (0, _vuex.mapState)('rentals', {
+        toRentals: function toRentals(state) {
+            return state.data.toRentals;
+        },
         cottages: function cottages(state) {
             return state.data.cottages;
         }
     })),
     methods: _extends({
+        validateTypeOfDate: function validateTypeOfDate(date) {
+            if (!date) return;
+            if (_moment2.default.isDate(date)) return (0, _moment2.default)(date).format('DD/MM/YYYY');
+            if (_moment2.default.isMoment(date)) return date.format('DD/MM/YYYY');
+            if (typeof date === 'string') return (0, _moment2.default)(date).format('DD/MM/YYYY');
+        },
         clearTrash: function clearTrash(text) {
             switch (text) {
                 case 'id':
@@ -2282,23 +2325,16 @@ exports.default = {
             }
         },
         isAvailable: function isAvailable() {
-            var _this = this;
-
             this.queryCottagesAvailables({
-                isForCottage: true,
-                choice: +this.trash.cottage,
-                simple: false,
-                dateFrom: this.trash.date_from ? this.trash.date_from.format('DD/MM/YYYY') : (0, _moment2.default)(this.rental.dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY'),
-                dateTo: this.trash.date_to ? this.trash.date_to.format('DD/MM/YYYY') : (0, _moment2.default)(this.rental.dateTo, 'YYYY-MM-DD').format('DD/MM/YYYY'),
-                isRented: true
+                dateFrom: this.trash.date_from ? this.validateTypeOfDate(this.trash.date_from) : (0, _moment2.default)(this.rental.dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY'),
+                dateTo: this.trash.date_to ? this.validateTypeOfDate(this.trash.date_to) : (0, _moment2.default)(this.rental.dateTo, 'YYYY-MM-DD').format('DD/MM/YYYY'),
+                update: true,
+                cottage_id: this.rental.cottage.id,
+                rental_id: this.rental.id
             }).then(function (response) {
-                var index = _this.cottages.findIndex(function (cottage) {
-                    return cottage.number === _this.trash.cottage;
-                });
-                _this.trash.cottage_id = _this.cottages[index].id;
                 _vueNotifications2.default.success({
-                    title: 'Cabaña disponible',
-                    message: 'Puede realizar el cambio de cabaña sin inconvenientes.',
+                    title: 'Cabañas disponibles',
+                    message: 'Estas son las cabañas disponibles según las fechas seleccionadas.',
                     useSwal: true
                 });
             }).catch(function (error) {
@@ -2324,18 +2360,21 @@ exports.default = {
             });
             window.jQuery('#b3-modal-id').modal('hide');
         }
-    }, (0, _vuex.mapActions)('rentals', ['setCottages', 'queryCottagesAvailables']), (0, _vuex.mapActions)('rentals_edit', ['updateRental'])),
+    }, (0, _vuex.mapActions)('rentals', ['queryCottagesAvailables']), (0, _vuex.mapActions)('rentals_edit', ['updateRental'])),
     filters: {},
-    created: function created() {
-        this.setCottages();
+    created: function created() {},
+    beforeMount: function beforeMount() {
+        this.trash.date_from = (0, _moment2.default)(this.rental.dateFrom, 'YYYY-MM-DD').toDate();
+        this.trash.date_to = (0, _moment2.default)(this.rental.dateTo, 'YYYY-MM-DD').toDate();
     },
     mounted: function mounted() {
-        var _this2 = this;
+        var _this = this;
 
         window.EventBus.$on('change-side', function (bool) {
-            return _this2.seeLeft = bool;
+            return _this.seeLeft = bool;
         });
         this.trash.cottage = this.rental.cottage.number;
+        this.trash.cottage_id = this.rental.cottage.id;
     }
 };
 
@@ -2424,7 +2463,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.box-shadow {\n    -webkit-box-shadow: 3px 3px 8px #333333;\n    -moz-box-shadow: 3px 3px 8px #333333;\n    box-shadow: 3px 3px 8px #333333;\n}\n", ""]);
 
 // exports
 
@@ -37058,8 +37097,37 @@ var render = function() {
                     },
                     [
                       _c(
+                        "div",
+                        { staticClass: "alert alert-warning text-justify" },
+                        [
+                          _c(
+                            "h4",
+                            { staticClass: "text-center" },
+                            [
+                              _c("icon-app", {
+                                attrs: { "icon-image": "exclamation-circle" }
+                              }),
+                              _vm._v(" A tener en cuenta")
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _vm._m(0)
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
                         "form",
-                        { staticClass: "form-inline justify-content-center" },
+                        {
+                          staticClass: "form-inline justify-content-center",
+                          attrs: { action: "#" },
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              _vm.isAvailable($event)
+                            }
+                          }
+                        },
                         [
                           _c(
                             "div",
@@ -37092,7 +37160,6 @@ var render = function() {
                                         "input-group-addon date-piker"
                                     },
                                     [
-                                      _vm._v("Desde "),
                                       _c("icon-app", {
                                         attrs: { iconImage: "calendar" }
                                       })
@@ -37102,10 +37169,12 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("date-picker", {
                                     attrs: {
-                                      placeholder: "Seleccione la fecha...",
+                                      placeholder:
+                                        "Seleccione la fecha desde...",
                                       config: _vm.dtpConfg,
                                       id: "dateFrom",
-                                      name: "dateFrom"
+                                      name: "dateFrom",
+                                      disabled: _vm.disableDateFrom
                                     },
                                     model: {
                                       value: _vm.trash.date_from,
@@ -37152,7 +37221,6 @@ var render = function() {
                                         "input-group-addon date-piker"
                                     },
                                     [
-                                      _vm._v("Hasta "),
                                       _c("icon-app", {
                                         attrs: { iconImage: "calendar" }
                                       })
@@ -37162,7 +37230,8 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("date-picker", {
                                     attrs: {
-                                      placeholder: "Seleccione la fecha...",
+                                      placeholder:
+                                        "Seleccione la fecha hasta...",
                                       config: _vm.dtpConfg,
                                       id: "dateTo",
                                       name: "dateTo"
@@ -37185,7 +37254,7 @@ var render = function() {
                             "button",
                             {
                               staticClass: "btn btn-outline-primary",
-                              on: { click: _vm.isAvailable }
+                              attrs: { type: "submit" }
                             },
                             [
                               _vm._v("Consultar fechas "),
@@ -37196,7 +37265,137 @@ var render = function() {
                             1
                           )
                         ]
-                      )
+                      ),
+                      _vm._v(" "),
+                      _vm.toRentals.length
+                        ? _c(
+                            "div",
+                            { staticClass: "row" },
+                            _vm._l(_vm.toRentals, function(cottage) {
+                              return _c(
+                                "div",
+                                { staticClass: "col-12 col-md-6 py-5" },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "card box-shadow border-light"
+                                    },
+                                    [
+                                      _c("img", {
+                                        staticClass: "card-img-top",
+                                        attrs: {
+                                          src: /https?:\/\//.test(
+                                            cottage.images
+                                          )
+                                            ? cottage.images
+                                            : cottage.images[0],
+                                          alt: "Imagen de la cabaña"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "card-body" }, [
+                                        _c(
+                                          "h4",
+                                          {
+                                            staticClass:
+                                              "card-title text-capitalize bg-dark text-light py-2 px-3 rounded"
+                                          },
+                                          [_vm._v(_vm._s(cottage.name))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("ul", { staticClass: "card-text" }, [
+                                          _c("li", [
+                                            _vm._v("Numero: "),
+                                            _c(
+                                              "span",
+                                              {
+                                                staticClass:
+                                                  "badge badge-primary"
+                                              },
+                                              [_vm._v(_vm._s(cottage.number))]
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "li",
+                                            { staticClass: "text-capitalize" },
+                                            [
+                                              _vm._v("Capasidad: "),
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-info"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      cottage.accommodation
+                                                    )
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "li",
+                                            { staticClass: "text-capitalize" },
+                                            [
+                                              _vm._v("Tipo: "),
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-warning"
+                                                },
+                                                [_vm._v(_vm._s(cottage.type))]
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("li", [
+                                            _vm._v("Precio: "),
+                                            _c(
+                                              "span",
+                                              {
+                                                staticClass:
+                                                  "badge badge-danger"
+                                              },
+                                              [
+                                                _c("icon-app", {
+                                                  attrs: {
+                                                    "icon-image": "dollar"
+                                                  }
+                                                }),
+                                                _vm._v(_vm._s(cottage.price))
+                                              ],
+                                              1
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("li", [
+                                            _vm._v(
+                                              "Descripción: " +
+                                                _vm._s(
+                                                  cottage.description ||
+                                                    "Sin descripción"
+                                                )
+                                            )
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._m(1, true)
+                                      ])
+                                    ]
+                                  )
+                                ]
+                              )
+                            })
+                          )
+                        : _vm._e()
                     ]
                   ),
                   _vm._v(" "),
@@ -37208,7 +37407,7 @@ var render = function() {
                     },
                     [
                       _c("div", { staticClass: "text-center" }, [
-                        _vm._m(0),
+                        _vm._m(2),
                         _vm._v(" "),
                         _c(
                           "button",
@@ -37263,6 +37462,52 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", [
+      _c("li", [
+        _vm._v(
+          "La reserva se puede modificar en su totalidad hasta 48 hs antes; recuerde que el ingreso es a las 10 am por lo cual las 48 hs cuentan desde ese momento hacía atras."
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _vm._v(
+          "Con menos de 48 hs solo puede extenderla o reducirla pero no podrá cambiar la fecha de inicio de la misma."
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _vm._v(
+          "Si el problema fuera la fecha de inicio en ese caso solo podrá cancelar y generar una nueva reserva en las fechas disponibles al momento de su realización."
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _vm._v(
+          "Si la seña luego de la actualización de la reserva es mayor a la ya abonada deberá abonar la diferencia para confirmar la nueva reserva."
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _vm._v(
+          "Si la seña luego de la actualización es menor y ya fué abonada queda confirmada automáticamente y la diferencia aplica al saldo restante del total de la reserva."
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-center" }, [
+      _c("button", { staticClass: "btn btn-block btn-outline-success" }, [
+        _vm._v("Actualizar reserva")
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -50401,6 +50646,9 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     setRental: function setRental(state, rental) {
         state.data.rental = rental;
+    },
+    setUpdatedRental: function setUpdatedRental(state, rental) {
+        state.data.updatedRental = rental;
     }
 };
 
@@ -50417,7 +50665,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
     data: {
-        rental: null
+        rental: null,
+        updatedRental: null
     }
 };
 
@@ -50506,10 +50755,7 @@ exports.default = {
         var dispatch = _ref11.dispatch;
 
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('rentals/availables/', {
-                dateFrom: payload.dateFrom,
-                dateTo: payload.dateTo
-            }).then(function (response) {
+            _appAxios.http.post('rentals/availables/', payload).then(function (response) {
                 dispatch('setToRentals', response.data.cottages);
                 dispatch('auth/setQueryFinished', true, { root: true });
                 resolve();

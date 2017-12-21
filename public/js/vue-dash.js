@@ -62497,6 +62497,9 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     setRental: function setRental(state, rental) {
         state.data.rental = rental;
+    },
+    setUpdatedRental: function setUpdatedRental(state, rental) {
+        state.data.updatedRental = rental;
     }
 };
 
@@ -62513,7 +62516,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
     data: {
-        rental: null
+        rental: null,
+        updatedRental: null
     }
 };
 
@@ -62602,10 +62606,7 @@ exports.default = {
         var dispatch = _ref11.dispatch;
 
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('rentals/availables/', {
-                dateFrom: payload.dateFrom,
-                dateTo: payload.dateTo
-            }).then(function (response) {
+            _appAxios.http.post('rentals/availables/', payload).then(function (response) {
                 dispatch('setToRentals', response.data.cottages);
                 dispatch('auth/setQueryFinished', true, { root: true });
                 resolve();

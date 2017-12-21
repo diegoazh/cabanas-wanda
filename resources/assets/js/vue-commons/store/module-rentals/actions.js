@@ -49,18 +49,16 @@ export default {
     },
     queryCottagesAvailables({dispatch}, payload) {
         return new Promise((resolve, reject) => {
-            http.post('rentals/availables/', {
-                dateFrom: payload.dateFrom,
-                dateTo: payload.dateTo,
-            }).then(response => {
-                dispatch('setToRentals', response.data.cottages);
-                dispatch('auth/setQueryFinished', true, {root: true});
-                resolve();
-            }).catch(err => {
-                dispatch('setToRentals', []);
-                dispatch('auth/setQueryFinished', true, {root: true});
-                reject(handlingXhrErrors(err));
-            });
+            http.post('rentals/availables/', payload)
+                .then(response => {
+                    dispatch('setToRentals', response.data.cottages);
+                    dispatch('auth/setQueryFinished', true, {root: true});
+                    resolve();
+                }).catch(err => {
+                    dispatch('setToRentals', []);
+                    dispatch('auth/setQueryFinished', true, {root: true});
+                    reject(handlingXhrErrors(err));
+                });
             dispatch('setLastQueryData', payload);
         });
     },
