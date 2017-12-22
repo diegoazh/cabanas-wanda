@@ -29,12 +29,13 @@
                                         <li>Si la seña luego de la actualización es menor y ya fué abonada queda confirmada automáticamente y la diferencia aplica al saldo restante del total de la reserva.</li>
                                     </ul>
                                 </div>
-                                <form class="form-inline justify-content-center" action="#" @submit.prevent="isAvailable">
+                                <form class="form-inline justify-content-center" @submit.prevent>
                                     <div :class="['form-group', 'form-row', {'has-error': !trash.date_from}, 'mr-2']">
                                         <label for="dateFrom" class="col-form-label sr-only">Desde</label>
                                         <div class="input-group">
                                             <div class="input-group-addon date-piker"><icon-app iconImage="calendar"></icon-app></div>
-                                            <date-picker placeholder="Seleccione la fecha desde..." :config="dtpConfg" id="dateFrom" name="dateFrom" v-model="trash.date_from" :disabled="disableDateFrom"></date-picker>
+                                            <date-picker v-if="!disableDateFrom" placeholder="Seleccione la fecha desde..." :config="dtpConfg" id="dateFrom" name="dateFrom" v-model="trash.date_from"></date-picker>
+                                            <input v-else type="text" :value="rental.dateFrom" class="form-control" disabled>
                                         </div>
                                     </div>
                                     <div :class="['form-group', 'form-row', {'has-error': !trash.date_to}, 'mr-2']">
@@ -44,7 +45,7 @@
                                             <date-picker placeholder="Seleccione la fecha hasta..." :config="dtpConfg" id="dateTo" name="dateTo" v-model="trash.date_to"></date-picker>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-outline-primary">Consultar fechas <icon-app iconImage="exchange"></icon-app></button>
+                                    <button @click="isAvailable" class="btn btn-outline-primary">Consultar fechas <icon-app iconImage="exchange"></icon-app></button>
                                 </form>
                                 <div class="row" v-if="toRentals.length">
                                     <div class="col-12 col-md-6 py-5" v-for="cottage in toRentals">
@@ -60,8 +61,17 @@
                                                     <li>Descripción: {{ cottage.description || 'Sin descripción'}}</li>
                                                 </ul>
                                                 <div class="text-center">
-                                                    <button class="btn btn-block btn-outline-success">Actualizar reserva</button>
+                                                    <button class="btn btn-block btn-outline-success" data-toggle="modal" data-target="#rental-update">Actualizar reserva</button>
                                                 </div>
+                                                <modal-app modal-title="Actualización de reserva" :action-btn-save="sendRentalUpdate"
+                                                           modal-id="rental-update" modal-header-classes="bg-warning text-dark"
+                                                           modal-footer-classes="bg-light" type-btn-save="btn-outline-success"
+                                                           type-btn-close="btn-outline-secondary" txt-btn-save="Actualizar"
+                                                           txt-btn-close="Cerrar">
+                                                    <div class="alert alert-warning text-center">
+                                                        <p>¿Esta seguro que desea actualizar la reserva?</p>
+                                                    </div>
+                                                </modal-app>
                                             </div>
                                         </div>
                                     </div>
@@ -72,11 +82,15 @@
                                     <div class="alert alert-danger">
                                         <p>Tenga en cuenta que si cancela la reserva con <b>menos de 48 hs</b> perderá compeltamente la seña.</p>
                                     </div>
-                                    <button class="btn btn-lg btn-danger" data-toggle="modal" data-target="#b3-modal-id">
+                                    <button class="btn btn-lg btn-danger" data-toggle="modal" data-target="#rental-cancel">
                                         <icon-app iconImage="times-circle"></icon-app> Cancelar
                                     </button>
                                 </div>
-                                <modal-app modalTitle="Cancelar reserva" :actionBtnSave="sendChangesToServer">
+                                <modal-app modal-title="Cancelación de reserva" :action-btn-save="sendRentalUpdate"
+                                           modal-id="rental-cancel" modal-header-classes="bg-danger text-light"
+                                           modal-footer-classes="bg-light" type-btn-save="btn-outline-danger"
+                                           type-btn-close="btn-outline-secondary" txt-btn-save="Cancelar"
+                                           txt-btn-close="Cerrar">
                                     <div class="alert alert-danger text-center">
                                         <p>¿Esta seguro que desea cancelar?</p>
                                     </div>
@@ -119,7 +133,7 @@
                 dtpConfg: {
                     locale: 'es',
                     format: 'DD/MM/YYYY',
-                    minDate: this.disableDateFrom ? moment(this.rental.dateFrom + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss').toDate() : moment().add(2, 'd').toDate(),
+                    minDate: moment().add(2, 'd').toDate(),
                     maxDate: moment().add(2, 'Y').toDate()
                 }
             }
@@ -145,24 +159,11 @@
             },
             clearTrash(text) {
                 switch(text) {
-                    case 'id': {
-                        this.trash.cottage_id = this.rental.cottage_id;
-                        this.trash.date_from = '';
-                        this.trash.date_to = '';
-                        this.trash.state = '';
-                    }
-                        break;
                     case 'date': {
-                        this.trash.cottage_id = this.rental.cottage_id;
-                        this.trash.date_from = moment(this.rental.dateFrom, 'YYYY-MM-DD').toDate();
-                        this.trash.date_to = moment(this.rental.dateTo, 'YYYY-MM-DD').toDate();
                         this.trash.state = '';
                     }
                         break;
                     case 'state': {
-                        this.trash.cottage_id = 0;
-                        this.trash.date_from = '';
-                        this.trash.date_to = '';
                         this.trash.state = 'cancelada';
                     }
                         break;
@@ -189,12 +190,12 @@
                     });
                 });
             },
-            sendChangesToServer() {
+            sendRentalUpdate() {
                 this.updateRental({
                     id: this.rental.id,
-                    cottage_id: this.trash.cottage_id,
-                    date_from: this.trash.date_from,
-                    date_to: this.trash.date_to,
+                    cottage_id: !this.trash.state ? id : null,
+                    dateFrom: !this.trash.state ? this.validateTypeOfDate(this.trash.date_from) : null,
+                    dateTo: !this.trash.state ? this.validateTypeOfDate(this.trash.date_to) : null,
                     state: this.trash.state,
                 }).then(response => {
                     window.EventBus.$emit('rental-updated');
@@ -202,19 +203,18 @@
                 }).catch(error => {
                     VueNoti.error(error);
                 });
-                window.jQuery('#b3-modal-id').modal('hide');
+                window.jQuery('#rental-update').modal('hide');
+                window.jQuery('#rental-cancel').modal('hide');
             },
             ...mapActions('rentals', ['queryCottagesAvailables']),
             ...mapActions('rentals_edit', ['updateRental']),
         },
-        filters: {},
-        created() {},
-        beforeMount() {
-            this.trash.date_from = moment(this.rental.dateFrom, 'YYYY-MM-DD').toDate();
-            this.trash.date_to = moment(this.rental.dateTo, 'YYYY-MM-DD').toDate();
-        },
+        filters: { },
+        created() { },
         mounted() {
             window.EventBus.$on('change-side', (bool) => this.seeLeft = bool);
+            if(!this.trash.date_from) this.trash.date_from = moment(this.rental.dateFrom, 'YYYY-MM-DD').toDate();
+            if(!this.trash.date_to) this.trash.date_to = moment(this.rental.dateTo, 'YYYY-MM-DD').toDate();
             this.trash.cottage = this.rental.cottage.number;
             this.trash.cottage_id = this.rental.cottage.id;
         }

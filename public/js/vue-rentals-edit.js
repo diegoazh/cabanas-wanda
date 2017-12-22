@@ -2218,6 +2218,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _moment = __webpack_require__("./node_modules/moment/moment.js");
 
@@ -2267,7 +2281,7 @@ exports.default = {
             dtpConfg: {
                 locale: 'es',
                 format: 'DD/MM/YYYY',
-                minDate: this.disableDateFrom ? (0, _moment2.default)(this.rental.dateFrom + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss').toDate() : (0, _moment2.default)().add(2, 'd').toDate(),
+                minDate: (0, _moment2.default)().add(2, 'd').toDate(),
                 maxDate: (0, _moment2.default)().add(2, 'Y').toDate()
             }
         };
@@ -2298,27 +2312,13 @@ exports.default = {
         },
         clearTrash: function clearTrash(text) {
             switch (text) {
-                case 'id':
-                    {
-                        this.trash.cottage_id = this.rental.cottage_id;
-                        this.trash.date_from = '';
-                        this.trash.date_to = '';
-                        this.trash.state = '';
-                    }
-                    break;
                 case 'date':
                     {
-                        this.trash.cottage_id = this.rental.cottage_id;
-                        this.trash.date_from = (0, _moment2.default)(this.rental.dateFrom, 'YYYY-MM-DD').toDate();
-                        this.trash.date_to = (0, _moment2.default)(this.rental.dateTo, 'YYYY-MM-DD').toDate();
                         this.trash.state = '';
                     }
                     break;
                 case 'state':
                     {
-                        this.trash.cottage_id = 0;
-                        this.trash.date_from = '';
-                        this.trash.date_to = '';
                         this.trash.state = 'cancelada';
                     }
                     break;
@@ -2345,12 +2345,12 @@ exports.default = {
                 });
             });
         },
-        sendChangesToServer: function sendChangesToServer() {
+        sendRentalUpdate: function sendRentalUpdate() {
             this.updateRental({
                 id: this.rental.id,
-                cottage_id: this.trash.cottage_id,
-                date_from: this.trash.date_from,
-                date_to: this.trash.date_to,
+                cottage_id: !this.trash.state ? id : null,
+                dateFrom: !this.trash.state ? this.validateTypeOfDate(this.trash.date_from) : null,
+                dateTo: !this.trash.state ? this.validateTypeOfDate(this.trash.date_to) : null,
                 state: this.trash.state
             }).then(function (response) {
                 window.EventBus.$emit('rental-updated');
@@ -2358,21 +2358,20 @@ exports.default = {
             }).catch(function (error) {
                 _vueNotifications2.default.error(error);
             });
-            window.jQuery('#b3-modal-id').modal('hide');
+            window.jQuery('#rental-update').modal('hide');
+            window.jQuery('#rental-cancel').modal('hide');
         }
     }, (0, _vuex.mapActions)('rentals', ['queryCottagesAvailables']), (0, _vuex.mapActions)('rentals_edit', ['updateRental'])),
     filters: {},
     created: function created() {},
-    beforeMount: function beforeMount() {
-        this.trash.date_from = (0, _moment2.default)(this.rental.dateFrom, 'YYYY-MM-DD').toDate();
-        this.trash.date_to = (0, _moment2.default)(this.rental.dateTo, 'YYYY-MM-DD').toDate();
-    },
     mounted: function mounted() {
         var _this = this;
 
         window.EventBus.$on('change-side', function (bool) {
             return _this.seeLeft = bool;
         });
+        if (!this.trash.date_from) this.trash.date_from = (0, _moment2.default)(this.rental.dateFrom, 'YYYY-MM-DD').toDate();
+        if (!this.trash.date_to) this.trash.date_to = (0, _moment2.default)(this.rental.dateTo, 'YYYY-MM-DD').toDate();
         this.trash.cottage = this.rental.cottage.number;
         this.trash.cottage_id = this.rental.cottage.id;
     }
@@ -37120,11 +37119,9 @@ var render = function() {
                         "form",
                         {
                           staticClass: "form-inline justify-content-center",
-                          attrs: { action: "#" },
                           on: {
                             submit: function($event) {
                               $event.preventDefault()
-                              _vm.isAvailable($event)
                             }
                           }
                         },
@@ -37167,23 +37164,28 @@ var render = function() {
                                     1
                                   ),
                                   _vm._v(" "),
-                                  _c("date-picker", {
-                                    attrs: {
-                                      placeholder:
-                                        "Seleccione la fecha desde...",
-                                      config: _vm.dtpConfg,
-                                      id: "dateFrom",
-                                      name: "dateFrom",
-                                      disabled: _vm.disableDateFrom
-                                    },
-                                    model: {
-                                      value: _vm.trash.date_from,
-                                      callback: function($$v) {
-                                        _vm.trash.date_from = $$v
-                                      },
-                                      expression: "trash.date_from"
-                                    }
-                                  })
+                                  !_vm.disableDateFrom
+                                    ? _c("date-picker", {
+                                        attrs: {
+                                          placeholder:
+                                            "Seleccione la fecha desde...",
+                                          config: _vm.dtpConfg,
+                                          id: "dateFrom",
+                                          name: "dateFrom"
+                                        },
+                                        model: {
+                                          value: _vm.trash.date_from,
+                                          callback: function($$v) {
+                                            _vm.trash.date_from = $$v
+                                          },
+                                          expression: "trash.date_from"
+                                        }
+                                      })
+                                    : _c("input", {
+                                        staticClass: "form-control",
+                                        attrs: { type: "text", disabled: "" },
+                                        domProps: { value: _vm.rental.dateFrom }
+                                      })
                                 ],
                                 1
                               )
@@ -37254,7 +37256,7 @@ var render = function() {
                             "button",
                             {
                               staticClass: "btn btn-outline-primary",
-                              attrs: { type: "submit" }
+                              on: { click: _vm.isAvailable }
                             },
                             [
                               _vm._v("Consultar fechas "),
@@ -37295,100 +37297,162 @@ var render = function() {
                                         }
                                       }),
                                       _vm._v(" "),
-                                      _c("div", { staticClass: "card-body" }, [
-                                        _c(
-                                          "h4",
-                                          {
-                                            staticClass:
-                                              "card-title text-capitalize bg-dark text-light py-2 px-3 rounded"
-                                          },
-                                          [_vm._v(_vm._s(cottage.name))]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("ul", { staticClass: "card-text" }, [
-                                          _c("li", [
-                                            _vm._v("Numero: "),
-                                            _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "badge badge-primary"
-                                              },
-                                              [_vm._v(_vm._s(cottage.number))]
-                                            )
-                                          ]),
+                                      _c(
+                                        "div",
+                                        { staticClass: "card-body" },
+                                        [
+                                          _c(
+                                            "h4",
+                                            {
+                                              staticClass:
+                                                "card-title text-capitalize bg-dark text-light py-2 px-3 rounded"
+                                            },
+                                            [_vm._v(_vm._s(cottage.name))]
+                                          ),
                                           _vm._v(" "),
                                           _c(
-                                            "li",
-                                            { staticClass: "text-capitalize" },
+                                            "ul",
+                                            { staticClass: "card-text" },
                                             [
-                                              _vm._v("Capasidad: "),
+                                              _c("li", [
+                                                _vm._v("Numero: "),
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "badge badge-primary"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(cottage.number)
+                                                    )
+                                                  ]
+                                                )
+                                              ]),
+                                              _vm._v(" "),
                                               _c(
-                                                "span",
+                                                "li",
                                                 {
-                                                  staticClass:
-                                                    "badge badge-info"
+                                                  staticClass: "text-capitalize"
                                                 },
                                                 [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      cottage.accommodation
-                                                    )
+                                                  _vm._v("Capasidad: "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "badge badge-info"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          cottage.accommodation
+                                                        )
+                                                      )
+                                                    ]
                                                   )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "li",
+                                                {
+                                                  staticClass: "text-capitalize"
+                                                },
+                                                [
+                                                  _vm._v("Tipo: "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "badge badge-warning"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(cottage.type)
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c("li", [
+                                                _vm._v("Precio: "),
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "badge badge-danger"
+                                                  },
+                                                  [
+                                                    _c("icon-app", {
+                                                      attrs: {
+                                                        "icon-image": "dollar"
+                                                      }
+                                                    }),
+                                                    _vm._v(
+                                                      _vm._s(cottage.price)
+                                                    )
+                                                  ],
+                                                  1
+                                                )
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("li", [
+                                                _vm._v(
+                                                  "Descripción: " +
+                                                    _vm._s(
+                                                      cottage.description ||
+                                                        "Sin descripción"
+                                                    )
+                                                )
+                                              ])
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _vm._m(1, true),
+                                          _vm._v(" "),
+                                          _c(
+                                            "modal-app",
+                                            {
+                                              attrs: {
+                                                "modal-title":
+                                                  "Actualización de reserva",
+                                                "action-btn-save":
+                                                  _vm.sendRentalUpdate,
+                                                "modal-id": "rental-update",
+                                                "modal-header-classes":
+                                                  "bg-warning text-dark",
+                                                "modal-footer-classes":
+                                                  "bg-light",
+                                                "type-btn-save":
+                                                  "btn-outline-success",
+                                                "type-btn-close":
+                                                  "btn-outline-secondary",
+                                                "txt-btn-save": "Actualizar",
+                                                "txt-btn-close": "Cerrar"
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "alert alert-warning text-center"
+                                                },
+                                                [
+                                                  _c("p", [
+                                                    _vm._v(
+                                                      "¿Esta seguro que desea actualizar la reserva?"
+                                                    )
+                                                  ])
                                                 ]
                                               )
                                             ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "li",
-                                            { staticClass: "text-capitalize" },
-                                            [
-                                              _vm._v("Tipo: "),
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "badge badge-warning"
-                                                },
-                                                [_vm._v(_vm._s(cottage.type))]
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c("li", [
-                                            _vm._v("Precio: "),
-                                            _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "badge badge-danger"
-                                              },
-                                              [
-                                                _c("icon-app", {
-                                                  attrs: {
-                                                    "icon-image": "dollar"
-                                                  }
-                                                }),
-                                                _vm._v(_vm._s(cottage.price))
-                                              ],
-                                              1
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("li", [
-                                            _vm._v(
-                                              "Descripción: " +
-                                                _vm._s(
-                                                  cottage.description ||
-                                                    "Sin descripción"
-                                                )
-                                            )
-                                          ])
-                                        ]),
-                                        _vm._v(" "),
-                                        _vm._m(1, true)
-                                      ])
+                                          )
+                                        ],
+                                        1
+                                      )
                                     ]
                                   )
                                 ]
@@ -37415,7 +37479,7 @@ var render = function() {
                             staticClass: "btn btn-lg btn-danger",
                             attrs: {
                               "data-toggle": "modal",
-                              "data-target": "#b3-modal-id"
+                              "data-target": "#rental-cancel"
                             }
                           },
                           [
@@ -37434,8 +37498,15 @@ var render = function() {
                         "modal-app",
                         {
                           attrs: {
-                            modalTitle: "Cancelar reserva",
-                            actionBtnSave: _vm.sendChangesToServer
+                            "modal-title": "Cancelación de reserva",
+                            "action-btn-save": _vm.sendRentalUpdate,
+                            "modal-id": "rental-cancel",
+                            "modal-header-classes": "bg-danger text-light",
+                            "modal-footer-classes": "bg-light",
+                            "type-btn-save": "btn-outline-danger",
+                            "type-btn-close": "btn-outline-secondary",
+                            "txt-btn-save": "Cancelar",
+                            "txt-btn-close": "Cerrar"
                           }
                         },
                         [
@@ -37503,9 +37574,14 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "text-center" }, [
-      _c("button", { staticClass: "btn btn-block btn-outline-success" }, [
-        _vm._v("Actualizar reserva")
-      ])
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-block btn-outline-success",
+          attrs: { "data-toggle": "modal", "data-target": "#rental-update" }
+        },
+        [_vm._v("Actualizar reserva")]
+      )
     ])
   },
   function() {
