@@ -1,5 +1,6 @@
 <template>
     <div id="reservas-edit-component" class="container jumbotron">
+        <h1 class="text-center">Edición y cancelación de reservas</h1>
         <div class="alert alert-danger" v-if="!rental">
             <p>Por su seguridad solo podrá realizar modificaciones si tiene el código de la reserva. De no ser así registrese como usuario del sitio y genere un nuevo código.</p>
         </div>
