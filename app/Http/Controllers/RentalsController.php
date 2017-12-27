@@ -8,6 +8,8 @@ use App\Http\Requests\RequestRental;
 use App\Http\Requests\RequestRentalFind;
 use App\Http\Requests\RequestRentalStore;
 use App\Http\Requests\RequestRentalUpdate;
+use App\Mail\AlertNewRental;
+use App\Mail\AlertNewUpdated;
 use App\Mail\RentalSuccess;
 use App\Mail\RentalUpdated;
 use App\Rental;
@@ -126,6 +128,7 @@ class RentalsController extends Controller
         }
 
         Mail::to($finalRental->user->email, $finalRental->user->formalFullName)->send(new RentalSuccess($finalRental));
+        Mail::to('cabaniasdewanda@gmail.com', 'Administradores Hotel Cabañas de Wanda')->send(new AlertNewRental($rental));
 
         return response()->json(compact('finalRental'), 200);
     }
@@ -385,6 +388,7 @@ class RentalsController extends Controller
         }
 
         Mail::to($rental->user->email, $rental->user->formalFullName)->send(new RentalUpdated($rental));
+        Mail::to('cabaniasdewanda@gmail.com', 'Administradores Hotel Cabañas de Wanda')->send(new AlertNewUpdated($rental));
 
         return response()->json(['message' => 'La reserva se actualizó correctamente.', 'rental' => $rental], 200);
     }
