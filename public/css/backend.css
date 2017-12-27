@@ -11,165 +11,170 @@
   padding: 0px;
   border: 5px solid #2b669a;
 }
-.cursorPointer {
-  cursor: pointer;
+.menu-fixed {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
+  -webkit-box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.5);
+          box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.5);
 }
-.menu-background {
-  background-color: #00A0B0;
-}
-*:disabled {
-  cursor: not-allowed;
-  pointer-events: all !important;
-}
-/*.menu-fixed {
-  position:fixed;
-  z-index:1000;
-  top:0;
-  width:100%;
-  box-shadow:0px 4px 3px rgba(0,0,0,.5);
-}*/
 /********************************************
  * Estilos del sitio
  ********************************************/
 * {
   font-family: Raleway, sans-serif;
 }
-body .container-backend #content {
-  min-height: 45.4rem;
+body {
+  background-color: #FFEFD5;
 }
-body .container-backend #content #main_content .card .tt-users:before {
-  content: '\F0C0';
-  font-family: 'FontAwesome';
-  margin-right: 5px;
+body .container-backend {
+  background-image: url(/images/cabanas2.jpg?ed6c34914de6a04575f4665e7ce28864);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
-body .container-backend #content #main_content .card .tt-cottages:before {
-  content: '\F015';
-  font-family: 'FontAwesome';
-  margin-right: 5px;
+body .container-backend #header nav.navbar {
+  border-radius: 0px;
+  margin-bottom: 0px;
 }
-body .container-backend #content #main_content .card .selectize-input {
-  line-height: inherit;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
+body .container-backend #header nav.navbar .container .navbar-header a {
+  padding: 0;
 }
-body .container-backend #content #main_content .card .help-info .help-icon {
+body .container-backend #header nav.navbar .container .navbar-header a span#app_name {
   position: relative;
-  float: right;
-  top: -5px;
-  left: 7px;
-  z-index: 10;
+  top: -25%;
 }
-body .container-backend #content #optional_content .card .tt-actual-images span {
-  text-decoration: underline;
+body .container-backend #header nav.navbar .container .navbar-header a:before {
+  content: url(/images/logo-cabanas-wanda-45x44.png?320329eca98224e52337c86320d98632);
+  width: 50%;
+  height: auto;
+  margin-right: 5px;
 }
-body .container-backend #content #optional_content .card .cottage-images div img {
-  margin-bottom: 15px;
+body .container-backend #header nav.navbar .container .navbar-collapse ul.navbar-right li a.img-user-profile {
+  padding: 5px;
 }
-body .container-backend #content #lateral_menu a {
+body .container-backend #header nav.navbar .container .navbar-collapse ul.navbar-right li a.img-user-profile img {
+  display: inline-block;
+  width: 40px;
+  height: auto;
+}
+body .container-backend #content {
+  height: 980px;
+  min-height: 980px;
+  max-height: 100%;
+}
+body .container-backend #content #main_menu .tt-menu {
+  display: inline-block;
+  text-align: center;
+  border-bottom: dotted;
+  font-size: 300%;
+  font-weight: bold;
+  text-shadow: #000000 2px 2px 3px;
+  color: #ffffff;
+}
+body .container-backend #content #main_menu a {
   text-decoration: none;
 }
-body .container-backend #content #lateral_menu ul,
-body .container-backend #content #lateral_menu ul ul {
+body .container-backend #content #main_menu ul,
+body .container-backend #content #main_menu ul ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-body .container-backend #content #lateral_menu #wrapper {
+body .container-backend #content #main_menu #wrapper {
   width: auto;
   margin: 20px auto;
   font-size: 20px;
 }
-body .container-backend #content #lateral_menu .menu {
+body .container-backend #content #main_menu .menu {
   width: auto;
   height: auto;
   -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.73), 0px 0px 18px 0px rgba(0, 0, 0, 0.13);
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.73), 0px 0px 18px 0px rgba(0, 0, 0, 0.13);
 }
-body .container-backend #content #lateral_menu .menu > li > a {
+body .container-backend #content #main_menu .menu > li > a {
   background-color: #A0522D;
   border-bottom: 1px solid #33373d;
   -webkit-box-shadow: inset 0px 1px 0px 0px #878e98;
   box-shadow: inset 0px 1px 0px 0px #878e98;
   width: 100%;
-  height: 3rem;
-  line-height: 3rem;
-  text-indent: 1rem;
+  height: 2.75em;
+  line-height: 2.75em;
+  text-indent: 2.75em;
   display: block;
   position: relative;
   font-weight: 600;
   color: #fff;
   text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  word-wrap: break-word;
 }
-body .container-backend #content #lateral_menu .menu ul li a {
+body .container-backend #content #main_menu .menu ul li a {
   background: #fff;
   border-bottom: 1px solid #efeff0;
   width: 100%;
-  height: 3rem;
-  min-height: 3rem;
-  line-height: 3rem;
-  text-indent: 2.5rem;
+  height: 2.75em;
+  line-height: 2.75em;
+  text-indent: 2.75em;
   display: block;
   position: relative;
-  font-size: 1rem;
+  font-size: 0.923em;
   font-weight: 400;
   color: #878d95;
-  word-wrap: break-word;
 }
-body .container-backend #content #lateral_menu .menu ul li:last-child a {
+body .container-backend #content #main_menu .menu ul li:last-child a {
   border-bottom: 1px solid #33373d;
 }
-body .container-backend #content #lateral_menu .menu > li > a:hover,
-body .container-backend #content #lateral_menu .menu > li > a.active {
+body .container-backend #content #main_menu .menu > li > a:hover,
+body .container-backend #content #main_menu .menu > li > a.active {
   background-color: #CD853F;
   border-bottom: 1px solid #103c56;
   -webkit-box-shadow: inset 0px 1px 0px 0px #6ad2ef;
   box-shadow: inset 0px 1px 0px 0px #6ad2ef;
 }
-body .container-backend #content #lateral_menu .menu > li > a.active {
+body .container-backend #content #main_menu .menu > li > a.active {
   border-bottom: 1px solid #1a638f;
 }
-body .container-backend #content #lateral_menu .menu > li > a.panel-dash:before {
+body .container-backend #content #main_menu .menu > li > a.panel-dash:before {
   content: '\F0E4';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-backend #content #lateral_menu .menu > li > a.frontend:before {
+body .container-backend #content #main_menu .menu > li > a.frontend:before {
   content: '\F108';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-backend #content #lateral_menu .menu > li > a.cottage:before {
+body .container-backend #content #main_menu .menu > li > a.cottage:before {
   content: '\F015';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-backend #content #lateral_menu .menu > li > a.promotion:before {
+body .container-backend #content #main_menu .menu > li > a.promotion:before {
   content: '\F06B';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-backend #content #lateral_menu .menu > li > a.claims:before {
+body .container-backend #content #main_menu .menu > li > a.claims:before {
   content: '\F071';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-backend #content #lateral_menu .menu > li > a.users:before {
+body .container-backend #content #main_menu .menu > li > a.users:before {
   content: '\F0C0';
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
-body .container-backend #content #lateral_menu .menu > li > a span {
-  font-size: 0.757rem;
+body .container-backend #content #main_menu .menu > li > a span {
+  font-size: 0.757em;
   display: inline-block;
   position: absolute;
-  right: 1rem;
+  right: 1em;
   top: 50%;
   background: #FFEFD5;
-  line-height: 1rem;
+  line-height: 1em;
   height: auto;
-  padding: .4rem .6rem;
-  margin: -0.8rem 0 0 0;
+  padding: .4em .6em;
+  margin: -0.8em 0 0 0;
   color: #878d95;
   text-indent: 0;
   text-align: center;
@@ -179,11 +184,11 @@ body .container-backend #content #lateral_menu .menu > li > a span {
   text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   font-weight: 500;
 }
-body .container-backend #content #lateral_menu .menu > li > a:hover span,
-body .container-backend #content #lateral_menu .menu > li a.active span {
+body .container-backend #content #main_menu .menu > li > a:hover span,
+body .container-backend #content #main_menu .menu > li a.active span {
   background: #FFEFD5;
 }
-body .container-backend #content #lateral_menu .menu ul > li > a span {
+body .container-backend #content #main_menu .menu ul > li > a span {
   font-size: 0.757em;
   display: inline-block;
   position: absolute;
@@ -201,7 +206,7 @@ body .container-backend #content #lateral_menu .menu ul > li > a span {
   border-radius: .769em;
   text-shadow: 0px 0px 0px rgba(255, 255, 255, 0.01);
 }
-body .container-backend #content #lateral_menu .menu > li > ul li a:before {
+body .container-backend #content #main_menu .menu > li > ul li a:before {
   content: '\25B6';
   font-size: 8px;
   color: #bcbcbf;
@@ -211,10 +216,69 @@ body .container-backend #content #lateral_menu .menu > li > ul li a:before {
   top: 0;
   left: -2.7em;
 }
-body .container-backend #content #lateral_menu .menu > li > ul li:hover a,
-body .container-backend #content #lateral_menu .menu > li > ul li:hover a span,
-body .container-backend #content #lateral_menu .menu > li > ul li:hover a:before {
+body .container-backend #content #main_menu .menu > li > ul li:hover a,
+body .container-backend #content #main_menu .menu > li > ul li:hover a span,
+body .container-backend #content #main_menu .menu > li > ul li:hover a:before {
   color: #32373D;
+}
+body .container-backend #content #main_content .panel {
+  margin-top: 10%;
+}
+body .container-backend #content #main_content .panel .tt-users,
+body .container-backend #content #main_content .panel .tt-cottages {
+  margin-left: 10px;
+}
+body .container-backend #content #main_content .panel .tt-users:before {
+  content: '\F0C0';
+  font-family: 'FontAwesome';
+  margin-right: 5px;
+}
+body .container-backend #content #main_content .panel .tt-cottages:before {
+  content: '\F015';
+  font-family: 'FontAwesome';
+  margin-right: 5px;
+}
+body .container-backend #content #main_content .panel .table-responsive {
+  margin: 7px 10px;
+}
+body .container-backend #content #main_content .panel .table-responsive table tbody tr td {
+  text-transform: capitalize;
+}
+body .container-backend #content #main_content .panel .table-responsive table tbody tr td.email-lower {
+  text-transform: none;
+}
+body .container-backend #content #main_content .panel.form-panel {
+  border: 2px dashed #808080;
+}
+body .container-backend #content #main_content .panel.form-panel .panel-heading {
+  background-image: none;
+  background-color: #A0522D;
+  color: #ffffff;
+  border-bottom: 2px dashed #ffffff;
+}
+body .container-backend #content #main_content .panel.form-panel .panel-heading h3.tt-cottages:before {
+  content: '\F015';
+  font-family: 'FontAwesome';
+  margin-right: 5px;
+}
+body .container-backend #content #main_content .panel.form-panel .help-info {
+  display: block;
+}
+body .container-backend #content #main_content .panel.form-panel .help-info .help-icon {
+  position: relative;
+  float: right;
+  top: -5px;
+  left: 7px;
+  z-index: 10;
+}
+body .container-backend #content #optional_content .panel {
+  margin-top: 10%;
+}
+body .container-backend #content #optional_content .panel .tt-actual-images span {
+  text-decoration: underline;
+}
+body .container-backend #content #optional_content .panel .cottage-images div img {
+  margin-bottom: 15px;
 }
 body .container-backend #footer #footer_rights {
   background-color: #7a7a7a;
