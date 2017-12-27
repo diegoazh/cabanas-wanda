@@ -11,9 +11,10 @@ Por favor conserva este e-mail como comprobante de la actualización de tu reser
 - Precio: **${{ $rental->cottage_price }} AR**
 - Dias: **{{ $rental->total_days}}**
 - Descuentos: **${{ $rental->deductions ? $rental->deductions : 0 }} AR**
-- Precio total: **${{ ($rental->cottage_price * $rental->total_days) - $rental->deductions }} AR**
+- Precio total: **${{ $rental->finalPayment }} AR**
 - Desde: **{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $rental->dateFrom . ' 10:00:00')->format('d/m/Y H:i:s') }}**
 - Hasta: **{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $rental->dateTo . ' 10:00:00')->format('d/m/Y H:i:s') }}**
+- Monto reserva: **${{ $rental->finalPayment * 30 / 100 }} AR**
 - Vto. reserva: **{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $rental->dateFrom . ' 10:00:00')->subDay()->format('d/m/Y H:i:s') }}**
 - Código de reserva: **{{ $rental->code ? $rental->code : 'Sin código, contacte al administrador.' }}**
 

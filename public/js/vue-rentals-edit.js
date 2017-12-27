@@ -2071,6 +2071,115 @@ exports.default = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/vue-rentals-edit-app/components/InfoRentalUpdated.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
+var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    components: {
+        'icon-app': _Icon2.default
+    },
+    data: function data() {
+        return {};
+    },
+
+    computed: _extends({}, (0, _vuex.mapState)('rentals_edit', {
+        updatedRental: function updatedRental(state) {
+            return state.data.updatedRental;
+        }
+    })),
+    methods: _extends({
+        clearRental: function clearRental() {
+            this.setUpdatedRental(null);
+        }
+    }, (0, _vuex.mapMutations)('rentals_edit', ['setUpdatedRental'])),
+    filters: {},
+    created: function created() {},
+    mounted: function mounted() {}
+};
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/vue-rentals-edit-app/components/RentalsEdit.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2092,6 +2201,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
@@ -2103,12 +2213,17 @@ var _UpdateRental = __webpack_require__("./resources/assets/js/vue-rentals-edit-
 
 var _UpdateRental2 = _interopRequireDefault(_UpdateRental);
 
+var _InfoRentalUpdated = __webpack_require__("./resources/assets/js/vue-rentals-edit-app/components/InfoRentalUpdated.vue");
+
+var _InfoRentalUpdated2 = _interopRequireDefault(_InfoRentalUpdated);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
     components: {
         'find-app': _FindRental2.default,
-        'update-app': _UpdateRental2.default
+        'update-app': _UpdateRental2.default,
+        'updated-app': _InfoRentalUpdated2.default
     },
     data: function data() {
         return {};
@@ -2117,6 +2232,9 @@ exports.default = {
     computed: _extends({}, (0, _vuex.mapState)('rentals_edit', {
         rental: function rental(state) {
             return state.data.rental;
+        },
+        updatedRental: function updatedRental(state) {
+            return state.data.updatedRental;
         }
     })),
     methods: _extends({}, (0, _vuex.mapMutations)('rentals_edit', ['setRental'])),
@@ -2144,6 +2262,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2291,6 +2414,7 @@ exports.default = {
     data: function data() {
         return {
             seeLeft: true,
+            loading: false,
             trash: {
                 cottage: 0,
                 cottage_id: 0,
@@ -2381,6 +2505,7 @@ exports.default = {
             }).catch(function (error) {
                 _vueNotifications2.default.error(error);
             });
+            this.loading = true;
             window.jQuery('#rental-update').modal('hide');
             window.jQuery('#rental-cancel').modal('hide');
             this.setToRentals([]);
@@ -2458,7 +2583,22 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.box-shadow {\n    -webkit-box-shadow: 3px 3px 8px #333333;\n    box-shadow: 3px 3px 8px #333333;\n}\n", ""]);
+exports.push([module.i, "\n.box-shadow {\n    -webkit-box-shadow: 3px 3px 8px #333333;\n    box-shadow: 3px 3px 8px #333333;\n}\n#loading > div > #loader {\n    font-size: 22rem;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1fdba54c\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./resources/assets/js/vue-rentals-edit-app/components/InfoRentalUpdated.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -38073,7 +38213,13 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Cambiar fecha")]
+                          [
+                            _c("icon-app", {
+                              attrs: { "icon-image": "calendar" }
+                            }),
+                            _vm._v(" Cambiar fecha")
+                          ],
+                          1
                         )
                       ]
                     ),
@@ -38101,7 +38247,13 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Cancelar")]
+                          [
+                            _c("icon-app", {
+                              attrs: { "icon-image": "times-circle" }
+                            }),
+                            _vm._v(" Cancelar")
+                          ],
+                          1
                         )
                       ]
                     )
@@ -38540,6 +38692,35 @@ var render = function() {
                               )
                             })
                           )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.loading
+                        ? _c(
+                            "div",
+                            {
+                              staticClass: "row justify-content-center",
+                              attrs: { id: "loading" }
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "col-6 align-content-center py-5"
+                                },
+                                [
+                                  _c("icon-app", {
+                                    attrs: {
+                                      "icon-id": "loader",
+                                      "icon-image": "spinner",
+                                      "aditional-classes":
+                                        "fa-pulse fa-fw text-secondary"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ]
+                          )
                         : _vm._e()
                     ]
                   ),
@@ -38678,6 +38859,301 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-1a82016c", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1fdba54c\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/vue-rentals-edit-app/components/InfoRentalUpdated.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-12 py-3" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-secondary btn-sm pull-right",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              $event.stopPropagation()
+              _vm.clearRental($event)
+            }
+          }
+        },
+        [
+          _c("icon-app", { attrs: { "icon-image": "exchange" } }),
+          _vm._v(" Cambiar reserva")
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-12 col-md-8" }, [
+      _c("table", { staticClass: "table table-striped" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          [
+            [
+              _c("tr", [
+                _c(
+                  "th",
+                  { attrs: { rowspan: "9" } },
+                  [
+                    _c("icon-app", { attrs: { iconImage: "home" } }),
+                    _vm._v(" " + _vm._s(_vm.updatedRental.cottage.name))
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v(" Precio")
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v(" " + _vm._s(_vm.updatedRental.cottage_price))
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c(
+                  "th",
+                  [
+                    _c("icon-app", { attrs: { iconImage: "calendar" } }),
+                    _vm._v(" Dias")
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-success" }, [
+                    _c("b", [_vm._v(_vm._s(_vm.updatedRental.total_days))])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c(
+                  "th",
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v(" Descuentos")
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v(" " + _vm._s(_vm.updatedRental.deductions))
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c(
+                  "th",
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v("Precio total")
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "span",
+                    { staticClass: "badge badge-info" },
+                    [
+                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _vm._v(" " + _vm._s(_vm.updatedRental.finalPayment))
+                    ],
+                    1
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c(
+                  "th",
+                  [
+                    _c("icon-app", { attrs: { iconImage: "calendar" } }),
+                    _vm._v(" Desde")
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-secondary" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("DateArg")(
+                          _vm.updatedRental.dateFrom + " 10:00:00"
+                        )
+                      )
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c(
+                  "th",
+                  [
+                    _c("icon-app", { attrs: { iconImage: "calendar" } }),
+                    _vm._v(" Hasta")
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-secondary" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("DateArg")(
+                          _vm.updatedRental.dateTo + " 10:00:00"
+                        )
+                      )
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c(
+                  "th",
+                  [
+                    _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                    _vm._v("Monto de reserva")
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "span",
+                    { staticClass: "badge badge-info" },
+                    [
+                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _vm._v(
+                        " " +
+                          _vm._s(
+                            (_vm.updatedRental.finalPayment * 30 / 100).toFixed(
+                              2
+                            )
+                          )
+                      )
+                    ],
+                    1
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c(
+                  "th",
+                  [
+                    _c("icon-app", { attrs: { iconImage: "calendar" } }),
+                    _vm._v(" Vto. reserva")
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-warning" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("DateArg")(
+                          _vm.updatedRental.dateReservationPayment
+                        )
+                      )
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c(
+                  "th",
+                  [
+                    _c("icon-app", { attrs: { iconImage: "barcode" } }),
+                    _vm._v(" Código de reserva")
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "span",
+                    { staticClass: "badge badge-primary text-uppercase" },
+                    [_vm._v(_vm._s(_vm.updatedRental.code))]
+                  )
+                ])
+              ])
+            ]
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _vm._m(1)
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-dark" }, [
+      _c("tr", [
+        _c("th", [_vm._v("Cabaña")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Concepto")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Detalle")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tfoot", { staticClass: "bg-secondary" }, [
+      _c("tr", [
+        _c(
+          "td",
+          { staticClass: "text-right text-light", attrs: { colspan: "3" } },
+          [_vm._v("Enviamos los datos al e-mail asociado a la reserva.")]
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1fdba54c", module.exports)
   }
 }
 
@@ -38881,7 +39357,11 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      !_vm.rental ? _c("find-app") : _c("update-app")
+      !_vm.rental && !_vm.updatedRental
+        ? _c("find-app")
+        : _vm.rental && !_vm.updatedRental
+          ? _c("update-app")
+          : !_vm.rental && _vm.updatedRental ? _c("updated-app") : _vm._e()
     ],
     1
   )
@@ -39138,6 +39618,33 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1a82016c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./UpdateRental.vue", function() {
      var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1a82016c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./UpdateRental.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1fdba54c\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./resources/assets/js/vue-rentals-edit-app/components/InfoRentalUpdated.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1fdba54c\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./resources/assets/js/vue-rentals-edit-app/components/InfoRentalUpdated.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("f3c36a9a", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1fdba54c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./InfoRentalUpdated.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1fdba54c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./InfoRentalUpdated.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -51545,6 +52052,37 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-commons/filters/DateGlobalFilter.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.DateArgFilter = undefined;
+
+var _moment = __webpack_require__("./node_modules/moment/moment.js");
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var DateArgFilter = exports.DateArgFilter = function DateArgFilter(value) {
+    var formatIn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'YYYY-MM-DD HH:mm:ss';
+    var formatOut = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'DD/MM/YYYY HH:mm:ss';
+
+    if (!value || typeof value !== 'string' || typeof formatIn !== 'string' || typeof formatOut !== 'string') {
+        console.error('Los argumentos de DateArgFilter deben ser de tipo string.');
+        return;
+    }
+
+    return (0, _moment2.default)(value, formatIn).format(formatOut);
+};
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-commons/notifications/notifications.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -52501,7 +53039,11 @@ exports.default = {
     updateRental: function updateRental(cntx, payload) {
         return new Promise(function (resolve, reject) {
             _appAxios.http.put('rentals/update-with-code/' + payload.id, payload).then(function (response) {
-                response.data.title = '¡Actualización exitosa!';
+                if (response.data.rental) cntx.commit('setUpdatedRental', response.data.rental);
+                if (!response.data.title) {
+                    response.data.title = '¡Actualización exitosa!';
+                    response.data.message += '\n Enviamos un email con los datos de la actualización al correo electrónico asociado a la reserva.';
+                }
                 response.data.useSwal = true;
                 resolve(response.data);
             }).catch(function (error) {
@@ -53215,6 +53757,58 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-rentals-edit-app/components/InfoRentalUpdated.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1fdba54c\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./resources/assets/js/vue-rentals-edit-app/components/InfoRentalUpdated.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/vue-rentals-edit-app/components/InfoRentalUpdated.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1fdba54c\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/vue-rentals-edit-app/components/InfoRentalUpdated.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-1fdba54c"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/vue-rentals-edit-app/components/InfoRentalUpdated.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1fdba54c", Component.options)
+  } else {
+    hotAPI.reload("data-v-1fdba54c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-rentals-edit-app/components/RentalsEdit.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -53343,6 +53937,8 @@ var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
 
 var _notifications = __webpack_require__("./resources/assets/js/vue-commons/notifications/notifications.js");
 
+var _DateGlobalFilter = __webpack_require__("./resources/assets/js/vue-commons/filters/DateGlobalFilter.js");
+
 var _store = __webpack_require__("./resources/assets/js/vue-commons/store/store.js");
 
 var _store2 = _interopRequireDefault(_store);
@@ -53356,6 +53952,7 @@ __webpack_require__("./node_modules/vue-directive-tooltip/css/index.css");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vueNotifications2.default, _notifications.optionsIzi).use(_vueCookies2.default).use(_vueDirectiveTooltip2.default);
+_vue2.default.filter('DateArg', _DateGlobalFilter.DateArgFilter);
 
 window.EventBus = new _vue2.default();
 

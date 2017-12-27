@@ -30,7 +30,7 @@
                     <tbody>
                         <template>
                             <tr>
-                                <th rowspan="8"><icon-app iconImage="home"></icon-app> {{ infoDeal.cottage.name }}</th>
+                                <th rowspan="9"><icon-app iconImage="home"></icon-app> {{ infoDeal.cottage.name }}</th>
                                 <th><icon-app iconImage="dollar"></icon-app> Precio</th>
                                 <td><icon-app iconImage="dollar"></icon-app> {{ infoDeal.cottage_price}}</td>
                             </tr>
@@ -53,6 +53,10 @@
                             <tr>
                                 <th><icon-app iconImage="calendar"></icon-app> Hasta</th>
                                 <td>{{ infoDeal.dateTo + ' 10:00:00' | argentineDateTime }}</td>
+                            </tr>
+                            <tr>
+                                <th><icon-app iconImage="dollar"></icon-app>Monto de reserva</th>
+                                <td><span class="badge badge-info"><icon-app iconImage="dollar"></icon-app> {{(infoDeal.finalPayment * 30 / 100).toFixed(2) }}</span></td>
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="calendar"></icon-app> Vto. reserva</th>

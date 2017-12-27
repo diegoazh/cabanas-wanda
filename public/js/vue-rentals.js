@@ -1848,6 +1848,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
@@ -56151,7 +56155,7 @@ var render = function() {
                 _c("tr", [
                   _c(
                     "th",
-                    { attrs: { rowspan: "8" } },
+                    { attrs: { rowspan: "9" } },
                     [
                       _c("icon-app", { attrs: { iconImage: "home" } }),
                       _vm._v(" " + _vm._s(_vm.infoDeal.cottage.name))
@@ -56276,6 +56280,34 @@ var render = function() {
                           _vm.infoDeal.dateTo + " 10:00:00"
                         )
                       )
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c(
+                    "th",
+                    [
+                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _vm._v("Monto de reserva")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "span",
+                      { staticClass: "badge badge-info" },
+                      [
+                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _vm._v(
+                          " " +
+                            _vm._s(
+                              (_vm.infoDeal.finalPayment * 30 / 100).toFixed(2)
+                            )
+                        )
+                      ],
+                      1
                     )
                   ])
                 ]),
@@ -70045,7 +70077,11 @@ exports.default = {
     updateRental: function updateRental(cntx, payload) {
         return new Promise(function (resolve, reject) {
             _appAxios.http.put('rentals/update-with-code/' + payload.id, payload).then(function (response) {
-                response.data.title = '¡Actualización exitosa!';
+                if (response.data.rental) cntx.commit('setUpdatedRental', response.data.rental);
+                if (!response.data.title) {
+                    response.data.title = '¡Actualización exitosa!';
+                    response.data.message += '\n Enviamos un email con los datos de la actualización al correo electrónico asociado a la reserva.';
+                }
                 response.data.useSwal = true;
                 resolve(response.data);
             }).catch(function (error) {

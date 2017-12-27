@@ -53389,7 +53389,11 @@ exports.default = {
     updateRental: function updateRental(cntx, payload) {
         return new Promise(function (resolve, reject) {
             _appAxios.http.put('rentals/update-with-code/' + payload.id, payload).then(function (response) {
-                response.data.title = '¡Actualización exitosa!';
+                if (response.data.rental) cntx.commit('setUpdatedRental', response.data.rental);
+                if (!response.data.title) {
+                    response.data.title = '¡Actualización exitosa!';
+                    response.data.message += '\n Enviamos un email con los datos de la actualización al correo electrónico asociado a la reserva.';
+                }
                 response.data.useSwal = true;
                 resolve(response.data);
             }).catch(function (error) {

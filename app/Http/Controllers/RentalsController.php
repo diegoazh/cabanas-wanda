@@ -371,7 +371,7 @@ class RentalsController extends Controller
 
         if (!$hasChanges) {
 
-            return response()->json(['message' => 'Reserva sin cambios. No se llevó acabo ninguna modificación.'], 200);
+            return response()->json(['title' => 'Sin modificaciones', 'message' => 'Reserva sin cambios. No se llevó acabo ninguna modificación.'], 200);
 
         } else {
 
@@ -386,7 +386,7 @@ class RentalsController extends Controller
 
         Mail::to($rental->user->email, $rental->user->formalFullName)->send(new RentalUpdated($rental));
 
-        return response()->json(['message' => 'La reserva se actualizó correctamente.'], 200);
+        return response()->json(['message' => 'La reserva se actualizó correctamente.', 'rental' => $rental], 200);
     }
 
     /**

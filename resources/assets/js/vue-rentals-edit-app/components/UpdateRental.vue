@@ -11,10 +11,10 @@
                     <div>
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="nav-item">
-                                <a class="nav-link active" href="#dates" aria-controls="dates" role="tab" data-toggle="tab" @click="clearTrash('date')">Cambiar fecha</a>
+                                <a class="nav-link active" href="#dates" aria-controls="dates" role="tab" data-toggle="tab" @click="clearTrash('date')"><icon-app icon-image="calendar"></icon-app> Cambiar fecha</a>
                             </li>
                             <li role="presentation" class="nav-item">
-                                <a class="nav-link" href="#cancelar" aria-controls="cancelar" role="tab" data-toggle="tab" @click="clearTrash('state')">Cancelar</a>
+                                <a class="nav-link" href="#cancelar" aria-controls="cancelar" role="tab" data-toggle="tab" @click="clearTrash('state')"><icon-app icon-image="times-circle"></icon-app> Cancelar</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -79,6 +79,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div id="loading" class="row justify-content-center" v-if="loading">
+                                    <div class="col-6 align-content-center py-5">
+                                        <icon-app icon-id="loader" icon-image="spinner" aditional-classes="fa-pulse fa-fw text-secondary"></icon-app>
+                                    </div>
+                                </div>
                             </div>
                             <div role="tabpanel" class="tab-pane pt-3" id="cancelar">
                                 <div class="text-center">
@@ -126,6 +131,7 @@
         data() {
             return {
                 seeLeft: true,
+                loading: false,
                 trash: {
                     cottage: 0,
                     cottage_id: 0,
@@ -209,6 +215,7 @@
                 }).catch(error => {
                     VueNoti.error(error);
                 });
+                this.loading = true;
                 window.jQuery('#rental-update').modal('hide');
                 window.jQuery('#rental-cancel').modal('hide');
                 this.setToRentals([]);
@@ -237,5 +244,8 @@
         -webkit-box-shadow: 3px 3px 8px #333333;
         -moz-box-shadow: 3px 3px 8px #333333;
         box-shadow: 3px 3px 8px #333333;
+    }
+    #loading > div > #loader {
+        font-size: 22rem;
     }
 </style>
