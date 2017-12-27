@@ -1,5 +1,6 @@
 export default {
     data: {
-        rental: null
+        rental: null,
+        updatedRental: null
     }
 };

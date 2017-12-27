@@ -22,13 +22,26 @@
   border: 5px solid #2b669a;
 }
 
-.menu-fixed {
+.cursorPointer {
+  cursor: pointer;
+}
+
+.menu-background {
+  background-color: #00A0B0;
+}
+
+*:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+
+/*.menu-fixed {
   position:fixed;
   z-index:1000;
   top:0;
   width:100%;
   box-shadow:0px 4px 3px rgba(0,0,0,.5);
-}
+}*/
 
 /********************************************
  * Estilos del sitio
@@ -37,70 +50,56 @@
   font-family: Raleway,sans-serif;
 }
 body {
-  background-color: #FFEFD5;
-
   .container-backend {
-    background-image: url('../../../../public/images/cabanias/cabanas2.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-
-    #header {
-      nav.navbar {
-        border-radius: 0px;
-        margin-bottom: 0px;
-
-        .container {
-          .navbar-header {
-            a {
-              padding: 0;
-
-              span#app_name {
-                position: relative;
-                top: -25%;
-              }
-            }
-            a:before {
-              content: url('../../../../public/images/logos/logo-cabanas-wanda-45x44.png');
-              width: 50%;
-              height: auto;
-              margin-right: 5px;
+    #content {
+      min-height: 45.4rem;
+      #main_content {
+        .card {
+          .tt-users:before {
+            content: '\f0c0';
+            font-family: 'FontAwesome';
+            margin-right: 5px;
+          }
+          .tt-cottages:before {
+            content: '\f015';
+            font-family: 'FontAwesome';
+            margin-right: 5px;
+          }
+        }
+        .card {
+          .selectize-input {
+            line-height: inherit;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+          }
+          .help-info {
+            .help-icon {
+              position: relative;
+              float: right;
+              top: -5px;
+              left: 7px;
+              z-index: 10;
             }
           }
-          .navbar-collapse {
-            ul.navbar-right {
-              li {
-                a.img-user-profile{
-                  padding: 5px;
-
-                  img {
-                    display: inline-block;
-                    width: 40px;
-                    height: auto;
-                  }
-                }
+        }
+      }
+      #optional_content{
+        .card {
+          .tt-actual-images{
+            span {
+              text-decoration: underline;
+            }
+          }
+          .cottage-images {
+            div {
+              img {
+                margin-bottom: 15px;
               }
             }
           }
         }
       }
-    }
-    #content {
-      height: 980px;
-      min-height: 980px;
-      max-height: 100%;
-
-      #main_menu {
-        .tt-menu {
-          display: inline-block;
-          text-align: center;
-          border-bottom: dotted;
-          font-size: 300%;
-          font-weight: bold;
-          text-shadow: #000000 2px 2px 3px;
-          color: #ffffff;
-        }
-
+      #lateral_menu {
         // https://webdesign.tutsplus.com/tutorials/orman-clarks-vertical-navigation-menu-the-css3-version--webdesign-5944
         a {
           text-decoration: none;
@@ -130,27 +129,30 @@ body {
           -moz-box-shadow: inset 0px 1px 0px 0px #878e98;
           box-shadow: inset 0px 1px 0px 0px #878e98;
           width: 100%;
-          height: 2.75em;
-          line-height: 2.75em;
-          text-indent: 2.75em;
+          height: 3rem;
+          line-height: 3rem;
+          text-indent: 1rem;
           display: block;
           position: relative;
           font-weight: 600;
           color: #fff;
           text-shadow: 0px 1px 0px rgba(0,0,0,.5);
+          word-wrap: break-word;
         }
         .menu ul li a {
           background: #fff;
           border-bottom: 1px solid #efeff0;
           width: 100%;
-          height: 2.75em;
-          line-height: 2.75em;
-          text-indent: 2.75em;
+          height: 3rem;
+          min-height: 3rem;
+          line-height: 3rem;
+          text-indent: 2.5rem;
           display: block;
           position: relative;
-          font-size: 0.923em;
+          font-size: 1rem;
           font-weight: 400;
           color: #878d95;
+          word-wrap: break-word;
         }
         .menu ul li:last-child a {
           border-bottom: 1px solid #33373d;
@@ -187,7 +189,7 @@ body {
           margin-right: 5px;
         }
         .menu > li > a.claims:before {
-        content: '\f071';
+          content: '\f071';
           font-family: 'FontAwesome';
           margin-right: 5px;
         }
@@ -198,16 +200,16 @@ body {
         }
         // Si lo reemplazamos por los badges de bootstrap se puede eliminar.
         .menu > li > a span {
-          font-size: 0.757em;
+          font-size: 0.757rem;
           display: inline-block;
           position: absolute;
-          right: 1em;
+          right: 1rem;
           top: 50%;
           background: #FFEFD5;
-          line-height: 1em;
+          line-height: 1rem;
           height: auto;
-          padding: .4em .6em;
-          margin: -.8em 0 0 0;
+          padding: .4rem .6rem;
+          margin: -.8rem 0 0 0;
           color: #878d95;
           text-indent: 0;
           text-align: center;
@@ -260,87 +262,6 @@ body {
         .menu > li > ul li:hover a span,
         .menu > li > ul li:hover a:before {
           color: #32373D;
-        }
-      }
-      #main_content {
-        .panel {
-          margin-top: 10%;
-
-          .tt-users, .tt-cottages {
-            margin-left: 10px;
-          }
-          .tt-users:before {
-            content: '\f0c0';
-            font-family: 'FontAwesome';
-            margin-right: 5px;
-          }
-          .tt-cottages:before {
-            content: '\f015';
-            font-family: 'FontAwesome';
-            margin-right: 5px;
-          }
-          .table-responsive {
-            margin: 7px 10px;
-
-            table {
-              tbody {
-                tr {
-                  td {
-                    text-transform: capitalize;
-                  }
-                  td.email-lower {
-                    text-transform: none;
-                  }
-                }
-              }
-            }
-          }
-        }
-        .panel.form-panel {
-          border: 2px dashed #808080;
-
-          .panel-heading {
-            background-image: none;
-            background-color: #A0522D;
-            color: #ffffff;
-            border-bottom: 2px dashed #ffffff;
-
-            h3.tt-cottages:before {
-              content: '\f015';
-              font-family: 'FontAwesome';
-              margin-right: 5px;
-            }
-          }
-
-          .help-info {
-            display: block;
-
-            .help-icon {
-              position: relative;
-              float: right;
-              top: -5px;
-              left: 7px;
-              z-index: 10;
-            }
-          }
-        }
-      }
-      #optional_content{
-        .panel {
-          margin-top: 10%;
-
-          .tt-actual-images{
-            span {
-              text-decoration: underline;
-            }
-          }
-          .cottage-images {
-            div {
-              img {
-                margin-bottom: 15px;
-              }
-            }
-          }
         }
       }
     }

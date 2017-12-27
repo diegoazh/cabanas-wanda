@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -26,26 +29,21 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/panel';
+    protected $redirectTo = '/';
 
     protected function authenticated ()
     {
-        $user = Auth::user();
+//        $user = Auth::user();
 
-        if (!$user->confirmed) {
+        if (!Auth::user()->confirmed) {
 
-            flash('<h4><span class="text-capitalize" style="display: block"><b>Aún no has confirmado tu cuenta.</b></span> Por favor busca en tu correo el mail de confirmación que te enviamos y sigue los pasos que allí se indican para confirmar tu cuenta o genera un nuevo mail de confirmación haciendo clic en el botón de abajo Muchas gracias. <br> <div class="text-center"><a href="/new_email_confirmation" class="btn btn-warning">Volver a enviar email de confirmación.</a></div></h4>', 'danger');
+            flash('<h4><span class="text-capitalize" style="display: block"><b>Aún no has confirmado tu cuenta.</b></span> Por favor busca en tu correo el mail de confirmación que te enviamos y sigue los pasos que allí se indican para confirmarla o solicita un nuevo mail de confirmación con la opción de abajo.</h4>')->error()->important();
+
+            $email = Auth::user()->email;
 
             Auth::logout();
-        }
 
-        if ($user->isAdmin() || $user->isEmployed())
-        {
-            return redirect()->route('admin.panel');
-        }
-        else
-        {
-            return redirect()->route('home');
+            return redirect('/new_email_confirmation')->with('email', $email);
         }
     }
 

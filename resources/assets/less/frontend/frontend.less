@@ -20,33 +20,37 @@
 /******************************************************
 * Clases
 *******************************************************/
-.label-email {
-  background-color: lighten(#7a43b6, 15%);
-  text-shadow: 0px 0px 2px @negro;
+.menu-fixed {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
+  box-shadow: 0px 4px 3px rgba(0, 0, 0, .5);
 }
 
-.menu-fixed {
-  position:fixed;
-  z-index:1000;
-  top:0;
-  width:100%;
-  box-shadow:0px 4px 3px rgba(0,0,0,.5);
+.cursorPointer {
+  cursor: pointer;
 }
+
+*:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+
 /******************************************************
 * Estilos
 *****************************/
 * {
   font-family: "Raleway", sans-serif;
-  /*font-size: 16px;
-  min-font-size: 16px;*/
   line-height: 1.6;
 }
+
 body {
   background-color: #ffffff;
 
   .container-frontend {
-    height: 980px;
-    min-height: 980px;
+    //height: 980px;
+    //min-height: 980px;
 
     #header {
       height: 606.5px;
@@ -57,129 +61,63 @@ body {
       background-size: cover;
       background-position: center 55%;
 
-      #overlay {
-        position: absolute;
-        width: 100%;
-        height: inherit;
-        opacity: 0;
-        background-color: #333333;
-        background-image: url('../../../../public/images/frontend/jaguar.jpg');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: left 35%;
+      div {
+        #overlay {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          background-color: #333333;
+          background-image: url('../../../../public/images/frontend/jaguar.jpg');
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: left 35%;
+        }
+
+        #container_logo {
+          text-align: center;
+          height: inherit;
+
+          h1 {
+            display: inline-block;
+            font-family: 'Gravitas One', cursive;
+            color: @granito-pastel;
+            font-size: 65px;
+            font-weight: normal;
+            text-align: right;
+            text-shadow: 3px 3px 2px #262626;
+            margin-top: 5%;
+
+            small {
+              font-family: 'Pinyon Script', cursive;
+              text-shadow: 2px 2px 1px #262626;
+              color: @granito-pastel;
+              font-size: 87%;
+            }
+          }
+        }
+        #container_logo > img {
+          //content: url('../../../../public/images/logos/logo-cabanas-wanda-390x380.png');
+          position: relative;
+          top: 8rem;
+          left: 6%;
+        }
       }
-      
+    }
+    .row {
       #arrow_left, #arrow_right {
+        position: relative;
         z-index: 100;
         width: 50%;
         height: 0;
-        border-bottom: 38px solid #fff;
-        top: -37px;
+        border-bottom: 41px solid #fff;
+        top: -40px;
       }
       #arrow_left {
         border-right: 55px solid transparent;
       }
       #arrow_right {
         border-left: 55px solid transparent;
-      }
-
-      nav.navbar {
-        background-color: @naranja-amarronado;
-        margin-bottom: 0px;
-
-        .container {
-          .navbar-header {
-            a {
-              color: lighten(@negro, 15%);
-              padding: 0;
-
-              span#app_name {
-                position: relative;
-                top: -25%;
-              }
-            }
-            a:before {
-              content: url('../../../../public/images/logos/logo-cabanas-wanda-45x44.png');
-              width: 50%;
-              height: auto;
-              margin-right: 5px;
-            }
-          }
-          .navbar-collapse {
-            ul.navbar-nav {
-              margin-left: 8px;
-              li.dropdown {
-                height: 100%;
-              }
-              li.open {
-                a, ul {
-                  background-color: @naranja;
-                }
-                ul {
-                  li {
-                    a:hover {
-                      background-color: @naranja-amarronado;
-                    }
-                  }
-                }
-              }
-              li {
-                a:hover {
-                  background-color: @naranja;
-                }
-              }
-            }
-            ul {
-              li {
-                a {
-                  color: lighten(@negro, 15%);
-                }
-              }
-            }
-            ul.navbar-right {
-              li {
-                a.img-user-profile{
-                  padding: 5px;
-                  color: lighten(@negro, 15%);
-
-                  img {
-                    display: inline-block;
-                    width: 40px;
-                    height: auto;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      div.col-md-8 {
-        text-align: center;
-        height: inherit;
-
-        h1 {
-          display: inline-block;
-          font-family: 'Gravitas One', cursive;
-          color: @granito-pastel;
-          font-size: 65px;
-          font-weight: normal;
-          text-align: right;
-          text-shadow: 3px 3px 2px #262626;
-          margin-top: 5%;
-
-          small {
-            font-family: 'Pinyon Script', cursive;
-            text-shadow: 2px 2px 1px #262626;
-            color: @granito-pastel;
-            font-size: 87%;
-          }
-        }
-      }
-      div.col-md-8:after {
-        content: url('../../../../public/images/logos/logo-cabanas-wanda-390x380.png');
-        position: relative;
-        top: 4%;
-        left: 6%;
       }
     }
     .row {
@@ -190,50 +128,44 @@ body {
       }
     }
     #content {
-      background-image: url('../../../../public/images/frontend/dibujo-tucan.jpg');
-      background-repeat: no-repeat;
-      background-position: 5% 15%;
+      .row {
+        div.division {
+          height: 7px;
+          margin: 20px auto;
+          margin-bottom: 100px;
+          border-top: 1px solid @granito-pastel;
+          border-bottom: 1px solid @granito-pastel;
+          overflow: visible;
 
-      hr.division {
-        width: 70%;
-        height: 7px;
-        margin: 20px auto;
-        margin-bottom: 100px;
-        border-top: 1px solid @granito-pastel;
-        border-bottom: 1px solid @granito-pastel;
-        overflow: visible;
+          span:before {
+            position: relative;
+            font-size: 7rem;
+            top: -2.6rem;
+            z-index: 1;
+            background-color: @blanco;
+          }
+        }
+        div.handsicon {
+          height: 0px;
+          margin: 5em auto;
+          border-top: 13px solid lighten(@negro, 20%);
+          border-bottom: 13px solid lighten(@negro, 20%);
+          border-right: 20px solid transparent;
+          border-left: 20px solid transparent;
+
+          i:before {
+            position: relative;
+            font-size: 7rem;
+            top: -3.4rem;
+            z-index: 1;
+            background-color: @blanco;
+          }
+        }
       }
-      hr.division:before {
-        content: "\f313";
-        font-family: 'Dashicons';
-        position: relative;
-        font-size: 7em;
-        left: 45%;
-        top: -0.6em;
-        z-index: 1;
-        background-color: @blanco;
-      }
-      hr.handicon {
-        width: 50%;
-        height: 0px;
-        margin: 5em auto;
-        border-top: 13px solid lighten(@negro, 20%);
-        border-bottom: 13px solid lighten(@negro, 20%);
-        border-right: 20px solid transparent;
-        border-left: 20px solid transparent;
-      }
-      hr.handicon:before {
-        content: "\f2b5";
-        font-family: 'FontAwesome';
-        position: relative;
-        font-size: 7em;
-        left: 40%;
-        top: -0.78em;
-        z-index: 1;
-        background-color: @blanco;
-      }
-      section {
-        width: 100%;
+      section#first_section {
+        background-image: url('../../../../public/images/frontend/dibujo-tucan.jpg');
+        background-repeat: no-repeat;
+        //background-position: 5% 9%;
 
         .description {
           #main_message {
@@ -385,62 +317,61 @@ body {
           }
         }
       }
-      #testimonies {
-        background-color: @celeste-suave-pastel;
-        margin: 0;
-        margin-top: 25px;
-
-        hr.division:before {
+      section#testimonies {
           background-color: @celeste-suave-pastel;
-        }
+          margin-top: 25px;
 
-        div {
-          text-align: left;
+          hr.division:before {
+            background-color: @celeste-suave-pastel;
+          }
 
-          #carousel-example-generic {
-            .carousel-inner {
-              .item {
-                height: 305px;
-                min-height: 305px;
-                padding: 0 12%;
+          div {
+            text-align: left;
 
-                img {
-                  position: relative;
-                  display: inline-block;
-                  width: 18%;
-                  top: 3.5em;
+            #carouselExampleIndicators {
+              .carousel-inner {
+                .carousel-item {
+                  height: 305px;
+                  min-height: 305px;
+                  padding: 0 12%;
+
+                  img {
+                    position: relative;
+                    display: inline-block;
+                    width: 18%;
+                    top: 3.5em;
+                  }
+                  blockquote {
+                    position: relative;
+                    left: 20%;
+                    top: -45%;
+                    width: 80%;
+                    text-align: justify;
+                  }
                 }
-                blockquote {
-                  position: relative;
-                  left: 20%;
-                  top: -45%;
-                  width: 80%;
-                  text-align: justify;
+              }
+              a.carousel-control {
+                background-image: none;
+              }
+            }
+
+            .overlay-testimony {
+              .testimony {
+                width: auto;
+                height: 400px;
+                overflow: hidden;
+
+                li {
+
                 }
               }
             }
-            a.carousel-control {
-              background-image: none;
-            }
-          }
-
-          .overlay-testimony {
-            .testimony {
-              width: auto;
-              height: 400px;
-              overflow: hidden;
-
-              li {
-
-              }
-            }
           }
         }
-      }
     }
     #footer {
       #terms_and_conditions {
-        margin: 0;
+        //margin: 0;
         background-color: lighten(@negro, 20%);
         padding-top: 30px;
         padding-bottom: 30px;

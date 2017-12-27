@@ -49,21 +49,16 @@ export default {
     },
     queryCottagesAvailables({dispatch}, payload) {
         return new Promise((resolve, reject) => {
-            http.post('rentals/availables/', {
-                query: payload.choice,
-                simple: payload.simple,
-                dateFrom: payload.dateFrom,
-                dateTo: payload.dateTo,
-                isForCottage: payload.isForCottage
-            }).then(response => {
-                dispatch('setToRentals', response.data.cottages);
-                dispatch('auth/setQueryFinished', true, {root: true});
-                resolve();
-            }).catch(err => {
-                dispatch('setToRentals', []);
-                dispatch('auth/setQueryFinished', true, {root: true});
-                reject(handlingXhrErrors(err));
-            });
+            http.post('rentals/availables/', payload)
+                .then(response => {
+                    dispatch('setToRentals', response.data.cottages);
+                    dispatch('auth/setQueryFinished', true, {root: true});
+                    resolve();
+                }).catch(err => {
+                    dispatch('setToRentals', []);
+                    dispatch('auth/setQueryFinished', true, {root: true});
+                    reject(handlingXhrErrors(err));
+                });
             dispatch('setLastQueryData', payload);
         });
     },
@@ -111,7 +106,7 @@ export default {
                             .then(response => {
                                 context.dispatch('auth/setToken', response, {root: true});
                                 context.commit('setClosedDeal', true);
-                                context.commit('setInfoDeal', response.data.rentals);
+                                context.commit('setInfoDeal', response.data.finalRental);
                                 resolve({
                                     title: 'RESERVA EXITOSA',
                                     message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
@@ -129,7 +124,7 @@ export default {
                     .then(response => {
                         context.dispatch('auth/setToken', response, {root: true});
                         context.commit('setClosedDeal', true);
-                        context.commit('setInfoDeal', response.data.rentals);
+                        context.commit('setInfoDeal', response.data.finalRental);
                         resolve({
                             title: 'RESERVA EXITOSA',
                             message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',

@@ -2,16 +2,16 @@
     <div class="modal fade" :id="modalId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div :class="['modal-dialog', {'modal-lg': modalSize === 'lg', 'modal-sm': modalSize === 'sm'}]" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div :class="['modal-header', modalHeaderClasses]">
                     <slot name="b3-modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">{{ modalTitle }}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </slot>
                 </div>
                 <div class="modal-body">
                     <slot></slot>
                 </div>
-                <div class="modal-footer">
+                <div :class="['modal-footer', modalFooterClasses]">
                     <slot name="b3-modal-footer">
                         <button v-if="showBtnClose" type="button" :class="['btn', typeBtnClose]" data-dismiss="modal" @click="setActionClose">
                             <icon-app :iconImage="iconBtnClose" v-if="iconBtnClose"></icon-app> {{ txtBtnClose }}
@@ -48,6 +48,14 @@
                 default: 'b3-modal-id',
             },
             modalSize: {
+                type: String,
+                default: ''
+            },
+            modalHeaderClasses: {
+                type: String,
+                default: ''
+            },
+            modalFooterClasses: {
                 type: String,
                 default: ''
             },
@@ -94,7 +102,7 @@
             },
             typeBtnClose: {
                 type: String,
-                default: 'btn-default'
+                default: 'btn-secondary'
             },
             onModalShown: {
                 type: Function,

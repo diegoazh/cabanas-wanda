@@ -37,18 +37,7 @@
 body {
   .container-fluid {
     #header {
-      min-height: 30%;
-      max-height: 30%;
-
-      #overlay {
-        min-height: 25.2%;
-        max-height: 25.2%;
-      }
-      div.col-md-8 {
-        height: 242px;
-        min-height: 242px;
-      }
-      div.col-md-8:after {
+      div.col-8:after {
         content: url('../../../../public/images/logos/logo-cabanas-wanda-190x185.png');
       }
     }
@@ -56,10 +45,6 @@ body {
     .content {
       div.col-md-4 {
         .row {
-          min-height: 600px;
-          max-height: 600px;
-          margin: 5px;
-          margin-bottom: 10px;
           box-shadow: 3px 3px 7px @negro;
           border: 5px solid @gris-clarito;
 
@@ -81,11 +66,12 @@ body {
             text-shadow: 2px 2px 2px @gris-oscuro;
             box-shadow: 5px 5px 3px @gris-oscuro;
           }
-          div.col-md-12 {
-            height: 250px;
+          div.col-12 {
             img {
               width: 100%;
               height: 100%;
+              border: 2px solid #999;
+              cursor: pointer;
             }
             table {
               tbody {
@@ -103,15 +89,12 @@ body {
           }
         }
         .row:hover {
-          border: 8px solid @celeste-suave-pastel;
-          box-shadow: 9px 9px 7px @gris-oscuro;
+          border-color: @celeste-suave-pastel;
         }
       }
     }
     #content {
       .col-md-8 {
-        padding-top: 25px;
-
         div.cottage-number {
           position: absolute;
           display: inline-block;
@@ -139,21 +122,9 @@ body {
             text-decoration: underline;
           }
         }
-        #carousel-example-generic {
-          border: 10px solid @gris-clarito;
+        #carouselExampleIndicators {
+          border: 5px solid @gris-clarito;
           border-radius: 7px;
-
-          .carousel-inner {
-            .item {
-              height: 700px;
-
-              img {
-                width: 100%;
-                height: 700px;
-                position: relative;
-              }
-            }
-          }
         }
         #cottage_description {
           table {
@@ -172,7 +143,7 @@ body {
                   }
                   span {
                     font-family: "Raleway", sans-serif;
-                    font-size: 14px;
+                    font-size: 16px;
                     line-height: 1.6;
                   }
                 }
@@ -185,11 +156,8 @@ body {
 
           div {
             .clndr {
-              @import (reference) '../../../../public/lib/bootstrap/less/bootstrap.less';
               @font-face {
                 font-family: 'Glyphicons Halflings';
-                src: url('../../../../public/lib/bootstrap/fonts/glyphicons-halflings-regular.eot');
-                src: url('../../../../public/lib/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../../public/lib/bootstrap/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../../../../public/lib/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../../public/lib/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../../public/lib/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
               }
               .clndr-controls {
                 .clearfix;
@@ -221,9 +189,6 @@ body {
                   .clndr-next-button {
                     cursor: pointer;
                     .noselect;
-                    .btn;
-                    .btn-primary;
-                    .btn-sm;
 
                     &:after {
                       content: '\f138';
@@ -235,9 +200,6 @@ body {
                   .clndr-previous-button {
                     cursor: pointer;
                     .noselect;
-                    .btn;
-                    .btn-primary;
-                    .btn-sm;
 
                     &:before {
                       content: '\f137';
@@ -249,8 +211,6 @@ body {
               }
 
               .clndr-table {
-                .table;
-                .table-bordered;
                 table-layout: fixed;
                 width: 100%;
                 border: 7px solid @gris-clarito;
@@ -343,10 +303,6 @@ body {
             }
           }
         }
-      }
-
-      #footer {
-        margin-top: 5px;
       }
     }
   }

@@ -12,7 +12,7 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('isEmployed')->except(['index', 'show']);
+
     }
 
     /**
@@ -48,6 +48,7 @@ class UsersController extends Controller
             'genre' => $info['genre'],
             'country_id' => $info['country']
         ]);
+
         $cliente->save();
 
         return response()->json(compact('cliente'), 200);

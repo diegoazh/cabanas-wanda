@@ -29,6 +29,7 @@ $(document).ready(function () {
         $('.avatar-selected').removeClass('avatar-selected');
         $('input[name=image_avatar]').val('');
         $('input[name=image_profile]').val('');
+        if (!$('#upload_image').prop('checked')) window.profileFunc();
     });
 
     $('.img-avatar').on('click', function (e) {

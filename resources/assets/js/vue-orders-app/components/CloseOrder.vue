@@ -1,14 +1,14 @@
 <template>
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <button class="btn btn-info pull-right" @click="backToItems">
+        <div class="col-12 col-md-12">
+            <button class="btn btn-outline-info btn-sm pull-right my-3" @click="backToItems">
                 <b><icon-app iconImage="shopping-basket"></icon-app> Editar pedido <icon-app iconImage="mail-reply"></icon-app></b>
             </button>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="col-12 col-md-12">
             <table class="table table-striped">
-                <thead>
-                    <tr class="dafault">
+                <thead class="thead bg-dark text-light">
+                    <tr>
                         <th>Fecha de entrega</th>
                         <th>Plato</th>
                         <th>Cantidad</th>
@@ -25,8 +25,8 @@
                         <td><icon-app iconImage="dollar"></icon-app> {{order.price * order.quantity}}</td>
                     </tr>
                 </tbody>
-                <tfoot>
-                    <tr class="danger">
+                <tfoot class="bg-danger text-light">
+                    <tr>
                         <td>Monto final</td>
                         <td></td>
                         <td>{{totalQuantity}}</td>
@@ -36,7 +36,7 @@
                 </tfoot>
             </table>
             <div class="text-center">
-                <button class="btn btn-lg btn-success" @click="setOrderToSend">
+                <button class="btn btn-lg btn-outline-success" @click="setOrderToSend">
                     <b><icon-app :iconImage="toggleIcon" :aditionalClasses="addAditionalClasses"></icon-app> Confirmar pedido</b>
                 </button>
             </div>

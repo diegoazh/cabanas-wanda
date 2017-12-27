@@ -1,28 +1,28 @@
 <template>
-    <div class="panel">
-        <div class="panel-heading">
+    <div class="card">
+        <div class="card-header bg-dark text-light">
             <h1 class="text-center"><icon-app iconImage="dashboard"></icon-app> Panel de administración</h1>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             <btn-switch-app :initLeft="seeRentals" textLeft="Reservas" iconTextLeft="handshake-o" textRight="Pedidos" iconTextRight="cutlery" classOnActive="text-primary" classOnInactive="text-muted" :textDeleted="true"></btn-switch-app>
             <div>
                 <template v-if="seeRentals">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" :class="{'active': this.type === 'pendiente'}">
-                            <a href="#pendientes" aria-controls="pendientes" role="tab" data-toggle="tab" @click="setTypeofQuery('pendiente')">Pendientes</a>
+                        <li class="nav-item" role="presentation">
+                            <a :class="['nav-link', {'active': this.type === 'pendiente'}]" href="#pendientes" aria-controls="pendientes" role="tab" data-toggle="tab" @click="setTypeofQuery('pendiente')">Pendientes</a>
                         </li>
-                        <li role="presentation" :class="{'active': this.type === 'confirmada'}">
-                            <a href="#confirmadas" aria-controls="confirmadas" role="tab" data-toggle="tab" @click="setTypeofQuery('confirmada')">Confirmadas</a>
+                        <li class="nav-item" role="presentation">
+                            <a :class="['nav-link', {'active': this.type === 'confirmada'}]" href="#confirmadas" aria-controls="confirmadas" role="tab" data-toggle="tab" @click="setTypeofQuery('confirmada')">Confirmadas</a>
                         </li>
-                        <li role="presentation" :class="{'active': this.type === 'en_curso'}">
-                            <a href="#en_curso" aria-controls="en_curso" role="tab" data-toggle="tab" @click="setTypeofQuery('en_curso')">En curso</a>
+                        <li class="nav-item" role="presentation">
+                            <a :class="['nav-link', {'active': this.type === 'en_curso'}]" href="#en_curso" aria-controls="en_curso" role="tab" data-toggle="tab" @click="setTypeofQuery('en_curso')">En curso</a>
                         </li>
-                        <li role="presentation" :class="{'active': this.type === 'cancelada'}">
-                            <a href="#canceladas" aria-controls="finalizadas_canceladas" role="tab" data-toggle="tab" @click="setTypeofQuery('cancelada')">Canceladas</a>
+                        <li class="nav-item" role="presentation">
+                            <a :class="['nav-link', {'active': this.type === 'cancelada'}]" href="#canceladas" aria-controls="finalizadas_canceladas" role="tab" data-toggle="tab" @click="setTypeofQuery('cancelada')">Canceladas</a>
                         </li>
-                        <li role="presentation" :class="{'active': this.type === 'finalizada'}">
-                            <a href="#finalizadas" aria-controls="finalizadas" role="tab" data-toggle="tab" @click="setTypeofQuery('finalizada')">Finalizadas</a>
+                        <li class="nav-item" role="presentation">
+                            <a :class="['nav-link', {'active': this.type === 'finalizada'}]" href="#finalizadas" aria-controls="finalizadas" role="tab" data-toggle="tab" @click="setTypeofQuery('finalizada')">Finalizadas</a>
                         </li>
                     </ul>
                     <!-- Tab panes -->
@@ -35,17 +35,17 @@
                 <template v-else>
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" :class="{'active': this.type === 'pendiente'}">
-                            <a href="#pendientes2" aria-controls="pendientes2" role="tab" data-toggle="tab" @click="setTypeofQuery('pendiente')">Pendientes</a>
+                        <li class="nav-item" role="presentation">
+                            <a :class="['nav-link', {'active': this.type === 'pendiente'}]" href="#pendientes2" aria-controls="pendientes2" role="tab" data-toggle="tab" @click="setTypeofQuery('pendiente')">Pendientes</a>
                         </li>
-                        <li role="presentation" :class="{'active': this.type === 'seniado'}">
-                            <a href="#seniadas" aria-controls="seniadas" role="tab" data-toggle="tab" @click="setTypeofQuery('seniado')">Señadas</a>
+                        <li class="nav-item" role="presentation">
+                            <a :class="['nav-link', {'active': this.type === 'seniado'}]" href="#seniadas" aria-controls="seniadas" role="tab" data-toggle="tab" @click="setTypeofQuery('seniado')">Señadas</a>
                         </li>
-                        <li role="presentation" :class="{'active': this.type === 'pagado'}">
-                            <a href="#pagadas" aria-controls="pagadas" role="tab" data-toggle="tab" @click="setTypeofQuery('pagado')">Pagadas</a>
+                        <li class="nav-item" role="presentation">
+                            <a :class="['nav-link', {'active': this.type === 'pagado'}]" href="#pagadas" aria-controls="pagadas" role="tab" data-toggle="tab" @click="setTypeofQuery('pagado')">Pagadas</a>
                         </li>
-                        <li role="presentation" :class="{'active': this.type === 'cancelado'}">
-                            <a href="#canceladas2" aria-controls="canceladas2" role="tab" data-toggle="tab" @click="setTypeofQuery('cancelado')">Canceladas</a>
+                        <li class="nav-item" role="presentation">
+                            <a :class="['nav-link', {'active': this.type === 'cancelado'}]" href="#canceladas2" aria-controls="canceladas2" role="tab" data-toggle="tab" @click="setTypeofQuery('cancelado')">Canceladas</a>
                         </li>
                     </ul>
                     <!-- Tab panes -->
@@ -55,10 +55,12 @@
                         </div>
                     </div>
                 </template>
-                <div class="text-center" v-if="pagination">
-                    <pagination for="dash" :records="total" :per-page="per_page" :chunk="pagChunk" :vuex="true"
-                                count-text="Listando {from} a {to} de {count} items|{count} items|Un item">
-                    </pagination>
+                <div class="row justify-content-center">
+                    <div class="text-center pt-3" v-if="pagination">
+                        <pagination for="dash" :records="total" :per-page="per_page" :chunk="pagChunk" :vuex="true"
+                                    count-text="Listando {from} a {to} de {count} items|{count} items|Un item">
+                        </pagination>
+                    </div>
                 </div>
             </div>
         </div>

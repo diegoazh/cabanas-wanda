@@ -20,23 +20,27 @@ $(document).ready(function(e) {
 
     menu_ul.hide();
 
+    let $menu =  $('#main_content');
+
     if(/cottages/.test(path)) {
         activeMenu(/cabañas/, menu_a);
-        (path[2]) ? null : $('#main_content').removeClass('col-md-4').addClass('col-md-6');
-        (/create/.test(path) || /edit/.test(path)) ? $('.panel').addClass('form-panel') : null;
+        if (path[2])
+            $menu.removeClass('col-md-4').addClass('col-md-6 offset-md-1');
+        else
+            $menu.removeClass('col-md-4').addClass('col-md-8');
     } else if (/users/.test(path)) {
         activeMenu(/usuarios/, menu_a);
-        $('#main_content').removeClass('col-md-4').addClass('col-md-6');
+        $menu.removeClass('col-md-4').addClass('col-md-8');
     } else if (/frontend/.test(path)) {
         activeMenu(/página principal/, menu_a);
-        $('#main_content').removeClass('col-md-4').addClass('col-md-6');
+        $menu.removeClass('col-md-4').addClass('col-md-6 offset-md-1');
     } else if (/food/.test(path)) {
-        $('#main_content').removeClass('col-md-4').addClass('col-md-6');
+        $menu.removeClass('col-md-4').addClass('col-md-8');
     } else if (/reports/.test(path)) {
-        $('#main_content').removeClass('col-md-offset-1 col-md-4').addClass('col-md-12');
+        $menu.removeClass('col-md-4').addClass('col-md-12');
     } else {
         activeMenu(/panel/, menu_a);
-        $('#main_content').removeClass('col-md-4').addClass('col-md-8');
+        $menu.removeClass('col-md-4').addClass('col-md-8');
     }
 
 

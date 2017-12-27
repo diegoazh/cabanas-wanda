@@ -14,7 +14,7 @@ Vue.filter('DateArg', DateArgFilter);
 window.EventBus = new Vue();
 
 const dashApp = new Vue({
-    el: '.panel',
+    el: '#content_backend',
     store,
     render: h => h(Dash)
 });

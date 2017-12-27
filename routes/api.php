@@ -22,7 +22,7 @@ Route::prefix('cottages')->group(function() {
 });
 
 Route::prefix('passengers')->group(function() {
-    Route::post('store', 'UsersController@store')->name('api.users.store');
+    Route::post('store', 'Administration\UsersController@store')->name('api.users.store');
 });
 
 // No olvidar hacer pasar las peticiones por el middleware jwt.auth
