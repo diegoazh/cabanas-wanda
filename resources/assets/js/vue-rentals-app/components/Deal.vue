@@ -1,44 +1,41 @@
 <template>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <button @click="goBackToReservas" v-if="!dataForm" class="btn btn-link pull-right"><icon-app iconImage="arrow-left"></icon-app> Volver a reservas <icon-app iconImage="handshake-o"></icon-app></button>
-            <button @click="goBackToFindUser" v-if="dataForm" class="btn btn-link pull-right"><icon-app iconImage="arrow-left"></icon-app> Volver a buscar usuario <icon-app iconImage="search"></icon-app></button>
+    <div class="row justify-content-around">
+        <div class="col-12 col-md-12">
+            <button @click="goBackToReservas" v-if="!dataForm" class="btn btn-outline-secondary btn-sm pull-right"><icon-app iconImage="arrow-left"></icon-app> Volver a reservas <icon-app iconImage="handshake-o"></icon-app></button>
+            <button @click="goBackToFindUser" v-if="dataForm" class="btn btn-outline-secondary btn-sm pull-right"><icon-app iconImage="arrow-left"></icon-app> Volver a buscar usuario <icon-app iconImage="search"></icon-app></button>
         </div>
-        <div v-if="!dataForm" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <h2 class="text-center">
+        <div v-if="!dataForm" class="col-12 col-md-8">
+            <h3 class="text-center">
                 Por favor ingrese sus sus datos
                 <br>
-                <small>
+                <small class="text-muted">
                     Si ya fué nuestro huesped o es un usuario del sitio
                     <br>
                     completaremos automáticamente sus datos
                 </small>
-            </h2>
+            </h3>
             <div class="text-center">
-                <form @submit.prevent="findUser(true)" class="form-inline">
-                    <h3 id="tt-find-btn-document" @click="onOffImg" role="button" class="text-center"><span :class="{'text-mutted': onOff, 'text-deleted': onOff, 'text-primary': !onOff}">DNI</span> <icon-app :iconImage="onOffBtn" :aditionalClasses="changeToogle"></icon-app> <span :class="{'text-mutted': !onOff, 'text-deleted': !onOff, 'text-primary': onOff}">Pasaporte</span></h3>
-                    <div :class="['form-group', {'has-error': !document}]">
+                <h3 id="tt-find-btn-document" @click="onOffImg" role="button" class="text-center"><span :class="{'text-mutted': onOff, 'text-deleted': onOff, 'text-primary': !onOff}">DNI</span> <icon-app :iconImage="onOffBtn" :aditionalClasses="changeToogle"></icon-app> <span :class="{'text-mutted': !onOff, 'text-deleted': !onOff, 'text-primary': onOff}">Pasaporte</span></h3>
+                <form @submit.prevent="findUser(true)" class="form-inline text-center">
+                    <div :class="['form-group', {'has-warning': !document}, 'mr-2']">
                         <label for="find-document" class="sr-only">{{ !onOff ? 'DNI' : 'Pasaporte' }}:</label>
                         <div class="input-group">
                             <div class="input-group-addon">{{ !onOff ? 'DNI' : 'Pasaporte' }}</div>
                             <input type="number" id="find-document" class="form-control" name="document" v-model="document">
                         </div>
                     </div>
-                    <div :class="['form-group', {'has-error': !email}]">
+                    <div :class="['form-group', {'has-warning': !email}, 'mr-2']">
                         <label for="mail" class="sr-only">e-mail: </label>
                         <div class="input-group">
                             <div class="input-group-addon"><icon-app iconId="at" iconImage="at"></icon-app></div>
                             <input type="email" id="mail" class="form-control" name="mail" v-model="email">
                         </div>
                     </div>
-                    <br><br>
-                    <div class="text-center">
-                        <button class="btn btn-primary btn-lg" :disabled="documentOrEmail">Buscar información <icon-app :iconImage="toggleIconImage" :aditionalClasses="btnClasses"></icon-app></button>
-                    </div>
+                    <button :class="['btn', {'btn-outline-primary': !documentOrEmail, 'btn-outline-secondary': documentOrEmail}]" :disabled="documentOrEmail">Buscar información <icon-app :iconImage="toggleIconImage" :aditionalClasses="btnClasses"></icon-app></button>
                 </form>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6" v-else>
+        <div class="col-12 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6" v-else>
             <h2 v-if="!userNotFound" class="text-center">La reserva se hará a nombre de:</h2>
             <div class="alert alert-info text-center" v-else>
                 <p>
@@ -48,36 +45,36 @@
                 </p>
             </div>
             <form @submit.prevent="closeDeal">
-                <div :class="['form-group', {'has-error': !name}]">
+                <div :class="['form-group', {'has-warning': !name}]">
                     <label for="name" class="sr-only">Nombres: </label>
                     <div class="input-group">
                         <div class="input-group-addon">Nombres</div>
                         <input type="text" id="name" class="form-control" name="name" v-model="name">
                     </div>
                 </div>
-                <div :class="['form-group', {'has-error': !lastname}]">
+                <div :class="['form-group', {'has-warning': !lastname}]">
                     <label for="lastname" class="sr-only">Apellidos: </label>
                     <div class="input-group">
                         <div class="input-group-addon">Apellidos</div>
                         <input type="text" id="lastname" class="form-control" name="lastname" v-model="lastname">
                     </div>
                 </div>
-                <div :class="['form-group', {'has-error': !email}]">
+                <div :class="['form-group', {'has-warning': !email}]">
                     <label for="email" class="sr-only">e-mail: </label>
                     <div class="input-group">
                         <div class="input-group-addon">e-mail</div>
                         <input type="email" id="email" class="form-control" name="email" v-model="email">
                     </div>
                 </div>
-                <div :class="['form-group', {'has-error': !document}]">
+                <div :class="['form-group', {'has-warning': !document}]">
                     <label for="document" class="sr-only">{{ !onOff ? 'DNI' : 'Pasaporte' }}:</label>
-                    <h3 id="tt-btn-document" @click="onOffImg" role="button" class="text-center"><span :class="{'text-mutted': onOff, 'text-deleted': onOff, 'text-primary': !onOff}">DNI</span> <icon-app :iconImage="onOffBtn" :aditionalClasses="changeToogle"></icon-app> <span :class="{'text-mutted': !onOff, 'text-deleted': !onOff, 'text-primary': onOff}">Pasaporte</span></h3>
+                    <h3 id="tt-btn-document" @click="onOffImg" role="button" class="text-center"><span :class="['cursorPointer', {'text-mutted': onOff, 'text-deleted': onOff, 'text-primary': !onOff}]">DNI</span> <icon-app :iconImage="onOffBtn" :aditionalClasses="changeToogle + ' cursorPointer'"></icon-app> <span :class="['cursorPointer', {'text-mutted': !onOff, 'text-deleted': !onOff, 'text-primary': onOff}]">Pasaporte</span></h3>
                     <div class="input-group">
                         <div class="input-group-addon">{{ !onOff ? 'DNI' : 'Pasaporte' }}</div>
                         <input type="number" id="document" class="form-control" name="document" v-model="document">
                     </div>
                 </div>
-                <div :class="['form-group', {'has-error': !genre}]">
+                <div :class="['form-group', {'has-warning': !genre}]">
                     <label for="genero" class="sr-only">Genero: </label>
                     <div class="input-group">
                         <div class="input-group-addon">Genero</div>
@@ -88,7 +85,7 @@
                         </select>
                     </div>
                 </div>
-                <div :class="['form-group', {'has-error': !country}]">
+                <div :class="['form-group', {'has-warning': !country}]">
                     <label for="country" class="sr-only">País: </label>
                     <div class="input-group">
                         <div class="input-group-addon">País</div>
@@ -99,7 +96,7 @@
                 </div>
                 <br>
                 <div class="text-center">
-                    <button class="btn btn-success btn-lg" :disabled="btnCreateNewUser">
+                    <button class="btn btn-outline-success btn-lg cursorPointer" :disabled="btnCreateNewUser" type="submit">
                         Finalizar reserva <icon-app :iconImage="toggleIconImage" :aditionalClasses="btnClasses"></icon-app>
                     </button>
                 </div>
@@ -137,7 +134,7 @@
         },
         computed: {
             documentOrEmail() {
-                return this.isNullOrUndefined(this.document) || this.isNullOrUndefined(this.email);
+                return this.isNullOrUndefined(this.document) && this.isNullOrUndefined(this.email);
             },
             toggleIconImage() {
                 return !this.queryFinished ? 'spinner' : 'search';
@@ -226,6 +223,8 @@
                 });
             },
             closeDeal() {
+                if (this.btnCreateNewUser) return;
+
                 const deal = {
                     name: this.name,
                     lastname: this.lastname,

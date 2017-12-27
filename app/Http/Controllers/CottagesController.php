@@ -10,7 +10,7 @@ class CottagesController extends Controller
     public function index()
     {
         $customContent = true;
-        $cottages = Cottage::orderBy('number', 'asc')->paginate(10);
+        $cottages = Cottage::where('state', 'enabled')->orderBy('number', 'asc')->paginate(10);
         return view('frontend.cottages-index')->with(compact('customContent', 'cottages'));
     }
 

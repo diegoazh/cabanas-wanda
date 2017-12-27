@@ -8,7 +8,8 @@ use App\Http\Requests\RequestRental;
 use App\Http\Requests\RequestRentalFind;
 use App\Http\Requests\RequestRentalStore;
 use App\Http\Requests\RequestRentalUpdate;
-use App\Passenger;
+use App\Mail\RentalSuccess;
+use App\Mail\RentalUpdated;
 use App\Rental;
 use App\User;
 use Carbon\Carbon;
@@ -16,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use JWTAuth;
 
 class RentalsController extends Controller
@@ -63,21 +65,17 @@ class RentalsController extends Controller
      */
     public function store(RequestRentalStore $request)
     {
-        $rentals = [];
+        $finalRental = null;
 
         try {
 
-            DB::transaction(function () use ($request, &$rentals) {
+            DB::transaction(function () use ($request, &$finalRental) {
 
                 $info = $request->all();
 
                 if (!$cliente = User::where('name', $info['name'])->where('lastname', $info['lastname'])->where('email', $info['email'])->first()) {
 
-                    if(!$cliente = Passenger::where('name', $info['name'])->where('lastname', $info['lastname'])->where('email', $info['email'])->first()) {
-
-                        throw new \Exception('No se ha encontrado ni usuario ni pasajero que corresponda a los datos brindados.', 404);
-
-                    }
+                    throw new \Exception('No se ha encontrado ni usuario ni pasajero que corresponda a los datos brindados.', 404);
 
                 }
 
@@ -94,7 +92,7 @@ class RentalsController extends Controller
 
                     $rental = new Rental();
 
-                    if (empty($cottages = Rental::cottageForNumber($cottage->number, false, $dateFrom->toDateString(), $dateTo->toDateString()))) {
+                    if (!empty(Rental::notAvailable($cottage->number, $dateFrom->toDateString(), $dateTo->toDateString()))) {
 
                         throw new \Exception('La cabaña ya ha sido reservada.');
 
@@ -103,7 +101,7 @@ class RentalsController extends Controller
                     $rental->cottage_id = $cottage->id;
                     $rental->dateFrom = $dateFrom->toDateString();
                     $rental->dateTo = $dateTo->toDateString();
-                    ($cliente->getTable() === 'users') ? $rental->user_id = $cliente->id : $rental->passenger_id = $cliente->id;
+                    $rental->user_id = $cliente->id;
                     $rental->cottage_price = $cottage->price;
                     $rental->total_days = $dateFrom->diffInDays($dateTo);
                     $rental->dateReservationPayment = Carbon::now()->addDays(1)->toDateTimeString();
@@ -114,9 +112,10 @@ class RentalsController extends Controller
                     $rental->code_reservation = $code;
                     $rental->save();
                     $rental->cottage;
+                    $rental->user;
                     $rental->code = $code;
 
-                    array_push($rentals, $rental);
+                    $finalRental = $rental;
                 }
             });
 
@@ -126,7 +125,9 @@ class RentalsController extends Controller
 
         }
 
-        return response()->json(compact('rentals'), 200);
+        Mail::to($finalRental->user->email, $finalRental->user->formalFullName)->send(new RentalSuccess($finalRental));
+
+        return response()->json(compact('finalRental'), 200);
     }
 
     /**
@@ -145,7 +146,6 @@ class RentalsController extends Controller
 
         $reserva->cottage;
         $reserva->user;
-        $reserva->passenger;
         $reserva->promotion;
         $reserva->claims;
 
@@ -172,9 +172,9 @@ class RentalsController extends Controller
     {
         $info = $request->only('reserva', 'dni', 'email', 'fromNow');
 
-        if ($info['reserva']) {
+        if (isset($info['reserva']) && $info['reserva']) {
 
-            if ($info['fromNow']) {
+            if (isset($info['fromNow']) && $info['fromNow']) {
 
                 if (!$reserva = Rental::where('code_reservation', sha1($info['reserva']))
                     ->where('dateFrom', '>=', Carbon::now()->toDateString())
@@ -194,30 +194,26 @@ class RentalsController extends Controller
             if (!$reserva = Rental::where('code_reservation', sha1($info['reserva']))
                 ->where('dateFrom', '<=', Carbon::now()->toDateString())
                 ->where('dateTo', '>=', Carbon::now()->toDateString())
-                ->where('state', 'en curso')
+                ->where('state', 'en_curso')
                 ->first()) {
 
                 return response()->json(['error' => 'No encontramos una reserva activa a la fecha para los datos proporcionado.'], 404);
 
             }
 
-            $owner = !empty($reserva->user_id) ? User::find($reserva->user_id) : Passenger::find($reserva->passenger_id);
+            $owner = !empty($reserva->user_id) ? User::find($reserva->user_id) : null;
 
-            $token = JWTAuth::fromUser($owner);
+            $owner ? $token = JWTAuth::fromUser($owner) : null;
 
-        } else if ($info['dni'] && $info['email']) {
+        } else if (isset($info['dni']) && $info['dni'] && isset($info['email']) && $info['email']) {
 
             if (!$user = User::where('dni', $info['dni'])->where('email', $info['email'])->first()) {
 
-                if (!$passenger = Passenger::where('dni', $info['dni'])->where('email', $info['email'])->first()) {
-
-                    return response()->json(['error' => 'No se encontraron ni usuarios ni pasajeros con los datos proporcionados.'], 404);
-
-                }
+                return response()->json(['error' => 'No se encontraron ni usuarios ni pasajeros con los datos proporcionados.'], 404);
 
             }
 
-            if (!$reserva = Rental::where((isset($user) && !empty($user)) ? 'user_id' : 'passenger_id', (isset($user) && !empty($user)) ? $user->id : $passenger->id)
+            if (!$reserva = Rental::where('user_id', $user->id)
                 ->where('dateFrom', '<=', Carbon::now()->toDateString())
                 ->where('dateTo', '>=', Carbon::now()->toDateString())
                 ->where('state', 'en curso')
@@ -227,7 +223,7 @@ class RentalsController extends Controller
 
             }
 
-            $token = JWTAuth::fromUser(!empty($user) ? $user : $passenger);
+            $token = JWTAuth::fromUser($user);
 
         } else {
 
@@ -237,7 +233,6 @@ class RentalsController extends Controller
 
         $reserva->cottage;
         $reserva->user;
-        $reserva->passenger;
         $reserva->promotion;
         $reserva->claims;
 
@@ -335,7 +330,10 @@ class RentalsController extends Controller
     public function updateWithCode(Request $request, $id)
     {
         $hasChanges = false;
-        $info = $request->only(['cottage_id', 'date_from', 'date_to', 'state']);
+        $info = $request->only(['cottage_id', 'dateFrom', 'dateTo', 'state']);
+        $dateFrom = $info['dateFrom'] ? Carbon::createFromFormat('d/m/Y H:i:s', $info['dateFrom'] . '00:00:00') : null;
+        $dateTo = $info['dateTo'] ? Carbon::createFromFormat('d/m/Y H:i:s', $info['dateTo'] . '10:00:00')->addDay() : null;
+        $cottage = Cottage::find($info['cottage_id']);
 
         if (!$rental= Rental::find($id)) {
 
@@ -345,17 +343,21 @@ class RentalsController extends Controller
 
         if ($info['cottage_id'] && $rental->cottage_id !== $info['cottage_id']) {
 
-            $rental->cottage_id = $info['cottage_id'];
-            $rental->save();
+            $rental->cottage_id = $cottage->id;
             $hasChanges = true;
 
         }
 
-        if ($info['date_from'] && $rental->dateFrom !== $info['date_from'] && $info['date_to'] && $rental->dateTo !== $info['date_to']) {
+        if (isset($dateFrom) || isset($dateTo)) {
 
-            $rental->dateFrom = $info['date_from'];
-            $rental->dateTo = $info['date_to'];
-            $rental->save();
+            if ($rental->dateFrom !== $dateFrom->toDateString()) $rental->dateFrom = $dateFrom->toDateString();
+            if ($rental->dateTo !== $dateTo->toDateString()) $rental->dateTo = $dateTo->toDateString();
+            $rental->cottage_price = $cottage->price;
+            $rental->total_days = $dateFrom->diffInDays($dateTo);
+            Carbon::now()->addDays(1)->gte($dateFrom) ? null : $rental->dateReservationPayment = Carbon::now()->addDays(1)->toDateTimeString();
+            // Fix me: Agregar la promoción y el calculo de su descuento aquí.
+            $rental->deductions = 0;
+            $rental->finalPayment = ($rental->cottage_price * $rental->total_days) - $rental->deductions;
             $hasChanges = true;
 
         }
@@ -363,29 +365,47 @@ class RentalsController extends Controller
         if ($info['state'] && $rental->state !== $info['state']) {
 
             $rental->state = $info['state'];
-            $rental->save();
             $hasChanges = true;
 
         }
 
         if (!$hasChanges) {
 
-            return response()->json(['message' => 'Reserva sin cambios. No se llevó acabo ninguna modificación.'], 200);
+            return response()->json(['title' => 'Sin modificaciones', 'message' => 'Reserva sin cambios. No se llevó acabo ninguna modificación.'], 200);
+
+        } else {
+
+            $code = $rental->createCodeReservation();
+            $rental->code_reservation = $code;
+            $rental->save();
+            $rental->cottage;
+            $rental->user;
+            $rental->code = $code;
 
         }
 
-        return response()->json(['message' => 'La reserva se actualizó correctamente.'], 200);
+        Mail::to($rental->user->email, $rental->user->formalFullName)->send(new RentalUpdated($rental));
+
+        return response()->json(['message' => 'La reserva se actualizó correctamente.', 'rental' => $rental], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Rental  $rental
+     * @param  Integer  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rental $rental)
+    public function destroy($id)
     {
-        //
+        if (!$rental = Rental::find($id)) {
+
+            return response()->json(['error' => 'La reserva buscada no existe o ya fué eliminada.'], 404);
+
+        }
+
+        $rental->delete();
+
+        return response()->json(['message' => 'La reserva fué eliminada correctamente.'], 200);
     }
 
     /**
@@ -396,26 +416,34 @@ class RentalsController extends Controller
      */
     public function cottagesAvailables(RequestRental $request)
     {
-        $info = $request->all();
+        $info = $request->all('dateFrom', 'dateTo', 'update', 'cottage_id', 'rental_id');
         $cottages = null;
 
         // cambiamos las fechas con Carbon ya que sino nos da error al consultar en la DB.
-        $info['dateFrom'] = Carbon::createFromFormat('d/m/Y', $info['dateFrom'])->toDateString();
-        $info['dateTo'] = Carbon::createFromFormat('d/m/Y', $info['dateTo'])->toDateString();
+        $dateFrom = Carbon::createFromFormat('d/m/Y', $info['dateFrom']);
+        $dateTo = Carbon::createFromFormat('d/m/Y', $info['dateTo']);
 
-        if ($info['isForCottage']) {
+        if ($dateTo->lt($dateFrom)) {
 
-            $cottages = Rental::cottageForNumber($info['query'], $info['simple'], $info['dateFrom'], $info['dateTo']);
-
-        } else {
-
-            $cottages = Rental::cottageForCapacity($info['query'], $info['simple'], $info['dateFrom'], $info['dateTo']);
+            return response()->json(['title' => 'RANGO DE FECHAS INVALIDO', 'error' => 'La fecha final (o fecha hasta) no puede ser menor que la fecha de inicio (o fecha desde). Por favor corrija esto y reintente. Muchas gracias.'], 500);
 
         }
 
-        if (empty($cottages)) {
+        if ($info['update']) {
 
-            $message = $info['isForCottage'] ? 'Lo sentimos la cabaña no está disponible en esa fecha. Por favor intenta con otra cabaña o con una fecha diferente.' : 'No tenemos cabañas disponibles en esa fecha para la capacidad indicada. Lo sentimos mucho, por favor prueba con otra fecha o varía la capacidad.';
+            if (!$rentals = Rental::checkForExtendsDate($dateFrom->toDateString(), $dateTo->toDateString(), $info['cottage_id'], $info['rental_id'])) {
+
+                $cottage = Cottage::find($info['cottage_id']);
+
+                return response()->json(compact($cottage), 200);
+
+            }
+
+        }
+
+        if (!$cottages = Rental::availables($dateFrom->toDateString(), $dateTo->toDateString())) {
+
+            $message = 'Lo sentimos mucho pero no tenemos cabañas disponibles en esas fechas.';
 
             return response()->json(['title' => 'SIN DISPONIBILIDAD', 'error' => $message], 404);
 
@@ -429,7 +457,7 @@ class RentalsController extends Controller
         $quantity = $results > 100 ? 100 : $results;
 
         if (!$rentals = DB::table('rentals')->select('id', 'dateFrom', 'dateTo', 'cottage_price', 'total_days', 'dateReservationPayment', 'state')
-            ->where('state', $state)->orderBy('dateFrom', 'desc')->paginate($quantity)) {
+            ->where('state', $state)->orderBy('dateFrom', 'asc')->paginate($quantity)) {
 
             return response()->json(['error' => 'No hay reservas en estado: ' . $state], 404);
 

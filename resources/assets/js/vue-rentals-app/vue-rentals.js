@@ -18,11 +18,7 @@ const rentalsApp = new Vue({
     el: '#vue-rentals-app',
     store,
     render: h => h(Rentals),
-    created() {
-        this.setCottages()
-            .then(response => VueNotifications.success({title: response.title, message: response.message, timeout: 4000, useSwal: false}))
-            .catch(error => VueNotifications.error({title: error.title, message: error.message, timeout: 4000, useSwal: false}));
-    },
+    created() { },
     methods: {
         ...mapActions(['setCottages'])
     },

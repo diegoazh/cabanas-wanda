@@ -10,7 +10,7 @@ import 'vue-directive-tooltip/css/index.css'
 Vue.use(VueNotifications, optionsIzi).use(VueCookies).use(Tooltip);
 
 const adminFoodApp = new Vue({
-    el: '.panel',
+    el: '.card',
     store,
     render: h => h(AdminFood)
 });

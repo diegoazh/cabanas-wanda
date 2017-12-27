@@ -21,7 +21,6 @@ class CreateRentalsTable extends Migration
             $table->date('dateTo');
             $table->string('description', 200)->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
-            $table->bigInteger('passenger_id')->unsigned()->nullable();
             $table->bigInteger('promotion_id')->unsigned()->nullable();
             $table->double('cottage_price', 8, 2);
             $table->integer('total_days');
@@ -30,13 +29,12 @@ class CreateRentalsTable extends Migration
             $table->string('deductionsDescription')->nullable();
             $table->double('finalPayment', 8, 2)->nullable();
             $table->datetime('dateFinalPayment')->nullable();
-            $table->enum('state', ['pendiente', 'confirmada', 'en curso', 'finalizada', 'cancelada'])->default('pendiente');
+            $table->enum('state', ['pendiente', 'confirmada', 'en_curso', 'finalizada', 'cancelada'])->default('pendiente');
             $table->boolean('wasRated')->default(false);
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('cottage_id')->references('id')->on('cottages');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('passenger_id')->references('id')->on('passengers');
             $table->foreign('promotion_id')->references('id')->on('promotions');
         });
     }

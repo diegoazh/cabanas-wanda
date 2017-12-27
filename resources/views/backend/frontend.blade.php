@@ -7,26 +7,26 @@
 @endsection
 
 @section('content')
-    <div class="panel-heading">
-        <h2>P&aacute;gina principal</h2>
+    <div class="card-header bg-dark text-light">
+        <h2 class="pl-3"><i class="fa fa-gears" aria-hidden="true"></i> P&aacute;gina principal</h2>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         {{ Form::open(['route' => (isset($front)) ? ['frontend.update', $front->id] : 'frontend.store', 'files' => true, 'method' => (isset($front)) ? 'PUT' : 'POST']) }}
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#welcome" aria-controls="welcome" role="tab" data-toggle="tab">Presentación</a></li>
-                <li role="presentation"><a href="#slogan1" aria-controls="slogan1" role="tab" data-toggle="tab">Slogan 1</a></li>
-                <li role="presentation"><a href="#slogan2" aria-controls="slogan2" role="tab" data-toggle="tab">Slogan 2</a></li>
-                <li role="presentation"><a href="#slogan3" aria-controls="slogan3" role="tab" data-toggle="tab">Slogan 3</a></li>
-                <li role="presentation"><a href="#slogan4" aria-controls="slogan4" role="tab" data-toggle="tab">Slogan 4</a></li>
-                <li role="presentation"><a href="#slogan5" aria-controls="slogan5" role="tab" data-toggle="tab">Slogan 5</a></li>
-                <li role="presentation"><a href="#slogan6" aria-controls="slogan6" role="tab" data-toggle="tab">Slogan 6</a></li>
-                <li role="presentation"><a href="#socialsnetworks" aria-controls="socialsnetworks" role="tab" data-toggle="tab">Redes sociales</a></li>
+                <li role="presentation" class="nav-item"><a href="#welcome" aria-controls="welcome" role="tab" data-toggle="tab" class="nav-link active">Presentación</a></li>
+                <li role="presentation" class="nav-item"><a href="#slogan1" aria-controls="slogan1" role="tab" data-toggle="tab" class="nav-link">Slogan 1</a></li>
+                <li role="presentation" class="nav-item"><a href="#slogan2" aria-controls="slogan2" role="tab" data-toggle="tab" class="nav-link">Slogan 2</a></li>
+                <li role="presentation" class="nav-item"><a href="#slogan3" aria-controls="slogan3" role="tab" data-toggle="tab" class="nav-link">Slogan 3</a></li>
+                <li role="presentation" class="nav-item"><a href="#slogan4" aria-controls="slogan4" role="tab" data-toggle="tab" class="nav-link">Slogan 4</a></li>
+                <li role="presentation" class="nav-item"><a href="#slogan5" aria-controls="slogan5" role="tab" data-toggle="tab" class="nav-link">Slogan 5</a></li>
+                <li role="presentation" class="nav-item"><a href="#slogan6" aria-controls="slogan6" role="tab" data-toggle="tab" class="nav-link">Slogan 6</a></li>
+                <li role="presentation" class="nav-item"><a href="#socialsnetworks" aria-controls="socialsnetworks" role="tab" data-toggle="tab" class="nav-link">Redes sociales</a></li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active" id="welcome">
+                <div role="tabpanel" class="tab-pane fade show active" id="welcome">
                     <br>
                     <div class="form-group">
                         <label for="imgs_header" class="sr-only">Imagenes de la cabecera</label>
@@ -170,7 +170,7 @@
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan4">
                     <div class="text-right">
-                        <span class="label label-info">Slogan opcional</span>
+                        <small class="text-muted">Slogan opcional</small>
                     </div>
                     <div class="form-group"><label for="tt_slogan_four" class="sr-only">Título slogan 4</label>
                         <div class="input-group">
@@ -200,7 +200,7 @@
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan5">
                     <div class="text-right">
-                        <span class="label label-info">Slogan opcional</span>
+                        <small class="text-muted">Slogan opcional</small>
                     </div>
                     <div class="form-group"><label for="tt_slogan_five" class="sr-only">Título slogan 5</label>
                         <div class="input-group">
@@ -230,7 +230,7 @@
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan6">
                     <div class="text-right">
-                        <span class="label label-info">Slogan opcional</span>
+                        <small class="text-muted">Slogan opcional</small>
                     </div>
                     <div class="form-group"><label for="tt_slogan_six" class="sr-only">Título slogan 6</label>
                         <div class="input-group">
@@ -267,6 +267,7 @@
                             {{ Form::text('link_video', (isset($front->link_video)) ? $front->link_video : null, ['class' => 'form-control', 'id' => 'link_video', 'placeholder' => 'Ingrese el link del v&iacute;deo en el pie de p&aacute;gina']) }}
                         </div>
                     </div>
+                    <hr>
                     <div class="form-group">
                         <label for="show_facebook" role="button">
                             {{ Form::checkbox('show_facebook', true, (isset($front->show_facebook)) ? $front->show_facebook : false, ['id' => 'show_facebook']) }}
@@ -280,6 +281,7 @@
                             {{ Form::text('facebook', (isset($front->facebook)) ? $front->facebook : null, ['class' => 'form-control', 'id' => 'facebook', 'placeholder' => 'Ingrese el link de la página de facebook']) }}
                         </div>
                     </div>
+                    <hr>
                     <div class="form-group">
                         <label for="show_twitter" role="button">
                             {{ Form::checkbox('show_twitter', true, (isset($front->show_twitter)) ? $front->show_twitter : false, ['id' => 'show_twitter']) }}
@@ -293,6 +295,7 @@
                             {{ Form::text('twitter', (isset($front->twitter)) ? : null, ['class' => 'form-control', 'id' => 'twitter', 'placeholder' => 'Ingrese el link de la página de twitter']) }}
                         </div>
                     </div>
+                    <hr>
                     <div class="form-group">
                         <label for="show_instagram" role="button">
                             {{ Form::checkbox('show_instagram', true, (isset($front->show_instagram)) ? $front->show_instagram : false, ['id' => 'show_instagram']) }}
@@ -306,6 +309,7 @@
                             {{ Form::text('instagram', (isset($front->instagram)) ? $front->instagram : null, ['class' => 'form-control', 'id' => 'instagram', 'placeholder' => 'Ingrese el link de la página de instagram']) }}
                         </div>
                     </div>
+                    <hr>
                     <div class="form-group">
                         <label for="show_youtube" role="button">
                             {{ Form::checkbox('show_youtube', true, (isset($front->show_youtube)) ? $front->show_youtube : false, ['id' => 'show_youtube']) }}
@@ -319,6 +323,7 @@
                             {{ Form::text('youtube', (isset($front->youtube)) ? $front->youtube : null, ['class' => 'form-control', 'id' => 'youtube', 'placeholder' => 'Ingrese el link de la página de youtube']) }}
                         </div>
                     </div>
+                    <hr>
                     <div class="form-group">
                         <label for="show_googleplus" role="button">
                             {{ Form::checkbox('show_googleplus', true, (isset($front->show_googleplus)) ? $front->show_googleplus : false, ['id' => 'show_googleplus']) }}
@@ -336,8 +341,8 @@
             </div>
             <hr>
             <div class="text-center">
-                {{ Form::reset('Limpiar formulario', ['class' => 'btn btn-warning btn-lg']) }}
-                {{ Form::submit((isset($front)) ? 'Actualizar' : 'Guardar', ['class' => 'btn btn-primary btn-lg']) }}
+                {{ Form::reset('Limpiar formulario', ['class' => 'btn btn-outline-warning btn-lg']) }}
+                {{ Form::submit((isset($front)) ? 'Actualizar' : 'Guardar', ['class' => 'btn btn-outline-primary btn-lg']) }}
             </div>
         {{ Form::close() }}
     </div>

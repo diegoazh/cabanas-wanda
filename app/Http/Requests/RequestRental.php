@@ -24,7 +24,6 @@ class RequestRental extends FormRequest
     public function rules()
     {
         return [
-            'query' => 'required|integer',
             'dateFrom' => 'required|string',
             'dateTo' => 'required|string'
         ];
@@ -38,8 +37,6 @@ class RequestRental extends FormRequest
     public function messages()
     {
         return [
-            'query.required' => 'Por favor proporcione la cantidad de personas, necesitamos saber cuantos huespedes serán.',
-            'query.integer' => 'Por favor indique la capacidad como un valor numérico.',
             'dateFrom.required' => 'Por favor indique la fecha de inicio de la reserva.',
             'dateFrom.string' => 'Por favor exprese la fecha como una cadena de texto.',
             'dateTo.required' => 'Por favor indique la fecha de fin de la reserva.',

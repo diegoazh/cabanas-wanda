@@ -10,10 +10,10 @@
 @endsection
 
 @section('content')
-    <div class="panel-heading">
+    <div class="card-header bg-dark text-light">
         <h3 class="tt-cottages">{{ (isset($cottage)) ? 'Editar caba&ntilde;a' : 'Registrar Caba&ntilde;a' }}</h3>
     </div>
-    <div class="panel-body form-panel">
+    <div class="card-body form-panel">
         {{ Form::open(['route' => ((isset($cottage)) ? ['cottages.update', $cottage] : 'cottages.store'), 'method' => ((isset($cottage)) ? 'PUT' : 'POST'), 'files' => true, 'id' => (isset($cottage) ? 'frmUpdateCottage' : 'frmCreateCottage')]) }}
         <div class="form-group">
             {{ Form::label('number', 'Numero de cabaña', ['class' => 'sr-only']) }}
@@ -21,9 +21,9 @@
                 <div class="input-group-addon">Numero de Caba&ntilde;a</div>
                 {{ Form::number('number', (isset($cottage)) ? $cottage->number : null, ['id' => 'number', 'class' => 'form-control', 'min' => 1, 'max' => 10, 'placeholder' => 'Ingrese el número de la cabaña', (isset($cottage)) ? 'disabled' : 'required']) }}
             </div>
-            <div class="help-info">
-                <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-                <small class="text-warning help-text">Es el número que tiene asignada la cabaña. Tenga en cuenta que una vez creada la cabaña este campo no podrá modificarse.</small>
+            <div class="help-info d-block">
+                <i class="fa fa-question-circle help-icon cursorPointer" aria-hidden="true" role="button"></i>
+                <small class="text-muted help-text">Es el número que tiene asignada la cabaña. Tenga en cuenta que una vez creada la cabaña este campo no podrá modificarse.</small>
             </div>
         </div>
         <div class="form-group">
@@ -32,9 +32,9 @@
                 <div class="input-group-addon">Nombre de la Caba&ntilde;a</div>
                 {{ Form::text('name', (isset($cottage)) ? $cottage->name : null, ['class' => 'form-control', 'placeholder' => 'Por ejemplo A o Suit, etc. Máximo 10 caracteres.', 'maxlength' => 10, 'required']) }}
             </div>
-            <div class="help-info">
-                <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-                <small class="text-warning help-text">El nombre ayudará en la URL de la cabaña, además ponerle un nombre ayuda en las busquedas por internet y es más intuitivo. Puede tener como máximo 10 caracteres.</small>
+            <div class="help-info d-block">
+                <i class="fa fa-question-circle help-icon cursorPointer" aria-hidden="true" role="button"></i>
+                <small class="text-muted help-text">El nombre ayudará en la URL de la cabaña, además ponerle un nombre ayuda en las busquedas por internet y es más intuitivo. Puede tener como máximo 10 caracteres.</small>
             </div>
         </div>
         <div class="form-group">
@@ -43,9 +43,9 @@
                 <div class="input-group-addon">Tipo de Caba&ntilde;a</div>
                 {{ Form::select('type', ['simple' => 'Simple', 'matrimonial' => 'Matrimonial'], (isset($cottage)) ? $cottage->type : null, ['placeholder' => ((isset($cottage)) ? null : 'Seleccione el tipo de cabaña'), 'class' => 'form-control', 'required']) }}
             </div>
-            <div class="help-info">
-                <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-                <small class="text-warning help-text">El tipo de cabaña indica si es con cama matrimonial o todas individuales, no tiene relación con la capacidad de la misma.</small>
+            <div class="help-info d-block">
+                <i class="fa fa-question-circle help-icon cursorPointer" aria-hidden="true" role="button"></i>
+                <small class="text-muted help-text">El tipo de cabaña indica si es con cama matrimonial o todas individuales, no tiene relación con la capacidad de la misma.</small>
             </div>
         </div>
         <div class="form-group">
@@ -54,9 +54,9 @@
                 <div class="input-group-addon">Capacidad</div>
                 {{ Form::number('accommodation', (isset($cottage)) ? $cottage->accommodation : null, ['placeholder' => 'Ingrese la capacidad de la cabaña', 'class' => 'form-control', 'min' => 1, 'max' => 6], 'required') }}
             </div>
-            <div class="help-info">
-                <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-                <small class="text-warning help-text">Cantidad de personas que pueden habitar la cabaña. Esta configurado con un máximo de 6 personas.</small>
+            <div class="help-info d-block">
+                <i class="fa fa-question-circle help-icon cursorPointer" aria-hidden="true" role="button"></i>
+                <small class="text-muted help-text">Cantidad de personas que pueden habitar la cabaña. Esta configurado con un máximo de 6 personas.</small>
             </div>
         </div>
         <div class="form-group">
@@ -65,9 +65,9 @@
                 <div class="input-group-addon">Precio $</div>
                 {{ Form::number('price', (isset($cottage)) ? $cottage->price : null, ['placeholder' => 'Determine el precio de la cabaña', 'class' => 'form-control', 'step' => 0.01], 'required') }}
             </div>
-            <div class="help-info">
-                <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-                <small class="text-warning help-text">El precio de la cabaña es considerado por cabaña no por persona, vg. si se alquila una de 6 se cobra el precio de la cabaña así la habite una sola persona.</small>
+            <div class="help-info d-block">
+                <i class="fa fa-question-circle help-icon cursorPointer" aria-hidden="true" role="button"></i>
+                <small class="text-muted help-text">El precio de la cabaña es considerado por cabaña no por persona, vg. si se alquila una de 6 se cobra el precio de la cabaña así la habite una sola persona.</small>
             </div>
         </div>
         <div class="form-group">
@@ -76,9 +76,9 @@
                 <div class="input-group-addon">Estado</div>
                 {{ Form::select('state', ['enabled' => 'Habilitada', 'disabled' => 'Deshabilitada'], (isset($cottage)) ? $cottage->state : 'disabled', ['class' => 'form-control', 'required']) }}
             </div>
-            <div class="help-info">
-                <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-                <small class="text-warning help-text">El estado de la cabaña, dependiendo de cual se configure aparecerá como disponible o no. Se configura por defecto en MANTENIMIENTO para evitar problemas con las reservas, dado que de otra forma aparecería automáticamente como disponible para reservarse y no simpre que se da de alta una nueva cabaña en el sistema necesariamente está lista para ser habitada.</small>
+            <div class="help-info d-block">
+                <i class="fa fa-question-circle help-icon cursorPointer" aria-hidden="true" role="button"></i>
+                <small class="text-muted help-text">El estado de la cabaña, dependiendo de cual se configure aparecerá como disponible o no. Se configura por defecto en MANTENIMIENTO para evitar problemas con las reservas, dado que de otra forma aparecería automáticamente como disponible para reservarse y no simpre que se da de alta una nueva cabaña en el sistema necesariamente está lista para ser habitada.</small>
             </div>
         </div>
         <div class="form-group">
@@ -87,9 +87,9 @@
                 <div class="input-group-addon">Fotos</div>
                 {{ Form::file('images[]', ['placeholder' => 'Elija las fotos a subir', 'class' => 'form-control', 'multiple', (!isset($cottage))?'required':'']) }}
             </div>
-            <div class="help-info">
-                <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-                <small class="text-warning help-text">Se pueden agregar varias imagenes a la vez. Para seleccionar diferentes imagenes por separado mantegra presionado <kbd>Ctrl</kbd> + <kbd>clic izq</kbd>. Para seleccionar un conjunto mantenga presionado <kbd>Shift</kbd> + <kbd>clic izq</kbd> en la primera y en la ultima imagen del conjunto.</small>
+            <div class="help-info d-block">
+                <i class="fa fa-question-circle help-icon cursorPointer" aria-hidden="true" role="button"></i>
+                <small class="text-muted help-text">Se pueden agregar varias imagenes a la vez. Para seleccionar diferentes imagenes por separado mantegra presionado <kbd>Ctrl</kbd> + <kbd>clic izq</kbd>. Para seleccionar un conjunto mantenga presionado <kbd>Shift</kbd> + <kbd>clic izq</kbd> en la primera y en la ultima imagen del conjunto.</small>
             </div>
         </div>
         <div class="form-group">
@@ -98,8 +98,8 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">Editor Markdown a HTML (Editor.md) <button id="clearTestContent" class="btn btn-outline-secondary btn-sm">Eliminar contenido de prueba</button></h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Editor Markdown a HTML (Editor.md) <button id="clearTestContent" class="btn btn-default">Eliminar contenido de prueba</button></h4>
                         </div>
                         <div id="editormd">
                             <textarea id="description" name="description" style="display:none;">{{ (isset($cottage)) ? $cottage->description : $contents }}</textarea>
@@ -112,9 +112,9 @@
             <div class="form-group">
                 {{ Form::label('create_other', '¿Registrar y crear nuevo?', ['role' => 'button']) }}
                 {{ Form::checkbox('create_other', '1', false) }}
-                <div class="help-info">
-                    <i class="fa fa-question-circle help-icon" aria-hidden="true" role="button"></i>
-                    <small class="text-warning help-text">Si tilda esta opción volverá a esta página luego de registrar la cabaña.</small>
+                <div class="help-info d-block">
+                    <i class="fa fa-question-circle help-icon cursorPointer" aria-hidden="true" role="button"></i>
+                    <small class="text-muted help-text">Si tilda esta opción volverá a esta página luego de registrar la cabaña.</small>
                 </div>
             </div>
         @else
@@ -123,11 +123,11 @@
         @endif
         <div class="text-center">
             @if(isset($cottage))
-                {{ Form::submit('Actualizar cabaña', ['class' => 'btn btn-primary', 'id' => 'updateCottage']) }}
-                <a href="{{ route('cottages.index') }}" class="btn btn-warning btn-xs">Volver</a>
+                {{ Form::submit('Actualizar cabaña', ['class' => 'btn btn-outline-success', 'id' => 'updateCottage']) }}
+                <a href="{{ route('cottages.index') }}" class="btn btn-outline-warning btn-sm">Volver</a>
             @else
-                {{ Form::reset('Limpiar formulario', ['class' => 'btn btn-default']) }}
-                {{ Form::submit('Registrar cabaña', ['class' => 'btn btn-primary', 'id' => 'createCottage']) }}
+                {{ Form::reset('Limpiar formulario', ['class' => 'btn btn-outline-secondary']) }}
+                {{ Form::submit('Registrar cabaña', ['class' => 'btn btn-outline-success', 'id' => 'createCottage']) }}
             @endif
         </div>
         {{ Form::close() }}
@@ -137,8 +137,8 @@
 @section('optional')
     @if(isset($cottage))
         <div id="optional_content" class="col-md-4">
-            <div class="panel panel-body">
-                <h3 class="text-center tt-actual-images">
+            <div class="card card-body">
+                <h3 class="text-center tt-actual-images pl-3">
                     <span>Im&aacute;genes actuales</span>
                     <br>
                     <small class="text-right text-muted">Seleccione las im&aacute;genes que quiera eliminar.</small>
@@ -186,7 +186,7 @@
             });
             $('#modal_description').click(function (e) {
                 e.preventDefault();
-                $('.modal-lg').attr('style', 'width: 95%');
+                $('.modal-lg').attr('style', 'max-width: 90%');
                 $('.modal-content #editormd').animate({
                     height: '850px'
                 }, 1000, 'swing', function () {

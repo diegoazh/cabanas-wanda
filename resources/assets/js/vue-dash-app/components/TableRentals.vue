@@ -218,7 +218,7 @@
                 return classString;
             },
             fullName(rental) {
-                return rental.user ? `${rental.user.lastname}, ${rental.user.name}` : `${rental.passenger.lastname}, ${rental.passenger.name}`;
+                return `${rental.user.lastname}, ${rental.user.name}`;
             },
             setSenia(price) {
                 return +(30 / 100 * +price).toFixed(2);

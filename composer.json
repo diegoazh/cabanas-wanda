@@ -5,23 +5,24 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=5.6.4",
+        "php": ">=7.0.0",
         "barryvdh/laravel-cors": "^0.9.3",
         "cviebrock/eloquent-sluggable": "^4.1",
         "fzaninotto/faker": "^1.6",
         "guzzlehttp/guzzle": "^6.3",
         "jenssegers/date": "^3.2",
-        "laracasts/flash": "^2.0",
-        "laravel/framework": "5.4.*",
+        "laracasts/flash": "^3.0",
+        "laravel/framework": "5.5.*",
         "laravel/tinker": "^1.0",
-        "laravelcollective/html": "5.4.*",
+        "laravelcollective/html": "5.5.*",
         "nesbot/carbon": "^1.22",
         "tymon/jwt-auth": "^0.5.12"
     },
     "require-dev": {
+        "filp/whoops": "~2.0",
         "laravel/browser-kit-testing": "^1.0",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.7",
+        "phpunit/phpunit": "~6.0",
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*"
     },
@@ -43,6 +44,10 @@
         }
     },
     "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover"
+        ],
         "post-root-package-install": [
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
@@ -60,6 +65,7 @@
     },
     "config": {
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "optimize-autoloader": true
     }
 }

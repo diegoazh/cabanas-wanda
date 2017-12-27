@@ -12,7 +12,7 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('isEmployed')->except(['index', 'show']);
+
     }
 
     /**
@@ -27,6 +27,31 @@ class UsersController extends Controller
             $users->country;
         });
         return view('backend.users')->with('users', $users);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $info = $request->all();
+
+        $cliente = new User([
+            'name' => $info['name'],
+            'lastname' => $info['lastname'],
+            'dni' => $info['dni'],
+            'passport' => $info['passport'],
+            'email' => $info['email'],
+            'genre' => $info['genre'],
+            'country_id' => $info['country']
+        ]);
+
+        $cliente->save();
+
+        return response()->json(compact('cliente'), 200);
     }
 
     /**

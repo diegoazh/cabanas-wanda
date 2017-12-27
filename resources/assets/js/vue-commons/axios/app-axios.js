@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const http =  axios.create({
-    baseURL: 'http://homestead.app/api/',
+    baseURL: window.location.origin +  '/api/',
     timeout: 60000,
     headers: {
         'Content-Type': 'application/json',

@@ -10,49 +10,26 @@
 /******************************************************
 * Estilos
 *****************************/
-body .container-fluid #header {
-  min-height: 30%;
-  max-height: 30%;
-}
-body .container-fluid #header #overlay {
-  min-height: 25.2%;
-  max-height: 25.2%;
-}
-body .container-fluid #header div.col-md-8 {
-  height: 242px;
-  min-height: 242px;
-}
-body .container-fluid #header div.col-md-8:after {
-  content: url(/images/logo-cabanas-wanda-190x185.png?30ec3eadfc1f196ee0822d5d210280d1);
-}
-body .container-fluid #content .col-md-8 {
-  padding-top: 25px;
-}
 body .container-fluid #content .col-md-8 img#img_user {
   display: inline-block;
   position: relative;
-  top: 5em;
+  top: 5rem;
 }
-body .container-fluid #content .col-md-8 div.table-responsive table tbody tr {
-  font-size: 16px;
-}
-body .container-fluid #content .col-md-8 div.col-md-6 form {
+body .container-fluid #content .col-md-8 div.col-md-7 form {
   border: 3px dotted #8c8c8c;
-  border-radius: 5%;
+  border-radius: 2%;
   background-color: #f0e7b2;
   -webkit-box-shadow: 0px 0px 15px 10px #8c8c8c;
           box-shadow: 0px 0px 15px 10px #8c8c8c;
   padding: 3% 5%;
   margin-bottom: 7%;
 }
-body .container-fluid #content .col-md-8 div.col-md-6 form table tr td img {
+body .container-fluid #content .col-md-8 div.col-md-7 form table tr td img {
   width: 50%;
   height: auto;
+  cursor: pointer;
 }
-body .container-fluid #content .col-md-8 div.col-md-6 form table tr td img.avatar-selected {
+body .container-fluid #content .col-md-8 div.col-md-7 form table tr td img.avatar-selected {
   padding: 0;
   border: 5px solid #1a638f;
-}
-body .container-fluid #content #footer {
-  margin-top: 5px;
 }

@@ -1,14 +1,14 @@
 <template>
     <div class="row" v-if="!liquidationOk">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <button class="btn btn-primary btn-xs pull-right" @click="changeReserva">
+        <div class="col-12 col-md-12 mb-3">
+            <button class="btn btn-outline-secondary btn-sm pull-right" @click="changeReserva">
                 <icon-app iconImage="refresh" :aditionalClasses="activeReload ? 'fa-spin fa-fw' : ''"></icon-app>
                 Cambiar reserva
             </button>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="col-12 col-md-12">
             <table class="table table-striped">
-                <thead>
+                <thead class="thead-dark">
                     <tr>
                         <th colspan="6" class="text-center">Reserva</th>
                     </tr>
@@ -16,53 +16,53 @@
                 <tbody>
                     <tr>
                         <th scope="row">Nombre y apellido</th>
-                        <td><span class="label label-primary">{{ defineOwner }}</span></td>
+                        <td><span class="badge badge-primary">{{ defineOwner }}</span></td>
                         <th scope="row">Estado</th>
-                        <td><span class="label label-info text-capitalize">{{ rental.state }}</span></td>
+                        <td><span class="badge badge-info text-capitalize">{{ rental.state }}</span></td>
                         <th scope="row">Fecha de realización</th>
-                        <td><span class="label label-default">{{ rental.created_at | displayArgDate }}</span></td>
+                        <td><span class="badge badge-secondary">{{ rental.created_at | displayArgDate }}</span></td>
                     </tr>
                     <tr>
                         <th scope="row">Cabaña</th>
-                        <td><span class="label label-warning">{{ rental.cottage.name }}</span></td>
+                        <td><span class="badge badge-warning">{{ rental.cottage.name }}</span></td>
                         <th scope="row">Número</th>
-                        <td><span class="label label-default">{{ rental.cottage.number }}</span></td>
+                        <td><span class="badge badge-secondary">{{ rental.cottage.number }}</span></td>
                         <th scope="row">Precio</th>
-                        <td><span class="label label-warning"><icon-app iconImage="dollar"></icon-app> {{ rental.cottage_price }}</span></td>
+                        <td><span class="badge badge-warning"><icon-app iconImage="dollar"></icon-app> {{ rental.cottage_price }}</span></td>
                     </tr>
                     <tr>
                         <th scope="row">Desde</th>
-                        <td><span class="label label-info">{{ rental.dateFrom | displayArgDate }}</span></td>
+                        <td><span class="badge badge-info">{{ rental.dateFrom | displayArgDate }}</span></td>
                         <th scope="row">Hasta</th>
-                        <td><span class="label label-info">{{ rental.dateTo | displayArgDate }}</span></td>
+                        <td><span class="badge badge-info">{{ rental.dateTo | displayArgDate }}</span></td>
                         <th scope="row">Cantidad de dias</th>
-                        <td><span class="label label-primary">{{ rental.total_days }}</span></td>
+                        <td><span class="badge badge-primary">{{ rental.total_days }}</span></td>
                     </tr>
                     <tr>
                         <th scope="row">Monto total</th>
-                        <td><span class="label label-danger"><icon-app iconImage="dollar"></icon-app> {{ rentalTotalAmount }}</span></td>
+                        <td><span class="badge badge-danger"><icon-app iconImage="dollar"></icon-app> {{ rentalTotalAmount }}</span></td>
                         <th scope="row">Monto de reserva</th>
-                        <td><span class="label label-success"><icon-app iconImage="dollar"></icon-app> {{ reservaAmount }}</span></td>
+                        <td><span class="badge badge-success"><icon-app iconImage="dollar"></icon-app> {{ reservaAmount }}</span></td>
                         <th scope="row">Vto. pago de reserva</th>
-                        <td><span class="label label-default">{{ rental.dateReservationPayment | displayArgDate }}</span></td>
+                        <td><span class="badge badge-secondary">{{ rental.dateReservationPayment | displayArgDate }}</span></td>
                     </tr>
                     <tr>
                         <th scope="row">Promocion</th>
-                        <td><span class="label label-info">{{ rental.promotion ? rental.promotion.name : 'Sin promoción' }}</span></td>
+                        <td><span class="badge badge-info">{{ rental.promotion ? rental.promotion.name : 'Sin promoción' }}</span></td>
                         <th scope="row">Descuento</th>
-                        <td><span class="label label-success"><icon-app iconImage="dollar"></icon-app> {{ (+rental.deductions || 0).toFixed(2) }}</span></td>
+                        <td><span class="badge badge-success"><icon-app iconImage="dollar"></icon-app> {{ (+rental.deductions || 0).toFixed(2) }}</span></td>
                         <th scope="row">Monto restante</th>
-                        <td><span class="label label-danger"><icon-app iconImage="dollar"></icon-app> {{ finalAmountWithDeductions }}</span></td>
+                        <td><span class="badge badge-danger"><icon-app iconImage="dollar"></icon-app> {{ finalAmountWithDeductions }}</span></td>
                     </tr>
                 </tbody>
                 <tfoot>
-                    <tr class="warning">
+                    <tr class="bg-warning text-dark">
                         <th scope="row" colspan="5">Seña</th>
-                        <td><span class="label label-success"><icon-app iconImage="minus"></icon-app> <icon-app iconImage="dollar"></icon-app> {{ reservaAmount }}</span></td>
+                        <td><span class="badge badge-success"><icon-app iconImage="minus"></icon-app> <icon-app iconImage="dollar"></icon-app> {{ reservaAmount }}</span></td>
                     </tr>
-                    <tr :class="{'danger': !rental.dateFinalPayment, 'success': rental.dateFinalPayment}">
+                    <tr :class="{'bg-danger text-white': !rental.dateFinalPayment, 'bg-success': rental.dateFinalPayment}">
                         <th scope="row" colspan="4">{{ rental.dateFinalPayment ? 'Pagado' : 'Saldo final'}}</th>
-                        <td><span class="label label-default">{{ rental.dateFinalPayment | displayArgDate }}</span></td>
+                        <td><span class="badge badge-secondary">{{ rental.dateFinalPayment | displayArgDate }}</span></td>
                         <td>
                             <span :class="['label', {'label-danger': !rental.dateFinalPayment, 'label-success': rental.dateFinalPayment}]">
                                 <icon-app iconImage="dollar"></icon-app> {{ (finalAmountWithDeductions - reservaAmount).toFixed(2) }}
@@ -73,21 +73,21 @@
             </table>
             <table class="table table-striped" v-for="(order, index) in rental.orders">
                 <thead>
-                    <tr>
+                    <tr class="bg-dark text-light">
                         <th colspan="6" class="text-center">
-                            <button :class="['pull-right', 'btn', 'btn-xs', {'btn-info': !order.show, 'btn-warning': order.show}]" @click="order.show = !order.show">
+                            <button :class="['pull-right', 'btn', 'btn-sm', {'btn-info': !order.show, 'btn-warning': order.show}]" @click="order.show = !order.show">
                                 <icon-app :iconImage="toggleCaret(order.show)"></icon-app> {{ order.show ? 'Ocultar detalle' : 'Mostrar detalle' }}
                             </button>
                             Pedido {{ index + 1 }}
                         </th>
                     </tr>
                     <tr>
-                        <th scope="col">Fecha</th>
-                        <td colspan="2" class="text-center"><span class="label label-default">{{ order.created_at | displayArgDate }}</span></td>
-                        <th scope="col">Estado</th>
-                        <td colspan="2" class="text-center"><span class="label label-warning text-capitalize">{{ order.state }}</span></td>
+                        <th scope="col" class="bg-secondary text-white">Fecha</th>
+                        <td colspan="2" class="text-center"><span class="badge badge-secondary">{{ order.created_at | displayArgDate }}</span></td>
+                        <th scope="col" class="bg-secondary text-white">Estado</th>
+                        <td colspan="2" class="text-center"><span class="badge badge-warning text-capitalize">{{ order.state }}</span></td>
                     </tr>
-                    <tr class="dafault">
+                    <tr class="bg-secondary text-white">
                         <th>Fecha de entrega</th>
                         <th>Plato</th>
                         <th>Categoría</th>
@@ -103,7 +103,7 @@
                         <tr v-for="item in order.orders_detail">
                             <td>{{ item.delivery | displayArgDate }}</td>
                             <td>{{ item.food.name }}</td>
-                            <td><span class="label label-info text-capitalize">{{ item.food.type }}</span></td>
+                            <td><span class="badge badge-info text-capitalize">{{ item.food.type }}</span></td>
                             <td>{{ item.quantity }}</td>
                             <td><icon-app iconImage="dollar"></icon-app> {{ item.food.price }}</td>
                             <td><icon-app iconImage="dollar"></icon-app> {{ item.food.price * item.quantity }}</td>
@@ -111,19 +111,19 @@
                     </tbody>
                 </transition>
                 <tfoot>
-                    <tr class="info">
+                    <tr class="bg-info">
                         <th>Monto parcial</th>
                         <td colspan="2"></td>
                         <td>{{ totalQuantity(order) }}</td>
                         <td></td>
                         <td><icon-app iconImage="dollar"></icon-app> {{ totalAmount(order) }}</td>
                     </tr>
-                    <tr class="warning">
+                    <tr class="bg-warning">
                         <th>Seña</th>
                         <td colspan="4"></td>
                         <td><icon-app iconImage="minus"></icon-app> <icon-app iconImage="dollar"></icon-app> {{ (+order.senia || 0).toFixed(2) }}</td>
                     </tr>
-                    <tr class="danger">
+                    <tr class="bg-danger text-white">
                         <th>Monto final</th>
                         <td colspan="4"></td>
                         <td><icon-app iconImage="dollar"></icon-app> {{ (totalAmount(order) - (order.senia || 0)).toFixed(2) }}</td>
@@ -131,7 +131,7 @@
                 </tfoot>
             </table>
             <table class="table table-striped">
-                <thead>
+                <thead class="thead-dark">
                     <tr>
                         <th colspan="6" class="text-center">Detalle final</th>
                     </tr>
@@ -147,7 +147,7 @@
                     </tr>
                 </tbody>
                 <tfoot>
-                    <tr class="danger">
+                    <tr class="bg-danger text-white">
                         <th scope="row">Saldo</th>
                         <td colspan="5" class="text-right"><icon-app iconImage="dollar"></icon-app> {{ finalAmountWhitDeductionsAndOrders }}</td>
                     </tr>
@@ -158,55 +158,59 @@
                             enter-active-class="animated fadeInUp"
                             leave-active-class="animated fadeOutUp">
                     <template v-if="!payLiquidation">
-                        <button id="btn-liquidation" class="btn btn-lg btn-success" @click="payLiquidation = !payLiquidation">
+                        <button id="btn-liquidation" class="btn btn-lg btn-outline-success" @click="payLiquidation = !payLiquidation">
                             <b><icon-app :iconImage="toggleIcon" :aditionalClasses="addAditionalClasses"></icon-app> Liquidar saldo</b>
                         </button>
                     </template>
                     <template v-else>
-                        <form @submit.prevent="sendLiquidation" class="form-inline">
-                            <fieldset>
-                                <legend>Ingrese sus credenciales de administrador</legend>
-                                <div class="form-group">
-                                    <label for="admin-email" class="sr-only">Email</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">
-                                            <icon-app iconImage="at"></icon-app>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <form @submit.prevent="sendLiquidation" class="form-inline">
+                                    <fieldset>
+                                        <legend>Ingrese sus credenciales de administrador</legend>
+                                        <div class="form-group form-row">
+                                            <label for="admin-email" class="col-form-label sr-only">Email</label>
+                                            <div class="input-group mr-2">
+                                                <div class="input-group-addon">
+                                                    <icon-app iconImage="at"></icon-app>
+                                                </div>
+                                                <input type="text" id="admin-email" name="admin-email" class="form-control" v-model="adminEmail">
+                                            </div>
+                                            <div class="input-group mr-2">
+                                                <div class="input-group-addon">
+                                                    <icon-app iconImage="asterisk"></icon-app>
+                                                    <icon-app iconImage="asterisk"></icon-app>
+                                                    <icon-app iconImage="asterisk"></icon-app>
+                                                </div>
+                                                <input type="password" id="admin-password" name="admin-password" class="form-control" v-model="adminPass">
+                                            </div>
+                                            <button class="btn btn-outline-primary" role="button" type="submit" :disabled="!adminEmail || !adminPass">
+                                                <icon-app :iconImage="queryFinished ? 'credit-card' : 'spinner'" :aditionalClasses="!queryFinished ? 'fa-spin fa-fw' : ''"></icon-app> Liquidar!
+                                            </button>
                                         </div>
-                                        <input type="text" id="admin-email" name="admin-email" class="form-control" v-model="adminEmail">
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">
-                                            <icon-app iconImage="asterisk"></icon-app>
-                                            <icon-app iconImage="asterisk"></icon-app>
-                                            <icon-app iconImage="asterisk"></icon-app>
-                                        </div>
-                                        <input type="password" id="admin-password" name="admin-password" class="form-control" v-model="adminPass">
-                                    </div>
-                                    <button class="btn btn-primary" role="button" type="submit" :disabled="!adminPass">
-                                        <icon-app :iconImage="queryFinished ? 'credit-card' : 'spinner'" :aditionalClasses="queryFinished ? 'fa-spin fa-fw' : ''"></icon-app> Liquidar!
-                                    </button>
-                                </div>
-                            </fieldset>
-                        </form>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
                     </template>
                 </transition>
             </div>
         </div>
     </div>
     <div class="row" v-else>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <button class="btn btn-primary btn-xs pull-right" @click="changeReserva">
+        <div class="col-12 col-md-12 mb-3">
+            <button class="btn btn-secondary btn-sm pull-right" @click="changeReserva">
                 <icon-app iconImage="refresh" :aditionalClasses="activeReload ? 'fa-spin fa-fw' : ''"></icon-app>
                 Volver a buscar reserva
             </button>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-12 col-md-12">
             <div class="text-center">
                 <span class="fa-stack fa-lg fa-5x text-success">
                   <i class="fa fa-circle-o fa-stack-2x"></i>
                   <i class="fa fa-check fa-stack-1x"></i>
                 </span>
-                <h2>La liquidación se realizó correctamente. <br> ¡Muchas gracias por elegirnos!</h2>
+                <h2 class="h2">La liquidación se realizó correctamente. <br> ¡Muchas gracias por elegirnos!</h2>
             </div>
         </div>
     </div>
@@ -245,7 +249,7 @@
                 return (total - reserva - deductions).toFixed(2);
             },
             defineOwner() {
-                return this.rental.user ? this.rental.user.lastname + ', ' + this.rental.user.name : this.rental.passenger.lastname + ', ' + this.rental.passenger.name;
+                return `${this.rental.user.lastname}, ${this.rental.user.name}`;
             },
             toggleIcon() {
                 return this.queryFinished ? 'credit-card' : 'spinner';

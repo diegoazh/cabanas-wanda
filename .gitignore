@@ -1,8 +1,9 @@
 /node_modules
 /public/hot
-/public/lib
+/public/lib/*
 /public/storage
 /public/images
+/resources/nginx-ssl
 /storage/*.key
 /vendor
 /.idea

@@ -1,90 +1,106 @@
 <template>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-12">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-12">
                     <btn-switch textLeft="Editar" textRight="Cancelar"></btn-switch>
-                    <div class="alert alert-warning alert-dismissable text-center">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <icon-app iconImage="times"></icon-app>
-                        </button>
-                        <span>Si desea cambiar todo, deberá cancelar la reserva actual y generar una nueva reserva.</span>
-                    </div>
                 </div>
             </div>
-            <div class="row" v-if="seeLeft">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row justify-content-center" v-if="seeLeft">
+                <div class="col-12 col-md-12">
                     <div>
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active">
-                                <a href="#cottage" aria-controls="cottage" role="tab" data-toggle="tab" @click="clearTrash('id')">Cambiar cabaña</a>
+                            <li role="presentation" class="nav-item">
+                                <a class="nav-link active" href="#dates" aria-controls="dates" role="tab" data-toggle="tab" @click="clearTrash('date')"><icon-app icon-image="calendar"></icon-app> Cambiar fecha</a>
                             </li>
-                            <li role="presentation">
-                                <a href="#dates" aria-controls="dates" role="tab" data-toggle="tab" @click="clearTrash('date')">Cambiar fecha</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#cancelar" aria-controls="cancelar" role="tab" data-toggle="tab" @click="clearTrash('state')">Cancelar</a>
+                            <li role="presentation" class="nav-item">
+                                <a class="nav-link" href="#cancelar" aria-controls="cancelar" role="tab" data-toggle="tab" @click="clearTrash('state')"><icon-app icon-image="times-circle"></icon-app> Cancelar</a>
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="cottage">
-                                <div class="text-center">
-                                    <h3>Cambiar la cabaña manteniendo las fechas</h3>
-                                    <form action="" class="form-inline">
-                                        <div class="form-group">
-                                            <label for="cottages" class="sr-only">Cabañas:</label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon"><icon-app iconImage="home"></icon-app></div>
-                                                <select name="cottages" id="cottages" class="form-control" v-model="trash.cottage" @change="trash.cottage_id = 0;">
-                                                    <option v-for="cottage in cottages" :value="cottage.number">{{ cottage.name.toUpperCase() + ' - (' + cottage.type.toUpperCase() + ')'}}</option>
-                                                </select>
-                                            </div>
-                                            <button class="btn btn-primary" @click.prevent="isAvailable"><icon-app iconImage="search"></icon-app></button>
+                            <div class="col py-3">
+                                <button class="btn btn-outline-secondary btn-sm pull-right" @click.prevent.stop="clearRental"><icon-app icon-image="exchange"></icon-app> Cambiar reserva</button>
+                            </div>
+                            <div role="tabpanel" class="tab-pane active pt-3" id="dates">
+                                <div class="alert alert-warning text-justify">
+                                    <h4 class="text-center"><icon-app icon-image="exclamation-circle"></icon-app> A tener en cuenta</h4>
+                                    <ul>
+                                        <li>La reserva se puede modificar en su totalidad hasta 48 hs antes; recuerde que el ingreso es a las 10 am por lo cual las 48 hs cuentan desde ese momento hacía atras.</li>
+                                        <li>Con menos de 48 hs solo puede extenderla o reducirla pero no podrá cambiar la fecha de inicio de la misma.</li>
+                                        <li>Si el problema fuera la fecha de inicio en ese caso solo podrá cancelar y generar una nueva reserva en las fechas disponibles al momento de su realización.</li>
+                                        <li>Si la seña luego de la actualización de la reserva es mayor a la ya abonada deberá abonar la diferencia para confirmar la nueva reserva.</li>
+                                        <li>Si la seña luego de la actualización es menor y ya fué abonada queda confirmada automáticamente y la diferencia aplica al saldo restante del total de la reserva.</li>
+                                    </ul>
+                                </div>
+                                <form class="form-inline justify-content-center" @submit.prevent>
+                                    <div :class="['form-group', 'form-row', {'has-error': !trash.date_from}, 'mr-2']">
+                                        <label for="dateFrom" class="col-form-label sr-only">Desde</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon date-piker"><icon-app iconImage="calendar"></icon-app></div>
+                                            <date-picker v-if="!disableDateFrom" placeholder="Seleccione la fecha desde..." :config="dtpConfg" id="dateFrom" name="dateFrom" v-model="trash.date_from"></date-picker>
+                                            <input v-else type="text" :value="rental.dateFrom" class="form-control" disabled>
                                         </div>
-                                    </form>
-                                    <br>
-                                    <div class="text-center">
-                                        <button class="btn btn-lg btn-success" v-if="trash.cottage_id !== 0" @click="sendChangesToServer">Cambiar cabaña <icon-app iconImage="exchange"></icon-app></button>
+                                    </div>
+                                    <div :class="['form-group', 'form-row', {'has-error': !trash.date_to}, 'mr-2']">
+                                        <label for="dateTo" class="col-form-label sr-only">Hasta</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon date-piker"><icon-app iconImage="calendar"></icon-app></div>
+                                            <date-picker placeholder="Seleccione la fecha hasta..." :config="dtpConfg" id="dateTo" name="dateTo" v-model="trash.date_to"></date-picker>
+                                        </div>
+                                    </div>
+                                    <button @click="isAvailable" class="btn btn-outline-primary">Consultar fechas <icon-app iconImage="exchange"></icon-app></button>
+                                </form>
+                                <div class="row" v-if="toRentals.length">
+                                    <div class="col-12 col-md-6 py-5" v-for="cottage in toRentals">
+                                        <div class="card box-shadow border-light">
+                                            <img :src="/https?:\/\//.test(cottage.images) ? cottage.images : cottage.images[0]" alt="Imagen de la cabaña" class="card-img-top">
+                                            <div class="card-body">
+                                                <h4 class="card-title text-capitalize bg-dark text-light py-2 px-3 rounded">{{ cottage.name }}</h4>
+                                                <ul class="card-text">
+                                                    <li>Numero: <span class="badge badge-primary">{{ cottage.number }}</span></li>
+                                                    <li class="text-capitalize">Capasidad: <span class="badge badge-info">{{ cottage.accommodation }}</span></li>
+                                                    <li class="text-capitalize">Tipo: <span class="badge badge-warning">{{ cottage.type }}</span></li>
+                                                    <li>Precio: <span class="badge badge-danger"><icon-app icon-image="dollar"></icon-app>{{ cottage.price }}</span></li>
+                                                    <li>Descripción: {{ cottage.description || 'Sin descripción'}}</li>
+                                                </ul>
+                                                <div class="text-center">
+                                                    <button class="btn btn-block btn-outline-success" data-toggle="modal" data-target="#rental-update" @click="trash.cottage_id = cottage.id">Actualizar reserva</button>
+                                                </div>
+                                                <modal-app modal-title="Actualización de reserva" :action-btn-save="sendRentalUpdate"
+                                                           modal-id="rental-update" modal-header-classes="bg-warning text-dark"
+                                                           modal-footer-classes="bg-light" type-btn-save="btn-outline-success"
+                                                           type-btn-close="btn-outline-secondary" txt-btn-save="Actualizar"
+                                                           txt-btn-close="Cerrar">
+                                                    <div class="alert alert-warning text-center">
+                                                        <p><icon-app icon-image="exclamation-triangle"></icon-app> ¿Esta seguro que desea actualizar la reserva?</p>
+                                                    </div>
+                                                </modal-app>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="loading" class="row justify-content-center" v-if="loading">
+                                    <div class="col-6 align-content-center py-5">
+                                        <icon-app icon-id="loader" icon-image="spinner" aditional-classes="fa-pulse fa-fw text-secondary"></icon-app>
                                     </div>
                                 </div>
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="dates">
-                                <div class="text-center">
-                                    <div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-4 col-lg-offset-2 col-lg-4">
-                                        <div :class="['form-group', {'has-error': !trash.date_from}]">
-                                            <label for="dateFrom"></label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon date-piker">Desde <icon-app iconImage="calendar"></icon-app></div>
-                                                <date-picker placeholder="Seleccione la fecha..." :config="dtpConfg" id="dateFrom" name="dateFrom" v-model="trash.date_from"></date-picker>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                        <div :class="['form-group', {'has-error': !trash.date_to}]">
-                                            <label for="dateTo"></label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon date-piker">Hasta <icon-app iconImage="calendar"></icon-app></div>
-                                                <date-picker placeholder="Seleccione la fecha..." :config="dtpConfg" id="dateTo" name="dateTo" v-model="trash.date_to"></date-picker>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8 text-center">
-                                        <button class="btn btn-lg btn-primary" v-if="trash.cottage_id !== 0" @click="isAvailable">Consultar fechas <icon-app iconImage="exchange"></icon-app></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="cancelar">
+                            <div role="tabpanel" class="tab-pane pt-3" id="cancelar">
                                 <div class="text-center">
                                     <div class="alert alert-danger">
                                         <p>Tenga en cuenta que si cancela la reserva con <b>menos de 48 hs</b> perderá compeltamente la seña.</p>
                                     </div>
-                                    <button class="btn btn-lg btn-danger" data-toggle="modal" data-target="#b3-modal-id">
+                                    <button class="btn btn-lg btn-danger" data-toggle="modal" data-target="#rental-cancel">
                                         <icon-app iconImage="times-circle"></icon-app> Cancelar
                                     </button>
                                 </div>
-                                <modal-app modalTitle="Cancelar reserva" :actionBtnSave="sendChangesToServer">
+                                <modal-app modal-title="Cancelación de reserva" :action-btn-save="sendRentalUpdate"
+                                           modal-id="rental-cancel" modal-header-classes="bg-danger text-light"
+                                           modal-footer-classes="bg-light" type-btn-save="btn-outline-danger"
+                                           type-btn-close="btn-outline-secondary" txt-btn-save="Cancelar"
+                                           txt-btn-close="Cerrar">
                                     <div class="alert alert-danger text-center">
-                                        <p>¿Esta seguro que desea cancelar?</p>
+                                        <p><icon-app icon-image="exclamation-triangle"></icon-app> ¿Esta seguro que desea cancelar?</p>
                                     </div>
                                 </modal-app>
                             </div>
@@ -100,7 +116,7 @@
     import moment from 'moment';
     import VueNoti from 'vue-notifications';
     import DatePicker from 'vue-bootstrap-datetimepicker';
-    import { mapActions, mapState } from 'vuex';
+    import { mapActions, mapState, mapMutations } from 'vuex';
     import BtnSwitch from '../../vue-commons/components/BtnSwitch.vue';
     import Icon from '../../vue-commons/components/Icon.vue';
     import Modal from '../../vue-commons/components/Modal.vue';
@@ -115,11 +131,12 @@
         data() {
             return {
                 seeLeft: true,
+                loading: false,
                 trash: {
                     cottage: 0,
                     cottage_id: 0,
-                    date_from: null,
-                    date_to: null,
+                    date_from: '',
+                    date_to: '',
                     state: ''
                 },
                 dtpConfg: {
@@ -131,34 +148,34 @@
             }
         },
         computed: {
+            disableDateFrom() {
+                return moment().add(2, 'd').isAfter(moment(this.rental.dateFrom, 'YYYY-MM-DD'));
+            },
             ...mapState('rentals_edit', {
                 rental: state => state.data.rental
             }),
             ...mapState('rentals', {
+                toRentals: state => state.data.toRentals,
                 cottages: state => state.data.cottages
             })
         },
         methods: {
+            clearRental() {
+                this.setRental(null);
+            },
+            validateTypeOfDate(date) {
+                if (!date) return;
+                if (moment.isDate(date)) return moment(date).format('DD/MM/YYYY');
+                if (moment.isMoment(date)) return date.format('DD/MM/YYYY');
+                if (typeof date === 'string') return date;
+            },
             clearTrash(text) {
                 switch(text) {
-                    case 'id': {
-                        this.trash.cottage_id = this.rental.cottage_id;
-                        this.trash.date_from = '';
-                        this.trash.date_to = '';
-                        this.trash.state = '';
-                    }
-                        break;
                     case 'date': {
-                        this.trash.cottage_id = this.rental.cottage_id;
-                        this.trash.date_from = moment(this.rental.dateFrom, 'YYYY-MM-DD').toDate();
-                        this.trash.date_to = moment(this.rental.dateTo, 'YYYY-MM-DD').toDate();
                         this.trash.state = '';
                     }
                         break;
                     case 'state': {
-                        this.trash.cottage_id = 0;
-                        this.trash.date_from = '';
-                        this.trash.date_to = '';
                         this.trash.state = 'cancelada';
                     }
                         break;
@@ -166,18 +183,15 @@
             },
             isAvailable() {
                 this.queryCottagesAvailables({
-                    isForCottage: true,
-                    choice: +this.trash.cottage,
-                    simple: false,
-                    dateFrom: this.trash.date_from ? this.trash.date_from.format('DD/MM/YYYY') : moment(this.rental.dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY'),
-                    dateTo: this.trash.date_to ? this.trash.date_to.format('DD/MM/YYYY') : moment(this.rental.dateTo, 'YYYY-MM-DD').format('DD/MM/YYYY'),
-                    isRented: true,
+                    dateFrom: this.trash.date_from ? this.validateTypeOfDate(this.trash.date_from) : moment(this.rental.dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY'),
+                    dateTo: this.trash.date_to ? this.validateTypeOfDate(this.trash.date_to) : moment(this.rental.dateTo, 'YYYY-MM-DD').format('DD/MM/YYYY'),
+                    update: true,
+                    cottage_id: this.rental.cottage.id,
+                    rental_id: this.rental.id
                 }).then(response => {
-                    let index = this.cottages.findIndex(cottage => cottage.number === this.trash.cottage);
-                    this.trash.cottage_id = this.cottages[index].id;
                     VueNoti.success({
-                        title: 'Cabaña disponible',
-                        message: 'Puede realizar el cambio de cabaña sin inconvenientes.',
+                        title: 'Cabañas disponibles',
+                        message: 'Estas son las cabañas disponibles según las fechas seleccionadas.',
                         useSwal: true
                     });
                 }).catch(error => {
@@ -188,12 +202,12 @@
                     });
                 });
             },
-            sendChangesToServer() {
+            sendRentalUpdate() {
                 this.updateRental({
                     id: this.rental.id,
-                    cottage_id: this.trash.cottage_id,
-                    date_from: this.trash.date_from,
-                    date_to: this.trash.date_to,
+                    cottage_id: !this.trash.state ? this.trash.cottage_id : null,
+                    dateFrom: !this.trash.state ? this.validateTypeOfDate(this.trash.date_from) : null,
+                    dateTo: !this.trash.state ? this.validateTypeOfDate(this.trash.date_to) : null,
                     state: this.trash.state,
                 }).then(response => {
                     window.EventBus.$emit('rental-updated');
@@ -201,20 +215,37 @@
                 }).catch(error => {
                     VueNoti.error(error);
                 });
-                window.jQuery('#b3-modal-id').modal('hide');
+                this.loading = true;
+                window.jQuery('#rental-update').modal('hide');
+                window.jQuery('#rental-cancel').modal('hide');
+                this.setToRentals([]);
             },
-            ...mapActions('rentals', ['setCottages', 'queryCottagesAvailables']),
+            ...mapActions('rentals', ['queryCottagesAvailables']),
             ...mapActions('rentals_edit', ['updateRental']),
+            ...mapMutations('rentals_edit', ['setRental']),
+            ...mapMutations('rentals', ['setToRentals']),
         },
-        filters: {},
-        created() {
-            this.setCottages();
+        filters: { },
+        created() { },
+        beforeMount() {
+            if (!this.trash.date_from) this.trash.date_from = moment(this.rental.dateFrom, 'YYYY-MM-DD').toDate();
+            if (!this.trash.date_to) this.trash.date_to = moment(this.rental.dateTo, 'YYYY-MM-DD').subtract(1, 'd').toDate();
         },
         mounted() {
             window.EventBus.$on('change-side', (bool) => this.seeLeft = bool);
             this.trash.cottage = this.rental.cottage.number;
+            this.trash.cottage_id = this.rental.cottage.id;
         }
     }
 </script>
 
-<style></style>
+<style>
+    .box-shadow {
+        -webkit-box-shadow: 3px 3px 8px #333333;
+        -moz-box-shadow: 3px 3px 8px #333333;
+        box-shadow: 3px 3px 8px #333333;
+    }
+    #loading > div > #loader {
+        font-size: 22rem;
+    }
+</style>

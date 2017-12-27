@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Rentals'),
+        'address' => env('MAIL_FROM_ADDRESS', 'administracion@cabaniasdewanda.com.ar'),
+        'name' => env('MAIL_FROM_NAME', 'Cabañas de Wanda'),
     ],
 
     /*

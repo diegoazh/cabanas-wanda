@@ -11,6 +11,7 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/frontend.css') }}" rel="stylesheet">
+    <link rel='stylesheet' href='{{ asset('lib/glyphicons-only-bootstrap/css/bootstrap.min.css') }}'>
     @yield('styles')
     <!-- Scripts -->
     <script>
@@ -24,17 +25,24 @@
     <div id="header" class="row">
         @include('templates.headers.main-header')
         @section('header')
-            <div id="overlay"></div>
-            <div class="col-md-8 col-md-offset-3 container-logo"></div>
+            <div class="col-12 mx-0 px-0">
+                <div id="overlay"></div>
+                <div id="container_logo" class="col-12 col-md-9 ml-auto">
+                    <img class="img-fluid" src="{{ asset('images/logos/logo-cabanas-wanda-290x283.png') }}" alt="">
+                </div>
+            </div>
         @show
-        <div id="arrow_left" class="col-md-6"></div>
-        <div id="arrow_right" class="col-md-6"></div>
+    </div>
+    <div id="arrows_div" class="row">
+        <div id="arrow_left" class="col-6"></div>
+        <div id="arrow_right" class="col-6"></div>
     </div>
     @include('templates.contents.frontend-content')
     <div id="footer" class="row">
         @section('footer')
         @show
-        <div id="footer_rights" class="col-md-12 text-center">
+        @include('templates.footers.main-footer')
+        <div id="footer_rights" class="col-12 px-2 text-center">
             <i class="fa fa-registered" aria-hidden="true"></i> Hotel Cabañas de Wanda. Copyright <i class="fa fa-copyright" aria-hidden="true"></i> 2010 - {{ (isset($year)) ? $year : 2017 }}. All right reserved.
             <br>
             Developed by Diego A. Zapata Häntsch
@@ -44,6 +52,10 @@
 <!-- Scripts -->
 <script src="{{ asset('js/libraries.js') }}"></script>
 <script src="{{ asset('js/frontend.js') }}"></script>
+<script>
+    $('#flash-overlay-modal').modal();
+    $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+</script>
 @yield('scripts')
 </body>
 </html>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Country;
-use App\Passenger;
 use App\User;
 use Illuminate\Http\Request;
 use JWTAuth;
@@ -16,11 +15,10 @@ class AuthenticateController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function authenticate(Request $request) // Fix -- also find passenger
+    public function authenticate(Request $request)
     {
         $info = $request->all();
         $user = null;
-        $passenger = null;
         $token = '';
         $countries = null;
 
@@ -30,21 +28,11 @@ class AuthenticateController
 
         } else if (empty($info['email']) && !empty($info['document'])) {
 
-            $user = User::where('dni', $info['document'])->first();
+            if (!$user = User::where('dni', $info['document'])->first()) {
 
-            if (!$user) {
+                if (!$user = User::where('passport', $info['document'])->first()) {
 
-                $user = User::where('passport', $info['document'])->first();
-
-                if (!$user) {
-
-                    $passenger = Passenger::where('dni', $info['document'])->first();
-
-                    if (!$passenger) {
-
-                        $passenger = Passenger::where('passport', $info['document'])->first();
-
-                    }
+                    $user = null;
 
                 }
 
@@ -52,46 +40,34 @@ class AuthenticateController
 
         } else if (!empty($info['email']) && empty($info['document'])) {
 
-            $user = User::where('email', $info['email'])->first();
+            if (!$user = User::where('email', $info['email'])->first()) {
 
-            if (!$user) {
-
-                $passenger = Passenger::where('email', $info['email'])->first();
+                $user = null;
 
             }
 
         } else {
 
-            $user = User::where('dni', $info['document'])->where('email', $info['email'])->first();
+            if (!$user = User::where('dni', $info['document'])->where('email', $info['email'])->first()) {
 
-            if (!$user) {
+                if (!$user = User::where('passport', $info['document'])->where('email', $info['email'])->first()) {
 
-                $user = User::where('passport', $info['document'])->where('email', $info['email'])->first();
-
-                if (!$user) {
-
-                    $passenger = Passenger::where('dni', $info['document'])->where('email', $info['email'])->first();
-
-                    if (!$passenger) {
-
-                        $passenger = Passenger::where('passport', $info['document'])->where('email', $info['email'])->first();
-
-                    }
+                    $user = null;
 
                 }
 
             }
         }
 
-        if (!empty($passenger) || !empty($user)) {
+        if (!empty($user)) {
 
-            $token = JWTAuth::fromUser($user ? $user : $passenger);
+            $token = JWTAuth::fromUser($user);
 
         }
 
         $countries = Country::orderBy('country')->get();
 
         // all good so return the token
-        return response()->json(compact('token', 'user', 'passenger', 'countries'), 200);
+        return response()->json(compact('token', 'user', 'countries'), 200);
     }
 }

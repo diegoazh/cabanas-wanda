@@ -5,8 +5,8 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/selectize.bootstrap3.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.datetimepicker.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/selectize.bootstrap3.css') }}">
 @endsection
 
 @section('content')

@@ -1,7 +1,7 @@
 <template>
     <div id="orders-component" class="container jumbotron">
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 page-header">
+            <div class="col-12 col-md-12 page-header">
                 <h1 class="text-center">Ordenes</h1>
                 <p class="text-center">Puedes programar los pedidos que desee para cada día de tu estadía</p>
             </div>

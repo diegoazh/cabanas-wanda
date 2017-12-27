@@ -1,7 +1,7 @@
 @extends('templates.frontend-layout')
 
 @section('title')
-    {{ $user->displayName() }}
+    {{ $user->formalFullname }}
 @endsection
 
 @section('styles')
@@ -9,26 +9,26 @@
 @endsection
 
 @section('content')
-    <div class="col-md-offset-2 col-md-8">
-        @if(Auth::check() && Auth::user()->isAdmin())
-            <div class="text-right">
-                <a href="{{ route('users.index') }}" class="btn btn-default btn-xs"><i class="fa fa-reply"></i> Volver</a>
-            </div>
-        @endif
-        <img  id="img_user" src="@if(!empty($user->imageProfile)) {{ asset('images/profiles/' . $user->imageProfile) }} @elseif($user->genre === 'm') {{ asset('images/profiles/chico-jopo.png') }} @else {{ asset('images/profiles/chica-rodete.png') }} @endif" alt="{{ $user->displayName() }}" class="img-responsive img-circle img-thumbnail">
-        <h2 class="text-right page-header">
-            {{ $user->displayName() }}
-            @if(Auth::check() && Auth::user()->dni === $user->dni)
-                <a href="{{ route('home.profile.edit', $user->slug) }}" class="btn btn-warning btn-xs">Editar <i class="fa fa-edit"></i></a>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            @if(Auth::check() && Auth::user()->isAdmin())
+                <div class="text-right">
+                    <a href="{{ route('users.index') }}" class="btn btn-outline-secondary btn-sm"><i class="fa fa-reply"></i> Volver</a>
+                </div>
             @endif
-            <br>
-            <small>
-                <span class="label @if($user->type === 'administrador' || $user->type === 'sysadmin') label-primary @elseif($user->type === 'frecuente') label-info @elseif($user->type === 'empleado') label-default @endif">{{ strtoupper($user->type) }}</span>
-            </small>
-        </h2>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
+            <img  id="img_user" src="@if(!empty($user->imageProfile)) {{ asset('images/profiles/' . $user->imageProfile) }} @elseif($user->genre === 'm') {{ asset('images/profiles/chico-jopo.png') }} @else {{ asset('images/profiles/chica-rodete.png') }} @endif" alt="{{ $user->formalFullname }}" class="img-fluid rounded-circle img-thumbnail">
+            <h2 class="text-right page-header">
+                {{ $user->formalFullname }}
+                @if(Auth::check() && Auth::user()->dni === $user->dni)
+                    <a href="{{ route('home.profile.edit', $user->slug) }}" class="btn btn-warning btn-sm">Editar <i class="fa fa-edit"></i></a>
+                @endif
+                <br>
+                <small>
+                    <span class="badge @if($user->type === 'administrador' || $user->type === 'sysadmin') badge-primary @elseif($user->type === 'frecuente') badge-info @elseif($user->type === 'empleado') badge-secondary @endif">{{ strtoupper($user->type) }}</span>
+                </small>
+            </h2>
+            <table class="table table-sm table-striped mb-5">
+                <thead class="thead-dark">
                     <tr>
                         <th scope="col" colspan="2" class="text-right">Detalles del Perfil</th>
                     </tr>
@@ -48,7 +48,7 @@
                     </tr>
                     <tr>
                         <th scope="row">País</th>
-                        <td><span class="label @if($user->country->abbreviation === 'AR') label-default @else label-success @endif">{{ $user->country->country }}</span></td>
+                        <td><span class="badge @if($user->country->abbreviation === 'AR') badge-secondary @else badge-success @endif">{{ $user->country->country }}</span></td>
                     </tr>
                     @if(Auth::check() && Auth::user()->isAdmin())
                         <tr>
@@ -65,7 +65,7 @@
                         </tr>
                         <tr>
                             <th scope="row">E-mail:</th>
-                            <td><span class="label label-email">{{ $user->email }}</span></td>
+                            <td><span class="badge badge-pill badge-info">{{ $user->email }}</span></td>
                         </tr>
                         <tr>
                             <th scope="row">Celular:</th>

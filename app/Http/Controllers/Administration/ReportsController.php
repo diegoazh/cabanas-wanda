@@ -34,7 +34,6 @@ class ReportsController extends Controller
 
             $rental->cottage;
             $rental->user;
-            $rental->passenger;
             $rental->promotion;
             $rental->claims;
 

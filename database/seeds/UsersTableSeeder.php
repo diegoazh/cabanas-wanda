@@ -24,9 +24,10 @@ class UsersTableSeeder extends Seeder
         $mantenimito->email = "mantenimientoInterno@cabaniasdewanda.com.ar";
         $mantenimito->password = \Hash::make('Mantenimiento@Interno');
         $mantenimito->confirmed = true;
+        $mantenimito->confirmation_code = str_random(150);
         $mantenimito->save();
 
-        $dazh = new User([
+        /*$dazh = new User([
             'name' => 'Diego Alberto',
             'lastname' => 'Zapata Häntsch',
             'dni' => 31511811,
@@ -34,9 +35,10 @@ class UsersTableSeeder extends Seeder
             'email' => 'diegoazh2003@gmail.com',
             'password' => \Hash::make('yusuke'),
             'confirmed' => true,
+            'confirmation_code' => str_random(150),
             'type' => 'sysadmin'
         ]);
-        $dazh->save();
+        $dazh->save();*/
 
         for ($i = 0; $i < 500; $i++)
         {
@@ -55,6 +57,7 @@ class UsersTableSeeder extends Seeder
             $user->type = $type[rand(0, 3)];
             $user->imageProfile = $faker->imageUrl();
             $user->confirmed = true;
+            $user->confirmation_code = str_random(150);
             $user->genre = $faker->randomElement(['m', 'f']);
             $user->save();
         }
