@@ -2,11 +2,10 @@
 
 namespace App;
 
-use Carbon\Carbon;
+use App\Events\NewRentalEvent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Faker\Factory as Faker;
-use Illuminate\Support\Facades\Hash;
 
 class Rental extends Model
 {
@@ -15,6 +14,8 @@ class Rental extends Model
     protected $table = 'rentals';
     protected $dates = ['deleted_at'];
     protected $fillable = ['code_reservation', 'cottage_id', 'dateFrom', 'dateTo', 'own', 'description', 'user_id', 'promotion_id', 'cottage_price', 'total_days', 'dateReservationPayment', 'deductions', 'deductionsDescription', 'finalPayment', 'dateFinalPayment', 'state', 'wasRated'];
+
+    protected $dispatchesEvents = [];
 
     /**
      * Relaciones del modelo
@@ -60,11 +61,10 @@ class Rental extends Model
     /**
      * Metodos del modelo
      **/
-    public function createCodeReservation()
+    public static function createCodeReservation($cottage_id, $user_id)
     {
         $faker = Faker::create();
-        $idUser = $this->attributes['user_id'];
-        return strtoupper($faker->lexify('??')) . $this->attributes['cottage_id'] . $idUser . strtoupper($faker->lexify('???')) . time();
+        return strtoupper($faker->lexify('??')) . $cottage_id . $user_id . strtoupper($faker->lexify('???')) . time();
     }
 
     /**

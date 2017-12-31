@@ -2,11 +2,12 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Cviebrock\EloquentSluggable\Sluggable;
+use App\Events\NewUserEvent;
 use App\MyTraits\TranslateDates;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\File as File;
 use Illuminate\Support\Facades\Storage as Storage;
 
@@ -21,7 +22,7 @@ class User extends Authenticatable
      */
     protected $table = 'users';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['name', 'lastname', 'dateOfBirth', 'country_id', 'dni', 'passport', 'email', 'celphone', 'phone', 'address', 'destination', 'password', 'imageProfile', 'slug', 'genre'];
+    protected $fillable = ['name', 'lastname', 'dateOfBirth', 'country_id', 'dni', 'passport', 'email', 'celphone', 'phone', 'address', 'destination', 'password', 'imageProfile', 'genre'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -31,6 +32,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $dispatchesEvents = [];
 
     public function Sluggable()
     {

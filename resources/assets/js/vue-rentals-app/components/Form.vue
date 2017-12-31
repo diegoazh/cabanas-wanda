@@ -21,7 +21,7 @@
                 enter-active-class="animated rubberBand"
                 leave-active-class="animated bounceOutRight">
                 <div class="alert alert-warning" v-if="invalidDate">
-                    <small> <icon-app icon-image="exclamation-triangle"></icon-app> La fecha de desde o de inicio no puede ser menor a la fecha hasta o de finalización.</small>
+                    <small> <icon-app icon-image="exclamation-triangle"></icon-app> La fecha <i>"desde"</i> o de inicio no puede ser menor a la fecha <i>"hasta"</i> o de finalización.</small>
                 </div>
             </transition>
         </form>
@@ -69,7 +69,12 @@
                 return this.bedSimple ? 'check-square-o' : 'square-o';
             },
             invalidDate() {
-                if (this.dateFrom && this.dateTo) return this.dateFrom.isAfter(this.dateTo);
+                let dateFrom = this.dateFrom ? moment(this.dateFrom, 'DD/MM/YYYY') : null;
+                let dateTo = this.dateTo ? moment(this.dateTo, 'DD/MM/YYYY') : null;
+
+                if (dateFrom && dateTo) {
+                    return dateFrom.isAfter(dateTo);
+                }
             },
             ...mapState('rentals', {
                 cottages: state => state.data.cottages,
@@ -90,8 +95,11 @@
                 }
             },
             hasErrorsInForm() {
-                if (this.dateFrom && this.dateTo)
-                    this.hasErrors = this.dateFrom.isAfter(this.dateTo);
+                let dateFrom = this.dateFrom ? moment(this.dateFrom, 'DD/MM/YYYY') : null;
+                let dateTo = this.dateTo ? moment(this.dateTo, 'DD/MM/YYYY') : null;
+
+                if (dateFrom && dateTo)
+                    this.hasErrors = dateFrom.isAfter(dateTo);
                 else
                     this.hasErrors = true;
             },
@@ -99,8 +107,8 @@
                 if (this.hasErrors) return;
                 this.setQueryFinished(false);
                 this.queryCottagesAvailables({
-                    dateFrom: moment(this.dateFrom).format('DD/MM/YYYY'),
-                    dateTo: moment(this.dateTo).format('DD/MM/YYYY')
+                    dateFrom: this.dateFrom,
+                    dateTo: this.dateTo
                 }).then(response => {})
                     .catch(error => {
                         VueNoti.error({
@@ -118,7 +126,7 @@
         }
     }
 
-    $('#capacidad').selectize({
+    window.jQuery('#capacidad').selectize({
         create: false,
         placeholder: '¿Cuantas personas son?',
         preload: true,

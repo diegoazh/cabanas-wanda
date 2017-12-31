@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Cottage;
 use App\Devolution;
+use App\Events\NewRentalEvent;
+use App\Events\RentalUpdateEvent;
 use App\Http\Requests\RequestRental;
 use App\Http\Requests\RequestRentalFind;
 use App\Http\Requests\RequestRentalStore;
 use App\Http\Requests\RequestRentalUpdate;
-use App\Mail\AlertNewRental;
-use App\Mail\AlertNewUpdated;
-use App\Mail\RentalSuccess;
-use App\Mail\RentalUpdated;
 use App\Rental;
 use App\User;
 use Carbon\Carbon;
@@ -19,7 +17,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use JWTAuth;
 
 class RentalsController extends Controller
@@ -67,11 +64,11 @@ class RentalsController extends Controller
      */
     public function store(RequestRentalStore $request)
     {
-        $finalRental = null;
+        $rental = null;
 
         try {
 
-            DB::transaction(function () use ($request, &$finalRental) {
+            DB::transaction(function () use ($request, &$rental) {
 
                 $info = $request->all();
 
@@ -92,32 +89,33 @@ class RentalsController extends Controller
                     $dateTo = Carbon::createFromFormat('d/m/Y H:i:s', $info['dateTo'] . '10:00:00')->addDay();
                     $cottage = Cottage::where('number', $toRental['number'])->where('name', $toRental['name'])->where('id', $toRental['id'])->first();
 
-                    $rental = new Rental();
-
                     if (!empty(Rental::notAvailable($cottage->number, $dateFrom->toDateString(), $dateTo->toDateString()))) {
 
                         throw new \Exception('La cabaña ya ha sido reservada.');
 
                     }
 
-                    $rental->cottage_id = $cottage->id;
-                    $rental->dateFrom = $dateFrom->toDateString();
-                    $rental->dateTo = $dateTo->toDateString();
-                    $rental->user_id = $cliente->id;
-                    $rental->cottage_price = $cottage->price;
-                    $rental->total_days = $dateFrom->diffInDays($dateTo);
-                    $rental->dateReservationPayment = Carbon::now()->addDays(1)->toDateTimeString();
-                    // Fix me: Agregar la promoción y el calculo de su descuento aquí.
-                    $rental->deductions = 0;
-                    $rental->finalPayment = ($rental->cottage_price * $rental->total_days) - $rental->deductions;
-                    $code = $rental->createCodeReservation();
-                    $rental->code_reservation = $code;
-                    $rental->save();
+                    $code = Rental::createCodeReservation($cottage->id, $cliente->id);
+
+                    $rental = Rental::create([
+                        'cottage_id' => $cottage->id,
+                        'dateFrom' => $dateFrom->toDateString(),
+                        'dateTo' => $dateTo->toDateString(),
+                        'user_id' => $cliente->id,
+                        'cottage_price' => $cottage->price,
+                        'total_days' => $dateFrom->diffInDays($dateTo),
+                        'dateReservationPayment' => Carbon::now()->addDays(1)->toDateTimeString(),
+                        // Fix me: Agregar la promoción y el calculo de su descuento aquí.
+                        'deductions' => 0,
+                        'finalPayment' => ($cottage->price * $dateFrom->diffInDays($dateTo)) - 0, // 0 is deductions fix this
+                       'code_reservation' => $code
+                    ]);
+
                     $rental->cottage;
                     $rental->user;
                     $rental->code = $code;
 
-                    $finalRental = $rental;
+                    event(new NewRentalEvent($rental));
                 }
             });
 
@@ -127,10 +125,7 @@ class RentalsController extends Controller
 
         }
 
-        Mail::to($finalRental->user->email, $finalRental->user->formalFullName)->send(new RentalSuccess($finalRental));
-        Mail::to('cabaniasdewanda@gmail.com', 'Administradores Hotel Cabañas de Wanda')->send(new AlertNewRental($rental));
-
-        return response()->json(compact('finalRental'), 200);
+        return response()->json(compact('rental'), 200);
     }
 
     /**
@@ -378,7 +373,7 @@ class RentalsController extends Controller
 
         } else {
 
-            $code = $rental->createCodeReservation();
+            $code = Rental::createCodeReservation($rental->cottage_id, $rental->user_id);
             $rental->code_reservation = $code;
             $rental->save();
             $rental->cottage;
@@ -387,8 +382,7 @@ class RentalsController extends Controller
 
         }
 
-        Mail::to($rental->user->email, $rental->user->formalFullName)->send(new RentalUpdated($rental));
-        Mail::to('cabaniasdewanda@gmail.com', 'Administradores Hotel Cabañas de Wanda')->send(new AlertNewUpdated($rental));
+        event(new RentalUpdateEvent($rental));
 
         return response()->json(['message' => 'La reserva se actualizó correctamente.', 'rental' => $rental], 200);
     }

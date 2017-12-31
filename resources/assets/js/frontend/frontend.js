@@ -95,7 +95,7 @@ $(document).ready(function (event) {
                         <i class="fa fa-envelope-open" aria-hidden="true"></i> ${$btn.data('tt-modal')} a
                     </h2>
                     <h3 class="text-center">
-                        <a class="btn btn-danger btn-lg" mailto="${$btn.data('body-modal')}@gmail.com">
+                        <a class="btn btn-danger btn-lg text-light" mailto="${$btn.data('body-modal')}@gmail.com">
                             <i class="fa fa-envelope-open-o" aria-hidden="true"></i> ${$btn.data('body-modal')}<i class="fa fa-at" aria-hidden="true"></i>gmail.com
                         </a>
                     </h3>`;

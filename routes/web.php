@@ -21,7 +21,7 @@
 use App\Mail\ConfirmAccount;
 use App\Mail\RentalSuccess;
 use App\Mail\AlertNewRental;
-use App\Mail\AlertNewUpdated;
+use App\Mail\AlertUpdatedRental;
 use App\Rental;
 use App\User;
 
@@ -80,6 +80,6 @@ Route::prefix('test')->group(function() {
         return new AlertNewRental(Rental::find(25));
     });
     Route::get('alert-update', function() {
-        return new AlertNewUpdated(Rental::find(25));
+        return new AlertUpdatedRental(Rental::find(25));
     });
 });

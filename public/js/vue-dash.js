@@ -2789,9 +2789,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
 
 var _moment = __webpack_require__("./node_modules/moment/moment.js");
 
@@ -2853,19 +2850,19 @@ exports.default = {
 
             switch (state) {
                 case 'pendiente':
-                    classString = 'label-warning';
+                    classString = 'badge-warning';
                     break;
                 case 'confirmada':
-                    classString = 'label-info';
+                    classString = 'badge-info';
                     break;
                 case 'en curso':
-                    classString = 'label-success';
+                    classString = 'badge-success';
                     break;
                 case 'finalizada':
-                    classString = 'label-default';
+                    classString = 'badge-secondary';
                     break;
                 case 'cancelada':
-                    classString = 'label-danger';
+                    classString = 'badge-danger';
                     break;
             }
 
@@ -48143,7 +48140,7 @@ var render = function() {
               _c("td", [
                 _c(
                   "span",
-                  { staticClass: "text-to-14px label label-default" },
+                  { staticClass: "text-to-14px badge badge-secondary" },
                   [
                     _vm._v(
                       _vm._s(
@@ -48161,7 +48158,7 @@ var render = function() {
               _c("td", [
                 _c(
                   "span",
-                  { staticClass: "text-to-14px label label-default" },
+                  { staticClass: "text-to-14px badge badge-secondary" },
                   [
                     _vm._v(
                       _vm._s(
@@ -48179,7 +48176,7 @@ var render = function() {
               _c("td", [
                 _c(
                   "span",
-                  { staticClass: "text-to-14px label label-primary" },
+                  { staticClass: "text-to-14px badge badge-primary" },
                   [_vm._v(_vm._s(rental.total_days))]
                 )
               ]),
@@ -48187,7 +48184,7 @@ var render = function() {
               _c("td", [
                 _c(
                   "span",
-                  { staticClass: "text-to-14px label label-warning" },
+                  { staticClass: "text-to-14px badge badge-warning" },
                   [
                     _c("icon-app", { attrs: { iconImage: "dollar" } }),
                     _vm._v("  " + _vm._s(_vm.setSenia(rental.cottage_price)))
@@ -48197,7 +48194,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [
-                _c("span", { staticClass: "text-to-14px label label-danger" }, [
+                _c("span", { staticClass: "text-to-14px badge badge-danger" }, [
                   _vm._v(
                     _vm._s(_vm._f("DateArg")(rental.dateReservationPayment))
                   )
@@ -48206,38 +48203,34 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _c("div", { staticClass: "row" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" },
-                    [
-                      _c(
-                        "button",
-                        {
-                          directives: [
-                            {
-                              name: "tooltip",
-                              rawName: "v-tooltip.left",
-                              value: "Ver reserva: " + _vm.rowNumber(index),
-                              expression: "'Ver reserva: ' + rowNumber(index)",
-                              modifiers: { left: true }
-                            }
-                          ],
-                          staticClass: "btn btn-info",
-                          attrs: {
-                            "data-toggle": "modal",
-                            "data-target": "#b3-modal-id"
-                          },
-                          on: {
-                            click: function($event) {
-                              _vm.findRental(rental.id)
-                            }
+                  _c("div", { staticClass: "col-12 col-md-12" }, [
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "tooltip",
+                            rawName: "v-tooltip.left",
+                            value: "Ver reserva: " + _vm.rowNumber(index),
+                            expression: "'Ver reserva: ' + rowNumber(index)",
+                            modifiers: { left: true }
                           }
+                        ],
+                        staticClass: "btn btn-info",
+                        attrs: {
+                          "data-toggle": "modal",
+                          "data-target": "#b3-modal-id"
                         },
-                        [_c("icon-app", { attrs: { iconImage: "eye" } })],
-                        1
-                      )
-                    ]
-                  )
+                        on: {
+                          click: function($event) {
+                            _vm.findRental(rental.id)
+                          }
+                        }
+                      },
+                      [_c("icon-app", { attrs: { iconImage: "eye" } })],
+                      1
+                    )
+                  ])
                 ])
               ])
             ])
@@ -48256,291 +48249,281 @@ var render = function() {
             onModalHidden: _vm.clearRental,
             iconBtnSave: "save",
             actionBtnSave: _vm.saveNewInfo,
-            iconBtnClose: "times"
+            iconBtnClose: "times",
+            "modal-header-classes": "bg-dark text-light",
+            "modal-footer-classes": "bg-light",
+            "type-btn-close": "btn-outline-secondary",
+            "type-btn-save": "btn-outline-primary"
           }
         },
         [
           _vm.rental
             ? _c("div", { staticClass: "container-fluid" }, [
                 _c("div", { staticClass: "row" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" },
-                    [
-                      _c("h2", { staticClass: "text-center" }, [
-                        _vm._v("\n                        Reserva cabaña "),
-                        _c(
-                          "span",
-                          { staticClass: "text-capitalize label label-info" },
-                          [_vm._v(_vm._s(_vm.rental.cottage.name))]
+                  _c("div", { staticClass: "col-12 col-md-12" }, [
+                    _c("h2", { staticClass: "text-center" }, [
+                      _vm._v("\n                        Reserva cabaña "),
+                      _c(
+                        "span",
+                        { staticClass: "text-capitalize badge badge-info" },
+                        [_vm._v(_vm._s(_vm.rental.cottage.name))]
+                      ),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("small", [
+                        _vm._v("\n                            Desde: "),
+                        _c("span", { staticClass: "badge badge-secondary" }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm._f("DateArg")(
+                                _vm.rental.dateFrom,
+                                "YYYY-MM-DD",
+                                "DD/MM/YYYY"
+                              )
+                            )
+                          )
+                        ]),
+                        _vm._v(
+                          "\n                             | \n                            Hasta: "
                         ),
+                        _c("span", { staticClass: "badge badge-secondary" }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm._f("DateArg")(
+                                _vm.rental.dateTo,
+                                "YYYY-MM-DD",
+                                "DD/MM/YYYY"
+                              )
+                            )
+                          )
+                        ]),
                         _vm._v(" "),
                         _c("br"),
                         _vm._v(" "),
-                        _c("small", [
-                          _vm._v("\n                            Desde: "),
-                          _c("span", { staticClass: "label label-default" }, [
-                            _vm._v(
-                              _vm._s(
-                                _vm._f("DateArg")(
-                                  _vm.rental.dateFrom,
-                                  "YYYY-MM-DD",
-                                  "DD/MM/YYYY"
-                                )
-                              )
+                        !_vm.editState
+                          ? _c(
+                              "span",
+                              {
+                                class: [
+                                  "text-uppercase",
+                                  "badge",
+                                  _vm.setClassState(_vm.rental.state)
+                                ]
+                              },
+                              [_vm._v(_vm._s(_vm.rental.state))]
                             )
-                          ]),
-                          _vm._v(
-                            "\n                             | \n                            Hasta: "
-                          ),
-                          _c("span", { staticClass: "label label-default" }, [
-                            _vm._v(
-                              _vm._s(
-                                _vm._f("DateArg")(
-                                  _vm.rental.dateTo,
-                                  "YYYY-MM-DD",
-                                  "DD/MM/YYYY"
-                                )
-                              )
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          !_vm.editState
-                            ? _c(
-                                "span",
-                                {
-                                  class: [
-                                    "text-uppercase",
-                                    "label",
-                                    _vm.setClassState(_vm.rental.state)
-                                  ]
-                                },
-                                [_vm._v(_vm._s(_vm.rental.state))]
-                              )
-                            : _vm._e(),
-                          _vm._v(" \n                            "),
-                          !_vm.editState
-                            ? _c(
-                                "a",
-                                {
-                                  directives: [
-                                    {
-                                      name: "tooltip",
-                                      rawName: "v-tooltip.hover",
-                                      value: "Editar estado",
-                                      expression: "'Editar estado'",
-                                      modifiers: { hover: true }
-                                    }
-                                  ],
-                                  attrs: { role: "button" },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      _vm.editState = true
-                                      _vm.trash.state = _vm.rental.state
-                                    }
+                          : _vm._e(),
+                        _vm._v(" \n                            "),
+                        !_vm.editState
+                          ? _c(
+                              "a",
+                              {
+                                directives: [
+                                  {
+                                    name: "tooltip",
+                                    rawName: "v-tooltip.hover",
+                                    value: "Editar estado",
+                                    expression: "'Editar estado'",
+                                    modifiers: { hover: true }
                                   }
-                                },
-                                [
-                                  _c("icon-app", {
-                                    attrs: { iconImage: "edit" }
-                                  })
                                 ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.editState
-                            ? _c(
-                                "form",
-                                {
-                                  staticClass: "form-inline",
-                                  on: {
-                                    submit: function($event) {
-                                      $event.preventDefault()
-                                    }
+                                staticClass: "cursorPointer",
+                                attrs: { role: "button" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.editState = true
+                                    _vm.trash.state = _vm.rental.state
                                   }
-                                },
-                                [
-                                  _c(
-                                    "div",
-                                    {
-                                      class: [
-                                        "alert",
-                                        "alert-dismissible",
-                                        _vm.setClassPenalty(_vm.rental.dateFrom)
-                                      ],
-                                      attrs: { role: "alert" }
-                                    },
-                                    [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "close",
-                                          attrs: {
-                                            type: "button",
-                                            "data-dismiss": "alert",
-                                            "aria-label": "Close"
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "span",
-                                            {
-                                              attrs: { "aria-hidden": "true" }
-                                            },
-                                            [_vm._v("×")]
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("h5", {
-                                        domProps: {
-                                          innerHTML: _vm._s(
-                                            _vm.setMsgPenalty(
-                                              _vm.rental.dateFrom,
-                                              _vm.setSenia(
-                                                +_vm.rental.cottage_price
-                                              )
+                                }
+                              },
+                              [
+                                _c("icon-app", { attrs: { iconImage: "edit" } })
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.editState
+                          ? _c(
+                              "form",
+                              {
+                                staticClass:
+                                  "form-inline justify-content-center",
+                                on: {
+                                  submit: function($event) {
+                                    $event.preventDefault()
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    class: [
+                                      "alert",
+                                      _vm.setClassPenalty(_vm.rental.dateFrom)
+                                    ],
+                                    attrs: { role: "alert" }
+                                  },
+                                  [
+                                    _c("h5", {
+                                      domProps: {
+                                        innerHTML: _vm._s(
+                                          _vm.setMsgPenalty(
+                                            _vm.rental.dateFrom,
+                                            _vm.setSenia(
+                                              +_vm.rental.cottage_price
                                             )
                                           )
-                                        }
-                                      })
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "form-group" }, [
+                                        )
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group form-row" },
+                                  [
                                     _c(
                                       "label",
                                       {
-                                        staticClass: "sr-only",
+                                        staticClass: "col-form-label sr-only",
                                         attrs: { for: "state" }
                                       },
                                       [_vm._v("Estado: ")]
                                     ),
                                     _vm._v(" "),
-                                    _c("div", { staticClass: "input-group" }, [
-                                      _c(
-                                        "div",
-                                        { staticClass: "input-group-addon" },
-                                        [_vm._v("Estado")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "select",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.trash.state,
-                                              expression: "trash.state"
-                                            }
-                                          ],
-                                          staticClass: "form-control",
-                                          attrs: { name: "state", id: "state" },
-                                          on: {
-                                            change: function($event) {
-                                              var $$selectedVal = Array.prototype.filter
-                                                .call(
-                                                  $event.target.options,
-                                                  function(o) {
-                                                    return o.selected
-                                                  }
+                                    _c(
+                                      "div",
+                                      { staticClass: "input-group mr-2" },
+                                      [
+                                        _c(
+                                          "div",
+                                          { staticClass: "input-group-addon" },
+                                          [_vm._v("Estado")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "select",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.trash.state,
+                                                expression: "trash.state"
+                                              }
+                                            ],
+                                            staticClass: "form-control",
+                                            attrs: {
+                                              name: "state",
+                                              id: "state"
+                                            },
+                                            on: {
+                                              change: function($event) {
+                                                var $$selectedVal = Array.prototype.filter
+                                                  .call(
+                                                    $event.target.options,
+                                                    function(o) {
+                                                      return o.selected
+                                                    }
+                                                  )
+                                                  .map(function(o) {
+                                                    var val =
+                                                      "_value" in o
+                                                        ? o._value
+                                                        : o.value
+                                                    return val
+                                                  })
+                                                _vm.$set(
+                                                  _vm.trash,
+                                                  "state",
+                                                  $event.target.multiple
+                                                    ? $$selectedVal
+                                                    : $$selectedVal[0]
                                                 )
-                                                .map(function(o) {
-                                                  var val =
-                                                    "_value" in o
-                                                      ? o._value
-                                                      : o.value
-                                                  return val
-                                                })
-                                              _vm.$set(
-                                                _vm.trash,
-                                                "state",
-                                                $event.target.multiple
-                                                  ? $$selectedVal
-                                                  : $$selectedVal[0]
-                                              )
+                                              }
                                             }
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "option",
-                                            {
-                                              attrs: { value: "pendiente" },
-                                              domProps: {
-                                                selected:
-                                                  _vm.rental.state ===
-                                                  "pendiente"
-                                              }
-                                            },
-                                            [_vm._v("Pendiente")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "option",
-                                            {
-                                              attrs: { value: "confirmada" },
-                                              domProps: {
-                                                selected:
-                                                  _vm.rental.state ===
-                                                  "confirmada"
-                                              }
-                                            },
-                                            [_vm._v("Confirmada")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "option",
-                                            {
-                                              attrs: { value: "en curso" },
-                                              domProps: {
-                                                selected:
-                                                  _vm.rental.state ===
-                                                  "en curso"
-                                              }
-                                            },
-                                            [_vm._v("En curso")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "option",
-                                            {
-                                              attrs: { value: "cancelada" },
-                                              domProps: {
-                                                selected:
-                                                  _vm.rental.state ===
-                                                  "cancelada"
-                                              }
-                                            },
-                                            [_vm._v("Cancelada")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "option",
-                                            {
-                                              attrs: { value: "finalizada" },
-                                              domProps: {
-                                                selected:
-                                                  _vm.rental.state ===
-                                                  "finalizada"
-                                              }
-                                            },
-                                            [_vm._v("Finalizada")]
-                                          )
-                                        ]
-                                      )
-                                    ]),
+                                          },
+                                          [
+                                            _c(
+                                              "option",
+                                              {
+                                                attrs: { value: "pendiente" },
+                                                domProps: {
+                                                  selected:
+                                                    _vm.rental.state ===
+                                                    "pendiente"
+                                                }
+                                              },
+                                              [_vm._v("Pendiente")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "option",
+                                              {
+                                                attrs: { value: "confirmada" },
+                                                domProps: {
+                                                  selected:
+                                                    _vm.rental.state ===
+                                                    "confirmada"
+                                                }
+                                              },
+                                              [_vm._v("Confirmada")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "option",
+                                              {
+                                                attrs: { value: "en curso" },
+                                                domProps: {
+                                                  selected:
+                                                    _vm.rental.state ===
+                                                    "en curso"
+                                                }
+                                              },
+                                              [_vm._v("En curso")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "option",
+                                              {
+                                                attrs: { value: "cancelada" },
+                                                domProps: {
+                                                  selected:
+                                                    _vm.rental.state ===
+                                                    "cancelada"
+                                                }
+                                              },
+                                              [_vm._v("Cancelada")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "option",
+                                              {
+                                                attrs: { value: "finalizada" },
+                                                domProps: {
+                                                  selected:
+                                                    _vm.rental.state ===
+                                                    "finalizada"
+                                                }
+                                              },
+                                              [_vm._v("Finalizada")]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    ),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "form-group" }, [
                                       _c(
                                         "button",
                                         {
-                                          staticClass: "btn btn-default",
+                                          staticClass:
+                                            "btn btn-outline-secondary mr-2",
                                           on: {
                                             click: function($event) {
                                               $event.preventDefault()
@@ -48555,7 +48538,8 @@ var render = function() {
                                       _c(
                                         "button",
                                         {
-                                          staticClass: "btn btn-primary",
+                                          staticClass:
+                                            "btn btn-outline-primary",
                                           on: {
                                             click: function($event) {
                                               $event.preventDefault()
@@ -48566,167 +48550,158 @@ var render = function() {
                                         [_vm._v("Actualizar")]
                                       )
                                     ])
-                                  ])
-                                ]
-                              )
-                            : _vm._e()
-                        ])
+                                  ]
+                                )
+                              ]
+                            )
+                          : _vm._e()
                       ])
-                    ]
-                  )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-12 col-md-12" }, [
+                    _c("table", { staticClass: "table table-striped" }, [
+                      _c("thead", { staticClass: "thead-dark" }, [
+                        _c("tr", [
+                          _c("th", [_vm._v("Concepto")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Detalle")])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tbody", [
+                        _c("tr", [
+                          _c("th", [_vm._v("Vto reserva:")]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "text-to-14px badge badge-secondary"
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm._f("DateArg")(
+                                      _vm.rental.dateReservationPayment
+                                    )
+                                  )
+                                )
+                              ]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("th", [_vm._v("Cantidad de días:")]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "text-to-14px badge badge-secondary"
+                              },
+                              [_vm._v(_vm._s(_vm.rental.total_days))]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("th", [
+                            _vm._v(
+                              _vm._s(_vm.rental.user ? "Usuario" : "Pasajero") +
+                                ":"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "text-to-14px text-capitatrze badge badge-info"
+                              },
+                              [_vm._v(_vm._s(_vm.fullName(_vm.rental)))]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("th", [_vm._v("Precio al reservar:")]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "span",
+                              {
+                                staticClass: "text-to-14px badge badge-danger"
+                              },
+                              [
+                                _c("icon-app", {
+                                  attrs: { iconImage: "dollar" }
+                                }),
+                                _vm._v(" " + _vm._s(_vm.rental.cottage_price))
+                              ],
+                              1
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("th", [_vm._v("Promoción:")]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "span",
+                              {
+                                staticClass: "text-to-14px badge badge-warning"
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.rental.promotion || "Sin promoción"
+                                  )
+                                )
+                              ]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("th", [_vm._v("Descuentos:")]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "span",
+                              {
+                                staticClass: "text-to-14px badge badge-primary"
+                              },
+                              [
+                                _c("icon-app", {
+                                  attrs: { iconImage: "dollar" }
+                                }),
+                                _vm._v(" " + _vm._s(_vm.rental.deductions || 0))
+                              ],
+                              1
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tfoot", [
+                        _c("tr", [_c("td", { attrs: { colspan: "2" } })])
+                      ])
+                    ])
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
                   _c(
                     "div",
-                    { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" },
-                    [
-                      _c("table", { staticClass: "table table-striped" }, [
-                        _c("thead", [
-                          _c("tr", [
-                            _c("th", [_vm._v("Descripción")]),
-                            _vm._v(" "),
-                            _c("th", [_vm._v("Valor")])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("tbody", [
-                          _c("tr", [
-                            _c("th", [_vm._v("Vto reserva:")]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "text-to-14px label label-default"
-                                },
-                                [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm._f("DateArg")(
-                                        _vm.rental.dateReservationPayment
-                                      )
-                                    )
-                                  )
-                                ]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Cantidad de días:")]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "text-to-14px label label-default"
-                                },
-                                [_vm._v(_vm._s(_vm.rental.total_days))]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [
-                              _vm._v(
-                                _vm._s(
-                                  _vm.rental.user ? "Usuario" : "Pasajero"
-                                ) + ":"
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "text-to-14px text-capitatrze label label-info"
-                                },
-                                [_vm._v(_vm._s(_vm.fullName(_vm.rental)))]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Precio al reservar:")]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "span",
-                                {
-                                  staticClass: "text-to-14px label label-danger"
-                                },
-                                [
-                                  _c("icon-app", {
-                                    attrs: { iconImage: "dollar" }
-                                  }),
-                                  _vm._v(" " + _vm._s(_vm.rental.cottage_price))
-                                ],
-                                1
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Promoción:")]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "text-to-14px label label-warning"
-                                },
-                                [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.rental.promotion || "Sin promoción"
-                                    )
-                                  )
-                                ]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Descuentos:")]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "text-to-14px label label-primary"
-                                },
-                                [
-                                  _c("icon-app", {
-                                    attrs: { iconImage: "dollar" }
-                                  }),
-                                  _vm._v(
-                                    " " + _vm._s(_vm.rental.deductions || 0)
-                                  )
-                                ],
-                                1
-                              )
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("tfoot", [
-                          _c("tr", [_c("td", { attrs: { colspan: "2" } })])
-                        ])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" },
+                    { staticClass: "col-12 col-md-12" },
                     [
                       _c("h3", { staticClass: "text-center" }, [
                         _vm._v("\n                        Descripción "),
@@ -48742,6 +48717,7 @@ var render = function() {
                                 modifiers: { hover: true }
                               }
                             ],
+                            staticClass: "cursorPointer",
                             attrs: { role: "button" },
                             on: {
                               click: function($event) {
@@ -48810,7 +48786,7 @@ var render = function() {
                               _c(
                                 "button",
                                 {
-                                  staticClass: "btn btn-default",
+                                  staticClass: "btn btn-outline-secondary",
                                   on: {
                                     click: function($event) {
                                       $event.preventDefault()
@@ -48835,7 +48811,7 @@ var render = function() {
                               _c(
                                 "button",
                                 {
-                                  staticClass: "btn btn-primary",
+                                  staticClass: "btn btn-outline-primary",
                                   on: {
                                     click: function($event) {
                                       $event.preventDefault()
@@ -64625,7 +64601,7 @@ exports.default = {
                     _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
                         context.dispatch('auth/setToken', response, { root: true });
                         context.commit('setClosedDeal', true);
-                        context.commit('setInfoDeal', response.data.finalRental);
+                        context.commit('setInfoDeal', response.data.rental);
                         resolve({
                             title: 'RESERVA EXITOSA',
                             message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
@@ -64641,7 +64617,7 @@ exports.default = {
                 _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
                     context.dispatch('auth/setToken', response, { root: true });
                     context.commit('setClosedDeal', true);
-                    context.commit('setInfoDeal', response.data.finalRental);
+                    context.commit('setInfoDeal', response.data.rental);
                     resolve({
                         title: 'RESERVA EXITOSA',
                         message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
