@@ -20,7 +20,10 @@
 
 use App\Mail\ConfirmAccount;
 use App\Mail\RentalSuccess;
+use App\Mail\AlertNewRental;
+use App\Mail\AlertUpdatedRental;
 use App\Rental;
+use App\User;
 
 Route::group(['middleware' => 'web'], function () {
     /**************************************
@@ -72,5 +75,11 @@ Route::prefix('test')->group(function() {
     });
     Route::get('mail-success', function() {
         return new RentalSuccess(Rental::find(25));
+    });
+    Route::get('alert-success', function() {
+        return new AlertNewRental(Rental::find(25));
+    });
+    Route::get('alert-update', function() {
+        return new AlertUpdatedRental(Rental::find(25));
     });
 });

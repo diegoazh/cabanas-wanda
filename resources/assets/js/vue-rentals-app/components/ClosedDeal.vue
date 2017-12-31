@@ -17,7 +17,8 @@
                     <p class="text-justify">Enviamos un email al correo electronico ingresado en la reserva. Este contiene toda la información de la misma y el código de reserva que <span class="text-danger">es único y solo Ud. lo conoce</span>.<br>
                         Este código le permitirá operar en nuestro sitio web para modificar o cancelar la reserva, asi como también para poder realizar pedidos y otras operaciones desde nuestra web.<br>
                         Tenga en cuenta que la reserva aún no está confirmada, para ello debe hacer el deposito de la seña indicada más abajo. Los datos para realizarlo se encuentran en el mail que le enviamos. El vencimiendo de la reserva se indica más abajo, si para esa fecha y hora la reserva no se confirmó, automáticamente se cae y la cabaña vuelve a quedar disponible para esa fecha.
-                        Por favor tenga en cuenta que <span class="text-danger">no podemos recuperarlo</span> y si lo pierde, deberá generar un nuevo código desde nuestra web, registrandose como usuario.</p>
+                        <br>
+                        Por favor tenga en cuenta que <span class="text-danger">no podemos recuperar</span> el código y si lo pierde, deberá generar un nuevo código desde nuestra web, registrandose como usuario.</p>
                 </div>
                 <table class="table table-striped">
                     <thead class="thead bg-dark text-light">
@@ -32,7 +33,7 @@
                             <tr>
                                 <th rowspan="9"><icon-app iconImage="home"></icon-app> {{ infoDeal.cottage.name }}</th>
                                 <th><icon-app iconImage="dollar"></icon-app> Precio</th>
-                                <td><icon-app iconImage="dollar"></icon-app> {{ infoDeal.cottage_price}}</td>
+                                <td><span class="badge badge-danger"><icon-app iconImage="dollar"></icon-app> {{ infoDeal.cottage_price}}</span></td>
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="calendar"></icon-app> Dias</th>
@@ -40,7 +41,7 @@
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="dollar"></icon-app> Descuentos</th>
-                                <td><icon-app iconImage="dollar"></icon-app> {{ infoDeal.deductions }}</td>
+                                <td><span class="badge badge-success"><icon-app iconImage="dollar"></icon-app> {{ infoDeal.deductions }}</span></td>
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="dollar"></icon-app>Precio total</th>
@@ -48,11 +49,11 @@
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="calendar"></icon-app> Desde</th>
-                                <td>{{ infoDeal.dateFrom + ' 10:00:00' | argentineDateTime }}</td>
+                                <td><span class="badge badge-secondary">{{ infoDeal.dateFrom + ' 10:00:00' | argentineDateTime }}</span></td>
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="calendar"></icon-app> Hasta</th>
-                                <td>{{ infoDeal.dateTo + ' 10:00:00' | argentineDateTime }}</td>
+                                <td><span class="badge badge-secondary">{{ infoDeal.dateTo + ' 10:00:00' | argentineDateTime }}</span></td>
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="dollar"></icon-app>Monto de reserva</th>

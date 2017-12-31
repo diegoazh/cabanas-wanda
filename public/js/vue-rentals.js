@@ -2123,6 +2123,7 @@ exports.default = {
                 this.genre = this.user.genre;
                 this.country = this.user.country_id;
                 this.dataForm = true;
+                this.userNotFound = false;
             } else {
                 this.name = '';
                 this.lastname = '';
@@ -2158,7 +2159,7 @@ exports.default = {
                     _this.createNew = true;
                 }
                 if (bool) {
-                    _this.dataForm = true;
+                    _this.dataForm = bool;
                 }
             }).catch(function (error) {
                 _vueNotifications2.default.warn({
@@ -2205,10 +2206,17 @@ exports.default = {
             this.setToken('');
             this.setUserData({});
             this.dataForm = false;
+            this.name = '';
+            this.lastname = '';
+            this.email = '';
+            this.document = 0;
+            this.genre = '';
+            this.country = 0;
+            this.dataForm = true;
             this.userNotFound = false;
         },
         isNullOrUndefined: function isNullOrUndefined(val) {
-            return typeof val === 'undefined' || val === null;
+            return typeof val === 'undefined' || val === null || typeof val === 'string' && val.length === 0;
         }
     }, (0, _vuex.mapActions)('rentals', ['authenticateUser', 'sendClosedDeal', 'setDeal', 'setUserData']), (0, _vuex.mapActions)('auth', ['setQueryFinished']), (0, _vuex.mapMutations)('auth', ['setToken']))
 };
@@ -2315,7 +2323,12 @@ exports.default = {
             return this.bedSimple ? 'check-square-o' : 'square-o';
         },
         invalidDate: function invalidDate() {
-            if (this.dateFrom && this.dateTo) return this.dateFrom.isAfter(this.dateTo);
+            var dateFrom = this.dateFrom ? (0, _moment2.default)(this.dateFrom, 'DD/MM/YYYY') : null;
+            var dateTo = this.dateTo ? (0, _moment2.default)(this.dateTo, 'DD/MM/YYYY') : null;
+
+            if (dateFrom && dateTo) {
+                return dateFrom.isAfter(dateTo);
+            }
         }
     }, (0, _vuex.mapState)('rentals', {
         cottages: function cottages(state) {
@@ -2337,14 +2350,17 @@ exports.default = {
             }
         },
         hasErrorsInForm: function hasErrorsInForm() {
-            if (this.dateFrom && this.dateTo) this.hasErrors = this.dateFrom.isAfter(this.dateTo);else this.hasErrors = true;
+            var dateFrom = this.dateFrom ? (0, _moment2.default)(this.dateFrom, 'DD/MM/YYYY') : null;
+            var dateTo = this.dateTo ? (0, _moment2.default)(this.dateTo, 'DD/MM/YYYY') : null;
+
+            if (dateFrom && dateTo) this.hasErrors = dateFrom.isAfter(dateTo);else this.hasErrors = true;
         },
         selectQuery: function selectQuery() {
             if (this.hasErrors) return;
             this.setQueryFinished(false);
             this.queryCottagesAvailables({
-                dateFrom: (0, _moment2.default)(this.dateFrom).format('DD/MM/YYYY'),
-                dateTo: (0, _moment2.default)(this.dateTo).format('DD/MM/YYYY')
+                dateFrom: this.dateFrom,
+                dateTo: this.dateTo
             }).then(function (response) {}).catch(function (error) {
                 _vueNotifications2.default.error({
                     title: error.title,
@@ -2360,7 +2376,7 @@ exports.default = {
 };
 
 
-$('#capacidad').selectize({
+window.jQuery('#capacidad').selectize({
     create: false,
     placeholder: '¿Cuantas personas son?',
     preload: true,
@@ -55990,9 +56006,11 @@ var render = function() {
                       _c("icon-app", {
                         attrs: { "icon-image": "exclamation-triangle" }
                       }),
-                      _vm._v(
-                        " La fecha de desde o de inicio no puede ser menor a la fecha hasta o de finalización."
-                      )
+                      _vm._v(" La fecha "),
+                      _c("i", [_vm._v('"desde"')]),
+                      _vm._v(" o de inicio no puede ser menor a la fecha "),
+                      _c("i", [_vm._v('"hasta"')]),
+                      _vm._v(" o de finalización.")
                     ],
                     1
                   )
@@ -70324,7 +70342,7 @@ exports.default = {
                     _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
                         context.dispatch('auth/setToken', response, { root: true });
                         context.commit('setClosedDeal', true);
-                        context.commit('setInfoDeal', response.data.finalRental);
+                        context.commit('setInfoDeal', response.data.rental);
                         resolve({
                             title: 'RESERVA EXITOSA',
                             message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
@@ -70340,7 +70358,7 @@ exports.default = {
                 _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
                     context.dispatch('auth/setToken', response, { root: true });
                     context.commit('setClosedDeal', true);
-                    context.commit('setInfoDeal', response.data.finalRental);
+                    context.commit('setInfoDeal', response.data.rental);
                     resolve({
                         title: 'RESERVA EXITOSA',
                         message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',

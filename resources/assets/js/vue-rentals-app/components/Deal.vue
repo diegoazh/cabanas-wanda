@@ -181,6 +181,7 @@
                     this.genre = this.user.genre;
                     this.country = this.user.country_id;
                     this.dataForm = true;
+                    this.userNotFound = false;
                 } else {
                     this.name = '';
                     this.lastname = '';
@@ -212,7 +213,7 @@
                             this.createNew = true;
                         }
                         if (bool) {
-                            this.dataForm = true;
+                            this.dataForm = bool;
                         }
                     }).catch(error => {
                         VueNoti.warn({
@@ -259,10 +260,17 @@
                 this.setToken('');
                 this.setUserData({});
                 this.dataForm = false;
+                this.name = '';
+                this.lastname = '';
+                this.email = '';
+                this.document = 0;
+                this.genre = '';
+                this.country = 0;
+                this.dataForm = true;
                 this.userNotFound = false;
             },
             isNullOrUndefined(val) {
-                return typeof val === 'undefined' || val === null;
+                return typeof val === 'undefined' || val === null || (typeof val === 'string' && val.length === 0);
             },
             ...mapActions('rentals', ['authenticateUser', 'sendClosedDeal', 'setDeal', 'setUserData']),
             ...mapActions('auth', ['setQueryFinished']),

@@ -46025,7 +46025,7 @@ exports.default = {
                     _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
                         context.dispatch('auth/setToken', response, { root: true });
                         context.commit('setClosedDeal', true);
-                        context.commit('setInfoDeal', response.data.finalRental);
+                        context.commit('setInfoDeal', response.data.rental);
                         resolve({
                             title: 'RESERVA EXITOSA',
                             message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',
@@ -46041,7 +46041,7 @@ exports.default = {
                 _appAxios.http.post('rentals/store?token=' + context.rootState.auth.xhr.token, payload).then(function (response) {
                     context.dispatch('auth/setToken', response, { root: true });
                     context.commit('setClosedDeal', true);
-                    context.commit('setInfoDeal', response.data.finalRental);
+                    context.commit('setInfoDeal', response.data.rental);
                     resolve({
                         title: 'RESERVA EXITOSA',
                         message: 'Se concretó con éxito la reserva, por favor toma nota de los códigos de reserva generados. Muchas gracias',

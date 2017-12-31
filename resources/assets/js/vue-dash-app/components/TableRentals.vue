@@ -15,14 +15,14 @@
             <tbody>
             <tr v-for="(rental, index) in pagination.data">
                 <td><icon-app iconImage="hashtag"></icon-app> {{ rowNumber(index) }}</td>
-                <td><span class="text-to-14px label label-default">{{ rental.dateFrom | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span></td>
-                <td><span class="text-to-14px label label-default">{{ rental.dateTo | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span></td>
-                <td><span class="text-to-14px label label-primary">{{ rental.total_days }}</span></td>
-                <td><span class="text-to-14px label label-warning"><icon-app iconImage="dollar"></icon-app>  {{ setSenia(rental.cottage_price) }}</span></td>
-                <td><span class="text-to-14px label label-danger">{{ rental.dateReservationPayment | DateArg }}</span></td>
+                <td><span class="text-to-14px badge badge-secondary">{{ rental.dateFrom | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span></td>
+                <td><span class="text-to-14px badge badge-secondary">{{ rental.dateTo | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span></td>
+                <td><span class="text-to-14px badge badge-primary">{{ rental.total_days }}</span></td>
+                <td><span class="text-to-14px badge badge-warning"><icon-app iconImage="dollar"></icon-app>  {{ setSenia(rental.cottage_price) }}</span></td>
+                <td><span class="text-to-14px badge badge-danger">{{ rental.dateReservationPayment | DateArg }}</span></td>
                 <td>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-12 col-md-12">
                             <button class="btn btn-info" v-tooltip.left="'Ver reserva: ' + rowNumber(index)" data-toggle="modal" data-target="#b3-modal-id" @click="findRental(rental.id)">
                                 <icon-app iconImage="eye"></icon-app>
                             </button>
@@ -37,30 +37,27 @@
             </tr>
             </tfoot>
         </table>
-        <modal-app :modalTitle="modalAppTitle" modalSize="lg" :onModalHidden="clearRental" iconBtnSave="save" :actionBtnSave="saveNewInfo" iconBtnClose="times">
+        <modal-app :modalTitle="modalAppTitle" modalSize="lg" :onModalHidden="clearRental" iconBtnSave="save" :actionBtnSave="saveNewInfo" iconBtnClose="times" modal-header-classes="bg-dark text-light" modal-footer-classes="bg-light" type-btn-close="btn-outline-secondary" type-btn-save="btn-outline-primary">
             <div class="container-fluid" v-if="rental">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-12 col-md-12">
                         <h2 class="text-center">
-                            Reserva caba&ntilde;a <span class="text-capitalize label label-info">{{ rental.cottage.name }}</span>
+                            Reserva caba&ntilde;a <span class="text-capitalize badge badge-info">{{ rental.cottage.name }}</span>
                             <br>
                             <small>
-                                Desde: <span class="label label-default">{{ rental.dateFrom | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span>
+                                Desde: <span class="badge badge-secondary">{{ rental.dateFrom | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span>
                                 &nbsp;|&nbsp;
-                                Hasta: <span class="label label-default">{{ rental.dateTo | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span>
+                                Hasta: <span class="badge badge-secondary">{{ rental.dateTo | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span>
                                 <br>
-                                <span :class="['text-uppercase', 'label', setClassState(rental.state)]" v-if="!editState">{{ rental.state }}</span>&nbsp;
-                                <a role="button" @click.prevent="editState = true; trash.state = rental.state;" v-tooltip.hover="'Editar estado'" v-if="!editState"><icon-app iconImage="edit"></icon-app></a>
-                                <form @submit.prevent="" class="form-inline" v-if="editState">
-                                    <div :class="['alert', 'alert-dismissible', setClassPenalty(rental.dateFrom)]" role="alert">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                <span :class="['text-uppercase', 'badge', setClassState(rental.state)]" v-if="!editState">{{ rental.state }}</span>&nbsp;
+                                <a class="cursorPointer" role="button" @click.prevent="editState = true; trash.state = rental.state;" v-tooltip.hover="'Editar estado'" v-if="!editState"><icon-app iconImage="edit"></icon-app></a>
+                                <form @submit.prevent="" class="form-inline justify-content-center" v-if="editState">
+                                    <div :class="['alert', setClassPenalty(rental.dateFrom)]" role="alert">
                                         <h5 v-html="setMsgPenalty(rental.dateFrom, setSenia(+rental.cottage_price))"></h5>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="state" class="sr-only">Estado: </label>
-                                        <div class="input-group">
+                                    <div class="form-group form-row">
+                                        <label for="state" class="col-form-label sr-only">Estado: </label>
+                                        <div class="input-group mr-2">
                                             <div class="input-group-addon">Estado</div>
                                             <select name="state" id="state" class="form-control" v-model="trash.state">
                                                 <option value="pendiente" :selected="rental.state === 'pendiente'">Pendiente</option>
@@ -71,8 +68,8 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <button class="btn btn-default" @click.prevent="editState = false; trash.state = '';">Cancelar</button>
-                                            <button class="btn btn-primary" @click.prevent="saveNewState">Actualizar</button>
+                                            <button class="btn btn-outline-secondary mr-2" @click.prevent="editState = false; trash.state = '';">Cancelar</button>
+                                            <button class="btn btn-outline-primary" @click.prevent="saveNewState">Actualizar</button>
                                         </div>
                                     </div>
                                 </form>
@@ -81,49 +78,49 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-12 col-md-12">
                         <table class="table table-striped">
-                            <thead>
+                            <thead class="thead-dark">
                                 <tr>
-                                    <th>Descripción</th>
-                                    <th>Valor</th>
+                                    <th>Concepto</th>
+                                    <th>Detalle</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <th>Vto reserva:</th>
                                     <td>
-                                        <span class="text-to-14px label label-default">{{ rental.dateReservationPayment | DateArg }}</span>
+                                        <span class="text-to-14px badge badge-secondary">{{ rental.dateReservationPayment | DateArg }}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Cantidad de días:</th>
                                     <td>
-                                        <span class="text-to-14px label label-default">{{ rental.total_days }}</span>
+                                        <span class="text-to-14px badge badge-secondary">{{ rental.total_days }}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>{{ rental.user ? 'Usuario' : 'Pasajero' }}:</th>
                                     <td>
-                                        <span class="text-to-14px text-capitatrze label label-info">{{ fullName(rental) }}</span>
+                                        <span class="text-to-14px text-capitatrze badge badge-info">{{ fullName(rental) }}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Precio al reservar:</th>
                                     <td>
-                                        <span class="text-to-14px label label-danger"><icon-app iconImage="dollar"></icon-app> {{ rental.cottage_price }}</span>
+                                        <span class="text-to-14px badge badge-danger"><icon-app iconImage="dollar"></icon-app> {{ rental.cottage_price }}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Promoción:</th>
                                     <td>
-                                        <span class="text-to-14px label label-warning">{{ rental.promotion || 'Sin promoci&oacute;n' }}</span>
+                                        <span class="text-to-14px badge badge-warning">{{ rental.promotion || 'Sin promoci&oacute;n' }}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Descuentos:</th>
                                     <td>
-                                        <span class="text-to-14px label label-primary"><icon-app iconImage="dollar"></icon-app> {{ rental.deductions || 0 }}</span>
+                                        <span class="text-to-14px badge badge-primary"><icon-app iconImage="dollar"></icon-app> {{ rental.deductions || 0 }}</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -136,9 +133,9 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-12 col-md-12">
                         <h3 class="text-center">
-                            Descripción <a role="button" @click.prevent="initEditorMd" v-tooltip.hover="'Editar descripción'"><icon-app :iconImage="editDescription ? 'times' : 'edit'"></icon-app></a>
+                            Descripción <a class="cursorPointer" role="button" @click.prevent="initEditorMd" v-tooltip.hover="'Editar descripción'"><icon-app :iconImage="editDescription ? 'times' : 'edit'"></icon-app></a>
                             <br>
                             <small class="text-muted">Aquí puede agregar cualquier comentario que necesite vincular a está reserva.</small>
                         </h3>
@@ -152,8 +149,8 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button class="btn btn-default" @click.prevent="editDescription = !editDescription"><b> Cancelar <icon-app iconImage="times-o"></icon-app></b></button>
-                                <button class="btn btn-primary" @click.prevent="setTextMarkdown"><b> Actualizar <icon-app iconImage="update"></icon-app></b></button>
+                                <button class="btn btn-outline-secondary" @click.prevent="editDescription = !editDescription"><b> Cancelar <icon-app iconImage="times-o"></icon-app></b></button>
+                                <button class="btn btn-outline-primary" @click.prevent="setTextMarkdown"><b> Actualizar <icon-app iconImage="update"></icon-app></b></button>
                             </div>
                         </div>
                     </div>
@@ -203,15 +200,15 @@
                 let classString = '';
 
                 switch (state) {
-                    case 'pendiente': classString = 'label-warning';
+                    case 'pendiente': classString = 'badge-warning';
                         break;
-                    case 'confirmada': classString = 'label-info';
+                    case 'confirmada': classString = 'badge-info';
                         break;
-                    case 'en curso': classString = 'label-success';
+                    case 'en curso': classString = 'badge-success';
                         break;
-                    case 'finalizada': classString = 'label-default';
+                    case 'finalizada': classString = 'badge-secondary';
                         break;
-                    case 'cancelada': classString = 'label-danger';
+                    case 'cancelada': classString = 'badge-danger';
                         break;
                 }
 

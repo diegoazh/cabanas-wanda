@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\NewUserEvent;
 use App\Mail\ConfirmAccount;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -83,8 +84,7 @@ class RegisterController extends Controller
         $user->confirmation_code = str_random(150);
         $user->save();
 
-        Mail::to($user->email, $user->formalFullname)
-            ->send(new ConfirmAccount($user));
+        event(new NewUserEvent($user));
 
         return $user;
     }
