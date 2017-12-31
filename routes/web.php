@@ -22,6 +22,7 @@ use App\Mail\ConfirmAccount;
 use App\Mail\RentalSuccess;
 use App\Mail\AlertNewRental;
 use App\Mail\AlertUpdatedRental;
+use App\BankingAccount;
 use App\Rental;
 use App\User;
 
@@ -74,12 +75,21 @@ Route::prefix('test')->group(function() {
         return new ConfirmAccount(User::find(158));
     });
     Route::get('mail-success', function() {
-        return new RentalSuccess(Rental::find(25));
+        $rental = Rental::find(25);
+        $cuenta = BankingAccount::where('nro_cta', 'like', '300709%')->where('active', true)->first();
+        $rental->banking = $cuenta;
+        return new RentalSuccess($rental);
     });
     Route::get('alert-success', function() {
-        return new AlertNewRental(Rental::find(25));
+        $rental = Rental::find(25);
+        $cuenta = BankingAccount::where('nro_cta', 'like', '300709%')->where('active', true)->first();
+        $rental->banking = $cuenta;
+        return new AlertNewRental($rental);
     });
     Route::get('alert-update', function() {
-        return new AlertUpdatedRental(Rental::find(25));
+        $rental = Rental::find(25);
+        $cuenta = BankingAccount::where('nro_cta', 'like', '300709%')->where('active', true)->first();
+        $rental->banking = $cuenta;
+        return new AlertUpdatedRental($rental);
     });
 });
