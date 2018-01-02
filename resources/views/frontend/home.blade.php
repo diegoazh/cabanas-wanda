@@ -26,22 +26,22 @@
             <div id="short_messeges" class="row">
                 <div class="col-12 col-md-5">
                     <div id="first_slogan">
-                        <img src="@if(isset($content)) {{ asset("images/frontend/" . $content->img_slogan_one) }} @else /images/cabanias/cabanas13.jpg @endif" alt="@if(isset($content)) {{ $content->img_slogan_one }}@endif" class="img-fluid">
-                        <h2>@if(isset($content)) {{ $content->tt_slogan_one }} @else ed quam nulla, faucibus at velit ac, pretium vestibulum erat. @endif</h2>
-                        <p>@if(isset($content)) {{ $content->desc_slogan_one }} @else Cras molestie neque elit, quis gravida elit blandit vel. Fusce leo augue, vehicula vel cursus sed, tristique non massa. Aenean varius laoreet elementum. Nullam suscipit sapien non enim pulvinar rhoncus. Morbi tristique, nunc quis semper dignissim, augue sapien condimentum ante, at interdum tellus massa pretium magna. Cras varius lacus vitae mauris iaculis pretium. Nullam suscipit sapien non enim pulvinar rhoncus. @endif</p>
+                        <img src="@if(isset($content) && !empty($content->img_slogan_one)) {{ asset("images/frontend/" . $content->img_slogan_one) }} @else /images/cabanias/cabanas13.jpg @endif" alt="@if(isset($content) && !empty($content->img_slogan_one)) {{ $content->img_slogan_one }}@endif" class="img-fluid">
+                        <h2>@if(isset($content) && !empty($content->tt_slogan_one)) {{ $content->tt_slogan_one }} @else ed quam nulla, faucibus at velit ac, pretium vestibulum erat. @endif</h2>
+                        <p>@if(isset($content) && !empty($content->desc_slogan_one)) {{ $content->desc_slogan_one }} @else Cras molestie neque elit, quis gravida elit blandit vel. Fusce leo augue, vehicula vel cursus sed, tristique non massa. Aenean varius laoreet elementum. Nullam suscipit sapien non enim pulvinar rhoncus. Morbi tristique, nunc quis semper dignissim, augue sapien condimentum ante, at interdum tellus massa pretium magna. Cras varius lacus vitae mauris iaculis pretium. Nullam suscipit sapien non enim pulvinar rhoncus. @endif</p>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
                     <div class="col-12">
-                        <div id="second_slogan" @if(isset($content)) style="background-image: url({{ asset("images/frontend/" . $content->img_slogan_two) }})" @endif>
-                            <h2>@if(isset($content)) {{ $content->tt_slogan_two }} @else ed quam nulla, faucibus at velit ac, pretium vestibulum erat.@endif</h2>
-                            <p>@if(isset($content)) {{ $content->desc_slogan_two }} @else Cras molestie neque elit, quis gravida elit blandit vel. Fusce leo augue, vehicula vel cursus sed, tristique non massa. Aenean varius laoreet elementum. Nullam suscipit sapien non enim pulvinar rhoncus. Morbi tristique, nunc quis semper dignissim, augue sapien condimentum ante, at interdum tellus massa pretium magna. Cras varius lacus vitae mauris iaculis pretium. @endif</p>
+                        <div id="second_slogan" @if(isset($content) && !empty($content->img_slogan_two)) style="background-image: url({{ asset("images/frontend/" . $content->img_slogan_two) }})" @endif>
+                            <h2>@if(isset($content) && !empty($content->tt_slogan_two)) {{ $content->tt_slogan_two }} @else ed quam nulla, faucibus at velit ac, pretium vestibulum erat.@endif</h2>
+                            <p>@if(isset($content) && !empty($content->desc_slogan_two)) {{ $content->desc_slogan_two }} @else Cras molestie neque elit, quis gravida elit blandit vel. Fusce leo augue, vehicula vel cursus sed, tristique non massa. Aenean varius laoreet elementum. Nullam suscipit sapien non enim pulvinar rhoncus. Morbi tristique, nunc quis semper dignissim, augue sapien condimentum ante, at interdum tellus massa pretium magna. Cras varius lacus vitae mauris iaculis pretium. @endif</p>
                         </div>
                     </div>
                     <div class="col-12">
-                        <div id="third_slogan" @if(isset($content)) style="background-image: url({{ asset("images/frontend/" . $content->img_slogan_three) }})" @endif>
-                            <h2>@if(isset($content)) {{ $content->tt_slogan_three }} @else ed quam nulla, faucibus at velit ac, pretium vestibulum erat. @endif</h2>
-                            <p>@if(isset($content)) {{ $content->desc_slogan_three }} @else Cras molestie neque elit, quis gravida elit blandit vel. Fusce leo augue, vehicula vel cursus sed, tristique non massa. Aenean varius laoreet elementum. Nullam suscipit sapien non enim pulvinar rhoncus. Morbi tristique, nunc quis semper dignissim, augue sapien condimentum ante, at interdum tellus massa pretium magna. Cras varius lacus vitae mauris iaculis pretium. @endif</p>
+                        <div id="third_slogan" @if(isset($content) && !empty($content->img_slogan_three)) style="background-image: url({{ asset("images/frontend/" . $content->img_slogan_three) }})" @endif>
+                            <h2>@if(isset($content) && !empty($content->tt_slogan_three)) {{ $content->tt_slogan_three }} @else ed quam nulla, faucibus at velit ac, pretium vestibulum erat. @endif</h2>
+                            <p>@if(isset($content) && !empty($content->desc_slogan_three)) {{ $content->desc_slogan_three }} @else Cras molestie neque elit, quis gravida elit blandit vel. Fusce leo augue, vehicula vel cursus sed, tristique non massa. Aenean varius laoreet elementum. Nullam suscipit sapien non enim pulvinar rhoncus. Morbi tristique, nunc quis semper dignissim, augue sapien condimentum ante, at interdum tellus massa pretium magna. Cras varius lacus vitae mauris iaculis pretium. @endif</p>
                         </div>
                     </div>
                 </div>
@@ -51,31 +51,31 @@
                     <i class="fa fa-handshake-o" aria-hidden="true"></i>
                 </div>
             </div>
-            <div id="short_messages_2" class="row @if(isset($content)) @if(!$content->show_slogans_456) hidden @endif @endif">
+            <div id="short_messages_2" class="row @if(isset($content) && !empty($content->show_slogans_456)) @if(!$content->show_slogans_456) hidden @endif @endif">
                 <div class="col-12 col-md-11">
-                    <div id="fourth_slogan" @if(isset($content)) style="background-image: url({{ asset("images/frontend/" . $content->img_slogan_four) }}) @endif">
-                        <h2>@if(isset($content)) {{ $content->tt_slogan_four }} @else Donec vitae molestie magna. Pellentesque nec odio congue, cursus velit in, lacinia lorem. @endif</h2>
-                        <p>@if(isset($content)) {{ $content->desc_slogan_four }} @else Nunc lobortis ut magna tristique consectetur. Ut maximus ultricies ullamcorper. Etiam a risus lorem. Mauris condimentum ex nunc, eu suscipit lacus tristique at. Donec condimentum dui id porttitor pellentesque. Phasellus maximus non ex et eleifend. Pellentesque facilisis scelerisque turpis sed tristique. Praesent viverra egestas mi. Nam efficitur pulvinar arcu quis egestas. Nunc lobortis ut magna tristique consectetur. Ut maximus ultricies ullamcorper. Etiam a risus lorem. Mauris condimentum ex nunc, eu suscipit lacus tristique at. Donec condimentum dui id porttitor pellentesque. Phasellus maximus non ex et eleifend. Pellentesque facilisis scelerisque turpis sed tristique. Praesent viverra egestas mi. Nam efficitur pulvinar arcu quis egestas. Nunc lobortis ut magna tristique consectetur. Ut maximus ultricies ullamcorper. Etiam a risus lorem. Mauris condimentum ex nunc, eu suscipit lacus tristique at. Donec condimentum dui id porttitor pellentesque. Phasellus maximus non ex et eleifend. Pellentesque facilisis scelerisque turpis sed tristique. Praesent viverra egestas mi. Nam efficitur pulvinar arcu quis egestas. @endif</p>
+                    <div id="fourth_slogan" @if(isset($content) && !empty($content->img_slogan_four)) style="background-image: url({{ asset("images/frontend/" . $content->img_slogan_four) }}) @endif">
+                        <h2>@if(isset($content) && !empty($content->tt_slogan_four)) {{ $content->tt_slogan_four }} @else Donec vitae molestie magna. Pellentesque nec odio congue, cursus velit in, lacinia lorem. @endif</h2>
+                        <p>@if(isset($content) && !empty($content->desc_slogan_four)) {{ $content->desc_slogan_four }} @else Nunc lobortis ut magna tristique consectetur. Ut maximus ultricies ullamcorper. Etiam a risus lorem. Mauris condimentum ex nunc, eu suscipit lacus tristique at. Donec condimentum dui id porttitor pellentesque. Phasellus maximus non ex et eleifend. Pellentesque facilisis scelerisque turpis sed tristique. Praesent viverra egestas mi. Nam efficitur pulvinar arcu quis egestas. Nunc lobortis ut magna tristique consectetur. Ut maximus ultricies ullamcorper. Etiam a risus lorem. Mauris condimentum ex nunc, eu suscipit lacus tristique at. Donec condimentum dui id porttitor pellentesque. Phasellus maximus non ex et eleifend. Pellentesque facilisis scelerisque turpis sed tristique. Praesent viverra egestas mi. Nam efficitur pulvinar arcu quis egestas. Nunc lobortis ut magna tristique consectetur. Ut maximus ultricies ullamcorper. Etiam a risus lorem. Mauris condimentum ex nunc, eu suscipit lacus tristique at. Donec condimentum dui id porttitor pellentesque. Phasellus maximus non ex et eleifend. Pellentesque facilisis scelerisque turpis sed tristique. Praesent viverra egestas mi. Nam efficitur pulvinar arcu quis egestas. @endif</p>
                     </div>
                 </div>
                 <div class="col-12 col-md-5">
                     <div id="fifth_slogan">
-                        <img src="@if(isset($content)) {{ asset("images/frontend/" . $content->img_slogan_five) }} @else /images/cabanias/cabanas5.jpg @endif" alt="@if(isset($content)) {{ $content->img_slogan_five }} @endif" class="img-fluid">
-                        <h2>@if(isset($content)) {{ $content->tt_slogan_five }} @else Donec lobortis sit amet nunc sit amet venenatis. @endif</h2>
-                        <p>@if(isset($content)) {{ $content->desc_slogan_five }} @else Mauris a velit suscipit, malesuada nunc quis, faucibus eros. Aliquam tincidunt nisi id erat dapibus, in vulputate urna consequat. Nam accumsan at lectus sit amet dapibus. Nam eget dui sapien. Nulla ac ligula accumsan, egestas enim ut, ultrices mauris. Donec a eros vel metus lobortis blandit. @endif</p>
+                        <img src="@if(isset($content) && !empty($content->img_slogan_five)) {{ asset("images/frontend/" . $content->img_slogan_five) }} @else /images/cabanias/cabanas5.jpg @endif" alt="@if(isset($content) && !empty($content->img_slogan_five)) {{ $content->img_slogan_five }} @endif" class="img-fluid">
+                        <h2>@if(isset($content) && !empty($content->tt_slogan_five)) {{ $content->tt_slogan_five }} @else Donec lobortis sit amet nunc sit amet venenatis. @endif</h2>
+                        <p>@if(isset($content) && !empty($content->desc_slogan_five)) {{ $content->desc_slogan_five }} @else Mauris a velit suscipit, malesuada nunc quis, faucibus eros. Aliquam tincidunt nisi id erat dapibus, in vulputate urna consequat. Nam accumsan at lectus sit amet dapibus. Nam eget dui sapien. Nulla ac ligula accumsan, egestas enim ut, ultrices mauris. Donec a eros vel metus lobortis blandit. @endif</p>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
                     <div id="sixth_slogan">
-                        <img src="@if(isset($content)) {{ asset("images/frontend/" . $content->img_slogan_six) }} @else /images/cabanias/cabanas2.jpg @endif" alt="@if(isset($content)) {{ $content->img_slogan_six }} @endif" class="img-fluid">
-                        <h2>@if(isset($content)) {{ $content->tt_slogan_six }} @else Donec lobortis sit amet nunc sit amet venenatis.@endif</h2>
-                        <p>@if(isset($content)) {{ $content->desc_slogan_six }} @else Mauris a velit suscipit, malesuada nunc quis, faucibus eros. Aliquam tincidunt nisi id erat dapibus, in vulputate urna consequat. Nam accumsan at lectus sit amet dapibus. Nam eget dui sapien. Nulla ac ligula accumsan, egestas enim ut, ultrices mauris. Donec a eros vel metus lobortis blandit.@endif</p>
+                        <img src="@if(isset($content) && !empty($content->img_slogan_six)) {{ asset("images/frontend/" . $content->img_slogan_six) }} @else /images/cabanias/cabanas2.jpg @endif" alt="@if(isset($content) && !empty($content->img_slogan_six)) {{ $content->img_slogan_six }} @endif" class="img-fluid">
+                        <h2>@if(isset($content) && !empty($content->tt_slogan_six)) {{ $content->tt_slogan_six }} @else Donec lobortis sit amet nunc sit amet venenatis.@endif</h2>
+                        <p>@if(isset($content) && !empty($content->desc_slogan_six)) {{ $content->desc_slogan_six }} @else Mauris a velit suscipit, malesuada nunc quis, faucibus eros. Aliquam tincidunt nisi id erat dapibus, in vulputate urna consequat. Nam accumsan at lectus sit amet dapibus. Nam eget dui sapien. Nulla ac ligula accumsan, egestas enim ut, ultrices mauris. Donec a eros vel metus lobortis blandit.@endif</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <section id="testimonies" class="row @if(isset($content)) @if(!$content->show_testimonies) hidden @endif @endif">
+    <section id="testimonies" class="row @if(isset($content) && !empty($content->show_testimonies)) @if(!$content->show_testimonies) hidden @endif @endif">
         <div class="col-12 col-md-8 offset-md-2 py-5">
             <h2 class="text-center">{{ strtoupper('testimonios') }}</h2>
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
