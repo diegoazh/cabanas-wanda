@@ -80,8 +80,7 @@ $(document).ready(function (event) {
     }
 
     function setFrontendModal(ttModal, bodyModal) {
-        $('.modal-header').css('background-color', '#333333').css('color', '#ffffff');
-        $('.modal-footer').css('background-color', '#333333');
+        (type === 'sm' || type === 'lg') ? $('.modal-dialog').addClass('modal-' + type) : null;
         $('.modal-title').text(ttModal);
         $('.modal-body').html(bodyModal);
     }
@@ -90,16 +89,8 @@ $(document).ready(function (event) {
         let lnk = e.target;
         let body = '';
         let $btn = $(lnk);
-        if(/mail/.test($btn.data('tt-modal'))) {
-            body = `<h2 class="text-center">
-                        <i class="fa fa-envelope-open" aria-hidden="true"></i> ${$btn.data('tt-modal')} a
-                    </h2>
-                    <h3 class="text-center">
-                        <a class="btn btn-danger btn-lg text-light" mailto="${$btn.data('body-modal')}@gmail.com">
-                            <i class="fa fa-envelope-open-o" aria-hidden="true"></i> ${$btn.data('body-modal')}<i class="fa fa-at" aria-hidden="true"></i>gmail.com
-                        </a>
-                    </h3>`;
-        } else if (/fijo/.test($btn.data('tt-modal'))) {
+
+        if (/fijo/.test($btn.data('tt-modal'))) {
             body = `<h2 class="text-center">
                         <i class="fa fa-phone" aria-hidden="true"></i> ${$btn.data('tt-modal')}
                     </h2>

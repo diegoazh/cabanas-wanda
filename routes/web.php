@@ -31,6 +31,7 @@ Route::group(['middleware' => 'web'], function () {
      * Base route app
      **************************************/
     Route::get('/', 'FrontendController@showHome')->name('home');
+    Route::post('user_contact', 'FrontendController@userContact')->name('home.front.userContact');
     Route::get('confirm_account', 'Auth\RegisterController@confirmAccount')->name('home.register.confirm');
     Route::get('new_email_confirmation', 'Auth\RegisterController@newEmailConfirmation')->name('home.register.newEmail');
     Route::post('send_new_email_confirmation', 'Auth\RegisterController@sendNewEmailConfirmation')->name('home.register.sendNewEmail');

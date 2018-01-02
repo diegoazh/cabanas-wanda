@@ -74,7 +74,7 @@
                     </a>
                 @endif
             @endif
-            <a href="#" id="mail" data-toggle="modal" data-target="#msg_modals_frontend" data-tt-modal="¡Escribenos un e-mail!" data-body-modal="cabaniasdewanda">
+            <a href="#" id="mail" data-toggle="modal" data-target="#modalEmailContact">
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-square-o fa-stack-2x"></i>
                       <i class="fa fa-envelope fa-stack-1x"></i>
@@ -95,6 +95,7 @@
                     </span>
                 ¡Envianos un Whatsapp!
             </a>
+            @include('frontend.modals.modal-email')
         </div>
     </div>
 </section>
