@@ -9,13 +9,13 @@
         <div class="col-12 col-md-8 description">
             <div id="main_message" class="row">
                 <div class="col-12 col-md-4 offset-md-1 px-4">
-                    <h2>@if(isset($content)) {{ $content->tt_presentation }} @else "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit" @endif</h2>
+                    <h2>@if(isset($content) && !empty($content->tt_presentation)) {{ $content->tt_presentation }} @else "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit" @endif</h2>
                 </div>
                 <div class="col-12 col-md-6">
-                    <p>@if(isset($content)) {{ $content->msg_presentation }} @else Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vel pharetra libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas feugiat condimentum congue. Praesent eleifend sodales justo, a dictum ipsum. Praesent vel gravida massa. Praesent tempor odio sed sem pulvinar pulvinar. Maecenas vulputate risus eu erat condimentum, sit amet auctor ante pretium. Sed tempor nec massa placerat elementum. @endif</p>
+                    <p>@if(isset($content) && !empty($content->msg_presentation)) {{ $content->msg_presentation }} @else Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vel pharetra libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas feugiat condimentum congue. Praesent eleifend sodales justo, a dictum ipsum. Praesent vel gravida massa. Praesent tempor odio sed sem pulvinar pulvinar. Maecenas vulputate risus eu erat condimentum, sit amet auctor ante pretium. Sed tempor nec massa placerat elementum. @endif</p>
                 </div>
                 <div class="col-12 text-center">
-                    <div class="link-button" role="button"><a href="@if(isset($content)) {{ $content->lnk_btn_presentation }} @else # @endif">@if(isset($content)) {{ $content->txt_btn_presentation }} @else Lorem ipsum dolor @endif</a></div>
+                    <div class="link-button" role="button"><a href="@if(isset($content) && !empty($content->lnk_btn_presentation)) {{ $content->lnk_btn_presentation }} @else # @endif">@if(isset($content) && !empty($content->txt_btn_presentation)) {{ $content->txt_btn_presentation }} @else Lorem ipsum dolor @endif</a></div>
                 </div>
             </div>
             <div class="row align-justify-center">
