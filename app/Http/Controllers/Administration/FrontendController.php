@@ -140,19 +140,19 @@ class FrontendController extends Controller
         $front->show_youtube = (isset($params['show_youtube'])) ? $params['show_youtube'] : false;
         $front->show_googleplus = (isset($params['show_googleplus'])) ? $params['show_googleplus'] : false;
         if (isset($params['imgs_header']))
-            $front->images_header = $front->addRemoveImage($params['imgs_header'], '', ($params['remove_olds_imgs_header']) ? ((!empty($front->images_header)) ? explode('|', $front->images_header) : []) : []);
+            $front->images_header = $front->addRemoveImage($params['imgs_header'], '', isset($params['remove_olds_imgs_header']) && $params['remove_olds_imgs_header'] ? ((!empty($front->images_header)) ? explode('|', $front->images_header) : []) : []);
         if (isset($params['img_slogan_one']))
-            $front->img_slogan_one = $front->addRemoveImage(array($params['img_slogan_one']), ($params['remove_olds_slogan1']) ? $front->img_slogan_one : '');
+            $front->img_slogan_one = $front->addRemoveImage(array($params['img_slogan_one']), isset($params['remove_olds_slogan1']) && $params['remove_olds_slogan1'] ? $front->img_slogan_one : '');
         if (isset($params['img_slogan_two']))
-            $front->img_slogan_two = $front->addRemoveImage(array($params['img_slogan_two']), ($params['remove_olds_slogan2']) ? $front->img_slogan_two : '');
+            $front->img_slogan_two = $front->addRemoveImage(array($params['img_slogan_two']), isset($params['remove_olds_slogan2']) && $params['remove_olds_slogan2'] ? $front->img_slogan_two : '');
         if (isset($params['img_slogan_three']))
-            $front->img_slogan_three = $front->addRemoveImage(array($params['img_slogan_three']), ($params['remove_olds_slogan3']) ? $front->img_slogan_three : '');
+            $front->img_slogan_three = $front->addRemoveImage(array($params['img_slogan_three']), isset($params['remove_olds_slogan3']) && $params['remove_olds_slogan3'] ? $front->img_slogan_three : '');
         if (isset($params['img_slogan_four']))
-            $front->img_slogan_four = $front->addRemoveImage(array($params['img_slogan_four']), ($params['remove_olds_slogan4']) ? $front->img_slogan_four : '');
+            $front->img_slogan_four = $front->addRemoveImage(array($params['img_slogan_four']), isset($params['remove_olds_slogan4']) && $params['remove_olds_slogan4'] ? $front->img_slogan_four : '');
         if (isset($params['img_slogan_five']))
-            $front->img_slogan_five = $front->addRemoveImage(array($params['img_slogan_five']), ($params['remove_olds_slogan5']) ? $front->img_slogan_five : '');
+            $front->img_slogan_five = $front->addRemoveImage(array($params['img_slogan_five']), isset($params['remove_olds_slogan5']) && $params['remove_olds_slogan5'] ? $front->img_slogan_five : '');
         if (isset($params['img_slogan_six']))
-            $front->img_slogan_six = $front->addRemoveImage(array($params['img_slogan_six']), ($params['remove_olds_slogan6']) ? $front->img_slogan_six : '');
+            $front->img_slogan_six = $front->addRemoveImage(array($params['img_slogan_six']), isset($params['remove_olds_slogan6']) && $params['remove_olds_slogan6'] ? $front->img_slogan_six : '');
         $front->save();
 
         flash('El contenido de la página principal se actualizó correctamente.', 'success');
