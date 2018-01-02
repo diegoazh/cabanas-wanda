@@ -14,40 +14,40 @@
         <div class="col-12 col-md-4 pl-md-5">
             <h2><i class="fa fa-youtube-square" aria-hidden="true"></i> Una peque&ntilde;a muestra</h2>
             <div class="embed-responsive embed-responsive-16by9">
-                <iframe width="560" height="315" src="@if(isset($content)) {{ $content->link_video }} @else https://www.youtube.com/embed/GktQFL-jAvs @endif" frameborder="0" allowfullscreen></iframe>
+                <iframe width="560" height="315" src="@if(isset($content) && !empty($content->link_video)) {{ $content->link_video }} @else https://www.youtube.com/embed/GktQFL-jAvs @endif" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
         <div class="col-12 col-md-4 pl-md-5">
             <h2><i class="fa fa-user-circle" aria-hidden="true"></i> Redes Sociales</h2>
-            <a href="@if(isset($content)) {{ $content->facebook }} @endif" @if(isset($content)) @if(!$content->show_facebook) class="hidden" @endif @endif>
+            <a href="@if(isset($content) && !empty($content->facebook)) {{ $content->facebook }} @endif" @if(isset($content) && !empty($content->show_facebook)) @if(!$content->show_facebook) class="hidden" @endif @endif>
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-square-o fa-stack-2x"></i>
                       <i class="fa fa-facebook fa-stack-1x"></i>
                     </span>
                 ¡Dejanos un me gusta en nuestra fan page!
             </a>
-            <a href="@if(isset($content)) {{ $content->twitter }} @endif" @if(isset($content)) @if(!$content->show_twitter) class="hidden" @endif @endif>
+            <a href="@if(isset($content) && !empty($content->twitter)) {{ $content->twitter }} @endif" @if(isset($content) && !empty($content->show_twitter)) @if(!$content->show_twitter) class="hidden" @endif @endif>
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-square-o fa-stack-2x"></i>
                       <i class="fa fa-twitter fa-stack-1x"></i>
                     </span>
                 ¡Siguenos en Twitter!
             </a>
-            <a href="@if(isset($content)) {{ $content->instagram }} @endif" @if(isset($content)) @if(!$content->show_instagram) class="hidden" @endif @endif>
+            <a href="@if(isset($content) && !empty($content->instagram)) {{ $content->instagram }} @endif" @if(isset($content) && !empty($content->show_instagram)) @if(!$content->show_instagram) class="hidden" @endif @endif>
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-square-o fa-stack-2x"></i>
                       <i class="fa fa-instagram fa-stack-1x"></i>
                     </span>
                 ¡Siguenos en Instagram!
             </a>
-            <a href="@if(isset($content)) {{ $content->youtube }} @endif" @if(isset($content)) @if(!$content->show_youtube) class="hidden" @endif @endif>
+            <a href="@if(isset($content) && !empty($content->youtube)) {{ $content->youtube }} @endif" @if(isset($content) && !empty($content->show_youtube)) @if(!$content->show_youtube) class="hidden" @endif @endif>
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-square-o fa-stack-2x"></i>
                       <i class="fa fa-youtube fa-stack-1x"></i>
                     </span>
                 ¡Suscribete a nuestro canal!
             </a>
-            <a href="@if(isset($content)) {{ $content->googleplus }} @endif" @if(isset($content)) @if(!$content->show_googleplus) class="hidden" @endif @endif>
+            <a href="@if(isset($content) && !empty($content->googleplus)) {{ $content->googleplus }} @endif" @if(isset($content) && !empty($content->show_googleplus)) @if(!$content->show_googleplus) class="hidden" @endif @endif>
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-square-o fa-stack-2x"></i>
                       <i class="fa fa-google-plus fa-stack-1x"></i>
