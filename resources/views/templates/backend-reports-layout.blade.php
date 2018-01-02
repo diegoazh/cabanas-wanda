@@ -41,6 +41,7 @@
         $(document).ready(function () {
             $('.navbar-light').removeClass('navbar-light bg-light').addClass('navbar-dark bg-dark');
         });
+        $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     </script>
     @yield('scripts')
 </body>

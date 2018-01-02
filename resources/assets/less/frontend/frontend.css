@@ -9,6 +9,10 @@
 /******************************************************
 * Clases
 *******************************************************/
+.hidden {
+  display: none;
+  visibility: hidden;
+}
 .menu-fixed {
   position: fixed;
   z-index: 1000;

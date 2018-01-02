@@ -8,6 +8,10 @@
 /********************************************
  * Clases
  ********************************************/
+.hidden {
+  display: none;
+  visibility: hidden;
+}
 .img-clicked {
   padding: 0px;
   border: 5px solid #2b669a;
