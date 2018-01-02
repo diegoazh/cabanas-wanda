@@ -20,7 +20,7 @@
         <div class="col-12 col-md-4 pl-md-5">
             <h2><i class="fa fa-user-circle" aria-hidden="true"></i> Redes Sociales</h2>
             @if(isset($content) && !empty($content->show_facebook))
-                @if(!$content->show_facebook)
+                @if($content->show_facebook)
                     <a href="@if(isset($content) && !empty($content->facebook)) {{ $content->facebook }} @endif">
                         <span class="fa-stack fa-lg">
                           <i class="fa fa-square-o fa-stack-2x"></i>
@@ -31,7 +31,7 @@
                 @endif
             @endif
             @if(isset($content) && !empty($content->show_twitter))
-                @if(!$content->show_twitter)
+                @if($content->show_twitter)
                     <a href="@if(isset($content) && !empty($content->twitter)) {{ $content->twitter }} @endif">
                         <span class="fa-stack fa-lg">
                           <i class="fa fa-square-o fa-stack-2x"></i>
@@ -42,7 +42,7 @@
                 @endif
             @endif
             @if(isset($content) && !empty($content->show_instagram))
-                @if(!$content->show_instagram)
+                @if($content->show_instagram)
                     <a href="@if(isset($content) && !empty($content->instagram)) {{ $content->instagram }} @endif">
                         <span class="fa-stack fa-lg">
                           <i class="fa fa-square-o fa-stack-2x"></i>
@@ -53,7 +53,7 @@
                 @endif
             @endif
             @if(isset($content) && !empty($content->show_youtube))
-                @if(!$content->show_youtube)
+                @if($content->show_youtube)
                     <a href="@if(isset($content) && !empty($content->youtube)) {{ $content->youtube }} @endif">
                         <span class="fa-stack fa-lg">
                           <i class="fa fa-square-o fa-stack-2x"></i>
@@ -64,7 +64,7 @@
                 @endif
             @endif
             @if(isset($content) && !empty($content->show_googleplus))
-                @if(!$content->show_googleplus)
+                @if($content->show_googleplus)
                     <a href="@if(isset($content) && !empty($content->googleplus)) {{ $content->googleplus }} @endif">
                         <span class="fa-stack fa-lg">
                           <i class="fa fa-square-o fa-stack-2x"></i>
