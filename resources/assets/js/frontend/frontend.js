@@ -109,6 +109,6 @@ $(document).ready(function (event) {
                         </a>
                     </h3>`;
         }
-        setFrontendModal('modalPhones', $btn.data('tt-modal'), body);
+        setFrontendModal('msg_modals_frontend', $btn.data('tt-modal'), body);
     });
 });

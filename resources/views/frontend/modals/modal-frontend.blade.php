@@ -1,4 +1,4 @@
-<div id="modalPhones" class="modal fade" tabindex="-1" role="dialog" id="msg_modals_frontend">
+<div class="modal fade" tabindex="-1" role="dialog" id="msg_modals_frontend">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark text-light">
