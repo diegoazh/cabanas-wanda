@@ -79,10 +79,10 @@ $(document).ready(function (event) {
         backgroundDrawing('dibujo-yacare', 'contain', '100% 50%');
     }
 
-    function setFrontendModal(ttModal, bodyModal) {
+    function setFrontendModal(modalId, ttModal, bodyModal) {
         // (type === 'sm' || type === 'lg') ? $('.modal-dialog').addClass('modal-' + type) : null;
-        $('.modal-title').text(ttModal);
-        $('.modal-body').html(bodyModal);
+        $(`#${modalId} > .modal-title`).text(ttModal);
+        $(`#${modalId} > .modal-body`).html(bodyModal);
     }
 
     $('#phone, #cel').click(function (e) {
@@ -109,6 +109,6 @@ $(document).ready(function (event) {
                         </a>
                     </h3>`;
         }
-        setFrontendModal($btn.data('tt-modal'), body);
+        setFrontendModal('modalPhones', $btn.data('tt-modal'), body);
     });
 });
