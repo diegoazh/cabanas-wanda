@@ -85,7 +85,7 @@ $(document).ready(function (event) {
         $('.modal-body').html(bodyModal);
     }
 
-    $('#mail, #phone, #cel').click(function (e) {
+    $('#phone, #cel').click(function (e) {
         let lnk = e.target;
         let body = '';
         let $btn = $(lnk);
