@@ -81,8 +81,8 @@ $(document).ready(function (event) {
 
     function setFrontendModal(modalId, ttModal, bodyModal) {
         // (type === 'sm' || type === 'lg') ? $('.modal-dialog').addClass('modal-' + type) : null;
-        $(`#${modalId} > .modal-title`).text(ttModal);
-        $(`#${modalId} > .modal-body`).html(bodyModal);
+        $(`#${modalId} > .modal-dialog > .modal-content > .modal-header > .modal-title`).text(ttModal);
+        $(`#${modalId} > .modal-dialog > .modal-content > .modal-body`).html(bodyModal);
     }
 
     $('#phone, #cel').click(function (e) {
