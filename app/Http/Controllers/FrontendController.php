@@ -49,4 +49,9 @@ class FrontendController extends Controller
 
         return redirect(route('home'));
     }
+
+    public function ourLocation()
+    {
+        return view('frontend.our-location');
+    }
 }

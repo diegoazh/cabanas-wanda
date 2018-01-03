@@ -2,7 +2,7 @@
 
 Gracias por contactarnos {{ $name }}
 
-Hemos recibido tu consulta y te resonderemos a la brevedad al mail que ingresaste.
+Hemos recibido tu consulta y te resonderemos a la brevedad a este email.
 
 Nuevamente gracias por escribirnos y esperamos tenerte pronto como huesped.
 
