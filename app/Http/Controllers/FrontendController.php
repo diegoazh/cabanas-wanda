@@ -54,4 +54,9 @@ class FrontendController extends Controller
     {
         return view('frontend.our-location');
     }
+
+    public function touristAttractions()
+    {
+        return view('frontend.tourist-attractions');
+    }
 }
