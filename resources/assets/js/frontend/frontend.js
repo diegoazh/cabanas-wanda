@@ -80,7 +80,7 @@ $(document).ready(function (event) {
     }
 
     function setFrontendModal(ttModal, bodyModal) {
-        (type === 'sm' || type === 'lg') ? $('.modal-dialog').addClass('modal-' + type) : null;
+        // (type === 'sm' || type === 'lg') ? $('.modal-dialog').addClass('modal-' + type) : null;
         $('.modal-title').text(ttModal);
         $('.modal-body').html(bodyModal);
     }
