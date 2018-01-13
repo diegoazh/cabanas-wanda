@@ -5,19 +5,13 @@ namespace App\Http\Controllers;
 use App\Mail\ConfirmEmailSuccess;
 use App\Mail\ContactFromApp;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
-use App\Frontend;
 use Illuminate\Support\Facades\Mail;
 
 class FrontendController extends Controller
 {
     public function showHome()
     {
-        $content = Frontend::where('deleted_at', null)->first();
-        $carbon = new Carbon();
-        $year = $carbon->year;
-
-        return view('frontend.home')->with(compact('year', 'content'));
+        return view('frontend.home');
     }
 
     public function userContact(Request $request)
