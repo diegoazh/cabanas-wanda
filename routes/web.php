@@ -43,6 +43,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('profile/{slug}/edit', 'UsersController@edit')->name('home.profile.edit');
     Route::put('profile/{slug}', 'UsersController@update')->name('home.profile.update');
     Route::delete('profile/{slug}', 'UsersController@destroy')->name('home.profile.destroy');
+    Route::get('profile/{slug}/rentals', 'UsersController@profileRentals')->name('home.profile.rentals');
     Route::get('rentals', 'RentalsController@index')->name('home.rentals.index');
     Route::get('rentals/edit', 'RentalsController@edit')->name('home.rentals.edit');
     Route::get('liquidation', 'LiquidationController@liquidation')->name('home.liquidation.liquidation');

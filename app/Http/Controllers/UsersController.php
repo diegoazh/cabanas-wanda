@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon as Carbon;
+use JWTAuth;
 
 class UsersController extends Controller
 {
@@ -35,8 +36,7 @@ class UsersController extends Controller
         {
             if (Auth::user()->slug === $slug)
             {
-                $user = User::where('slug', $slug)->first();
-                return view('frontend.profile-edit')->with('user', $user);
+                return view('frontend.profile-edit')->with('user', Auth::user());
             }
             else
             {
@@ -110,18 +110,55 @@ class UsersController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     * @param \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
     public function destroy($id, Request $request)
     {
         $user = User::find($id);
         $user->delete();
+
         flash('El usuario fue eliminado exitosamente.', 'success');
+
         if ($request->ajax()) {
+
             return response()->json([
                 'message' => 'El usuario fue eliminado exitosamente.'
             ]);
+
         }
+
         return redirect()->route('users.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function profileRentals($slug)
+    {
+        if (!Auth::check()) {
+
+            return redirect(route('login'));
+
+        }
+
+        if (Auth::user()->slug !== $slug) {
+
+            Auth::logout();
+            return redirect(route('login'));
+
+        }
+
+        $token = JWTAuth::fromUser(Auth::user());
+
+        return view('frontend.profile-rentals')->with(['user' => Auth::user()]);
+    }
+
+    public function myRentals($token)
+    {
+
     }
 }

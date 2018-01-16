@@ -72,6 +72,9 @@
                             <a class="dropdown-item" href="{{ route('home.profile.show', Auth::user()->slug) }}">
                                 <i class="fa fa-user-circle-o" aria-hidden="true"></i> Perfil
                             </a>
+                            <a class="dropdown-item" href="{{ route('home.profile.rentals', Auth::user()->slug) }}">
+                                <i class="fa fa-handshake-o" aria-hidden="true"></i> Mis reservas
+                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 Cerrar sesión <i class="fa fa-sign-out" aria-hidden="true"></i>
