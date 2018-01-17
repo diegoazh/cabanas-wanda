@@ -215,7 +215,9 @@ class CottagesController extends Controller
 
                 }
 
-            } else if (isset($info['bulkType']) && $info['bulkType'] && !empty($info['type'])) {
+            }
+
+            if (isset($info['bulkType']) && $info['bulkType'] && !empty($info['type'])) {
 
                 foreach ($info['cottages'] as $number) {
 
@@ -231,7 +233,9 @@ class CottagesController extends Controller
 
                 }
 
-            } else if (isset($info['bulkAccommodation']) && $info['bulkAccommodation'] && isset($info['accommodationCottages']) && !empty($info['accommodationCottages'])) {
+            }
+
+            if (isset($info['bulkAccommodation']) && $info['bulkAccommodation'] && isset($info['accommodationCottages']) && !empty($info['accommodationCottages'])) {
 
                 foreach ($info['cottages'] as $number) {
 
@@ -247,7 +251,9 @@ class CottagesController extends Controller
 
                 }
 
-            } else if (isset($info['bulkPrice']) && $info['bulkPrice'] && isset($info['priceCottages']) && !empty($info['priceCottages'])) {
+            }
+
+            if (isset($info['bulkPrice']) && $info['bulkPrice'] && isset($info['priceCottages']) && !empty($info['priceCottages'])) {
 
                 foreach ($info['cottages'] as $number) {
 
