@@ -269,11 +269,6 @@ class CottagesController extends Controller
 
                 }
 
-            } else {
-
-                flash('<h3>No se envió la información necesaria, por favor verifique y reintente.</h3>')->warning();
-                return redirect(route('cottages.index'));
-
             }
 
         } else {
