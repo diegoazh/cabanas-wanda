@@ -69,11 +69,11 @@
                                     <i class="fa fa-tachometer" aria-hidden="true"></i> Administración
                                 </a>
                             @endif
-                            <a class="dropdown-item" href="{{ route('home.profile.show', Auth::user()->slug) }}">
-                                <i class="fa fa-user-circle-o" aria-hidden="true"></i> Perfil
-                            </a>
                             <a class="dropdown-item" href="{{ route('home.profile.rentals', Auth::user()->slug) }}">
                                 <i class="fa fa-handshake-o" aria-hidden="true"></i> Mis reservas
+                            </a>
+                            <a class="dropdown-item" href="{{ route('home.profile.show', Auth::user()->slug) }}">
+                                <i class="fa fa-user-circle-o" aria-hidden="true"></i> Perfil
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

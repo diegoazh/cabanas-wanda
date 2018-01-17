@@ -12,4 +12,5 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/vue-profile-rentals.js') }}" type="text/javascript"></script>
 @endsection

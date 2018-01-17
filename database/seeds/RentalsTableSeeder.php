@@ -67,7 +67,7 @@ class RentalsTableSeeder extends Seeder
             $rental->user_id = $user['id'];
             $rental->cottage_price = Cottage::find($rental->cottage_id)->price;
             $rental->dateReservationPayment = Carbon::createFromFormat('Y-m-d', $rental->dateFrom)->subDay()->addHours(10)->toDateString();
-            $code = $rental->createCodeReservation();
+            $code = $rental->createCodeReservation($rental->cottage_id, $rental->user_id);
             $rental->code_reservation = $code;
             $rental->state = $state;
             $rental->save();

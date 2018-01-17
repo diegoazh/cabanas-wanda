@@ -5,7 +5,7 @@ import VueNotifications from 'vue-notifications';
 import store from '../vue-commons/store/store'
 import { optionsIzi } from '../vue-commons/notifications/notifications'
 import Orders from './components/Orders.vue'
-import 'vue-directive-tooltip/css/index.css';
+import 'vue-directive-tooltip/css/index.css'
 
 Vue.use(VueNotifications, optionsIzi).use(VueCookies).use(Tooltip);
 

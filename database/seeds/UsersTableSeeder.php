@@ -27,7 +27,7 @@ class UsersTableSeeder extends Seeder
         $mantenimito->confirmation_code = str_random(150);
         $mantenimito->save();
 
-        /*$dazh = new User([
+        $dazh = new User([
             'name' => 'Diego Alberto',
             'lastname' => 'Zapata Häntsch',
             'dni' => 31511811,
@@ -38,7 +38,7 @@ class UsersTableSeeder extends Seeder
             'confirmation_code' => str_random(150),
             'type' => 'sysadmin'
         ]);
-        $dazh->save();*/
+        $dazh->save();
 
         for ($i = 0; $i < 500; $i++)
         {
