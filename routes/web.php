@@ -69,6 +69,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Administration', 'middleware'
     Route::put('users/{user}', 'UsersController@update')->name('users.update')->middleware('isEmployed');
     Route::delete('users/{user}', 'UsersController@destroy')->name('users.destroy')->middleware('isEmployed');
     Route::resource('cottages', 'CottagesController');
+    Route::post('cottages/bulk_actions', 'CottagesController@cottagesBulkActions')->name('cottage.cottagesBulkActions');
     Route::get('food', 'FoodsController@index')->name('comidas.index');
     Route::get('reports', 'ReportsController@index')->name('reports.index');
     //Route::resource('promotions', 'PromotionsController');

@@ -120,11 +120,13 @@ class CottagesController extends Controller
                 Rule::unique('cottages')->ignore($cottage->id)
             ]
         ]);
+
         if ($v->fails())
         {
             return redirect()->back()->withInput()->withErrors($v->errors());
-            flash('Ha ocurrido un error por favor verifique la información enviada.', 'warning');
+            flash('<h3>Ha ocurrido un error por favor verifique la información enviada.</h3>', 'warning');
         }
+
         $attributes = $request->all();
         $cottage->name = $attributes['name'];
         $cottage->type = $attributes['type'];
@@ -134,7 +136,9 @@ class CottagesController extends Controller
         $cottage->price = $attributes['price'];
         $cottage->images = $cottage->addOrRemoveImages((isset($attributes['images'])) ? $attributes['images'] : null, $attributes['actualImages'], $attributes['removedImages']);
         $cottage->save();
-        flash('La cabaña se actualizó correctamente.', 'success');
+
+        flash('<h3>La cabaña se actualizó correctamente.</h3>', 'success');
+
         return redirect()->route('cottages.index');
     }
 
@@ -148,12 +152,133 @@ class CottagesController extends Controller
     {
         $cottage = Cottage::find($id);
         $cottage->delete();
-        flash('La cabaña se eliminó correctamente.', 'success');
+
+        flash('<h3>La cabaña se eliminó correctamente.</h3>', 'success');
+
         if ($request->ajax()) {
             return response()->json([
                 'message' => 'La cabaña se eliminó correctamente.'
             ]);
         }
+
         return redirect()->route('cottages.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function cottagesBulkActions(Request $request)
+    {
+        $info = $request->all();
+        $cottages = Cottage::all();
+
+        if (isset($info['action'])) {
+
+            if ($info['action'] === 'enable') {
+
+                foreach ($cottages as $cottage) {
+                    $cottage->state = 'enabled';
+                    $cottage->save();
+                }
+
+            } else if ($info['action'] === 'disable') {
+
+                foreach ($cottages as $cottage) {
+                    $cottage->state = 'disabled';
+                    $cottage->save();
+                }
+
+            } else {
+
+                flash('<h3>No se envió la información necesaria, por favor verifique y reintente.</h3>')->warning();
+                return redirect(route('cottages.index'));
+
+            }
+
+        } else if (isset($info['cottages']) && !empty($info['cottages'])) {
+
+            if (isset($info['bulkState']) && $info['bulkState'] && isset($info['state']) && !empty($info['state'])) {
+
+                foreach ($info['cottages'] as $number) {
+
+                    foreach ($cottages as $cottage) {
+
+                        if ($cottage->number === (integer)$number) {
+
+                            $cottage->state = $info['state'];
+                            $cottage->save();
+
+                        }
+                    }
+
+                }
+
+            } else if (isset($info['bulkType']) && $info['bulkType'] && !empty($info['type'])) {
+
+                foreach ($info['cottages'] as $number) {
+
+                    foreach ($cottages as $cottage) {
+
+                        if ($cottage->number === (integer)$number) {
+
+                            $cottage->type = $info['type'];
+                            $cottage->save();
+
+                        }
+                    }
+
+                }
+
+            } else if (isset($info['bulkAccommodation']) && $info['bulkAccommodation'] && isset($info['accommodationCottages']) && !empty($info['accommodationCottages'])) {
+
+                foreach ($info['cottages'] as $number) {
+
+                    foreach ($cottages as $cottage) {
+
+                        if ($cottage->number === (integer)$number) {
+
+                            $cottage->accommodation = $info['accommodationCottages'];
+                            $cottage->save();
+
+                        }
+                    }
+
+                }
+
+            } else if (isset($info['bulkPrice']) && $info['bulkPrice'] && isset($info['priceCottages']) && !empty($info['priceCottages'])) {
+
+                foreach ($info['cottages'] as $number) {
+
+                    foreach ($cottages as $cottage) {
+
+                        if ($cottage->number === (integer)$number) {
+
+                            $cottage->price = $info['priceCottages'];
+                            $cottage->save();
+
+                        }
+                    }
+
+                }
+
+            } else {
+
+                flash('<h3>No se envió la información necesaria, por favor verifique y reintente.</h3>')->warning();
+                return redirect(route('cottages.index'));
+
+            }
+
+        } else {
+
+            flash('<h3>La información no llegó correctamente, por favor verifique y reintente.</h3>')->warning();
+            return redirect(route('cottages.index'));
+
+        }
+
+        flash('<h3>Las operaciones se procesaron con éxito.</h3>')->success();
+
+        return redirect(route('cottages.index'));
     }
 }

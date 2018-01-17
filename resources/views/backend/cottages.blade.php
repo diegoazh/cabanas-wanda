@@ -4,7 +4,13 @@
 
 @section('content')
     @include('backend.modals.modal-forms')
-    <h1 class="tt-cottages pl-3 py-3">Lista de Caba&ntilde;as</h1>
+    <h1 class="tt-cottages pl-3 py-3">Lista de Caba&ntilde;as
+        @if(Auth::user()->isAdmin())
+            <button class="btn btn-outline-info pull-right mr-3" type="button" data-toggle="modal" data-target="#bulkActions">
+                <i class="fa fa-bolt" aria-hidden="true"></i> Acciones masivas
+            </button>
+        @endif
+    </h1>
         <table class="table table-striped table-hover">
             <thead class="thead bg-dark text-light">
                 <tr>
@@ -57,3 +63,4 @@
         </table>
         <div class="text-center">{{ $cottages->render() }}</div>
 @endsection
+@include('backend.modals.modal-bulk-actions')

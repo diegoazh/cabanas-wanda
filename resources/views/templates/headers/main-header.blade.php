@@ -64,7 +64,7 @@
                         </a>
 
                         <div class="dropdown-menu" role="menu">
-                            @if(Auth::user()->type === 'administrador' || Auth::user()->type === 'sysadmin')
+                            @if(Auth::user()->isAdmin())
                                 <a class="dropdown-item" href="{{ route('admin.panel') }}">
                                     <i class="fa fa-tachometer" aria-hidden="true"></i> Administración
                                 </a>
