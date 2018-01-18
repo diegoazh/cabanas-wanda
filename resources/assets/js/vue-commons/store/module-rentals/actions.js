@@ -34,7 +34,7 @@ export default {
     },
     setCottages({commit, dispatch}) {
         return new Promise((resolve, reject) => {
-            http.get('cottages/enabled/')
+            http.get('cottages/enabled')
                 .then(response => {
                     commit('setCottages', response.data.cottages);
                     resolve({
@@ -49,7 +49,7 @@ export default {
     },
     queryCottagesAvailables({dispatch}, payload) {
         return new Promise((resolve, reject) => {
-            http.post('rentals/availables/', payload)
+            http.post('rentals/availables', payload)
                 .then(response => {
                     dispatch('setToRentals', response.data.cottages);
                     dispatch('auth/setQueryFinished', true, {root: true});
@@ -64,7 +64,7 @@ export default {
     },
     authenticateUser({dispatch}, payload) {
         return new Promise((resolve, reject) => {
-            http.post('auth/auth/', {
+            http.post('auth/auth', {
                 isAdmin: payload.isAdmin,
                 userLogged: payload.userLogged,
                 document: payload.document,
