@@ -1,7 +1,7 @@
 <template>
     <div class="col-12 col-md-6">
         <div class="card cottage-card">
-            <img :src="cottage.images" alt="" class="card-img-top">
+            <img :src="seleccionarFoto(cottage.images)" alt="" class="card-img-top">
             <div class="card-body">
                 <h4 class="card-title text-capitalize bg-info text-light px-3 py-2 rounded">{{ cottage.name }}</h4>
                 <ul>
@@ -52,6 +52,12 @@
             prepareDeal(index) {
                 this.setToRentals(this.toRentals.splice(index, 1));
                 this.setDeal(true);
+            },
+            seleccionarFoto(images) {
+                if (/|/.test(images)) {
+                    return images.split('|').shift();
+                }
+                return images;
             },
             ...mapActions('rentals', ['deleteItemToRentals', 'setToRentals', 'setDeal'])
         }
