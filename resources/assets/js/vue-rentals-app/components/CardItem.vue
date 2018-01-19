@@ -55,7 +55,7 @@
             },
             seleccionarFoto(images) {
                 if (/|/.test(images)) {
-                    return images.split('|').shift();
+                    return 'images/cabanias/' + images.split('|').shift();
                 }
                 return images;
             },
