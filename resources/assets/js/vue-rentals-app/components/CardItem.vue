@@ -54,7 +54,7 @@
                 this.setDeal(true);
             },
             seleccionarFoto(images) {
-                if (/|/.test(images)) {
+                if (!/lorempixel/.test(images)) {
                     return 'images/cabanias/' + images.split('|').shift();
                 }
                 return images;

@@ -1,6 +1,6 @@
 <template>
     <div class="row justify-content-center">
-        <div class="col-12">
+        <div class="col-7">
             <table class="table table-striped">
                 <thead class="bg-dark text-light">
                 <tr>
