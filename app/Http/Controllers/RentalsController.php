@@ -463,4 +463,26 @@ class RentalsController extends Controller
 
         return response()->json($rentals, 200);
     }
+
+    public function updateRentalCode(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'integer'
+        ], [
+            'id.integer' => 'El id debe ser un número entero.'
+        ]);
+
+        if (!$id = $request->input('id', null)) {
+
+            return response()->json(['message' => 'No hemos encontrado la reserva solicitada.'], 404);
+
+        }
+
+        $rental = Rental::find($id);
+        $code = Rental::createCodeReservation($rental->cottage_id, $rental->user_id);
+        $rental->code_reservation = $code;
+        $rental->save();
+
+        return response()->json(compact('code'), 200);
+    }
 }

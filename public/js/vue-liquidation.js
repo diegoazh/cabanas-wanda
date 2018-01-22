@@ -36120,7 +36120,58 @@ Object.defineProperty(exports, "__esModule", {
 
 var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
 
-exports.default = {};
+var _moment = __webpack_require__("./node_modules/moment/moment.js");
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    getMyRentals: function getMyRentals(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.get('profile/rentals', {
+                params: {
+                    token: payload
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                response.data.rentals.forEach(function (rental) {
+                    rental.dateFrom = (0, _moment2.default)(rental.dateFrom, 'YYYY-MM-DD');
+                    rental.dateTo = (0, _moment2.default)(rental.dateTo, 'YYYY-MM-DD');
+                });
+                cntx.commit('setRentals', response.data.rentals);
+                resolve({
+                    title: 'Listado de reservas',
+                    message: 'Hemos localizado todas sus reservas.',
+                    type: 'success',
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                cntx.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    },
+    updateRentalCode: function updateRentalCode(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('rentals/update-code', payload, {
+                params: {
+                    token: cntx.rootGetters['auth/getToken']
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve({
+                    title: 'Nuevo código',
+                    message: 'El nuevo c\xF3digo de su reserva es: ' + response.data.code + '\n                              Se lo enviamos a su casilla de correo electr\xF3nico.',
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                cntx.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    }
+};
 
 /***/ }),
 
@@ -36183,9 +36234,13 @@ var moduleProfileRentals = exports.moduleProfileRentals = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    setRentals: function setRentals(state, rentals) {
+        state.data.rentals = rentals;
+    }
+};
 
 /***/ }),
 
@@ -36199,7 +36254,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
-    data: {}
+    data: {
+        rentals: []
+    }
 };
 
 /***/ }),

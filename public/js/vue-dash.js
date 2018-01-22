@@ -50494,6 +50494,8 @@ return VueNotifications;
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var template = __webpack_require__("./node_modules/vue-pagination-2/compiled/template.js");
@@ -50507,7 +50509,6 @@ module.exports = {
       required: false
     },
     theme: {
-      type: String,
       default: 'bootstrap3'
     },
     align: {
@@ -50570,11 +50571,19 @@ module.exports = {
   computed: {
     Theme: function Theme() {
 
+      if (_typeof(this.theme) === 'object') {
+        return this.theme;
+      }
+
       var themes = {
         bootstrap3: __webpack_require__("./node_modules/vue-pagination-2/compiled/themes/bootstrap3.js"),
         bootstrap4: __webpack_require__("./node_modules/vue-pagination-2/compiled/themes/bootstrap4.js"),
         bulma: __webpack_require__("./node_modules/vue-pagination-2/compiled/themes/bulma.js")
       };
+
+      if (_typeof(themes[this.theme]) === undefined) {
+        throw 'vue-pagination-2: the theme ' + this.theme + ' does not exist';
+      }
 
       return themes[this.theme];
     },
@@ -50737,10 +50746,10 @@ module.exports = function () {
 
     return h(
       "div",
-      { "class": "VuePagination" },
+      { "class": "VuePagination " + theme.wrapper },
       [h(
         "nav",
-        { "class": theme.wrapper + " " + theme[this.align] },
+        { "class": "" + theme.nav },
         [h(
           "ul",
           {
@@ -50749,7 +50758,7 @@ module.exports = function () {
               value: this.totalPages > 1
             }],
 
-            "class": theme.list + " " + theme[this.align] + " VuePagination__pagination" },
+            "class": theme.list + " VuePagination__pagination" },
           [h(
             "li",
             { "class": "VuePagination__pagination-item " + theme.item + " " + theme.prev + " VuePagination__pagination-item-prev-chunk " + this.allowedChunkClass(-1) },
@@ -50811,17 +50820,17 @@ module.exports = function () {
               [">>"]
             )]
           )]
-        )]
-      ), h(
-        "p",
-        {
-          directives: [{
-            name: "show",
-            value: parseInt(this.records)
-          }],
+        ), h(
+          "p",
+          {
+            directives: [{
+              name: "show",
+              value: parseInt(this.records)
+            }],
 
-          "class": "VuePagination__count " + theme[alignText] },
-        [this.count]
+            "class": "VuePagination__count " + theme.count },
+          [this.count]
+        )]
       )]
     );
   };
@@ -50836,18 +50845,14 @@ module.exports = function () {
 
 
 module.exports = {
+    nav: '',
+    count: '',
     wrapper: '',
     list: 'pagination',
     item: 'page-item',
     link: 'page-link',
     next: '',
     prev: '',
-    center: 'text-center',
-    left: 'text-left',
-    right: 'text-right',
-    centerText: 'text-center',
-    leftText: 'text-left',
-    rightText: 'text-right',
     active: 'active'
 };
 
@@ -50860,19 +50865,14 @@ module.exports = {
 
 
 module.exports = {
+    nav: '',
+    count: '',
     wrapper: '',
     list: 'pagination',
     item: 'page-item',
     link: 'page-link',
     next: '',
     prev: '',
-    center: 'justify-content-center',
-    textCenter: 'text-center',
-    left: 'text-left',
-    right: 'text-right',
-    centerText: 'text-center',
-    leftText: 'text-left',
-    rightText: 'text-right',
     active: 'active'
 };
 
@@ -50885,18 +50885,14 @@ module.exports = {
 
 
 module.exports = {
+    nav: '',
+    count: '',
     wrapper: 'pagination',
     list: 'pagination-list',
     item: '',
     link: 'pagination-link',
     next: '',
     prev: '',
-    center: 'is-centered',
-    left: 'is-left',
-    right: 'is-right',
-    centerText: 'has-text-centered',
-    leftText: 'has-text-left',
-    rightText: 'has-text-right',
     active: 'is-current'
 };
 
@@ -64333,7 +64329,58 @@ Object.defineProperty(exports, "__esModule", {
 
 var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
 
-exports.default = {};
+var _moment = __webpack_require__("./node_modules/moment/moment.js");
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    getMyRentals: function getMyRentals(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.get('profile/rentals', {
+                params: {
+                    token: payload
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                response.data.rentals.forEach(function (rental) {
+                    rental.dateFrom = (0, _moment2.default)(rental.dateFrom, 'YYYY-MM-DD');
+                    rental.dateTo = (0, _moment2.default)(rental.dateTo, 'YYYY-MM-DD');
+                });
+                cntx.commit('setRentals', response.data.rentals);
+                resolve({
+                    title: 'Listado de reservas',
+                    message: 'Hemos localizado todas sus reservas.',
+                    type: 'success',
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                cntx.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    },
+    updateRentalCode: function updateRentalCode(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('rentals/update-code', payload, {
+                params: {
+                    token: cntx.rootGetters['auth/getToken']
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve({
+                    title: 'Nuevo código',
+                    message: 'El nuevo c\xF3digo de su reserva es: ' + response.data.code + '\n                              Se lo enviamos a su casilla de correo electr\xF3nico.',
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                cntx.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    }
+};
 
 /***/ }),
 
@@ -64396,9 +64443,13 @@ var moduleProfileRentals = exports.moduleProfileRentals = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    setRentals: function setRentals(state, rentals) {
+        state.data.rentals = rentals;
+    }
+};
 
 /***/ }),
 
@@ -64412,7 +64463,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
-    data: {}
+    data: {
+        rentals: []
+    }
 };
 
 /***/ }),

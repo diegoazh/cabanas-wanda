@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Rental;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -154,11 +156,33 @@ class UsersController extends Controller
 
         $token = JWTAuth::fromUser(Auth::user());
 
+        Cookie::queue('info_one', $token, 180, null, null, false, false);
+
         return view('frontend.profile-rentals')->with(['user' => Auth::user()]);
     }
 
-    public function myRentals($token)
+    public function myRentals(Request $request)
     {
+        if (!$token = $request->query('token', null)) {
 
+            flash('<h3>No hemos podido identificarlo por favor ingrese sus credenciales y vuelva a intentarlo. Muchas gracias.</h3>')->warning();
+
+            return redirect(route('login'));
+        }
+
+        if (!$user = JWTAuth::parseToken()->authenticate()) {
+
+            return response()->json(['message' => 'No hemos podido identificar al usuario, es posible que el token no sea válido. Por favor recargue nuevamente esta página o vuelva a loguearse. Muchas gracias.'], 404);
+
+        }
+
+        $rentals = Rental::where('user_id', $user->id)->orderBy('dateFrom', 'desc')->get();
+
+        foreach ($rentals as $rental) {
+            $rental->cottage;
+        }
+
+        return response()->json(compact('rentals'), 200);
     }
+
 }
