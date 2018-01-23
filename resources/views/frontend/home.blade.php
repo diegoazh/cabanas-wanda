@@ -132,8 +132,6 @@
             </section>
         @endif
     @endif
-    @include('frontend.modals.modal-frontend')
-    {{--@include('frontend.modals.modal-maintenance')--}}
 @endsection
 
 @section('scripts')

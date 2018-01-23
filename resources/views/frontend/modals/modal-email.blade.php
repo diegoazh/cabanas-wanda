@@ -19,35 +19,45 @@
                                 <div class="form-group form-row">
                                     <label for="name" class="col-form-label sr-only">Nombre completo:<sup class="text-danger"><b>*</b></sup></label>
                                     <div class="input-group">
-                                        <div class="input-group-addon">Nombre completo<sup class="text-danger"><b>*</b></sup></div>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Nombre completo<sup class="text-danger"><b>*</b></sup></span>
+                                        </div>
                                         <input type="text" id="name" name="name" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="form-group form-row">
                                     <label for="email" class="col-form-label sr-only">Email:<sup class="text-danger"><b>*</b></sup></label>
                                     <div class="input-group">
-                                        <div class="input-group-addon">Email<sup class="text-danger"><b>*</b></sup></div>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Email<sup class="text-danger"><b>*</b></sup></span>
+                                        </div>
                                         <input type="email" id="email" name="email" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="form-group form-row">
                                     <label for="phone" class="col-form-label sr-only">Tel&eacute;fono:</label>
                                     <div class="input-group">
-                                        <div class="input-group-addon">Tel&eacute;fono</div>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Tel&eacute;fono</span>
+                                        </div>
                                         <input type="number" id="phone" name="phone" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group form-row">
                                     <label for="subject" class="col-form-label sr-only">Asunto:<sup class="text-danger"><b>*</b></sup></label>
                                     <div class="input-group">
-                                        <div class="input-group-addon">Asunto<sup class="text-danger"><b>*</b></sup></div>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Asunto<sup class="text-danger"><b>*</b></sup></span>
+                                        </div>
                                         <input type="text" id="subject" name="subject" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="form-group form-row">
                                     <label for="content" class="col-form-label sr-only">Descripción:<sup class="text-danger"><b>*</b></sup></label>
                                     <div class="input-group">
-                                        <div class="input-group-addon">Descripción<sup class="text-danger"><b>*</b></sup></div>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Descripción<sup class="text-danger"><b>*</b></sup></span>
+                                        </div>
                                         <textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea>
                                     </div>
                                 </div>

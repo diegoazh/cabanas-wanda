@@ -96,6 +96,8 @@
                 ¡Envianos un Whatsapp!
             </a>
             @include('frontend.modals.modal-email')
+            @include('frontend.modals.modal-frontend')
+            {{--@include('frontend.modals.modal-maintenance')--}}
         </div>
     </div>
 </section>

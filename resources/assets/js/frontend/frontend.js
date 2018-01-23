@@ -91,7 +91,7 @@ $(document).ready(function (event) {
         let $btn = $(lnk);
 
         if (/fijo/.test($btn.data('tt-modal'))) {
-            body = `<h2 class="text-center">
+            body = `<h2 class="text-center text-dark">
                         <i class="fa fa-phone" aria-hidden="true"></i> ${$btn.data('tt-modal')}
                     </h2>
                     <h3 class="text-center">
@@ -100,7 +100,7 @@ $(document).ready(function (event) {
                         </a>
                     </h3>`;
         } else {
-            body = `<h2 class="text-center">
+            body = `<h2 class="text-center text-dark">
                         <i class="fa fa-mobile" aria-hidden="true"></i> ${$btn.data('tt-modal')}
                     </h2>
                     <h3 class="text-center">
