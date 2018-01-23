@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Rental;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -10,15 +11,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class NewRentalCode extends Mailable
 {
     use Queueable, SerializesModels;
+    public $rental;
     public $code;
 
     /**
      * Create a new message instance.
+     * @param Rental $rental
+     * @param Integer $code
      *
      * @return void
      */
-    public function __construct($code)
+    public function __construct(Rental $rental, $code)
     {
+        $this->rental = $rental;
         $this->code = $code;
     }
 
@@ -29,6 +34,6 @@ class NewRentalCode extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.rentals.new-rental-code');
+        return $this->markdown('emails.rentals.new-rental-code')->subject('Nuevo código de reserva');
     }
 }

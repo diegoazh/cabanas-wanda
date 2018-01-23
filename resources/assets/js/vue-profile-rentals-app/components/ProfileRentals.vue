@@ -21,7 +21,9 @@
                     <td><span class="badge badge-secondary">{{ rental.cottage.name.toUpperCase() }}</span></td>
                     <td><i class="fa fa-dollar" aria-hidden="true"></i> {{ rental.cottage_price }} <sup style="text-decoration: underline;"><b>ARS</b></sup></td>
                     <td>
-                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalNewCode" @click.prevent="rentalModal = rental"><i class="fa fa-barcode"></i> Nuevo código</button>
+                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalNewCode" @click.prevent="rentalModal = rental">
+                            <icon-app :icon-image="setIconOnBtn(rental)" :aditional-classes="setAditionalClassesOnBtn(rental)"></icon-app> Nuevo código
+                        </button>
                     </td>
                 </tr>
                 </tbody>
@@ -40,8 +42,11 @@
                     type-btn-close="btn-outline-secondary"
                     txt-btn-save="Generar código"
                     txt-btn-close="Cerrar"
+                    icon-btn-close="times"
+                    icon-btn-save="refresh"
                     :on-modal-hidden="setRentalModalNull"
-                    :action-btn-save="sendQueryForNewCode">
+                    :action-btn-save="sendQueryForNewCode"
+                    :action-btn-close="setRentalModalNull">
                 <h4>Esta por generar un nuevo código de reserva.</h4>
                 <hr>
                 <p class="text-danger">¿Está seguro de querer cambiarlo?</p>
@@ -55,11 +60,13 @@
     import VueNoti from 'vue-notifications'
     import { mapActions, mapState } from 'vuex'
     import Modal from '../../vue-commons/components/Modal'
+    import Icon from '../../vue-commons/components/Icon'
 
     export default {
         name: 'profile-rentals',
         components: {
-            'modal-app': Modal
+            'modal-app': Modal,
+            'icon-app': Icon
         },
         data() {
             return {
@@ -75,7 +82,8 @@
               return 'Actualizar código de reserva';
             },
             ...mapState('auth', {
-                token: state => state.xhr.token
+                token: state => state.xhr.token,
+                queryFinished: state => state.xhr.queryFinished
             }),
             ...mapState('profile_rentals', {
                 rentals: state => state.data.rentals
@@ -85,23 +93,44 @@
             isCurrent(dateFrom, dateTo) {
                 return moment().isBetween(dateFrom, dateTo, null, '[]')
             },
+            setIconOnBtn(rental) {
+                if (rental && this.rentalModal) {
+                    if (rental.id === this.rentalModal.id && !this.queryFinished) {
+                        return 'spinner';
+                    }
+                }
+
+                return 'barcode';
+            },
+            setAditionalClassesOnBtn(rental) {
+                if (rental && this.rentalModal) {
+                    if (rental.id === this.rentalModal.id && !this.queryFinished) {
+                        return 'fa-spin fa-fw';
+                    }
+                }
+
+                return null;
+            },
             setRentalModalNull() {
                 this.rentalModal = null;
             },
             sendQueryForNewCode() {
                 if (this.rentalModal) {
+                    this.setQueryFinished(false);
                     this.updateRentalCode({id: this.rentalModal.id})
                         .then(response => {
                             VueNoti.success(response);
+                            this.setQueryFinished(true);
                         })
                         .catch(error => {
                             VueNoti.error(error);
+                            this.setQueryFinished(true);
                         });
                 }
 
                 window.jQuery('#modalNewCode').modal('hide');
             },
-            ...mapActions('auth', ['fireSetTokenMutation']),
+            ...mapActions('auth', ['fireSetTokenMutation', 'setQueryFinished']),
             ...mapActions('profile_rentals', ['getMyRentals', 'updateRentalCode'])
         },
         filters: {},
