@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\RentalUpdateEvent' => [
             'App\Listeners\RentalUpdateListener'
+        ],
+        'App\Events\NewCodeReservationEvent' => [
+            'App\Listeners\NewCodeReservationListener'
         ]
     ];
 

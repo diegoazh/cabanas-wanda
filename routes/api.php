@@ -41,6 +41,7 @@ Route::prefix('rentals')->group(function() {
             ->where('state', '\w+')->where('results', '\d+')->name('api.rentals.forState');
         Route::get('for-id/{id}', 'RentalsController@findForId')
             ->where('id', '\d+')->name('api.rentals.forId');
+        Route::post('update-code', 'RentalsController@updateRentalCode')->name('api.rentals.updateRentalCode');
     });
 });
 
@@ -70,4 +71,8 @@ Route::prefix('liquidation')->group(function() {
 Route::prefix('reports')->group(function() {
     Route::get('rentals', 'Administration\ReportsController@rentalsForMonth')->name('api.reports.rentals');
     Route::get('orders', 'Administration\ReportsController@findOrdersForRental')->name('api.reports.orders');
+});
+
+Route::prefix('profile')->middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
+    Route::get('rentals', 'UsersController@myRentals')->name('api.profile.myRentals');
 });

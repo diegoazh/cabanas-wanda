@@ -62,7 +62,7 @@
                                             <select name="state" id="state" class="form-control" v-model="trash.state">
                                                 <option value="pendiente" :selected="rental.state === 'pendiente'">Pendiente</option>
                                                 <option value="confirmada" :selected="rental.state === 'confirmada'">Confirmada</option>
-                                                <option value="en curso" :selected="rental.state === 'en curso'">En curso</option>
+                                                <option value="en_curso" :selected="rental.state === 'en_curso'">En curso</option>
                                                 <option value="cancelada" :selected="rental.state === 'cancelada'">Cancelada</option>
                                                 <option value="finalizada" :selected="rental.state === 'finalizada'">Finalizada</option>
                                             </select>

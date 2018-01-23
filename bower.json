@@ -36,7 +36,7 @@
     "chosen": "^1.8.2",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "animate.css": "^3.5.2",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.0.0",
     "glyphicons-only-bootstrap": "^0.0.1"
   }
 }

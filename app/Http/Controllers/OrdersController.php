@@ -64,7 +64,7 @@ class OrdersController extends Controller
 
                 foreach ($info['orders'] as $items) {
 
-                    $delivery = Carbon::createFromFormat('Y-m-d', explode('T', $items['delivery'])[0]);
+                    $delivery = Carbon::createFromFormat('d/m/Y', $items['delivery']);
 
                     if (!$delivery->between($dateFrom, $dateTo)) {
 
@@ -84,7 +84,7 @@ class OrdersController extends Controller
 
         } catch(\Exception $exception) {
 
-            return response()->json(['error' => 'Ocurrio un error intentando dar de alta el pedido.\n Por favor tenga en cuenta el siguiente detalle: Codigo: ' . $exception->getCode() . ' - Mensaje: ' . $exception->getMessage()], 500); //  . ' - Line: ' . $exception->getLine()
+            return response()->json(['error' => 'Ocurrio un error intentando dar de alta el pedido.\n Por favor tenga en cuenta el siguiente detalle: Codigo: ' . $exception->getCode() . ' - Mensaje: ' . $exception->getMessage() . ' - Line: ' . $exception->getLine() . ' - File: ' . $exception->getFile()], 500);
 
         }
 

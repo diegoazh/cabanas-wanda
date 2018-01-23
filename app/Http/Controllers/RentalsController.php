@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cottage;
 use App\Devolution;
+use App\Events\NewCodeReservationEvent;
 use App\Events\NewRentalEvent;
 use App\Events\RentalUpdateEvent;
 use App\Http\Requests\RequestRental;
@@ -462,5 +463,30 @@ class RentalsController extends Controller
         }
 
         return response()->json($rentals, 200);
+    }
+
+    public function updateRentalCode(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'integer'
+        ], [
+            'id.integer' => 'El id debe ser un número entero.'
+        ]);
+
+        if (!$id = $request->input('id', null)) {
+
+            return response()->json(['message' => 'No hemos encontrado la reserva solicitada.'], 404);
+
+        }
+
+        $rental = Rental::find($id);
+        $code = Rental::createCodeReservation($rental->cottage_id, $rental->user_id);
+        $rental->code_reservation = $code;
+        $rental->save();
+        $rental->user;
+
+        event(new NewCodeReservationEvent($rental, $code));
+
+        return response()->json(compact('code'), 200);
     }
 }
