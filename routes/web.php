@@ -97,4 +97,9 @@ Route::prefix('test')->group(function() {
         $rental->banking = $cuenta;
         return new AlertUpdatedRental($rental);
     });
+    Route::get('new-code', function() {
+        $rental = Rental::find(10);
+        $code = 'ABC52DEF'. time();
+        return new \App\Mail\NewRentalCode($rental, $code);
+    });
 });

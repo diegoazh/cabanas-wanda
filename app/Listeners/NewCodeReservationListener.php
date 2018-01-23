@@ -27,6 +27,7 @@ class NewCodeReservationListener
      */
     public function handle($event)
     {
-        Mail::to($event->rental->user->email, $event->rental->user->formalFullName)->send(new NewRentalCode($event->code));
+        Mail::to($event->rental->user->email, $event->rental->user->formalFullName)
+            ->send(new NewRentalCode($event->rental, $event->code));
     }
 }
