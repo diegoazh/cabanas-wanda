@@ -4,29 +4,41 @@ namespace App\Http\Controllers\Administration;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
-    public function __construct()
-    {
-
-    }
-
     /**
      * Display a listing of the resource.
+     * @param Request $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::where('deleted_at', null)->orderBy('created_at', 'desc')->paginate(10);
+        if (($request->search || empty($request->search)) && !$request->query('page', null)) {
+            $search = $request->search;
+        } else if (!empty(Cookie::get('search'))) {
+            $search = Cookie::get('search');
+        } else {
+            $search = null;
+        }
+
+        $users = User::email($search)->orderBy('created_at', 'desc')->paginate(10);
         $users->each(function ($users) {
             $users->country;
         });
-        return view('backend.users')->with('users', $users);
+
+        if ($search && !empty($search)) {
+            Cookie::queue('search', $search, 60, null, null, false, false);
+        } else {
+            Cookie::forget('search');
+        }
+
+        return view('backend.users')->with(compact('users', 'search'));
     }
 
     /**

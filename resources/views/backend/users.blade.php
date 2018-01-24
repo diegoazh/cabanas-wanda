@@ -4,7 +4,15 @@
 
 @section('content')
     @include('backend.modals.modal-forms')
-    <h1 class="tt-users pl-3 py-3">Usuarios registrados</h1>
+    <h1 class="tt-users pl-3 py-3">
+        Usuarios registrados
+        {!! Form::open(['route' => 'users.index', 'method' => 'get', 'class' => 'pull-right mr-3']) !!}
+            <div class="form-group">
+                <label for="searchUser" class="col-form-label sr-only">Buscar mail:</label>
+                {!! Form::text('search', isset($search) ? $search : null, ['class' => 'form-control', 'id' => 'searchUser', 'placeholder' => 'Buscar mail...', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 'title' => 'Presione ENTER para buscar']) !!}
+            </div>
+        {!! Form::close() !!}
+    </h1>
     <table class="table table-striped table-hover">
         <thead class="thead bg-dark text-light">
             <tr>
@@ -46,4 +54,12 @@
         </tfoot>
     </table>
     <div class="text-center align-self-center mt-1 mb-3">{{ $users->links('vendor.pagination.bootstrap-4') }}</div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 @endsection

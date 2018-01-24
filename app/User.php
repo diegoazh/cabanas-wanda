@@ -44,6 +44,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function scopeEmail($query, $email)
+    {
+        return $query->where('email', 'like', "%$email%");
+    }
+
     public function country()
     {
         return $this->belongsTo('App\Country');
