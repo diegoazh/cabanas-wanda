@@ -21,7 +21,7 @@
     <li class="item"><a href="#" class="promotion">Promociones <span>{{ isset($canPromotions) ? $canPromotions : 0 }}</span></a>
         <ul>
             <li class="subitem"><a href="#">Listado de promos <span>{{ isset($canPromotions) ? $canPromotions : 0 }}</span></a></li>
-            <li class="subitem"><a href="#">Crear promo</a></li>
+            <li class="subitem"><a href="{{ route('promotions.create') }}">Crear promo</a></li>
         </ul>
     </li>
     <li class="item"><a href="#" class="claims">Reclamos <span>{{ isset($canClaims) ? $canClaims : 0 }}</span></a>

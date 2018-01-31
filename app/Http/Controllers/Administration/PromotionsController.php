@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Administration;
 use App\Promotion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PromotionsController extends Controller
 {
@@ -25,7 +26,11 @@ class PromotionsController extends Controller
      */
     public function create()
     {
-        //
+        if (!Auth::user()->isAdmin()) {
+            return redirect(route('login'));
+        }
+
+        return view('backend.promotions-create');
     }
 
     /**

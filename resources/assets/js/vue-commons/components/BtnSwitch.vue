@@ -118,8 +118,12 @@
     }
 </script>
 
-<style>
+<style scoped>
     .text-deleted {
         text-decoration: line-through;
+    }
+
+    .cursorPointer {
+        cursor: pointer;
     }
 </style>

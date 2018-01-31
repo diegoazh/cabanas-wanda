@@ -62,6 +62,7 @@ mix.copy([
     .js('resources/assets/js/vue-reports-app/vue-reports.js', 'public/js')
     .js('resources/assets/js/vue-dash-app/vue-dash.js', 'public/js')
     .js('resources/assets/js/vue-profile-rentals-app/vue-profile-rentals.js', 'public/js')
+    .js('resources/assets/js/vue-promotions-create-app/vue-promotions-create.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .version([
         './public/css/app.css',
