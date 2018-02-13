@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card" id="form-promotion">
         <div class="card-header bg-dark text-light">
             <h1><icon-app icon-image="gift"></icon-app> Alta de promociones</h1>
         </div>
@@ -7,7 +7,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-md-9">
-                        <form action="#">
+                        <form @submit.prevent="sendNewPromotion">
                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="pills-desc-tab" data-toggle="pill" href="#pills-desc" role="tab" aria-controls="pills-desc" aria-selected="true">Descripción</a>
@@ -31,12 +31,13 @@
                                     <fieldset>
                                         <legend class="text-muted">Datos descriptivos</legend>
                                         <div class="form-label-group">
-                                            <input type="text" id="namePromotion" class="form-control" placeholder="Nombre de la promoción">
+                                            <input type="text" id="namePromotion" class="form-control" placeholder="Nombre de la promoción" v-model="name">
                                             <label for="namePromotion">Nombre de la promoción</label>
                                         </div>
                                         <div class="form-group">
                                             <label for="descProm">Descripción</label>
                                             <markdown-editor
+                                                    id="descProm"
                                                     v-model="description"
                                                     ref="markdownEditor"
                                                     preview-class="markdown-body"></markdown-editor>
@@ -47,19 +48,19 @@
                                     <fieldset>
                                         <legend class="text-muted">Tipo de promoción</legend>
                                         <btn-switch-app :init-left="isLeft"
-                                                        text-left="Porcentage"
+                                                        text-left="Porcentaje"
                                                         text-right="Monto fijo"
                                                         icon-left="porcent"
                                                         icon-right="dollar"></btn-switch-app>
                                         <transition name="inputs-type-transition"
                                                     enter-active-class="animated bounceInUp"
                                                     leave-active-class="animated bounceOutUp">
-                                            <div class="form-label-group" v-if="isLeft" key="percentage">
-                                                <input type="number" class="form-control" id="porcentPromotion" placeholder="Porcentage de promoción" min="1" max="100" step="0.01" pattern="^[0-9]+">
-                                                <label for="porcentPromotion">Porcentage de promoción</label>
+                                            <div class="form-label-group" v-if="isLeft" key="percentaje">
+                                                <input type="number" class="form-control" id="porcentPromotion" placeholder="Porcentaje de promoción" min="1" max="100" step="0.01" pattern="^[0-9]+" v-model="percent">
+                                                <label for="porcentPromotion">Porcentaje de promoción</label>
                                             </div>
                                             <div class="form-label-group" v-else key="amount">
-                                                <input type="number" id="montoPromotion" class="form-control" placeholder="Monto fijo de promoción" min="1" step="0.01" pattern="^[0-9]+">
+                                                <input type="number" id="montoPromotion" class="form-control" placeholder="Monto fijo de promoción" min="1" step="0.01" pattern="^[0-9]+" v-model="amount">
                                                 <label for="montoPromotion">Monto fijo de promoción</label>
                                             </div>
                                         </transition>
@@ -137,6 +138,10 @@
                                     </fieldset>
                                 </div>
                             </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-outline-success">Crear <icon-app icon-image="gift"></icon-app></button>
+                                <button type="reset" class="btn btn-outline-warning">Limpiar</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -162,9 +167,12 @@
         data() {
             return {
                 isLeft: true,
+                name: '',
                 description: '',
                 state: '',
                 terms: '',
+                percent: null,
+                amount: null,
                 dateFrom: new Date(),
                 dateTo: new Date(),
                 config: {
@@ -175,7 +183,9 @@
             }
         },
         computed: {},
-        methods: {},
+        methods: {
+            sendNewPromotion() {}
+        },
         filters: {},
         created() {
         },
@@ -189,4 +199,9 @@
     @import '~eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
     @import '~simplemde/dist/simplemde.min.css';
     @import '~github-markdown-css';
+</style>
+<style>
+    #content{
+        margin-top: 5rem;
+    }
 </style>

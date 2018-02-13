@@ -41,7 +41,12 @@ class PromotionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $info = $request->all();
+        $promotion = Promotion::create($info);
+
+        flash('La promoción se creó correctamente')->success();
+
+        return response()->json(['message' => 'La promosión se creó correctamente']);
     }
 
     /**
