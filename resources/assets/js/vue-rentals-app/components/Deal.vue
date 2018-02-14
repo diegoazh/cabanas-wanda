@@ -1,8 +1,8 @@
 <template>
     <div class="row justify-content-around">
         <div class="col-12 col-md-12">
-            <button @click.prevent="goBackToReservas" v-if="!dataForm" class="btn btn-outline-secondary btn-sm pull-right"><icon-app iconImage="arrow-left"></icon-app> Volver a reservas <icon-app type-icon="r" iconImage="handshake"></icon-app></button>
-            <button @click.prevent="goBackToFindUser" v-if="dataForm" class="btn btn-outline-secondary btn-sm pull-right"><icon-app iconImage="arrow-left"></icon-app> Volver a buscar usuario <icon-app iconImage="search"></icon-app></button>
+            <button @click.prevent="goBackToReservas" v-if="!dataForm" class="btn btn-outline-secondary btn-sm float-right"><icon-app iconImage="arrow-left"></icon-app> Volver a reservas <icon-app type-icon="r" iconImage="handshake"></icon-app></button>
+            <button @click.prevent="goBackToFindUser" v-if="dataForm" class="btn btn-outline-secondary btn-sm float-right"><icon-app iconImage="arrow-left"></icon-app> Volver a buscar usuario <icon-app iconImage="search"></icon-app></button>
         </div>
         <div v-if="!dataForm" class="col-12 col-md-8">
             <h3 class="text-center">

@@ -1,7 +1,7 @@
 <template>
     <div class="row justify-content-around">
         <div class="col-12 col-md-12">
-            <button @click="goBackToReservas" class="btn btn-outline-secondary btn-sm pull-right">
+            <button @click="goBackToReservas" class="btn btn-outline-secondary btn-sm float-right">
                 <icon-app iconImage="arrow-left"></icon-app>
                 Volver a reservas
                 <icon-app type-icon="r" iconImage="handshake"></icon-app>

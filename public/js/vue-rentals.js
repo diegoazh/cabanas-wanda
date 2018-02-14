@@ -55346,7 +55346,7 @@ var render = function() {
         ? _c(
             "button",
             {
-              staticClass: "btn btn-outline-secondary btn-sm pull-right",
+              staticClass: "btn btn-outline-secondary btn-sm float-right",
               on: {
                 click: function($event) {
                   $event.preventDefault()
@@ -55369,7 +55369,7 @@ var render = function() {
         ? _c(
             "button",
             {
-              staticClass: "btn btn-outline-secondary btn-sm pull-right",
+              staticClass: "btn btn-outline-secondary btn-sm float-right",
               on: {
                 click: function($event) {
                   $event.preventDefault()
@@ -56323,7 +56323,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "btn btn-outline-secondary btn-sm pull-right",
+          staticClass: "btn btn-outline-secondary btn-sm float-right",
           on: { click: _vm.goBackToReservas }
         },
         [

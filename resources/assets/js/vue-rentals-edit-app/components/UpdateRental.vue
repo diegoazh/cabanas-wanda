@@ -1,11 +1,6 @@
 <template>
     <div class="row justify-content-center">
         <div class="col-12 col-md-12">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-12">
-                    <btn-switch textLeft="Editar" textRight="Cancelar"></btn-switch>
-                </div>
-            </div>
             <div class="row justify-content-center" v-if="seeLeft">
                 <div class="col-12 col-md-12">
                     <div>
@@ -19,7 +14,7 @@
                         </ul>
                         <div class="tab-content">
                             <div class="col py-3">
-                                <button class="btn btn-outline-secondary btn-sm pull-right" @click.prevent.stop="clearRental"><icon-app icon-image="exchange"></icon-app> Cambiar reserva</button>
+                                <button class="btn btn-outline-secondary btn-sm float-right" @click.prevent.stop="clearRental"><icon-app icon-image="exchange-alt"></icon-app> Cambiar reserva</button>
                             </div>
                             <div role="tabpanel" class="tab-pane active pt-3" id="dates">
                                 <div class="alert alert-warning text-justify">
@@ -36,7 +31,7 @@
                                     <div :class="['form-group', 'form-row', {'has-error': !trash.date_from}, 'mr-2']">
                                         <label for="dateFrom" class="col-form-label sr-only">Desde</label>
                                         <div class="input-group">
-                                            <div class="input-group-addon date-piker"><icon-app iconImage="calendar"></icon-app></div>
+                                            <div class="input-group-prepend date-piker"><div class="input-group-text"><icon-app iconImage="calendar"></icon-app></div></div>
                                             <date-picker v-if="!disableDateFrom" placeholder="Seleccione la fecha desde..." :config="dtpConfg" id="dateFrom" name="dateFrom" v-model="trash.date_from"></date-picker>
                                             <input v-else type="text" :value="rental.dateFrom" class="form-control" disabled>
                                         </div>
@@ -44,23 +39,23 @@
                                     <div :class="['form-group', 'form-row', {'has-error': !trash.date_to}, 'mr-2']">
                                         <label for="dateTo" class="col-form-label sr-only">Hasta</label>
                                         <div class="input-group">
-                                            <div class="input-group-addon date-piker"><icon-app iconImage="calendar"></icon-app></div>
+                                            <div class="input-group-prepend date-piker"><div class="input-group-text"><icon-app iconImage="calendar"></icon-app></div></div>
                                             <date-picker placeholder="Seleccione la fecha hasta..." :config="dtpConfg" id="dateTo" name="dateTo" v-model="trash.date_to"></date-picker>
                                         </div>
                                     </div>
-                                    <button @click="isAvailable" class="btn btn-outline-primary">Consultar fechas <icon-app iconImage="exchange"></icon-app></button>
+                                    <button @click="isAvailable" class="btn btn-outline-primary">Consultar fechas <icon-app iconImage="exchange-alt"></icon-app></button>
                                 </form>
                                 <div class="row" v-if="toRentals.length">
                                     <div class="col-12 col-md-6 py-5" v-for="cottage in toRentals">
                                         <div class="card box-shadow border-light">
-                                            <img :src="/https?:\/\//.test(cottage.images) ? cottage.images : cottage.images[0]" alt="Imagen de la cabaña" class="card-img-top">
+                                            <img :src="regexp.test(cottage.images) ? cottage.images : cottage.images[0]" alt="Imagen de la cabaña" class="card-img-top">
                                             <div class="card-body">
                                                 <h4 class="card-title text-capitalize bg-dark text-light py-2 px-3 rounded">{{ cottage.name }}</h4>
                                                 <ul class="card-text">
                                                     <li>Numero: <span class="badge badge-primary">{{ cottage.number }}</span></li>
                                                     <li class="text-capitalize">Capasidad: <span class="badge badge-info">{{ cottage.accommodation }}</span></li>
                                                     <li class="text-capitalize">Tipo: <span class="badge badge-warning">{{ cottage.type }}</span></li>
-                                                    <li>Precio: <span class="badge badge-danger"><icon-app icon-image="dollar"></icon-app>{{ cottage.price }}</span></li>
+                                                    <li>Precio: <span class="badge badge-danger"><icon-app icon-image="dollar-sign"></icon-app>{{ cottage.price }}</span></li>
                                                     <li>Descripción: {{ cottage.description || 'Sin descripción'}}</li>
                                                 </ul>
                                                 <div class="text-center">
@@ -132,6 +127,7 @@
             return {
                 seeLeft: true,
                 loading: false,
+                regexp: /https?:\/\//,
                 trash: {
                     cottage: 0,
                     cottage_id: 0,
