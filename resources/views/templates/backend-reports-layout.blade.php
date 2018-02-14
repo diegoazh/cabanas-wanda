@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend.css') }}">
     <link rel='stylesheet' href='{{ asset('lib/glyphicons-only-bootstrap/css/bootstrap.min.css') }}'>
+    <link rel="stylesheet" href="{{ asset('font-awesome/css/fontawesome-all.css') }}">
     @yield('styles')
 </head>
 <body class="bg-light">

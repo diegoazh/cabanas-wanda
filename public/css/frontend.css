@@ -40,7 +40,7 @@ body .container-frontend #header {
   height: 606.5px;
   min-height: 67%;
   max-height: 67%;
-  background-image: url(/images/cabanas1.jpg?cce046055ca09e61318a08b9368fc97c);
+  background-image: url('/images/frontend/cabanas1.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center 55%;
@@ -51,7 +51,7 @@ body .container-frontend #header div #overlay {
   height: 100%;
   opacity: 0;
   background-color: #333333;
-  background-image: url(/images/jaguar.jpg?a583257bc6680456672d9b3ea8affb59);
+  background-image: url('/images/frontend/jaguar.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: left 35%;
@@ -130,7 +130,7 @@ body .container-frontend #content .row div.handsicon i:before {
   background-color: #ffffff;
 }
 body .container-frontend #content section#first_section {
-  background-image: url(/images/dibujo-tucan.jpg?e20d6be01100e58edd0eab913446f14c);
+  background-image: url('/images/frontend/dibujo-tucan.jpg');
   background-repeat: no-repeat;
 }
 body .container-frontend #content section#first_section .description #main_message h2,
@@ -216,7 +216,7 @@ body .container-frontend #content section#first_section .description #short_mess
 }
 body .container-frontend #content section#first_section .description #short_messeges div div #second_slogan {
   background-color: #99cbc0;
-  background-image: url(/images/cabanas8.jpg?5e668287ac3e39e6518b0429fa83d870);
+  background-image: url('/images/cabanias/cabanas8.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   border: 3px solid #d4dfc4;
@@ -225,7 +225,7 @@ body .container-frontend #content section#first_section .description #short_mess
 }
 body .container-frontend #content section#first_section .description #short_messeges div div #third_slogan {
   background-color: #99cbc0;
-  background-image: url(/images/cabanas12.jpg?6baf81e3c3c7e715f2acb393b3b069ff);
+  background-image: url('/images/cabanias/cabanas12.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   border: 3px solid #d4dfc4;
@@ -264,7 +264,7 @@ body .container-frontend #content section#first_section .description #short_mess
 }
 body .container-frontend #content section#first_section .description #short_messages_2 div #fourth_slogan {
   min-height: 300px;
-  background-image: url(/images/cabanas7.jpg?7a8e3c1b0af282d550a3f3c0f6ac4e02);
+  background-image: url('/images/cabanias/cabanas7.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }

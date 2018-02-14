@@ -151,7 +151,7 @@ $(document).ready(function (e) {
         var inputValue = $this.data('objectValue');
         var name = $this.data('objectDisplay');
         var $btnSubmit = $('#submit_form');
-        var $btnClose = $('.modal-footer > button.btn-default');
+        var $btnClose = $('.modal-footer > button.btn-secondary');
         var $form = $formOptional !== '' && $formOptional !== undefined && $formOptional !== null ? $formOptional : $('#modalFormId');
         if (!Object.isObject(textsToDisplay)) {
             var message = '' + 'El quinto parametro de la función debe ser un array de objetos y debe contener las siguientes propiedades:\n' + 'name - boolean -> indica si se mostrara en el título el nombre del objeto a modificar o el atributo que se modificará.\n' + 'tile - string -> El texto que se mostrará en el título del modal.\n' + 'infoText - string -> Texto que se mostrará en la etiqueta small dentro del titulo del modal.\n' + 'label - string -> Texto que se mostrará en la etiqueta label y en el div con clase input-group-addon.\n' + 'textBtn string -> Texto que se mostrará en el boton que envía el formulario.\n' + 'inputType - string -> Texto que define el atributo type del input del formulario.\n' + 'options - Array de Objects -> Array que se utilizará para crear las etiquetas options si el input es de\n' + 'tipo select debe definir las propiedades value y text. Por ejemplo:\n' + 'options: [                                                         \n' + '            {value: \'valueOption\', text: \'textOption\'},        \n' + '            {value: \'valueOption\', text: \'textOption\'},        \n' + '            ...                                                    \n' + '         ]                                                         \n';
@@ -160,8 +160,8 @@ $(document).ready(function (e) {
             return;
         }
         if (Object.isObject(textsToDisplay)) {
-            $('.modal-title').html('¿ ' + textsToDisplay.title + ' <span class="span-display label"></span> ? <br /> <small>' + textsToDisplay.infoText + '</small>');
-            $('.sr-only, .input-group-addon').text(textsToDisplay.label);
+            $('#modalForms .modal-title').html('¿ ' + textsToDisplay.title + ' <span class="span-display badge"></span> ? <br /> <small>' + textsToDisplay.infoText + '</small>');
+            $('.sr-only, .input-group-text').text(textsToDisplay.label);
         }
         if (modalSize !== '' && modalSize !== undefined && modalSize !== null) {
             $('.modal-dialog').addClass(modalSize);
@@ -169,7 +169,7 @@ $(document).ready(function (e) {
         $('.span-display').html( true ? name : inputValue);
         if (textsToDisplay.inputType.toLowerCase() === 'select') {
             $('#inputFormId').remove();
-            $('.input-group').append($('<select>').attr('id', 'inputFormId').attr('name', 'inputFormId').addClass('form-control'));
+            $('#container_input .input-group').append($('<select>').attr('id', 'inputFormId').attr('name', 'inputFormId').addClass('form-control'));
             if (Array.isArray(textsToDisplay.options)) {
                 $.each(textsToDisplay.options, function (i, item) {
                     $('#inputFormId').append($('<option>', {
@@ -183,21 +183,23 @@ $(document).ready(function (e) {
             }
         } else {
             $('#inputFormId').remove();
-            $('.input-group').append($('<input>').attr('id', 'inputFormId').attr('name', 'inputFormId').addClass('form-control'));
-            $('#inputFormId').attr('type', textsToDisplay.inputType).val(inputValue);
+            $('#container_input.input-group').append($('<input>').attr('id', 'inputFormId').attr('name', 'inputFormId').addClass('form-control'));
+            $('#inputFormId').attr('type', textsToDisplay.inputType).val(+inputValue);
         }
         if (method.toUpperCase() === 'DELETE') {
-            $('#inputFormId').attr('disabled', 'disabled');
-            $('.span-display').addClass('label-danger');
+            $('#inputFormId').attr('disabled', true).addClass('disabled');
+            $('.span-display').addClass('badge-danger');
             $('.modal-title > small').addClass('text-danger');
             $btnSubmit.removeClass('btn-primary').addClass('btn-danger');
-            $btnSubmit.html('<i class="fa fa-trash-o" aria-hidden="true"></i> ' + textsToDisplay.textBtn);
+            $btnSubmit.html('<i class="fas fa-trash" aria-hidden="true"></i> ' + textsToDisplay.textBtn);
+            $btnClose.html('<i class="fas fa-times" aria-hidden="true"></i> ' + 'Cerrar');
         } else {
             $('#inputFormId').removeAttr('disabled');
-            $('.span-display').addClass('label-warning');
+            $('.span-display').addClass('badge-warning');
             $('.modal-title > small').addClass('text-warning');
             $btnSubmit.removeClass('btn-primary').addClass('btn-warning');
             $btnSubmit.html('<i class="fa fa-exchange" aria-hidden="true"></i> ' + textsToDisplay.textBtn);
+            $btnClose.html('<i class="fas fa-times" aria-hidden="true"></i> ' + 'Cerrar');
         }
         $('input[name=_method]').val(method.toUpperCase());
         typeof files === "boolean" ? files ? $form.attr('enctype', 'multipart/form-data') : null : $form.attr('enctype', files);
@@ -358,7 +360,7 @@ $(document).ready(function (e) {
 
     if (/cottages/.test(path)) {
         activeMenu(/cabañas/, menu_a);
-        if (path[2]) $menu.removeClass('col-md-4').addClass('col-md-6 offset-md-1');else $menu.removeClass('col-md-4').addClass('col-md-8');
+        if (path[2]) $menu.removeClass('col-md-4').addClass('col-md-6');else $menu.removeClass('col-md-4').addClass('col-md-8');
     } else if (/users/.test(path)) {
         activeMenu(/usuarios/, menu_a);
         $menu.removeClass('col-md-4').addClass('col-md-8');

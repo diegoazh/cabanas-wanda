@@ -155,6 +155,7 @@
     import BtnSwitch from '../../vue-commons/components/BtnSwitch'
     import markdownEditor from 'vue-simplemde/src/markdown-editor'
     import datePicker from 'vue-bootstrap-datetimepicker';
+    import { mapActions } from 'vuex';
 
     export default {
         name: 'promotions-create',
@@ -184,12 +185,16 @@
         },
         computed: {},
         methods: {
-            sendNewPromotion() {}
+            sendNewPromotion() {},
+            ...mapActions('auth', ['fireSetTokenMutation'])
         },
         filters: {},
         created() {
         },
         mounted() {
+            if (this.$cookies.isKey('info_one')) {
+                this.fireSetTokenMutation(this.$cookies.get('info_one'));
+            }
             window.EventBus.$on('change-side', (side) => this.isLeft = side);
         }
     }

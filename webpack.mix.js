@@ -13,13 +13,14 @@ const { mix } = require('laravel-mix');
 
 mix.copy([
         './public/lib/dashicons/fonts',
-        './public/lib/font-awesome/fonts'
     ], './public/fonts')
+    .copy([
+        './public/lib/font-awesome/web-fonts-with-css',
+    ], './public/font-awesome')
     .styles([
         './node_modules/bootstrap/dist/css/bootstrap.css',
         './public/lib/animate.css/animate.css',
         './public/lib/dashicons/css/dashicons.css',
-        './public/lib/font-awesome/css/font-awesome.css',
     ], './public/css/app.css')
     .styles([
         './public/lib/clndr/demo/css/clndr.css'

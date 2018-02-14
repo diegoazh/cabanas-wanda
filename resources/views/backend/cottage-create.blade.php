@@ -11,14 +11,14 @@
 
 @section('content')
     <div class="card-header bg-dark text-light">
-        <h3 class="tt-cottages">{{ (isset($cottage)) ? 'Editar caba&ntilde;a' : 'Registrar Caba&ntilde;a' }}</h3>
+        <h3><i class="fas fa-home" aria-hidden="true"></i>{{ (isset($cottage)) ? 'Editar caba&ntilde;a' : 'Registrar Caba&ntilde;a' }}</h3>
     </div>
     <div class="card-body form-panel">
         {{ Form::open(['route' => ((isset($cottage)) ? ['cottages.update', $cottage] : 'cottages.store'), 'method' => ((isset($cottage)) ? 'PUT' : 'POST'), 'files' => true, 'id' => (isset($cottage) ? 'frmUpdateCottage' : 'frmCreateCottage')]) }}
         <div class="form-group">
             {{ Form::label('number', 'Numero de cabaña', ['class' => 'sr-only']) }}
             <div class="input-group">
-                <div class="input-group-addon">Numero de Caba&ntilde;a</div>
+                <div class="input-group-prepend"><div class="input-group-text">Numero de Caba&ntilde;a</div></div>
                 {{ Form::number('number', (isset($cottage)) ? $cottage->number : null, ['id' => 'number', 'class' => 'form-control', 'min' => 1, 'max' => 10, 'placeholder' => 'Ingrese el número de la cabaña', (isset($cottage)) ? 'disabled' : 'required']) }}
             </div>
             <div class="help-info d-block">
@@ -29,7 +29,7 @@
         <div class="form-group">
             {{ Form::label('name', 'Nombre de la cabaña', ['class' => 'sr-only']) }}
             <div class="input-group">
-                <div class="input-group-addon">Nombre de la Caba&ntilde;a</div>
+                <div class="input-group-prepend"><div class="input-group-text">Nombre de la Caba&ntilde;a</div></div>
                 {{ Form::text('name', (isset($cottage)) ? $cottage->name : null, ['class' => 'form-control', 'placeholder' => 'Por ejemplo A o Suit, etc. Máximo 10 caracteres.', 'maxlength' => 10, 'required']) }}
             </div>
             <div class="help-info d-block">
@@ -39,8 +39,8 @@
         </div>
         <div class="form-group">
             {{ Form::label('type', 'Tipo de cabaña', ['class' => 'sr-only']) }}
-            <div class="input-group">
-                <div class="input-group-addon">Tipo de Caba&ntilde;a</div>
+            <div class="input-group" style="height: 38px">
+                <div class="input-group-prepend"><div class="input-group-text">Tipo de Caba&ntilde;a</div></div>
                 {{ Form::select('type', ['simple' => 'Simple', 'matrimonial' => 'Matrimonial'], (isset($cottage)) ? $cottage->type : null, ['placeholder' => ((isset($cottage)) ? null : 'Seleccione el tipo de cabaña'), 'class' => 'form-control', 'required']) }}
             </div>
             <div class="help-info d-block">
@@ -51,7 +51,7 @@
         <div class="form-group">
             {{ Form::label('accommodation', 'Capacidad', ['class' => 'sr-only']) }}
             <div class="input-group">
-                <div class="input-group-addon">Capacidad</div>
+                <div class="input-group-prepend"><div class="input-group-text">Capacidad</div></div>
                 {{ Form::number('accommodation', (isset($cottage)) ? $cottage->accommodation : null, ['placeholder' => 'Ingrese la capacidad de la cabaña', 'class' => 'form-control', 'min' => 1, 'max' => 6], 'required') }}
             </div>
             <div class="help-info d-block">
@@ -62,7 +62,7 @@
         <div class="form-group">
             {{ Form::label('price', 'Precio $', ['class' => 'sr-only']) }}
             <div class="input-group">
-                <div class="input-group-addon">Precio $</div>
+                <div class="input-group-prepend"><div class="input-group-text">Precio $</div></div>
                 {{ Form::number('price', (isset($cottage)) ? $cottage->price : null, ['placeholder' => 'Determine el precio de la cabaña', 'class' => 'form-control', 'step' => 0.01], 'required') }}
             </div>
             <div class="help-info d-block">
@@ -72,8 +72,8 @@
         </div>
         <div class="form-group">
             {{ Form::label('state', 'Estado', ['class' => 'sr-only']) }}
-            <div class="input-group">
-                <div class="input-group-addon">Estado</div>
+            <div class="input-group" style="height: 38px">
+                <div class="input-group-prepend"><div class="input-group-text">Estado</div></div>
                 {{ Form::select('state', ['enabled' => 'Habilitada', 'disabled' => 'Deshabilitada'], (isset($cottage)) ? $cottage->state : 'disabled', ['class' => 'form-control', 'required']) }}
             </div>
             <div class="help-info d-block">
@@ -84,7 +84,7 @@
         <div class="form-group">
             {{ Form::label('images[]', 'Fotos', ['class' => 'sr-only']) }}
             <div class="input-group">
-                <div class="input-group-addon">Fotos</div>
+                <div class="input-group-prepend"><div class="input-group-text">Fotos</div></div>
                 {{ Form::file('images[]', ['placeholder' => 'Elija las fotos a subir', 'class' => 'form-control', 'multiple', (!isset($cottage))?'required':'']) }}
             </div>
             <div class="help-info d-block">
@@ -149,7 +149,7 @@
                         @for($j = 1; $j >= 0; $j--)
                             @if(!empty($images[$i]))
                                 <div class="col-md-6">
-                                    <img src="{{ asset('images/cabanias/' . $images[$i]) }}" alt="{{ $images[$i] }}" role="button" class="img-responsive img-thumbnail img-clickable">
+                                    <img src="{{ preg_match('/https?:\/\//',$images[0]) ? $images[0] : asset('images/cabanias/' . $images[$i]) }}" alt="{{ $images[$i] }}" role="button" class="img-responsive img-thumbnail img-clickable">
                                 </div>
                             @endif
                             @php $i++ @endphp

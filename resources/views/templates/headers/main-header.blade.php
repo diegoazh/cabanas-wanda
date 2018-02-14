@@ -13,12 +13,12 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home.cottages.index') }}">
-                        <i class="fa fa-home" aria-hidden="true"></i> Caba&ntilde;as
+                        <i class="fas fa-home" aria-hidden="true"></i> Caba&ntilde;as
                     </a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-handshake-o" aria-hidden="true"></i> Reservas <span class="caret"></span>
+                        <i class="far fa-handshake" aria-hidden="true"></i> Reservas <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('home.rentals.index') }}">Realizar reserva</a>
@@ -28,7 +28,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-cutlery" aria-hidden="true"></i> Comidas <span class="caret"></span>
+                        <i class="fas fa-utensils" aria-hidden="true"></i> Comidas <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('home.order.index') }}">Realizar pedido</a>
@@ -55,8 +55,8 @@
             <ul class="navbar-nav mr-0">
                 <!-- Authentication Links -->
                 @if (Auth::guest())
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/login') }}">Ingresar <i class="fa fa-sign-in" aria-hidden="true"></i></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/register') }}">Registrarse <i class="fa fa-address-card-o" aria-hidden="true"></i></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('/login') }}">Ingresar <i class="fas fa-sign-in-alt" aria-hidden="true"></i></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('/register') }}">Registrarse <i class="fas fa-address-book" aria-hidden="true"></i></a></li>
                 @else
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle img-user-profile" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -77,7 +77,7 @@
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Cerrar sesión <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                Cerrar sesión <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
                             </a>
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}

@@ -4,7 +4,7 @@
 
 @section('content')
     @include('backend.modals.modal-forms')
-    <h1 class="tt-cottages pl-3 py-3">Lista de Caba&ntilde;as
+    <h1 class="pl-3 py-3"><i class="fas fa-home" aria-hidden="true"></i> Lista de Caba&ntilde;as
         @if(Auth::user()->isAdmin())
             <button class="btn btn-outline-info pull-right mr-3" type="button" data-toggle="modal" data-target="#bulkActions">
                 <i class="fa fa-bolt" aria-hidden="true"></i> Acciones masivas
@@ -29,7 +29,7 @@
             @foreach($cottages as $cottage)
                 <tr data-object="{{ $cottage->id }}">
                     <td>
-                        <span class="badge badge-secondary"><i class="fa fa-hashtag" aria-hidden="true"></i> {{ $cottage->number }}</span>
+                        <span class="badge badge-secondary"><i class="fas fa-hashtag" aria-hidden="true"></i> {{ $cottage->number }}</span>
                     </td>
                     <td><a class="btn btn-link" href="{{ route('cottages.show', $cottage->slug) }}">{{ strtoupper($cottage->name) }}</a></td>
                     <td>
@@ -39,14 +39,14 @@
                         <span class="badge @if($cottage->state === 'enabled') badge-success @elseif($cottage->state === 'maintenance') badge-warning @elseif($cottage->state === 'disabled') badge-danger @endif">@if($cottage->state === 'enabled') Habilitada @elseif($cottage->state === 'disabled') Deshabilitada @else Mantenimiento @endif</span>
                     </td>
                     <td>
-                        <i class="fa fa-usd" aria-hidden="true"></i> {{ $cottage->price }}
+                        <i class="fas fa-dollar-sign" aria-hidden="true"></i> {{ $cottage->price }}
                     </td>
                     <td>
                         <span class="text-capitalize badge @if($cottage->type === 'simple') badge-primary @else badge-success @endif">{{ $cottage->type }}</span>
                     </td>
                     @if(Auth::user()->type === 'administrador' || Auth::user()->type === 'sysadmin')
                         <td>
-                            <a href="{{ route('cottages.edit', $cottage) }}" role="button" class="btn btn-outline-warning btn-sm text-dark"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                            <a href="{{ route('cottages.edit', $cottage) }}" role="button" class="btn btn-outline-warning btn-sm text-dark"><i class="fa fa-edit" aria-hidden="true"></i> Editar</a>
                             <a role="button" class="btn btn-outline-danger btn-sm delete-cottage" data-toggle="modal" data-target="#modalForms" data-object-display="{{ $cottage->name }}" data-object-value="{{ $cottage->number }}"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
                         </td>
                     @endif
