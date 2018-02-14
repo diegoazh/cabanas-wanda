@@ -169,7 +169,7 @@ $(document).ready(function (e) {
         $('.span-display').html( true ? name : inputValue);
         if (textsToDisplay.inputType.toLowerCase() === 'select') {
             $('#inputFormId').remove();
-            $('#container_input .input-group').append($('<select>').attr('id', 'inputFormId').attr('name', 'inputFormId').addClass('form-control'));
+            $('#container_input.input-group').append($('<select>').attr('id', 'inputFormId').attr('name', 'inputFormId').addClass('form-control'));
             if (Array.isArray(textsToDisplay.options)) {
                 $.each(textsToDisplay.options, function (i, item) {
                     $('#inputFormId').append($('<option>', {
@@ -184,7 +184,7 @@ $(document).ready(function (e) {
         } else {
             $('#inputFormId').remove();
             $('#container_input.input-group').append($('<input>').attr('id', 'inputFormId').attr('name', 'inputFormId').addClass('form-control'));
-            $('#inputFormId').attr('type', textsToDisplay.inputType).val(+inputValue);
+            $('#inputFormId').attr('type', textsToDisplay.inputType).val(inputValue);
         }
         if (method.toUpperCase() === 'DELETE') {
             $('#inputFormId').attr('disabled', true).addClass('disabled');
@@ -197,8 +197,8 @@ $(document).ready(function (e) {
             $('#inputFormId').removeAttr('disabled');
             $('.span-display').addClass('badge-warning');
             $('.modal-title > small').addClass('text-warning');
-            $btnSubmit.removeClass('btn-primary').addClass('btn-warning');
-            $btnSubmit.html('<i class="fa fa-exchange" aria-hidden="true"></i> ' + textsToDisplay.textBtn);
+            $btnSubmit.removeClass('btn-primary btn-danger').addClass('btn-warning');
+            $btnSubmit.html('<i class="fas fa-sync" aria-hidden="true"></i> ' + textsToDisplay.textBtn);
             $btnClose.html('<i class="fas fa-times" aria-hidden="true"></i> ' + 'Cerrar');
         }
         $('input[name=_method]').val(method.toUpperCase());

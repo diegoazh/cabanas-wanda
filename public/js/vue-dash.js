@@ -1673,6 +1673,10 @@ exports.default = {
                 return value !== undefined && typeof value === 'string';
             }
         },
+        typeIconLeft: {
+            type: String,
+            default: 's'
+        },
         iconTextLeft: {
             type: String,
             default: '',
@@ -1687,6 +1691,10 @@ exports.default = {
             validator: function validator(value) {
                 return value !== undefined && typeof value === 'string';
             }
+        },
+        typeIconRight: {
+            type: String,
+            default: 's'
         },
         iconTextRight: {
             type: String,
@@ -1802,6 +1810,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     name: 'icon-app',
     props: {
+        typeIcon: {
+            type: String,
+            default: 's'
+        },
         iconImage: {
             type: String,
             default: '',
@@ -1820,7 +1832,7 @@ exports.default = {
     },
     computed: {
         toggleIconClass: function toggleIconClass() {
-            var classes = 'fa fa-' + this.iconImage;
+            var classes = (this.typeIcon === 'l' ? 'fal' : this.typeIcon === 'r' ? 'far' : 'fas') + ' fa-' + this.iconImage;
             if (this.aditionalClasses) {
                 classes += ' ' + this.aditionalClasses;
             }
@@ -2276,6 +2288,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6273,7 +6291,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47682,7 +47700,12 @@ var render = function() {
         },
         [
           _vm.iconTextLeft
-            ? _c("icon-app", { attrs: { iconImage: _vm.iconTextLeft } })
+            ? _c("icon-app", {
+                attrs: {
+                  typeIcon: _vm.typeIconLeft,
+                  iconImage: _vm.iconTextLeft
+                }
+              })
             : _vm._e(),
           _vm._v(" " + _vm._s(_vm.textLeft) + "\n        ")
         ],
@@ -47715,7 +47738,12 @@ var render = function() {
         [
           _vm._v("\n            " + _vm._s(_vm.textRight) + " "),
           _vm.iconTextRight
-            ? _c("icon-app", { attrs: { iconImage: _vm.iconTextRight } })
+            ? _c("icon-app", {
+                attrs: {
+                  typeIcon: _vm.typeIconRight,
+                  iconImage: _vm.iconTextRight
+                }
+              })
             : _vm._e()
         ],
         1
@@ -47748,7 +47776,7 @@ var render = function() {
         "h1",
         { staticClass: "text-center" },
         [
-          _c("icon-app", { attrs: { iconImage: "dashboard" } }),
+          _c("icon-app", { attrs: { iconImage: "tachometer-alt" } }),
           _vm._v(" Panel de administración")
         ],
         1
@@ -47763,9 +47791,9 @@ var render = function() {
           attrs: {
             initLeft: _vm.seeRentals,
             textLeft: "Reservas",
-            iconTextLeft: "handshake-o",
+            iconTextLeft: "handshake",
             textRight: "Pedidos",
-            iconTextRight: "cutlery",
+            iconTextRight: "utensils",
             classOnActive: "text-primary",
             classOnInactive: "text-muted",
             textDeleted: true
@@ -48983,38 +49011,43 @@ var render = function() {
                       { staticClass: "text-to-14px label label-primary" },
                       [
                         _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                        _vm._v(" " + _vm._s(orders.senia))
+                        _vm._v(
+                          " " + _vm._s(orders.senia) + "\n                "
+                        )
                       ],
                       1
                     )
                   : _vm._e(),
                 _vm._v(" "),
-                !orders.edit
-                  ? _c(
-                      "a",
-                      {
-                        directives: [
-                          {
-                            name: "tooltip",
-                            rawName: "v-tooltip.right",
-                            value: "Editar seña",
-                            expression: "'Editar seña'",
-                            modifiers: { right: true }
+                _c("sup", [
+                  !orders.edit
+                    ? _c(
+                        "a",
+                        {
+                          directives: [
+                            {
+                              name: "tooltip",
+                              rawName: "v-tooltip.right",
+                              value: "Editar seña",
+                              expression: "'Editar seña'",
+                              modifiers: { right: true }
+                            }
+                          ],
+                          staticClass: "cursorPointer",
+                          attrs: { role: "button" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              orders.edit = true
+                              _vm.trash.senia = orders.senia
+                            }
                           }
-                        ],
-                        attrs: { role: "button" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            orders.edit = true
-                            _vm.trash.senia = orders.senia
-                          }
-                        }
-                      },
-                      [_c("icon-app", { attrs: { iconImage: "edit" } })],
-                      1
-                    )
-                  : _vm._e(),
+                        },
+                        [_c("icon-app", { attrs: { iconImage: "edit" } })],
+                        1
+                      )
+                    : _vm._e()
+                ]),
                 _vm._v(" "),
                 orders.edit
                   ? _c(

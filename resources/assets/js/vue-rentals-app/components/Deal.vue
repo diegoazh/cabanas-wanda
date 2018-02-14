@@ -1,7 +1,7 @@
 <template>
     <div class="row justify-content-around">
         <div class="col-12 col-md-12">
-            <button @click="goBackToReservas" v-if="!dataForm" class="btn btn-outline-secondary btn-sm pull-right"><icon-app iconImage="arrow-left"></icon-app> Volver a reservas <icon-app iconImage="handshake-o"></icon-app></button>
+            <button @click="goBackToReservas" v-if="!dataForm" class="btn btn-outline-secondary btn-sm pull-right"><icon-app iconImage="arrow-left"></icon-app> Volver a reservas <icon-app type-icon="r" iconImage="handshake"></icon-app></button>
             <button @click="goBackToFindUser" v-if="dataForm" class="btn btn-outline-secondary btn-sm pull-right"><icon-app iconImage="arrow-left"></icon-app> Volver a buscar usuario <icon-app iconImage="search"></icon-app></button>
         </div>
         <div v-if="!dataForm" class="col-12 col-md-8">
@@ -15,19 +15,19 @@
                 </small>
             </h3>
             <div class="text-center">
-                <h3 id="tt-find-btn-document" @click="onOffImg" role="button" class="text-center"><span :class="{'text-mutted': onOff, 'text-deleted': onOff, 'text-primary': !onOff}">DNI</span> <icon-app :iconImage="onOffBtn" :aditionalClasses="changeToogle"></icon-app> <span :class="{'text-mutted': !onOff, 'text-deleted': !onOff, 'text-primary': onOff}">Pasaporte</span></h3>
+                <h3 id="tt-find-btn-document" @click="onOffImg" role="button" class="text-center"><span :class="{'text-mutted': onOff, 'text-deleted': onOff, 'text-primary': !onOff}">DNI</span> <icon-app :iconImage="onOffBtn" :aditionalClasses="changeToogle"></icon-app> <span :class="{'text-mutted': !onOff, 'text-deleted': !onOff, 'text-primary': onOff}">Pasaporte</span></h3> <!-- TODO(Diego) implement btnSwich -->
                 <form @submit.prevent="findUser(true)" class="form-inline text-center">
                     <div :class="['form-group', {'has-warning': !document}, 'mr-2']">
                         <label for="find-document" class="sr-only">{{ !onOff ? 'DNI' : 'Pasaporte' }}:</label>
                         <div class="input-group">
-                            <div class="input-group-addon">{{ !onOff ? 'DNI' : 'Pasaporte' }}</div>
+                            <div class="input-group-prepend"><div class="input-group-text">{{ !onOff ? 'DNI' : 'Pasaporte' }}</div></div>
                             <input type="number" id="find-document" class="form-control" name="document" v-model="document">
                         </div>
                     </div>
                     <div :class="['form-group', {'has-warning': !email}, 'mr-2']">
                         <label for="mail" class="sr-only">e-mail: </label>
                         <div class="input-group">
-                            <div class="input-group-addon"><icon-app iconId="at" iconImage="at"></icon-app></div>
+                            <div class="input-group-prepend"><div class="input-group-text"><icon-app iconId="at" iconImage="at"></icon-app></div></div>
                             <input type="email" id="mail" class="form-control" name="mail" v-model="email">
                         </div>
                     </div>
@@ -48,21 +48,21 @@
                 <div :class="['form-group', {'has-warning': !name}]">
                     <label for="name" class="sr-only">Nombres: </label>
                     <div class="input-group">
-                        <div class="input-group-addon">Nombres</div>
+                        <div class="input-group-prepend"><div class="input-group-text">Nombres</div></div>
                         <input type="text" id="name" class="form-control" name="name" v-model="name">
                     </div>
                 </div>
                 <div :class="['form-group', {'has-warning': !lastname}]">
                     <label for="lastname" class="sr-only">Apellidos: </label>
                     <div class="input-group">
-                        <div class="input-group-addon">Apellidos</div>
+                        <div class="input-group-prepend"><div class="input-group-text">Apellidos</div></div>
                         <input type="text" id="lastname" class="form-control" name="lastname" v-model="lastname">
                     </div>
                 </div>
                 <div :class="['form-group', {'has-warning': !email}]">
                     <label for="email" class="sr-only">e-mail: </label>
                     <div class="input-group">
-                        <div class="input-group-addon">e-mail</div>
+                        <div class="input-group-prepend"><div class="input-group-text">e-mail</div></div>
                         <input type="email" id="email" class="form-control" name="email" v-model="email">
                     </div>
                 </div>
@@ -70,14 +70,14 @@
                     <label for="document" class="sr-only">{{ !onOff ? 'DNI' : 'Pasaporte' }}:</label>
                     <h3 id="tt-btn-document" @click="onOffImg" role="button" class="text-center"><span :class="['cursorPointer', {'text-mutted': onOff, 'text-deleted': onOff, 'text-primary': !onOff}]">DNI</span> <icon-app :iconImage="onOffBtn" :aditionalClasses="changeToogle + ' cursorPointer'"></icon-app> <span :class="['cursorPointer', {'text-mutted': !onOff, 'text-deleted': !onOff, 'text-primary': onOff}]">Pasaporte</span></h3>
                     <div class="input-group">
-                        <div class="input-group-addon">{{ !onOff ? 'DNI' : 'Pasaporte' }}</div>
+                        <div class="input-group-prepend"><div class="input-group-text">{{ !onOff ? 'DNI' : 'Pasaporte' }}</div></div>
                         <input type="number" id="document" class="form-control" name="document" v-model="document">
                     </div>
                 </div>
                 <div :class="['form-group', {'has-warning': !genre}]">
                     <label for="genero" class="sr-only">Genero: </label>
                     <div class="input-group">
-                        <div class="input-group-addon">Genero</div>
+                        <div class="input-group-prepend"><div class="input-group-text">Genero</div></div>
                         <select id="genero" class="form-control" name="genero" v-model="genre" placeholder="Elija su genero por favor...">
                             <option value="m">Masculino</option>
                             <option value="f">Femenino</option>
@@ -88,7 +88,7 @@
                 <div :class="['form-group', {'has-warning': !country}]">
                     <label for="country" class="sr-only">País: </label>
                     <div class="input-group">
-                        <div class="input-group-addon">País</div>
+                        <div class="input-group-prepend"><div class="input-group-text">País</div></div>
                         <select id="country" class="form-control" name="country" v-model="country" placeholder="Elija su país por favor...">
                             <option v-for="pais in countries" :value="pais.id">{{ pais.country }}</option>
                         </select>

@@ -8,10 +8,10 @@
                     <li><b class="number-btn-item">Número: {{ cottage.number }}</b></li>
                     <li><b class="capacity-btn-item">Capacidad: {{ cottage.accommodation }}</b></li>
                     <li><b>Entrega: <span class="badge badge-secondary">{{ deliveryDay }}</span></b></li>
-                    <li><span :class="['label', {'label-primary': cottage.type === 'simple', 'label-success': cottage.type === 'matrimonial'}]"><b class="text-capitalize">{{ cottage.type }}</b></span></li>
+                    <li><span :class="['badge', {'badge-primary': cottage.type === 'simple', 'badge-success': cottage.type === 'matrimonial'}]"><b class="text-capitalize">{{ cottage.type }}</b></span></li>
                     <li><b>Días: {{ calcularDias }}</b></li>
-                    <li><b>Precio: <span class="badge badge-primary"><icon-app iconImage="dollar"></icon-app>{{ cottage.price }}</span></b></li>
-                    <li><b>Precio final: <span class="badge badge-danger"><icon-app iconImage="dollar"></icon-app>{{ calcularMonto(calcularDias, cottage.price) }}</span></b></li>
+                    <li><b>Precio: <span class="badge badge-primary"><icon-app iconImage="dollar-sign"></icon-app>{{ cottage.price }}</span></b></li>
+                    <li><b>Precio final: <span class="badge badge-danger"><icon-app iconImage="dollar-sign"></icon-app>{{ calcularMonto(calcularDias, cottage.price) }}</span></b></li>
                 </ul>
                 <button @click="prepareDeal(index)" class="btn btn-block btn-outline-success cursorPointer">RESERVAR</button>
             </div>

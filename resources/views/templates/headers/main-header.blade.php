@@ -46,7 +46,7 @@
                 @if(Auth::check())
                     @if(Auth::user()->isAdminOrEmployed())
                         @if(Auth::user()->isAdmin())
-                            <li class="nav-item"><a class="nav-link" href="{{ route('reports.index') }}"><i class="fa fa-line-chart" aria-hidden="true"></i> Reportes</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('reports.index') }}"><i class="fas fa-chart-line" aria-hidden="true"></i> Reportes</a></li>
                         @endif
                     @endif
                 @endif
@@ -66,14 +66,14 @@
                         <div class="dropdown-menu" role="menu">
                             @if(Auth::user()->isAdmin())
                                 <a class="dropdown-item" href="{{ route('admin.panel') }}">
-                                    <i class="fa fa-tachometer" aria-hidden="true"></i> Administración
+                                    <i class="fas fa-tachometer-alt" aria-hidden="true"></i> Administración
                                 </a>
                             @endif
                             <a class="dropdown-item" href="{{ route('home.profile.rentals', Auth::user()->slug) }}">
-                                <i class="fa fa-handshake-o" aria-hidden="true"></i> Mis reservas
+                                <i class="far fa-handshake" aria-hidden="true"></i> Mis reservas
                             </a>
                             <a class="dropdown-item" href="{{ route('home.profile.show', Auth::user()->slug) }}">
-                                <i class="fa fa-user-circle-o" aria-hidden="true"></i> Perfil
+                                <i class="fas fa-user-circle" aria-hidden="true"></i> Perfil
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

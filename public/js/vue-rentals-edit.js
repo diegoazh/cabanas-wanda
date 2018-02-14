@@ -1673,6 +1673,10 @@ exports.default = {
                 return value !== undefined && typeof value === 'string';
             }
         },
+        typeIconLeft: {
+            type: String,
+            default: 's'
+        },
         iconTextLeft: {
             type: String,
             default: '',
@@ -1687,6 +1691,10 @@ exports.default = {
             validator: function validator(value) {
                 return value !== undefined && typeof value === 'string';
             }
+        },
+        typeIconRight: {
+            type: String,
+            default: 's'
         },
         iconTextRight: {
             type: String,
@@ -1802,6 +1810,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     name: 'icon-app',
     props: {
+        typeIcon: {
+            type: String,
+            default: 's'
+        },
         iconImage: {
             type: String,
             default: '',
@@ -1820,7 +1832,7 @@ exports.default = {
     },
     computed: {
         toggleIconClass: function toggleIconClass() {
-            var classes = 'fa fa-' + this.iconImage;
+            var classes = (this.typeIcon === 'l' ? 'fal' : this.typeIcon === 'r' ? 'far' : 'fas') + ' fa-' + this.iconImage;
             if (this.aditionalClasses) {
                 classes += ' ' + this.aditionalClasses;
             }
@@ -2658,7 +2670,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -39395,7 +39407,12 @@ var render = function() {
         },
         [
           _vm.iconTextLeft
-            ? _c("icon-app", { attrs: { iconImage: _vm.iconTextLeft } })
+            ? _c("icon-app", {
+                attrs: {
+                  typeIcon: _vm.typeIconLeft,
+                  iconImage: _vm.iconTextLeft
+                }
+              })
             : _vm._e(),
           _vm._v(" " + _vm._s(_vm.textLeft) + "\n        ")
         ],
@@ -39428,7 +39445,12 @@ var render = function() {
         [
           _vm._v("\n            " + _vm._s(_vm.textRight) + " "),
           _vm.iconTextRight
-            ? _c("icon-app", { attrs: { iconImage: _vm.iconTextRight } })
+            ? _c("icon-app", {
+                attrs: {
+                  typeIcon: _vm.typeIconRight,
+                  iconImage: _vm.iconTextRight
+                }
+              })
             : _vm._e()
         ],
         1

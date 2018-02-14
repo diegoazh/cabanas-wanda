@@ -2,7 +2,7 @@
     <div class="col-12 col-md-12">
         <h3 v-if="toRentals.length" class="text-center">Cabañas disponibles</h3>
         <div v-if="toRentals.length" :class="['text-center', 'alert', {'alert-info': toRentals.length > 0, 'alert-warning': toRentals.length === 0}]">
-            <icon-app iconImage="warning"></icon-app>
+            <icon-app iconImage="exclamation-triangle"></icon-app>
             {{ toRentals.length ? 'Cabañas disponibles según el rango de fechas elegido' : 'Lamentablemente no tenemos cabañas disponibles.'}}
         </div>
         <div class="row">

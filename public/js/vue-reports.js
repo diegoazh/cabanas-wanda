@@ -7251,6 +7251,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     name: 'icon-app',
     props: {
+        typeIcon: {
+            type: String,
+            default: 's'
+        },
         iconImage: {
             type: String,
             default: '',
@@ -7269,7 +7273,7 @@ exports.default = {
     },
     computed: {
         toggleIconClass: function toggleIconClass() {
-            var classes = 'fa fa-' + this.iconImage;
+            var classes = (this.typeIcon === 'l' ? 'fal' : this.typeIcon === 'r' ? 'far' : 'fas') + ' fa-' + this.iconImage;
             if (this.aditionalClasses) {
                 classes += ' ' + this.aditionalClasses;
             }
@@ -38593,7 +38597,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -74090,7 +74094,9 @@ var render = function() {
                     attrs: { href: "/admin" }
                   },
                   [
-                    _c("icon-app", { attrs: { iconImage: "hand-o-left" } }),
+                    _c("icon-app", {
+                      attrs: { "type-icon": "r", iconImage: "hand-point-left" }
+                    }),
                     _vm._v(" volver al panel")
                   ],
                   1
@@ -74113,7 +74119,7 @@ var render = function() {
                         iconImage:
                           !_vm.queryFinished || !_vm.queryEnd
                             ? "spinner"
-                            : "line-chart",
+                            : "chart-line",
                         aditionalClasses:
                           !_vm.queryFinished || !_vm.queryEnd
                             ? "fa-pulse fa-fw"
@@ -74372,11 +74378,7 @@ var render = function() {
                               "div",
                               { staticClass: "input-group" },
                               [
-                                _c(
-                                  "div",
-                                  { staticClass: "input-group-addon" },
-                                  [_vm._v("Año")]
-                                ),
+                                _vm._m(0),
                                 _vm._v(" "),
                                 _c("date-picker", {
                                   attrs: {
@@ -74405,9 +74407,7 @@ var render = function() {
                             }),
                             _vm._v(" "),
                             _c("div", { staticClass: "input-group" }, [
-                              _c("div", { staticClass: "input-group-addon" }, [
-                                _vm._v("Estado")
-                              ]),
+                              _vm._m(1),
                               _vm._v(" "),
                               _c(
                                 "select",
@@ -74493,11 +74493,7 @@ var render = function() {
                               "div",
                               { staticClass: "input-group" },
                               [
-                                _c(
-                                  "div",
-                                  { staticClass: "input-group-addon" },
-                                  [_vm._v("Mes")]
-                                ),
+                                _vm._m(2),
                                 _vm._v(" "),
                                 _c("date-picker", {
                                   staticClass: "text-capitalize",
@@ -74527,9 +74523,7 @@ var render = function() {
                             }),
                             _vm._v(" "),
                             _c("div", { staticClass: "input-group" }, [
-                              _c("div", { staticClass: "input-group-addon" }, [
-                                _vm._v("Estado")
-                              ]),
+                              _vm._m(3),
                               _vm._v(" "),
                               _c(
                                 "select",
@@ -74703,11 +74697,7 @@ var render = function() {
                               "div",
                               { staticClass: "input-group" },
                               [
-                                _c(
-                                  "div",
-                                  { staticClass: "input-group-addon" },
-                                  [_vm._v("Desde")]
-                                ),
+                                _vm._m(4),
                                 _vm._v(" "),
                                 _c("date-picker", {
                                   attrs: {
@@ -74743,11 +74733,7 @@ var render = function() {
                               "div",
                               { staticClass: "input-group" },
                               [
-                                _c(
-                                  "div",
-                                  { staticClass: "input-group-addon" },
-                                  [_vm._v("Hasta")]
-                                ),
+                                _vm._m(5),
                                 _vm._v(" "),
                                 _c("date-picker", {
                                   attrs: {
@@ -74780,9 +74766,7 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "input-group" }, [
-                              _c("div", { staticClass: "input-group-addon" }, [
-                                _vm._v("Estado")
-                              ]),
+                              _vm._m(6),
                               _vm._v(" "),
                               _c(
                                 "select",
@@ -75129,9 +75113,7 @@ var render = function() {
                           "div",
                           { staticClass: "input-group" },
                           [
-                            _c("div", { staticClass: "input-group-addon" }, [
-                              _vm._v("Desde")
-                            ]),
+                            _vm._m(7),
                             _vm._v(" "),
                             _c("date-picker", {
                               attrs: {
@@ -75167,9 +75149,7 @@ var render = function() {
                           "div",
                           { staticClass: "input-group" },
                           [
-                            _c("div", { staticClass: "input-group-addon" }, [
-                              _vm._v("Hasta")
-                            ]),
+                            _vm._m(8),
                             _vm._v(" "),
                             _c("date-picker", {
                               attrs: {
@@ -75199,9 +75179,7 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "input-group" }, [
-                          _c("div", { staticClass: "input-group-addon" }, [
-                            _vm._v("Estado")
-                          ]),
+                          _vm._m(9),
                           _vm._v(" "),
                           _c(
                             "select",
@@ -75273,7 +75251,8 @@ var render = function() {
                 [
                   _c("icon-app", {
                     attrs: {
-                      iconImage: "refresh",
+                      "icon-type": "r",
+                      iconImage: "sync-alt",
                       aditionalClasses:
                         !_vm.queryFinished || !_vm.queryEnd
                           ? "fa-spin fa-fw"
@@ -75287,13 +75266,93 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(0)
+          _vm._m(10)
         ])
       ])
     ])
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Año")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Estado")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Mes")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Estado")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Desde")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Hasta")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Estado")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Desde")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Hasta")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Estado")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

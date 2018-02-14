@@ -43,22 +43,22 @@
                                         </tr>
                                         <tr>
                                             <th scope="row"><i class="fa fa-users" aria-hidden="true"></i> Capacidad</th>
-                                            <td><span class="badge badge-secondary"><i class="fa fa-hashtag" aria-hidden="true"> {{ $cottages[$i]->accommodation }}</i></span></td>
+                                            <td><span class="badge badge-secondary"><i class="fas fa-hashtag" aria-hidden="true"> {{ $cottages[$i]->accommodation }}</i></span></td>
                                         </tr>
                                         <tr>
-                                            <th scope="row"><i class="fa fa-usd" aria-hidden="true"></i> Precio</th>
-                                            <td><span class="badge badge-danger"><i class="fa fa-dollar" aria-hidden="true"> {{ $cottages[$i]->price }}</i></span></td>
+                                            <th scope="row"><i class="fas fa-dollar-sign" aria-hidden="true"></i> Precio</th>
+                                            <td><span class="badge badge-danger"><i class="fas fa-dollar-sign" aria-hidden="true"> {{ $cottages[$i]->price }}</i></span></td>
                                         </tr>
                                         <tr>
                                             <th scope="row"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Estado</th>
                                             <td><span class="badge @if($cottages[$i]->state === 'enabled') badge-success @else badge-danger @endif">{{ $cottages[$i]->state === 'enabled' ? 'Habilitada' : 'Deshabilitada' }}</span></td>
                                         </tr>
                                         <tr>
-                                            <th scope="row"><i class="fa fa-commenting-o" aria-hidden="true"></i> Calificación</th>
+                                            <th scope="row"><i class="fas fa-comment-alt" aria-hidden="true"></i> Calificación</th>
                                             <td>
                                                 @if($cottages[$i]->voters)
                                                     @for($a = 0; $a < ($cottages[$i]->stars / $cottages[$i]->voters); $a++)
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fas fa-star" aria-hidden="true"></i>
                                                     @endfor
                                                 @else
                                                     Sin calificaci&oacute;n

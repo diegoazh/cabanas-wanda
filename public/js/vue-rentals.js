@@ -1648,6 +1648,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     name: 'icon-app',
     props: {
+        typeIcon: {
+            type: String,
+            default: 's'
+        },
         iconImage: {
             type: String,
             default: '',
@@ -1666,7 +1670,7 @@ exports.default = {
     },
     computed: {
         toggleIconClass: function toggleIconClass() {
-            var classes = 'fa fa-' + this.iconImage;
+            var classes = (this.typeIcon === 'l' ? 'fal' : this.typeIcon === 'r' ? 'far' : 'fas') + ' fa-' + this.iconImage;
             if (this.aditionalClasses) {
                 classes += ' ' + this.aditionalClasses;
             }
@@ -2683,7 +2687,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -55291,7 +55295,7 @@ var render = function() {
             ]
           },
           [
-            _c("icon-app", { attrs: { iconImage: "warning" } }),
+            _c("icon-app", { attrs: { iconImage: "exclamation-triangle" } }),
             _vm._v(
               "\n        " +
                 _vm._s(
@@ -55349,7 +55353,9 @@ var render = function() {
             [
               _c("icon-app", { attrs: { iconImage: "arrow-left" } }),
               _vm._v(" Volver a reservas "),
-              _c("icon-app", { attrs: { iconImage: "handshake-o" } })
+              _c("icon-app", {
+                attrs: { "type-icon": "r", iconImage: "handshake" }
+              })
             ],
             1
           )
@@ -55451,8 +55457,10 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c("div", { staticClass: "input-group-addon" }, [
-                        _vm._v(_vm._s(!_vm.onOff ? "DNI" : "Pasaporte"))
+                      _c("div", { staticClass: "input-group-prepend" }, [
+                        _c("div", { staticClass: "input-group-text" }, [
+                          _vm._v(_vm._s(!_vm.onOff ? "DNI" : "Pasaporte"))
+                        ])
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -55497,16 +55505,18 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c(
-                        "div",
-                        { staticClass: "input-group-addon" },
-                        [
-                          _c("icon-app", {
-                            attrs: { iconId: "at", iconImage: "at" }
-                          })
-                        ],
-                        1
-                      ),
+                      _c("div", { staticClass: "input-group-prepend" }, [
+                        _c(
+                          "div",
+                          { staticClass: "input-group-text" },
+                          [
+                            _c("icon-app", {
+                              attrs: { iconId: "at", iconImage: "at" }
+                            })
+                          ],
+                          1
+                        )
+                      ]),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -55610,9 +55620,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c("div", { staticClass: "input-group-addon" }, [
-                        _vm._v("Nombres")
-                      ]),
+                      _vm._m(1),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -55650,9 +55658,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c("div", { staticClass: "input-group-addon" }, [
-                        _vm._v("Apellidos")
-                      ]),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -55694,9 +55700,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c("div", { staticClass: "input-group-addon" }, [
-                        _vm._v("e-mail")
-                      ]),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -55783,8 +55787,10 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c("div", { staticClass: "input-group-addon" }, [
-                        _vm._v(_vm._s(!_vm.onOff ? "DNI" : "Pasaporte"))
+                      _c("div", { staticClass: "input-group-prepend" }, [
+                        _c("div", { staticClass: "input-group-text" }, [
+                          _vm._v(_vm._s(!_vm.onOff ? "DNI" : "Pasaporte"))
+                        ])
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -55827,9 +55833,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c("div", { staticClass: "input-group-addon" }, [
-                        _vm._v("Genero")
-                      ]),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -55893,9 +55897,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c("div", { staticClass: "input-group-addon" }, [
-                        _vm._v("País")
-                      ]),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -55989,6 +55991,46 @@ var staticRenderFns = [
         )
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Nombres")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Apellidos")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("e-mail")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Genero")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("País")])
+    ])
   }
 ]
 render._withStripped = true
@@ -56040,12 +56082,14 @@ var render = function() {
             "div",
             { staticClass: "input-group mr-3" },
             [
-              _c(
-                "div",
-                { staticClass: "input-group-addon date-piker" },
-                [_c("icon-app", { attrs: { iconImage: "calendar" } })],
-                1
-              ),
+              _c("div", { staticClass: "input-group-prepend date-piker" }, [
+                _c(
+                  "div",
+                  { staticClass: "input-group-text" },
+                  [_c("icon-app", { attrs: { iconImage: "calendar" } })],
+                  1
+                )
+              ]),
               _vm._v(" "),
               _c("date-picker", {
                 attrs: {
@@ -56076,12 +56120,14 @@ var render = function() {
             "div",
             { staticClass: "input-group mr-3" },
             [
-              _c(
-                "div",
-                { staticClass: "input-group-addon date-piker" },
-                [_c("icon-app", { attrs: { iconImage: "calendar" } })],
-                1
-              ),
+              _c("div", { staticClass: "input-group-prepend date-piker" }, [
+                _c(
+                  "div",
+                  { staticClass: "input-group-text" },
+                  [_c("icon-app", { attrs: { iconImage: "calendar" } })],
+                  1
+                )
+              ]),
               _vm._v(" "),
               _c("date-picker", {
                 attrs: {
@@ -56274,7 +56320,9 @@ var render = function() {
         [
           _c("icon-app", { attrs: { iconImage: "arrow-left" } }),
           _vm._v("\n            Volver a reservas\n            "),
-          _c("icon-app", { attrs: { iconImage: "handshake-o" } })
+          _c("icon-app", {
+            attrs: { "type-icon": "r", iconImage: "handshake" }
+          })
         ],
         1
       )
@@ -56291,7 +56339,8 @@ var render = function() {
         [
           _c("icon-app", {
             attrs: {
-              iconImage: "thumbs-o-up",
+              "type-icon": "r",
+              iconImage: "thumbs-up",
               aditionalClasses: "text-success big-hand"
             }
           })
@@ -56323,7 +56372,7 @@ var render = function() {
                   _c(
                     "th",
                     [
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                       _vm._v(" Precio")
                     ],
                     1
@@ -56334,7 +56383,7 @@ var render = function() {
                       "span",
                       { staticClass: "badge badge-danger" },
                       [
-                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                         _vm._v(" " + _vm._s(_vm.infoDeal.cottage_price))
                       ],
                       1
@@ -56363,7 +56412,7 @@ var render = function() {
                   _c(
                     "th",
                     [
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                       _vm._v(" Descuentos")
                     ],
                     1
@@ -56374,7 +56423,7 @@ var render = function() {
                       "span",
                       { staticClass: "badge badge-success" },
                       [
-                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                         _vm._v(" " + _vm._s(_vm.infoDeal.deductions))
                       ],
                       1
@@ -56386,7 +56435,7 @@ var render = function() {
                   _c(
                     "th",
                     [
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                       _vm._v("Precio total")
                     ],
                     1
@@ -56397,7 +56446,7 @@ var render = function() {
                       "span",
                       { staticClass: "badge badge-info" },
                       [
-                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                         _vm._v(" " + _vm._s(_vm.infoDeal.finalPayment))
                       ],
                       1
@@ -56455,7 +56504,7 @@ var render = function() {
                   _c(
                     "th",
                     [
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                       _vm._v("Monto de reserva")
                     ],
                     1
@@ -56466,7 +56515,7 @@ var render = function() {
                       "span",
                       { staticClass: "badge badge-info" },
                       [
-                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                         _vm._v(
                           " " +
                             _vm._s(
@@ -56639,10 +56688,10 @@ var render = function() {
               "span",
               {
                 class: [
-                  "label",
+                  "badge",
                   {
-                    "label-primary": _vm.cottage.type === "simple",
-                    "label-success": _vm.cottage.type === "matrimonial"
+                    "badge-primary": _vm.cottage.type === "simple",
+                    "badge-success": _vm.cottage.type === "matrimonial"
                   }
                 ]
               },
@@ -56663,7 +56712,7 @@ var render = function() {
                 "span",
                 { staticClass: "badge badge-primary" },
                 [
-                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                  _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                   _vm._v(_vm._s(_vm.cottage.price))
                 ],
                 1
@@ -56678,7 +56727,7 @@ var render = function() {
                 "span",
                 { staticClass: "badge badge-danger" },
                 [
-                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                  _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                   _vm._v(
                     _vm._s(
                       _vm.calcularMonto(_vm.calcularDias, _vm.cottage.price)

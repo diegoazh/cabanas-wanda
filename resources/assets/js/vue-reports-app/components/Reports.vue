@@ -5,12 +5,12 @@
                 <div class="row">
                     <div class="col-12 col-md-12">
                         <h1 class="text-center">
-                            <a href="/admin" class="btn btn-outline-warning btn-sm pull-left"><icon-app iconImage="hand-o-left"></icon-app> volver al panel</a>
+                            <a href="/admin" class="btn btn-outline-warning btn-sm pull-left"><icon-app type-icon="r" iconImage="hand-point-left"></icon-app> volver al panel</a>
                             REPORTES
                             <transition name="loader"
                                         enter-active-class="animated fadeIn"
                                         leave-active-class="animated fadeOut">
-                                <icon-app :iconImage="!queryFinished || !queryEnd ? 'spinner' : 'line-chart'"
+                                <icon-app :iconImage="!queryFinished || !queryEnd ? 'spinner' : 'chart-line'"
                                           :aditionalClasses="!queryFinished || !queryEnd ? 'fa-pulse fa-fw' : ''"></icon-app>
                             </transition>
                         </h1>
@@ -66,7 +66,7 @@
                                         <div class="form-group">
                                             <label for="anio" class="sr-only">Año:</label>
                                             <div class="input-group">
-                                                <div class="input-group-addon">Año</div>
+                                                <div class="input-group-prepend"><div class="input-group-text">Año</div></div>
                                                 <date-picker placeholder="Seleccione el año..."
                                                              :config="cnfgYear"
                                                              id="anio"
@@ -76,7 +76,7 @@
                                         <div class="form-group">
                                             <label for="estado" class="sr-only"></label>
                                             <div class="input-group">
-                                                <div class="input-group-addon">Estado</div>
+                                                <div class="input-group-prepend"><div class="input-group-text">Estado</div></div>
                                                 <select name="estado" id="estado" class="form-control" v-model="estado">
                                                     <option value="pendiente">Pendiente</option>
                                                     <option value="confirmada">Confirmada</option>
@@ -92,7 +92,7 @@
                                         <div class="form-group">
                                             <label for="mes" class="sr-only">Mes:</label>
                                             <div class="input-group">
-                                                <div class="input-group-addon">Mes</div>
+                                                <div class="input-group-prepend"><div class="input-group-text">Mes</div></div>
                                                 <date-picker placeholder="Seleccione el mes..."
                                                              :config="cnfgMonth"
                                                              id="mes"
@@ -103,7 +103,7 @@
                                         <div class="form-group">
                                             <label for="estado2" class="sr-only"></label>
                                             <div class="input-group">
-                                                <div class="input-group-addon">Estado</div>
+                                                <div class="input-group-prepend"><div class="input-group-text">Estado</div></div>
                                                 <select name="estado2" id="estado2" class="form-control" v-model="estado">
                                                     <option value="pendiente">Pendiente</option>
                                                     <option value="confirmada">Confirmada</option>
@@ -135,7 +135,7 @@
                                         <div class="form-group">
                                             <label for="periodFrom" class="sr-only">Desde:</label>
                                             <div class="input-group">
-                                                <div class="input-group-addon">Desde</div>
+                                                <div class="input-group-prepend"><div class="input-group-text">Desde</div></div>
                                                 <date-picker placeholder="Seleccione la fecha..."
                                                              :config="cnfgPeriod"
                                                              id="periodFrom"
@@ -145,7 +145,7 @@
                                         <div class="form-group">
                                             <label for="periodTo" class="sr-only">Hasta:</label>
                                             <div class="input-group">
-                                                <div class="input-group-addon">Hasta</div>
+                                                <div class="input-group-prepend"><div class="input-group-text">Hasta</div></div>
                                                 <date-picker placeholder="Seleccione la fecha..."
                                                              :config="cnfgPeriod"
                                                              id="periodTo"
@@ -155,7 +155,7 @@
                                         <div class="form-group">
                                             <label for="estado3" class="sr-only">Estado:</label>
                                             <div class="input-group">
-                                                <div class="input-group-addon">Estado</div>
+                                                <div class="input-group-prepend"><div class="input-group-text">Estado</div></div>
                                                 <select name="estado3" id="estado3" class="form-control" v-model="estado">
                                                     <option value="pendiente">Pendiente</option>
                                                     <option value="confirmada">Confirmada</option>
@@ -219,7 +219,7 @@
                                         <div class="form-group">
                                             <label for="filterFrom" class="sr-only">Desde:</label>
                                             <div class="input-group">
-                                                <div class="input-group-addon">Desde</div>
+                                                <div class="input-group-prepend"><div class="input-group-text">Desde</div></div>
                                                 <date-picker placeholder="Seleccione la fecha..."
                                                              :config="cnfgPeriod"
                                                              id="filterFrom"
@@ -229,7 +229,7 @@
                                         <div class="form-group">
                                             <label for="filterTo" class="sr-only">Hasta:</label>
                                             <div class="input-group">
-                                                <div class="input-group-addon">Hasta</div>
+                                                <div class="input-group-prepend"><div class="input-group-text">Hasta</div></div>
                                                 <date-picker placeholder="Seleccione la fecha..."
                                                              :config="cnfgPeriod"
                                                              id="filterTo"
@@ -239,7 +239,7 @@
                                         <div class="form-group">
                                             <label for="estado4" class="sr-only">Estado:</label>
                                             <div class="input-group">
-                                                <div class="input-group-addon">Estado</div>
+                                                <div class="input-group-prepend"><div class="input-group-text">Estado</div></div>
                                                 <select name="estado4" id="estado4" class="form-control" v-model="estado">
                                                     <option value="pendiente">Pendiente</option>
                                                     <option value="confirmada">Confirmada</option>
@@ -255,7 +255,7 @@
                         </div>
                         <div class="text-center">
                             <button class="btn btn-success" @click="btnUpateRp">
-                                <icon-app iconImage="refresh" :aditionalClasses="(!queryFinished || !queryEnd) ? 'fa-spin fa-fw': ''"></icon-app> Actualizar
+                                <icon-app icon-type="r" iconImage="sync-alt" :aditionalClasses="(!queryFinished || !queryEnd) ? 'fa-spin fa-fw': ''"></icon-app> Actualizar
                             </button>
                         </div>
                     </div>

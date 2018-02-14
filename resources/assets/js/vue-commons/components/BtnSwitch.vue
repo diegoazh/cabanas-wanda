@@ -2,13 +2,13 @@
     <div class="text-center">
         <h2>
             <span role="button" :class="['cursorPointer', classTxtLeft ,applyLeftSide]" @click="toggleLeft">
-                <icon-app :iconImage="iconTextLeft" v-if="iconTextLeft"></icon-app> {{ textLeft }}
+                <icon-app :typeIcon="typeIconLeft" :iconImage="iconTextLeft" v-if="iconTextLeft"></icon-app> {{ textLeft }}
             </span>&nbsp;
             <span @click="toggleSide" class="cursorPointer">
                 <icon-app role="button" :iconImage="applyBtnType" :aditionalClasses="aditionalClassesForBtn"></icon-app>&nbsp;
             </span>
             <span role="button" :class="['cursorPointer', classTxtRight, applyRightSide]" @click="toggleRight">
-                {{ textRight }} <icon-app :iconImage="iconTextRight" v-if="iconTextRight"></icon-app>
+                {{ textRight }} <icon-app :typeIcon="typeIconRight" :iconImage="iconTextRight" v-if="iconTextRight"></icon-app>
             </span>
         </h2>
     </div>
@@ -38,6 +38,10 @@
                 required: true,
                 validator: value => value !== undefined && typeof value === 'string'
             },
+            typeIconLeft: {
+                type: String,
+                default: 's'
+            },
             iconTextLeft: {
                 type: String,
                 default : '',
@@ -48,6 +52,10 @@
                 default: '',
                 required: true,
                 validator: value => value !== undefined && typeof value === 'string'
+            },
+            typeIconRight: {
+                type: String,
+                default: 's'
             },
             iconTextRight: {
                 type: String,

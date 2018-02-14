@@ -15,8 +15,14 @@
                 <td><icon-app iconImage="hashtag"></icon-app> {{ rowNumber(index) }}</td>
                 <td><span class="text-to-14px label label-warning"><icon-app iconImage="home"></icon-app> {{ orders.rental.cottage.name }}</span></td>
                 <td>
-                    <span class="text-to-14px label label-primary" v-if="!orders.edit"><icon-app iconImage="dollar"></icon-app> {{ orders.senia }}</span>
-                    <a role="button" @click.prevent="orders.edit = true; trash.senia = orders.senia;" v-tooltip.right="'Editar seña'" v-if="!orders.edit"><icon-app iconImage="edit"></icon-app></a>
+                    <span class="text-to-14px label label-primary" v-if="!orders.edit">
+                        <icon-app iconImage="dollar"></icon-app> {{ orders.senia }}
+                    </span>
+                    <sup>
+                        <a role="button" @click.prevent="orders.edit = true; trash.senia = orders.senia;" v-tooltip.right="'Editar seña'" v-if="!orders.edit" class="cursorPointer">
+                            <icon-app iconImage="edit"></icon-app>
+                        </a>
+                    </sup>
                     <form @submit.prevent="" class="form-inline" v-if="orders.edit">
                         <div class="form-group">
                             <label for="seniaOrder" class="sr-only">Se&ntilde;a: </label>

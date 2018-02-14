@@ -1648,6 +1648,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     name: 'icon-app',
     props: {
+        typeIcon: {
+            type: String,
+            default: 's'
+        },
         iconImage: {
             type: String,
             default: '',
@@ -1666,7 +1670,7 @@ exports.default = {
     },
     computed: {
         toggleIconClass: function toggleIconClass() {
-            var classes = 'fa fa-' + this.iconImage;
+            var classes = (this.typeIcon === 'l' ? 'fal' : this.typeIcon === 'r' ? 'far' : 'fas') + ' fa-' + this.iconImage;
             if (this.aditionalClasses) {
                 classes += ' ' + this.aditionalClasses;
             }
@@ -2406,7 +2410,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
