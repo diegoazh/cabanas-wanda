@@ -2217,14 +2217,13 @@ exports.default = {
             this.setToken('');
             this.setUserData({});
             this.dataForm = false;
+            this.userNotFound = true;
             this.name = '';
             this.lastname = '';
             this.email = '';
             this.document = 0;
             this.genre = '';
             this.country = 0;
-            this.dataForm = true;
-            this.userNotFound = false;
         },
         isNullOrUndefined: function isNullOrUndefined(val) {
             return typeof val === 'undefined' || val === null || typeof val === 'string' && val.length === 0;
@@ -55348,7 +55347,12 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-outline-secondary btn-sm pull-right",
-              on: { click: _vm.goBackToReservas }
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.goBackToReservas($event)
+                }
+              }
             },
             [
               _c("icon-app", { attrs: { iconImage: "arrow-left" } }),
@@ -55366,7 +55370,12 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-outline-secondary btn-sm pull-right",
-              on: { click: _vm.goBackToFindUser }
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.goBackToFindUser($event)
+                }
+              }
             },
             [
               _c("icon-app", { attrs: { iconImage: "arrow-left" } }),

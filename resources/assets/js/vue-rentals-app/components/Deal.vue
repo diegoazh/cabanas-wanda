@@ -1,8 +1,8 @@
 <template>
     <div class="row justify-content-around">
         <div class="col-12 col-md-12">
-            <button @click="goBackToReservas" v-if="!dataForm" class="btn btn-outline-secondary btn-sm pull-right"><icon-app iconImage="arrow-left"></icon-app> Volver a reservas <icon-app type-icon="r" iconImage="handshake"></icon-app></button>
-            <button @click="goBackToFindUser" v-if="dataForm" class="btn btn-outline-secondary btn-sm pull-right"><icon-app iconImage="arrow-left"></icon-app> Volver a buscar usuario <icon-app iconImage="search"></icon-app></button>
+            <button @click.prevent="goBackToReservas" v-if="!dataForm" class="btn btn-outline-secondary btn-sm pull-right"><icon-app iconImage="arrow-left"></icon-app> Volver a reservas <icon-app type-icon="r" iconImage="handshake"></icon-app></button>
+            <button @click.prevent="goBackToFindUser" v-if="dataForm" class="btn btn-outline-secondary btn-sm pull-right"><icon-app iconImage="arrow-left"></icon-app> Volver a buscar usuario <icon-app iconImage="search"></icon-app></button>
         </div>
         <div v-if="!dataForm" class="col-12 col-md-8">
             <h3 class="text-center">
@@ -260,14 +260,13 @@
                 this.setToken('');
                 this.setUserData({});
                 this.dataForm = false;
+                this.userNotFound = true;
                 this.name = '';
                 this.lastname = '';
                 this.email = '';
                 this.document = 0;
                 this.genre = '';
                 this.country = 0;
-                this.dataForm = true;
-                this.userNotFound = false;
             },
             isNullOrUndefined(val) {
                 return typeof val === 'undefined' || val === null || (typeof val === 'string' && val.length === 0);
