@@ -5,15 +5,15 @@ import VueNotifications from 'vue-notifications'
 import VueSimplemde  from 'vue-simplemde';
 import store from '../vue-commons/store/store'
 import { optionsIzi } from "../vue-commons/notifications/notifications"
-import PromotionsCreate from './components/PromotionsCreate'
+import PromotionsStore from './components/PromotionsStore'
 import 'vue-directive-tooltip/css/index.css';
 
 Vue.use(VueNotifications, optionsIzi).use(VueCookies).use(Tooltip).use(VueSimplemde);
 
 window.EventBus = new Vue();
 
-const promotionsCreateApp = new Vue({
+const promotionsStoreApp = new Vue({
     el: '#content_backend',
     store,
-    render: h => h(PromotionsCreate)
+    render: h => h(PromotionsStore)
 });
