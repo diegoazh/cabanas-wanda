@@ -2131,6 +2131,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
+
+var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
 
 var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
 
@@ -2165,12 +2179,14 @@ exports.default = {
             isLeft: true,
             name: '',
             description: '',
-            state: '',
+            state: 'disabled',
+            descState: '',
             terms: '',
             percent: null,
             amount: null,
-            dateFrom: new Date(),
-            dateTo: new Date(),
+            dateFrom: null,
+            dateTo: null,
+            hasErrors: true,
             config: {
                 locale: 'es',
                 format: 'DD/MM/YYYY',
@@ -2179,10 +2195,35 @@ exports.default = {
         };
     },
 
-    computed: {},
+    computed: {
+        invalidDate: function invalidDate() {
+            var dateFrom = this.dateFrom ? moment(this.dateFrom, 'DD/MM/YYYY') : null;
+            var dateTo = this.dateTo ? moment(this.dateTo, 'DD/MM/YYYY') : null;
+
+            if (dateFrom && dateTo) {
+                return this.hasErrors = dateFrom.isAfter(dateTo);
+            }
+        }
+    },
     methods: _extends({
-        sendNewPromotion: function sendNewPromotion() {}
-    }, (0, _vuex.mapActions)('auth', ['fireSetTokenMutation'])),
+        sendNewPromotion: function sendNewPromotion() {
+            this.createNewPromotion({
+                name: this.name,
+                amount: this.amount,
+                percentage: this.percent,
+                description: this.description,
+                startDate: this.dateFrom,
+                endDate: this.dateTo,
+                state: this.state,
+                descriptionState: this.descState,
+                termsAndConditions: this.terms
+            }).then(function (response) {
+                _vueNotifications2.default.success(response);
+            }).catch(function (error) {
+                _vueNotifications2.default.error(error);
+            });
+        }
+    }, (0, _vuex.mapActions)('auth', ['fireSetTokenMutation']), (0, _vuex.mapActions)('promotion_store', ['createNewPromotion'])),
     filters: {},
     created: function created() {},
     mounted: function mounted() {
@@ -56485,7 +56526,9 @@ var render = function() {
                                     _c("date-picker", {
                                       attrs: {
                                         id: "dateFrom",
-                                        config: _vm.config
+                                        config: _vm.config,
+                                        placeholder:
+                                          "Ingrese la fecha de inicio"
                                       },
                                       model: {
                                         value: _vm.dateFrom,
@@ -56521,7 +56564,9 @@ var render = function() {
                                     _c("date-picker", {
                                       attrs: {
                                         id: "dateTo",
-                                        config: _vm.config
+                                        config: _vm.config,
+                                        placeholder:
+                                          "Ingrese la fecha de finalización"
                                       },
                                       model: {
                                         value: _vm.dateTo,
@@ -56536,6 +56581,60 @@ var render = function() {
                                 )
                               ])
                             ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _c(
+                              "div",
+                              { staticClass: "col-12 justify-content-center" },
+                              [
+                                _c(
+                                  "transition",
+                                  {
+                                    attrs: {
+                                      name: "invalid-promotion-date",
+                                      "enter-active-class":
+                                        "animated rubberBand",
+                                      "leave-active-class":
+                                        "animated bounceOutRight"
+                                    }
+                                  },
+                                  [
+                                    _vm.invalidDate
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "alert alert-warning text-center"
+                                          },
+                                          [
+                                            _c(
+                                              "small",
+                                              [
+                                                _c("icon-app", {
+                                                  attrs: {
+                                                    "icon-image":
+                                                      "exclamation-triangle"
+                                                  }
+                                                }),
+                                                _vm._v(" La fecha "),
+                                                _c("i", [_vm._v('"desde"')]),
+                                                _vm._v(
+                                                  " o de inicio no puede ser menor a la fecha "
+                                                ),
+                                                _c("i", [_vm._v('"hasta"')]),
+                                                _vm._v(" o de finalización.")
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                )
+                              ],
+                              1
+                            )
                           ])
                         ])
                       ]
@@ -56557,7 +56656,71 @@ var render = function() {
                             _vm._v("Estado de la promoción")
                           ]),
                           _vm._v(" "),
-                          _vm._m(3),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "sr-only",
+                                attrs: { for: "estadoProm" }
+                              },
+                              [_vm._v("Estado")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "input-group" }, [
+                              _vm._m(3),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.state,
+                                      expression: "state"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { id: "estadoProm" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.state = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "disabled" } },
+                                    [_vm._v("Deshabilitada")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "enabled" } },
+                                    [_vm._v("Habilitada")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "paused" } }, [
+                                    _vm._v("Pausada")
+                                  ])
+                                ]
+                              )
+                            ])
+                          ]),
                           _vm._v(" "),
                           _c(
                             "div",
@@ -56574,11 +56737,11 @@ var render = function() {
                                   "preview-class": "markdown-body"
                                 },
                                 model: {
-                                  value: _vm.state,
+                                  value: _vm.descState,
                                   callback: function($$v) {
-                                    _vm.state = $$v
+                                    _vm.descState = $$v
                                   },
-                                  expression: "state"
+                                  expression: "descState"
                                 }
                               })
                             ],
@@ -56647,7 +56810,7 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-outline-success",
-                      attrs: { type: "submit" }
+                      attrs: { type: "submit", disabled: "hasErrors" }
                     },
                     [
                       _vm._v("Crear "),
@@ -56797,34 +56960,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticClass: "sr-only", attrs: { for: "estadoProm" } }, [
-        _vm._v("Estado")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "input-group" }, [
-        _c("div", { staticClass: "input-group-prepend" }, [
-          _c("div", { staticClass: "input-group-text" }, [_vm._v("Estado")])
-        ]),
-        _vm._v(" "),
-        _c(
-          "select",
-          { staticClass: "form-control", attrs: { id: "estadoProm" } },
-          [
-            _c("option", { attrs: { value: "pausada" } }, [_vm._v("Pausada")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "vigente" } }, [_vm._v("Vigente")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "finalizada" } }, [
-              _vm._v("Finalizada")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { selected: "", value: "oculta" } }, [
-              _vm._v("Oculta")
-            ])
-          ]
-        )
-      ])
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Estado")])
     ])
   }
 ]
@@ -70549,6 +70686,126 @@ exports.default = {
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
+
+var _moment = __webpack_require__("./node_modules/moment/moment.js");
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  createNewPromotion: function createNewPromotion(cntx, payload) {
+    return new Promise(function (resolve, reject) {
+      _appAxios.http.post('promotion/store', payload, {
+        params: {
+          token: cntx.rootState.auth.xhr.token
+        }
+      }).then(function (response) {
+        cntx.dispatch('auth/setToken', response, { root: true });
+        resolve({
+          title: 'OPERACIÓN EXITOSA',
+          message: response.data.message,
+          useSwal: true
+        });
+      }).catch(function (error) {
+        context.dispatch('auth/setToken', error.response, { root: true });
+        reject((0, _appAxios.handlingXhrErrors)(error));
+      });
+    });
+  }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/getters.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotionStore.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.modulePromotionStore = undefined;
+
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/state.js");
+
+var _state2 = _interopRequireDefault(_state);
+
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/getters.js");
+
+var _getters2 = _interopRequireDefault(_getters);
+
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/mutations.js");
+
+var _mutations2 = _interopRequireDefault(_mutations);
+
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/actions.js");
+
+var _actions2 = _interopRequireDefault(_actions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var modulePromotionStore = exports.modulePromotionStore = {
+    namespaced: true,
+    state: _state2.default,
+    getters: _getters2.default,
+    mutations: _mutations2.default,
+    actions: _actions2.default
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/mutations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-commons/store/module-rentals-edit/actions.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -71231,6 +71488,8 @@ var _moduleDash = __webpack_require__("./resources/assets/js/vue-commons/store/m
 
 var _moduleProfileRentals = __webpack_require__("./resources/assets/js/vue-commons/store/module-profile-rentals/moduleProfileRentals.js");
 
+var _modulePromotionStore = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotionStore.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vuex2.default);
@@ -71245,7 +71504,8 @@ exports.default = new _vuex2.default.Store({
         liquidation: _moduleLiquidation.moduleLiquidation,
         reports: _moduleReports.moduleReports,
         dash: _moduleDash.moduleDash,
-        profile_rentals: _moduleProfileRentals.moduleProfileRentals
+        profile_rentals: _moduleProfileRentals.moduleProfileRentals,
+        promotion_store: _modulePromotionStore.modulePromotionStore
     }
 });
 

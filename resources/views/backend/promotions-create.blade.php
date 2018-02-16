@@ -13,5 +13,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/vue-promotions-create.js') }}"></script>
+    <script src="{{ asset('js/vue-promotions-store.js') }}"></script>
 @endsection

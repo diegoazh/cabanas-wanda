@@ -1,7 +1,7 @@
 <template>
     <div class="row justify-content-center">
         <div class="col-12 col-md-12">
-            <div class="row justify-content-center" v-if="seeLeft">
+            <div class="row justify-content-center">
                 <div class="col-12 col-md-12">
                     <div>
                         <ul class="nav nav-tabs" role="tablist">
@@ -43,7 +43,14 @@
                                             <date-picker placeholder="Seleccione la fecha hasta..." :config="dtpConfg" id="dateTo" name="dateTo" v-model="trash.date_to"></date-picker>
                                         </div>
                                     </div>
-                                    <button @click="isAvailable" class="btn btn-outline-primary">Consultar fechas <icon-app iconImage="exchange-alt"></icon-app></button>
+                                    <button @click="isAvailable" class="btn btn-outline-primary" :disabled="hasErrors">Consultar fechas <icon-app iconImage="exchange-alt"></icon-app></button>
+                                    <transition name="invalid-edit-date"
+                                        enter-active-class="animated rubberBand"
+                                        leave-active-class="animated bounceOutRight">
+                                        <div class="alert alert-warning" v-if="invalidDate">
+                                            <small> <icon-app icon-image="exclamation-triangle"></icon-app> La fecha <i>"desde"</i> o de inicio no puede ser menor a la fecha <i>"hasta"</i> o de finalización.</small>
+                                        </div>
+                                    </transition>
                                 </form>
                                 <div class="row" v-if="toRentals.length">
                                     <div class="col-12 col-md-6 py-5" v-for="cottage in toRentals">
@@ -125,9 +132,9 @@
         },
         data() {
             return {
-                seeLeft: true,
                 loading: false,
                 regexp: /https?:\/\//,
+                hasErrors: true,
                 trash: {
                     cottage: 0,
                     cottage_id: 0,
@@ -146,6 +153,14 @@
         computed: {
             disableDateFrom() {
                 return moment().add(2, 'd').isAfter(moment(this.rental.dateFrom, 'YYYY-MM-DD'));
+            },
+            invalidDate() {
+                let dateFrom = this.trash.date_from ? moment(this.trash.date_from, 'DD/MM/YYYY') : null;
+                let dateTo = this.trash.date_to ? moment(this.trash.date_to, 'DD/MM/YYYY') : null;
+
+                if (dateFrom && dateTo) {
+                    return this.hasErrors = dateFrom.isAfter(dateTo);
+                }
             },
             ...mapState('rentals_edit', {
                 rental: state => state.data.rental
@@ -228,7 +243,6 @@
             if (!this.trash.date_to) this.trash.date_to = moment(this.rental.dateTo, 'YYYY-MM-DD').subtract(1, 'd').toDate();
         },
         mounted() {
-            window.EventBus.$on('change-side', (bool) => this.seeLeft = bool);
             this.trash.cottage = this.rental.cottage.number;
             this.trash.cottage_id = this.rental.cottage.id;
         }

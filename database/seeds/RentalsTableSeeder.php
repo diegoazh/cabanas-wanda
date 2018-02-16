@@ -74,6 +74,7 @@ class RentalsTableSeeder extends Seeder
 
             DB::table('test_code_reservation')->insert([
                 'code' => $code,
+                'state' => $rental->state,
                 'date_from' => $rental->dateFrom
             ]);
         }

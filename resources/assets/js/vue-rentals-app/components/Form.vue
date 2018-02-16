@@ -94,7 +94,7 @@
                     this.dtpConfig = this.toggleConfig;
                 }
             },
-            hasErrorsInForm() {
+            hasErrorsInForm() { // TODO(Diego) Eliminar en la proximas correcciones esta función. Se puede simplificar utilizando simplemente invalidDate()
                 let dateFrom = this.dateFrom ? moment(this.dateFrom, 'DD/MM/YYYY') : null;
                 let dateTo = this.dateTo ? moment(this.dateTo, 'DD/MM/YYYY') : null;
 

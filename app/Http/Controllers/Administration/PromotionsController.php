@@ -52,7 +52,7 @@ class PromotionsController extends Controller
 
         flash('La promoción se creó correctamente')->success();
 
-        return response()->json(['message' => 'La promosión se creó correctamente']);
+        return response()->json(['message' => $info]);
     }
 
     /**

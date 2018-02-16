@@ -77,7 +77,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">Desde</span>
                                                         </div>
-                                                        <date-picker id="dateFrom" v-model="dateFrom" :config="config"></date-picker>
+                                                        <date-picker id="dateFrom" v-model="dateFrom" :config="config" placeholder="Ingrese la fecha de inicio"></date-picker>
                                                     </div>
                                                 </div>
                                             </div>
@@ -88,10 +88,21 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">Hasta</span>
                                                         </div>
-                                                        <date-picker id="dateTo" v-model="dateTo" :config="config"></date-picker>
+                                                        <date-picker id="dateTo" v-model="dateTo" :config="config" placeholder="Ingrese la fecha de finalización"></date-picker>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
+                                          <div class="col-12 justify-content-center">
+                                            <transition name="invalid-promotion-date"
+                                                enter-active-class="animated rubberBand"
+                                                leave-active-class="animated bounceOutRight">
+                                                <div class="alert alert-warning text-center" v-if="invalidDate">
+                                                    <small> <icon-app icon-image="exclamation-triangle"></icon-app> La fecha <i>"desde"</i> o de inicio no puede ser menor a la fecha <i>"hasta"</i> o de finalización.</small>
+                                                </div>
+                                            </transition>
+                                          </div>
                                         </div>
                                     </fieldset>
                                 </div>
@@ -104,11 +115,10 @@
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">Estado</div>
                                                 </div>
-                                                <select id="estadoProm" class="form-control">
-                                                    <option value="pausada">Pausada</option>
-                                                    <option value="vigente">Vigente</option>
-                                                    <option value="finalizada">Finalizada</option>
-                                                    <option selected value="oculta">Oculta</option>
+                                                <select id="estadoProm" class="form-control" v-model="state">
+                                                  <option value="disabled">Deshabilitada</option>
+                                                  <option value="enabled">Habilitada</option>
+                                                  <option value="paused">Pausada</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -116,7 +126,7 @@
                                             <label for="stateDesc">Descripción del estado</label>
                                             <markdown-editor
                                                     id="stateDesc"
-                                                    v-model="state"
+                                                    v-model="descState"
                                                     ref="markdownEditor"
                                                     preview-class="markdown-body"></markdown-editor>
                                         </div>
@@ -139,7 +149,7 @@
                                 </div>
                             </div>
                             <div class="col-12 text-center">
-                                <button type="submit" class="btn btn-outline-success">Crear <icon-app icon-image="gift"></icon-app></button>
+                                <button type="submit" class="btn btn-outline-success" disabled="hasErrors">Crear <icon-app icon-image="gift"></icon-app></button>
                                 <button type="reset" class="btn btn-outline-warning">Limpiar</button>
                             </div>
                         </form>
@@ -151,10 +161,11 @@
 </template>
 
 <script>
+    import VueNoti from 'vue-notifications'
     import Icon from '../../vue-commons/components/Icon'
     import BtnSwitch from '../../vue-commons/components/BtnSwitch'
     import markdownEditor from 'vue-simplemde/src/markdown-editor'
-    import datePicker from 'vue-bootstrap-datetimepicker';
+    import datePicker from 'vue-bootstrap-datetimepicker'
     import { mapActions } from 'vuex';
 
     export default {
@@ -170,12 +181,14 @@
                 isLeft: true,
                 name: '',
                 description: '',
-                state: '',
+                state: 'disabled',
+                descState: '',
                 terms: '',
                 percent: null,
                 amount: null,
-                dateFrom: new Date(),
-                dateTo: new Date(),
+                dateFrom: null,
+                dateTo: null,
+                hasErrors: true,
                 config: {
                     locale: 'es',
                     format: 'DD/MM/YYYY',
@@ -183,10 +196,36 @@
                 }
             }
         },
-        computed: {},
+        computed: {
+          invalidDate() {
+              let dateFrom = this.dateFrom ? moment(this.dateFrom, 'DD/MM/YYYY') : null;
+              let dateTo = this.dateTo ? moment(this.dateTo, 'DD/MM/YYYY') : null;
+
+              if (dateFrom && dateTo) {
+                  return this.hasErrors = dateFrom.isAfter(dateTo);
+              }
+          },
+        },
         methods: {
-            sendNewPromotion() {},
-            ...mapActions('auth', ['fireSetTokenMutation'])
+            sendNewPromotion() {
+              this.createNewPromotion({
+                name: this.name,
+                amount: this.amount,
+                percentage: this.percent,
+                description: this.description,
+                startDate: this.dateFrom,
+                endDate: this.dateTo,
+                state: this.state,
+                descriptionState: this.descState,
+                termsAndConditions: this.terms
+              }).then(response => {
+                VueNoti.success(response);
+              }).catch(error => {
+                VueNoti.error(error);
+              })
+            },
+            ...mapActions('auth', ['fireSetTokenMutation']),
+            ...mapActions('promotion_store', ['createNewPromotion'])
         },
         filters: {},
         created() {

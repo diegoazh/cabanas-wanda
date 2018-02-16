@@ -9,6 +9,7 @@ import { moduleLiquidation } from './module-liquidation/moduleLiquidation';
 import { moduleReports } from './module-reports/moduleReports';
 import { moduleDash } from './module-dash/moduleDash';
 import { moduleProfileRentals } from './module-profile-rentals/moduleProfileRentals';
+import { modulePromotionStore } from './module-promotion-store/modulePromotionStore';
 
 Vue.use(Vuex);
 
@@ -22,6 +23,7 @@ export default new Vuex.Store({
         liquidation: moduleLiquidation,
         reports: moduleReports,
         dash: moduleDash,
-        profile_rentals: moduleProfileRentals
+        profile_rentals: moduleProfileRentals,
+        promotion_store: modulePromotionStore
     }
 });

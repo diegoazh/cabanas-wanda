@@ -78,5 +78,5 @@ Route::prefix('profile')->middleware(['jwt.auth', 'jwt.refresh'])->group(functio
 });
 
 Route::prefix('promotion')->middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
-    Route::post('store', 'PromotionController@store')->name('api.promotion.store');
+    Route::post('store', 'Administration\PromotionsController@store')->name('api.promotion.store');
 });
