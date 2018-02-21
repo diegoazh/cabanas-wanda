@@ -38971,7 +38971,7 @@ var staticRenderFns = [
       _c("p", [
         _vm._v("Tenga en cuenta que si cancela la reserva con "),
         _c("b", [_vm._v("menos de 48 hs")]),
-        _vm._v(" perderá compeltamente la seña.")
+        _vm._v(" perderá completamente la seña.")
       ])
     ])
   }

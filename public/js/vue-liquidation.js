@@ -1912,6 +1912,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -21502,18 +21506,20 @@ var render = function() {
               _vm._v(" "),
               _vm.forCode
                 ? _c("div", { staticClass: "input-group mr-2" }, [
-                    _c(
-                      "div",
-                      { staticClass: "input-group-addon" },
-                      [
-                        _c("icon-app", {
-                          attrs: {
-                            iconImage: _vm.forCode ? "barcode" : "hashtag"
-                          }
-                        })
-                      ],
-                      1
-                    ),
+                    _c("div", { staticClass: "input-group-prepend" }, [
+                      _c(
+                        "div",
+                        { staticClass: "input-group-text" },
+                        [
+                          _c("icon-app", {
+                            attrs: {
+                              iconImage: _vm.forCode ? "barcode" : "hashtag"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -21550,18 +21556,20 @@ var render = function() {
               _vm._v(" "),
               !_vm.forCode
                 ? _c("div", { staticClass: "input-group mr-2" }, [
-                    _c(
-                      "div",
-                      { staticClass: "input-group-addon" },
-                      [
-                        _c("icon-app", {
-                          attrs: {
-                            iconImage: _vm.forCode ? "barcode" : "hashtag"
-                          }
-                        })
-                      ],
-                      1
-                    ),
+                    _c("div", { staticClass: "input-group-prepend" }, [
+                      _c(
+                        "div",
+                        { staticClass: "input-group-text" },
+                        [
+                          _c("icon-app", {
+                            attrs: {
+                              iconImage: _vm.forCode ? "barcode" : "hashtag"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -21598,12 +21606,14 @@ var render = function() {
               _vm._v(" "),
               !_vm.forCode
                 ? _c("div", { staticClass: "input-group mr-2" }, [
-                    _c(
-                      "div",
-                      { staticClass: "input-group-addon" },
-                      [_c("icon-app", { attrs: { iconImage: "at" } })],
-                      1
-                    ),
+                    _c("div", { staticClass: "input-group-prepend" }, [
+                      _c(
+                        "div",
+                        { staticClass: "input-group-text" },
+                        [_c("icon-app", { attrs: { iconImage: "at" } })],
+                        1
+                      )
+                    ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -21701,7 +21711,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12 col-md-12 page-header" }, [
-        _c("h1", { staticClass: "text-center" }, [_vm._v("Liquidación final")]),
+        _c(
+          "h1",
+          { staticClass: "text-center rounded bg-dark text-light py-2" },
+          [_vm._v("Liquidación final")]
+        ),
         _vm._v(" "),
         _c("p", { staticClass: "text-center" }, [
           _vm._v("Puedes ver todos los consumos de tu estadía")
@@ -21734,7 +21748,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-outline-secondary btn-sm pull-right",
+              staticClass: "btn btn-outline-secondary btn-sm float-right",
               on: { click: _vm.changeReserva }
             },
             [
@@ -21816,7 +21830,7 @@ var render = function() {
                       "span",
                       { staticClass: "badge badge-warning" },
                       [
-                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                         _vm._v(" " + _vm._s(_vm.rental.cottage_price))
                       ],
                       1
@@ -21866,7 +21880,7 @@ var render = function() {
                       "span",
                       { staticClass: "badge badge-danger" },
                       [
-                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                         _vm._v(" " + _vm._s(_vm.rentalTotalAmount))
                       ],
                       1
@@ -21882,7 +21896,7 @@ var render = function() {
                       "span",
                       { staticClass: "badge badge-success" },
                       [
-                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                         _vm._v(" " + _vm._s(_vm.reservaAmount))
                       ],
                       1
@@ -21928,7 +21942,7 @@ var render = function() {
                       "span",
                       { staticClass: "badge badge-success" },
                       [
-                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                         _vm._v(
                           " " + _vm._s((+_vm.rental.deductions || 0).toFixed(2))
                         )
@@ -21946,7 +21960,7 @@ var render = function() {
                       "span",
                       { staticClass: "badge badge-danger" },
                       [
-                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                         _vm._v(" " + _vm._s(_vm.finalAmountWithDeductions))
                       ],
                       1
@@ -21968,7 +21982,7 @@ var render = function() {
                       [
                         _c("icon-app", { attrs: { iconImage: "minus" } }),
                         _vm._v(" "),
-                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                         _vm._v(" " + _vm._s(_vm.reservaAmount))
                       ],
                       1
@@ -22018,7 +22032,9 @@ var render = function() {
                           ]
                         },
                         [
-                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                          _c("icon-app", {
+                            attrs: { iconImage: "dollar-sign" }
+                          }),
                           _vm._v(
                             " " +
                               _vm._s(
@@ -22152,7 +22168,9 @@ var render = function() {
                       _c(
                         "th",
                         [
-                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                          _c("icon-app", {
+                            attrs: { iconImage: "dollar-sign" }
+                          }),
                           _vm._v("/unidad")
                         ],
                         1
@@ -22161,7 +22179,9 @@ var render = function() {
                       _c(
                         "th",
                         [
-                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                          _c("icon-app", {
+                            attrs: { iconImage: "dollar-sign" }
+                          }),
                           _vm._v(" total por plato")
                         ],
                         1
@@ -22211,7 +22231,7 @@ var render = function() {
                                   "td",
                                   [
                                     _c("icon-app", {
-                                      attrs: { iconImage: "dollar" }
+                                      attrs: { iconImage: "dollar-sign" }
                                     }),
                                     _vm._v(" " + _vm._s(item.food.price))
                                   ],
@@ -22222,7 +22242,7 @@ var render = function() {
                                   "td",
                                   [
                                     _c("icon-app", {
-                                      attrs: { iconImage: "dollar" }
+                                      attrs: { iconImage: "dollar-sign" }
                                     }),
                                     _vm._v(
                                       " " +
@@ -22251,7 +22271,9 @@ var render = function() {
                       _c(
                         "td",
                         [
-                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                          _c("icon-app", {
+                            attrs: { iconImage: "dollar-sign" }
+                          }),
                           _vm._v(" " + _vm._s(_vm.totalAmount(order)))
                         ],
                         1
@@ -22268,7 +22290,9 @@ var render = function() {
                         [
                           _c("icon-app", { attrs: { iconImage: "minus" } }),
                           _vm._v(" "),
-                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                          _c("icon-app", {
+                            attrs: { iconImage: "dollar-sign" }
+                          }),
                           _vm._v(" " + _vm._s((+order.senia || 0).toFixed(2)))
                         ],
                         1
@@ -22283,7 +22307,9 @@ var render = function() {
                       _c(
                         "td",
                         [
-                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                          _c("icon-app", {
+                            attrs: { iconImage: "dollar-sign" }
+                          }),
                           _vm._v(
                             " " +
                               _vm._s(
@@ -22315,7 +22341,7 @@ var render = function() {
                       "td",
                       { staticClass: "text-right", attrs: { colspan: "5" } },
                       [
-                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                         _vm._v(
                           " " +
                             _vm._s(
@@ -22342,7 +22368,9 @@ var render = function() {
                         "td",
                         { staticClass: "text-right", attrs: { colspan: "5" } },
                         [
-                          _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                          _c("icon-app", {
+                            attrs: { iconImage: "dollar-sign" }
+                          }),
                           _vm._v(
                             " " +
                               _vm._s(
@@ -22368,7 +22396,7 @@ var render = function() {
                     "td",
                     { staticClass: "text-right", attrs: { colspan: "5" } },
                     [
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                       _vm._v(
                         " " + _vm._s(_vm.finalAmountWhitDeductionsAndOrders)
                       )
@@ -22470,14 +22498,25 @@ var render = function() {
                                                 "div",
                                                 {
                                                   staticClass:
-                                                    "input-group-addon"
+                                                    "input-group-prepend"
                                                 },
                                                 [
-                                                  _c("icon-app", {
-                                                    attrs: { iconImage: "at" }
-                                                  })
-                                                ],
-                                                1
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "input-group-text"
+                                                    },
+                                                    [
+                                                      _c("icon-app", {
+                                                        attrs: {
+                                                          iconImage: "at"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                                ]
                                               ),
                                               _vm._v(" "),
                                               _c("input", {
@@ -22521,28 +22560,37 @@ var render = function() {
                                                 "div",
                                                 {
                                                   staticClass:
-                                                    "input-group-addon"
+                                                    "input-group-prepend"
                                                 },
                                                 [
-                                                  _c("icon-app", {
-                                                    attrs: {
-                                                      iconImage: "asterisk"
-                                                    }
-                                                  }),
-                                                  _vm._v(" "),
-                                                  _c("icon-app", {
-                                                    attrs: {
-                                                      iconImage: "asterisk"
-                                                    }
-                                                  }),
-                                                  _vm._v(" "),
-                                                  _c("icon-app", {
-                                                    attrs: {
-                                                      iconImage: "asterisk"
-                                                    }
-                                                  })
-                                                ],
-                                                1
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "input-group-text"
+                                                    },
+                                                    [
+                                                      _c("icon-app", {
+                                                        attrs: {
+                                                          iconImage: "asterisk"
+                                                        }
+                                                      }),
+                                                      _vm._v(" "),
+                                                      _c("icon-app", {
+                                                        attrs: {
+                                                          iconImage: "asterisk"
+                                                        }
+                                                      }),
+                                                      _vm._v(" "),
+                                                      _c("icon-app", {
+                                                        attrs: {
+                                                          iconImage: "asterisk"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                                ]
                                               ),
                                               _vm._v(" "),
                                               _c("input", {
@@ -22632,7 +22680,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-secondary btn-sm pull-right",
+              staticClass: "btn btn-secondary btn-sm float-right",
               on: { click: _vm.changeReserva }
             },
             [
@@ -22683,7 +22731,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-12 col-md-12" }, [
       _c("div", { staticClass: "text-center" }, [
         _c("span", { staticClass: "fa-stack fa-lg fa-5x text-success" }, [
-          _c("i", { staticClass: "fa fa-circle-o fa-stack-2x" }),
+          _c("i", { staticClass: "far fa-circle fa-stack-2x" }),
           _vm._v(" "),
           _c("i", { staticClass: "fa fa-check fa-stack-1x" })
         ]),

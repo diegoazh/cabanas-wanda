@@ -1,7 +1,7 @@
 <template>
     <div class="row" v-if="!liquidationOk">
         <div class="col-12 col-md-12 mb-3">
-            <button class="btn btn-outline-secondary btn-sm pull-right" @click="changeReserva">
+            <button class="btn btn-outline-secondary btn-sm float-right" @click="changeReserva">
                 <icon-app iconImage="refresh" :aditionalClasses="activeReload ? 'fa-spin fa-fw' : ''"></icon-app>
                 Cambiar reserva
             </button>
@@ -28,7 +28,7 @@
                         <th scope="row">Número</th>
                         <td><span class="badge badge-secondary">{{ rental.cottage.number }}</span></td>
                         <th scope="row">Precio</th>
-                        <td><span class="badge badge-warning"><icon-app iconImage="dollar"></icon-app> {{ rental.cottage_price }}</span></td>
+                        <td><span class="badge badge-warning"><icon-app iconImage="dollar-sign"></icon-app> {{ rental.cottage_price }}</span></td>
                     </tr>
                     <tr>
                         <th scope="row">Desde</th>
@@ -40,9 +40,9 @@
                     </tr>
                     <tr>
                         <th scope="row">Monto total</th>
-                        <td><span class="badge badge-danger"><icon-app iconImage="dollar"></icon-app> {{ rentalTotalAmount }}</span></td>
+                        <td><span class="badge badge-danger"><icon-app iconImage="dollar-sign"></icon-app> {{ rentalTotalAmount }}</span></td>
                         <th scope="row">Monto de reserva</th>
-                        <td><span class="badge badge-success"><icon-app iconImage="dollar"></icon-app> {{ reservaAmount }}</span></td>
+                        <td><span class="badge badge-success"><icon-app iconImage="dollar-sign"></icon-app> {{ reservaAmount }}</span></td>
                         <th scope="row">Vto. pago de reserva</th>
                         <td><span class="badge badge-secondary">{{ rental.dateReservationPayment | displayArgDate }}</span></td>
                     </tr>
@@ -50,22 +50,22 @@
                         <th scope="row">Promocion</th>
                         <td><span class="badge badge-info">{{ rental.promotion ? rental.promotion.name : 'Sin promoción' }}</span></td>
                         <th scope="row">Descuento</th>
-                        <td><span class="badge badge-success"><icon-app iconImage="dollar"></icon-app> {{ (+rental.deductions || 0).toFixed(2) }}</span></td>
+                        <td><span class="badge badge-success"><icon-app iconImage="dollar-sign"></icon-app> {{ (+rental.deductions || 0).toFixed(2) }}</span></td>
                         <th scope="row">Monto restante</th>
-                        <td><span class="badge badge-danger"><icon-app iconImage="dollar"></icon-app> {{ finalAmountWithDeductions }}</span></td>
+                        <td><span class="badge badge-danger"><icon-app iconImage="dollar-sign"></icon-app> {{ finalAmountWithDeductions }}</span></td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr class="bg-warning text-dark">
                         <th scope="row" colspan="5">Seña</th>
-                        <td><span class="badge badge-success"><icon-app iconImage="minus"></icon-app> <icon-app iconImage="dollar"></icon-app> {{ reservaAmount }}</span></td>
+                        <td><span class="badge badge-success"><icon-app iconImage="minus"></icon-app> <icon-app iconImage="dollar-sign"></icon-app> {{ reservaAmount }}</span></td>
                     </tr>
                     <tr :class="{'bg-danger text-white': !rental.dateFinalPayment, 'bg-success': rental.dateFinalPayment}">
                         <th scope="row" colspan="4">{{ rental.dateFinalPayment ? 'Pagado' : 'Saldo final'}}</th>
                         <td><span class="badge badge-secondary">{{ rental.dateFinalPayment | displayArgDate }}</span></td>
                         <td>
                             <span :class="['label', {'label-danger': !rental.dateFinalPayment, 'label-success': rental.dateFinalPayment}]">
-                                <icon-app iconImage="dollar"></icon-app> {{ (finalAmountWithDeductions - reservaAmount).toFixed(2) }}
+                                <icon-app iconImage="dollar-sign"></icon-app> {{ (finalAmountWithDeductions - reservaAmount).toFixed(2) }}
                             </span>
                         </td>
                     </tr>
@@ -92,8 +92,8 @@
                         <th>Plato</th>
                         <th>Categoría</th>
                         <th>Cantidad</th>
-                        <th><icon-app iconImage="dollar"></icon-app>/unidad</th>
-                        <th><icon-app iconImage="dollar"></icon-app> total por plato</th>
+                        <th><icon-app iconImage="dollar-sign"></icon-app>/unidad</th>
+                        <th><icon-app iconImage="dollar-sign"></icon-app> total por plato</th>
                     </tr>
                 </thead>
                 <transition name="slide-fade"
@@ -105,8 +105,8 @@
                             <td>{{ item.food.name }}</td>
                             <td><span class="badge badge-info text-capitalize">{{ item.food.type }}</span></td>
                             <td>{{ item.quantity }}</td>
-                            <td><icon-app iconImage="dollar"></icon-app> {{ item.food.price }}</td>
-                            <td><icon-app iconImage="dollar"></icon-app> {{ item.food.price * item.quantity }}</td>
+                            <td><icon-app iconImage="dollar-sign"></icon-app> {{ item.food.price }}</td>
+                            <td><icon-app iconImage="dollar-sign"></icon-app> {{ item.food.price * item.quantity }}</td>
                         </tr>
                     </tbody>
                 </transition>
@@ -116,17 +116,17 @@
                         <td colspan="2"></td>
                         <td>{{ totalQuantity(order) }}</td>
                         <td></td>
-                        <td><icon-app iconImage="dollar"></icon-app> {{ totalAmount(order) }}</td>
+                        <td><icon-app iconImage="dollar-sign"></icon-app> {{ totalAmount(order) }}</td>
                     </tr>
                     <tr class="bg-warning">
                         <th>Seña</th>
                         <td colspan="4"></td>
-                        <td><icon-app iconImage="minus"></icon-app> <icon-app iconImage="dollar"></icon-app> {{ (+order.senia || 0).toFixed(2) }}</td>
+                        <td><icon-app iconImage="minus"></icon-app> <icon-app iconImage="dollar-sign"></icon-app> {{ (+order.senia || 0).toFixed(2) }}</td>
                     </tr>
                     <tr class="bg-danger text-white">
                         <th>Monto final</th>
                         <td colspan="4"></td>
-                        <td><icon-app iconImage="dollar"></icon-app> {{ (totalAmount(order) - (order.senia || 0)).toFixed(2) }}</td>
+                        <td><icon-app iconImage="dollar-sign"></icon-app> {{ (totalAmount(order) - (order.senia || 0)).toFixed(2) }}</td>
                     </tr>
                 </tfoot>
             </table>
@@ -139,17 +139,17 @@
                 <tbody>
                     <tr>
                         <th scope="row">Reserva</th>
-                        <td colspan="5" class="text-right"><icon-app iconImage="dollar"></icon-app> {{ rental.dateFinalPayment ? 0 : (finalAmountWithDeductions - reservaAmount).toFixed(2) }}</td>
+                        <td colspan="5" class="text-right"><icon-app iconImage="dollar-sign"></icon-app> {{ rental.dateFinalPayment ? 0 : (finalAmountWithDeductions - reservaAmount).toFixed(2) }}</td>
                     </tr>
                     <tr v-for="(order, index) in rental.orders">
                         <th scope="row">Pedido {{ index + 1 }}</th>
-                        <td colspan="5" class="text-right"><icon-app iconImage="dollar"></icon-app> {{ (totalAmount(order) - (order.senia || 0)).toFixed(2) }}</td>
+                        <td colspan="5" class="text-right"><icon-app iconImage="dollar-sign"></icon-app> {{ (totalAmount(order) - (order.senia || 0)).toFixed(2) }}</td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr class="bg-danger text-white">
                         <th scope="row">Saldo</th>
-                        <td colspan="5" class="text-right"><icon-app iconImage="dollar"></icon-app> {{ finalAmountWhitDeductionsAndOrders }}</td>
+                        <td colspan="5" class="text-right"><icon-app iconImage="dollar-sign"></icon-app> {{ finalAmountWhitDeductionsAndOrders }}</td>
                     </tr>
                 </tfoot>
             </table>
@@ -171,16 +171,20 @@
                                         <div class="form-group form-row">
                                             <label for="admin-email" class="col-form-label sr-only">Email</label>
                                             <div class="input-group mr-2">
-                                                <div class="input-group-addon">
-                                                    <icon-app iconImage="at"></icon-app>
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                      <icon-app iconImage="at"></icon-app>
+                                                    </div>
                                                 </div>
                                                 <input type="text" id="admin-email" name="admin-email" class="form-control" v-model="adminEmail">
                                             </div>
                                             <div class="input-group mr-2">
-                                                <div class="input-group-addon">
-                                                    <icon-app iconImage="asterisk"></icon-app>
-                                                    <icon-app iconImage="asterisk"></icon-app>
-                                                    <icon-app iconImage="asterisk"></icon-app>
+                                                <div class="input-group-prepend">
+                                                      <div class="input-group-text">
+                                                      <icon-app iconImage="asterisk"></icon-app>
+                                                      <icon-app iconImage="asterisk"></icon-app>
+                                                      <icon-app iconImage="asterisk"></icon-app>
+                                                    </div>
                                                 </div>
                                                 <input type="password" id="admin-password" name="admin-password" class="form-control" v-model="adminPass">
                                             </div>
@@ -199,7 +203,7 @@
     </div>
     <div class="row" v-else>
         <div class="col-12 col-md-12 mb-3">
-            <button class="btn btn-secondary btn-sm pull-right" @click="changeReserva">
+            <button class="btn btn-secondary btn-sm float-right" @click="changeReserva">
                 <icon-app iconImage="refresh" :aditionalClasses="activeReload ? 'fa-spin fa-fw' : ''"></icon-app>
                 Volver a buscar reserva
             </button>
@@ -207,7 +211,7 @@
         <div class="col-12 col-md-12">
             <div class="text-center">
                 <span class="fa-stack fa-lg fa-5x text-success">
-                  <i class="fa fa-circle-o fa-stack-2x"></i>
+                  <i class="far fa-circle fa-stack-2x"></i>
                   <i class="fa fa-check fa-stack-1x"></i>
                 </span>
                 <h2 class="h2">La liquidación se realizó correctamente. <br> ¡Muchas gracias por elegirnos!</h2>

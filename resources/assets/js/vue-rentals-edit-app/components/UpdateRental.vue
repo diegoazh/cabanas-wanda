@@ -90,7 +90,7 @@
                             <div role="tabpanel" class="tab-pane pt-3" id="cancelar">
                                 <div class="text-center">
                                     <div class="alert alert-danger">
-                                        <p>Tenga en cuenta que si cancela la reserva con <b>menos de 48 hs</b> perderá compeltamente la seña.</p>
+                                        <p>Tenga en cuenta que si cancela la reserva con <b>menos de 48 hs</b> perderá completamente la seña.</p>
                                     </div>
                                     <button class="btn btn-lg btn-danger" data-toggle="modal" data-target="#rental-cancel">
                                         <icon-app iconImage="times-circle"></icon-app> Cancelar

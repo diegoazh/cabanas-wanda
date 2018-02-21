@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administration;
 
 use App\Promotion;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -48,11 +49,17 @@ class PromotionsController extends Controller
     public function store(Request $request)
     {
         $info = $request->all();
+        
+        $info['startDate'] = Carbon::createFromFormat('d/m/Y', $info['startDate']);
+        $info['endDate'] = Carbon::createFromFormat('d/m/Y', $info['endDate']);
+
         $promotion = Promotion::create($info);
 
-        flash('La promoción se creó correctamente')->success();
+        $message = 'La promoción se creó correctamente';
 
-        return response()->json(['message' => $info]);
+        flash("<h3 class=\"text-center\"><i class=\"fas fa-information-circle\" aria-hidden=\"true\"></i> $message</h3>")->success();
+
+        return response()->json(['message' => $message]);
     }
 
     /**

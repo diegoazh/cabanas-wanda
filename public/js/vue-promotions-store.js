@@ -2141,6 +2141,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -2186,11 +2193,10 @@ exports.default = {
             amount: null,
             dateFrom: null,
             dateTo: null,
-            hasErrors: true,
             config: {
                 locale: 'es',
                 format: 'DD/MM/YYYY',
-                minDate: new Date()
+                minDate: new Date(moment().year(), moment().month(), moment().date(), 0, 0, 0, 0)
             }
         };
     },
@@ -2201,8 +2207,21 @@ exports.default = {
             var dateTo = this.dateTo ? moment(this.dateTo, 'DD/MM/YYYY') : null;
 
             if (dateFrom && dateTo) {
-                return this.hasErrors = dateFrom.isAfter(dateTo);
+                return dateFrom.isAfter(dateTo);
+            } else {
+                return true;
             }
+        },
+        positiveNumber: function positiveNumber() {
+            if (+this.percent < 0) {
+                this.percent = -+this.percent;
+            }
+            if (+this.amount < 0) {
+                this.amount = -+this.amount;
+            }
+        },
+        hasErrors: function hasErrors() {
+            return !this.name || !this.terms || !this.percent && !this.amount || this.invalidDate;
         }
     },
     methods: _extends({
@@ -16151,21 +16170,6 @@ exports.push([module.i, "\n.markdown-editor .markdown-body {\n  padding: 0.5em\n
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7c46cef4\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=1!./resources/assets/js/vue-promotions-store-app/components/PromotionsStore.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n#content{\n    margin-top: 5rem;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7c46cef4\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-promotions-store-app/components/PromotionsStore.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16176,7 +16180,7 @@ exports.i(__webpack_require__("./node_modules/css-loader/index.js!./node_modules
 exports.i(__webpack_require__("./node_modules/css-loader/index.js!./node_modules/github-markdown-css/github-markdown.css"), "");
 
 // module
-exports.push([module.i, "\n", ""]);
+exports.push([module.i, "\n#descProm[data-v-7c46cef4] {\n  overflow-y: scroll !important;\n}\n", ""]);
 
 // exports
 
@@ -56805,12 +56809,29 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
+                _c("div", { staticClass: "col-12" }, [
+                  _c("div", { staticClass: "alert alert-info text-center" }, [
+                    _c(
+                      "small",
+                      [
+                        _c("icon-app", {
+                          attrs: { "icon-image": "info-circle" }
+                        }),
+                        _vm._v(
+                          " Recuerde que toda promoción debe cumplir con las exigencias de las leyes civil, comercial y de defensa del consumidor de la Republica Argentina. Si no está seguro por favor consulte con abogado antes de poner en vigencia una promoción.\n                            "
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "col-12 text-center" }, [
                   _c(
                     "button",
                     {
                       staticClass: "btn btn-outline-success",
-                      attrs: { type: "submit", disabled: "hasErrors" }
+                      attrs: { type: "submit", disabled: _vm.hasErrors }
                     },
                     [
                       _vm._v("Crear "),
@@ -57275,33 +57296,6 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3c40460f\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0!./markdown-editor.vue", function() {
      var newContent = require("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3c40460f\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0!./markdown-editor.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7c46cef4\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=1!./resources/assets/js/vue-promotions-store-app/components/PromotionsStore.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7c46cef4\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=1!./resources/assets/js/vue-promotions-store-app/components/PromotionsStore.vue");
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("63eed31f", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7c46cef4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./PromotionsStore.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7c46cef4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./PromotionsStore.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -71518,7 +71512,6 @@ var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7c46cef4\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-promotions-store-app/components/PromotionsStore.vue")
-  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7c46cef4\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=1!./resources/assets/js/vue-promotions-store-app/components/PromotionsStore.vue")
 }
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */

@@ -38576,18 +38576,20 @@ var render = function() {
               _vm._v(" "),
               _vm.forCode
                 ? _c("div", { staticClass: "input-group mr-2" }, [
-                    _c(
-                      "div",
-                      { staticClass: "input-group-addon" },
-                      [
-                        _c("icon-app", {
-                          attrs: {
-                            iconImage: _vm.forCode ? "barcode" : "hashtag"
-                          }
-                        })
-                      ],
-                      1
-                    ),
+                    _c("div", { staticClass: "input-group-prepend" }, [
+                      _c(
+                        "div",
+                        { staticClass: "input-group-text" },
+                        [
+                          _c("icon-app", {
+                            attrs: {
+                              iconImage: _vm.forCode ? "barcode" : "hashtag"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -38624,18 +38626,20 @@ var render = function() {
               _vm._v(" "),
               !_vm.forCode
                 ? _c("div", { staticClass: "input-group mr-2" }, [
-                    _c(
-                      "div",
-                      { staticClass: "input-group-addon" },
-                      [
-                        _c("icon-app", {
-                          attrs: {
-                            iconImage: _vm.forCode ? "barcode" : "hashtag"
-                          }
-                        })
-                      ],
-                      1
-                    ),
+                    _c("div", { staticClass: "input-group-prepend" }, [
+                      _c(
+                        "div",
+                        { staticClass: "input-group-text" },
+                        [
+                          _c("icon-app", {
+                            attrs: {
+                              iconImage: _vm.forCode ? "barcode" : "hashtag"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -38672,12 +38676,14 @@ var render = function() {
               _vm._v(" "),
               !_vm.forCode
                 ? _c("div", { staticClass: "input-group mr-2" }, [
-                    _c(
-                      "div",
-                      { staticClass: "input-group-addon" },
-                      [_c("icon-app", { attrs: { iconImage: "at" } })],
-                      1
-                    ),
+                    _c("div", { staticClass: "input-group-prepend" }, [
+                      _c(
+                        "div",
+                        { staticClass: "input-group-text" },
+                        [_c("icon-app", { attrs: { iconImage: "at" } })],
+                        1
+                      )
+                    ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [

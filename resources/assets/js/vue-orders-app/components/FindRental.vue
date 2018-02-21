@@ -5,7 +5,7 @@
         </div>
         <div class="col-12 col-md-8 offset-md-2">
             <div class="text-center">
-                <p id="p-for-code" class="text-center"><span :class="{'text-deleted': forCode, 'text-muted': forCode, 'text-primary': !forCode}">DNI + email</span> <a @click="toggleIcon" role="button"><icon-app iconId="on-off-code" :iconImage="toggleIconCode" aditionalClasses="text-muted"></icon-app></a> <span :class="{'text-deleted': !forCode, 'text-muted': !forCode, 'text-primary': forCode}">Código de reserva</span></p>
+                <p id="p-for-code" class="text-center"><span :class="{'text-deleted': forCode, 'text-muted': forCode, 'text-primary': !forCode}">DNI + email</span> <a @click="toggleIcon" role="button"><icon-app iconId="on-off-code" :iconImage="toggleIconCode" aditionalClasses="text-muted"></icon-app></a> <span :class="{'text-deleted': !forCode, 'text-muted': !forCode, 'text-primary': forCode}">Código de reserva</span></p> <!-- TODO(Diego) Cambiar esto a btnSwitch. -->
             </div>
             <form @submit.prevent="sendFindParameters" class="form-inline">
                 <fieldset>
@@ -13,17 +13,17 @@
                     <div class="form-group form-row">
                         <label :for="forCode ? 'codigo-reserva' : 'dni-reseva'" class="col-form-label sr-only">Código de reserva</label>
                         <div class="input-group mr-2" v-if="forCode">
-                            <div class="input-group-addon"><icon-app :iconImage="forCode ? 'barcode' : 'hashtag'"></icon-app></div>
+                            <div class="input-group-prepend"><div class="input-group-text"><icon-app :iconImage="forCode ? 'barcode' : 'hashtag'"></icon-app></div></div>
                             <input type="text" class="form-control" id="codigo-reserva" v-model="reserva">
                         </div>
                         <label :for="forCode ? 'codigo-reserva' : 'dni-reseva'" class="col-form-label sr-only">Código de reserva</label>
                         <div class="input-group mr-2" v-if="!forCode">
-                            <div class="input-group-addon"><icon-app :iconImage="forCode ? 'barcode' : 'hashtag'"></icon-app></div>
+                            <div class="input-group-prepend"><div class="input-group-text"><icon-app :iconImage="forCode ? 'barcode' : 'hashtag'"></icon-app></div></div>
                             <input type="number" class="form-control" id="dni-reseva" v-model="dni">
                         </div>
                         <label for="emal-reserva" class="col-form-label sr-only">Email</label>
                         <div class="input-group mr-2" v-if="!forCode">
-                            <div class="input-group-addon"><icon-app iconImage="at"></icon-app></div>
+                            <div class="input-group-prepend"><div class="input-group-text"><icon-app iconImage="at"></icon-app></div></div>
                             <input type="email" class="form-control" id="emal-reserva" v-model="email">
                         </div>
                         <button class="btn btn-outline-primary pull-right"><icon-app :iconImage="toggleBtnIcon" :aditionalClasses="toggleBtnClasses"></icon-app> Buscar</button>

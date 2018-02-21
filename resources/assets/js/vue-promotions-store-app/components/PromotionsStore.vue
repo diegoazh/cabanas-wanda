@@ -148,8 +148,15 @@
                                     </fieldset>
                                 </div>
                             </div>
+                            <div class="col-12">
+                              <div class="alert alert-info text-center">
+                                <small>
+                                  <icon-app icon-image="info-circle"></icon-app> Recuerde que toda promoción debe cumplir con las exigencias de las leyes civil, comercial y de defensa del consumidor de la Republica Argentina. Si no está seguro por favor consulte con abogado antes de poner en vigencia una promoción.
+                                </small>
+                              </div>
+                            </div>
                             <div class="col-12 text-center">
-                                <button type="submit" class="btn btn-outline-success" disabled="hasErrors">Crear <icon-app icon-image="gift"></icon-app></button>
+                                <button type="submit" class="btn btn-outline-success" :disabled="hasErrors">Crear <icon-app icon-image="gift"></icon-app></button>
                                 <button type="reset" class="btn btn-outline-warning">Limpiar</button>
                             </div>
                         </form>
@@ -188,23 +195,35 @@
                 amount: null,
                 dateFrom: null,
                 dateTo: null,
-                hasErrors: true,
                 config: {
                     locale: 'es',
                     format: 'DD/MM/YYYY',
-                    minDate: new Date()
+                    minDate: new Date(moment().year(), moment().month(), moment().date(), 0, 0, 0, 0)
                 }
             }
         },
         computed: {
-          invalidDate() {
+          invalidDate () {
               let dateFrom = this.dateFrom ? moment(this.dateFrom, 'DD/MM/YYYY') : null;
               let dateTo = this.dateTo ? moment(this.dateTo, 'DD/MM/YYYY') : null;
 
               if (dateFrom && dateTo) {
-                  return this.hasErrors = dateFrom.isAfter(dateTo);
+                  return dateFrom.isAfter(dateTo);
+              } else {
+                return true;
               }
           },
+          positiveNumber () {
+            if (+this.percent < 0) {
+              this.percent = -(+this.percent);
+            }
+            if (+this.amount < 0) {
+              this.amount = -(+this.amount);
+            }
+          },
+          hasErrors () {
+            return !this.name || !this.terms || (!this.percent && !this.amount) || this.invalidDate
+          }
         },
         methods: {
             sendNewPromotion() {
@@ -243,9 +262,8 @@
     @import '~eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
     @import '~simplemde/dist/simplemde.min.css';
     @import '~github-markdown-css';
-</style>
-<style>
-    #content{
-        margin-top: 5rem;
+
+    #descProm {
+      overflow-y: scroll !important;
     }
 </style>
