@@ -2014,6 +2014,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -2279,14 +2289,18 @@ exports.default = {
             this.pagination(this.trashPage[tabName]);
             this.trashPage.choice = tabName;
         },
-        defineConfDateTimePiker: function defineConfDateTimePiker(rental, food) {
-            var min = (0, _moment2.default)((0, _moment2.default)(rental.dateFrom + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY');
+        defConfDtp: function defConfDtp(rental, food) {
+            var min = (0, _moment2.default)(rental.dateFrom + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss');
             return {
                 locale: 'es',
                 format: 'DD/MM/YYYY',
-                minDate: min.isBefore(_moment2.default.now()) ? (0, _moment2.default)((0, _moment2.default)().add(3, 'h').format('DD/MM/YYYY'), 'DD/MM/YYYY') : min,
-                maxDate: food.type === 'desayuno' ? (0, _moment2.default)((0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY') : (0, _moment2.default)((0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').subtract(1, 'd').format('DD/MM/YYYY'), 'DD/MM/YYYY')
+                minDate: min.isBefore(_moment2.default.now()) ? (0, _moment2.default)().add(3, 'h') : min,
+                maxDate: food.type === 'desayuno' ? (0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss') : (0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').subtract(1, 'd')
             };
+        },
+        notAvailableOrder: function notAvailableOrder(number) {
+            var max = (0, _moment2.default)(this.rental.dateTo + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss');
+            return number === 1 ? (0, _moment2.default)().isAfter(max) : (0, _moment2.default)().isAfter(max.subtract(1, 'd'));
         },
         fireReplacesInShowDp: function fireReplacesInShowDp(id) {
             window.jQuery('.table-condensed').removeClass('table-condensed').addClass('table-sm');
@@ -2483,7 +2497,7 @@ exports.default = {
             return final;
         },
         toggleIcon: function toggleIcon() {
-            return this.queryFinished ? 'handshake-o' : 'spinner';
+            return this.queryFinished ? 'handshake' : 'spinner';
         },
         addAditionalClasses: function addAditionalClasses() {
             return this.queryFinished ? '' : 'fa-spin fa-fw';
@@ -38816,13 +38830,13 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "btn btn-light text-dark btn-sm pull-right mt-1 mr-1",
+          staticClass: "btn btn-info btn-sm float-right mt-1 mr-1",
           on: { click: _vm.changeReserva }
         },
         [
           _c("icon-app", {
             attrs: {
-              iconImage: "refresh",
+              iconImage: "sync",
               aditionalClasses: _vm.activeReload ? "fa-spin fa-fw" : ""
             }
           }),
@@ -38877,8 +38891,8 @@ var render = function() {
       _c("hr"),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-3 pull-right" }, [
-          _c("caption", { staticClass: "text-right" }, [
+        _c("div", { staticClass: "col-12" }, [
+          _c("caption", { staticClass: "text-right float-right" }, [
             _c(
               "a",
               {
@@ -38920,7 +38934,7 @@ var render = function() {
             "span",
             { staticClass: "badge badge-warning img-circle" },
             [
-              _c("icon-app", { attrs: { iconImage: "dollar" } }),
+              _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
               _vm._v(" " + _vm._s(_vm.totalAmount))
             ],
             1
@@ -39047,239 +39061,295 @@ var render = function() {
                 attrs: { role: "tabpanel", id: "tab" + number }
               },
               [
-                _c("table", { staticClass: "table table-striped" }, [
-                  _vm._m(0, true),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.elementsPerPage(number), function(food, index) {
-                      return _c("tr", [
-                        _c("td", [
-                          _c(
-                            "p",
-                            [
-                              _c("icon-app", {
-                                attrs: {
-                                  iconImage: food.checked
-                                    ? "check-square-o"
-                                    : "square-o",
-                                  aditionalClasses: food.checked
-                                    ? "text-primary"
-                                    : "text-default"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(food.name))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
-                              "div",
-                              { staticClass: "input-group" },
-                              [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "input-group-addon date-piker"
-                                  },
-                                  [
-                                    _c("icon-app", {
-                                      attrs: { iconImage: "calendar" }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c("date-picker", {
-                                  attrs: {
-                                    placeholder: "Seleccione la fecha...",
-                                    config: _vm.defineConfDateTimePiker(
-                                      _vm.rental,
-                                      food
-                                    ),
-                                    id: "delivery" + index,
-                                    name: "delivery" + index
-                                  },
-                                  on: {
-                                    "dp-show": function($event) {
-                                      _vm.fireReplacesInShowDp(
-                                        "#delivery" + index
-                                      )
-                                    }
-                                  },
-                                  model: {
-                                    value: food.delivery,
-                                    callback: function($$v) {
-                                      _vm.$set(food, "delivery", $$v)
-                                    },
-                                    expression: "food.delivery"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          [
-                            _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(food.price) +
-                                "\n                        "
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("div", { staticClass: "input-group" }, [
-                              _c(
-                                "div",
-                                { staticClass: "input-group-addon date-piker" },
-                                [
-                                  _c("icon-app", {
-                                    attrs: { iconImage: "hashtag" }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: food.quantity,
-                                    expression: "food.quantity"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "number",
-                                  id: "cantidad" + index,
-                                  name: "cantidad" + index,
-                                  placeholder: "Seleccione la cantidad..."
-                                },
-                                domProps: { value: food.quantity },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      food,
-                                      "quantity",
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              })
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "text-right" }, [
-                          _c(
-                            "button",
-                            {
-                              class: [
-                                "btn",
-                                {
-                                  "btn-success": !food.checked,
-                                  "btn-danger": food.checked
-                                }
-                              ],
-                              on: {
-                                click: function($event) {
-                                  _vm.toggelAddRemoveFood(food)
-                                }
-                              }
-                            },
-                            [
-                              _c("icon-app", {
-                                attrs: {
-                                  iconImage: food.checked ? "minus" : "plus"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ])
-                      ])
-                    })
-                  ),
-                  _vm._v(" "),
-                  _c("tfoot", [
-                    _c("tr", [
+                _vm.notAvailableOrder(number)
+                  ? [
                       _c(
-                        "td",
-                        { staticClass: "text-center", attrs: { colspan: "6" } },
+                        "div",
+                        { staticClass: "alert alert-info text-center" },
                         [
                           _c(
                             "h3",
-                            { staticClass: "text-right" },
+                            { staticClass: "text-center" },
                             [
                               _c("icon-app", {
-                                attrs: { iconImage: "shopping-basket" }
+                                attrs: { iconImage: "info-circle" }
                               }),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                { staticClass: "badge badge-info img-circle" },
-                                [_vm._v(_vm._s(_vm.totalQuantity))]
-                              ),
-                              _vm._v(" "),
-                              _c("icon-app", { attrs: { iconImage: "money" } }),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  staticClass: "badge badge-warning img-circle"
-                                },
-                                [
-                                  _c("icon-app", {
-                                    attrs: { iconImage: "dollar" }
-                                  }),
-                                  _vm._v(" " + _vm._s(_vm.totalAmount))
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "row justify-content-center" },
-                            [
-                              _c("pagination", {
-                                attrs: {
-                                  for: "orders",
-                                  records: _vm.quantityForType(number),
-                                  "per-page": _vm.itemsPerPage,
-                                  chunk: 7,
-                                  vuex: true,
-                                  "count-text":
-                                    "Mostrando {from} a {to} de {count} items|{count} items|Un item"
-                                }
-                              })
+                              _vm._v(" No es posible realizar este pedido.")
                             ],
                             1
                           )
                         ]
                       )
-                    ])
-                  ])
-                ])
-              ]
+                    ]
+                  : [
+                      _c("table", { staticClass: "table table-striped" }, [
+                        _vm._m(0, true),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.elementsPerPage(number), function(
+                            food,
+                            index
+                          ) {
+                            return _c("tr", [
+                              _c("td", [
+                                _c(
+                                  "p",
+                                  [
+                                    _c("icon-app", {
+                                      attrs: {
+                                        "type-icon": "r",
+                                        iconImage: food.checked
+                                          ? "check-square"
+                                          : "square",
+                                        aditionalClasses: food.checked
+                                          ? "text-primary"
+                                          : "text-default"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(food.name))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "div",
+                                    { staticClass: "input-group" },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "input-group-prepend date-piker"
+                                        },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "input-group-text" },
+                                            [
+                                              _c("icon-app", {
+                                                attrs: { iconImage: "calendar" }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("date-picker", {
+                                        attrs: {
+                                          placeholder: "Seleccione la fecha...",
+                                          config: _vm.defConfDtp(
+                                            _vm.rental,
+                                            food
+                                          ),
+                                          id: "delivery" + index,
+                                          name: "delivery" + index
+                                        },
+                                        on: {
+                                          "dp-show": function($event) {
+                                            _vm.fireReplacesInShowDp(
+                                              "#delivery" + index
+                                            )
+                                          }
+                                        },
+                                        model: {
+                                          value: food.delivery,
+                                          callback: function($$v) {
+                                            _vm.$set(food, "delivery", $$v)
+                                          },
+                                          expression: "food.delivery"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                [
+                                  _c("icon-app", {
+                                    attrs: { iconImage: "dollar-sign" }
+                                  }),
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(food.price) +
+                                      "\n                        "
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("div", { staticClass: "input-group" }, [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "input-group-prepend date-piker"
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          { staticClass: "input-group-text" },
+                                          [
+                                            _c("icon-app", {
+                                              attrs: { iconImage: "hashtag" }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: food.quantity,
+                                          expression: "food.quantity"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "number",
+                                        id: "cantidad" + index,
+                                        name: "cantidad" + index,
+                                        placeholder: "Seleccione la cantidad..."
+                                      },
+                                      domProps: { value: food.quantity },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            food,
+                                            "quantity",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-right" }, [
+                                _c(
+                                  "button",
+                                  {
+                                    class: [
+                                      "btn",
+                                      {
+                                        "btn-success": !food.checked,
+                                        "btn-danger": food.checked
+                                      }
+                                    ],
+                                    on: {
+                                      click: function($event) {
+                                        _vm.toggelAddRemoveFood(food)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("icon-app", {
+                                      attrs: {
+                                        iconImage: food.checked
+                                          ? "minus"
+                                          : "plus"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ])
+                            ])
+                          })
+                        ),
+                        _vm._v(" "),
+                        _c("tfoot", [
+                          _c("tr", [
+                            _c(
+                              "td",
+                              {
+                                staticClass: "text-center",
+                                attrs: { colspan: "6" }
+                              },
+                              [
+                                _c(
+                                  "h3",
+                                  { staticClass: "text-right" },
+                                  [
+                                    _c("icon-app", {
+                                      attrs: { iconImage: "shopping-basket" }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-info img-circle"
+                                      },
+                                      [_vm._v(_vm._s(_vm.totalQuantity))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("icon-app", {
+                                      attrs: { iconImage: "money" }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-warning img-circle"
+                                      },
+                                      [
+                                        _c("icon-app", {
+                                          attrs: { iconImage: "dollar-sign" }
+                                        }),
+                                        _vm._v(" " + _vm._s(_vm.totalAmount))
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "row justify-content-center" },
+                                  [
+                                    _c("pagination", {
+                                      attrs: {
+                                        for: "orders",
+                                        records: _vm.quantityForType(number),
+                                        "per-page": _vm.itemsPerPage,
+                                        chunk: 7,
+                                        vuex: true,
+                                        "count-text":
+                                          "Mostrando {from} a {to} de {count} items|{count} items|Un item"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                            )
+                          ])
+                        ])
+                      ])
+                    ]
+              ],
+              2
             )
           })
         ),
@@ -39292,7 +39362,7 @@ var render = function() {
               on: { click: _vm.btnCloseOrder }
             },
             [
-              _c("icon-app", { attrs: { iconImage: "handshake-o" } }),
+              _c("icon-app", { attrs: { iconImage: "handshake" } }),
               _vm._v("\n                Cerrar pedido\n            ")
             ],
             1
@@ -39422,7 +39492,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "btn btn-outline-info btn-sm pull-right my-3",
+          staticClass: "btn btn-outline-info btn-sm float-right my-3",
           on: { click: _vm.backToItems }
         },
         [
@@ -39452,7 +39522,7 @@ var render = function() {
             _c(
               "th",
               [
-                _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                 _vm._v("/unidad")
               ],
               1
@@ -39461,7 +39531,7 @@ var render = function() {
             _c(
               "th",
               [
-                _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                 _vm._v(" total por plato")
               ],
               1
@@ -39484,7 +39554,7 @@ var render = function() {
               _c(
                 "td",
                 [
-                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                  _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                   _vm._v(" " + _vm._s(order.price))
                 ],
                 1
@@ -39493,7 +39563,7 @@ var render = function() {
               _c(
                 "td",
                 [
-                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                  _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                   _vm._v(" " + _vm._s(order.price * order.quantity))
                 ],
                 1
@@ -39515,7 +39585,7 @@ var render = function() {
             _c(
               "td",
               [
-                _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                 _vm._v(" " + _vm._s(_vm.totalAmount))
               ],
               1

@@ -21711,11 +21711,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12 col-md-12 page-header" }, [
-        _c(
-          "h1",
-          { staticClass: "text-center rounded bg-dark text-light py-2" },
-          [_vm._v("Liquidación final")]
-        ),
+        _c("h1", { staticClass: "text-center" }, [_vm._v("Liquidación final")]),
         _vm._v(" "),
         _c("p", { staticClass: "text-center" }, [
           _vm._v("Puedes ver todos los consumos de tu estadía")

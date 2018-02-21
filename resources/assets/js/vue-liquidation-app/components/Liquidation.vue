@@ -2,7 +2,7 @@
     <div id="liquidation-component" class="container jumbotron">
         <div class="row">
             <div class="col-12 col-md-12 page-header">
-                <h1 class="text-center rounded bg-dark text-light py-2">Liquidación final</h1>
+                <h1 class="text-center">Liquidación final</h1>
                 <p class="text-center">Puedes ver todos los consumos de tu estadía</p>
             </div>
         </div>
