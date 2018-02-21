@@ -39,7 +39,6 @@
   font-family: Raleway, sans-serif;
 }
 body .container-backend #content {
-  padding-top: 10rem;
   min-height: 45.4rem;
 }
 body .container-backend #content #main_content .card .selectize-input {

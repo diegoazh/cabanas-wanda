@@ -47245,9 +47245,7 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("div", { staticClass: "input-group" }, [
-                _c("div", { staticClass: "input-group-addon" }, [
-                  _vm._v("Nombre")
-                ]),
+                _vm._m(1),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -47278,7 +47276,7 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(1),
+            _vm._m(2),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("label", { staticClass: "sr-only", attrs: { for: "price" } }, [
@@ -47286,9 +47284,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "input-group" }, [
-                _c("div", { staticClass: "input-group-addon" }, [
-                  _vm._v("Precio")
-                ]),
+                _vm._m(3),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -47434,19 +47430,41 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Nombre")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group" }, [
       _c("label", { staticClass: "sr-only", attrs: { for: "type" } }, [
         _vm._v("Tipo:")
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "input-group" }, [
-        _c("div", { staticClass: "input-group-addon" }, [_vm._v("Tipo")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", id: "type", name: "type" }
-        })
-      ])
+      _c(
+        "div",
+        { staticClass: "input-group", staticStyle: { height: "38px" } },
+        [
+          _c("div", { staticClass: "input-group-prepend" }, [
+            _c("div", { staticClass: "input-group-text" }, [_vm._v("Tipo")])
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", id: "type", name: "type" }
+          })
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Precio")])
     ])
   }
 ]

@@ -1,4 +1,5 @@
 <template>
+  <div class="container-fluid">
     <div class="card" id="form-promotion">
         <div class="card-header bg-dark text-light">
             <h1><icon-app icon-image="gift"></icon-app> Alta de promociones</h1>
@@ -30,12 +31,12 @@
                                 <div class="tab-pane fade show active" id="pills-desc" role="tabpanel" aria-labelledby="pills-desc-tab">
                                     <fieldset>
                                         <legend class="text-muted">Datos descriptivos</legend>
-                                        <div class="form-label-group">
+                                        <div class="form-group">
+                                            <label for="namePromotion" class="sr-only">Nombre de la promoción</label>
                                             <input type="text" id="namePromotion" class="form-control" placeholder="Nombre de la promoción" v-model="name">
-                                            <label for="namePromotion">Nombre de la promoción</label>
                                         </div>
                                         <div class="form-group">
-                                            <label for="descProm">Descripción</label>
+                                            <label for="descProm" class="sr-only">Descripción</label>
                                             <markdown-editor
                                                     id="descProm"
                                                     v-model="description"
@@ -165,6 +166,7 @@
             </div>
         </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -259,11 +261,11 @@
 </script>
 
 <style scoped>
-    @import '~eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
-    @import '~simplemde/dist/simplemde.min.css';
-    @import '~github-markdown-css';
+  @import '~eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
+  @import '~simplemde/dist/simplemde.min.css';
+  @import '~github-markdown-css';
 
-    #descProm {
-      overflow-y: scroll !important;
-    }
+  .CodeMirror, .CodeMirror-scroll {
+    height: 400px;
+  }
 </style>

@@ -2148,6 +2148,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -16180,7 +16182,7 @@ exports.i(__webpack_require__("./node_modules/css-loader/index.js!./node_modules
 exports.i(__webpack_require__("./node_modules/css-loader/index.js!./node_modules/github-markdown-css/github-markdown.css"), "");
 
 // module
-exports.push([module.i, "\n#descProm[data-v-7c46cef4] {\n  overflow-y: scroll !important;\n}\n", ""]);
+exports.push([module.i, "\n.CodeMirror[data-v-7c46cef4], .CodeMirror-scroll[data-v-7c46cef4] {\n  height: 400px;\n}\n", ""]);
 
 // exports
 
@@ -56240,617 +56242,636 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card", attrs: { id: "form-promotion" } }, [
-    _c("div", { staticClass: "card-header bg-dark text-light" }, [
-      _c(
-        "h1",
-        [
-          _c("icon-app", { attrs: { "icon-image": "gift" } }),
-          _vm._v(" Alta de promociones")
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12 col-md-9" }, [
-            _c(
-              "form",
-              {
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    _vm.sendNewPromotion($event)
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c("div", { staticClass: "card", attrs: { id: "form-promotion" } }, [
+      _c("div", { staticClass: "card-header bg-dark text-light" }, [
+        _c(
+          "h1",
+          [
+            _c("icon-app", { attrs: { "icon-image": "gift" } }),
+            _vm._v(" Alta de promociones")
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-12 col-md-9" }, [
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.sendNewPromotion($event)
+                    }
                   }
-                }
-              },
-              [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("hr"),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "tab-content",
-                    attrs: { id: "pills-tabContent" }
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "tab-pane fade show active",
-                        attrs: {
-                          id: "pills-desc",
-                          role: "tabpanel",
-                          "aria-labelledby": "pills-desc-tab"
-                        }
-                      },
-                      [
-                        _c("fieldset", [
-                          _c("legend", { staticClass: "text-muted" }, [
-                            _vm._v("Datos descriptivos")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-label-group" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.name,
-                                  expression: "name"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                id: "namePromotion",
-                                placeholder: "Nombre de la promoción"
-                              },
-                              domProps: { value: _vm.name },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.name = $event.target.value
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("label", { attrs: { for: "namePromotion" } }, [
-                              _vm._v("Nombre de la promoción")
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "form-group" },
-                            [
-                              _c("label", { attrs: { for: "descProm" } }, [
-                                _vm._v("Descripción")
-                              ]),
-                              _vm._v(" "),
-                              _c("markdown-editor", {
-                                ref: "markdownEditor",
-                                attrs: {
-                                  id: "descProm",
-                                  "preview-class": "markdown-body"
-                                },
-                                model: {
-                                  value: _vm.description,
-                                  callback: function($$v) {
-                                    _vm.description = $$v
-                                  },
-                                  expression: "description"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "tab-pane fade",
-                        attrs: {
-                          id: "pills-type",
-                          role: "tabpanel",
-                          "aria-labelledby": "pills-type-tab"
-                        }
-                      },
-                      [
-                        _c(
-                          "fieldset",
-                          [
+                },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-content",
+                      attrs: { id: "pills-tabContent" }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "tab-pane fade show active",
+                          attrs: {
+                            id: "pills-desc",
+                            role: "tabpanel",
+                            "aria-labelledby": "pills-desc-tab"
+                          }
+                        },
+                        [
+                          _c("fieldset", [
                             _c("legend", { staticClass: "text-muted" }, [
-                              _vm._v("Tipo de promoción")
+                              _vm._v("Datos descriptivos")
                             ]),
                             _vm._v(" "),
-                            _c("btn-switch-app", {
-                              attrs: {
-                                "init-left": _vm.isLeft,
-                                "text-left": "Porcentaje",
-                                "text-right": "Monto fijo",
-                                "icon-left": "porcent",
-                                "icon-right": "dollar"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "transition",
-                              {
-                                attrs: {
-                                  name: "inputs-type-transition",
-                                  "enter-active-class": "animated bounceInUp",
-                                  "leave-active-class": "animated bounceOutUp"
-                                }
-                              },
-                              [
-                                _vm.isLeft
-                                  ? _c(
-                                      "div",
-                                      {
-                                        key: "percentaje",
-                                        staticClass: "form-label-group"
-                                      },
-                                      [
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.percent,
-                                              expression: "percent"
-                                            }
-                                          ],
-                                          staticClass: "form-control",
-                                          attrs: {
-                                            type: "number",
-                                            id: "porcentPromotion",
-                                            placeholder:
-                                              "Porcentaje de promoción",
-                                            min: "1",
-                                            max: "100",
-                                            step: "0.01",
-                                            pattern: "^[0-9]+"
-                                          },
-                                          domProps: { value: _vm.percent },
-                                          on: {
-                                            input: function($event) {
-                                              if ($event.target.composing) {
-                                                return
-                                              }
-                                              _vm.percent = $event.target.value
-                                            }
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "label",
-                                          {
-                                            attrs: { for: "porcentPromotion" }
-                                          },
-                                          [_vm._v("Porcentaje de promoción")]
-                                        )
-                                      ]
-                                    )
-                                  : _c(
-                                      "div",
-                                      {
-                                        key: "amount",
-                                        staticClass: "form-label-group"
-                                      },
-                                      [
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.amount,
-                                              expression: "amount"
-                                            }
-                                          ],
-                                          staticClass: "form-control",
-                                          attrs: {
-                                            type: "number",
-                                            id: "montoPromotion",
-                                            placeholder:
-                                              "Monto fijo de promoción",
-                                            min: "1",
-                                            step: "0.01",
-                                            pattern: "^[0-9]+"
-                                          },
-                                          domProps: { value: _vm.amount },
-                                          on: {
-                                            input: function($event) {
-                                              if ($event.target.composing) {
-                                                return
-                                              }
-                                              _vm.amount = $event.target.value
-                                            }
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "label",
-                                          { attrs: { for: "montoPromotion" } },
-                                          [_vm._v("Monto fijo de promoción")]
-                                        )
-                                      ]
-                                    )
-                              ]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "tab-pane fade",
-                        attrs: {
-                          id: "pills-vigencia",
-                          role: "tabpanel",
-                          "aria-labelledby": "pills-vigencia-tab"
-                        }
-                      },
-                      [
-                        _c("fieldset", [
-                          _c("legend", { staticClass: "text-muted" }, [
-                            _vm._v("Vigencia")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-6" }, [
-                              _c("div", { staticClass: "form-group" }, [
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "sr-only",
-                                    attrs: { for: "dateFrom" }
-                                  },
-                                  [_vm._v("Desde")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "input-group" },
-                                  [
-                                    _vm._m(1),
-                                    _vm._v(" "),
-                                    _c("date-picker", {
-                                      attrs: {
-                                        id: "dateFrom",
-                                        config: _vm.config,
-                                        placeholder:
-                                          "Ingrese la fecha de inicio"
-                                      },
-                                      model: {
-                                        value: _vm.dateFrom,
-                                        callback: function($$v) {
-                                          _vm.dateFrom = $$v
-                                        },
-                                        expression: "dateFrom"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-6" }, [
-                              _c("div", { staticClass: "form-group" }, [
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "sr-only",
-                                    attrs: { for: "dateTo" }
-                                  },
-                                  [_vm._v("Hasta")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "input-group" },
-                                  [
-                                    _vm._m(2),
-                                    _vm._v(" "),
-                                    _c("date-picker", {
-                                      attrs: {
-                                        id: "dateTo",
-                                        config: _vm.config,
-                                        placeholder:
-                                          "Ingrese la fecha de finalización"
-                                      },
-                                      model: {
-                                        value: _vm.dateTo,
-                                        callback: function($$v) {
-                                          _vm.dateTo = $$v
-                                        },
-                                        expression: "dateTo"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "row" }, [
-                            _c(
-                              "div",
-                              { staticClass: "col-12 justify-content-center" },
-                              [
-                                _c(
-                                  "transition",
-                                  {
-                                    attrs: {
-                                      name: "invalid-promotion-date",
-                                      "enter-active-class":
-                                        "animated rubberBand",
-                                      "leave-active-class":
-                                        "animated bounceOutRight"
-                                    }
-                                  },
-                                  [
-                                    _vm.invalidDate
-                                      ? _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "alert alert-warning text-center"
-                                          },
-                                          [
-                                            _c(
-                                              "small",
-                                              [
-                                                _c("icon-app", {
-                                                  attrs: {
-                                                    "icon-image":
-                                                      "exclamation-triangle"
-                                                  }
-                                                }),
-                                                _vm._v(" La fecha "),
-                                                _c("i", [_vm._v('"desde"')]),
-                                                _vm._v(
-                                                  " o de inicio no puede ser menor a la fecha "
-                                                ),
-                                                _c("i", [_vm._v('"hasta"')]),
-                                                _vm._v(" o de finalización.")
-                                              ],
-                                              1
-                                            )
-                                          ]
-                                        )
-                                      : _vm._e()
-                                  ]
-                                )
-                              ],
-                              1
-                            )
-                          ])
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "tab-pane fade",
-                        attrs: {
-                          id: "pills-estado",
-                          role: "tabpanel",
-                          "aria-labelledby": "pills-estado-tab"
-                        }
-                      },
-                      [
-                        _c("fieldset", [
-                          _c("legend", { staticClass: "text-muted" }, [
-                            _vm._v("Estado de la promoción")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "sr-only",
-                                attrs: { for: "estadoProm" }
-                              },
-                              [_vm._v("Estado")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "input-group" }, [
-                              _vm._m(3),
-                              _vm._v(" "),
+                            _c("div", { staticClass: "form-group" }, [
                               _c(
-                                "select",
+                                "label",
                                 {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.state,
-                                      expression: "state"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: { id: "estadoProm" },
-                                  on: {
-                                    change: function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.state = $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    }
-                                  }
+                                  staticClass: "sr-only",
+                                  attrs: { for: "namePromotion" }
                                 },
-                                [
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "disabled" } },
-                                    [_vm._v("Deshabilitada")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "enabled" } },
-                                    [_vm._v("Habilitada")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "paused" } }, [
-                                    _vm._v("Pausada")
-                                  ])
-                                ]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "form-group" },
-                            [
-                              _c("label", { attrs: { for: "stateDesc" } }, [
-                                _vm._v("Descripción del estado")
-                              ]),
+                                [_vm._v("Nombre de la promoción")]
+                              ),
                               _vm._v(" "),
-                              _c("markdown-editor", {
-                                ref: "markdownEditor",
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.name,
+                                    expression: "name"
+                                  }
+                                ],
+                                staticClass: "form-control",
                                 attrs: {
-                                  id: "stateDesc",
-                                  "preview-class": "markdown-body"
+                                  type: "text",
+                                  id: "namePromotion",
+                                  placeholder: "Nombre de la promoción"
                                 },
-                                model: {
-                                  value: _vm.descState,
-                                  callback: function($$v) {
-                                    _vm.descState = $$v
-                                  },
-                                  expression: "descState"
+                                domProps: { value: _vm.name },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.name = $event.target.value
+                                  }
                                 }
                               })
-                            ],
-                            1
-                          )
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "tab-pane fade",
-                        attrs: {
-                          id: "pills-terms",
-                          role: "tabpnale",
-                          "aria-labelledby": "pills-terms-tab"
-                        }
-                      },
-                      [
-                        _c("fieldset", [
-                          _c("legend", { staticClass: "text-muted" }, [
-                            _vm._v("Términos y condiciones")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "sr-only",
-                                attrs: { for: "termsAndConditions" }
-                              },
-                              [_vm._v("Términos y condiciones")]
-                            ),
+                            ]),
                             _vm._v(" "),
                             _c(
                               "div",
                               { staticClass: "form-group" },
                               [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "sr-only",
+                                    attrs: { for: "descProm" }
+                                  },
+                                  [_vm._v("Descripción")]
+                                ),
+                                _vm._v(" "),
                                 _c("markdown-editor", {
                                   ref: "markdownEditor",
                                   attrs: {
-                                    id: "termsAndconditions",
+                                    id: "descProm",
                                     "preview-class": "markdown-body"
                                   },
                                   model: {
-                                    value: _vm.terms,
+                                    value: _vm.description,
                                     callback: function($$v) {
-                                      _vm.terms = $$v
+                                      _vm.description = $$v
                                     },
-                                    expression: "terms"
+                                    expression: "description"
                                   }
                                 })
                               ],
                               1
                             )
                           ])
-                        ])
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-12" }, [
-                  _c("div", { staticClass: "alert alert-info text-center" }, [
-                    _c(
-                      "small",
-                      [
-                        _c("icon-app", {
-                          attrs: { "icon-image": "info-circle" }
-                        }),
-                        _vm._v(
-                          " Recuerde que toda promoción debe cumplir con las exigencias de las leyes civil, comercial y de defensa del consumidor de la Republica Argentina. Si no está seguro por favor consulte con abogado antes de poner en vigencia una promoción.\n                            "
-                        )
-                      ],
-                      1
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-12 text-center" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-outline-success",
-                      attrs: { type: "submit", disabled: _vm.hasErrors }
-                    },
-                    [
-                      _vm._v("Crear "),
-                      _c("icon-app", { attrs: { "icon-image": "gift" } })
-                    ],
-                    1
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "tab-pane fade",
+                          attrs: {
+                            id: "pills-type",
+                            role: "tabpanel",
+                            "aria-labelledby": "pills-type-tab"
+                          }
+                        },
+                        [
+                          _c(
+                            "fieldset",
+                            [
+                              _c("legend", { staticClass: "text-muted" }, [
+                                _vm._v("Tipo de promoción")
+                              ]),
+                              _vm._v(" "),
+                              _c("btn-switch-app", {
+                                attrs: {
+                                  "init-left": _vm.isLeft,
+                                  "text-left": "Porcentaje",
+                                  "text-right": "Monto fijo",
+                                  "icon-left": "porcent",
+                                  "icon-right": "dollar"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "transition",
+                                {
+                                  attrs: {
+                                    name: "inputs-type-transition",
+                                    "enter-active-class": "animated bounceInUp",
+                                    "leave-active-class": "animated bounceOutUp"
+                                  }
+                                },
+                                [
+                                  _vm.isLeft
+                                    ? _c(
+                                        "div",
+                                        {
+                                          key: "percentaje",
+                                          staticClass: "form-label-group"
+                                        },
+                                        [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.percent,
+                                                expression: "percent"
+                                              }
+                                            ],
+                                            staticClass: "form-control",
+                                            attrs: {
+                                              type: "number",
+                                              id: "porcentPromotion",
+                                              placeholder:
+                                                "Porcentaje de promoción",
+                                              min: "1",
+                                              max: "100",
+                                              step: "0.01",
+                                              pattern: "^[0-9]+"
+                                            },
+                                            domProps: { value: _vm.percent },
+                                            on: {
+                                              input: function($event) {
+                                                if ($event.target.composing) {
+                                                  return
+                                                }
+                                                _vm.percent =
+                                                  $event.target.value
+                                              }
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c(
+                                            "label",
+                                            {
+                                              attrs: { for: "porcentPromotion" }
+                                            },
+                                            [_vm._v("Porcentaje de promoción")]
+                                          )
+                                        ]
+                                      )
+                                    : _c(
+                                        "div",
+                                        {
+                                          key: "amount",
+                                          staticClass: "form-label-group"
+                                        },
+                                        [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.amount,
+                                                expression: "amount"
+                                              }
+                                            ],
+                                            staticClass: "form-control",
+                                            attrs: {
+                                              type: "number",
+                                              id: "montoPromotion",
+                                              placeholder:
+                                                "Monto fijo de promoción",
+                                              min: "1",
+                                              step: "0.01",
+                                              pattern: "^[0-9]+"
+                                            },
+                                            domProps: { value: _vm.amount },
+                                            on: {
+                                              input: function($event) {
+                                                if ($event.target.composing) {
+                                                  return
+                                                }
+                                                _vm.amount = $event.target.value
+                                              }
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c(
+                                            "label",
+                                            {
+                                              attrs: { for: "montoPromotion" }
+                                            },
+                                            [_vm._v("Monto fijo de promoción")]
+                                          )
+                                        ]
+                                      )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "tab-pane fade",
+                          attrs: {
+                            id: "pills-vigencia",
+                            role: "tabpanel",
+                            "aria-labelledby": "pills-vigencia-tab"
+                          }
+                        },
+                        [
+                          _c("fieldset", [
+                            _c("legend", { staticClass: "text-muted" }, [
+                              _vm._v("Vigencia")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-6" }, [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "sr-only",
+                                      attrs: { for: "dateFrom" }
+                                    },
+                                    [_vm._v("Desde")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "input-group" },
+                                    [
+                                      _vm._m(1),
+                                      _vm._v(" "),
+                                      _c("date-picker", {
+                                        attrs: {
+                                          id: "dateFrom",
+                                          config: _vm.config,
+                                          placeholder:
+                                            "Ingrese la fecha de inicio"
+                                        },
+                                        model: {
+                                          value: _vm.dateFrom,
+                                          callback: function($$v) {
+                                            _vm.dateFrom = $$v
+                                          },
+                                          expression: "dateFrom"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-6" }, [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "sr-only",
+                                      attrs: { for: "dateTo" }
+                                    },
+                                    [_vm._v("Hasta")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "input-group" },
+                                    [
+                                      _vm._m(2),
+                                      _vm._v(" "),
+                                      _c("date-picker", {
+                                        attrs: {
+                                          id: "dateTo",
+                                          config: _vm.config,
+                                          placeholder:
+                                            "Ingrese la fecha de finalización"
+                                        },
+                                        model: {
+                                          value: _vm.dateTo,
+                                          callback: function($$v) {
+                                            _vm.dateTo = $$v
+                                          },
+                                          expression: "dateTo"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "row" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "col-12 justify-content-center"
+                                },
+                                [
+                                  _c(
+                                    "transition",
+                                    {
+                                      attrs: {
+                                        name: "invalid-promotion-date",
+                                        "enter-active-class":
+                                          "animated rubberBand",
+                                        "leave-active-class":
+                                          "animated bounceOutRight"
+                                      }
+                                    },
+                                    [
+                                      _vm.invalidDate
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "alert alert-warning text-center"
+                                            },
+                                            [
+                                              _c(
+                                                "small",
+                                                [
+                                                  _c("icon-app", {
+                                                    attrs: {
+                                                      "icon-image":
+                                                        "exclamation-triangle"
+                                                    }
+                                                  }),
+                                                  _vm._v(" La fecha "),
+                                                  _c("i", [_vm._v('"desde"')]),
+                                                  _vm._v(
+                                                    " o de inicio no puede ser menor a la fecha "
+                                                  ),
+                                                  _c("i", [_vm._v('"hasta"')]),
+                                                  _vm._v(" o de finalización.")
+                                                ],
+                                                1
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e()
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            ])
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "tab-pane fade",
+                          attrs: {
+                            id: "pills-estado",
+                            role: "tabpanel",
+                            "aria-labelledby": "pills-estado-tab"
+                          }
+                        },
+                        [
+                          _c("fieldset", [
+                            _c("legend", { staticClass: "text-muted" }, [
+                              _vm._v("Estado de la promoción")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "sr-only",
+                                  attrs: { for: "estadoProm" }
+                                },
+                                [_vm._v("Estado")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "input-group" }, [
+                                _vm._m(3),
+                                _vm._v(" "),
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.state,
+                                        expression: "state"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: { id: "estadoProm" },
+                                    on: {
+                                      change: function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.state = $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "disabled" } },
+                                      [_vm._v("Deshabilitada")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "enabled" } },
+                                      [_vm._v("Habilitada")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "paused" } },
+                                      [_vm._v("Pausada")]
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c("label", { attrs: { for: "stateDesc" } }, [
+                                  _vm._v("Descripción del estado")
+                                ]),
+                                _vm._v(" "),
+                                _c("markdown-editor", {
+                                  ref: "markdownEditor",
+                                  attrs: {
+                                    id: "stateDesc",
+                                    "preview-class": "markdown-body"
+                                  },
+                                  model: {
+                                    value: _vm.descState,
+                                    callback: function($$v) {
+                                      _vm.descState = $$v
+                                    },
+                                    expression: "descState"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "tab-pane fade",
+                          attrs: {
+                            id: "pills-terms",
+                            role: "tabpnale",
+                            "aria-labelledby": "pills-terms-tab"
+                          }
+                        },
+                        [
+                          _c("fieldset", [
+                            _c("legend", { staticClass: "text-muted" }, [
+                              _vm._v("Términos y condiciones")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "sr-only",
+                                  attrs: { for: "termsAndConditions" }
+                                },
+                                [_vm._v("Términos y condiciones")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "form-group" },
+                                [
+                                  _c("markdown-editor", {
+                                    ref: "markdownEditor",
+                                    attrs: {
+                                      id: "termsAndconditions",
+                                      "preview-class": "markdown-body"
+                                    },
+                                    model: {
+                                      value: _vm.terms,
+                                      callback: function($$v) {
+                                        _vm.terms = $$v
+                                      },
+                                      expression: "terms"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ])
+                          ])
+                        ]
+                      )
+                    ]
                   ),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-outline-warning",
-                      attrs: { type: "reset" }
-                    },
-                    [_vm._v("Limpiar")]
-                  )
-                ])
-              ]
-            )
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("div", { staticClass: "alert alert-info text-center" }, [
+                      _c(
+                        "small",
+                        [
+                          _c("icon-app", {
+                            attrs: { "icon-image": "info-circle" }
+                          }),
+                          _vm._v(
+                            " Recuerde que toda promoción debe cumplir con las exigencias de las leyes civil, comercial y de defensa del consumidor de la Republica Argentina. Si no está seguro por favor consulte con abogado antes de poner en vigencia una promoción.\n                              "
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12 text-center" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-success",
+                        attrs: { type: "submit", disabled: _vm.hasErrors }
+                      },
+                      [
+                        _vm._v("Crear "),
+                        _c("icon-app", { attrs: { "icon-image": "gift" } })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-warning",
+                        attrs: { type: "reset" }
+                      },
+                      [_vm._v("Limpiar")]
+                    )
+                  ])
+                ]
+              )
+            ])
           ])
         ])
       ])

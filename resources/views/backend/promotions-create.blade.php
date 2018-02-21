@@ -5,7 +5,6 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('lib/bootstrap/docs/4.0/examples/floating-labels/floating-labels.css') }}">
 @endsection
 
 @section('content')
