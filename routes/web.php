@@ -44,6 +44,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::put('profile/{slug}', 'UsersController@update')->name('home.profile.update');
     Route::delete('profile/{slug}', 'UsersController@destroy')->name('home.profile.destroy');
     Route::get('profile/{slug}/rentals', 'UsersController@profileRentals')->name('home.profile.rentals');
+    Route::get('password/change', 'UsersController@passwordChange')->name('home.password.change');
+    Route::post('password/change/reset', 'UsersController@passwordReset')->name('home.password.reset');
     Route::get('rentals', 'RentalsController@index')->name('home.rentals.index');
     Route::get('rentals/edit', 'RentalsController@edit')->name('home.rentals.edit');
     Route::get('liquidation', 'LiquidationController@liquidation')->name('home.liquidation.liquidation');
@@ -76,7 +78,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Administration', 'middleware'
     Route::get('promotions', 'PromotionsController@index')->name('promotions.index');
 });
 
-Route::prefix('test')->group(function() {
+/*Route::prefix('test')->group(function() {
     Route::get('mail-welcome', function() {
         return new ConfirmAccount(User::find(158));
     });
@@ -103,4 +105,4 @@ Route::prefix('test')->group(function() {
         $code = 'ABC52DEF'. time();
         return new \App\Mail\NewRentalCode($rental, $code);
     });
-});
+});*/

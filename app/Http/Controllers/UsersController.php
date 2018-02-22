@@ -6,6 +6,7 @@ use App\Rental;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -183,6 +184,40 @@ class UsersController extends Controller
         }
 
         return response()->json(compact('rentals'), 200);
+    }
+
+    public function passwordChange()
+    {
+        if (!Auth::check()) {
+            return redirect(route('home'));
+        }
+
+        return view('frontend.password-change');
+    }
+
+    public function passwordReset(Request $request)
+    {
+        if (!Hash::check($request->password, Auth::user()->password)) {
+
+            flash('<h3>Las contraseña actual no es correcta</h3>')->error()->important();
+
+            return back(301);
+
+        }
+
+        if ($request->passwordNew !== $request->password_confirmation) {
+
+            flash('<h3>Las contraseña no coinciden, por favor verifiquelo y reintente</h3>')->error()->important();
+
+            return back(301);
+
+        }
+
+        Auth::user()->fill(['password' => Hash::make($request->passwordNew)])->save();
+
+        flash('<h3>La contraseña se cambió correctamente</h3>')->success()->important();
+        
+        return redirect(route('home.profile.show', Auth::user()->slug));
     }
 
 }

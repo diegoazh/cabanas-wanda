@@ -75,6 +75,9 @@
                             <a class="dropdown-item" href="{{ route('home.profile.show', Auth::user()->slug) }}">
                                 <i class="fas fa-user-circle" aria-hidden="true"></i> Perfil
                             </a>
+                            <a class="dropdown-item" href="{{ route('home.password.change') }}">
+                                <i class="fas fa-lock" aria-hidden="true"></i> Cambiar contraseña
+                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 Cerrar sesión <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
