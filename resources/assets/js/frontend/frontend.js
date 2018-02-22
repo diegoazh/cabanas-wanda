@@ -77,6 +77,8 @@ $(document).ready(function (event) {
         backgroundDrawing('dibujo-mono', 'contain', '100% 50%');
     } else if (/new_email_confirmation/.test(path)) {
         backgroundDrawing('dibujo-yacare', 'contain', '100% 50%');
+    } else if (/password/.test(path)) {
+        backgroundDrawing('dibujo-puma', 'contain', '100% 50%');
     }
 
     function setFrontendModal(modalId, ttModal, bodyModal) {
