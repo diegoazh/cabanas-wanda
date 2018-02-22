@@ -87,8 +87,10 @@
                                         </div>
                                         <date-picker placeholder="Seleccione la fecha..."
                                                      :config="defConfDtp(rental, food)"
-                                                     :id="'delivery'+index"
-                                                     :name="'delivery'+index" v-model="food.delivery"
+                                                     :id="'delivery' + index"
+                                                     :name="'delivery' + index"
+                                                     value=""
+                                                     v-model="food.delivery"
                                                      @dp-show="fireReplacesInShowDp(`#delivery${index}`)"></date-picker>
                                     </div>
                                 </div>
@@ -227,6 +229,7 @@
                 meriendas: state => state.data.meriendas,
                 cenas: state => state.data.cenas,
                 itemsPerPage: state => state.itemsPerPage,
+                orderToEdit: state => state.data.orderToEdit
             }),
             ...mapState('food', {
                 foods: state => state.data.food,
@@ -237,7 +240,8 @@
                 if (this.foods.length === 0) {
                     this.getAllFood()
                         .then(response => {
-                            this.filterFoodType(this.foods);
+                            this.filterFoodType(this.foods)
+                                .then(this.filterItemsToEdit());
                         })
                         .catch(error => {
                             // console.log(error);
@@ -246,35 +250,64 @@
 
             },
             filterFoodType(foods) {
-                let foodType = [];
-                let types = ['desayuno', 'almuerzo', 'merienda', 'cena'];
+                return new Promise((resolve, reject) => {
+                    let foodType = [];
+                    let types = ['desayuno', 'almuerzo', 'merienda', 'cena'];
 
-                for (let food of foods) {
-                    this.$set(food, 'checked', false);
-                    this.$set(food, 'quantity', 1);
-                    this.$set(food, 'delivery', null);
-                }
-
-                for (let i = types.length - 1; i >= 0; i--) {
-                    foodType = foods.filter((element, index, array) => {
-                        return element.type === types[i];
-                    });
-
-                    switch (types[i]) {
-                        case 'desayuno':
-                            this.setDesayunos(foodType);
-                            break;
-                        case 'almuerzo':
-                            this.setAlmuerzos(foodType);
-                            break;
-                        case 'merienda':
-                            this.setMeriendas(foodType);
-                            break;
-                        case 'cena':
-                            this.setCenas(foodType);
-                            break;
+                    for (let food of foods) {
+                        this.$set(food, 'checked', false);
+                        this.$set(food, 'quantity', 1);
+                        this.$set(food, 'delivery', null);
                     }
-                }
+
+                    for (let i = types.length - 1; i >= 0; i--) {
+                        foodType = foods.filter((element, index, array) => {
+                            return element.type === types[i];
+                        });
+
+                        switch (types[i]) {
+                            case 'desayuno':
+                                this.setDesayunos(foodType);
+                                break;
+                            case 'almuerzo':
+                                this.setAlmuerzos(foodType);
+                                break;
+                            case 'merienda':
+                                this.setMeriendas(foodType);
+                                break;
+                            case 'cena':
+                                this.setCenas(foodType);
+                                break;
+                        }
+                    }
+                    resolve();
+                });
+            },
+            filterItemsToEdit() {
+                return new Promise((resolve, reject) => {
+                    if (this.orderToEdit && window.localStorage.getItem('orders_detail')) {
+                        let comidas = [this.desayunos, this.almuerzos, this.meriendas, this.cenas];
+                        let orders = JSON.parse(window.localStorage.getItem('orders_detail'));
+                        comidas.forEach((comida, index, comidas) => {
+                            orders.forEach((order, inde, orders) => {
+                                comida.forEach((ele, ind, arr) => {
+                                    if (order.food.id === ele.id) {
+                                        ele.delivery = order.delivery;
+                                        ele.quantity = order.quantity;
+                                        this.toggelAddRemoveFood(ele);
+                                    }
+                                });
+                            });
+                        });
+
+                        this.setDesayunos(comidas[0]);
+                        this.setAlmuerzos(comidas[1]);
+                        this.setMeriendas(comidas[2]);
+                        this.setCenas(comidas[3]);
+                    }
+                    window.localStorage.removeItem('orders_detail');
+                    resolve();
+                });
             },
             elementsPerPage(number) {
                 let food = [];
@@ -294,7 +327,7 @@
                         break;
                 }
 
-                let pageTo = this.page * this.itemsPerPage; // quince debería ser una variable
+                let pageTo = this.page * this.itemsPerPage; // TODO (Diego) quince, luego pasar a variable
                 let pageFrom = (this.page === 1) ? 0 : (this.page - 1) * this.itemsPerPage;
 
                 return food.filter(function (element, index, array) {
@@ -327,12 +360,16 @@
                 this.trashPage.choice = tabName;
             },
             defConfDtp(rental, food) {
-                let min = moment(rental.dateFrom + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss');
+                /**
+                 * TODO (Diego) Encontrar la manera de que el evento se dispare solo para ese picker no para todos.
+                 * Eso es lo que demora el show del picker.
+                 * */
+                let min = moment(moment(rental.dateFrom + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY');
                 return {
                     locale: 'es',
                     format: 'DD/MM/YYYY',
-                    minDate: min.isBefore(moment.now()) ? moment().add(3, 'h') : min,
-                    maxDate: food.type === 'desayuno' ? moment(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss') : moment(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').subtract(1, 'd')
+                    minDate: min.isBefore(moment.now()) ? moment(moment().add(3, 'h').format('DD/MM/YYYY'), 'DD/MM/YYYY') : min,
+                    maxDate: food.type === 'desayuno' ? moment(moment(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY') : moment(moment(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').subtract(1, 'd').format('DD/MM/YYYY'), 'DD/MM/YYYY')
                 }
             },
             notAvailableOrder(number) {

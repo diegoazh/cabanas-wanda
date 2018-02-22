@@ -59,6 +59,7 @@ mix.copy([
     .js('resources/assets/js/vue-rentals-edit-app/vue-rentals-edit.js', 'public/js')
     .js('resources/assets/js/vue-admin-food-app/vue-admin-food.js', 'public/js')
     .js('resources/assets/js/vue-orders-app/vue-orders.js', 'public/js')
+    .js('resources/assets/js/vue-orders-edit-app/vue-orders-edit.js', 'public/js')
     .js('resources/assets/js/vue-liquidation-app/vue-liquidation.js', 'public/js')
     .js('resources/assets/js/vue-reports-app/vue-reports.js', 'public/js')
     .js('resources/assets/js/vue-dash-app/vue-dash.js', 'public/js')

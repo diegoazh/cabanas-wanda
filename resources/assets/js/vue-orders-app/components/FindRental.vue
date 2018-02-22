@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-12 col-md-12">
-            <h3 class="text-center">Primero necesitamos saber a que reserva pertenecerá</h3>
+            <h3 class="text-center">Primero necesitamos saber cual es su reserva</h3>
         </div>
         <div class="col-12 col-md-8 offset-md-2">
             <div class="text-center">

@@ -32,7 +32,7 @@
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('home.order.index') }}">Realizar pedido</a>
-                        <a class="dropdown-item" href="#">Modificar pedido</a>
+                        <a class="dropdown-item" href="{{ route('home.order.edit') }}">Modificar pedido</a>
                         @if(Auth::check())
                             @if(Auth::user()->isAdminOrEmployed())
                                 <div role="separator" class="dropdown-divider"></div>

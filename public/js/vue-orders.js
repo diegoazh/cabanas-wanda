@@ -2024,6 +2024,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -2163,6 +2165,9 @@ exports.default = {
         },
         itemsPerPage: function itemsPerPage(state) {
             return state.itemsPerPage;
+        },
+        orderToEdit: function orderToEdit(state) {
+            return state.data.orderToEdit;
         }
     }), (0, _vuex.mapState)('food', {
         foods: function foods(state) {
@@ -2175,7 +2180,7 @@ exports.default = {
 
             if (this.foods.length === 0) {
                 this.getAllFood().then(function (response) {
-                    _this.filterFoodType(_this.foods);
+                    _this.filterFoodType(_this.foods).then(_this.filterItemsToEdit());
                 }).catch(function (error) {
                     // console.log(error);
                 });
@@ -2184,60 +2189,91 @@ exports.default = {
         filterFoodType: function filterFoodType(foods) {
             var _this2 = this;
 
-            var foodType = [];
-            var types = ['desayuno', 'almuerzo', 'merienda', 'cena'];
+            return new Promise(function (resolve, reject) {
+                var foodType = [];
+                var types = ['desayuno', 'almuerzo', 'merienda', 'cena'];
 
-            var _iteratorNormalCompletion3 = true;
-            var _didIteratorError3 = false;
-            var _iteratorError3 = undefined;
+                var _iteratorNormalCompletion3 = true;
+                var _didIteratorError3 = false;
+                var _iteratorError3 = undefined;
 
-            try {
-                for (var _iterator3 = foods[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                    var food = _step3.value;
-
-                    this.$set(food, 'checked', false);
-                    this.$set(food, 'quantity', 1);
-                    this.$set(food, 'delivery', null);
-                }
-            } catch (err) {
-                _didIteratorError3 = true;
-                _iteratorError3 = err;
-            } finally {
                 try {
-                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                        _iterator3.return();
+                    for (var _iterator3 = foods[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                        var food = _step3.value;
+
+                        _this2.$set(food, 'checked', false);
+                        _this2.$set(food, 'quantity', 1);
+                        _this2.$set(food, 'delivery', null);
                     }
+                } catch (err) {
+                    _didIteratorError3 = true;
+                    _iteratorError3 = err;
                 } finally {
-                    if (_didIteratorError3) {
-                        throw _iteratorError3;
+                    try {
+                        if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                            _iterator3.return();
+                        }
+                    } finally {
+                        if (_didIteratorError3) {
+                            throw _iteratorError3;
+                        }
                     }
                 }
-            }
 
-            var _loop = function _loop(i) {
-                foodType = foods.filter(function (element, index, array) {
-                    return element.type === types[i];
-                });
+                var _loop = function _loop(i) {
+                    foodType = foods.filter(function (element, index, array) {
+                        return element.type === types[i];
+                    });
 
-                switch (types[i]) {
-                    case 'desayuno':
-                        _this2.setDesayunos(foodType);
-                        break;
-                    case 'almuerzo':
-                        _this2.setAlmuerzos(foodType);
-                        break;
-                    case 'merienda':
-                        _this2.setMeriendas(foodType);
-                        break;
-                    case 'cena':
-                        _this2.setCenas(foodType);
-                        break;
+                    switch (types[i]) {
+                        case 'desayuno':
+                            _this2.setDesayunos(foodType);
+                            break;
+                        case 'almuerzo':
+                            _this2.setAlmuerzos(foodType);
+                            break;
+                        case 'merienda':
+                            _this2.setMeriendas(foodType);
+                            break;
+                        case 'cena':
+                            _this2.setCenas(foodType);
+                            break;
+                    }
+                };
+
+                for (var i = types.length - 1; i >= 0; i--) {
+                    _loop(i);
                 }
-            };
+                resolve();
+            });
+        },
+        filterItemsToEdit: function filterItemsToEdit() {
+            var _this3 = this;
 
-            for (var i = types.length - 1; i >= 0; i--) {
-                _loop(i);
-            }
+            return new Promise(function (resolve, reject) {
+                if (_this3.orderToEdit && window.localStorage.getItem('orders_detail')) {
+                    var comidas = [_this3.desayunos, _this3.almuerzos, _this3.meriendas, _this3.cenas];
+                    var orders = JSON.parse(window.localStorage.getItem('orders_detail'));
+                    comidas.forEach(function (comida, index, comidas) {
+                        orders.forEach(function (order, inde, orders) {
+                            comida.forEach(function (ele, ind, arr) {
+                                if (order.food.id === ele.id) {
+                                    ele.delivery = order.delivery;
+                                    ele.quantity = order.quantity;
+                                    _this3.toggelAddRemoveFood(ele);
+                                }
+                            });
+                        });
+                    });
+
+                    _this3.setDesayunos(comidas[0]);
+                    _this3.setAlmuerzos(comidas[1]);
+                    _this3.setMeriendas(comidas[2]);
+                    _this3.setCenas(comidas[3]);
+                }
+                window.localStorage.removeItem('orders_detail');
+                resolve();
+            });
         },
         elementsPerPage: function elementsPerPage(number) {
             var food = [];
@@ -2257,7 +2293,7 @@ exports.default = {
                     break;
             }
 
-            var pageTo = this.page * this.itemsPerPage; // quince debería ser una variable
+            var pageTo = this.page * this.itemsPerPage; // TODO (Diego) quince, luego pasar a variable
             var pageFrom = this.page === 1 ? 0 : (this.page - 1) * this.itemsPerPage;
 
             return food.filter(function (element, index, array) {
@@ -2290,12 +2326,16 @@ exports.default = {
             this.trashPage.choice = tabName;
         },
         defConfDtp: function defConfDtp(rental, food) {
-            var min = (0, _moment2.default)(rental.dateFrom + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss');
+            /**
+             * TODO (Diego) Encontrar la manera de que el evento se dispare solo para ese picker no para todos.
+             * Eso es lo que demora el show del picker.
+             * */
+            var min = (0, _moment2.default)((0, _moment2.default)(rental.dateFrom + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY');
             return {
                 locale: 'es',
                 format: 'DD/MM/YYYY',
-                minDate: min.isBefore(_moment2.default.now()) ? (0, _moment2.default)().add(3, 'h') : min,
-                maxDate: food.type === 'desayuno' ? (0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss') : (0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').subtract(1, 'd')
+                minDate: min.isBefore(_moment2.default.now()) ? (0, _moment2.default)((0, _moment2.default)().add(3, 'h').format('DD/MM/YYYY'), 'DD/MM/YYYY') : min,
+                maxDate: food.type === 'desayuno' ? (0, _moment2.default)((0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY') : (0, _moment2.default)((0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').subtract(1, 'd').format('DD/MM/YYYY'), 'DD/MM/YYYY')
             };
         },
         notAvailableOrder: function notAvailableOrder(number) {
@@ -2508,6 +2548,12 @@ exports.default = {
         },
         rental: function rental(state) {
             return state.data.rental;
+        },
+        orderToEdit: function orderToEdit(state) {
+            return state.data.orderToEdit;
+        },
+        orderId: function orderId(state) {
+            return state.data.orderId;
         }
     }), (0, _vuex.mapState)('auth', {
         queryFinished: function queryFinished(state) {
@@ -2529,12 +2575,16 @@ exports.default = {
             this.setQueryFinished(false);
             this.sendOrder({
                 rental_id: this.rental.id,
-                orders: this.orders
+                orders: this.orders,
+                orderToEdit: this.orderToEdit,
+                order_id: this.orderId
             }).then(function (response) {
                 _vueNotifications2.default.success(response);
                 _this.setQueryFinished(true);
                 _this.setOrders([]);
                 _this.setCloseOrder(false);
+                _this.setOrderToEdit(false);
+                _this.setOrderId(null);
                 EventBus.$emit('change-reserva');
             }).catch(function (error) {
                 error.useSwal = true;
@@ -2542,7 +2592,7 @@ exports.default = {
                 _this.setQueryFinished(true);
             });
         }
-    }, (0, _vuex.mapActions)('orders', ['setCloseOrder', 'sendOrder', 'setOrders']), (0, _vuex.mapActions)('auth', ['setQueryFinished'])),
+    }, (0, _vuex.mapActions)('orders', ['setCloseOrder', 'sendOrder', 'setOrders', 'setOrderToEdit', 'setOrderId']), (0, _vuex.mapActions)('auth', ['setQueryFinished'])),
     filters: {
         displayArgDate: function displayArgDate(date) {
             if (!_moment2.default.isMoment(date) && typeof date === 'string') {
@@ -2886,7 +2936,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -38751,7 +38801,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12 col-md-12" }, [
       _c("h3", { staticClass: "text-center" }, [
-        _vm._v("Primero necesitamos saber a que reserva pertenecerá")
+        _vm._v("Primero necesitamos saber cual es su reserva")
       ])
     ])
   }
@@ -39148,7 +39198,8 @@ var render = function() {
                                             food
                                           ),
                                           id: "delivery" + index,
-                                          name: "delivery" + index
+                                          name: "delivery" + index,
+                                          value: ""
                                         },
                                         on: {
                                           "dp-show": function($event) {
@@ -53372,23 +53423,33 @@ exports.default = {
 
         commit('setCloseOrder', bool);
     },
-    setDesayunos: function setDesayunos(_ref5, desayunos) {
+    setOrderToEdit: function setOrderToEdit(_ref5, bool) {
         var commit = _ref5.commit;
+
+        commit('setOrderToEdit', bool);
+    },
+    setOrderId: function setOrderId(_ref6, id) {
+        var commit = _ref6.commit;
+
+        commit('setOrderId', bool);
+    },
+    setDesayunos: function setDesayunos(_ref7, desayunos) {
+        var commit = _ref7.commit;
 
         commit('setDesayunos', desayunos);
     },
-    setAlmuerzos: function setAlmuerzos(_ref6, almuerzos) {
-        var commit = _ref6.commit;
+    setAlmuerzos: function setAlmuerzos(_ref8, almuerzos) {
+        var commit = _ref8.commit;
 
         commit('setAlmuerzos', almuerzos);
     },
-    setMeriendas: function setMeriendas(_ref7, meriendas) {
-        var commit = _ref7.commit;
+    setMeriendas: function setMeriendas(_ref9, meriendas) {
+        var commit = _ref9.commit;
 
         commit('setMeriendas', meriendas);
     },
-    setCenas: function setCenas(_ref8, cenas) {
-        var commit = _ref8.commit;
+    setCenas: function setCenas(_ref10, cenas) {
+        var commit = _ref10.commit;
 
         commit('setCenas', cenas);
     },
@@ -53413,14 +53474,17 @@ exports.default = {
     },
     sendOrder: function sendOrder(cntx, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('orders/store', payload, {
+            (0, _appAxios.http)({
+                url: payload.orderToEdit ? 'orders/update' : 'orders/store',
+                method: payload.orderToEdit ? 'put' : 'post',
+                data: payload,
                 params: {
                     token: cntx.rootGetters['auth/getToken']
                 }
             }).then(function (response) {
                 cntx.dispatch('auth/setToken', response, { root: true });
                 resolve({
-                    title: 'PEDIDO REALIZADO',
+                    title: payload.orderToEdit ? 'PEDIDO ACTUALIZADO' : 'PEDIDO REALIZADO',
                     message: response.data.message,
                     useSwal: true
                 });
@@ -53514,6 +53578,12 @@ exports.default = {
             }), 1);
         }
     },
+    setOrderToEdit: function setOrderToEdit(state, bool) {
+        state.data.orderToEdit = bool;
+    },
+    setOrderId: function setOrderId(state, id) {
+        state.data.orderId = id;
+    },
     setCloseOrder: function setCloseOrder(state, bool) {
         state.data.closeOrder = bool;
     },
@@ -53546,6 +53616,8 @@ exports.default = {
     page: 1,
     itemsPerPage: 10,
     data: {
+        orderToEdit: false,
+        orderId: null,
         rental: null,
         closeOrder: false,
         orders: [],

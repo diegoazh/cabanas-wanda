@@ -38,7 +38,7 @@ class PromotionsController extends Controller
     public function list()
     {
         $promos = Promotion::orderBy('state')->get()->toArray();
-        return response()->json(['promotions' => $promos]);
+        return response()->json(['promotions' => $promos], 201);
     }
 
     /**
@@ -60,7 +60,7 @@ class PromotionsController extends Controller
 
         flash("<h3 class=\"text-center\"><i class=\"fas fa-information-circle\" aria-hidden=\"true\"></i> $message</h3>")->success();
 
-        return response()->json(['message' => $message]);
+        return response()->json(['message' => $message], 200);
     }
 
     /**

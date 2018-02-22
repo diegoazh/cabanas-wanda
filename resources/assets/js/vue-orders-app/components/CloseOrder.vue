@@ -82,7 +82,9 @@
             },
             ...mapState('orders', {
                 orders: state => state.data.orders,
-                rental: state => state.data.rental
+                rental: state => state.data.rental,
+                orderToEdit: state => state.data.orderToEdit,
+                orderId: state => state.data.orderId,
             }),
             ...mapState('auth', {
                 queryFinished: state => state.xhr.queryFinished
@@ -101,12 +103,16 @@
                 this.setQueryFinished(false);
                 this.sendOrder({
                     rental_id: this.rental.id,
-                    orders: this.orders
+                    orders: this.orders,
+                    orderToEdit: this.orderToEdit,
+                    order_id: this.orderId
                 }).then(response => {
                     VueNoti.success(response);
                     this.setQueryFinished(true);
                     this.setOrders([]);
                     this.setCloseOrder(false);
+                    this.setOrderToEdit(false);
+                    this.setOrderId(null);
                     EventBus.$emit('change-reserva');
                 }).catch(error => {
                     error.useSwal = true;
@@ -114,7 +120,7 @@
                     this.setQueryFinished(true);
                 });
             },
-            ...mapActions('orders', ['setCloseOrder', 'sendOrder', 'setOrders']),
+            ...mapActions('orders', ['setCloseOrder', 'sendOrder', 'setOrders', 'setOrderToEdit', 'setOrderId']),
             ...mapActions('auth', ['setQueryFinished'])
         },
         filters: {
