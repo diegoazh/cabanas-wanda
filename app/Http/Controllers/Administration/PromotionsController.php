@@ -13,21 +13,11 @@ use JWTAuth;
 class PromotionsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Show the page with promotions and form to creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
     {
         if (!Auth::user()->isAdmin()) {
             return redirect(route('login'));
@@ -38,6 +28,17 @@ class PromotionsController extends Controller
         Cookie::queue('info_one', $token, 180, null, null, false, false);
 
         return view('backend.promotions-create');
+    }
+
+    /**
+     * Show the page with promotions and form to creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list()
+    {
+        $promos = Promotion::orderBy('state')->get()->toArray();
+        return response()->json(['promotions' => $promos]);
     }
 
     /**

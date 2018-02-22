@@ -1969,7 +1969,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-promotions-store-app/components/PromotionsStore.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-promotions-store-app/components/Promotions.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1982,6 +1982,171 @@ Object.defineProperty(exports, "__esModule", {
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
+var _PromotionsList = __webpack_require__("./resources/assets/js/vue-promotions-store-app/components/PromotionsList.vue");
+
+var _PromotionsList2 = _interopRequireDefault(_PromotionsList);
+
+var _PromotionsStore = __webpack_require__("./resources/assets/js/vue-promotions-store-app/components/PromotionsStore.vue");
+
+var _PromotionsStore2 = _interopRequireDefault(_PromotionsStore);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    name: 'promotions',
+    components: {
+        'promotions-list': _PromotionsList2.default,
+        'promotions-store': _PromotionsStore2.default
+    },
+    data: function data() {
+        return {};
+    },
+
+    computed: {},
+    methods: _extends({}, (0, _vuex.mapActions)('auth', ['fireSetTokenMutation'])),
+    filters: {},
+    created: function created() {},
+    mounted: function mounted() {
+        if (this.$cookies.isKey('info_one')) {
+            this.fireSetTokenMutation(this.$cookies.get('info_one'));
+        }
+    }
+};
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-promotions-store-app/components/PromotionsList.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+
+var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
+
+var _vueNotifications2 = _interopRequireDefault(_vueNotifications);
+
+var _Icon = __webpack_require__("./resources/assets/js/vue-commons/components/Icon.vue");
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    name: 'promotions-list',
+    components: {
+        'icon-app': _Icon2.default
+    },
+    data: function data() {
+        return {};
+    },
+
+    computed: _extends({}, (0, _vuex.mapState)('promotions', {
+        promotions: function promotions(state) {
+            return state.data.promotions;
+        }
+    })),
+    methods: _extends({}, (0, _vuex.mapActions)('promotions', ['promotionsList'])),
+    filters: {},
+    created: function created() {},
+    beforeMount: function beforeMount() {},
+    mounted: function mounted() {
+        this.promotionsList().then(function (response) {
+            return _vueNotifications2.default.success(response);
+        }).catch(function (error) {
+            return _vueNotifications2.default.error(error);
+        });
+    }
+};
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-promotions-store-app/components/PromotionsStore.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
 //
 //
 //
@@ -2176,87 +2341,84 @@ var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    name: 'promotions-create',
-    components: {
-        'icon-app': _Icon2.default,
-        'btn-switch-app': _BtnSwitch2.default,
-        markdownEditor: _markdownEditor2.default,
-        datePicker: _vueBootstrapDatetimepicker2.default
-    },
-    data: function data() {
-        return {
-            isLeft: true,
-            name: '',
-            description: '',
-            state: 'disabled',
-            descState: '',
-            terms: '',
-            percent: null,
-            amount: null,
-            dateFrom: null,
-            dateTo: null,
-            config: {
-                locale: 'es',
-                format: 'DD/MM/YYYY',
-                minDate: new Date(moment().year(), moment().month(), moment().date(), 0, 0, 0, 0)
-            }
-        };
-    },
+  name: 'promotions-create',
+  components: {
+    'icon-app': _Icon2.default,
+    'btn-switch-app': _BtnSwitch2.default,
+    markdownEditor: _markdownEditor2.default,
+    datePicker: _vueBootstrapDatetimepicker2.default
+  },
+  data: function data() {
+    return {
+      isLeft: true,
+      name: '',
+      description: '',
+      state: 'disabled',
+      descState: '',
+      terms: '',
+      percent: null,
+      amount: null,
+      dateFrom: null,
+      dateTo: null,
+      config: {
+        locale: 'es',
+        format: 'DD/MM/YYYY',
+        minDate: new Date(moment().year(), moment().month(), moment().date(), 0, 0, 0, 0)
+      }
+    };
+  },
 
-    computed: {
-        invalidDate: function invalidDate() {
-            var dateFrom = this.dateFrom ? moment(this.dateFrom, 'DD/MM/YYYY') : null;
-            var dateTo = this.dateTo ? moment(this.dateTo, 'DD/MM/YYYY') : null;
+  computed: {
+    invalidDate: function invalidDate() {
+      var dateFrom = this.dateFrom ? moment(this.dateFrom, 'DD/MM/YYYY') : null;
+      var dateTo = this.dateTo ? moment(this.dateTo, 'DD/MM/YYYY') : null;
 
-            if (dateFrom && dateTo) {
-                return dateFrom.isAfter(dateTo);
-            } else {
-                return true;
-            }
-        },
-        positiveNumber: function positiveNumber() {
-            if (+this.percent < 0) {
-                this.percent = -+this.percent;
-            }
-            if (+this.amount < 0) {
-                this.amount = -+this.amount;
-            }
-        },
-        hasErrors: function hasErrors() {
-            return !this.name || !this.terms || !this.percent && !this.amount || this.invalidDate;
-        }
+      if (dateFrom && dateTo) {
+        return dateFrom.isAfter(dateTo);
+      } else {
+        return true;
+      }
     },
-    methods: _extends({
-        sendNewPromotion: function sendNewPromotion() {
-            this.createNewPromotion({
-                name: this.name,
-                amount: this.amount,
-                percentage: this.percent,
-                description: this.description,
-                startDate: this.dateFrom,
-                endDate: this.dateTo,
-                state: this.state,
-                descriptionState: this.descState,
-                termsAndConditions: this.terms
-            }).then(function (response) {
-                _vueNotifications2.default.success(response);
-            }).catch(function (error) {
-                _vueNotifications2.default.error(error);
-            });
-        }
-    }, (0, _vuex.mapActions)('auth', ['fireSetTokenMutation']), (0, _vuex.mapActions)('promotion_store', ['createNewPromotion'])),
-    filters: {},
-    created: function created() {},
-    mounted: function mounted() {
-        var _this = this;
-
-        if (this.$cookies.isKey('info_one')) {
-            this.fireSetTokenMutation(this.$cookies.get('info_one'));
-        }
-        window.EventBus.$on('change-side', function (side) {
-            return _this.isLeft = side;
-        });
+    positiveNumber: function positiveNumber() {
+      if (+this.percent < 0) {
+        this.percent = -+this.percent;
+      }
+      if (+this.amount < 0) {
+        this.amount = -+this.amount;
+      }
+    },
+    hasErrors: function hasErrors() {
+      return !this.name || !this.terms || !this.percent && !this.amount || this.invalidDate;
     }
+  },
+  methods: _extends({
+    sendNewPromotion: function sendNewPromotion() {
+      this.createNewPromotion({
+        name: this.name,
+        amount: this.amount,
+        percentage: this.percent,
+        description: this.description,
+        startDate: this.dateFrom,
+        endDate: this.dateTo,
+        state: this.state,
+        descriptionState: this.descState,
+        termsAndConditions: this.terms
+      }).then(function (response) {
+        _vueNotifications2.default.success(response);
+      }).catch(function (error) {
+        _vueNotifications2.default.error(error);
+      });
+    }
+  }, (0, _vuex.mapActions)('promotions', ['createNewPromotion'])),
+  filters: {},
+  created: function created() {},
+  mounted: function mounted() {
+    var _this = this;
+
+    window.EventBus.$on('change-side', function (side) {
+      return _this.isLeft = side;
+    });
+  }
 };
 
 /***/ }),
@@ -16142,6 +16304,21 @@ exports.push([module.i, ".vue-tooltip{background-color:#000;box-sizing:border-bo
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-29da3909\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-promotions-store-app/components/PromotionsList.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2bc0e592\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16166,6 +16343,21 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 // module
 exports.push([module.i, "\n.markdown-editor .markdown-body {\n  padding: 0.5em\n}\n.markdown-editor .editor-preview-active, .markdown-editor .editor-preview-active-side {\n  display: block;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6014f4cb\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-promotions-store-app/components/Promotions.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -56126,6 +56318,152 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-29da3909\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-promotions-store-app/components/PromotionsList.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c("table", { staticClass: "table table-striped" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _vm.promotions.length > 0
+          ? _c(
+              "tbody",
+              _vm._l(_vm.promotions, function(promo, index) {
+                return _c("tr", [
+                  _c(
+                    "td",
+                    [
+                      _c("icon-app", { attrs: { "icon-image": "hashtag" } }),
+                      _vm._v(" " + _vm._s(index + 1))
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(promo.name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(promo.state))]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      promo.amount
+                        ? _c("icon-app", {
+                            attrs: { "icon-image": "dollar-sign" }
+                          })
+                        : _vm._e(),
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(
+                            promo.amount ? promo.amount : promo.percentage
+                          ) +
+                          "\n                    "
+                      ),
+                      !promo.amount
+                        ? _c("icon-app", { attrs: { "icon-image": "percent" } })
+                        : _vm._e()
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("span", { staticClass: "badge badge-info" }, [
+                      _vm._v(
+                        _vm._s(
+                          _vm._f("dateArg")(
+                            promo.startDate,
+                            "YYYY-MM-DD",
+                            "DD/MM/YYYY"
+                          )
+                        )
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("span", { staticClass: "badge badge-warning" }, [
+                      _vm._v(
+                        _vm._s(
+                          _vm._f("dateArg")(
+                            promo.endDate,
+                            "YYYY-MM-DD",
+                            "DD/MM/YYYY"
+                          )
+                        )
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "button",
+                      { staticClass: "btn btn-outline-warning" },
+                      [
+                        _vm._v("Editar "),
+                        _c("icon-app", { attrs: { "icon-image": "edit" } })
+                      ],
+                      1
+                    )
+                  ])
+                ])
+              })
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _c("tfoot")
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header bg-dark text-light" }, [
+      _c("h2", { staticClass: "text-center" }, [_vm._v("Lista de promociones")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Orden")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Estado")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Descuento")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Inicio")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Fin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Acciones")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-29da3909", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2bc0e592\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -56235,7 +56573,7 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7c46cef4\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-promotions-store-app/components/PromotionsStore.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6014f4cb\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-promotions-store-app/components/Promotions.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -56243,635 +56581,747 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
-    _c("div", { staticClass: "card", attrs: { id: "form-promotion" } }, [
-      _c("div", { staticClass: "card-header bg-dark text-light" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12" }, [
         _c(
-          "h1",
+          "div",
+          { staticClass: "tab-content", attrs: { id: "pills-tabContent" } },
           [
-            _c("icon-app", { attrs: { "icon-image": "gift" } }),
-            _vm._v(" Alta de promociones")
-          ],
-          1
+            _c(
+              "div",
+              {
+                staticClass: "tab-pane fade show active",
+                attrs: {
+                  id: "pills-list",
+                  role: "tabpanel",
+                  "aria-labelledby": "pills-list-tab"
+                }
+              },
+              [_c("promotions-list")],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "tab-pane fade",
+                attrs: {
+                  id: "pills-store",
+                  role: "tabpanel",
+                  "aria-labelledby": "pills-store-tab"
+                }
+              },
+              [_c("promotions-store")],
+              1
+            )
+          ]
         )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-12 col-md-9" }, [
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c(
+          "ul",
+          {
+            staticClass: "nav nav-pills nav-fill mb-3",
+            attrs: { id: "pills-tab", role: "tablist" }
+          },
+          [
+            _c("li", { staticClass: "nav-item" }, [
               _c(
-                "form",
+                "a",
                 {
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      _vm.sendNewPromotion($event)
-                    }
+                  staticClass: "nav-link active",
+                  attrs: {
+                    id: "pills-list-tab",
+                    "data-toggle": "pill",
+                    href: "#pills-list",
+                    role: "tab",
+                    "aria-controls": "pills-list",
+                    "aria-selected": "true"
                   }
                 },
-                [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c("hr"),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "tab-content",
-                      attrs: { id: "pills-tabContent" }
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "tab-pane fade show active",
-                          attrs: {
-                            id: "pills-desc",
-                            role: "tabpanel",
-                            "aria-labelledby": "pills-desc-tab"
-                          }
-                        },
-                        [
-                          _c("fieldset", [
-                            _c("legend", { staticClass: "text-muted" }, [
-                              _vm._v("Datos descriptivos")
-                            ]),
+                [_vm._v("Lista de promociones")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "nav-item" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link",
+                  attrs: {
+                    id: "pills-store-tab",
+                    "data-toggle": "pill",
+                    href: "#pills-store",
+                    role: "tab",
+                    "aria-controls": "pills-store",
+                    "aria-selected": "false"
+                  }
+                },
+                [_vm._v("Crear promoción")]
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("hr")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6014f4cb", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7c46cef4\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-promotions-store-app/components/PromotionsStore.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card", attrs: { id: "form-promotion" } }, [
+    _c("div", { staticClass: "card-header bg-dark text-light" }, [
+      _c(
+        "h1",
+        [
+          _c("icon-app", { attrs: { "icon-image": "gift" } }),
+          _vm._v(" Alta de promociones")
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12 col-md-9" }, [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    _vm.sendNewPromotion($event)
+                  }
+                }
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-content",
+                    attrs: { id: "pills-tabContent" }
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "tab-pane fade show active",
+                        attrs: {
+                          id: "pills-desc",
+                          role: "tabpanel",
+                          "aria-labelledby": "pills-desc-tab"
+                        }
+                      },
+                      [
+                        _c("fieldset", [
+                          _c("legend", { staticClass: "text-muted" }, [
+                            _vm._v("Datos descriptivos")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "sr-only",
+                                attrs: { for: "namePromotion" }
+                              },
+                              [_vm._v("Nombre de la promoción")]
+                            ),
                             _vm._v(" "),
-                            _c("div", { staticClass: "form-group" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.name,
+                                  expression: "name"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                id: "namePromotion",
+                                placeholder: "Nombre de la promoción"
+                              },
+                              domProps: { value: _vm.name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.name = $event.target.value
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "form-group" },
+                            [
                               _c(
                                 "label",
                                 {
                                   staticClass: "sr-only",
-                                  attrs: { for: "namePromotion" }
+                                  attrs: { for: "descProm" }
                                 },
-                                [_vm._v("Nombre de la promoción")]
+                                [_vm._v("Descripción")]
                               ),
                               _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.name,
-                                    expression: "name"
-                                  }
-                                ],
-                                staticClass: "form-control",
+                              _c("markdown-editor", {
+                                ref: "markdownEditor",
                                 attrs: {
-                                  type: "text",
-                                  id: "namePromotion",
-                                  placeholder: "Nombre de la promoción"
+                                  id: "descProm",
+                                  "preview-class": "markdown-body"
                                 },
-                                domProps: { value: _vm.name },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.name = $event.target.value
-                                  }
+                                model: {
+                                  value: _vm.description,
+                                  callback: function($$v) {
+                                    _vm.description = $$v
+                                  },
+                                  expression: "description"
                                 }
                               })
+                            ],
+                            1
+                          )
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "tab-pane fade",
+                        attrs: {
+                          id: "pills-type",
+                          role: "tabpanel",
+                          "aria-labelledby": "pills-type-tab"
+                        }
+                      },
+                      [
+                        _c(
+                          "fieldset",
+                          [
+                            _c("legend", { staticClass: "text-muted" }, [
+                              _vm._v("Tipo de promoción")
                             ]),
                             _vm._v(" "),
+                            _c("btn-switch-app", {
+                              attrs: {
+                                "init-left": _vm.isLeft,
+                                "text-left": "Porcentaje",
+                                "text-right": "Monto fijo",
+                                "icon-left": "porcent",
+                                "icon-right": "dollar"
+                              }
+                            }),
+                            _vm._v(" "),
                             _c(
-                              "div",
-                              { staticClass: "form-group" },
+                              "transition",
+                              {
+                                attrs: {
+                                  name: "inputs-type-transition",
+                                  "enter-active-class": "animated bounceInUp",
+                                  "leave-active-class": "animated bounceOutUp"
+                                }
+                              },
                               [
+                                _vm.isLeft
+                                  ? _c(
+                                      "div",
+                                      {
+                                        key: "percentaje",
+                                        staticClass: "form-group"
+                                      },
+                                      [
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass: "sr-only",
+                                            attrs: { for: "porcentPromotion" }
+                                          },
+                                          [_vm._v("Porcentaje de promoción")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.percent,
+                                              expression: "percent"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: {
+                                            type: "number",
+                                            id: "porcentPromotion",
+                                            placeholder:
+                                              "Porcentaje de promoción",
+                                            min: "1",
+                                            max: "100",
+                                            step: "0.01",
+                                            pattern: "^[0-9]+"
+                                          },
+                                          domProps: { value: _vm.percent },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.percent = $event.target.value
+                                            }
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  : _c(
+                                      "div",
+                                      {
+                                        key: "amount",
+                                        staticClass: "form-group"
+                                      },
+                                      [
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass: "sr-only",
+                                            attrs: { for: "montoPromotion" }
+                                          },
+                                          [_vm._v("Monto fijo de promoción")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.amount,
+                                              expression: "amount"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: {
+                                            type: "number",
+                                            id: "montoPromotion",
+                                            placeholder:
+                                              "Monto fijo de promoción",
+                                            min: "1",
+                                            step: "0.01",
+                                            pattern: "^[0-9]+"
+                                          },
+                                          domProps: { value: _vm.amount },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.amount = $event.target.value
+                                            }
+                                          }
+                                        })
+                                      ]
+                                    )
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "tab-pane fade",
+                        attrs: {
+                          id: "pills-vigencia",
+                          role: "tabpanel",
+                          "aria-labelledby": "pills-vigencia-tab"
+                        }
+                      },
+                      [
+                        _c("fieldset", [
+                          _c("legend", { staticClass: "text-muted" }, [
+                            _vm._v("Vigencia")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-6" }, [
+                              _c("div", { staticClass: "form-group" }, [
                                 _c(
                                   "label",
                                   {
                                     staticClass: "sr-only",
-                                    attrs: { for: "descProm" }
+                                    attrs: { for: "dateFrom" }
                                   },
-                                  [_vm._v("Descripción")]
+                                  [_vm._v("Desde")]
                                 ),
                                 _vm._v(" "),
-                                _c("markdown-editor", {
-                                  ref: "markdownEditor",
-                                  attrs: {
-                                    id: "descProm",
-                                    "preview-class": "markdown-body"
+                                _c(
+                                  "div",
+                                  { staticClass: "input-group" },
+                                  [
+                                    _vm._m(1),
+                                    _vm._v(" "),
+                                    _c("date-picker", {
+                                      attrs: {
+                                        id: "dateFrom",
+                                        config: _vm.config,
+                                        placeholder:
+                                          "Ingrese la fecha de inicio"
+                                      },
+                                      model: {
+                                        value: _vm.dateFrom,
+                                        callback: function($$v) {
+                                          _vm.dateFrom = $$v
+                                        },
+                                        expression: "dateFrom"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-6" }, [
+                              _c("div", { staticClass: "form-group" }, [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "sr-only",
+                                    attrs: { for: "dateTo" }
                                   },
-                                  model: {
-                                    value: _vm.description,
-                                    callback: function($$v) {
-                                      _vm.description = $$v
-                                    },
-                                    expression: "description"
-                                  }
-                                })
+                                  [_vm._v("Hasta")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "input-group" },
+                                  [
+                                    _vm._m(2),
+                                    _vm._v(" "),
+                                    _c("date-picker", {
+                                      attrs: {
+                                        id: "dateTo",
+                                        config: _vm.config,
+                                        placeholder:
+                                          "Ingrese la fecha de finalización"
+                                      },
+                                      model: {
+                                        value: _vm.dateTo,
+                                        callback: function($$v) {
+                                          _vm.dateTo = $$v
+                                        },
+                                        expression: "dateTo"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _c(
+                              "div",
+                              { staticClass: "col-12 justify-content-center" },
+                              [
+                                _c(
+                                  "transition",
+                                  {
+                                    attrs: {
+                                      name: "invalid-promotion-date",
+                                      "enter-active-class":
+                                        "animated rubberBand",
+                                      "leave-active-class":
+                                        "animated bounceOutRight"
+                                    }
+                                  },
+                                  [
+                                    _vm.invalidDate
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "alert alert-warning text-center"
+                                          },
+                                          [
+                                            _c(
+                                              "small",
+                                              [
+                                                _c("icon-app", {
+                                                  attrs: {
+                                                    "icon-image":
+                                                      "exclamation-triangle"
+                                                  }
+                                                }),
+                                                _vm._v(" La fecha "),
+                                                _c("i", [_vm._v('"desde"')]),
+                                                _vm._v(
+                                                  " o de inicio no puede ser menor a la fecha "
+                                                ),
+                                                _c("i", [_vm._v('"hasta"')]),
+                                                _vm._v(" o de finalización.")
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                )
                               ],
                               1
                             )
                           ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "tab-pane fade",
-                          attrs: {
-                            id: "pills-type",
-                            role: "tabpanel",
-                            "aria-labelledby": "pills-type-tab"
-                          }
-                        },
-                        [
-                          _c(
-                            "fieldset",
-                            [
-                              _c("legend", { staticClass: "text-muted" }, [
-                                _vm._v("Tipo de promoción")
-                              ]),
-                              _vm._v(" "),
-                              _c("btn-switch-app", {
-                                attrs: {
-                                  "init-left": _vm.isLeft,
-                                  "text-left": "Porcentaje",
-                                  "text-right": "Monto fijo",
-                                  "icon-left": "porcent",
-                                  "icon-right": "dollar"
-                                }
-                              }),
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "tab-pane fade",
+                        attrs: {
+                          id: "pills-estado",
+                          role: "tabpanel",
+                          "aria-labelledby": "pills-estado-tab"
+                        }
+                      },
+                      [
+                        _c("fieldset", [
+                          _c("legend", { staticClass: "text-muted" }, [
+                            _vm._v("Estado de la promoción")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "sr-only",
+                                attrs: { for: "estadoProm" }
+                              },
+                              [_vm._v("Estado")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "input-group" }, [
+                              _vm._m(3),
                               _vm._v(" "),
                               _c(
-                                "transition",
+                                "select",
                                 {
-                                  attrs: {
-                                    name: "inputs-type-transition",
-                                    "enter-active-class": "animated bounceInUp",
-                                    "leave-active-class": "animated bounceOutUp"
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.state,
+                                      expression: "state"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { id: "estadoProm" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.state = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    }
                                   }
                                 },
                                 [
-                                  _vm.isLeft
-                                    ? _c(
-                                        "div",
-                                        {
-                                          key: "percentaje",
-                                          staticClass: "form-label-group"
-                                        },
-                                        [
-                                          _c("input", {
-                                            directives: [
-                                              {
-                                                name: "model",
-                                                rawName: "v-model",
-                                                value: _vm.percent,
-                                                expression: "percent"
-                                              }
-                                            ],
-                                            staticClass: "form-control",
-                                            attrs: {
-                                              type: "number",
-                                              id: "porcentPromotion",
-                                              placeholder:
-                                                "Porcentaje de promoción",
-                                              min: "1",
-                                              max: "100",
-                                              step: "0.01",
-                                              pattern: "^[0-9]+"
-                                            },
-                                            domProps: { value: _vm.percent },
-                                            on: {
-                                              input: function($event) {
-                                                if ($event.target.composing) {
-                                                  return
-                                                }
-                                                _vm.percent =
-                                                  $event.target.value
-                                              }
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c(
-                                            "label",
-                                            {
-                                              attrs: { for: "porcentPromotion" }
-                                            },
-                                            [_vm._v("Porcentaje de promoción")]
-                                          )
-                                        ]
-                                      )
-                                    : _c(
-                                        "div",
-                                        {
-                                          key: "amount",
-                                          staticClass: "form-label-group"
-                                        },
-                                        [
-                                          _c("input", {
-                                            directives: [
-                                              {
-                                                name: "model",
-                                                rawName: "v-model",
-                                                value: _vm.amount,
-                                                expression: "amount"
-                                              }
-                                            ],
-                                            staticClass: "form-control",
-                                            attrs: {
-                                              type: "number",
-                                              id: "montoPromotion",
-                                              placeholder:
-                                                "Monto fijo de promoción",
-                                              min: "1",
-                                              step: "0.01",
-                                              pattern: "^[0-9]+"
-                                            },
-                                            domProps: { value: _vm.amount },
-                                            on: {
-                                              input: function($event) {
-                                                if ($event.target.composing) {
-                                                  return
-                                                }
-                                                _vm.amount = $event.target.value
-                                              }
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c(
-                                            "label",
-                                            {
-                                              attrs: { for: "montoPromotion" }
-                                            },
-                                            [_vm._v("Monto fijo de promoción")]
-                                          )
-                                        ]
-                                      )
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "disabled" } },
+                                    [_vm._v("Deshabilitada")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "enabled" } },
+                                    [_vm._v("Habilitada")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "paused" } }, [
+                                    _vm._v("Pausada")
+                                  ])
                                 ]
                               )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "form-group" },
+                            [
+                              _c("label", { attrs: { for: "stateDesc" } }, [
+                                _vm._v("Descripción del estado")
+                              ]),
+                              _vm._v(" "),
+                              _c("markdown-editor", {
+                                ref: "markdownEditor",
+                                attrs: {
+                                  id: "stateDesc",
+                                  "preview-class": "markdown-body"
+                                },
+                                model: {
+                                  value: _vm.descState,
+                                  callback: function($$v) {
+                                    _vm.descState = $$v
+                                  },
+                                  expression: "descState"
+                                }
+                              })
                             ],
                             1
                           )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "tab-pane fade",
-                          attrs: {
-                            id: "pills-vigencia",
-                            role: "tabpanel",
-                            "aria-labelledby": "pills-vigencia-tab"
-                          }
-                        },
-                        [
-                          _c("fieldset", [
-                            _c("legend", { staticClass: "text-muted" }, [
-                              _vm._v("Vigencia")
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-6" }, [
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    {
-                                      staticClass: "sr-only",
-                                      attrs: { for: "dateFrom" }
-                                    },
-                                    [_vm._v("Desde")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "input-group" },
-                                    [
-                                      _vm._m(1),
-                                      _vm._v(" "),
-                                      _c("date-picker", {
-                                        attrs: {
-                                          id: "dateFrom",
-                                          config: _vm.config,
-                                          placeholder:
-                                            "Ingrese la fecha de inicio"
-                                        },
-                                        model: {
-                                          value: _vm.dateFrom,
-                                          callback: function($$v) {
-                                            _vm.dateFrom = $$v
-                                          },
-                                          expression: "dateFrom"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-6" }, [
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    {
-                                      staticClass: "sr-only",
-                                      attrs: { for: "dateTo" }
-                                    },
-                                    [_vm._v("Hasta")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "input-group" },
-                                    [
-                                      _vm._m(2),
-                                      _vm._v(" "),
-                                      _c("date-picker", {
-                                        attrs: {
-                                          id: "dateTo",
-                                          config: _vm.config,
-                                          placeholder:
-                                            "Ingrese la fecha de finalización"
-                                        },
-                                        model: {
-                                          value: _vm.dateTo,
-                                          callback: function($$v) {
-                                            _vm.dateTo = $$v
-                                          },
-                                          expression: "dateTo"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "col-12 justify-content-center"
-                                },
-                                [
-                                  _c(
-                                    "transition",
-                                    {
-                                      attrs: {
-                                        name: "invalid-promotion-date",
-                                        "enter-active-class":
-                                          "animated rubberBand",
-                                        "leave-active-class":
-                                          "animated bounceOutRight"
-                                      }
-                                    },
-                                    [
-                                      _vm.invalidDate
-                                        ? _c(
-                                            "div",
-                                            {
-                                              staticClass:
-                                                "alert alert-warning text-center"
-                                            },
-                                            [
-                                              _c(
-                                                "small",
-                                                [
-                                                  _c("icon-app", {
-                                                    attrs: {
-                                                      "icon-image":
-                                                        "exclamation-triangle"
-                                                    }
-                                                  }),
-                                                  _vm._v(" La fecha "),
-                                                  _c("i", [_vm._v('"desde"')]),
-                                                  _vm._v(
-                                                    " o de inicio no puede ser menor a la fecha "
-                                                  ),
-                                                  _c("i", [_vm._v('"hasta"')]),
-                                                  _vm._v(" o de finalización.")
-                                                ],
-                                                1
-                                              )
-                                            ]
-                                          )
-                                        : _vm._e()
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
-                            ])
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "tab-pane fade",
-                          attrs: {
-                            id: "pills-estado",
-                            role: "tabpanel",
-                            "aria-labelledby": "pills-estado-tab"
-                          }
-                        },
-                        [
-                          _c("fieldset", [
-                            _c("legend", { staticClass: "text-muted" }, [
-                              _vm._v("Estado de la promoción")
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "form-group" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "sr-only",
-                                  attrs: { for: "estadoProm" }
-                                },
-                                [_vm._v("Estado")]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "input-group" }, [
-                                _vm._m(3),
-                                _vm._v(" "),
-                                _c(
-                                  "select",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.state,
-                                        expression: "state"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: { id: "estadoProm" },
-                                    on: {
-                                      change: function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.state = $event.target.multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "option",
-                                      { attrs: { value: "disabled" } },
-                                      [_vm._v("Deshabilitada")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "option",
-                                      { attrs: { value: "enabled" } },
-                                      [_vm._v("Habilitada")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "option",
-                                      { attrs: { value: "paused" } },
-                                      [_vm._v("Pausada")]
-                                    )
-                                  ]
-                                )
-                              ])
-                            ]),
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "tab-pane fade",
+                        attrs: {
+                          id: "pills-terms",
+                          role: "tabpnale",
+                          "aria-labelledby": "pills-terms-tab"
+                        }
+                      },
+                      [
+                        _c("fieldset", [
+                          _c("legend", { staticClass: "text-muted" }, [
+                            _vm._v("Términos y condiciones")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "sr-only",
+                                attrs: { for: "termsAndConditions" }
+                              },
+                              [_vm._v("Términos y condiciones")]
+                            ),
                             _vm._v(" "),
                             _c(
                               "div",
                               { staticClass: "form-group" },
                               [
-                                _c("label", { attrs: { for: "stateDesc" } }, [
-                                  _vm._v("Descripción del estado")
-                                ]),
-                                _vm._v(" "),
                                 _c("markdown-editor", {
                                   ref: "markdownEditor",
                                   attrs: {
-                                    id: "stateDesc",
+                                    id: "termsAndconditions",
                                     "preview-class": "markdown-body"
                                   },
                                   model: {
-                                    value: _vm.descState,
+                                    value: _vm.terms,
                                     callback: function($$v) {
-                                      _vm.descState = $$v
+                                      _vm.terms = $$v
                                     },
-                                    expression: "descState"
+                                    expression: "terms"
                                   }
                                 })
                               ],
                               1
                             )
                           ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "tab-pane fade",
-                          attrs: {
-                            id: "pills-terms",
-                            role: "tabpnale",
-                            "aria-labelledby": "pills-terms-tab"
-                          }
-                        },
-                        [
-                          _c("fieldset", [
-                            _c("legend", { staticClass: "text-muted" }, [
-                              _vm._v("Términos y condiciones")
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "form-group" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "sr-only",
-                                  attrs: { for: "termsAndConditions" }
-                                },
-                                [_vm._v("Términos y condiciones")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group" },
-                                [
-                                  _c("markdown-editor", {
-                                    ref: "markdownEditor",
-                                    attrs: {
-                                      id: "termsAndconditions",
-                                      "preview-class": "markdown-body"
-                                    },
-                                    model: {
-                                      value: _vm.terms,
-                                      callback: function($$v) {
-                                        _vm.terms = $$v
-                                      },
-                                      expression: "terms"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ])
-                          ])
-                        ]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-12" }, [
-                    _c("div", { staticClass: "alert alert-info text-center" }, [
-                      _c(
-                        "small",
-                        [
-                          _c("icon-app", {
-                            attrs: { "icon-image": "info-circle" }
-                          }),
-                          _vm._v(
-                            " Recuerde que toda promoción debe cumplir con las exigencias de las leyes civil, comercial y de defensa del consumidor de la Republica Argentina. Si no está seguro por favor consulte con abogado antes de poner en vigencia una promoción.\n                              "
-                          )
-                        ],
-                        1
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-12 text-center" }, [
+                        ])
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-12" }, [
+                  _c("div", { staticClass: "alert alert-info text-center" }, [
                     _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-outline-success",
-                        attrs: { type: "submit", disabled: _vm.hasErrors }
-                      },
+                      "small",
                       [
-                        _vm._v("Crear "),
-                        _c("icon-app", { attrs: { "icon-image": "gift" } })
+                        _c("icon-app", {
+                          attrs: { "icon-image": "info-circle" }
+                        }),
+                        _vm._v(
+                          " Recuerde que toda promoción debe cumplir con las exigencias de las leyes civil, comercial y de defensa del consumidor de la Republica Argentina. Si no está seguro por favor consulte con abogado antes de poner en vigencia una promoción.\n                            "
+                        )
                       ],
                       1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-outline-warning",
-                        attrs: { type: "reset" }
-                      },
-                      [_vm._v("Limpiar")]
                     )
                   ])
-                ]
-              )
-            ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-12 text-center" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-success",
+                      attrs: { type: "submit", disabled: _vm.hasErrors }
+                    },
+                    [
+                      _vm._v("Crear "),
+                      _c("icon-app", { attrs: { "icon-image": "gift" } })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-warning",
+                      attrs: { type: "reset" }
+                    },
+                    [_vm._v("Limpiar")]
+                  )
+                ])
+              ]
+            )
           ])
         ])
       ])
@@ -57273,6 +57723,33 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-29da3909\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-promotions-store-app/components/PromotionsList.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-29da3909\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-promotions-store-app/components/PromotionsList.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("672462b8", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-29da3909\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PromotionsList.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-29da3909\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PromotionsList.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2bc0e592\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -57317,6 +57794,33 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3c40460f\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0!./markdown-editor.vue", function() {
      var newContent = require("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3c40460f\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0!./markdown-editor.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6014f4cb\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-promotions-store-app/components/Promotions.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6014f4cb\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-promotions-store-app/components/Promotions.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("d48b5efe", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6014f4cb\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Promotions.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6014f4cb\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Promotions.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -69625,6 +70129,37 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/vue-commons/filters/DateGlobalFilter.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.DateArgFilter = undefined;
+
+var _moment = __webpack_require__("./node_modules/moment/moment.js");
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var DateArgFilter = exports.DateArgFilter = function DateArgFilter(value) {
+    var formatIn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'YYYY-MM-DD HH:mm:ss';
+    var formatOut = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'DD/MM/YYYY HH:mm:ss';
+
+    if (!value || typeof value !== 'string' || typeof formatIn !== 'string' || typeof formatOut !== 'string') {
+        console.error('Los argumentos de DateArgFilter deben ser de tipo string.');
+        return;
+    }
+
+    return (0, _moment2.default)(value, formatIn).format(formatOut);
+};
+
+/***/ }),
+
 /***/ "./resources/assets/js/vue-commons/notifications/notifications.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -70708,37 +71243,47 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
 
-var _moment = __webpack_require__("./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 exports.default = {
-  createNewPromotion: function createNewPromotion(cntx, payload) {
-    return new Promise(function (resolve, reject) {
-      _appAxios.http.post('promotion/store', payload, {
-        params: {
-          token: cntx.rootState.auth.xhr.token
-        }
-      }).then(function (response) {
-        cntx.dispatch('auth/setToken', response, { root: true });
-        resolve({
-          title: 'OPERACIÓN EXITOSA',
-          message: response.data.message,
-          useSwal: true
+    promotionsList: function promotionsList(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.get('promotions/list').then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                cntx.commit('setPromotions', response.data.promotions);
+                resolve({
+                    title: 'OK!',
+                    message: 'Data founded correctly',
+                    timeout: 4000
+                });
+            }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
         });
-      }).catch(function (error) {
-        context.dispatch('auth/setToken', error.response, { root: true });
-        reject((0, _appAxios.handlingXhrErrors)(error));
-      });
-    });
-  }
+    },
+    createNewPromotion: function createNewPromotion(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('promotions/store', payload, {
+                params: {
+                    token: cntx.rootState.auth.xhr.token
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve({
+                    title: 'OPERACIÓN EXITOSA',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    }
 };
 
 /***/ }),
@@ -70756,7 +71301,7 @@ exports.default = {};
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotionStore.js":
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotions.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70765,7 +71310,7 @@ exports.default = {};
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.modulePromotionStore = undefined;
+exports.modulePromotions = undefined;
 
 var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/state.js");
 
@@ -70785,7 +71330,7 @@ var _actions2 = _interopRequireDefault(_actions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var modulePromotionStore = exports.modulePromotionStore = {
+var modulePromotions = exports.modulePromotions = {
     namespaced: true,
     state: _state2.default,
     getters: _getters2.default,
@@ -70802,9 +71347,14 @@ var modulePromotionStore = exports.modulePromotionStore = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    setPromotions: function setPromotions(state, promotions) {
+        if (!Array.isArray(promotions)) return;
+        state.data.promotions = promotions;
+    }
+};
 
 /***/ }),
 
@@ -70815,9 +71365,13 @@ exports.default = {};
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    data: {
+        promotions: []
+    }
+};
 
 /***/ }),
 
@@ -71503,7 +72057,7 @@ var _moduleDash = __webpack_require__("./resources/assets/js/vue-commons/store/m
 
 var _moduleProfileRentals = __webpack_require__("./resources/assets/js/vue-commons/store/module-profile-rentals/moduleProfileRentals.js");
 
-var _modulePromotionStore = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotionStore.js");
+var _modulePromotions = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotions.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -71520,9 +72074,113 @@ exports.default = new _vuex2.default.Store({
         reports: _moduleReports.moduleReports,
         dash: _moduleDash.moduleDash,
         profile_rentals: _moduleProfileRentals.moduleProfileRentals,
-        promotion_store: _modulePromotionStore.modulePromotionStore
+        promotions: _modulePromotions.modulePromotions
     }
 });
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-promotions-store-app/components/Promotions.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6014f4cb\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-promotions-store-app/components/Promotions.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-promotions-store-app/components/Promotions.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6014f4cb\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-promotions-store-app/components/Promotions.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-6014f4cb"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/vue-promotions-store-app/components/Promotions.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6014f4cb", Component.options)
+  } else {
+    hotAPI.reload("data-v-6014f4cb", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-promotions-store-app/components/PromotionsList.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-29da3909\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-promotions-store-app/components/PromotionsList.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-promotions-store-app/components/PromotionsList.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-29da3909\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-promotions-store-app/components/PromotionsList.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-29da3909"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/vue-promotions-store-app/components/PromotionsList.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-29da3909", Component.options)
+  } else {
+    hotAPI.reload("data-v-29da3909", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
 
 /***/ }),
 
@@ -71610,15 +72268,17 @@ var _store2 = _interopRequireDefault(_store);
 
 var _notifications = __webpack_require__("./resources/assets/js/vue-commons/notifications/notifications.js");
 
-var _PromotionsStore = __webpack_require__("./resources/assets/js/vue-promotions-store-app/components/PromotionsStore.vue");
+var _DateGlobalFilter = __webpack_require__("./resources/assets/js/vue-commons/filters/DateGlobalFilter.js");
 
-var _PromotionsStore2 = _interopRequireDefault(_PromotionsStore);
+var _Promotions = __webpack_require__("./resources/assets/js/vue-promotions-store-app/components/Promotions.vue");
+
+var _Promotions2 = _interopRequireDefault(_Promotions);
 
 __webpack_require__("./node_modules/vue-directive-tooltip/css/index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_vue2.default.use(_vueNotifications2.default, _notifications.optionsIzi).use(_vueCookies2.default).use(_vueDirectiveTooltip2.default).use(_vueSimplemde2.default);
+_vue2.default.use(_vueNotifications2.default, _notifications.optionsIzi).use(_vueCookies2.default).use(_vueDirectiveTooltip2.default).use(_vueSimplemde2.default).filter('dateArg', _DateGlobalFilter.DateArgFilter);
 
 window.EventBus = new _vue2.default();
 
@@ -71626,7 +72286,7 @@ var promotionsStoreApp = new _vue2.default({
     el: '#content_backend',
     store: _store2.default,
     render: function render(h) {
-        return h(_PromotionsStore2.default);
+        return h(_Promotions2.default);
     }
 });
 

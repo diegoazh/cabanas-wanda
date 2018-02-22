@@ -1,0 +1,18 @@
+@extends('templates.frontend-layout')
+
+@section('title')
+    Ordernar
+@endsection
+
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.datetimepicker.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/selectize.bootstrap3.css') }}">
+@endsection
+
+@section('content')
+    <div id="vue-orders-edit-app"></div>
+@endsection
+
+@section('scripts')
+    <script type="text/javascript" src="{{ asset('js/vue-orders-edit.js') }}"></script>
+@endsection

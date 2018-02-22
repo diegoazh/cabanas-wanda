@@ -77,6 +77,10 @@ Route::prefix('profile')->middleware(['jwt.auth', 'jwt.refresh'])->group(functio
     Route::get('rentals', 'UsersController@myRentals')->name('api.profile.myRentals');
 });
 
-Route::prefix('promotion')->middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
-    Route::post('store', 'Administration\PromotionsController@store')->name('api.promotion.store');
+Route::prefix('promotions')->group(function () {
+    Route::get('list', 'Administration\PromotionsController@list')->name('api.promotion.list');
+
+    Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
+        Route::post('store', 'Administration\PromotionsController@store')->name('api.promotion.store');
+    });
 });

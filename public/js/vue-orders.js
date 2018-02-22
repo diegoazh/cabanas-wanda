@@ -53718,37 +53718,47 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
 
-var _moment = __webpack_require__("./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 exports.default = {
-  createNewPromotion: function createNewPromotion(cntx, payload) {
-    return new Promise(function (resolve, reject) {
-      _appAxios.http.post('promotion/store', payload, {
-        params: {
-          token: cntx.rootState.auth.xhr.token
-        }
-      }).then(function (response) {
-        cntx.dispatch('auth/setToken', response, { root: true });
-        resolve({
-          title: 'OPERACIÓN EXITOSA',
-          message: response.data.message,
-          useSwal: true
+    promotionsList: function promotionsList(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.get('promotions/list').then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                cntx.commit('setPromotions', response.data.promotions);
+                resolve({
+                    title: 'OK!',
+                    message: 'Data founded correctly',
+                    timeout: 4000
+                });
+            }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
         });
-      }).catch(function (error) {
-        context.dispatch('auth/setToken', error.response, { root: true });
-        reject((0, _appAxios.handlingXhrErrors)(error));
-      });
-    });
-  }
+    },
+    createNewPromotion: function createNewPromotion(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('promotions/store', payload, {
+                params: {
+                    token: cntx.rootState.auth.xhr.token
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve({
+                    title: 'OPERACIÓN EXITOSA',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    }
 };
 
 /***/ }),
@@ -53766,7 +53776,7 @@ exports.default = {};
 
 /***/ }),
 
-/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotionStore.js":
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotions.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53775,7 +53785,7 @@ exports.default = {};
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.modulePromotionStore = undefined;
+exports.modulePromotions = undefined;
 
 var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/state.js");
 
@@ -53795,7 +53805,7 @@ var _actions2 = _interopRequireDefault(_actions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var modulePromotionStore = exports.modulePromotionStore = {
+var modulePromotions = exports.modulePromotions = {
     namespaced: true,
     state: _state2.default,
     getters: _getters2.default,
@@ -53812,9 +53822,14 @@ var modulePromotionStore = exports.modulePromotionStore = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    setPromotions: function setPromotions(state, promotions) {
+        if (!Array.isArray(promotions)) return;
+        state.data.promotions = promotions;
+    }
+};
 
 /***/ }),
 
@@ -53825,9 +53840,13 @@ exports.default = {};
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    data: {
+        promotions: []
+    }
+};
 
 /***/ }),
 
@@ -54513,7 +54532,7 @@ var _moduleDash = __webpack_require__("./resources/assets/js/vue-commons/store/m
 
 var _moduleProfileRentals = __webpack_require__("./resources/assets/js/vue-commons/store/module-profile-rentals/moduleProfileRentals.js");
 
-var _modulePromotionStore = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotionStore.js");
+var _modulePromotions = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotions.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -54530,7 +54549,7 @@ exports.default = new _vuex2.default.Store({
         reports: _moduleReports.moduleReports,
         dash: _moduleDash.moduleDash,
         profile_rentals: _moduleProfileRentals.moduleProfileRentals,
-        promotion_store: _modulePromotionStore.modulePromotionStore
+        promotions: _modulePromotions.modulePromotions
     }
 });
 

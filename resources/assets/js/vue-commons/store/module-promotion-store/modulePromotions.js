@@ -4,7 +4,7 @@ import mutations from './mutations'
 import actions from './actions'
 
 
-export const modulePromotionStore = {
+export const modulePromotions = {
     namespaced: true,
     state,
     getters,

@@ -72,7 +72,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Administration', 'middleware'
     Route::post('cottages/bulk_actions', 'CottagesController@cottagesBulkActions')->name('cottage.cottagesBulkActions');
     Route::get('food', 'FoodsController@index')->name('comidas.index');
     Route::get('reports', 'ReportsController@index')->name('reports.index');
-    Route::get('promotions/create', 'PromotionsController@create')->name('promotions.create');
+    Route::get('promotions', 'PromotionsController@index')->name('promotions.index');
 });
 
 Route::prefix('test')->group(function() {

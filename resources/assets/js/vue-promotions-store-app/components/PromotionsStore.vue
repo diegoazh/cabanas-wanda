@@ -1,5 +1,4 @@
 <template>
-  <div class="container-fluid">
     <div class="card" id="form-promotion">
         <div class="card-header bg-dark text-light">
             <h1><icon-app icon-image="gift"></icon-app> Alta de promociones</h1>
@@ -56,13 +55,13 @@
                                         <transition name="inputs-type-transition"
                                                     enter-active-class="animated bounceInUp"
                                                     leave-active-class="animated bounceOutUp">
-                                            <div class="form-label-group" v-if="isLeft" key="percentaje">
+                                            <div class="form-group" v-if="isLeft" key="percentaje">
+                                                <label for="porcentPromotion" class="sr-only">Porcentaje de promoción</label>
                                                 <input type="number" class="form-control" id="porcentPromotion" placeholder="Porcentaje de promoción" min="1" max="100" step="0.01" pattern="^[0-9]+" v-model="percent">
-                                                <label for="porcentPromotion">Porcentaje de promoción</label>
                                             </div>
-                                            <div class="form-label-group" v-else key="amount">
+                                            <div class="form-group" v-else key="amount">
+                                                <label for="montoPromotion" class="sr-only">Monto fijo de promoción</label>
                                                 <input type="number" id="montoPromotion" class="form-control" placeholder="Monto fijo de promoción" min="1" step="0.01" pattern="^[0-9]+" v-model="amount">
-                                                <label for="montoPromotion">Monto fijo de promoción</label>
                                             </div>
                                         </transition>
                                     </fieldset>
@@ -166,7 +165,6 @@
             </div>
         </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -245,16 +243,12 @@
                 VueNoti.error(error);
               })
             },
-            ...mapActions('auth', ['fireSetTokenMutation']),
-            ...mapActions('promotion_store', ['createNewPromotion'])
+            ...mapActions('promotions', ['createNewPromotion'])
         },
         filters: {},
         created() {
         },
         mounted() {
-            if (this.$cookies.isKey('info_one')) {
-                this.fireSetTokenMutation(this.$cookies.get('info_one'));
-            }
             window.EventBus.$on('change-side', (side) => this.isLeft = side);
         }
     }
