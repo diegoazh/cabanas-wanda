@@ -25,7 +25,7 @@ $(document).ready(function(e) {
     if(/cottages/.test(path)) {
         activeMenu(/cabañas/, menu_a);
         if (path[2])
-            $menu.removeClass('col-md-4').addClass('col-md-6 offset-md-1');
+            $menu.removeClass('col-md-4').addClass('col-md-6');
         else
             $menu.removeClass('col-md-4').addClass('col-md-8');
     } else if (/users/.test(path)) {

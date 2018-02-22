@@ -50,7 +50,11 @@
                                 Hasta: <span class="badge badge-secondary">{{ rental.dateTo | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span>
                                 <br>
                                 <span :class="['text-uppercase', 'badge', setClassState(rental.state)]" v-if="!editState">{{ rental.state }}</span>&nbsp;
-                                <a class="cursorPointer" role="button" @click.prevent="editState = true; trash.state = rental.state;" v-tooltip.hover="'Editar estado'" v-if="!editState"><icon-app iconImage="edit"></icon-app></a>
+                                <sup role="button" class="cursorPointer">
+                                    <a class="cursorPointer" role="button" @click.prevent="editState = true; trash.state = rental.state;" v-tooltip.hover="'Editar estado'" v-if="!editState">
+                                        <icon-app iconImage="edit"></icon-app>
+                                    </a>
+                                </sup>
                                 <form @submit.prevent="" class="form-inline justify-content-center" v-if="editState">
                                     <div :class="['alert', setClassPenalty(rental.dateFrom)]" role="alert">
                                         <h5 v-html="setMsgPenalty(rental.dateFrom, setSenia(+rental.cottage_price))"></h5>
@@ -58,7 +62,7 @@
                                     <div class="form-group form-row">
                                         <label for="state" class="col-form-label sr-only">Estado: </label>
                                         <div class="input-group mr-2">
-                                            <div class="input-group-addon">Estado</div>
+                                            <div class="input-group-prepend"><div class="input-group-text">Estado</div></div>
                                             <select name="state" id="state" class="form-control" v-model="trash.state">
                                                 <option value="pendiente" :selected="rental.state === 'pendiente'">Pendiente</option>
                                                 <option value="confirmada" :selected="rental.state === 'confirmada'">Confirmada</option>
@@ -135,7 +139,7 @@
                 <div class="row">
                     <div class="col-12 col-md-12">
                         <h3 class="text-center">
-                            Descripción <a class="cursorPointer" role="button" @click.prevent="initEditorMd" v-tooltip.hover="'Editar descripción'"><icon-app :iconImage="editDescription ? 'times' : 'edit'"></icon-app></a>
+                            Descripción <sup role="button" class="cursorPointer"><a class="cursorPointer" role="button" @click.prevent="initEditorMd" v-tooltip.hover="'Editar descripción'"><icon-app :iconImage="editDescription ? 'times' : 'edit'"></icon-app></a></sup>
                             <br>
                             <small class="text-muted">Aquí puede agregar cualquier comentario que necesite vincular a está reserva.</small>
                         </h3>

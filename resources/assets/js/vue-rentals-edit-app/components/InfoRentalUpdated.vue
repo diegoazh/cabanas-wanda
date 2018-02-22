@@ -1,7 +1,7 @@
 <template>
     <div class="row justify-content-center">
         <div class="col-12 py-3">
-            <button class="btn btn-outline-secondary btn-sm pull-right" @click.prevent.stop="clearRental"><icon-app icon-image="exchange"></icon-app> Cambiar reserva</button>
+            <button class="btn btn-outline-secondary btn-sm float-right" @click.prevent.stop="clearRental"><icon-app type-icon="r" icon-image="hand-point-left"></icon-app> Cambiar reserva</button>
         </div>
         <div class="col-12 col-md-8">
             <table class="table table-striped">
@@ -16,20 +16,20 @@
                 <template>
                     <tr>
                         <th rowspan="9"><icon-app iconImage="home"></icon-app> {{ updatedRental.cottage.name }}</th>
-                        <th><icon-app iconImage="dollar"></icon-app> Precio</th>
-                        <td><icon-app iconImage="dollar"></icon-app> {{ updatedRental.cottage_price}}</td>
+                        <th><icon-app iconImage="dollar-sign"></icon-app> Precio</th>
+                        <td><icon-app iconImage="dollar-sign"></icon-app> {{ updatedRental.cottage_price}}</td>
                     </tr>
                     <tr>
                         <th><icon-app iconImage="calendar"></icon-app> Dias</th>
                         <td><span class="badge badge-success"><b>{{ updatedRental.total_days}}</b></span></td>
                     </tr>
                     <tr>
-                        <th><icon-app iconImage="dollar"></icon-app> Descuentos</th>
-                        <td><icon-app iconImage="dollar"></icon-app> {{ updatedRental.deductions }}</td>
+                        <th><icon-app iconImage="dollar-sign"></icon-app> Descuentos</th>
+                        <td><icon-app iconImage="dollar-sign"></icon-app> {{ updatedRental.deductions }}</td>
                     </tr>
                     <tr>
-                        <th><icon-app iconImage="dollar"></icon-app>Precio total</th>
-                        <td><span class="badge badge-info"><icon-app iconImage="dollar"></icon-app> {{ updatedRental.finalPayment }}</span></td>
+                        <th><icon-app iconImage="dollar-sign"></icon-app>Precio total</th>
+                        <td><span class="badge badge-info"><icon-app iconImage="dollar-sign"></icon-app> {{ updatedRental.finalPayment }}</span></td>
                     </tr>
                     <tr>
                         <th><icon-app iconImage="calendar"></icon-app> Desde</th>
@@ -40,8 +40,8 @@
                         <td><span class="badge badge-secondary">{{ updatedRental.dateTo + ' 10:00:00' | DateArg }}</span></td>
                     </tr>
                     <tr>
-                        <th><icon-app iconImage="dollar"></icon-app>Monto de reserva</th>
-                        <td><span class="badge badge-info"><icon-app iconImage="dollar"></icon-app> {{ (updatedRental.finalPayment * 30 / 100).toFixed(2) }}</span></td>
+                        <th><icon-app iconImage="dollar-sign"></icon-app>Monto de reserva</th>
+                        <td><span class="badge badge-info"><icon-app iconImage="dollar-sign"></icon-app> {{ (updatedRental.finalPayment * 30 / 100).toFixed(2) }}</span></td>
                     </tr>
                     <tr>
                         <th><icon-app iconImage="calendar"></icon-app> Vto. reserva</th>

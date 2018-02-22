@@ -48,6 +48,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('rentals/edit', 'RentalsController@edit')->name('home.rentals.edit');
     Route::get('liquidation', 'LiquidationController@liquidation')->name('home.liquidation.liquidation');
     Route::get('order', 'OrdersController@index')->name('home.order.index');
+    Route::get('order/edit', 'OrdersController@edit')->name('home.order.edit');
 
     /**************************************
      * Auth Routes
@@ -72,7 +73,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Administration', 'middleware'
     Route::post('cottages/bulk_actions', 'CottagesController@cottagesBulkActions')->name('cottage.cottagesBulkActions');
     Route::get('food', 'FoodsController@index')->name('comidas.index');
     Route::get('reports', 'ReportsController@index')->name('reports.index');
-    //Route::resource('promotions', 'PromotionsController');
+    Route::get('promotions', 'PromotionsController@index')->name('promotions.index');
 });
 
 Route::prefix('test')->group(function() {

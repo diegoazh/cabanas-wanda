@@ -31,7 +31,7 @@
                     <div class="form-group">
                         <label for="imgs_header" class="sr-only">Imagenes de la cabecera</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Imagenes de la cabecera</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Imagenes de la cabecera</div></div>
                             {{ Form::file('imgs_header[]', ['class' => 'form-control', 'id' => 'imgs_header', 'multiple' => 'multiple']) }}
                         </div>
                     </div>
@@ -43,25 +43,25 @@
                     </div>
                     <div class="form-group"><label for="tt_presentation" class="sr-only">Titulo presentación</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Título de presentación</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Título de presentación</div></div>
                             {{ Form::text('tt_presentation', (isset($front->tt_presentation)) ? $front->tt_presentation : '', ['id' => 'tt_presentation', 'class' => 'form-control', 'placeholder' => 'Ingrese el titulo de presentación de la página principal...']) }}
                         </div>
                     </div>
                     <div class="form-group"><label for="msg_presentation" class="sr-only">Mensaje de presentación</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Mensaje de presentación</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Mensaje de presentación</div></div>
                             {{ Form::textarea('msg_presentation', (isset($front->msg_presentation)) ? $front->msg_presentation : '', ['id' => 'msg_presentation', 'class' => 'form-control', 'placeholder' => 'Ingrese la descripción de la presentación en la página principal...']) }}
                         </div>
                     </div>
                     <div class="form-group"><label for="txt_btn_presentation" class="sr-only">Texto botón presentación</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Texto botón presentación</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Texto botón presentación</div></div>
                             {{ Form::text('txt_btn_presentation', (isset($front->txt_btn_presentation)) ? $front->txt_btn_presentation : '', ['id' => 'txt_btn_presentation', 'class' => 'form-control', 'placeholder' => 'Ingrese el texto del botón de la página principal...']) }}
                         </div>
                     </div>
                     <div class="form-group"><label for="lnk_btn_presentation" class="sr-only">Link del botón de presentación</label>
-                        <div class="input-group">
-                            <div class="input-group-addon">Link del botón de presentación</div>
+                        <div class="input-group" style="height: 38px">
+                            <div class="input-group-prepend"><div class="input-group-text">Link del botón de presentación</div></div>
                             {{ Form::select('lnk_btn_presentation', [], (isset($front->lnk_btn_presentation)) ? $front->lnk_btn_presentation : null, ['id' => 'lnk_btn_presentation', 'class' => 'form-control', 'placeholder' => 'Seleccióne el link del boton de la página principal, también puede escribirlo...']) }}
                         </div>
                     </div>
@@ -78,25 +78,25 @@
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan1">
                     <div class="text-right">
-                        <span class="label label-warning">Slogan requerido</span>
+                        <span class="badge badge-warning">Slogan requerido</span>
                     </div>
                     <br>
                     <div class="form-group"><label for="tt_slogan_one" class="sr-only">Título slogan 1</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Título slogan 1</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Título slogan 1</div></div>
                             {{ Form::text('tt_slogan_one', (isset($front->tt_slogan_one)) ? $front->tt_slogan_one : '', ['id' => 'tt_slogan_one', 'class' => 'form-control', 'placeholder' => 'Ingrese el titulo del slogan 1...']) }}
                         </div>
                     </div>
                     <div class="form-group"><label for="desc_slogan_one" class="sr-only">Descripción sologan 1</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Descripción sologan 1</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Descripción sologan 1</div></div>
                             {{ Form::textarea('desc_slogan_one', (isset($front->desc_slogan_one)) ? $front->desc_slogan_one : '', ['id' => 'desc_slogan_one', 'class' => 'form-control', 'placeholder' => 'Ingrese la descripción del slogan 1...']) }}
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="img_slogan_one" class="sr-only">Imagen del slogan 1</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Imagen del slogan 1</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Imagen del slogan 1</div></div>
                             {{ Form::file('img_slogan_one', ['id' => 'img_slogan_one', 'class' => 'form-control', 'placeholder' => 'Ingrese la imágen del slogan 1...']) }}
                         </div>
                     </div>
@@ -109,25 +109,25 @@
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan2">
                     <div class="text-right">
-                        <span class="label label-warning">Slogan requerido</span>
+                        <span class="badge badge-warning">Slogan requerido</span>
                     </div>
                     <br>
                     <div class="form-group"><label for="tt_slogan_two" class="sr-only">Título slogan 2</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Título slogan 2</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Título slogan 2</div></div>
                             {{ Form::text('tt_slogan_two', (isset($front->tt_slogan_two)) ? $front->tt_slogan_two : '', ['id' => 'tt_slogan_two', 'class' => 'form-control', 'placeholder' => 'Ingrese el titulo del slogan 2...']) }}
                         </div>
                     </div>
                     <div class="form-group"><label for="desc_slogan_two" class="sr-only">Descripción sologan 2</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Descripción sologan 2</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Descripción sologan 2</div></div>
                             {{ Form::textarea('desc_slogan_two', (isset($front->desc_slogan_two)) ? $front->desc_slogan_two : '', ['id' => 'desc_slogan_two', 'class' => 'form-control', 'placeholder' => 'Ingrese la descripción del slogan 2...']) }}
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="img_slogan_two" class="sr-only">Imagen del slogan 2</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Imagen del slogan 2</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Imagen del slogan 2</div></div>
                             {{ Form::file('img_slogan_two', ['id' => 'img_slogan_two', 'class' => 'form-control', 'placeholder' => 'Ingrese la imágen del slogan 2...']) }}
                         </div>
                     </div>
@@ -140,24 +140,24 @@
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan3">
                     <div class="text-right">
-                        <span class="label label-warning">Slogan requerido</span>
+                        <span class="badge badge-warning">Slogan requerido</span>
                     </div>
                     <br>
                     <div class="form-group"><label for="tt_slogan_three" class="sr-only">Título slogan 3</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Título slogan 3</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Título slogan 3</div></div>
                             {{ Form::text('tt_slogan_three', (isset($front->tt_slogan_three)) ? $front->tt_slogan_three : '', ['id' => 'tt_slogan_three', 'class' => 'form-control', 'placeholder' => 'Ingrese el titulo del slogan 3...']) }}
                         </div>
                     </div>
                     <div class="form-group"><label for="desc_slogan_three" class="sr-only">Descripción sologan 3</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Descripción sologan 3</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Descripción sologan 3</div></div>
                             {{ Form::textarea('desc_slogan_three', (isset($front->desc_slogan_three)) ? $front->desc_slogan_three : '', ['id' => 'desc_slogan_three', 'class' => 'form-control', 'placeholder' => 'Ingrese la descripción del slogan 3...']) }}
                         </div>
                     </div>
                     <div class="form-group"><label for="img_slogan_three" class="sr-only">Imagen del slogan 3</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Imagen del slogan 3</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Imagen del slogan 3</div></div>
                             {{ Form::file('img_slogan_three', ['id' => 'img_slogan_three', 'class' => 'form-control', 'placeholder' => 'Ingrese la imágen del slogan 3...']) }}
                         </div>
                     </div>
@@ -170,24 +170,24 @@
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan4">
                     <div class="text-right">
-                        <small class="text-muted">Slogan opcional</small>
+                        <small class="badge badge-info">Slogan opcional</small>
                     </div>
                     <div class="form-group"><label for="tt_slogan_four" class="sr-only">Título slogan 4</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Título slogan 4</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Título slogan 4</div></div>
                             {{ Form::text('tt_slogan_four', (isset($front->tt_slogan_four)) ? $front->tt_slogan_four : '', ['id' => 'tt_slogan_four', 'class' => 'form-control', 'placeholder' => 'Ingrese el titulo del slogan 4...']) }}
                         </div>
                     </div>
                     <div class="form-group"><label for="desc_slogan_four" class="sr-only">Descripción sologan 4</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Descripción sologan 4</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Descripción sologan 4</div></div>
                             {{ Form::textarea('desc_slogan_four', (isset($front->desc_slogan_four)) ? $front->desc_slogan_four : '', ['id' => 'desc_slogan_four', 'class' => 'form-control', 'placeholder' => 'Ingrese la descripción del slogan 4...']) }}
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="img_slogan_four" class="sr-only">Imagen del slogan 4</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Imagen del slogan 4</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Imagen del slogan 4</div></div>
                             {{ Form::file('img_slogan_four', ['id' => 'img_slogan_four', 'class' => 'form-control', 'placeholder' => 'Ingrese la imágen del slogan 4...']) }}
                         </div>
                     </div>
@@ -200,24 +200,24 @@
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan5">
                     <div class="text-right">
-                        <small class="text-muted">Slogan opcional</small>
+                        <small class="badge badge-info">Slogan opcional</small>
                     </div>
                     <div class="form-group"><label for="tt_slogan_five" class="sr-only">Título slogan 5</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Título slogan 5</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Título slogan 5</div></div>
                             {{ Form::text('tt_slogan_five', (isset($front->tt_slogan_five)) ? $front->tt_slogan_five : '', ['id' => 'tt_slogan_five', 'class' => 'form-control', 'placeholder' => 'Ingrese el titulo del slogan 5...']) }}
                         </div>
                     </div>
                     <div class="form-group"><label for="desc_slogan_five" class="sr-only">Descripción sologan 5</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Descripción sologan 5</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Descripción sologan 5</div></div>
                             {{ Form::textarea('desc_slogan_five', (isset($front->desc_slogan_five)) ? $front->desc_slogan_five : '', ['id' => 'desc_slogan_five', 'class' => 'form-control', 'placeholder' => 'Ingrese la descripción del slogan 5...']) }}
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="img_slogan_five" class="sr-only">Imagen del slogan 5</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Imagen del slogan 5</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Imagen del slogan 5</div></div>
                             {{ Form::file('img_slogan_five', ['id' => 'img_slogan_five', 'class' => 'form-control', 'placeholder' => 'Ingrese la imágen del slogan 5...']) }}
                         </div>
                     </div>
@@ -230,24 +230,24 @@
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="slogan6">
                     <div class="text-right">
-                        <small class="text-muted">Slogan opcional</small>
+                        <small class="badge badge-info">Slogan opcional</small>
                     </div>
                     <div class="form-group"><label for="tt_slogan_six" class="sr-only">Título slogan 6</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Título slogan 6</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Título slogan 6</div></div>
                             {{ Form::text('tt_slogan_six', (isset($front->tt_slogan_six)) ? $front->tt_slogan_six : '', ['id' => 'tt_slogan_six', 'class' => 'form-control', 'placeholder' => 'Ingrese el titulo del slogan 6...']) }}
                         </div>
                     </div>
                     <div class="form-group"><label for="desc_slogan_six" class="sr-only">Descripción sologan 6</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Descripción sologan 6</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Descripción sologan 6</div></div>
                             {{ Form::textarea('desc_slogan_six', (isset($front->desc_slogan_six)) ? $front->desc_slogan_six : '', ['id' => 'desc_slogan_six', 'class' => 'form-control', 'placeholder' => 'Ingrese la descripción del slogan 6...']) }}
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="img_slogan_six" class="sr-only">Imagen del slogan 6</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Imagen del slogan 6</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Imagen del slogan 6</div></div>
                             {{ Form::file('img_slogan_six', ['id' => 'img_slogan_six', 'class' => 'form-control', 'placeholder' => 'Ingrese la imágen del slogan 6...']) }}
                         </div>
                     </div>
@@ -263,7 +263,7 @@
                     <div class="form-group">
                         <label for="link_video" class="sr-only">Link v&iacute;deo pie de p&aacute;gina</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Link v&iacute;deo pie de p&aacute;gina</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Link v&iacute;deo pie de p&aacute;gina</div></div>
                             {{ Form::text('link_video', (isset($front->link_video)) ? $front->link_video : null, ['class' => 'form-control', 'id' => 'link_video', 'placeholder' => 'Ingrese el link del v&iacute;deo en el pie de p&aacute;gina']) }}
                         </div>
                     </div>
@@ -277,7 +277,7 @@
                     <div class="form-group">
                         <label for="facebook" class="sr-only">Facebook</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Facebook</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Facebook</div></div>
                             {{ Form::text('facebook', (isset($front->facebook)) ? $front->facebook : null, ['class' => 'form-control', 'id' => 'facebook', 'placeholder' => 'Ingrese el link de la página de facebook']) }}
                         </div>
                     </div>
@@ -291,7 +291,7 @@
                     <div class="form-group">
                         <label for="twitter" class="sr-only">Twitter</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Twitter</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Twitter</div></div>
                             {{ Form::text('twitter', (isset($front->twitter)) ? : null, ['class' => 'form-control', 'id' => 'twitter', 'placeholder' => 'Ingrese el link de la página de twitter']) }}
                         </div>
                     </div>
@@ -305,7 +305,7 @@
                     <div class="form-group">
                         <label for="instagram" class="sr-only">Instagram</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Instagram</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Instagram</div></div>
                             {{ Form::text('instagram', (isset($front->instagram)) ? $front->instagram : null, ['class' => 'form-control', 'id' => 'instagram', 'placeholder' => 'Ingrese el link de la página de instagram']) }}
                         </div>
                     </div>
@@ -319,7 +319,7 @@
                     <div class="form-group">
                         <label for="youtube" class="sr-only">YouTube</label>
                         <div class="input-group">
-                            <div class="input-group-addon">YouTube</div>
+                            <div class="input-group-prepend"><div class="input-group-text">YouTube</div></div>
                             {{ Form::text('youtube', (isset($front->youtube)) ? $front->youtube : null, ['class' => 'form-control', 'id' => 'youtube', 'placeholder' => 'Ingrese el link de la página de youtube']) }}
                         </div>
                     </div>
@@ -333,7 +333,7 @@
                     <div class="form-group">
                         <label for="googleplus" class="sr-only">Google Plus</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Google Plus</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Google Plus</div></div>
                             {{ Form::text('googleplus', (isset($front->googleplus)) ? $front->googleplus : null, ['class' => 'form-control', 'id' => 'googleplus', 'placeholder' => 'Ingrese el link de la página de googleplus']) }}
                         </div>
                     </div>

@@ -18,15 +18,14 @@
             @endif
         </ul>
     </li>
-    <li class="item"><a href="#" class="promotion">Promociones <span>{{ isset($canPromotions) ? $canPromotions : 0 }}</span></a>
+    <li class="item"><a href="#" class="promotion">Promociones <span>{{ isset($cantPromotions) ? $cantPromotions : 0 }}</span></a>
         <ul>
-            <li class="subitem"><a href="#">Listado de promos <span>{{ isset($canPromotions) ? $canPromotions : 0 }}</span></a></li>
-            <li class="subitem"><a href="#">Crear promo</a></li>
+            <li class="subitem"><a href="{{ route('promotions.index') }}">Promociones <span>{{ isset($cantPromotions) ? $cantPromotions : 0 }}</span></a></li>
         </ul>
     </li>
-    <li class="item"><a href="#" class="claims">Reclamos <span>{{ isset($canClaims) ? $canClaims : 0 }}</span></a>
+    <li class="item"><a href="#" class="claims">Reclamos <span>{{ isset($cantClaims) ? $cantClaims : 0 }}</span></a>
         <ul>
-            <li class="subitem"><a href="#">Listado de reclamos <span>{{ isset($canClaims) ? $canClaims : 0 }}</span></a></li>
+            <li class="subitem"><a href="#">Listado de reclamos <span>{{ isset($cantClaims) ? $cantClaims : 0 }}</span></a></li>
             <li class="subitem"><a href="#">Crear reclamo</a></li>
         </ul>
     </li>

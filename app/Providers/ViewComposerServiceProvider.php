@@ -16,11 +16,13 @@ class ViewComposerServiceProvider extends ServiceProvider
     {
         View::composers([
             'App\Http\ViewComposers\AdminViewComposer' => [
-                'backend.panel',
-                'backend.home-page',
                 'backend.cottages',
                 'backend.cottage-create',
-                'backend.users'
+                'backend.foods',
+                'backend.frontend',
+                'backend.panel',
+                'backend.promotions-create',
+                'backend.users',
             ],
             'App\Http\ViewComposers\RegisterViewComposer' => 'auth.register',
             'App\Http\ViewComposers\FooterFrontViewComposer' => [

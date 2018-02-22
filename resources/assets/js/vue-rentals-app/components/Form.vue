@@ -5,12 +5,12 @@
             <div class="form-group">
                 <label for="dateFrom" class="col-form-label sr-only">Desde</label>
                 <div class="input-group mr-3">
-                    <div class="input-group-addon date-piker"><icon-app iconImage="calendar"></icon-app></div>
+                    <div class="input-group-prepend date-piker"><div class="input-group-text"><icon-app iconImage="calendar"></icon-app></div></div>
                     <date-picker placeholder="Seleccione la fecha desde..." :config="dtpConfig" id="dateFrom" name="dateFrom" v-model="dateFrom"></date-picker>
                 </div>
                 <label for="dateTo" class="col-form-label sr-only">Hasta</label>
                 <div class="input-group mr-3">
-                    <div class="input-group-addon date-piker"><icon-app iconImage="calendar"></icon-app></div>
+                    <div class="input-group-prepend date-piker"><div class="input-group-text"><icon-app iconImage="calendar"></icon-app></div></div>
                     <date-picker placeholder="Seleccione la fecha hasta..." :config="dtpConfig" id="dateTo" name="dateTo" v-model="dateTo"></date-picker>
                 </div>
                 <button :class="['btn', {'btn-outline-primary': !hasErrors, 'btn-outline-secondary': hasErrors}]" :disabled="hasErrors" role="button">
@@ -94,7 +94,7 @@
                     this.dtpConfig = this.toggleConfig;
                 }
             },
-            hasErrorsInForm() {
+            hasErrorsInForm() { // TODO(Diego) Eliminar en la proximas correcciones esta función. Se puede simplificar utilizando simplemente invalidDate()
                 let dateFrom = this.dateFrom ? moment(this.dateFrom, 'DD/MM/YYYY') : null;
                 let dateTo = this.dateTo ? moment(this.dateTo, 'DD/MM/YYYY') : null;
 

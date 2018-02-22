@@ -1673,6 +1673,10 @@ exports.default = {
                 return value !== undefined && typeof value === 'string';
             }
         },
+        typeIconLeft: {
+            type: String,
+            default: 's'
+        },
         iconTextLeft: {
             type: String,
             default: '',
@@ -1687,6 +1691,10 @@ exports.default = {
             validator: function validator(value) {
                 return value !== undefined && typeof value === 'string';
             }
+        },
+        typeIconRight: {
+            type: String,
+            default: 's'
         },
         iconTextRight: {
             type: String,
@@ -1802,6 +1810,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     name: 'icon-app',
     props: {
+        typeIcon: {
+            type: String,
+            default: 's'
+        },
         iconImage: {
             type: String,
             default: '',
@@ -1820,7 +1832,7 @@ exports.default = {
     },
     computed: {
         toggleIconClass: function toggleIconClass() {
-            var classes = 'fa fa-' + this.iconImage;
+            var classes = (this.typeIcon === 'l' ? 'fal' : this.typeIcon === 'r' ? 'far' : 'fas') + ' fa-' + this.iconImage;
             if (this.aditionalClasses) {
                 classes += ' ' + this.aditionalClasses;
             }
@@ -2437,6 +2449,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -2490,22 +2516,22 @@ exports.default = {
 
             switch (state) {
                 case 'pendiente':
-                    classString = 'label-warning';
+                    classString = 'badge-warning';
                     break;
                 case 'seniado':
-                    classString = 'label-info';
+                    classString = 'badge-info';
                     break;
                 case 'pagado':
-                    classString = 'label-success';
+                    classString = 'badge-success';
                     break;
                 case 'preparandose':
-                    classString = 'label-info';
+                    classString = 'badge-info';
                     break;
                 case 'entregado':
-                    classString = 'label-success';
+                    classString = 'badge-success';
                     break;
                 case 'cancelado':
-                    classString = 'label-danger';
+                    classString = 'badge-danger';
                     break;
             }
 
@@ -2516,16 +2542,16 @@ exports.default = {
 
             switch (type) {
                 case 'desayuno':
-                    classType = 'label-desayuno';
+                    classType = 'badge-desayuno';
                     break;
                 case 'almuerzo':
-                    classType = 'label-almuerzo';
+                    classType = 'badge-almuerzo';
                     break;
                 case 'merienda':
-                    classType = 'label-merienda';
+                    classType = 'badge-merienda';
                     break;
                 case 'cena':
-                    classType = 'label-cena';
+                    classType = 'badge-cena';
                     break;
             }
 
@@ -2570,7 +2596,7 @@ exports.default = {
                     return _this.$set(detail, 'edit', false);
                 });
                 _this.order = order;
-                _this.modalAppTitle = 'Detalle pedido, cabaña ' + _this.order.rental.cottage.name;
+                _this.modalAppTitle = 'Detalle pedido, cabaña ' + _this.order.rental.cottage.name.toUpperCase();
                 _vueNotifications2.default.success({
                     title: 'OK!',
                     message: 'Orden cargada con éxito',
@@ -2628,6 +2654,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
 //
 //
 //
@@ -6220,7 +6250,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2bc0e592\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue":
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2bc0e592\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
@@ -6228,7 +6258,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.text-deleted {\n    text-decoration: line-through;\n}\n", ""]);
+exports.push([module.i, "\n.text-deleted[data-v-2bc0e592] {\n    text-decoration: line-through;\n}\n.cursorPointer[data-v-2bc0e592] {\n    cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -6273,7 +6303,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -6288,7 +6318,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.text-to-14px {\n    font-size: 14px;\n}\n.label-desayuno{\n    background-color: #DBF9F3;\n    color: #333333;\n    border: solid 1px #333333;\n}\n.label-almuerzo{\n    background-color: #CBE9FC;\n    color: #333333;\n    border: solid 1px #333333;\n}\n.label-merienda{\n    background-color: #CBD5FC;\n    color: #333333;\n    border: solid 1px #333333;\n}\n.label-cena{\n    background-color: #DECBFC;\n    color: #333333;\n    border: solid 1px #333333;\n}\n", ""]);
+exports.push([module.i, "\n.text-to-14px {\n    font-size: 14px;\n}\n.badge-desayuno{\n    background-color: #DBF9F3;\n    color: #333333;\n    border: solid 1px #333333;\n}\n.badge-almuerzo{\n    background-color: #CBE9FC;\n    color: #333333;\n    border: solid 1px #333333;\n}\n.badge-merienda{\n    background-color: #CBD5FC;\n    color: #333333;\n    border: solid 1px #333333;\n}\n.badge-cena{\n    background-color: #DECBFC;\n    color: #333333;\n    border: solid 1px #333333;\n}\n", ""]);
 
 // exports
 
@@ -47664,7 +47694,7 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2bc0e592\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2bc0e592\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -47682,7 +47712,12 @@ var render = function() {
         },
         [
           _vm.iconTextLeft
-            ? _c("icon-app", { attrs: { iconImage: _vm.iconTextLeft } })
+            ? _c("icon-app", {
+                attrs: {
+                  typeIcon: _vm.typeIconLeft,
+                  iconImage: _vm.iconTextLeft
+                }
+              })
             : _vm._e(),
           _vm._v(" " + _vm._s(_vm.textLeft) + "\n        ")
         ],
@@ -47715,7 +47750,12 @@ var render = function() {
         [
           _vm._v("\n            " + _vm._s(_vm.textRight) + " "),
           _vm.iconTextRight
-            ? _c("icon-app", { attrs: { iconImage: _vm.iconTextRight } })
+            ? _c("icon-app", {
+                attrs: {
+                  typeIcon: _vm.typeIconRight,
+                  iconImage: _vm.iconTextRight
+                }
+              })
             : _vm._e()
         ],
         1
@@ -47748,7 +47788,7 @@ var render = function() {
         "h1",
         { staticClass: "text-center" },
         [
-          _c("icon-app", { attrs: { iconImage: "dashboard" } }),
+          _c("icon-app", { attrs: { iconImage: "tachometer-alt" } }),
           _vm._v(" Panel de administración")
         ],
         1
@@ -47763,9 +47803,9 @@ var render = function() {
           attrs: {
             initLeft: _vm.seeRentals,
             textLeft: "Reservas",
-            iconTextLeft: "handshake-o",
+            iconTextLeft: "handshake",
             textRight: "Pedidos",
-            iconTextRight: "cutlery",
+            iconTextRight: "utensils",
             classOnActive: "text-primary",
             classOnInactive: "text-muted",
             textDeleted: true
@@ -48341,35 +48381,46 @@ var render = function() {
                             )
                           : _vm._e(),
                         _vm._v(" \n                            "),
-                        !_vm.editState
-                          ? _c(
-                              "a",
-                              {
-                                directives: [
+                        _c(
+                          "sup",
+                          {
+                            staticClass: "cursorPointer",
+                            attrs: { role: "button" }
+                          },
+                          [
+                            !_vm.editState
+                              ? _c(
+                                  "a",
                                   {
-                                    name: "tooltip",
-                                    rawName: "v-tooltip.hover",
-                                    value: "Editar estado",
-                                    expression: "'Editar estado'",
-                                    modifiers: { hover: true }
-                                  }
-                                ],
-                                staticClass: "cursorPointer",
-                                attrs: { role: "button" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    _vm.editState = true
-                                    _vm.trash.state = _vm.rental.state
-                                  }
-                                }
-                              },
-                              [
-                                _c("icon-app", { attrs: { iconImage: "edit" } })
-                              ],
-                              1
-                            )
-                          : _vm._e(),
+                                    directives: [
+                                      {
+                                        name: "tooltip",
+                                        rawName: "v-tooltip.hover",
+                                        value: "Editar estado",
+                                        expression: "'Editar estado'",
+                                        modifiers: { hover: true }
+                                      }
+                                    ],
+                                    staticClass: "cursorPointer",
+                                    attrs: { role: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        _vm.editState = true
+                                        _vm.trash.state = _vm.rental.state
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("icon-app", {
+                                      attrs: { iconImage: "edit" }
+                                    })
+                                  ],
+                                  1
+                                )
+                              : _vm._e()
+                          ]
+                        ),
                         _vm._v(" "),
                         _vm.editState
                           ? _c(
@@ -48428,8 +48479,18 @@ var render = function() {
                                       [
                                         _c(
                                           "div",
-                                          { staticClass: "input-group-addon" },
-                                          [_vm._v("Estado")]
+                                          {
+                                            staticClass: "input-group-prepend"
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass: "input-group-text"
+                                              },
+                                              [_vm._v("Estado")]
+                                            )
+                                          ]
                                         ),
                                         _vm._v(" "),
                                         _c(
@@ -48732,36 +48793,45 @@ var render = function() {
                       _c("h3", { staticClass: "text-center" }, [
                         _vm._v("\n                        Descripción "),
                         _c(
-                          "a",
+                          "sup",
                           {
-                            directives: [
-                              {
-                                name: "tooltip",
-                                rawName: "v-tooltip.hover",
-                                value: "Editar descripción",
-                                expression: "'Editar descripción'",
-                                modifiers: { hover: true }
-                              }
-                            ],
                             staticClass: "cursorPointer",
-                            attrs: { role: "button" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                _vm.initEditorMd($event)
-                              }
-                            }
+                            attrs: { role: "button" }
                           },
                           [
-                            _c("icon-app", {
-                              attrs: {
-                                iconImage: _vm.editDescription
-                                  ? "times"
-                                  : "edit"
-                              }
-                            })
-                          ],
-                          1
+                            _c(
+                              "a",
+                              {
+                                directives: [
+                                  {
+                                    name: "tooltip",
+                                    rawName: "v-tooltip.hover",
+                                    value: "Editar descripción",
+                                    expression: "'Editar descripción'",
+                                    modifiers: { hover: true }
+                                  }
+                                ],
+                                staticClass: "cursorPointer",
+                                attrs: { role: "button" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.initEditorMd($event)
+                                  }
+                                }
+                              },
+                              [
+                                _c("icon-app", {
+                                  attrs: {
+                                    iconImage: _vm.editDescription
+                                      ? "times"
+                                      : "edit"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c("br"),
@@ -48967,7 +49037,7 @@ var render = function() {
               _c("td", [
                 _c(
                   "span",
-                  { staticClass: "text-to-14px label label-warning" },
+                  { staticClass: "text-to-14px badge badge-warning" },
                   [
                     _c("icon-app", { attrs: { iconImage: "home" } }),
                     _vm._v(" " + _vm._s(orders.rental.cottage.name))
@@ -48980,41 +49050,46 @@ var render = function() {
                 !orders.edit
                   ? _c(
                       "span",
-                      { staticClass: "text-to-14px label label-primary" },
+                      { staticClass: "text-to-14px badge badge-primary" },
                       [
                         _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                        _vm._v(" " + _vm._s(orders.senia))
+                        _vm._v(
+                          " " + _vm._s(orders.senia) + "\n                "
+                        )
                       ],
                       1
                     )
                   : _vm._e(),
                 _vm._v(" "),
-                !orders.edit
-                  ? _c(
-                      "a",
-                      {
-                        directives: [
-                          {
-                            name: "tooltip",
-                            rawName: "v-tooltip.right",
-                            value: "Editar seña",
-                            expression: "'Editar seña'",
-                            modifiers: { right: true }
+                _c("sup", [
+                  !orders.edit
+                    ? _c(
+                        "a",
+                        {
+                          directives: [
+                            {
+                              name: "tooltip",
+                              rawName: "v-tooltip.right",
+                              value: "Editar seña",
+                              expression: "'Editar seña'",
+                              modifiers: { right: true }
+                            }
+                          ],
+                          staticClass: "cursorPointer",
+                          attrs: { role: "button" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              orders.edit = true
+                              _vm.trash.senia = orders.senia
+                            }
                           }
-                        ],
-                        attrs: { role: "button" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            orders.edit = true
-                            _vm.trash.senia = orders.senia
-                          }
-                        }
-                      },
-                      [_c("icon-app", { attrs: { iconImage: "edit" } })],
-                      1
-                    )
-                  : _vm._e(),
+                        },
+                        [_c("icon-app", { attrs: { iconImage: "edit" } })],
+                        1
+                      )
+                    : _vm._e()
+                ]),
                 _vm._v(" "),
                 orders.edit
                   ? _c(
@@ -49044,13 +49119,19 @@ var render = function() {
                             [
                               _c(
                                 "div",
-                                { staticClass: "input-group-addon" },
+                                { staticClass: "input-group-prepend" },
                                 [
-                                  _c("icon-app", {
-                                    attrs: { iconImage: "dollar" }
-                                  })
-                                ],
-                                1
+                                  _c(
+                                    "div",
+                                    { staticClass: "input-group-text" },
+                                    [
+                                      _c("icon-app", {
+                                        attrs: { iconImage: "dollar" }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ]
                               ),
                               _vm._v(" "),
                               _c("input", {
@@ -49089,7 +49170,7 @@ var render = function() {
                             _c(
                               "button",
                               {
-                                staticClass: "btn btn-default btn-sm",
+                                staticClass: "btn btn-secondary btn-sm",
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
@@ -49124,7 +49205,7 @@ var render = function() {
               _c("td", [
                 _c(
                   "span",
-                  { staticClass: "text-to-14px label label-default" },
+                  { staticClass: "text-to-14px badge badge-secondary" },
                   [_vm._v(_vm._s(_vm._f("DateArg")(orders.senia_date)))]
                 )
               ]),
@@ -49200,7 +49281,7 @@ var render = function() {
                     [
                       _c("h2", { staticClass: "text-center" }, [
                         _vm._v("\n                        Pedido cabaña "),
-                        _c("span", { staticClass: "label label-info" }, [
+                        _c("span", { staticClass: "badge badge-info" }, [
                           _vm._v(_vm._s(_vm.order.rental.cottage.name))
                         ]),
                         _vm._v(" "),
@@ -49213,7 +49294,7 @@ var render = function() {
                                 {
                                   class: [
                                     "text-uppercase",
-                                    "label",
+                                    "badge",
                                     _vm.setClassState(_vm.order.state)
                                   ]
                                 },
@@ -49227,42 +49308,52 @@ var render = function() {
                               )
                             : _vm._e(),
                           _vm._v(" \n                            "),
-                          !_vm.editState
-                            ? _c(
-                                "a",
-                                {
-                                  directives: [
+                          _c(
+                            "sup",
+                            {
+                              staticClass: "cursorPointer",
+                              attrs: { role: "button" }
+                            },
+                            [
+                              !_vm.editState
+                                ? _c(
+                                    "a",
                                     {
-                                      name: "tooltip",
-                                      rawName: "v-tooltip.hover",
-                                      value: "Editar estado",
-                                      expression: "'Editar estado'",
-                                      modifiers: { hover: true }
-                                    }
-                                  ],
-                                  attrs: { role: "button" },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      _vm.editState = true
-                                      _vm.trash.state = _vm.order.state
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("icon-app", {
-                                    attrs: { iconImage: "edit" }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e(),
+                                      directives: [
+                                        {
+                                          name: "tooltip",
+                                          rawName: "v-tooltip.hover",
+                                          value: "Editar estado",
+                                          expression: "'Editar estado'",
+                                          modifiers: { hover: true }
+                                        }
+                                      ],
+                                      attrs: { role: "button" },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          _vm.editState = true
+                                          _vm.trash.state = _vm.order.state
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("icon-app", {
+                                        attrs: { iconImage: "edit" }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                : _vm._e()
+                            ]
+                          ),
                           _vm._v(" "),
                           _vm.editState
                             ? _c(
                                 "form",
                                 {
-                                  staticClass: "form-inline",
+                                  staticClass:
+                                    "form-inline justify-content-center",
                                   on: {
                                     submit: function($event) {
                                       $event.preventDefault()
@@ -49283,8 +49374,14 @@ var render = function() {
                                     _c("div", { staticClass: "input-group" }, [
                                       _c(
                                         "div",
-                                        { staticClass: "input-group-addon" },
-                                        [_vm._v("Estado")]
+                                        { staticClass: "input-group-prepend" },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "input-group-text" },
+                                            [_vm._v("Estado")]
+                                          )
+                                        ]
                                       ),
                                       _vm._v(" "),
                                       _c(
@@ -49384,7 +49481,7 @@ var render = function() {
                                       _c(
                                         "button",
                                         {
-                                          staticClass: "btn btn-default",
+                                          staticClass: "btn btn-secondary",
                                           on: {
                                             click: function($event) {
                                               $event.preventDefault()
@@ -49426,405 +49523,436 @@ var render = function() {
                     { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-12" },
                     [
                       _c("div", { staticClass: "table-responsive" }, [
-                        _c("table", { staticClass: "table table-striped" }, [
-                          _c("thead", [
-                            _c("tr", [
-                              _c("th", [_vm._v("Orden")]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("Plato")]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("Tipo")]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("Cantidad")]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("Precio")]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("Total")]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("Fecha entrega")]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("Estado del plato")])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "tbody",
-                            _vm._l(_vm.order.orders_detail, function(
-                              detail,
-                              index
-                            ) {
-                              return _c("tr", [
-                                _c(
-                                  "td",
-                                  [
-                                    _c("icon-app", {
-                                      attrs: { iconImage: "hashtag" }
-                                    }),
-                                    _vm._v(
-                                      " " +
-                                        _vm._s(index + 1) +
-                                        "\n                                "
-                                    )
-                                  ],
-                                  1
-                                ),
+                        _c(
+                          "table",
+                          {
+                            staticClass: "table table-striped table-responsive"
+                          },
+                          [
+                            _c("thead", { staticClass: "bg-dark text-light" }, [
+                              _c("tr", [
+                                _c("th", [_vm._v("Orden")]),
                                 _vm._v(" "),
-                                _c("td", [
+                                _c("th", [_vm._v("Plato")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Tipo")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Cantidad")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Precio")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Total")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Para el")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Estado")])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              _vm._l(_vm.order.orders_detail, function(
+                                detail,
+                                index
+                              ) {
+                                return _c("tr", [
                                   _c(
-                                    "span",
-                                    { staticClass: "label label-primary" },
+                                    "td",
                                     [
                                       _c("icon-app", {
-                                        attrs: { iconImage: "cutlery" }
-                                      }),
-                                      _vm._v(" " + _vm._s(detail.food.name))
-                                    ],
-                                    1
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "span",
-                                    {
-                                      class: [
-                                        "label",
-                                        _vm.setClassType(detail.food.type)
-                                      ]
-                                    },
-                                    [_vm._v(_vm._s(detail.food.type))]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "span",
-                                    { staticClass: "label label-info" },
-                                    [_vm._v(_vm._s(detail.quantity))]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "span",
-                                    { staticClass: "label label-warning" },
-                                    [
-                                      _c("icon-app", {
-                                        attrs: { iconImage: "dollar" }
-                                      }),
-                                      _vm._v(" " + _vm._s(detail.food.price))
-                                    ],
-                                    1
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "span",
-                                    { staticClass: "label label-danger" },
-                                    [
-                                      _c("icon-app", {
-                                        attrs: { iconImage: "dollar" }
+                                        attrs: { iconImage: "hashtag" }
                                       }),
                                       _vm._v(
                                         " " +
-                                          _vm._s(
-                                            (
-                                              detail.quantity *
-                                              detail.food.price
-                                            ).toFixed(2)
-                                          ) +
-                                          "\n                                    "
+                                          _vm._s(index + 1) +
+                                          "\n                                "
                                       )
                                     ],
                                     1
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "span",
-                                    { staticClass: "label label-default" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm._f("DateArg")(
-                                            detail.delivery,
-                                            "YYYY-MM-DD",
-                                            "DD/MM/YYYY"
-                                          )
-                                        )
-                                      )
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  !detail.edit
-                                    ? _c(
-                                        "span",
-                                        {
-                                          class: [
-                                            "label",
-                                            _vm.setClassState(detail.state)
-                                          ]
-                                        },
-                                        [
-                                          _vm._v(
+                                  ),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _c(
+                                      "span",
+                                      { staticClass: "badge badge-primary" },
+                                      [
+                                        _c("icon-app", {
+                                          attrs: { iconImage: "utensils" }
+                                        }),
+                                        _vm._v(" " + _vm._s(detail.food.name))
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _c(
+                                      "span",
+                                      {
+                                        class: [
+                                          "badge",
+                                          _vm.setClassType(detail.food.type)
+                                        ]
+                                      },
+                                      [_vm._v(_vm._s(detail.food.type))]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _c(
+                                      "span",
+                                      { staticClass: "badge badge-info" },
+                                      [_vm._v(_vm._s(detail.quantity))]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _c(
+                                      "span",
+                                      { staticClass: "badge badge-warning" },
+                                      [
+                                        _c("icon-app", {
+                                          attrs: { iconImage: "dollar" }
+                                        }),
+                                        _vm._v(" " + _vm._s(detail.food.price))
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _c(
+                                      "span",
+                                      { staticClass: "badge badge-danger" },
+                                      [
+                                        _c("icon-app", {
+                                          attrs: { iconImage: "dollar" }
+                                        }),
+                                        _vm._v(
+                                          " " +
                                             _vm._s(
-                                              _vm._f("correctState")(
-                                                detail.state
-                                              )
+                                              (
+                                                detail.quantity *
+                                                detail.food.price
+                                              ).toFixed(2)
+                                            ) +
+                                            "\n                                    "
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _c(
+                                      "span",
+                                      { staticClass: "badge badge-secondary" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm._f("DateArg")(
+                                              detail.delivery,
+                                              "YYYY-MM-DD",
+                                              "DD/MM/YYYY"
                                             )
                                           )
-                                        ]
-                                      )
-                                    : _vm._e(),
+                                        )
+                                      ]
+                                    )
+                                  ]),
                                   _vm._v(" "),
-                                  !detail.edit
-                                    ? _c(
-                                        "a",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "tooltip",
-                                              rawName: "v-tooltip.hover",
-                                              value: "Editar estado",
-                                              expression: "'Editar estado'",
-                                              modifiers: { hover: true }
-                                            }
-                                          ],
-                                          attrs: { role: "button" },
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              detail.edit = true
-                                              _vm.trash.stateFood = detail.state
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("icon-app", {
-                                            attrs: { iconImage: "edit" }
-                                          })
-                                        ],
-                                        1
-                                      )
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  detail.edit
-                                    ? _c(
-                                        "form",
-                                        {
-                                          staticClass: "form-inline",
-                                          on: {
-                                            submit: function($event) {
-                                              $event.preventDefault()
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "div",
-                                            { staticClass: "form-group" },
-                                            [
-                                              _c(
-                                                "label",
-                                                {
-                                                  staticClass: "sr-only",
-                                                  attrs: { for: "stateFood" }
-                                                },
-                                                [_vm._v("Estado: ")]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "div",
-                                                {
-                                                  staticClass:
-                                                    "input-group input-group-sm"
-                                                },
-                                                [
-                                                  _c(
-                                                    "div",
-                                                    {
-                                                      staticClass:
-                                                        "input-group-addon"
-                                                    },
-                                                    [_vm._v("Estado")]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "select",
-                                                    {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value:
-                                                            _vm.trash.stateFood,
-                                                          expression:
-                                                            "trash.stateFood"
-                                                        }
-                                                      ],
-                                                      staticClass:
-                                                        "form-control",
-                                                      attrs: {
-                                                        name: "state",
-                                                        id: "stateFood"
-                                                      },
-                                                      on: {
-                                                        change: function(
-                                                          $event
-                                                        ) {
-                                                          var $$selectedVal = Array.prototype.filter
-                                                            .call(
-                                                              $event.target
-                                                                .options,
-                                                              function(o) {
-                                                                return o.selected
-                                                              }
-                                                            )
-                                                            .map(function(o) {
-                                                              var val =
-                                                                "_value" in o
-                                                                  ? o._value
-                                                                  : o.value
-                                                              return val
-                                                            })
-                                                          _vm.$set(
-                                                            _vm.trash,
-                                                            "stateFood",
-                                                            $event.target
-                                                              .multiple
-                                                              ? $$selectedVal
-                                                              : $$selectedVal[0]
-                                                          )
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c(
-                                                        "option",
-                                                        {
-                                                          attrs: {
-                                                            value: "pendiente"
-                                                          },
-                                                          domProps: {
-                                                            selected:
-                                                              detail.state ===
-                                                              "pendiente"
-                                                          }
-                                                        },
-                                                        [_vm._v("Pendiente")]
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "option",
-                                                        {
-                                                          attrs: {
-                                                            value:
-                                                              "preparandose"
-                                                          },
-                                                          domProps: {
-                                                            selected:
-                                                              detail.state ===
-                                                              "preparandose"
-                                                          }
-                                                        },
-                                                        [_vm._v("Preparandose")]
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "option",
-                                                        {
-                                                          attrs: {
-                                                            value: "entregado"
-                                                          },
-                                                          domProps: {
-                                                            selected:
-                                                              detail.state ===
-                                                              "entregado"
-                                                          }
-                                                        },
-                                                        [_vm._v("Entregado")]
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "option",
-                                                        {
-                                                          attrs: {
-                                                            value: "cancelado"
-                                                          },
-                                                          domProps: {
-                                                            selected:
-                                                              detail.state ===
-                                                              "cancelado"
-                                                          }
-                                                        },
-                                                        [_vm._v("Cancelado")]
-                                                      )
-                                                    ]
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "div",
-                                                { staticClass: "form-group" },
-                                                [
-                                                  _c(
-                                                    "button",
-                                                    {
-                                                      staticClass:
-                                                        "btn btn-default btn-sm",
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          $event.preventDefault()
-                                                          detail.edit = false
-                                                          _vm.trash.stateFood =
-                                                            ""
-                                                        }
-                                                      }
-                                                    },
-                                                    [_vm._v("Cancelar")]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "button",
-                                                    {
-                                                      staticClass:
-                                                        "btn btn-primary btn-sm",
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          $event.preventDefault()
-                                                          _vm.saveNewStateFood(
-                                                            detail
-                                                          )
-                                                        }
-                                                      }
-                                                    },
-                                                    [_vm._v("Actualizar")]
-                                                  )
-                                                ]
-                                              )
+                                  _c("td", [
+                                    !detail.edit
+                                      ? _c(
+                                          "span",
+                                          {
+                                            class: [
+                                              "badge",
+                                              _vm.setClassState(detail.state)
                                             ]
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm._f("correctState")(
+                                                  detail.state
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _c(
+                                      "sup",
+                                      {
+                                        staticClass: "cursorPointer",
+                                        attrs: { role: "button" }
+                                      },
+                                      [
+                                        !detail.edit
+                                          ? _c(
+                                              "a",
+                                              {
+                                                directives: [
+                                                  {
+                                                    name: "tooltip",
+                                                    rawName: "v-tooltip.hover",
+                                                    value: "Editar estado",
+                                                    expression:
+                                                      "'Editar estado'",
+                                                    modifiers: { hover: true }
+                                                  }
+                                                ],
+                                                attrs: { role: "button" },
+                                                on: {
+                                                  click: function($event) {
+                                                    $event.preventDefault()
+                                                    detail.edit = true
+                                                    _vm.trash.stateFood =
+                                                      detail.state
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("icon-app", {
+                                                  attrs: { iconImage: "edit" }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                          : _vm._e()
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    detail.edit
+                                      ? _c(
+                                          "form",
+                                          {
+                                            staticClass: "form-inline",
+                                            on: {
+                                              submit: function($event) {
+                                                $event.preventDefault()
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              { staticClass: "form-group" },
+                                              [
+                                                _c(
+                                                  "label",
+                                                  {
+                                                    staticClass: "sr-only",
+                                                    attrs: { for: "stateFood" }
+                                                  },
+                                                  [_vm._v("Estado: ")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "input-group input-group-sm"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "input-group-prepend"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "input-group-text"
+                                                          },
+                                                          [_vm._v("Estado")]
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "select",
+                                                      {
+                                                        directives: [
+                                                          {
+                                                            name: "model",
+                                                            rawName: "v-model",
+                                                            value:
+                                                              _vm.trash
+                                                                .stateFood,
+                                                            expression:
+                                                              "trash.stateFood"
+                                                          }
+                                                        ],
+                                                        staticClass:
+                                                          "form-control",
+                                                        attrs: {
+                                                          name: "state",
+                                                          id: "stateFood"
+                                                        },
+                                                        on: {
+                                                          change: function(
+                                                            $event
+                                                          ) {
+                                                            var $$selectedVal = Array.prototype.filter
+                                                              .call(
+                                                                $event.target
+                                                                  .options,
+                                                                function(o) {
+                                                                  return o.selected
+                                                                }
+                                                              )
+                                                              .map(function(o) {
+                                                                var val =
+                                                                  "_value" in o
+                                                                    ? o._value
+                                                                    : o.value
+                                                                return val
+                                                              })
+                                                            _vm.$set(
+                                                              _vm.trash,
+                                                              "stateFood",
+                                                              $event.target
+                                                                .multiple
+                                                                ? $$selectedVal
+                                                                : $$selectedVal[0]
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "option",
+                                                          {
+                                                            attrs: {
+                                                              value: "pendiente"
+                                                            },
+                                                            domProps: {
+                                                              selected:
+                                                                detail.state ===
+                                                                "pendiente"
+                                                            }
+                                                          },
+                                                          [_vm._v("Pendiente")]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "option",
+                                                          {
+                                                            attrs: {
+                                                              value:
+                                                                "preparandose"
+                                                            },
+                                                            domProps: {
+                                                              selected:
+                                                                detail.state ===
+                                                                "preparandose"
+                                                            }
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "Preparandose"
+                                                            )
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "option",
+                                                          {
+                                                            attrs: {
+                                                              value: "entregado"
+                                                            },
+                                                            domProps: {
+                                                              selected:
+                                                                detail.state ===
+                                                                "entregado"
+                                                            }
+                                                          },
+                                                          [_vm._v("Entregado")]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "option",
+                                                          {
+                                                            attrs: {
+                                                              value: "cancelado"
+                                                            },
+                                                            domProps: {
+                                                              selected:
+                                                                detail.state ===
+                                                                "cancelado"
+                                                            }
+                                                          },
+                                                          [_vm._v("Cancelado")]
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "div",
+                                                  { staticClass: "form-group" },
+                                                  [
+                                                    _c(
+                                                      "button",
+                                                      {
+                                                        staticClass:
+                                                          "btn btn-secondary btn-sm",
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            $event.preventDefault()
+                                                            detail.edit = false
+                                                            _vm.trash.stateFood =
+                                                              ""
+                                                          }
+                                                        }
+                                                      },
+                                                      [_vm._v("Cancelar")]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "button",
+                                                      {
+                                                        staticClass:
+                                                          "btn btn-primary btn-sm",
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            $event.preventDefault()
+                                                            _vm.saveNewStateFood(
+                                                              detail
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      [_vm._v("Actualizar")]
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ])
                                 ])
-                              ])
-                            })
-                          ),
-                          _vm._v(" "),
-                          _c("tfoot", [
-                            _c("tr", [_c("td", { attrs: { colspan: "8" } })])
-                          ])
-                        ])
+                              })
+                            ),
+                            _vm._v(" "),
+                            _c("tfoot", [
+                              _c("tr", [_c("td", { attrs: { colspan: "8" } })])
+                            ])
+                          ]
+                        )
                       ])
                     ]
                   )
@@ -50965,23 +51093,23 @@ if(false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2bc0e592\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue":
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2bc0e592\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2bc0e592\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue");
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2bc0e592\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue");
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("e3d21590", content, false, {});
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("e2ace2b6", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2bc0e592\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BtnSwitch.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2bc0e592\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BtnSwitch.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2bc0e592\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BtnSwitch.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2bc0e592\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BtnSwitch.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -63246,19 +63374,19 @@ var handlingXhrErrors = exports.handlingXhrErrors = function handlingXhrErrors(e
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2bc0e592\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue")
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2bc0e592\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue")
 }
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
 var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],\"es2015\",\"stage-2\"],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2bc0e592\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2bc0e592\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/vue-commons/components/BtnSwitch.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-2bc0e592"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -64164,23 +64292,33 @@ exports.default = {
 
         commit('setCloseOrder', bool);
     },
-    setDesayunos: function setDesayunos(_ref5, desayunos) {
+    setOrderToEdit: function setOrderToEdit(_ref5, bool) {
         var commit = _ref5.commit;
+
+        commit('setOrderToEdit', bool);
+    },
+    setOrderId: function setOrderId(_ref6, id) {
+        var commit = _ref6.commit;
+
+        commit('setOrderId', bool);
+    },
+    setDesayunos: function setDesayunos(_ref7, desayunos) {
+        var commit = _ref7.commit;
 
         commit('setDesayunos', desayunos);
     },
-    setAlmuerzos: function setAlmuerzos(_ref6, almuerzos) {
-        var commit = _ref6.commit;
+    setAlmuerzos: function setAlmuerzos(_ref8, almuerzos) {
+        var commit = _ref8.commit;
 
         commit('setAlmuerzos', almuerzos);
     },
-    setMeriendas: function setMeriendas(_ref7, meriendas) {
-        var commit = _ref7.commit;
+    setMeriendas: function setMeriendas(_ref9, meriendas) {
+        var commit = _ref9.commit;
 
         commit('setMeriendas', meriendas);
     },
-    setCenas: function setCenas(_ref8, cenas) {
-        var commit = _ref8.commit;
+    setCenas: function setCenas(_ref10, cenas) {
+        var commit = _ref10.commit;
 
         commit('setCenas', cenas);
     },
@@ -64205,14 +64343,17 @@ exports.default = {
     },
     sendOrder: function sendOrder(cntx, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('orders/store', payload, {
+            (0, _appAxios.http)({
+                url: payload.orderToEdit ? 'orders/update' : 'orders/store',
+                method: payload.orderToEdit ? 'put' : 'post',
+                data: payload,
                 params: {
                     token: cntx.rootGetters['auth/getToken']
                 }
             }).then(function (response) {
                 cntx.dispatch('auth/setToken', response, { root: true });
                 resolve({
-                    title: 'PEDIDO REALIZADO',
+                    title: payload.orderToEdit ? 'PEDIDO ACTUALIZADO' : 'PEDIDO REALIZADO',
                     message: response.data.message,
                     useSwal: true
                 });
@@ -64306,6 +64447,12 @@ exports.default = {
             }), 1);
         }
     },
+    setOrderToEdit: function setOrderToEdit(state, bool) {
+        state.data.orderToEdit = bool;
+    },
+    setOrderId: function setOrderId(state, id) {
+        state.data.orderId = id;
+    },
     setCloseOrder: function setCloseOrder(state, bool) {
         state.data.closeOrder = bool;
     },
@@ -64338,6 +64485,8 @@ exports.default = {
     page: 1,
     itemsPerPage: 10,
     data: {
+        orderToEdit: false,
+        orderId: null,
         rental: null,
         closeOrder: false,
         orders: [],
@@ -64498,6 +64647,145 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     data: {
         rentals: []
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
+
+exports.default = {
+    promotionsList: function promotionsList(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.get('promotions/list').then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                cntx.commit('setPromotions', response.data.promotions);
+                resolve({
+                    title: 'OK!',
+                    message: 'Data founded correctly',
+                    timeout: 4000
+                });
+            }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    },
+    createNewPromotion: function createNewPromotion(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('promotions/store', payload, {
+                params: {
+                    token: cntx.rootState.auth.xhr.token
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve({
+                    title: 'OPERACIÓN EXITOSA',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/getters.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.modulePromotions = undefined;
+
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/state.js");
+
+var _state2 = _interopRequireDefault(_state);
+
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/getters.js");
+
+var _getters2 = _interopRequireDefault(_getters);
+
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/mutations.js");
+
+var _mutations2 = _interopRequireDefault(_mutations);
+
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/actions.js");
+
+var _actions2 = _interopRequireDefault(_actions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var modulePromotions = exports.modulePromotions = {
+    namespaced: true,
+    state: _state2.default,
+    getters: _getters2.default,
+    mutations: _mutations2.default,
+    actions: _actions2.default
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/mutations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    setPromotions: function setPromotions(state, promotions) {
+        if (!Array.isArray(promotions)) return;
+        state.data.promotions = promotions;
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    data: {
+        promotions: []
     }
 };
 
@@ -65185,6 +65473,8 @@ var _moduleDash = __webpack_require__("./resources/assets/js/vue-commons/store/m
 
 var _moduleProfileRentals = __webpack_require__("./resources/assets/js/vue-commons/store/module-profile-rentals/moduleProfileRentals.js");
 
+var _modulePromotions = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotions.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vuex2.default);
@@ -65199,7 +65489,8 @@ exports.default = new _vuex2.default.Store({
         liquidation: _moduleLiquidation.moduleLiquidation,
         reports: _moduleReports.moduleReports,
         dash: _moduleDash.moduleDash,
-        profile_rentals: _moduleProfileRentals.moduleProfileRentals
+        profile_rentals: _moduleProfileRentals.moduleProfileRentals,
+        promotions: _modulePromotions.modulePromotions
     }
 });
 

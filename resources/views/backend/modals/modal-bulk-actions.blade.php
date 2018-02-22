@@ -60,7 +60,9 @@
                                 <div class="form-group">
                                     {!! Form::label('typeCottages', 'Tipo de cabaña', ['class' => 'col-form-label sr-only']) !!}
                                     <div class="input-group">
-                                        <div class="input-group-addon">Tipo</div>
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Tipo</div>
+                                        </div>
                                         {!! Form::select('type', ['simple' => 'Simple', 'matrimonial' => 'Matrimonial'], 'simple', ['class' => 'form-control']) !!}
                                     </div>
                                 </div>
@@ -73,7 +75,9 @@
                                 <div class="form-group">
                                     {!! Form::label('accommodationCottages', 'Capacidad de las cabañas', ['class' => 'col-form-label sr-only']) !!}
                                     <div class="input-group">
-                                        <div class="input-group-addon">Capacidad</div>
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Capacidad</div>
+                                        </div>
                                         {!! Form::number('accommodationCottages', null, ['class' => 'form-control', 'placeholder' => 'Ingrese la capacidad de las cabañas...']) !!}
                                     </div>
                                 </div>
@@ -86,7 +90,9 @@
                                 <div class="form-group">
                                     {!! Form::label('priceCottages', 'Precio de las cabañas', ['class' => 'col-form-label sr-only']) !!}
                                     <div class="input-group">
-                                        <div class="input-group-addon"><i class="fa fa-dollar" aria-hidden="true"></i></div>
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="fas fa-dollar-sign" aria-hidden="true"></i></div>
+                                        </div>
                                         {!! Form::number('priceCottages', null, ['class' => 'form-control', 'placeholder' => 'Ingrese el precio de las cabañas...']) !!}
                                     </div>
                                 </div>
@@ -97,7 +103,9 @@
                 </div>
             </div>
             <div class="modal-footer bg-light">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+                    <i class="fas fa-times" aria-hidden="true"></i> Cerrar
+                </button>
             </div>
         </div>
     </div>

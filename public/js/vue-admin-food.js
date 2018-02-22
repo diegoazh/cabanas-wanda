@@ -2191,6 +2191,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     name: 'icon-app',
     props: {
+        typeIcon: {
+            type: String,
+            default: 's'
+        },
         iconImage: {
             type: String,
             default: '',
@@ -2209,7 +2213,7 @@ exports.default = {
     },
     computed: {
         toggleIconClass: function toggleIconClass() {
-            var classes = 'fa fa-' + this.iconImage;
+            var classes = (this.typeIcon === 'l' ? 'fal' : this.typeIcon === 'r' ? 'far' : 'fas') + ' fa-' + this.iconImage;
             if (this.aditionalClasses) {
                 classes += ' ' + this.aditionalClasses;
             }
@@ -5661,7 +5665,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -5998,7 +6002,7 @@ if(false) {
 
 	// Default settings
 	var defaults = {
-		id: null, 
+		id: null,
 		class: '',
 		title: '',
 		titleColor: '',
@@ -6080,7 +6084,7 @@ if(false) {
         CustomEventPolyfill.prototype = window.Event.prototype;
 
         window.CustomEvent = CustomEventPolyfill;
-    } 
+    }
 
 	/**
 	 * A simple forEach() implementation for Arrays, Objects and NodeLists
@@ -6170,16 +6174,16 @@ if(false) {
 	 * @private
 	 */
 	var drag = function() {
-	    
+
 	    return {
 	        move: function(toast, instance, settings, xpos) {
 
 	        	var opacity,
 	        		opacityRange = 0.3,
 	        		distance = 180;
-	            
+
 	            if(xpos !== 0){
-	            	
+
 	            	toast.classList.add(PLUGIN_NAME+'-dragged');
 
 	            	toast.style.transform = 'translateX('+xpos + 'px)';
@@ -6196,7 +6200,7 @@ if(false) {
 						}
 		            }
 					toast.style.opacity = opacity;
-			
+
 					if(opacity < opacityRange){
 
 						if(ISCHROME || ISFIREFOX)
@@ -6208,7 +6212,7 @@ if(false) {
 					}
 	            }
 
-				
+
 	        },
 	        startMoving: function(toast, instance, settings, e) {
 
@@ -6253,7 +6257,7 @@ if(false) {
 				toast.style.transform = '';
 
 	            if(toast.classList.contains(PLUGIN_NAME+'-dragged')){
-	            	
+
 	            	toast.classList.remove(PLUGIN_NAME+'-dragged');
 
 					toast.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
@@ -6359,7 +6363,7 @@ if(false) {
 					}
 
 				}, settings.timeout);
-				
+
 	        },
 	        pause: function() {
 
@@ -6372,12 +6376,12 @@ if(false) {
 						propertyWidth = computedStyle.getPropertyValue('width');
 
 					$elem.style.transition = 'none';
-					$elem.style.width = propertyWidth;					
+					$elem.style.width = propertyWidth;
 				}
 
 				if(typeof callback === 'function'){
 					setTimeout(function() {
-						callback.apply(that);						
+						callback.apply(that);
 					}, 10);
 				}
 
@@ -6418,7 +6422,7 @@ if(false) {
 
 				if(typeof callback === 'function'){
 					setTimeout(function() {
-						callback.apply(that);						
+						callback.apply(that);
 					}, 10);
 				}
 
@@ -6452,12 +6456,12 @@ if(false) {
 
 			var $overlay = document.querySelector('.'+PLUGIN_NAME+'-overlay');
 			if($overlay !== null){
-				var refs = $overlay.getAttribute('data-iziToast-ref');		
+				var refs = $overlay.getAttribute('data-iziToast-ref');
 					refs = refs.split(',');
 				var index = refs.indexOf(settings.REF);
 
 				if(index !== -1){
-					refs.splice(index, 1);			
+					refs.splice(index, 1);
 				}
 				$overlay.setAttribute('data-iziToast-ref', refs.join());
 
@@ -6487,7 +6491,7 @@ if(false) {
 		var H = $toast.parentNode.offsetHeight;
 				$toast.parentNode.style.height = H+'px';
 				$toast.style.pointerEvents = 'none';
-		
+
 		if(!ISMOBILE || window.innerWidth > MOBILEWIDTH){
 			$toast.parentNode.style.transitionDelay = '0.2s';
 		}
@@ -6501,12 +6505,12 @@ if(false) {
 		}
 
 		setTimeout(function() {
-			
+
 			$toast.parentNode.style.height = '0px';
 			$toast.parentNode.style.overflow = '';
 
 			setTimeout(function(){
-				
+
 				$toast.parentNode.remove();
 				try {
 					settings.closedBy = closedBy;
@@ -6613,7 +6617,7 @@ if(false) {
 			}
 
 			if(settings.color) { //#, rgb, rgba, hsl
-				
+
 				if( isColor(settings.color) ){
 					$DOM.toast.style.background = settings.color;
 				} else {
@@ -6624,7 +6628,7 @@ if(false) {
 			if(settings.backgroundColor) {
 				$DOM.toast.style.background = settings.backgroundColor;
 				if(settings.balloon){
-					$DOM.toast.style.borderColor = settings.backgroundColor;				
+					$DOM.toast.style.borderColor = settings.backgroundColor;
 				}
 			}
 		})();
@@ -6644,7 +6648,7 @@ if(false) {
 				if(settings.rtl){
 					$DOM.toastBody.style.marginRight = (settings.imageWidth + 10) + 'px';
 				} else {
-					$DOM.toastBody.style.marginLeft = (settings.imageWidth + 10) + 'px';				
+					$DOM.toastBody.style.marginLeft = (settings.imageWidth + 10) + 'px';
 				}
 				$DOM.toast.appendChild($DOM.cover);
 			}
@@ -6653,7 +6657,7 @@ if(false) {
 		// Button close
 		(function(){
 			if(settings.close){
-				
+
 				$DOM.buttonClose = document.createElement('button');
 
 				$DOM.buttonClose.classList.add(PLUGIN_NAME + '-close');
@@ -6685,7 +6689,7 @@ if(false) {
 				}
 
 				if(settings.pauseOnHover && !settings.resetOnHover){
-					
+
 					$DOM.toast.addEventListener('mouseenter', function (e) {
 						this.classList.add(PLUGIN_NAME+'-paused');
 
@@ -6718,7 +6722,7 @@ if(false) {
 		(function(){
 			if(settings.icon) {
 				$DOM.icon.setAttribute('class', PLUGIN_NAME + '-icon ' + settings.icon);
-				
+
 				if(settings.iconText){
 					$DOM.icon.appendChild(document.createTextNode(settings.iconText));
 				}
@@ -6726,9 +6730,9 @@ if(false) {
 				if(settings.rtl){
 					$DOM.toastBody.style.paddingRight = '33px';
 				} else {
-					$DOM.toastBody.style.paddingLeft = '33px';				
+					$DOM.toastBody.style.paddingLeft = '33px';
 				}
-				
+
 				if(settings.iconColor){
 					$DOM.icon.style.color = settings.iconColor;
 				}
@@ -6764,7 +6768,7 @@ if(false) {
 				}
 			}
 		})();
-		
+
 		// Message
 		(function(){
 			if(settings.message.length > 0) {
@@ -6785,7 +6789,7 @@ if(false) {
 					}
 				}
 				if(settings.messageLineHeight) {
-					
+
 					if( !isNaN(settings.titleSize) ){
 						$DOM.p.style.lineHeight = settings.messageLineHeight+'px';
 					} else {
@@ -6799,7 +6803,7 @@ if(false) {
 			if(settings.rtl){
 				$DOM.strong.style.marginLeft = '10px';
 			} else if(settings.layout !== 2 && !settings.rtl) {
-				$DOM.strong.style.marginRight = '10px';	
+				$DOM.strong.style.marginRight = '10px';
 			}
 		}
 
@@ -6979,7 +6983,7 @@ if(false) {
 		(function(){
 			if(settings.animateInside){
 				$DOM.toast.classList.add(PLUGIN_NAME+'-animateInside');
-			
+
 				var animationTimes = [200, 100, 300];
 				if(settings.transitionIn == 'bounceInLeft'){
 					animationTimes = [400, 200, 400];
@@ -7075,9 +7079,9 @@ if(false) {
 			});
 		}
 
-		that.toast = $DOM.toast;		
+		that.toast = $DOM.toast;
 	};
-	
+
 
 	return $iziToast;
 });
@@ -43511,7 +43515,7 @@ module.exports = __webpack_require__("./node_modules/uslug/lib/uslug.js");
 /***/ "./node_modules/uslug/lib/L.js":
 /***/ (function(module, exports) {
 
-/* 
+/*
  * List of Unicode code that are flagged as letter.
  *
  * Contains Unicode code of:
@@ -43620,7 +43624,7 @@ exports.Z = [32, 160, 5760, 8192, 8193, 8194, 8195, 8196, 8197, 8198, 8199, 8200
       var c = chars[i];
       var code = c.charCodeAt(0);
       // Allow Common CJK Unified Ideographs
-      // See: http://www.unicode.org/versions/Unicode6.0.0/ch12.pdf - Table 12-2 
+      // See: http://www.unicode.org/versions/Unicode6.0.0/ch12.pdf - Table 12-2
       if (0x4E00 <= code && code <= 0x9FFF) {
         rv.push(c);
         continue;
@@ -43700,7 +43704,7 @@ exports.Z = [32, 160, 5760, 8192, 8193, 8194, 8195, 8196, 8197, 8198, 8199, 8200
                 case 'h': _expires = "; max-age=" + +_expireTime * 3600; break; // 60 * 60
                 case 'min':  _expires = "; max-age=" + +_expireTime * 60; break; // 60
                 case 's': _expires = "; max-age=" + _expireTime; break;
-                case 'y': _expires = "; max-age=" + +_expireTime * 31104000; break; // 60 * 60 * 24 * 30 * 12            
+                case 'y': _expires = "; max-age=" + +_expireTime * 31104000; break; // 60 * 60 * 24 * 30 * 12
                 default: new Error("unknown exception of 'set operation'");
               }
             } else {
@@ -47241,9 +47245,7 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("div", { staticClass: "input-group" }, [
-                _c("div", { staticClass: "input-group-addon" }, [
-                  _vm._v("Nombre")
-                ]),
+                _vm._m(1),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -47274,7 +47276,7 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(1),
+            _vm._m(2),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("label", { staticClass: "sr-only", attrs: { for: "price" } }, [
@@ -47282,9 +47284,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "input-group" }, [
-                _c("div", { staticClass: "input-group-addon" }, [
-                  _vm._v("Precio")
-                ]),
+                _vm._m(3),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -47430,19 +47430,41 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Nombre")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group" }, [
       _c("label", { staticClass: "sr-only", attrs: { for: "type" } }, [
         _vm._v("Tipo:")
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "input-group" }, [
-        _c("div", { staticClass: "input-group-addon" }, [_vm._v("Tipo")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", id: "type", name: "type" }
-        })
-      ])
+      _c(
+        "div",
+        { staticClass: "input-group", staticStyle: { height: "38px" } },
+        [
+          _c("div", { staticClass: "input-group-prepend" }, [
+            _c("div", { staticClass: "input-group-text" }, [_vm._v("Tipo")])
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", id: "type", name: "type" }
+          })
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Precio")])
     ])
   }
 ]
@@ -62172,23 +62194,33 @@ exports.default = {
 
         commit('setCloseOrder', bool);
     },
-    setDesayunos: function setDesayunos(_ref5, desayunos) {
+    setOrderToEdit: function setOrderToEdit(_ref5, bool) {
         var commit = _ref5.commit;
+
+        commit('setOrderToEdit', bool);
+    },
+    setOrderId: function setOrderId(_ref6, id) {
+        var commit = _ref6.commit;
+
+        commit('setOrderId', bool);
+    },
+    setDesayunos: function setDesayunos(_ref7, desayunos) {
+        var commit = _ref7.commit;
 
         commit('setDesayunos', desayunos);
     },
-    setAlmuerzos: function setAlmuerzos(_ref6, almuerzos) {
-        var commit = _ref6.commit;
+    setAlmuerzos: function setAlmuerzos(_ref8, almuerzos) {
+        var commit = _ref8.commit;
 
         commit('setAlmuerzos', almuerzos);
     },
-    setMeriendas: function setMeriendas(_ref7, meriendas) {
-        var commit = _ref7.commit;
+    setMeriendas: function setMeriendas(_ref9, meriendas) {
+        var commit = _ref9.commit;
 
         commit('setMeriendas', meriendas);
     },
-    setCenas: function setCenas(_ref8, cenas) {
-        var commit = _ref8.commit;
+    setCenas: function setCenas(_ref10, cenas) {
+        var commit = _ref10.commit;
 
         commit('setCenas', cenas);
     },
@@ -62213,14 +62245,17 @@ exports.default = {
     },
     sendOrder: function sendOrder(cntx, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('orders/store', payload, {
+            (0, _appAxios.http)({
+                url: payload.orderToEdit ? 'orders/update' : 'orders/store',
+                method: payload.orderToEdit ? 'put' : 'post',
+                data: payload,
                 params: {
                     token: cntx.rootGetters['auth/getToken']
                 }
             }).then(function (response) {
                 cntx.dispatch('auth/setToken', response, { root: true });
                 resolve({
-                    title: 'PEDIDO REALIZADO',
+                    title: payload.orderToEdit ? 'PEDIDO ACTUALIZADO' : 'PEDIDO REALIZADO',
                     message: response.data.message,
                     useSwal: true
                 });
@@ -62314,6 +62349,12 @@ exports.default = {
             }), 1);
         }
     },
+    setOrderToEdit: function setOrderToEdit(state, bool) {
+        state.data.orderToEdit = bool;
+    },
+    setOrderId: function setOrderId(state, id) {
+        state.data.orderId = id;
+    },
     setCloseOrder: function setCloseOrder(state, bool) {
         state.data.closeOrder = bool;
     },
@@ -62346,6 +62387,8 @@ exports.default = {
     page: 1,
     itemsPerPage: 10,
     data: {
+        orderToEdit: false,
+        orderId: null,
         rental: null,
         closeOrder: false,
         orders: [],
@@ -62506,6 +62549,145 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     data: {
         rentals: []
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
+
+exports.default = {
+    promotionsList: function promotionsList(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.get('promotions/list').then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                cntx.commit('setPromotions', response.data.promotions);
+                resolve({
+                    title: 'OK!',
+                    message: 'Data founded correctly',
+                    timeout: 4000
+                });
+            }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    },
+    createNewPromotion: function createNewPromotion(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('promotions/store', payload, {
+                params: {
+                    token: cntx.rootState.auth.xhr.token
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve({
+                    title: 'OPERACIÓN EXITOSA',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/getters.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.modulePromotions = undefined;
+
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/state.js");
+
+var _state2 = _interopRequireDefault(_state);
+
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/getters.js");
+
+var _getters2 = _interopRequireDefault(_getters);
+
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/mutations.js");
+
+var _mutations2 = _interopRequireDefault(_mutations);
+
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/actions.js");
+
+var _actions2 = _interopRequireDefault(_actions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var modulePromotions = exports.modulePromotions = {
+    namespaced: true,
+    state: _state2.default,
+    getters: _getters2.default,
+    mutations: _mutations2.default,
+    actions: _actions2.default
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/mutations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    setPromotions: function setPromotions(state, promotions) {
+        if (!Array.isArray(promotions)) return;
+        state.data.promotions = promotions;
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    data: {
+        promotions: []
     }
 };
 
@@ -63193,6 +63375,8 @@ var _moduleDash = __webpack_require__("./resources/assets/js/vue-commons/store/m
 
 var _moduleProfileRentals = __webpack_require__("./resources/assets/js/vue-commons/store/module-profile-rentals/moduleProfileRentals.js");
 
+var _modulePromotions = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotions.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vuex2.default);
@@ -63207,7 +63391,8 @@ exports.default = new _vuex2.default.Store({
         liquidation: _moduleLiquidation.moduleLiquidation,
         reports: _moduleReports.moduleReports,
         dash: _moduleDash.moduleDash,
-        profile_rentals: _moduleProfileRentals.moduleProfileRentals
+        profile_rentals: _moduleProfileRentals.moduleProfileRentals,
+        promotions: _modulePromotions.modulePromotions
     }
 });
 

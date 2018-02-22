@@ -6,7 +6,7 @@
     @include('backend.modals.modal-forms')
     <h1 class="tt-users pl-3 py-3">
         Usuarios registrados
-        {!! Form::open(['route' => 'users.index', 'method' => 'get', 'class' => 'pull-right mr-3']) !!}
+        {!! Form::open(['route' => 'users.index', 'method' => 'get', 'class' => 'form-inline float-right mr-3']) !!}
             <div class="form-group">
                 <label for="searchUser" class="col-form-label sr-only">Buscar mail:</label>
                 {!! Form::text('search', isset($search) ? $search : null, ['class' => 'form-control', 'id' => 'searchUser', 'placeholder' => 'Buscar mail...', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 'title' => 'Presione ENTER para buscar']) !!}
@@ -35,10 +35,10 @@
                 @if(Auth::user()->type === 'administrador' || Auth::user()->type === 'sysadmin')
                     <td>
                         <a role="button" class="btn btn-outline-warning btn-sm btn-edit-type" data-toggle="modal" data-target="#modalForms" data-object-display="{{ $user->formalFullname }}" data-object-value="{{ $user->type }}">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar rol
+                            <i class="fas fa-edit" aria-hidden="true"></i> Editar rol
                         </a>
                         <a role="button" class="btn btn-outline-danger btn-sm btn-delete-user" data-toggle="modal" data-target="#modalForms" data-object-display="{{ $user->formalFullname }}" data-object-value="{{ $user->formalFullname }}">
-                            <i class="fa fa-user-times" aria-hidden="true"></i> Eliminar
+                            <i class="fas fa-user-times" aria-hidden="true"></i> Eliminar
                         </a>
                     </td>
                 @endif
@@ -57,9 +57,4 @@
 @endsection
 
 @section('scripts')
-    <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-    </script>
 @endsection

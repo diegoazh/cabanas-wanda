@@ -1648,6 +1648,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     name: 'icon-app',
     props: {
+        typeIcon: {
+            type: String,
+            default: 's'
+        },
         iconImage: {
             type: String,
             default: '',
@@ -1666,7 +1670,7 @@ exports.default = {
     },
     computed: {
         toggleIconClass: function toggleIconClass() {
-            var classes = 'fa fa-' + this.iconImage;
+            var classes = (this.typeIcon === 'l' ? 'fal' : this.typeIcon === 'r' ? 'far' : 'fas') + ' fa-' + this.iconImage;
             if (this.aditionalClasses) {
                 classes += ' ' + this.aditionalClasses;
             }
@@ -2213,14 +2217,13 @@ exports.default = {
             this.setToken('');
             this.setUserData({});
             this.dataForm = false;
+            this.userNotFound = true;
             this.name = '';
             this.lastname = '';
             this.email = '';
             this.document = 0;
             this.genre = '';
             this.country = 0;
-            this.dataForm = true;
-            this.userNotFound = false;
         },
         isNullOrUndefined: function isNullOrUndefined(val) {
             return typeof val === 'undefined' || val === null || typeof val === 'string' && val.length === 0;
@@ -2357,6 +2360,7 @@ exports.default = {
             }
         },
         hasErrorsInForm: function hasErrorsInForm() {
+            // TODO(Diego) Eliminar en la proximas correcciones esta función. Se puede simplificar utilizando simplemente invalidDate()
             var dateFrom = this.dateFrom ? (0, _moment2.default)(this.dateFrom, 'DD/MM/YYYY') : null;
             var dateTo = this.dateTo ? (0, _moment2.default)(this.dateTo, 'DD/MM/YYYY') : null;
 
@@ -2683,7 +2687,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -55291,7 +55295,7 @@ var render = function() {
             ]
           },
           [
-            _c("icon-app", { attrs: { iconImage: "warning" } }),
+            _c("icon-app", { attrs: { iconImage: "exclamation-triangle" } }),
             _vm._v(
               "\n        " +
                 _vm._s(
@@ -55343,13 +55347,20 @@ var render = function() {
         ? _c(
             "button",
             {
-              staticClass: "btn btn-outline-secondary btn-sm pull-right",
-              on: { click: _vm.goBackToReservas }
+              staticClass: "btn btn-outline-secondary btn-sm float-right",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.goBackToReservas($event)
+                }
+              }
             },
             [
               _c("icon-app", { attrs: { iconImage: "arrow-left" } }),
               _vm._v(" Volver a reservas "),
-              _c("icon-app", { attrs: { iconImage: "handshake-o" } })
+              _c("icon-app", {
+                attrs: { "type-icon": "r", iconImage: "handshake" }
+              })
             ],
             1
           )
@@ -55359,8 +55370,13 @@ var render = function() {
         ? _c(
             "button",
             {
-              staticClass: "btn btn-outline-secondary btn-sm pull-right",
-              on: { click: _vm.goBackToFindUser }
+              staticClass: "btn btn-outline-secondary btn-sm float-right",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.goBackToFindUser($event)
+                }
+              }
             },
             [
               _c("icon-app", { attrs: { iconImage: "arrow-left" } }),
@@ -55451,8 +55467,10 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c("div", { staticClass: "input-group-addon" }, [
-                        _vm._v(_vm._s(!_vm.onOff ? "DNI" : "Pasaporte"))
+                      _c("div", { staticClass: "input-group-prepend" }, [
+                        _c("div", { staticClass: "input-group-text" }, [
+                          _vm._v(_vm._s(!_vm.onOff ? "DNI" : "Pasaporte"))
+                        ])
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -55497,16 +55515,18 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c(
-                        "div",
-                        { staticClass: "input-group-addon" },
-                        [
-                          _c("icon-app", {
-                            attrs: { iconId: "at", iconImage: "at" }
-                          })
-                        ],
-                        1
-                      ),
+                      _c("div", { staticClass: "input-group-prepend" }, [
+                        _c(
+                          "div",
+                          { staticClass: "input-group-text" },
+                          [
+                            _c("icon-app", {
+                              attrs: { iconId: "at", iconImage: "at" }
+                            })
+                          ],
+                          1
+                        )
+                      ]),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -55610,9 +55630,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c("div", { staticClass: "input-group-addon" }, [
-                        _vm._v("Nombres")
-                      ]),
+                      _vm._m(1),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -55650,9 +55668,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c("div", { staticClass: "input-group-addon" }, [
-                        _vm._v("Apellidos")
-                      ]),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -55694,9 +55710,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c("div", { staticClass: "input-group-addon" }, [
-                        _vm._v("e-mail")
-                      ]),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -55783,8 +55797,10 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c("div", { staticClass: "input-group-addon" }, [
-                        _vm._v(_vm._s(!_vm.onOff ? "DNI" : "Pasaporte"))
+                      _c("div", { staticClass: "input-group-prepend" }, [
+                        _c("div", { staticClass: "input-group-text" }, [
+                          _vm._v(_vm._s(!_vm.onOff ? "DNI" : "Pasaporte"))
+                        ])
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -55827,9 +55843,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c("div", { staticClass: "input-group-addon" }, [
-                        _vm._v("Genero")
-                      ]),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -55893,9 +55907,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group" }, [
-                      _c("div", { staticClass: "input-group-addon" }, [
-                        _vm._v("País")
-                      ]),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -55989,6 +56001,46 @@ var staticRenderFns = [
         )
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Nombres")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Apellidos")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("e-mail")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Genero")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("País")])
+    ])
   }
 ]
 render._withStripped = true
@@ -56040,12 +56092,14 @@ var render = function() {
             "div",
             { staticClass: "input-group mr-3" },
             [
-              _c(
-                "div",
-                { staticClass: "input-group-addon date-piker" },
-                [_c("icon-app", { attrs: { iconImage: "calendar" } })],
-                1
-              ),
+              _c("div", { staticClass: "input-group-prepend date-piker" }, [
+                _c(
+                  "div",
+                  { staticClass: "input-group-text" },
+                  [_c("icon-app", { attrs: { iconImage: "calendar" } })],
+                  1
+                )
+              ]),
               _vm._v(" "),
               _c("date-picker", {
                 attrs: {
@@ -56076,12 +56130,14 @@ var render = function() {
             "div",
             { staticClass: "input-group mr-3" },
             [
-              _c(
-                "div",
-                { staticClass: "input-group-addon date-piker" },
-                [_c("icon-app", { attrs: { iconImage: "calendar" } })],
-                1
-              ),
+              _c("div", { staticClass: "input-group-prepend date-piker" }, [
+                _c(
+                  "div",
+                  { staticClass: "input-group-text" },
+                  [_c("icon-app", { attrs: { iconImage: "calendar" } })],
+                  1
+                )
+              ]),
               _vm._v(" "),
               _c("date-picker", {
                 attrs: {
@@ -56268,13 +56324,15 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "btn btn-outline-secondary btn-sm pull-right",
+          staticClass: "btn btn-outline-secondary btn-sm float-right",
           on: { click: _vm.goBackToReservas }
         },
         [
           _c("icon-app", { attrs: { iconImage: "arrow-left" } }),
           _vm._v("\n            Volver a reservas\n            "),
-          _c("icon-app", { attrs: { iconImage: "handshake-o" } })
+          _c("icon-app", {
+            attrs: { "type-icon": "r", iconImage: "handshake" }
+          })
         ],
         1
       )
@@ -56291,7 +56349,8 @@ var render = function() {
         [
           _c("icon-app", {
             attrs: {
-              iconImage: "thumbs-o-up",
+              "type-icon": "r",
+              iconImage: "thumbs-up",
               aditionalClasses: "text-success big-hand"
             }
           })
@@ -56323,7 +56382,7 @@ var render = function() {
                   _c(
                     "th",
                     [
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                       _vm._v(" Precio")
                     ],
                     1
@@ -56334,7 +56393,7 @@ var render = function() {
                       "span",
                       { staticClass: "badge badge-danger" },
                       [
-                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                         _vm._v(" " + _vm._s(_vm.infoDeal.cottage_price))
                       ],
                       1
@@ -56363,7 +56422,7 @@ var render = function() {
                   _c(
                     "th",
                     [
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                       _vm._v(" Descuentos")
                     ],
                     1
@@ -56374,7 +56433,7 @@ var render = function() {
                       "span",
                       { staticClass: "badge badge-success" },
                       [
-                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                         _vm._v(" " + _vm._s(_vm.infoDeal.deductions))
                       ],
                       1
@@ -56386,7 +56445,7 @@ var render = function() {
                   _c(
                     "th",
                     [
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                       _vm._v("Precio total")
                     ],
                     1
@@ -56397,7 +56456,7 @@ var render = function() {
                       "span",
                       { staticClass: "badge badge-info" },
                       [
-                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                         _vm._v(" " + _vm._s(_vm.infoDeal.finalPayment))
                       ],
                       1
@@ -56455,7 +56514,7 @@ var render = function() {
                   _c(
                     "th",
                     [
-                      _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                      _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                       _vm._v("Monto de reserva")
                     ],
                     1
@@ -56466,7 +56525,7 @@ var render = function() {
                       "span",
                       { staticClass: "badge badge-info" },
                       [
-                        _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                        _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                         _vm._v(
                           " " +
                             _vm._s(
@@ -56639,10 +56698,10 @@ var render = function() {
               "span",
               {
                 class: [
-                  "label",
+                  "badge",
                   {
-                    "label-primary": _vm.cottage.type === "simple",
-                    "label-success": _vm.cottage.type === "matrimonial"
+                    "badge-primary": _vm.cottage.type === "simple",
+                    "badge-success": _vm.cottage.type === "matrimonial"
                   }
                 ]
               },
@@ -56663,7 +56722,7 @@ var render = function() {
                 "span",
                 { staticClass: "badge badge-primary" },
                 [
-                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                  _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                   _vm._v(_vm._s(_vm.cottage.price))
                 ],
                 1
@@ -56678,7 +56737,7 @@ var render = function() {
                 "span",
                 { staticClass: "badge badge-danger" },
                 [
-                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                  _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                   _vm._v(
                     _vm._s(
                       _vm.calcularMonto(_vm.calcularDias, _vm.cottage.price)
@@ -70034,23 +70093,33 @@ exports.default = {
 
         commit('setCloseOrder', bool);
     },
-    setDesayunos: function setDesayunos(_ref5, desayunos) {
+    setOrderToEdit: function setOrderToEdit(_ref5, bool) {
         var commit = _ref5.commit;
+
+        commit('setOrderToEdit', bool);
+    },
+    setOrderId: function setOrderId(_ref6, id) {
+        var commit = _ref6.commit;
+
+        commit('setOrderId', bool);
+    },
+    setDesayunos: function setDesayunos(_ref7, desayunos) {
+        var commit = _ref7.commit;
 
         commit('setDesayunos', desayunos);
     },
-    setAlmuerzos: function setAlmuerzos(_ref6, almuerzos) {
-        var commit = _ref6.commit;
+    setAlmuerzos: function setAlmuerzos(_ref8, almuerzos) {
+        var commit = _ref8.commit;
 
         commit('setAlmuerzos', almuerzos);
     },
-    setMeriendas: function setMeriendas(_ref7, meriendas) {
-        var commit = _ref7.commit;
+    setMeriendas: function setMeriendas(_ref9, meriendas) {
+        var commit = _ref9.commit;
 
         commit('setMeriendas', meriendas);
     },
-    setCenas: function setCenas(_ref8, cenas) {
-        var commit = _ref8.commit;
+    setCenas: function setCenas(_ref10, cenas) {
+        var commit = _ref10.commit;
 
         commit('setCenas', cenas);
     },
@@ -70075,14 +70144,17 @@ exports.default = {
     },
     sendOrder: function sendOrder(cntx, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('orders/store', payload, {
+            (0, _appAxios.http)({
+                url: payload.orderToEdit ? 'orders/update' : 'orders/store',
+                method: payload.orderToEdit ? 'put' : 'post',
+                data: payload,
                 params: {
                     token: cntx.rootGetters['auth/getToken']
                 }
             }).then(function (response) {
                 cntx.dispatch('auth/setToken', response, { root: true });
                 resolve({
-                    title: 'PEDIDO REALIZADO',
+                    title: payload.orderToEdit ? 'PEDIDO ACTUALIZADO' : 'PEDIDO REALIZADO',
                     message: response.data.message,
                     useSwal: true
                 });
@@ -70176,6 +70248,12 @@ exports.default = {
             }), 1);
         }
     },
+    setOrderToEdit: function setOrderToEdit(state, bool) {
+        state.data.orderToEdit = bool;
+    },
+    setOrderId: function setOrderId(state, id) {
+        state.data.orderId = id;
+    },
     setCloseOrder: function setCloseOrder(state, bool) {
         state.data.closeOrder = bool;
     },
@@ -70208,6 +70286,8 @@ exports.default = {
     page: 1,
     itemsPerPage: 10,
     data: {
+        orderToEdit: false,
+        orderId: null,
         rental: null,
         closeOrder: false,
         orders: [],
@@ -70368,6 +70448,145 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     data: {
         rentals: []
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
+
+exports.default = {
+    promotionsList: function promotionsList(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.get('promotions/list').then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                cntx.commit('setPromotions', response.data.promotions);
+                resolve({
+                    title: 'OK!',
+                    message: 'Data founded correctly',
+                    timeout: 4000
+                });
+            }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    },
+    createNewPromotion: function createNewPromotion(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('promotions/store', payload, {
+                params: {
+                    token: cntx.rootState.auth.xhr.token
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve({
+                    title: 'OPERACIÓN EXITOSA',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/getters.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.modulePromotions = undefined;
+
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/state.js");
+
+var _state2 = _interopRequireDefault(_state);
+
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/getters.js");
+
+var _getters2 = _interopRequireDefault(_getters);
+
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/mutations.js");
+
+var _mutations2 = _interopRequireDefault(_mutations);
+
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/actions.js");
+
+var _actions2 = _interopRequireDefault(_actions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var modulePromotions = exports.modulePromotions = {
+    namespaced: true,
+    state: _state2.default,
+    getters: _getters2.default,
+    mutations: _mutations2.default,
+    actions: _actions2.default
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/mutations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    setPromotions: function setPromotions(state, promotions) {
+        if (!Array.isArray(promotions)) return;
+        state.data.promotions = promotions;
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    data: {
+        promotions: []
     }
 };
 
@@ -71055,6 +71274,8 @@ var _moduleDash = __webpack_require__("./resources/assets/js/vue-commons/store/m
 
 var _moduleProfileRentals = __webpack_require__("./resources/assets/js/vue-commons/store/module-profile-rentals/moduleProfileRentals.js");
 
+var _modulePromotions = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotions.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vuex2.default);
@@ -71069,7 +71290,8 @@ exports.default = new _vuex2.default.Store({
         liquidation: _moduleLiquidation.moduleLiquidation,
         reports: _moduleReports.moduleReports,
         dash: _moduleDash.moduleDash,
-        profile_rentals: _moduleProfileRentals.moduleProfileRentals
+        profile_rentals: _moduleProfileRentals.moduleProfileRentals,
+        promotions: _modulePromotions.modulePromotions
     }
 });
 

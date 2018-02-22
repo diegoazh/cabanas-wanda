@@ -1648,6 +1648,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     name: 'icon-app',
     props: {
+        typeIcon: {
+            type: String,
+            default: 's'
+        },
         iconImage: {
             type: String,
             default: '',
@@ -1666,7 +1670,7 @@ exports.default = {
     },
     computed: {
         toggleIconClass: function toggleIconClass() {
-            var classes = 'fa fa-' + this.iconImage;
+            var classes = (this.typeIcon === 'l' ? 'fal' : this.typeIcon === 'r' ? 'far' : 'fas') + ' fa-' + this.iconImage;
             if (this.aditionalClasses) {
                 classes += ' ' + this.aditionalClasses;
             }
@@ -2010,6 +2014,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _vueNotifications = __webpack_require__("./node_modules/vue-notifications/dist/vue-notifications.es5.js");
 
@@ -2149,6 +2165,9 @@ exports.default = {
         },
         itemsPerPage: function itemsPerPage(state) {
             return state.itemsPerPage;
+        },
+        orderToEdit: function orderToEdit(state) {
+            return state.data.orderToEdit;
         }
     }), (0, _vuex.mapState)('food', {
         foods: function foods(state) {
@@ -2161,7 +2180,7 @@ exports.default = {
 
             if (this.foods.length === 0) {
                 this.getAllFood().then(function (response) {
-                    _this.filterFoodType(_this.foods);
+                    _this.filterFoodType(_this.foods).then(_this.filterItemsToEdit());
                 }).catch(function (error) {
                     // console.log(error);
                 });
@@ -2170,60 +2189,91 @@ exports.default = {
         filterFoodType: function filterFoodType(foods) {
             var _this2 = this;
 
-            var foodType = [];
-            var types = ['desayuno', 'almuerzo', 'merienda', 'cena'];
+            return new Promise(function (resolve, reject) {
+                var foodType = [];
+                var types = ['desayuno', 'almuerzo', 'merienda', 'cena'];
 
-            var _iteratorNormalCompletion3 = true;
-            var _didIteratorError3 = false;
-            var _iteratorError3 = undefined;
+                var _iteratorNormalCompletion3 = true;
+                var _didIteratorError3 = false;
+                var _iteratorError3 = undefined;
 
-            try {
-                for (var _iterator3 = foods[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                    var food = _step3.value;
-
-                    this.$set(food, 'checked', false);
-                    this.$set(food, 'quantity', 1);
-                    this.$set(food, 'delivery', null);
-                }
-            } catch (err) {
-                _didIteratorError3 = true;
-                _iteratorError3 = err;
-            } finally {
                 try {
-                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                        _iterator3.return();
+                    for (var _iterator3 = foods[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                        var food = _step3.value;
+
+                        _this2.$set(food, 'checked', false);
+                        _this2.$set(food, 'quantity', 1);
+                        _this2.$set(food, 'delivery', null);
                     }
+                } catch (err) {
+                    _didIteratorError3 = true;
+                    _iteratorError3 = err;
                 } finally {
-                    if (_didIteratorError3) {
-                        throw _iteratorError3;
+                    try {
+                        if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                            _iterator3.return();
+                        }
+                    } finally {
+                        if (_didIteratorError3) {
+                            throw _iteratorError3;
+                        }
                     }
                 }
-            }
 
-            var _loop = function _loop(i) {
-                foodType = foods.filter(function (element, index, array) {
-                    return element.type === types[i];
-                });
+                var _loop = function _loop(i) {
+                    foodType = foods.filter(function (element, index, array) {
+                        return element.type === types[i];
+                    });
 
-                switch (types[i]) {
-                    case 'desayuno':
-                        _this2.setDesayunos(foodType);
-                        break;
-                    case 'almuerzo':
-                        _this2.setAlmuerzos(foodType);
-                        break;
-                    case 'merienda':
-                        _this2.setMeriendas(foodType);
-                        break;
-                    case 'cena':
-                        _this2.setCenas(foodType);
-                        break;
+                    switch (types[i]) {
+                        case 'desayuno':
+                            _this2.setDesayunos(foodType);
+                            break;
+                        case 'almuerzo':
+                            _this2.setAlmuerzos(foodType);
+                            break;
+                        case 'merienda':
+                            _this2.setMeriendas(foodType);
+                            break;
+                        case 'cena':
+                            _this2.setCenas(foodType);
+                            break;
+                    }
+                };
+
+                for (var i = types.length - 1; i >= 0; i--) {
+                    _loop(i);
                 }
-            };
+                resolve();
+            });
+        },
+        filterItemsToEdit: function filterItemsToEdit() {
+            var _this3 = this;
 
-            for (var i = types.length - 1; i >= 0; i--) {
-                _loop(i);
-            }
+            return new Promise(function (resolve, reject) {
+                if (_this3.orderToEdit && window.localStorage.getItem('orders_detail')) {
+                    var comidas = [_this3.desayunos, _this3.almuerzos, _this3.meriendas, _this3.cenas];
+                    var orders = JSON.parse(window.localStorage.getItem('orders_detail'));
+                    comidas.forEach(function (comida, index, comidas) {
+                        orders.forEach(function (order, inde, orders) {
+                            comida.forEach(function (ele, ind, arr) {
+                                if (order.food.id === ele.id) {
+                                    ele.delivery = order.delivery;
+                                    ele.quantity = order.quantity;
+                                    _this3.toggelAddRemoveFood(ele);
+                                }
+                            });
+                        });
+                    });
+
+                    _this3.setDesayunos(comidas[0]);
+                    _this3.setAlmuerzos(comidas[1]);
+                    _this3.setMeriendas(comidas[2]);
+                    _this3.setCenas(comidas[3]);
+                }
+                window.localStorage.removeItem('orders_detail');
+                resolve();
+            });
         },
         elementsPerPage: function elementsPerPage(number) {
             var food = [];
@@ -2243,7 +2293,7 @@ exports.default = {
                     break;
             }
 
-            var pageTo = this.page * this.itemsPerPage; // quince debería ser una variable
+            var pageTo = this.page * this.itemsPerPage; // TODO (Diego) quince, luego pasar a variable
             var pageFrom = this.page === 1 ? 0 : (this.page - 1) * this.itemsPerPage;
 
             return food.filter(function (element, index, array) {
@@ -2275,7 +2325,11 @@ exports.default = {
             this.pagination(this.trashPage[tabName]);
             this.trashPage.choice = tabName;
         },
-        defineConfDateTimePiker: function defineConfDateTimePiker(rental, food) {
+        defConfDtp: function defConfDtp(rental, food) {
+            /**
+             * TODO (Diego) Encontrar la manera de que el evento se dispare solo para ese picker no para todos.
+             * Eso es lo que demora el show del picker.
+             * */
             var min = (0, _moment2.default)((0, _moment2.default)(rental.dateFrom + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY');
             return {
                 locale: 'es',
@@ -2283,6 +2337,10 @@ exports.default = {
                 minDate: min.isBefore(_moment2.default.now()) ? (0, _moment2.default)((0, _moment2.default)().add(3, 'h').format('DD/MM/YYYY'), 'DD/MM/YYYY') : min,
                 maxDate: food.type === 'desayuno' ? (0, _moment2.default)((0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY'), 'DD/MM/YYYY') : (0, _moment2.default)((0, _moment2.default)(rental.dateTo + ' 23:00:00', 'YYYY-MM-DD HH:mm:ss').subtract(1, 'd').format('DD/MM/YYYY'), 'DD/MM/YYYY')
             };
+        },
+        notAvailableOrder: function notAvailableOrder(number) {
+            var max = (0, _moment2.default)(this.rental.dateTo + ' 10:00:00', 'YYYY-MM-DD HH:mm:ss');
+            return number === 1 ? (0, _moment2.default)().isAfter(max) : (0, _moment2.default)().isAfter(max.subtract(1, 'd'));
         },
         fireReplacesInShowDp: function fireReplacesInShowDp(id) {
             window.jQuery('.table-condensed').removeClass('table-condensed').addClass('table-sm');
@@ -2479,7 +2537,7 @@ exports.default = {
             return final;
         },
         toggleIcon: function toggleIcon() {
-            return this.queryFinished ? 'handshake-o' : 'spinner';
+            return this.queryFinished ? 'handshake' : 'spinner';
         },
         addAditionalClasses: function addAditionalClasses() {
             return this.queryFinished ? '' : 'fa-spin fa-fw';
@@ -2490,6 +2548,12 @@ exports.default = {
         },
         rental: function rental(state) {
             return state.data.rental;
+        },
+        orderToEdit: function orderToEdit(state) {
+            return state.data.orderToEdit;
+        },
+        orderId: function orderId(state) {
+            return state.data.orderId;
         }
     }), (0, _vuex.mapState)('auth', {
         queryFinished: function queryFinished(state) {
@@ -2511,12 +2575,16 @@ exports.default = {
             this.setQueryFinished(false);
             this.sendOrder({
                 rental_id: this.rental.id,
-                orders: this.orders
+                orders: this.orders,
+                orderToEdit: this.orderToEdit,
+                order_id: this.orderId
             }).then(function (response) {
                 _vueNotifications2.default.success(response);
                 _this.setQueryFinished(true);
                 _this.setOrders([]);
                 _this.setCloseOrder(false);
+                _this.setOrderToEdit(false);
+                _this.setOrderId(null);
                 EventBus.$emit('change-reserva');
             }).catch(function (error) {
                 error.useSwal = true;
@@ -2524,7 +2592,7 @@ exports.default = {
                 _this.setQueryFinished(true);
             });
         }
-    }, (0, _vuex.mapActions)('orders', ['setCloseOrder', 'sendOrder', 'setOrders']), (0, _vuex.mapActions)('auth', ['setQueryFinished'])),
+    }, (0, _vuex.mapActions)('orders', ['setCloseOrder', 'sendOrder', 'setOrders', 'setOrderToEdit', 'setOrderId']), (0, _vuex.mapActions)('auth', ['setQueryFinished'])),
     filters: {
         displayArgDate: function displayArgDate(date) {
             if (!_moment2.default.isMoment(date) && typeof date === 'string') {
@@ -2853,7 +2921,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -2868,7 +2936,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -38572,18 +38640,20 @@ var render = function() {
               _vm._v(" "),
               _vm.forCode
                 ? _c("div", { staticClass: "input-group mr-2" }, [
-                    _c(
-                      "div",
-                      { staticClass: "input-group-addon" },
-                      [
-                        _c("icon-app", {
-                          attrs: {
-                            iconImage: _vm.forCode ? "barcode" : "hashtag"
-                          }
-                        })
-                      ],
-                      1
-                    ),
+                    _c("div", { staticClass: "input-group-prepend" }, [
+                      _c(
+                        "div",
+                        { staticClass: "input-group-text" },
+                        [
+                          _c("icon-app", {
+                            attrs: {
+                              iconImage: _vm.forCode ? "barcode" : "hashtag"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -38620,18 +38690,20 @@ var render = function() {
               _vm._v(" "),
               !_vm.forCode
                 ? _c("div", { staticClass: "input-group mr-2" }, [
-                    _c(
-                      "div",
-                      { staticClass: "input-group-addon" },
-                      [
-                        _c("icon-app", {
-                          attrs: {
-                            iconImage: _vm.forCode ? "barcode" : "hashtag"
-                          }
-                        })
-                      ],
-                      1
-                    ),
+                    _c("div", { staticClass: "input-group-prepend" }, [
+                      _c(
+                        "div",
+                        { staticClass: "input-group-text" },
+                        [
+                          _c("icon-app", {
+                            attrs: {
+                              iconImage: _vm.forCode ? "barcode" : "hashtag"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -38668,12 +38740,14 @@ var render = function() {
               _vm._v(" "),
               !_vm.forCode
                 ? _c("div", { staticClass: "input-group mr-2" }, [
-                    _c(
-                      "div",
-                      { staticClass: "input-group-addon" },
-                      [_c("icon-app", { attrs: { iconImage: "at" } })],
-                      1
-                    ),
+                    _c("div", { staticClass: "input-group-prepend" }, [
+                      _c(
+                        "div",
+                        { staticClass: "input-group-text" },
+                        [_c("icon-app", { attrs: { iconImage: "at" } })],
+                        1
+                      )
+                    ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -38727,7 +38801,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12 col-md-12" }, [
       _c("h3", { staticClass: "text-center" }, [
-        _vm._v("Primero necesitamos saber a que reserva pertenecerá")
+        _vm._v("Primero necesitamos saber cual es su reserva")
       ])
     ])
   }
@@ -38806,13 +38880,13 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "btn btn-light text-dark btn-sm pull-right mt-1 mr-1",
+          staticClass: "btn btn-info btn-sm float-right mt-1 mr-1",
           on: { click: _vm.changeReserva }
         },
         [
           _c("icon-app", {
             attrs: {
-              iconImage: "refresh",
+              iconImage: "sync",
               aditionalClasses: _vm.activeReload ? "fa-spin fa-fw" : ""
             }
           }),
@@ -38867,8 +38941,8 @@ var render = function() {
       _c("hr"),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-3 pull-right" }, [
-          _c("caption", { staticClass: "text-right" }, [
+        _c("div", { staticClass: "col-12" }, [
+          _c("caption", { staticClass: "text-right float-right" }, [
             _c(
               "a",
               {
@@ -38910,7 +38984,7 @@ var render = function() {
             "span",
             { staticClass: "badge badge-warning img-circle" },
             [
-              _c("icon-app", { attrs: { iconImage: "dollar" } }),
+              _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
               _vm._v(" " + _vm._s(_vm.totalAmount))
             ],
             1
@@ -39037,239 +39111,296 @@ var render = function() {
                 attrs: { role: "tabpanel", id: "tab" + number }
               },
               [
-                _c("table", { staticClass: "table table-striped" }, [
-                  _vm._m(0, true),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.elementsPerPage(number), function(food, index) {
-                      return _c("tr", [
-                        _c("td", [
-                          _c(
-                            "p",
-                            [
-                              _c("icon-app", {
-                                attrs: {
-                                  iconImage: food.checked
-                                    ? "check-square-o"
-                                    : "square-o",
-                                  aditionalClasses: food.checked
-                                    ? "text-primary"
-                                    : "text-default"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(food.name))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
-                              "div",
-                              { staticClass: "input-group" },
-                              [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "input-group-addon date-piker"
-                                  },
-                                  [
-                                    _c("icon-app", {
-                                      attrs: { iconImage: "calendar" }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c("date-picker", {
-                                  attrs: {
-                                    placeholder: "Seleccione la fecha...",
-                                    config: _vm.defineConfDateTimePiker(
-                                      _vm.rental,
-                                      food
-                                    ),
-                                    id: "delivery" + index,
-                                    name: "delivery" + index
-                                  },
-                                  on: {
-                                    "dp-show": function($event) {
-                                      _vm.fireReplacesInShowDp(
-                                        "#delivery" + index
-                                      )
-                                    }
-                                  },
-                                  model: {
-                                    value: food.delivery,
-                                    callback: function($$v) {
-                                      _vm.$set(food, "delivery", $$v)
-                                    },
-                                    expression: "food.delivery"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          [
-                            _c("icon-app", { attrs: { iconImage: "dollar" } }),
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(food.price) +
-                                "\n                        "
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("div", { staticClass: "input-group" }, [
-                              _c(
-                                "div",
-                                { staticClass: "input-group-addon date-piker" },
-                                [
-                                  _c("icon-app", {
-                                    attrs: { iconImage: "hashtag" }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: food.quantity,
-                                    expression: "food.quantity"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "number",
-                                  id: "cantidad" + index,
-                                  name: "cantidad" + index,
-                                  placeholder: "Seleccione la cantidad..."
-                                },
-                                domProps: { value: food.quantity },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      food,
-                                      "quantity",
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              })
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "text-right" }, [
-                          _c(
-                            "button",
-                            {
-                              class: [
-                                "btn",
-                                {
-                                  "btn-success": !food.checked,
-                                  "btn-danger": food.checked
-                                }
-                              ],
-                              on: {
-                                click: function($event) {
-                                  _vm.toggelAddRemoveFood(food)
-                                }
-                              }
-                            },
-                            [
-                              _c("icon-app", {
-                                attrs: {
-                                  iconImage: food.checked ? "minus" : "plus"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ])
-                      ])
-                    })
-                  ),
-                  _vm._v(" "),
-                  _c("tfoot", [
-                    _c("tr", [
+                _vm.notAvailableOrder(number)
+                  ? [
                       _c(
-                        "td",
-                        { staticClass: "text-center", attrs: { colspan: "6" } },
+                        "div",
+                        { staticClass: "alert alert-info text-center" },
                         [
                           _c(
                             "h3",
-                            { staticClass: "text-right" },
+                            { staticClass: "text-center" },
                             [
                               _c("icon-app", {
-                                attrs: { iconImage: "shopping-basket" }
+                                attrs: { iconImage: "info-circle" }
                               }),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                { staticClass: "badge badge-info img-circle" },
-                                [_vm._v(_vm._s(_vm.totalQuantity))]
-                              ),
-                              _vm._v(" "),
-                              _c("icon-app", { attrs: { iconImage: "money" } }),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  staticClass: "badge badge-warning img-circle"
-                                },
-                                [
-                                  _c("icon-app", {
-                                    attrs: { iconImage: "dollar" }
-                                  }),
-                                  _vm._v(" " + _vm._s(_vm.totalAmount))
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "row justify-content-center" },
-                            [
-                              _c("pagination", {
-                                attrs: {
-                                  for: "orders",
-                                  records: _vm.quantityForType(number),
-                                  "per-page": _vm.itemsPerPage,
-                                  chunk: 7,
-                                  vuex: true,
-                                  "count-text":
-                                    "Mostrando {from} a {to} de {count} items|{count} items|Un item"
-                                }
-                              })
+                              _vm._v(" No es posible realizar este pedido.")
                             ],
                             1
                           )
                         ]
                       )
-                    ])
-                  ])
-                ])
-              ]
+                    ]
+                  : [
+                      _c("table", { staticClass: "table table-striped" }, [
+                        _vm._m(0, true),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.elementsPerPage(number), function(
+                            food,
+                            index
+                          ) {
+                            return _c("tr", [
+                              _c("td", [
+                                _c(
+                                  "p",
+                                  [
+                                    _c("icon-app", {
+                                      attrs: {
+                                        "type-icon": "r",
+                                        iconImage: food.checked
+                                          ? "check-square"
+                                          : "square",
+                                        aditionalClasses: food.checked
+                                          ? "text-primary"
+                                          : "text-default"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(food.name))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "div",
+                                    { staticClass: "input-group" },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "input-group-prepend date-piker"
+                                        },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "input-group-text" },
+                                            [
+                                              _c("icon-app", {
+                                                attrs: { iconImage: "calendar" }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("date-picker", {
+                                        attrs: {
+                                          placeholder: "Seleccione la fecha...",
+                                          config: _vm.defConfDtp(
+                                            _vm.rental,
+                                            food
+                                          ),
+                                          id: "delivery" + index,
+                                          name: "delivery" + index,
+                                          value: ""
+                                        },
+                                        on: {
+                                          "dp-show": function($event) {
+                                            _vm.fireReplacesInShowDp(
+                                              "#delivery" + index
+                                            )
+                                          }
+                                        },
+                                        model: {
+                                          value: food.delivery,
+                                          callback: function($$v) {
+                                            _vm.$set(food, "delivery", $$v)
+                                          },
+                                          expression: "food.delivery"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                [
+                                  _c("icon-app", {
+                                    attrs: { iconImage: "dollar-sign" }
+                                  }),
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(food.price) +
+                                      "\n                        "
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("div", { staticClass: "input-group" }, [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "input-group-prepend date-piker"
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          { staticClass: "input-group-text" },
+                                          [
+                                            _c("icon-app", {
+                                              attrs: { iconImage: "hashtag" }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: food.quantity,
+                                          expression: "food.quantity"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "number",
+                                        id: "cantidad" + index,
+                                        name: "cantidad" + index,
+                                        placeholder: "Seleccione la cantidad..."
+                                      },
+                                      domProps: { value: food.quantity },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            food,
+                                            "quantity",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-right" }, [
+                                _c(
+                                  "button",
+                                  {
+                                    class: [
+                                      "btn",
+                                      {
+                                        "btn-success": !food.checked,
+                                        "btn-danger": food.checked
+                                      }
+                                    ],
+                                    on: {
+                                      click: function($event) {
+                                        _vm.toggelAddRemoveFood(food)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("icon-app", {
+                                      attrs: {
+                                        iconImage: food.checked
+                                          ? "minus"
+                                          : "plus"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ])
+                            ])
+                          })
+                        ),
+                        _vm._v(" "),
+                        _c("tfoot", [
+                          _c("tr", [
+                            _c(
+                              "td",
+                              {
+                                staticClass: "text-center",
+                                attrs: { colspan: "6" }
+                              },
+                              [
+                                _c(
+                                  "h3",
+                                  { staticClass: "text-right" },
+                                  [
+                                    _c("icon-app", {
+                                      attrs: { iconImage: "shopping-basket" }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-info img-circle"
+                                      },
+                                      [_vm._v(_vm._s(_vm.totalQuantity))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("icon-app", {
+                                      attrs: { iconImage: "money" }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-warning img-circle"
+                                      },
+                                      [
+                                        _c("icon-app", {
+                                          attrs: { iconImage: "dollar-sign" }
+                                        }),
+                                        _vm._v(" " + _vm._s(_vm.totalAmount))
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "row justify-content-center" },
+                                  [
+                                    _c("pagination", {
+                                      attrs: {
+                                        for: "orders",
+                                        records: _vm.quantityForType(number),
+                                        "per-page": _vm.itemsPerPage,
+                                        chunk: 7,
+                                        vuex: true,
+                                        "count-text":
+                                          "Mostrando {from} a {to} de {count} items|{count} items|Un item"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                            )
+                          ])
+                        ])
+                      ])
+                    ]
+              ],
+              2
             )
           })
         ),
@@ -39282,7 +39413,7 @@ var render = function() {
               on: { click: _vm.btnCloseOrder }
             },
             [
-              _c("icon-app", { attrs: { iconImage: "handshake-o" } }),
+              _c("icon-app", { attrs: { iconImage: "handshake" } }),
               _vm._v("\n                Cerrar pedido\n            ")
             ],
             1
@@ -39412,7 +39543,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "btn btn-outline-info btn-sm pull-right my-3",
+          staticClass: "btn btn-outline-info btn-sm float-right my-3",
           on: { click: _vm.backToItems }
         },
         [
@@ -39442,7 +39573,7 @@ var render = function() {
             _c(
               "th",
               [
-                _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                 _vm._v("/unidad")
               ],
               1
@@ -39451,7 +39582,7 @@ var render = function() {
             _c(
               "th",
               [
-                _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                 _vm._v(" total por plato")
               ],
               1
@@ -39474,7 +39605,7 @@ var render = function() {
               _c(
                 "td",
                 [
-                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                  _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                   _vm._v(" " + _vm._s(order.price))
                 ],
                 1
@@ -39483,7 +39614,7 @@ var render = function() {
               _c(
                 "td",
                 [
-                  _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                  _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                   _vm._v(" " + _vm._s(order.price * order.quantity))
                 ],
                 1
@@ -39505,7 +39636,7 @@ var render = function() {
             _c(
               "td",
               [
-                _c("icon-app", { attrs: { iconImage: "dollar" } }),
+                _c("icon-app", { attrs: { iconImage: "dollar-sign" } }),
                 _vm._v(" " + _vm._s(_vm.totalAmount))
               ],
               1
@@ -53292,23 +53423,33 @@ exports.default = {
 
         commit('setCloseOrder', bool);
     },
-    setDesayunos: function setDesayunos(_ref5, desayunos) {
+    setOrderToEdit: function setOrderToEdit(_ref5, bool) {
         var commit = _ref5.commit;
+
+        commit('setOrderToEdit', bool);
+    },
+    setOrderId: function setOrderId(_ref6, id) {
+        var commit = _ref6.commit;
+
+        commit('setOrderId', bool);
+    },
+    setDesayunos: function setDesayunos(_ref7, desayunos) {
+        var commit = _ref7.commit;
 
         commit('setDesayunos', desayunos);
     },
-    setAlmuerzos: function setAlmuerzos(_ref6, almuerzos) {
-        var commit = _ref6.commit;
+    setAlmuerzos: function setAlmuerzos(_ref8, almuerzos) {
+        var commit = _ref8.commit;
 
         commit('setAlmuerzos', almuerzos);
     },
-    setMeriendas: function setMeriendas(_ref7, meriendas) {
-        var commit = _ref7.commit;
+    setMeriendas: function setMeriendas(_ref9, meriendas) {
+        var commit = _ref9.commit;
 
         commit('setMeriendas', meriendas);
     },
-    setCenas: function setCenas(_ref8, cenas) {
-        var commit = _ref8.commit;
+    setCenas: function setCenas(_ref10, cenas) {
+        var commit = _ref10.commit;
 
         commit('setCenas', cenas);
     },
@@ -53333,14 +53474,17 @@ exports.default = {
     },
     sendOrder: function sendOrder(cntx, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('orders/store', payload, {
+            (0, _appAxios.http)({
+                url: payload.orderToEdit ? 'orders/update' : 'orders/store',
+                method: payload.orderToEdit ? 'put' : 'post',
+                data: payload,
                 params: {
                     token: cntx.rootGetters['auth/getToken']
                 }
             }).then(function (response) {
                 cntx.dispatch('auth/setToken', response, { root: true });
                 resolve({
-                    title: 'PEDIDO REALIZADO',
+                    title: payload.orderToEdit ? 'PEDIDO ACTUALIZADO' : 'PEDIDO REALIZADO',
                     message: response.data.message,
                     useSwal: true
                 });
@@ -53434,6 +53578,12 @@ exports.default = {
             }), 1);
         }
     },
+    setOrderToEdit: function setOrderToEdit(state, bool) {
+        state.data.orderToEdit = bool;
+    },
+    setOrderId: function setOrderId(state, id) {
+        state.data.orderId = id;
+    },
     setCloseOrder: function setCloseOrder(state, bool) {
         state.data.closeOrder = bool;
     },
@@ -53466,6 +53616,8 @@ exports.default = {
     page: 1,
     itemsPerPage: 10,
     data: {
+        orderToEdit: false,
+        orderId: null,
         rental: null,
         closeOrder: false,
         orders: [],
@@ -53626,6 +53778,145 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     data: {
         rentals: []
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
+
+exports.default = {
+    promotionsList: function promotionsList(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.get('promotions/list').then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                cntx.commit('setPromotions', response.data.promotions);
+                resolve({
+                    title: 'OK!',
+                    message: 'Data founded correctly',
+                    timeout: 4000
+                });
+            }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    },
+    createNewPromotion: function createNewPromotion(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('promotions/store', payload, {
+                params: {
+                    token: cntx.rootState.auth.xhr.token
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve({
+                    title: 'OPERACIÓN EXITOSA',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/getters.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.modulePromotions = undefined;
+
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/state.js");
+
+var _state2 = _interopRequireDefault(_state);
+
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/getters.js");
+
+var _getters2 = _interopRequireDefault(_getters);
+
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/mutations.js");
+
+var _mutations2 = _interopRequireDefault(_mutations);
+
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/actions.js");
+
+var _actions2 = _interopRequireDefault(_actions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var modulePromotions = exports.modulePromotions = {
+    namespaced: true,
+    state: _state2.default,
+    getters: _getters2.default,
+    mutations: _mutations2.default,
+    actions: _actions2.default
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/mutations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    setPromotions: function setPromotions(state, promotions) {
+        if (!Array.isArray(promotions)) return;
+        state.data.promotions = promotions;
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    data: {
+        promotions: []
     }
 };
 
@@ -54313,6 +54604,8 @@ var _moduleDash = __webpack_require__("./resources/assets/js/vue-commons/store/m
 
 var _moduleProfileRentals = __webpack_require__("./resources/assets/js/vue-commons/store/module-profile-rentals/moduleProfileRentals.js");
 
+var _modulePromotions = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotions.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vuex2.default);
@@ -54327,7 +54620,8 @@ exports.default = new _vuex2.default.Store({
         liquidation: _moduleLiquidation.moduleLiquidation,
         reports: _moduleReports.moduleReports,
         dash: _moduleDash.moduleDash,
-        profile_rentals: _moduleProfileRentals.moduleProfileRentals
+        profile_rentals: _moduleProfileRentals.moduleProfileRentals,
+        promotions: _modulePromotions.modulePromotions
     }
 });
 

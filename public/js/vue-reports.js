@@ -7251,6 +7251,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     name: 'icon-app',
     props: {
+        typeIcon: {
+            type: String,
+            default: 's'
+        },
         iconImage: {
             type: String,
             default: '',
@@ -7269,7 +7273,7 @@ exports.default = {
     },
     computed: {
         toggleIconClass: function toggleIconClass() {
-            var classes = 'fa fa-' + this.iconImage;
+            var classes = (this.typeIcon === 'l' ? 'fal' : this.typeIcon === 'r' ? 'far' : 'fas') + ' fa-' + this.iconImage;
             if (this.aditionalClasses) {
                 classes += ' ' + this.aditionalClasses;
             }
@@ -38593,7 +38597,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -74090,7 +74094,9 @@ var render = function() {
                     attrs: { href: "/admin" }
                   },
                   [
-                    _c("icon-app", { attrs: { iconImage: "hand-o-left" } }),
+                    _c("icon-app", {
+                      attrs: { "type-icon": "r", iconImage: "hand-point-left" }
+                    }),
                     _vm._v(" volver al panel")
                   ],
                   1
@@ -74113,7 +74119,7 @@ var render = function() {
                         iconImage:
                           !_vm.queryFinished || !_vm.queryEnd
                             ? "spinner"
-                            : "line-chart",
+                            : "chart-line",
                         aditionalClasses:
                           !_vm.queryFinished || !_vm.queryEnd
                             ? "fa-pulse fa-fw"
@@ -74372,11 +74378,7 @@ var render = function() {
                               "div",
                               { staticClass: "input-group" },
                               [
-                                _c(
-                                  "div",
-                                  { staticClass: "input-group-addon" },
-                                  [_vm._v("Año")]
-                                ),
+                                _vm._m(0),
                                 _vm._v(" "),
                                 _c("date-picker", {
                                   attrs: {
@@ -74405,9 +74407,7 @@ var render = function() {
                             }),
                             _vm._v(" "),
                             _c("div", { staticClass: "input-group" }, [
-                              _c("div", { staticClass: "input-group-addon" }, [
-                                _vm._v("Estado")
-                              ]),
+                              _vm._m(1),
                               _vm._v(" "),
                               _c(
                                 "select",
@@ -74493,11 +74493,7 @@ var render = function() {
                               "div",
                               { staticClass: "input-group" },
                               [
-                                _c(
-                                  "div",
-                                  { staticClass: "input-group-addon" },
-                                  [_vm._v("Mes")]
-                                ),
+                                _vm._m(2),
                                 _vm._v(" "),
                                 _c("date-picker", {
                                   staticClass: "text-capitalize",
@@ -74527,9 +74523,7 @@ var render = function() {
                             }),
                             _vm._v(" "),
                             _c("div", { staticClass: "input-group" }, [
-                              _c("div", { staticClass: "input-group-addon" }, [
-                                _vm._v("Estado")
-                              ]),
+                              _vm._m(3),
                               _vm._v(" "),
                               _c(
                                 "select",
@@ -74703,11 +74697,7 @@ var render = function() {
                               "div",
                               { staticClass: "input-group" },
                               [
-                                _c(
-                                  "div",
-                                  { staticClass: "input-group-addon" },
-                                  [_vm._v("Desde")]
-                                ),
+                                _vm._m(4),
                                 _vm._v(" "),
                                 _c("date-picker", {
                                   attrs: {
@@ -74743,11 +74733,7 @@ var render = function() {
                               "div",
                               { staticClass: "input-group" },
                               [
-                                _c(
-                                  "div",
-                                  { staticClass: "input-group-addon" },
-                                  [_vm._v("Hasta")]
-                                ),
+                                _vm._m(5),
                                 _vm._v(" "),
                                 _c("date-picker", {
                                   attrs: {
@@ -74780,9 +74766,7 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "input-group" }, [
-                              _c("div", { staticClass: "input-group-addon" }, [
-                                _vm._v("Estado")
-                              ]),
+                              _vm._m(6),
                               _vm._v(" "),
                               _c(
                                 "select",
@@ -75129,9 +75113,7 @@ var render = function() {
                           "div",
                           { staticClass: "input-group" },
                           [
-                            _c("div", { staticClass: "input-group-addon" }, [
-                              _vm._v("Desde")
-                            ]),
+                            _vm._m(7),
                             _vm._v(" "),
                             _c("date-picker", {
                               attrs: {
@@ -75167,9 +75149,7 @@ var render = function() {
                           "div",
                           { staticClass: "input-group" },
                           [
-                            _c("div", { staticClass: "input-group-addon" }, [
-                              _vm._v("Hasta")
-                            ]),
+                            _vm._m(8),
                             _vm._v(" "),
                             _c("date-picker", {
                               attrs: {
@@ -75199,9 +75179,7 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "input-group" }, [
-                          _c("div", { staticClass: "input-group-addon" }, [
-                            _vm._v("Estado")
-                          ]),
+                          _vm._m(9),
                           _vm._v(" "),
                           _c(
                             "select",
@@ -75273,7 +75251,8 @@ var render = function() {
                 [
                   _c("icon-app", {
                     attrs: {
-                      iconImage: "refresh",
+                      "icon-type": "r",
+                      iconImage: "sync-alt",
                       aditionalClasses:
                         !_vm.queryFinished || !_vm.queryEnd
                           ? "fa-spin fa-fw"
@@ -75287,13 +75266,93 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(0)
+          _vm._m(10)
         ])
       ])
     ])
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Año")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Estado")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Mes")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Estado")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Desde")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Hasta")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Estado")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Desde")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Hasta")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Estado")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -88500,23 +88559,33 @@ exports.default = {
 
         commit('setCloseOrder', bool);
     },
-    setDesayunos: function setDesayunos(_ref5, desayunos) {
+    setOrderToEdit: function setOrderToEdit(_ref5, bool) {
         var commit = _ref5.commit;
+
+        commit('setOrderToEdit', bool);
+    },
+    setOrderId: function setOrderId(_ref6, id) {
+        var commit = _ref6.commit;
+
+        commit('setOrderId', bool);
+    },
+    setDesayunos: function setDesayunos(_ref7, desayunos) {
+        var commit = _ref7.commit;
 
         commit('setDesayunos', desayunos);
     },
-    setAlmuerzos: function setAlmuerzos(_ref6, almuerzos) {
-        var commit = _ref6.commit;
+    setAlmuerzos: function setAlmuerzos(_ref8, almuerzos) {
+        var commit = _ref8.commit;
 
         commit('setAlmuerzos', almuerzos);
     },
-    setMeriendas: function setMeriendas(_ref7, meriendas) {
-        var commit = _ref7.commit;
+    setMeriendas: function setMeriendas(_ref9, meriendas) {
+        var commit = _ref9.commit;
 
         commit('setMeriendas', meriendas);
     },
-    setCenas: function setCenas(_ref8, cenas) {
-        var commit = _ref8.commit;
+    setCenas: function setCenas(_ref10, cenas) {
+        var commit = _ref10.commit;
 
         commit('setCenas', cenas);
     },
@@ -88541,14 +88610,17 @@ exports.default = {
     },
     sendOrder: function sendOrder(cntx, payload) {
         return new Promise(function (resolve, reject) {
-            _appAxios.http.post('orders/store', payload, {
+            (0, _appAxios.http)({
+                url: payload.orderToEdit ? 'orders/update' : 'orders/store',
+                method: payload.orderToEdit ? 'put' : 'post',
+                data: payload,
                 params: {
                     token: cntx.rootGetters['auth/getToken']
                 }
             }).then(function (response) {
                 cntx.dispatch('auth/setToken', response, { root: true });
                 resolve({
-                    title: 'PEDIDO REALIZADO',
+                    title: payload.orderToEdit ? 'PEDIDO ACTUALIZADO' : 'PEDIDO REALIZADO',
                     message: response.data.message,
                     useSwal: true
                 });
@@ -88642,6 +88714,12 @@ exports.default = {
             }), 1);
         }
     },
+    setOrderToEdit: function setOrderToEdit(state, bool) {
+        state.data.orderToEdit = bool;
+    },
+    setOrderId: function setOrderId(state, id) {
+        state.data.orderId = id;
+    },
     setCloseOrder: function setCloseOrder(state, bool) {
         state.data.closeOrder = bool;
     },
@@ -88674,6 +88752,8 @@ exports.default = {
     page: 1,
     itemsPerPage: 10,
     data: {
+        orderToEdit: false,
+        orderId: null,
         rental: null,
         closeOrder: false,
         orders: [],
@@ -88834,6 +88914,145 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     data: {
         rentals: []
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/actions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _appAxios = __webpack_require__("./resources/assets/js/vue-commons/axios/app-axios.js");
+
+exports.default = {
+    promotionsList: function promotionsList(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.get('promotions/list').then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                cntx.commit('setPromotions', response.data.promotions);
+                resolve({
+                    title: 'OK!',
+                    message: 'Data founded correctly',
+                    timeout: 4000
+                });
+            }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    },
+    createNewPromotion: function createNewPromotion(cntx, payload) {
+        return new Promise(function (resolve, reject) {
+            _appAxios.http.post('promotions/store', payload, {
+                params: {
+                    token: cntx.rootState.auth.xhr.token
+                }
+            }).then(function (response) {
+                cntx.dispatch('auth/setToken', response, { root: true });
+                resolve({
+                    title: 'OPERACIÓN EXITOSA',
+                    message: response.data.message,
+                    useSwal: true
+                });
+            }).catch(function (error) {
+                context.dispatch('auth/setToken', error.response, { root: true });
+                reject((0, _appAxios.handlingXhrErrors)(error));
+            });
+        });
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/getters.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotions.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.modulePromotions = undefined;
+
+var _state = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/state.js");
+
+var _state2 = _interopRequireDefault(_state);
+
+var _getters = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/getters.js");
+
+var _getters2 = _interopRequireDefault(_getters);
+
+var _mutations = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/mutations.js");
+
+var _mutations2 = _interopRequireDefault(_mutations);
+
+var _actions = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/actions.js");
+
+var _actions2 = _interopRequireDefault(_actions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var modulePromotions = exports.modulePromotions = {
+    namespaced: true,
+    state: _state2.default,
+    getters: _getters2.default,
+    mutations: _mutations2.default,
+    actions: _actions2.default
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/mutations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    setPromotions: function setPromotions(state, promotions) {
+        if (!Array.isArray(promotions)) return;
+        state.data.promotions = promotions;
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/assets/js/vue-commons/store/module-promotion-store/state.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    data: {
+        promotions: []
     }
 };
 
@@ -89521,6 +89740,8 @@ var _moduleDash = __webpack_require__("./resources/assets/js/vue-commons/store/m
 
 var _moduleProfileRentals = __webpack_require__("./resources/assets/js/vue-commons/store/module-profile-rentals/moduleProfileRentals.js");
 
+var _modulePromotions = __webpack_require__("./resources/assets/js/vue-commons/store/module-promotion-store/modulePromotions.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vuex2.default);
@@ -89535,7 +89756,8 @@ exports.default = new _vuex2.default.Store({
         liquidation: _moduleLiquidation.moduleLiquidation,
         reports: _moduleReports.moduleReports,
         dash: _moduleDash.moduleDash,
-        profile_rentals: _moduleProfileRentals.moduleProfileRentals
+        profile_rentals: _moduleProfileRentals.moduleProfileRentals,
+        promotions: _modulePromotions.modulePromotions
     }
 });
 

@@ -6,7 +6,7 @@
                 <div class="form-group form-row">
                     <label for="search_code" class="col-form-label sr-only">Código:</label>
                     <div class="input-group mr-2">
-                        <div class="input-group-addon"><icon-app iconImage="barcode"></icon-app></div>
+                        <div class="input-group-prepend"><div class="input-group-text"><icon-app iconImage="barcode"></icon-app></div></div>
                         <input name="search_code" id="search_code" type="text" class="form-control" v-model="code">
                     </div>
                     <button class="btn btn-outline-primary" @click.prevent="findRentalForCode"><icon-app iconImage="search"></icon-app></button>

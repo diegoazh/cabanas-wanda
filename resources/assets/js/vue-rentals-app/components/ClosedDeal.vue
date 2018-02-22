@@ -1,16 +1,16 @@
 <template>
     <div class="row justify-content-around">
         <div class="col-12 col-md-12">
-            <button @click="goBackToReservas" class="btn btn-outline-secondary btn-sm pull-right">
+            <button @click="goBackToReservas" class="btn btn-outline-secondary btn-sm float-right">
                 <icon-app iconImage="arrow-left"></icon-app>
                 Volver a reservas
-                <icon-app iconImage="handshake-o"></icon-app>
+                <icon-app type-icon="r" iconImage="handshake"></icon-app>
             </button>
         </div>
         <div class="col-12 col-md-12">
             <h2 class="text-center">Se contretó con éxito la reserva!</h2>
             <div class="text-center">
-                <icon-app iconImage="thumbs-o-up" aditionalClasses="text-success big-hand"></icon-app>
+                <icon-app type-icon="r" iconImage="thumbs-up" aditionalClasses="text-success big-hand"></icon-app>
             </div>
             <div class="">
                 <div class="alert alert-info">
@@ -32,20 +32,20 @@
                         <template>
                             <tr>
                                 <th rowspan="9"><icon-app iconImage="home"></icon-app> {{ infoDeal.cottage.name }}</th>
-                                <th><icon-app iconImage="dollar"></icon-app> Precio</th>
-                                <td><span class="badge badge-danger"><icon-app iconImage="dollar"></icon-app> {{ infoDeal.cottage_price}}</span></td>
+                                <th><icon-app iconImage="dollar-sign"></icon-app> Precio</th>
+                                <td><span class="badge badge-danger"><icon-app iconImage="dollar-sign"></icon-app> {{ infoDeal.cottage_price}}</span></td>
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="calendar"></icon-app> Dias</th>
                                 <td><span class="badge badge-success"><b>{{ infoDeal.total_days}}</b></span></td>
                             </tr>
                             <tr>
-                                <th><icon-app iconImage="dollar"></icon-app> Descuentos</th>
-                                <td><span class="badge badge-success"><icon-app iconImage="dollar"></icon-app> {{ infoDeal.deductions }}</span></td>
+                                <th><icon-app iconImage="dollar-sign"></icon-app> Descuentos</th>
+                                <td><span class="badge badge-success"><icon-app iconImage="dollar-sign"></icon-app> {{ infoDeal.deductions }}</span></td>
                             </tr>
                             <tr>
-                                <th><icon-app iconImage="dollar"></icon-app>Precio total</th>
-                                <td><span class="badge badge-info"><icon-app iconImage="dollar"></icon-app> {{ infoDeal.finalPayment }}</span></td>
+                                <th><icon-app iconImage="dollar-sign"></icon-app>Precio total</th>
+                                <td><span class="badge badge-info"><icon-app iconImage="dollar-sign"></icon-app> {{ infoDeal.finalPayment }}</span></td>
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="calendar"></icon-app> Desde</th>
@@ -56,8 +56,8 @@
                                 <td><span class="badge badge-secondary">{{ infoDeal.dateTo + ' 10:00:00' | argentineDateTime }}</span></td>
                             </tr>
                             <tr>
-                                <th><icon-app iconImage="dollar"></icon-app>Monto de reserva</th>
-                                <td><span class="badge badge-info"><icon-app iconImage="dollar"></icon-app> {{(infoDeal.finalPayment * 30 / 100).toFixed(2) }}</span></td>
+                                <th><icon-app iconImage="dollar-sign"></icon-app>Monto de reserva</th>
+                                <td><span class="badge badge-info"><icon-app iconImage="dollar-sign"></icon-app> {{(infoDeal.finalPayment * 30 / 100).toFixed(2) }}</span></td>
                             </tr>
                             <tr>
                                 <th><icon-app iconImage="calendar"></icon-app> Vto. reserva</th>

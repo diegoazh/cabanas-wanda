@@ -13,13 +13,14 @@ const { mix } = require('laravel-mix');
 
 mix.copy([
         './public/lib/dashicons/fonts',
-        './public/lib/font-awesome/fonts'
     ], './public/fonts')
+    .copy([
+        './public/lib/font-awesome/web-fonts-with-css',
+    ], './public/font-awesome')
     .styles([
         './node_modules/bootstrap/dist/css/bootstrap.css',
         './public/lib/animate.css/animate.css',
         './public/lib/dashicons/css/dashicons.css',
-        './public/lib/font-awesome/css/font-awesome.css',
     ], './public/css/app.css')
     .styles([
         './public/lib/clndr/demo/css/clndr.css'
@@ -58,10 +59,12 @@ mix.copy([
     .js('resources/assets/js/vue-rentals-edit-app/vue-rentals-edit.js', 'public/js')
     .js('resources/assets/js/vue-admin-food-app/vue-admin-food.js', 'public/js')
     .js('resources/assets/js/vue-orders-app/vue-orders.js', 'public/js')
+    .js('resources/assets/js/vue-orders-edit-app/vue-orders-edit.js', 'public/js')
     .js('resources/assets/js/vue-liquidation-app/vue-liquidation.js', 'public/js')
     .js('resources/assets/js/vue-reports-app/vue-reports.js', 'public/js')
     .js('resources/assets/js/vue-dash-app/vue-dash.js', 'public/js')
     .js('resources/assets/js/vue-profile-rentals-app/vue-profile-rentals.js', 'public/js')
+    .js('resources/assets/js/vue-promotions-store-app/vue-promotions-store.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .version([
         './public/css/app.css',

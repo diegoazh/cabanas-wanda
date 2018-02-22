@@ -12,6 +12,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/frontend.css') }}" rel="stylesheet">
     <link rel='stylesheet' href='{{ asset('lib/glyphicons-only-bootstrap/css/bootstrap.min.css') }}'>
+    <link rel="stylesheet" href="{{ asset('font-awesome/css/fontawesome-all.css') }}">
     @yield('styles')
     <!-- Scripts -->
     <script>
@@ -43,7 +44,7 @@
         @show
         @include('templates.footers.main-footer')
         <div id="footer_rights" class="col-12 px-2 text-center">
-            <i class="fa fa-registered" aria-hidden="true"></i> Hotel Cabañas de Wanda. Copyright <i class="fa fa-copyright" aria-hidden="true"></i> 2010 - {{ (isset($year)) ? $year : 2017 }}. All right reserved.
+            <i class="far fa-registered" aria-hidden="true"></i> Hotel Cabañas de Wanda. Copyright <i class="far fa-copyright" aria-hidden="true"></i> 2010 - {{ (isset($year)) ? $year : 2017 }}. All right reserved.
             <br>
             Developed by Diego A. Zapata Häntsch
         </div>
@@ -55,6 +56,9 @@
 <script>
     $('#flash-overlay-modal').modal();
     $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 </script>
 @yield('scripts')
 </body>

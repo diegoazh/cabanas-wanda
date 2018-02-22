@@ -9,21 +9,21 @@
                     <div class="form-group">
                         <label for="name" class="col-form-label sr-only">Nombre:</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Nombre</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Nombre</div></div>
                             <input id="name" name="name" type="text" class="form-control" placeholder="Ej: Desayuno americano" v-model="name">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="type" class="sr-only">Tipo:</label>
-                        <div class="input-group">
-                            <div class="input-group-addon">Tipo</div>
+                        <div class="input-group" style="height: 38px">
+                            <div class="input-group-prepend"><div class="input-group-text">Tipo</div></div>
                             <input type="text" id="type" name="type" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="price" class="sr-only">Precio:</label>
                         <div class="input-group">
-                            <div class="input-group-addon">Precio</div>
+                            <div class="input-group-prepend"><div class="input-group-text">Precio</div></div>
                             <input id="price" name="price" type="number" step="0.01" class="form-control" placeholder="Ej: 150" v-model="price">
                         </div>
                     </div>

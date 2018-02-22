@@ -58,6 +58,7 @@ Route::prefix('food')->group(function() {
 Route::prefix('orders')->group(function() {
     Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function() {
         Route::post('store', 'OrdersController@store')->name('api.orders.store');
+        Route::put('update', 'OrdersController@update')->name('api.orders.update');
         Route::get('for-state/{state}/{results}', 'OrdersController@ordersForState')->name('api.orders.forState');
         Route::get('for-id/{id}', 'OrdersController@findForId')->name('api.orders.forId');
         Route::put('update-states/{id}', 'OrdersController@updateStates')->name('api.orders.updateStates');
@@ -75,4 +76,12 @@ Route::prefix('reports')->group(function() {
 
 Route::prefix('profile')->middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
     Route::get('rentals', 'UsersController@myRentals')->name('api.profile.myRentals');
+});
+
+Route::prefix('promotions')->group(function () {
+    Route::get('list', 'Administration\PromotionsController@list')->name('api.promotion.list');
+
+    Route::middleware(['jwt.auth', 'jwt.refresh'])->group(function () {
+        Route::post('store', 'Administration\PromotionsController@store')->name('api.promotion.store');
+    });
 });

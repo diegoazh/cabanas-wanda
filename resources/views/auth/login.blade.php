@@ -16,7 +16,7 @@
     <div class="row justify-content-center">
         <div class="col-12 col-md-8">
             <div class="card my-5">
-                <div class="card-header bg-secondary h3 text-light"><i class="fa fa-vcard" aria-hidden="true"></i> Ingreso de miembros</div>
+                <div class="card-header bg-secondary h3 text-light"><i class="fas fa-id-card" aria-hidden="true"></i> Ingreso de miembros</div>
                 <div class="card-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}

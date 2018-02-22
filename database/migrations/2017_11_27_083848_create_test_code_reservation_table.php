@@ -16,6 +16,7 @@ class CreateTestCodeReservationTable extends Migration
         Schema::create('test_code_reservation', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code');
+            $table->string('state');
             $table->date('date_from');
             $table->timestamps();
         });

@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-12 col-md-12">
-            <button class="btn btn-outline-info btn-sm pull-right my-3" @click="backToItems">
+            <button class="btn btn-outline-info btn-sm float-right my-3" @click="backToItems">
                 <b><icon-app iconImage="shopping-basket"></icon-app> Editar pedido <icon-app iconImage="mail-reply"></icon-app></b>
             </button>
         </div>
@@ -12,8 +12,8 @@
                         <th>Fecha de entrega</th>
                         <th>Plato</th>
                         <th>Cantidad</th>
-                        <th><icon-app iconImage="dollar"></icon-app>/unidad</th>
-                        <th><icon-app iconImage="dollar"></icon-app> total por plato</th>
+                        <th><icon-app iconImage="dollar-sign"></icon-app>/unidad</th>
+                        <th><icon-app iconImage="dollar-sign"></icon-app> total por plato</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,8 +21,8 @@
                         <td>{{order.delivery | displayArgDate}}</td>
                         <td>{{order.name}}</td>
                         <td>{{order.quantity}}</td>
-                        <td><icon-app iconImage="dollar"></icon-app> {{order.price}}</td>
-                        <td><icon-app iconImage="dollar"></icon-app> {{order.price * order.quantity}}</td>
+                        <td><icon-app iconImage="dollar-sign"></icon-app> {{order.price}}</td>
+                        <td><icon-app iconImage="dollar-sign"></icon-app> {{order.price * order.quantity}}</td>
                     </tr>
                 </tbody>
                 <tfoot class="bg-danger text-light">
@@ -31,7 +31,7 @@
                         <td></td>
                         <td>{{totalQuantity}}</td>
                         <td></td>
-                        <td><icon-app iconImage="dollar"></icon-app> {{totalAmount}}</td>
+                        <td><icon-app iconImage="dollar-sign"></icon-app> {{totalAmount}}</td>
                     </tr>
                 </tfoot>
             </table>
@@ -75,14 +75,16 @@
                 return final;
             },
             toggleIcon() {
-                return this.queryFinished ? 'handshake-o' : 'spinner';
+                return this.queryFinished ? 'handshake' : 'spinner';
             },
             addAditionalClasses() {
                 return this.queryFinished ? '' : 'fa-spin fa-fw';
             },
             ...mapState('orders', {
                 orders: state => state.data.orders,
-                rental: state => state.data.rental
+                rental: state => state.data.rental,
+                orderToEdit: state => state.data.orderToEdit,
+                orderId: state => state.data.orderId,
             }),
             ...mapState('auth', {
                 queryFinished: state => state.xhr.queryFinished
@@ -101,12 +103,16 @@
                 this.setQueryFinished(false);
                 this.sendOrder({
                     rental_id: this.rental.id,
-                    orders: this.orders
+                    orders: this.orders,
+                    orderToEdit: this.orderToEdit,
+                    order_id: this.orderId
                 }).then(response => {
                     VueNoti.success(response);
                     this.setQueryFinished(true);
                     this.setOrders([]);
                     this.setCloseOrder(false);
+                    this.setOrderToEdit(false);
+                    this.setOrderId(null);
                     EventBus.$emit('change-reserva');
                 }).catch(error => {
                     error.useSwal = true;
@@ -114,7 +120,7 @@
                     this.setQueryFinished(true);
                 });
             },
-            ...mapActions('orders', ['setCloseOrder', 'sendOrder', 'setOrders']),
+            ...mapActions('orders', ['setCloseOrder', 'sendOrder', 'setOrders', 'setOrderToEdit', 'setOrderId']),
             ...mapActions('auth', ['setQueryFinished'])
         },
         filters: {

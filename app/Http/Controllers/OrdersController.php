@@ -165,35 +165,97 @@ class OrdersController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit()
+    {
+        return view('frontend.order-edit');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $this->validate($request, [
             'rental_id' => 'required|integer',
+            'order_id' => 'required|integer',
         ], [
             'rental_id.required' => 'Es necesario que proporcione la identificación del alquiler',
             'rental_id.integer' => 'el identificador debe ser un entero.',
+            'order_id.required' => 'Es necesario que proporcione la identificación del alquiler',
+            'order_id.integer' => 'el identificador debe ser un entero.',
         ]);
 
         $info = $request->all();
 
-        if(!$pedido = Order::find($id)) {
+        if(!$pedido = Order::find($info['order_id'])) {
 
             return response()->json(['error', 'No hemos encontrado el pedido solicitado.'], 404);
 
         }
 
-        try {
+        $collection = collect($info['orders']);
 
-            $pedido->rental_id = $info['rental_id'];
-            $pedido->save();
+        try {
+            DB::transaction(function () use($info, $pedido, $collection) {
+
+                $rental = Rental::find($info['rental_id']);
+                $dateFrom = Carbon::createFromFormat('Y-m-d', $rental->dateFrom);
+                $dateTo = Carbon::createFromFormat('Y-m-d', $rental->dateTo);
+
+                foreach ($pedido->ordersDetail as $key => $detail) {
+
+                    if (!$collection->contains('id', $detail->food_id)) {
+
+                        $detail->delete();
+                        $pedido->ordersDetail->pull($key);
+
+                    }
+
+                }
+
+                unset($detail);
+
+                foreach ($collection as $key => $detail) {
+
+                    $delivery = Carbon::createFromFormat('d/m/Y', $detail['delivery']);
+
+                    if (!$delivery->between($dateFrom, $dateTo)) {
+
+                        throw new \Exception('La fecha ' . $delivery->format('d/m/Y') . ' no se encuentra dentro del periodo de estadía según la reserva seleccionada. Las fechas deben encontrarse entre ' . $dateFrom->format('d/m/Y') . ' y ' . $dateTo->format('d/m/Y') . ' o ser iguales a las mismas, por favor verifique las fechas y reintente. Muchas gracias', 500);
+
+                    }
+
+                    if (!$pedido->ordersDetail->contains('food_id', $detail['id'])) {
+
+                        $detailNew = new OrdersDetail([
+                            'food_id' => $detail['id'],
+                            'delivery' => $delivery->toDateString(),
+                            'quantity' => $detail['quantity']
+                        ]);
+
+                        $pedido->ordersDetail()->save($detailNew);
+
+                    } else {
+
+                        $first = $pedido->ordersDetail->firstWhere('food_id', $detail['id']);
+                        $first->food_id = $detail['id'];
+                        $first->delivery = $delivery->toDateString();
+                        $first->quantity = $detail['quantity'];
+                        $first->save();
+                    }
+
+                }
+            });
 
         } catch(\Exception $exception) {
 
-            return response()->json(['error' => 'Ha ocurrido un error actualizando el pedido. Por favor verifiquelo: Codigo: ' . $exception->getCode() . ' - Mensaje: ' . $exception->getMessage()], 500);
+            return response()->json(['error' => 'Ocurrio un error intentando dar de alta el pedido.\n Por favor tenga en cuenta el siguiente detalle: Codigo: ' . $exception->getCode() . ' - Mensaje: ' . $exception->getMessage() . ' - Line: ' . $exception->getLine() . ' - File: ' . $exception->getFile()], 500);
 
         }
 

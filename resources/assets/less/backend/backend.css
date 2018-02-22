@@ -1,7 +1,7 @@
 /********************************************
  * Imports
  ********************************************/
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,600');
 /******************************************************
 * Colores
 ******************************************************/
@@ -41,16 +41,6 @@
 }
 body .container-backend #content {
   min-height: 45.4rem;
-}
-body .container-backend #content #main_content .card .tt-users:before {
-  content: '\f0c0';
-  font-family: 'FontAwesome';
-  margin-right: 5px;
-}
-body .container-backend #content #main_content .card .tt-cottages:before {
-  content: '\f015';
-  font-family: 'FontAwesome';
-  margin-right: 5px;
 }
 body .container-backend #content #main_content .card .selectize-input {
   line-height: inherit;
@@ -138,33 +128,33 @@ body .container-backend #content #lateral_menu .menu > li > a.active {
   border-bottom: 1px solid #1a638f;
 }
 body .container-backend #content #lateral_menu .menu > li > a.panel-dash:before {
-  content: '\f0e4';
-  font-family: 'FontAwesome';
+  content: '\f3fd';
+  font-family: 'Font Awesome 5 Free';
   margin-right: 5px;
 }
 body .container-backend #content #lateral_menu .menu > li > a.frontend:before {
   content: '\f108';
-  font-family: 'FontAwesome';
+  font-family: 'Font Awesome 5 Free';
   margin-right: 5px;
 }
 body .container-backend #content #lateral_menu .menu > li > a.cottage:before {
   content: '\f015';
-  font-family: 'FontAwesome';
+  font-family: 'Font Awesome 5 Free';
   margin-right: 5px;
 }
 body .container-backend #content #lateral_menu .menu > li > a.promotion:before {
   content: '\f06b';
-  font-family: 'FontAwesome';
+  font-family: 'Font Awesome 5 Free';
   margin-right: 5px;
 }
 body .container-backend #content #lateral_menu .menu > li > a.claims:before {
   content: '\f071';
-  font-family: 'FontAwesome';
+  font-family: 'Font Awesome 5 Free';
   margin-right: 5px;
 }
 body .container-backend #content #lateral_menu .menu > li > a.users:before {
   content: '\f0c0';
-  font-family: 'FontAwesome';
+  font-family: 'Font Awesome 5 Free';
   margin-right: 5px;
 }
 body .container-backend #content #lateral_menu .menu > li > a span {

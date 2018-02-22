@@ -9,7 +9,7 @@
     <div class="row justify-content-center">
         <div class="col-12 col-md-8">
             <div class="card mb-5">
-                <div class="card-header bg-secondary text-light h3"><i class="fa fa-address-book" aria-hidden="true"></i> Registrarse como miembro</div>
+                <div class="card-header bg-secondary text-light h3"><i class="fas fa-address-book" aria-hidden="true"></i> Registrarse como miembro</div>
                 <div class="card-body">
                     @if(count($errors) > 0)
                         <div class="alert alert-warning" role="alert">

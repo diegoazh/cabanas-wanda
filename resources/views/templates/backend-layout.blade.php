@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend.css') }}">
     <link rel='stylesheet' href='{{ asset('lib/glyphicons-only-bootstrap/css/bootstrap.min.css') }}'>
+    <link rel="stylesheet" href="{{ asset('font-awesome/css/fontawesome-all.css') }}">
     @yield('styles')
 </head>
 <body class="bg-light">
@@ -23,7 +24,7 @@
                 <div class="row">
                     <div class="col-12 mb-3">
                         <a id="button_left_menu" class="btn btn-dark text-white cursorPointer" role="button">
-                            <i class="fa fa-navicon" aria-hidden="true"></i> Menú
+                            <i class="fas fa-bars" aria-hidden="true"></i> Menú
                         </a>
                     </div>
                 </div>
@@ -72,6 +73,9 @@
     </script>
     <script>
         $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
     @yield('scripts')
 </body>

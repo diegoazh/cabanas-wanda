@@ -3,29 +3,42 @@
 namespace App\Http\Controllers\Administration;
 
 use App\Promotion;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+use JWTAuth;
 
 class PromotionsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Show the page with promotions and form to creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        if (!Auth::user()->isAdmin()) {
+            return redirect(route('login'));
+        }
+
+        $token = JWTAuth::fromUser(Auth::user());
+
+        Cookie::queue('info_one', $token, 180, null, null, false, false);
+
+        return view('backend.promotions-create');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the page with promotions and form to creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function list()
     {
-        //
+        $promos = Promotion::orderBy('state')->get()->toArray();
+        return response()->json(['promotions' => $promos], 201);
     }
 
     /**
@@ -36,7 +49,18 @@ class PromotionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $info = $request->all();
+        
+        $info['startDate'] = Carbon::createFromFormat('d/m/Y', $info['startDate']);
+        $info['endDate'] = Carbon::createFromFormat('d/m/Y', $info['endDate']);
+
+        $promotion = Promotion::create($info);
+
+        $message = 'La promoción se creó correctamente';
+
+        flash("<h3 class=\"text-center\"><i class=\"fas fa-information-circle\" aria-hidden=\"true\"></i> $message</h3>")->success();
+
+        return response()->json(['message' => $message], 200);
     }
 
     /**

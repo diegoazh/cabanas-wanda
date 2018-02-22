@@ -14,14 +14,14 @@ class AdminViewComposer
     {
         $cantUsers = User::all()->count();
         $cantCottages = Cottage::all()->count();
-        $canPromotions = Promotion::all()->count();
-        $canClaims = Claim::all()->count();
+        $cantPromotions = Promotion::all()->count();
+        $cantClaims = Claim::all()->count();
 
         $view->with([
             'cantUsers' => $cantUsers,
             'cantCottages' => $cantCottages,
-            'canPromotions' => $canPromotions,
-            'canClaims' => $canClaims
+            'cantPromotions' => $cantPromotions,
+            'cantClaims' => $cantClaims
         ]);
     }
 }

@@ -13,6 +13,12 @@ export default {
     setCloseOrder({commit}, bool) {
         commit('setCloseOrder', bool);
     },
+    setOrderToEdit({commit}, bool) {
+        commit('setOrderToEdit', bool);
+    },
+    setOrderId({commit}, id) {
+        commit('setOrderId', bool);
+    },
     setDesayunos({commit}, desayunos) {
         commit('setDesayunos', desayunos);
     },
@@ -46,14 +52,17 @@ export default {
     },
     sendOrder(cntx, payload) {
         return new Promise((resolve, reject) => {
-            http.post('orders/store', payload, {
+            http({
+                url: payload.orderToEdit ? 'orders/update' : 'orders/store',
+                method: payload.orderToEdit ? 'put' : 'post',
+                data: payload,
                 params: {
                     token: cntx.rootGetters['auth/getToken']
                 }
             }).then(response => {
                 cntx.dispatch('auth/setToken', response, {root: true});
                 resolve({
-                    title: 'PEDIDO REALIZADO',
+                    title:  payload.orderToEdit ? 'PEDIDO ACTUALIZADO' : 'PEDIDO REALIZADO',
                     message: response.data.message,
                     useSwal: true,
                 });

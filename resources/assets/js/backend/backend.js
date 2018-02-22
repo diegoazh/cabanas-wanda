@@ -78,7 +78,7 @@ $(document).ready(function(e) {
         var inputValue = $this.data('objectValue');
         var name = $this.data('objectDisplay');
         var $btnSubmit = $('#submit_form');
-        var $btnClose = $('.modal-footer > button.btn-default');
+        var $btnClose = $('.modal-footer > button.btn-secondary');
         var $form = ($formOptional !== '' && $formOptional !== undefined && $formOptional !== null) ? $formOptional : $('#modalFormId');
         if (!Object.isObject(textsToDisplay)) {
             var message = (''+
@@ -101,16 +101,16 @@ $(document).ready(function(e) {
             return;
         }
         if (Object.isObject(textsToDisplay)) {
-            $('.modal-title').html('¿ ' + textsToDisplay.title + ' <span class="span-display label"></span> ? <br /> <small>' + textsToDisplay.infoText + '</small>');
-            $('.sr-only, .input-group-addon').text(textsToDisplay.label);
+            $('#modalForms .modal-title').html('¿ ' + textsToDisplay.title + ' <span class="span-display badge"></span> ? <br /> <small>' + textsToDisplay.infoText + '</small>');
+            $('.sr-only, .input-group-text').text(textsToDisplay.label);
         }
         if (modalSize !== '' && modalSize !== undefined && modalSize !== null) {
             $('.modal-dialog').addClass(modalSize);
         }
-        $('.span-display').html('<i class="fa fa-hashtag" aria-hidden="true"></i> ' + (textsToDisplay.name) ? name : inputValue);
+        $('.span-display').html('<i class="fas fa-hashtag" aria-hidden="true"></i> ' + (textsToDisplay.name) ? name : inputValue);
         if (textsToDisplay.inputType.toLowerCase() === 'select') {
             $('#inputFormId').remove();
-            $('.input-group').append($('<select>').attr('id', 'inputFormId').attr('name', 'inputFormId').addClass('form-control'));
+            $('#container_input.input-group').append($('<select>').attr('id', 'inputFormId').attr('name', 'inputFormId').addClass('form-control'));
             if (Array.isArray(textsToDisplay.options)) {
                 $.each(textsToDisplay.options, function (i, item) {
                     $('#inputFormId').append($('<option>', {
@@ -124,21 +124,23 @@ $(document).ready(function(e) {
             }
         } else {
             $('#inputFormId').remove();
-            $('.input-group').append($('<input>').attr('id', 'inputFormId').attr('name', 'inputFormId').addClass('form-control'));
+            $('#container_input.input-group').append($('<input>').attr('id', 'inputFormId').attr('name', 'inputFormId').addClass('form-control'));
             $('#inputFormId').attr('type', textsToDisplay.inputType).val(inputValue);
         }
         if (method.toUpperCase() === 'DELETE') {
-            $('#inputFormId').attr('disabled', 'disabled');
-            $('.span-display').addClass('label-danger');
+            $('#inputFormId').attr('disabled', true).addClass('disabled');
+            $('.span-display').addClass('badge-danger');
             $('.modal-title > small').addClass('text-danger');
             $btnSubmit.removeClass('btn-primary').addClass('btn-danger');
-            $btnSubmit.html('<i class="fa fa-trash-o" aria-hidden="true"></i> ' + textsToDisplay.textBtn);
+            $btnSubmit.html('<i class="fas fa-trash" aria-hidden="true"></i> ' + textsToDisplay.textBtn);
+            $btnClose.html('<i class="fas fa-times" aria-hidden="true"></i> ' + 'Cerrar');
         } else {
             $('#inputFormId').removeAttr('disabled');
-            $('.span-display').addClass('label-warning');
+            $('.span-display').addClass('badge-warning');
             $('.modal-title > small').addClass('text-warning');
-            $btnSubmit.removeClass('btn-primary').addClass('btn-warning');
-            $btnSubmit.html('<i class="fa fa-exchange" aria-hidden="true"></i> ' + textsToDisplay.textBtn);
+            $btnSubmit.removeClass('btn-primary btn-danger').addClass('btn-warning');
+            $btnSubmit.html('<i class="fas fa-sync" aria-hidden="true"></i> ' + textsToDisplay.textBtn);
+            $btnClose.html('<i class="fas fa-times" aria-hidden="true"></i> ' + 'Cerrar');
         }
         $('input[name=_method]').val(method.toUpperCase());
         (typeof(files) === "boolean") ? ((files) ? $form.attr('enctype', 'multipart/form-data'): null) : $form.attr('enctype', files);

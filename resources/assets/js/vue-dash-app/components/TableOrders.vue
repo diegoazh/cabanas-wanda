@@ -13,25 +13,31 @@
             <tbody>
             <tr v-for="(orders, index) in pagination.data">
                 <td><icon-app iconImage="hashtag"></icon-app> {{ rowNumber(index) }}</td>
-                <td><span class="text-to-14px label label-warning"><icon-app iconImage="home"></icon-app> {{ orders.rental.cottage.name }}</span></td>
+                <td><span class="text-to-14px badge badge-warning"><icon-app iconImage="home"></icon-app> {{ orders.rental.cottage.name }}</span></td>
                 <td>
-                    <span class="text-to-14px label label-primary" v-if="!orders.edit"><icon-app iconImage="dollar"></icon-app> {{ orders.senia }}</span>
-                    <a role="button" @click.prevent="orders.edit = true; trash.senia = orders.senia;" v-tooltip.right="'Editar seña'" v-if="!orders.edit"><icon-app iconImage="edit"></icon-app></a>
+                    <span class="text-to-14px badge badge-primary" v-if="!orders.edit">
+                        <icon-app iconImage="dollar"></icon-app> {{ orders.senia }}
+                    </span>
+                    <sup>
+                        <a role="button" @click.prevent="orders.edit = true; trash.senia = orders.senia;" v-tooltip.right="'Editar seña'" v-if="!orders.edit" class="cursorPointer">
+                            <icon-app iconImage="edit"></icon-app>
+                        </a>
+                    </sup>
                     <form @submit.prevent="" class="form-inline" v-if="orders.edit">
                         <div class="form-group">
                             <label for="seniaOrder" class="sr-only">Se&ntilde;a: </label>
                             <div class="input-group input-group-sm">
-                                <div class="input-group-addon"><icon-app iconImage="dollar"></icon-app></div>
+                                <div class="input-group-prepend"><div class="input-group-text"><icon-app iconImage="dollar"></icon-app></div></div>
                                 <input type="number" name="seniaOrder" id="seniaOrder" class="form-control" v-model="trash.senia">
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-default btn-sm" @click.prevent="orders.edit = false; trash.senia = '';">Cancelar</button>
+                                <button class="btn btn-secondary btn-sm" @click.prevent="orders.edit = false; trash.senia = '';">Cancelar</button>
                                 <button class="btn btn-primary btn-sm" @click.prevent="saveNewSenia(orders)">Actualizar</button>
                             </div>
                         </div>
                     </form>
                 </td>
-                <td><span class="text-to-14px label label-default">{{ orders.senia_date | DateArg }}</span></td>
+                <td><span class="text-to-14px badge badge-secondary">{{ orders.senia_date | DateArg }}</span></td>
                 <td>
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -54,16 +60,20 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <h2 class="text-center">
-                            Pedido caba&ntilde;a <span class="label label-info">{{ order.rental.cottage.name }}</span>
+                            Pedido caba&ntilde;a <span class="badge badge-info">{{ order.rental.cottage.name }}</span>
                             <br>
                             <small>
-                                <span :class="['text-uppercase', 'label', setClassState(order.state)]" v-if="!editState">{{ order.state | correctState }}</span>&nbsp;
-                                <a role="button" @click.prevent="editState = true; trash.state = order.state;" v-tooltip.hover="'Editar estado'" v-if="!editState"><icon-app iconImage="edit"></icon-app></a>
-                                <form @submit.prevent="" class="form-inline" v-if="editState">
+                                <span :class="['text-uppercase', 'badge', setClassState(order.state)]" v-if="!editState">{{ order.state | correctState }}</span>&nbsp;
+                                <sup role="button" class="cursorPointer">
+                                    <a role="button" @click.prevent="editState = true; trash.state = order.state;" v-tooltip.hover="'Editar estado'" v-if="!editState">
+                                        <icon-app iconImage="edit"></icon-app>
+                                    </a>
+                                </sup>
+                                <form @submit.prevent="" class="form-inline justify-content-center" v-if="editState">
                                     <div class="form-group">
                                         <label for="state" class="sr-only">Estado: </label>
                                         <div class="input-group">
-                                            <div class="input-group-addon">Estado</div>
+                                            <div class="input-group-prepend"><div class="input-group-text">Estado</div></div>
                                             <select name="state" id="state" class="form-control" v-model="trash.state">
                                                 <option value="pendiente" :selected="order.state === 'pendiente'">Pendiente</option>
                                                 <option value="seniado" :selected="order.state === 'seniado'">Señada</option>
@@ -72,7 +82,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <button class="btn btn-default" @click.prevent="editState = false; trash.state = '';">Cancelar</button>
+                                            <button class="btn btn-secondary" @click.prevent="editState = false; trash.state = '';">Cancelar</button>
                                             <button class="btn btn-primary" @click.prevent="saveNewState">Actualizar</button>
                                         </div>
                                     </div>
@@ -84,8 +94,8 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
+                            <table class="table table-striped table-responsive">
+                                <thead class="bg-dark text-light">
                                 <tr>
                                     <th>Orden</th>
                                     <th>Plato</th>
@@ -93,8 +103,8 @@
                                     <th>Cantidad</th>
                                     <th>Precio</th>
                                     <th>Total</th>
-                                    <th>Fecha entrega</th>
-                                    <th>Estado del plato</th>
+                                    <th>Para el</th>
+                                    <th>Estado</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -103,33 +113,37 @@
                                         <icon-app iconImage="hashtag"></icon-app> {{ index + 1 }}
                                     </td>
                                     <td>
-                                        <span class="label label-primary"><icon-app iconImage="cutlery"></icon-app> {{ detail.food.name }}</span>
+                                        <span class="badge badge-primary"><icon-app iconImage="utensils"></icon-app> {{ detail.food.name }}</span>
                                     </td>
                                     <td>
-                                        <span :class="['label', setClassType(detail.food.type)]">{{ detail.food.type }}</span>
+                                        <span :class="['badge', setClassType(detail.food.type)]">{{ detail.food.type }}</span>
                                     </td>
                                     <td>
-                                        <span class="label label-info">{{ detail.quantity }}</span>
+                                        <span class="badge badge-info">{{ detail.quantity }}</span>
                                     </td>
                                     <td>
-                                        <span class="label label-warning"><icon-app iconImage="dollar"></icon-app> {{ detail.food.price }}</span>
+                                        <span class="badge badge-warning"><icon-app iconImage="dollar"></icon-app> {{ detail.food.price }}</span>
                                     </td>
                                     <td>
-                                        <span class="label label-danger">
+                                        <span class="badge badge-danger">
                                             <icon-app iconImage="dollar"></icon-app> {{ (detail.quantity * detail.food.price).toFixed(2) }}
                                         </span>
                                     </td>
                                     <td>
-                                        <span class="label label-default">{{ detail.delivery | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span>
+                                        <span class="badge badge-secondary">{{ detail.delivery | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span>
                                     </td>
                                     <td>
-                                        <span :class="['label', setClassState(detail.state)]" v-if="!detail.edit">{{ detail.state | correctState }}</span>
-                                        <a role="button" @click.prevent="detail.edit = true; trash.stateFood = detail.state;" v-tooltip.hover="'Editar estado'" v-if="!detail.edit"><icon-app iconImage="edit"></icon-app></a>
+                                        <span :class="['badge', setClassState(detail.state)]" v-if="!detail.edit">{{ detail.state | correctState }}</span>
+                                        <sup role="button" class="cursorPointer">
+                                            <a role="button" @click.prevent="detail.edit = true; trash.stateFood = detail.state;" v-tooltip.hover="'Editar estado'" v-if="!detail.edit">
+                                                <icon-app iconImage="edit"></icon-app>
+                                            </a>
+                                        </sup>
                                         <form @submit.prevent="" class="form-inline" v-if="detail.edit">
                                             <div class="form-group">
                                                 <label for="stateFood" class="sr-only">Estado: </label>
                                                 <div class="input-group input-group-sm">
-                                                    <div class="input-group-addon">Estado</div>
+                                                    <div class="input-group-prepend"><div class="input-group-text">Estado</div></div>
                                                     <select name="state" id="stateFood" class="form-control" v-model="trash.stateFood">
                                                         <option value="pendiente" :selected="detail.state === 'pendiente'">Pendiente</option>
                                                         <option value="preparandose" :selected="detail.state === 'preparandose'">Preparandose</option>
@@ -138,7 +152,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <button class="btn btn-default btn-sm" @click.prevent="detail.edit = false; trash.stateFood = '';">Cancelar</button>
+                                                    <button class="btn btn-secondary btn-sm" @click.prevent="detail.edit = false; trash.stateFood = '';">Cancelar</button>
                                                     <button class="btn btn-primary btn-sm" @click.prevent="saveNewStateFood(detail)">Actualizar</button>
                                                 </div>
                                             </div>
@@ -198,17 +212,17 @@
                 let classString = '';
 
                 switch (state) {
-                    case 'pendiente': classString = 'label-warning';
+                    case 'pendiente': classString = 'badge-warning';
                         break;
-                    case 'seniado': classString = 'label-info';
+                    case 'seniado': classString = 'badge-info';
                         break;
-                    case 'pagado': classString = 'label-success';
+                    case 'pagado': classString = 'badge-success';
                         break;
-                    case 'preparandose': classString = 'label-info';
+                    case 'preparandose': classString = 'badge-info';
                         break;
-                    case 'entregado': classString = 'label-success';
+                    case 'entregado': classString = 'badge-success';
                         break;
-                    case 'cancelado': classString = 'label-danger';
+                    case 'cancelado': classString = 'badge-danger';
                         break;
                 }
 
@@ -218,13 +232,13 @@
                 let classType = '';
 
                 switch (type) {
-                    case 'desayuno': classType = 'label-desayuno';
+                    case 'desayuno': classType = 'badge-desayuno';
                         break;
-                    case 'almuerzo': classType = 'label-almuerzo';
+                    case 'almuerzo': classType = 'badge-almuerzo';
                         break;
-                    case 'merienda': classType = 'label-merienda';
+                    case 'merienda': classType = 'badge-merienda';
                         break;
-                    case 'cena': classType = 'label-cena';
+                    case 'cena': classType = 'badge-cena';
                         break;
                 }
 
@@ -263,7 +277,7 @@
                 }).then(order => {
                     order.orders_detail.forEach(detail => this.$set(detail, 'edit', false));
                     this.order = order;
-                    this.modalAppTitle = 'Detalle pedido, cabaña ' + this.order.rental.cottage.name;
+                    this.modalAppTitle = 'Detalle pedido, cabaña ' + this.order.rental.cottage.name.toUpperCase();
                     VueNoti.success({
                         title: 'OK!',
                         message: 'Orden cargada con éxito',
@@ -314,22 +328,22 @@
     .text-to-14px {
         font-size: 14px;
     }
-    .label-desayuno{
+    .badge-desayuno{
         background-color: #DBF9F3;
         color: #333333;
         border: solid 1px #333333;
     }
-    .label-almuerzo{
+    .badge-almuerzo{
         background-color: #CBE9FC;
         color: #333333;
         border: solid 1px #333333;
     }
-    .label-merienda{
+    .badge-merienda{
         background-color: #CBD5FC;
         color: #333333;
         border: solid 1px #333333;
     }
-    .label-cena{
+    .badge-cena{
         background-color: #DECBFC;
         color: #333333;
         border: solid 1px #333333;

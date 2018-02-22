@@ -15,6 +15,12 @@ export default {
             state.data.orders.splice(state.data.orders.findIndex(element => element.name === food.name), 1);
         }
     },
+    setOrderToEdit(state, bool) {
+        state.data.orderToEdit = bool;
+    },
+    setOrderId(state, id) {
+        state.data.orderId = id;
+    },
     setCloseOrder(state, bool) {
         state.data.closeOrder = bool;
     },

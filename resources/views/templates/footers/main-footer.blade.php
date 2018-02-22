@@ -3,16 +3,16 @@
         <div class="col-12 col-md-4 pl-md-5">
             <h2><i class="fa fa-info-circle" aria-hidden="true"></i> Información para el usuario</h2>
             <ul class="fa-ul">
-                <li><a href="#"><i class="fa-li fa fa-check-square-o" aria-hidden="true"></i> Acerca de nosotros</a></li>
-                <li><a href="{{ route('home.front.ourLocation') }}"><i class="fa-li fa fa-check-square-o" aria-hidden="true"></i> Cómo llegar</a></li>
-                <li><a href="{{ route('home.front.touristAttractions') }}"><i class="fa-li fa fa-check-square-o" aria-hidden="true"></i> Atracciónes turísticas de la zona</a></li>
-                <li><a href="#"><i class="fa-li fa fa-check-square-o" aria-hidden="true"></i> Bases y condiciones en promociones</a></li>
-                <li><a href="#"><i class="fa-li fa fa-check-square-o" aria-hidden="true"></i> Política de privacidad</a></li>
-                <li><a href="#"><i class="fa-li fa fa-check-square-o" aria-hidden="true"></i> Términos y condiciones</a></li>
+                <li><a href="#"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Acerca de nosotros</a></li>
+                <li><a href="{{ route('home.front.ourLocation') }}"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Cómo llegar</a></li>
+                <li><a href="{{ route('home.front.touristAttractions') }}"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Atracciónes turísticas de la zona</a></li>
+                <li><a href="#"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Bases y condiciones en promociones</a></li>
+                <li><a href="#"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Política de privacidad</a></li>
+                <li><a href="#"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Términos y condiciones</a></li>
             </ul>
         </div>
         <div class="col-12 col-md-4 pl-md-5">
-            <h2><i class="fa fa-youtube-square" aria-hidden="true"></i> Una peque&ntilde;a muestra</h2>
+            <h2><i class="fab fa-youtube" aria-hidden="true"></i> Una peque&ntilde;a muestra</h2>
             <div class="embed-responsive embed-responsive-16by9">
                 <iframe width="560" height="315" src="@if(isset($content) && !empty($content->link_video)) {{ $content->link_video }} @else https://www.youtube.com/embed/GktQFL-jAvs @endif" frameborder="0" allowfullscreen></iframe>
             </div>
@@ -23,8 +23,8 @@
                 @if($content->show_facebook)
                     <a href="@if(isset($content) && !empty($content->facebook)) {{ $content->facebook }} @endif">
                         <span class="fa-stack fa-lg">
-                          <i class="fa fa-square-o fa-stack-2x"></i>
-                          <i class="fa fa-facebook fa-stack-1x"></i>
+                          <i class="far fa-square fa-stack-2x"></i>
+                          <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
                         </span>
                         ¡Dejanos un me gusta en nuestra fan page!
                     </a>
@@ -34,8 +34,8 @@
                 @if($content->show_twitter)
                     <a href="@if(isset($content) && !empty($content->twitter)) {{ $content->twitter }} @endif">
                         <span class="fa-stack fa-lg">
-                          <i class="fa fa-square-o fa-stack-2x"></i>
-                          <i class="fa fa-twitter fa-stack-1x"></i>
+                          <i class="far fa-square fa-stack-2x"></i>
+                          <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
                         </span>
                         ¡Siguenos en Twitter!
                     </a>
@@ -45,8 +45,8 @@
                 @if($content->show_instagram)
                     <a href="@if(isset($content) && !empty($content->instagram)) {{ $content->instagram }} @endif">
                         <span class="fa-stack fa-lg">
-                          <i class="fa fa-square-o fa-stack-2x"></i>
-                          <i class="fa fa-instagram fa-stack-1x"></i>
+                          <i class="far fa-square fa-stack-2x"></i>
+                          <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
                         </span>
                         ¡Siguenos en Instagram!
                     </a>
@@ -56,8 +56,8 @@
                 @if($content->show_youtube)
                     <a href="@if(isset($content) && !empty($content->youtube)) {{ $content->youtube }} @endif">
                         <span class="fa-stack fa-lg">
-                          <i class="fa fa-square-o fa-stack-2x"></i>
-                          <i class="fa fa-youtube fa-stack-1x"></i>
+                          <i class="far fa-square fa-stack-2x"></i>
+                          <i class="fab fa-youtube fa-stack-1x fa-inverse"></i>
                         </span>
                         ¡Suscribete a nuestro canal!
                     </a>
@@ -67,8 +67,8 @@
                 @if($content->show_googleplus)
                     <a href="@if(isset($content) && !empty($content->googleplus)) {{ $content->googleplus }} @endif">
                         <span class="fa-stack fa-lg">
-                          <i class="fa fa-square-o fa-stack-2x"></i>
-                          <i class="fa fa-google-plus fa-stack-1x"></i>
+                          <i class="far fa-square fa-stack-2x"></i>
+                          <i class="fab fa-google-plus fa-stack-1x fa-inverse"></i>
                         </span>
                         ¡Dejanos un +1 en Google+!
                     </a>
@@ -76,22 +76,22 @@
             @endif
             <a href="#" id="mail" data-toggle="modal" data-target="#modalEmailContact">
                     <span class="fa-stack fa-lg">
-                      <i class="fa fa-square-o fa-stack-2x"></i>
-                      <i class="fa fa-envelope fa-stack-1x"></i>
+                      <i class="far fa-square fa-stack-2x"></i>
+                      <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
                     </span>
                 ¡Escribenos un e-mail!
             </a>
             <a href="#" id="phone" data-toggle="modal" data-target="#msg_modals_frontend" data-tt-modal="¡Contactanos a nuestro fijo!" data-body-modal="(0054) 03757-471272">
                     <span class="fa-stack fa-lg">
-                      <i class="fa fa-square-o fa-stack-2x"></i>
-                      <i class="fa fa-phone fa-stack-1x"></i>
+                      <i class="far fa-square fa-stack-2x"></i>
+                      <i class="fas fa-phone fa-stack-1x fa-inverse"></i>
                     </span>
                 ¡Contactanos a nuestro fijo!
             </a>
             <a href="#" id="cel" data-toggle="modal" data-target="#msg_modals_frontend" data-tt-modal="¡Envianos un Whatsapp!" data-body-modal="(+549) 3757-675651">
                     <span class="fa-stack fa-lg">
-                      <i class="fa fa-square-o fa-stack-2x"></i>
-                      <i class="fa fa-whatsapp fa-stack-1x"></i>
+                      <i class="far fa-square fa-stack-2x"></i>
+                      <i class="fab fa-whatsapp fa-stack-1x fa-inverse"></i>
                     </span>
                 ¡Envianos un Whatsapp!
             </a>

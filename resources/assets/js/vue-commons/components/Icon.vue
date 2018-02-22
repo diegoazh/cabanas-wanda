@@ -6,6 +6,10 @@
     export default {
         name: 'icon-app',
         props: {
+            typeIcon: {
+              type: String,
+              default: 's',
+            },
             iconImage: {
                 type: String,
                 default: '',
@@ -24,7 +28,7 @@
         },
         computed: {
             toggleIconClass() {
-                let classes = 'fa fa-' + this.iconImage;
+                let classes = (this.typeIcon === 'l' ? 'fal' : (this.typeIcon === 'r' ? 'far' : 'fas')) + ' fa-' + this.iconImage;
                 if (this.aditionalClasses) {
                     classes += ' ' + this.aditionalClasses;
                 }
