@@ -33,56 +33,56 @@
                         <div class="form-group">
                             {{ Form::label('name', 'Nombre: ', ['class' => 'sr-only']) }}
                             <div class="input-group">
-                                <div class="input-group-addon">Nombre:</div>
+                                <div class="input-group-prepend"><div class="input-group-text">Nombre:</div></div>
                                 {{ Form::text('name', $user->name, ['class' => 'form-control', 'placeholder' => 'Ingrese el nombre']) }}
                             </div>
                         </div>
                         <div class="form-group">
                             {{ Form::label('lastname', 'Apellido: ', ['class' => 'sr-only']) }}
                             <div class="input-group">
-                                <div class="input-group-addon">Apellido:</div>
+                                <div class="input-group-prepend"><div class="input-group-text">Apellido:</div></div>
                                 {{ Form::text('lastname', $user->lastname, ['class' => 'form-control', 'placeholder' => 'Ingrese el apellido']) }}
                             </div>
                         </div>
                         <div class="form-group">
                             {{ Form::label('dateOfBirth', 'Nacimiento: ', ['class' => 'sr-only']) }}
                             <div id="birth" class="input-group">
-                                <div class="input-group-addon date-piker"><i class="fa fa-calendar"></i></div>
+                                <div class="input-group-prepend date-piker"><div class="input-group-text"><i class="fa fa-calendar"></i></div></div>
                                 {{ Form::text('dateOfBirth', $user->dateOfBirth->format('d/m/Y'), ['class' => 'form-control date-picker', 'id' => 'dateOfBirth', 'placeholder' => 'Ingrese la fecha de nacimiento']) }}
                             </div>
                         </div>
                         <div class="form-group">
                             {{ Form::label('genre', 'Sexo: ', ['class' => 'sr-only']) }}
-                            <div class="input-group">
-                                <div class="input-group-addon">Sexo:</div>
+                            <div class="input-group" style="height: 38px">
+                                <div class="input-group-prepend"><div class="input-group-text">Sexo:</div></div>
                                 {{ Form::select('genre', ['m' => 'Masculino', 'f' => 'Femenino', 'o' => 'Otro'], $user->genre, ['class' => 'form-control']) }}
                             </div>
                         </div>
                         <div class="form-group">
                             {{ Form::label('dni', 'DNI: ', ['class' => 'sr-only']) }}
                             <div class="input-group">
-                                <div class="input-group-addon">DNI:</div>
+                                <div class="input-group-prepend"><div class="input-group-text">DNI:</div></div>
                                 {{ Form::number('dni', $user->dni, ['class' => 'form-control', 'placeholder' => 'Ingrese el nº de pasaporte', 'disabled' => true]) }}
                             </div>
                         </div>
                         <div class="form-group">
                             {{ Form::label('passport', 'Pasaporte: ', ['class' => 'sr-only']) }}
                             <div class="input-group">
-                                <div class="input-group-addon">Pasaporte:</div>
+                                <div class="input-group-prepend"><div class="input-group-text">Pasaporte:</div></div>
                                 {{ Form::text('passport', $user->passport, ['class' => 'form-control', 'placeholder' => 'Ingrese el nº de pasaporte']) }}
                             </div>
                         </div>
                         <div class="form-group">
                             {{ Form::label('email', 'E-mail: ', ['class' => 'sr-only']) }}
                             <div class="input-group">
-                                <div class="input-group-addon">E-mail:</div>
+                                <div class="input-group-prepend"><div class="input-group-text">E-mail:</div></div>
                                 {{ Form::email('email', $user->email, ['class' => 'form-control', 'placeholder' => 'Ingrese su email', 'disabled' => 'disabled']) }}
                             </div>
                         </div>
                         <div class="form-group">
                             {{ Form::label('celphone', 'Celular: ', ['class' => 'sr-only']) }}
                             <div class="input-group">
-                                <div class="input-group-addon">Celular:</div>
+                                <div class="input-group-prepend"><div class="input-group-text">Celular:</div></div>
                                 {{ Form::number('celphone', $user->celphone, ['class' => 'form-control', 'placeholder' => 'Ingrese su nº de celular']) }}
                             </div>
                             <small class="text-danger">*Recuerde ingresar su codigo de país sin el + (mas) o reemplacelo por 00. Ejemplo: 005491123456789</small>
@@ -90,7 +90,7 @@
                         <div class="form-group">
                             {{ Form::label('phone', 'Tel&eacute;fono: ', ['class' => 'sr-only']) }}
                             <div class="input-group">
-                                <div class="input-group-addon">Tel&eacute;fono:</div>
+                                <div class="input-group-prepend"><div class="input-group-text">Tel&eacute;fono:</div></div>
                                 {{ Form::number('phone', $user->phone, ['class' => 'form-control', 'placeholder' => 'Ingrese su nº de teléfono']) }}
                             </div>
                             <small class="text-danger">*Recuerde ingresar su codigo de país sin el + (mas) o reemplacelo por 00. Ejemplo: 005491123456789</small>
@@ -98,7 +98,7 @@
                         <div class="form-group">
                             {{ Form::label('address', 'Direcci&oacute;n: ', ['class' => 'sr-only']) }}
                             <div class="input-group">
-                                <div class="input-group-addon">Direcci&oacute;n:</div>
+                                <div class="input-group-prepend"><div class="input-group-text">Direcci&oacute;n:</div></div>
                                 {{ Form::text('address', $user->address, ['class' => 'form-control', 'placeholder' => 'Ingrese su dirección']) }}
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                         <div class="form-group imageProfile">
                             {{ Form::label('imageProfile', 'Foto de perfil: ', ['class' => 'sr-only']) }}
                             <div class="input-group">
-                                <div class="input-group-addon">Foto de perfil:</div>
+                                <div class="input-group-prepend"><div class="input-group-text">Foto de perfil:</div></div>
                                 {{ Form::file('imageProfile', ['class' => 'form-control', 'id' => 'imageProfile']) }}
                                 {{ Form::hidden('image_avatar') }}
                             </div>

@@ -191,7 +191,7 @@ class RentalsController extends Controller
             }
 
             if (!$reserva = Rental::where('code_reservation', sha1($info['reserva']))
-                ->where('dateFrom', '<=', Carbon::now()->toDateString())
+                ->where('dateFrom', '<=', Carbon::now()->toDateString()) // Se modifica solo con 48hs o más de anticipación
                 ->where('dateTo', '>=', Carbon::now()->toDateString())
                 ->where('state', 'en_curso')
                 ->first()) {
@@ -354,7 +354,7 @@ class RentalsController extends Controller
             $rental->cottage_price = $cottage->price;
             $rental->total_days = $dateFrom->diffInDays($dateTo);
             Carbon::now()->addDays(1)->gte($dateFrom) ? null : $rental->dateReservationPayment = Carbon::now()->addDays(1)->toDateTimeString();
-            // Fix me: Agregar la promoción y el calculo de su descuento aquí.
+            // TODO (Diego) Fix me: Agregar la promoción y el calculo de su descuento aquí.
             $rental->deductions = 0;
             $rental->finalPayment = ($rental->cottage_price * $rental->total_days) - $rental->deductions;
             $hasChanges = true;
