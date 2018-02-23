@@ -4,6 +4,7 @@ namespace App;
 
 use App\Events\NewUserEvent;
 use App\MyTraits\TranslateDates;
+use App\Notifications\CustomResetPasswordNotification;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -96,5 +97,10 @@ class User extends Authenticatable
         if (preg_match($pattern, $user->imageProfile) === 0)
             Storage::disk('profiles')->delete($user->imageProfile);
         return $name;
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+       $this->notify(new CustomResetPasswordNotification($token));
     }
 }
