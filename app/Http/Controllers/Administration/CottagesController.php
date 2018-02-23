@@ -65,7 +65,12 @@ class CottagesController extends Controller
                     $query->where('deleted_at', null);
                 })
             ]
+        ], [
+            'number.required' => 'El número es requerido',
+            'number.numeric' => 'El número debe ser un entero',
+            'number.unique' => 'El número de la cabaña debe ser único',
         ]);
+
         if ($v->fails())
         {
             return redirect()->back()->withInput()->withErrors($v->errors());
@@ -119,6 +124,10 @@ class CottagesController extends Controller
                 'numeric',
                 Rule::unique('cottages')->ignore($cottage->id)
             ]
+        ], [
+            'number.required' => 'El número es requerido',
+            'number.numeric' => 'El número debe ser un entero',
+            'number.unique' => 'El número de la cabaña debe ser único',
         ]);
 
         if ($v->fails())
@@ -153,13 +162,13 @@ class CottagesController extends Controller
         $cottage = Cottage::find($id);
         $cottage->delete();
 
-        flash('<h3>La cabaña se eliminó correctamente.</h3>', 'success');
-
         if ($request->ajax()) {
             return response()->json([
                 'message' => 'La cabaña se eliminó correctamente.'
             ]);
         }
+
+        flash('<h3>La cabaña se eliminó correctamente.</h3>', 'success');
 
         return redirect()->route('cottages.index');
     }
@@ -201,11 +210,11 @@ class CottagesController extends Controller
 
             if (isset($info['bulkState']) && $info['bulkState'] && isset($info['state']) && !empty($info['state'])) {
 
-                foreach ($info['cottages'] as $number) {
+                foreach ($info['cottages'] as $id) {
 
                     foreach ($cottages as $cottage) {
 
-                        if ($cottage->number === (integer)$number) {
+                        if ($cottage->id === (integer)$id) {
 
                             $cottage->state = $info['state'];
                             $cottage->save();
@@ -219,11 +228,11 @@ class CottagesController extends Controller
 
             if (isset($info['bulkType']) && $info['bulkType'] && !empty($info['type'])) {
 
-                foreach ($info['cottages'] as $number) {
+                foreach ($info['cottages'] as $id) {
 
                     foreach ($cottages as $cottage) {
 
-                        if ($cottage->number === (integer)$number) {
+                        if ($cottage->id === (integer)$id) {
 
                             $cottage->type = $info['type'];
                             $cottage->save();
@@ -237,11 +246,11 @@ class CottagesController extends Controller
 
             if (isset($info['bulkAccommodation']) && $info['bulkAccommodation'] && isset($info['accommodationCottages']) && !empty($info['accommodationCottages'])) {
 
-                foreach ($info['cottages'] as $number) {
+                foreach ($info['cottages'] as $id) {
 
                     foreach ($cottages as $cottage) {
 
-                        if ($cottage->number === (integer)$number) {
+                        if ($cottage->id === (integer)$id) {
 
                             $cottage->accommodation = $info['accommodationCottages'];
                             $cottage->save();
@@ -255,11 +264,11 @@ class CottagesController extends Controller
 
             if (isset($info['bulkPrice']) && $info['bulkPrice'] && isset($info['priceCottages']) && !empty($info['priceCottages'])) {
 
-                foreach ($info['cottages'] as $number) {
+                foreach ($info['cottages'] as $id) {
 
                     foreach ($cottages as $cottage) {
 
-                        if ($cottage->number === (integer)$number) {
+                        if ($cottage->id === (integer)$id) {
 
                             $cottage->price = $info['priceCottages'];
                             $cottage->save();

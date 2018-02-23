@@ -61,6 +61,8 @@
                 </tr>
             </tfoot>
         </table>
-        <div class="text-center">{{ $cottages->render() }}</div>
+        <div class="row justify-content-center">
+            <div class="text-center">{{ $cottages->links('vendor.pagination.bootstrap-4') }}</div>
+        </div>
 @endsection
 @include('backend.modals.modal-bulk-actions')

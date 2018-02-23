@@ -19,7 +19,7 @@
             {{ Form::label('number', 'Numero de cabaña', ['class' => 'sr-only']) }}
             <div class="input-group">
                 <div class="input-group-prepend"><div class="input-group-text">Numero de Caba&ntilde;a</div></div>
-                {{ Form::number('number', (isset($cottage)) ? $cottage->number : null, ['id' => 'number', 'class' => 'form-control', 'min' => 1, 'max' => 10, 'placeholder' => 'Ingrese el número de la cabaña', (isset($cottage)) ? 'disabled' : 'required']) }}
+                {{ Form::number('number', (isset($cottage)) ? $cottage->number : null, ['id' => 'number', 'class' => 'form-control', 'min' => 1, 'max' => 50, 'placeholder' => 'Ingrese el número de la cabaña', (isset($cottage)) ? 'disabled' : 'required']) }}
             </div>
             <div class="help-info d-block">
                 <i class="fa fa-question-circle help-icon cursorPointer" aria-hidden="true" role="button"></i>
@@ -199,6 +199,8 @@
                      saveHTMLToTextarea : true
                      });
                     $('#clearTestContent').click(function (e) {
+                         e.preventDefault();
+                         e.stopPropagation();
                         editor.clear();
                     })
                 });

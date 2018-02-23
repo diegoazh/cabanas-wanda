@@ -32,8 +32,9 @@
                             <hr>
                             {!! Form::open(['method' => 'post', 'action' => 'Administration\CottagesController@cottagesBulkActions']) !!}
                                 <div class="form-group">
+                                   @php $arr = []; foreach ($cottages as $value) { $arr[$value->id] = 'Num ' . $value->number; } @endphp
                                     {!! Form::label('cottagesNumbers', 'Selecione las cabañas', ['class' => 'col-form-label']) !!}
-                                    {!! Form::select('cottages', [1 => 'Num 1', 2 => 'Num 2', 3 => 'Num 3', 4 => 'Num 4', 5 => 'Num 5', 6 => 'Num 6', 7 => 'Num 7', 8 => 'Num 8', 9 => 'Num 9', 10 => 'Num 10'], null, ['class' => 'form-control', 'multiple' => 'multiple', 'name' => 'cottages[]']) !!}
+                                    {!! Form::select('cottages', $arr, null, ['class' => 'form-control', 'multiple' => 'multiple', 'name' => 'cottages[]']) !!}
                                     <small class="text-muted">Recuerde que manteniendo presionado <kbd>Ctrl</kbd> o <kbd>Shift</kbd> puede seleccionar varias a la vez.</small>
                                 </div>
                                 <hr>

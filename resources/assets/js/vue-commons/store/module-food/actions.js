@@ -78,7 +78,7 @@ export default {
             }).then(response => {
                 context.dispatch('auth/setToken', response, {root: true});
                 resolve({
-                    title: 'Eliminado',
+                    title: 'ELIMINADO',
                     message: response.data.message,
                     useSwal: true
                 });

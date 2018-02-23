@@ -150,19 +150,19 @@ $(document).ready(function(e) {
         $btnSubmit.click(function () {
             var data = $form.serialize();
             var url = $form.attr('action');
-            $('#modalForms').hide();
+            $('#modalForms').modal('hide');
             if (method.toLowerCase() === 'delete') {
                 $('#inputFormId').removeAttr('disabled');
                 $.post(url, data, function (response) {
                     $row.fadeOut();
+                    $('#modalForms').on('hide.bs.modal', function (e) {
+                        $form.attr('action', oldAction);
+                    });
                 });
             } else {
                 $form.submit();
             }
         });
-        $('#modalForms').on('hide.bs.modal', function (e) {
-            $form.attr('action', oldAction);
-        })
     }
 
 
@@ -257,7 +257,7 @@ $(document).ready(function(e) {
     });
 
     /******************************************************************
-     *  Button edit type User
+     *  Button delete User
      * *****************************************************************/
     $('.btn-delete-user').click(function (event) {
         texts = {

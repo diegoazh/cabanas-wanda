@@ -160,18 +160,19 @@
                 this.setQueryFinished(false);
                 this.deleteFood(this.idToDelete)
                     .then(response => {
+                        VueNoti.success(response);
                         this.food.map(function (element, index, array) {
                             if (index === this.idToDelete) {
                                 array.splice(index, 1);
                             }
                         });
-                        VueNoti.success(response);
                         this.setQueryFinished(true);
                     })
                     .catch(error => {
                         VueNoti.error(error);
                         this.setQueryFinished(true);
-                    })
+                    });
+                window.jQuery('#ModalDeleteFood').modal('hide');
             },
             ...mapActions('food', ['getAllFood', 'deleteFood', 'setCreate', 'setItemToUpdate']),
             ...mapActions('auth', ['setQueryFinished']),

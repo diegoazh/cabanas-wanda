@@ -121,8 +121,6 @@ class UsersController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        flash('El usuario fue eliminado exitosamente.', 'success');
-
         if ($request->ajax()) {
 
             return response()->json([
@@ -130,6 +128,8 @@ class UsersController extends Controller
             ]);
 
         }
+
+        flash('El usuario fue eliminado exitosamente.', 'success');
 
         return redirect()->route('users.index');
     }
@@ -216,7 +216,7 @@ class UsersController extends Controller
         Auth::user()->fill(['password' => Hash::make($request->passwordNew)])->save();
 
         flash('<h3>La contraseña se cambió correctamente</h3>')->success()->important();
-        
+
         return redirect(route('home.profile.show', Auth::user()->slug));
     }
 
