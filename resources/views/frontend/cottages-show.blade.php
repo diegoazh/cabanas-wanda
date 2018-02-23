@@ -134,10 +134,10 @@
                     </tfoot>
                 </table>
             </div>
-            <div class="row justify-content-center reservation-section">
+            {{-- <div class="row justify-content-center reservation-section">
                 <h2 class="title-sections text-left" style="cursor: pointer;"><i role="button" class="fa fa-caret-down" aria-hidden="true"></i> Reservas</h2>
                 <div id="calendar" class="col-12 col-md-8 my-5 element-slide"></div>
-            </div>
+            </div> --}} TODO (Diego) Revisar el calendario.
             <div class="w-100"></div>
         </div>
     </div>
