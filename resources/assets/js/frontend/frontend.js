@@ -107,7 +107,7 @@ $(document).ready(function (event) {
                     </h2>
                     <h3 class="text-center">
                         <a href="#" class="btn btn-success btn-lg">
-                            <i class="fa fa-whatsapp" aria-hidden="true"></i> ${$btn.data('body-modal')}
+                            <i class="fab fa-whatsapp" aria-hidden="true"></i> ${$btn.data('body-modal')}
                         </a>
                     </h3>`;
         }
