@@ -34,6 +34,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('user_contact', 'FrontendController@userContact')->name('home.front.userContact');
     Route::get('our_location', 'FrontendController@ourLocation')->name('home.front.ourLocation');
     Route::get('tourist_attractions', 'FrontendController@touristAttractions')->name('home.front.touristAttractions');
+    Route::get('about_us', 'FrontendController@aboutUs')->name('home.front.aboutUs');
+    Route::get('policies_of_privacy', 'FrontendController@policiesPrivacy')->name('home.front.policiesPrivacy');
+    Route::get('bases_and_terms', 'FrontendController@basesTerms')->name('home.front.basesTerms');
+    Route::get('terms_and_onditions', 'FrontendController@termsConditions')->name('home.front.termsConditions');
     Route::get('confirm_account', 'Auth\RegisterController@confirmAccount')->name('home.register.confirm');
     Route::get('new_email_confirmation', 'Auth\RegisterController@newEmailConfirmation')->name('home.register.newEmail');
     Route::post('send_new_email_confirmation', 'Auth\RegisterController@sendNewEmailConfirmation')->name('home.register.sendNewEmail');

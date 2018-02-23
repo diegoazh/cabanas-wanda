@@ -3,12 +3,12 @@
         <div class="col-12 col-md-4 pl-md-5">
             <h2><i class="fa fa-info-circle" aria-hidden="true"></i> Información para el usuario</h2>
             <ul class="fa-ul">
-                <li><a href="#"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Acerca de nosotros</a></li>
+                <li><a href="{{ route('home.front.aboutUs') }}"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Acerca de nosotros</a></li>
                 <li><a href="{{ route('home.front.ourLocation') }}"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Cómo llegar</a></li>
                 <li><a href="{{ route('home.front.touristAttractions') }}"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Atracciónes turísticas de la zona</a></li>
-                <li><a href="#"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Bases y condiciones en promociones</a></li>
-                <li><a href="#"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Política de privacidad</a></li>
-                <li><a href="#"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Términos y condiciones</a></li>
+                <li><a href="{{ route('home.front.basesTerms') }}"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Bases y condiciones en promociones</a></li>
+                <li><a href="{{ route('home.front.policiesPrivacy') }}"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Política de privacidad</a></li>
+                <li><a href="{{ route('home.front.termsConditions') }}"><i class="fa-li fas fa-check-square" aria-hidden="true"></i> Términos y condiciones</a></li>
             </ul>
         </div>
         <div class="col-12 col-md-4 pl-md-5">

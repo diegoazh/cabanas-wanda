@@ -53,4 +53,25 @@ class FrontendController extends Controller
     {
         return view('frontend.tourist-attractions');
     }
+
+    public function aboutUs()
+    {
+        return view('frontend.about-us');
+    }
+
+    public function policiesPrivacy()
+    {
+        return view('frontend.policies-privacy');
+    }
+
+    public function basesTerms()
+    {
+        return view('frontend.bases-terms');
+    }
+
+    public function termsConditions()
+    {
+        return view('frontend.terms-conditions');
+    }
+
 }
