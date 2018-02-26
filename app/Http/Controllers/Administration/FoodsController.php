@@ -136,7 +136,7 @@ class FoodsController extends Controller
      */
     public function all()
     {
-        $comidas = Food::where('available', true)->orderBy('type')->orderBy('name')->get();
+        $comidas = Food::orderBy('type')->orderBy('name')->get();
 
         return response()->json(compact('comidas'), 200);
     }

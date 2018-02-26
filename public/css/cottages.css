@@ -1,1 +1,271 @@
-.clearfix:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0}.clearfix{display:inline-block}.noselect{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none}body .container-fluid #header div.col-8:after{content:url(/images/logo-cabanas-wanda-190x185.png?30ec3eadfc1f196ee0822d5d210280d1)}body .container-fluid .content div.col-md-4 .row{-webkit-box-shadow:3px 3px 7px #000;box-shadow:3px 3px 7px #000;border:5px solid #bfbfbf}body .container-fluid .content div.col-md-4 .row div.cottage-number{position:absolute;display:inline-block;top:-1%;left:90%;padding:5px;padding-top:13px;width:57px;height:57px;border-radius:50px;background-color:#fd7500;color:#fff;z-index:15;font-weight:700;font-size:18px;text-shadow:2px 2px 2px #2e2e2e;-webkit-box-shadow:5px 5px 3px #2e2e2e;box-shadow:5px 5px 3px #2e2e2e}body .container-fluid .content div.col-md-4 .row div.col-12 img{width:100%;height:100%;border:2px solid #999;cursor:pointer}body .container-fluid .content div.col-md-4 .row div.col-12 table tbody tr td{text-transform:capitalize}body .container-fluid .content div.col-md-4 .row div.col-12 table tbody tr td i.fa-star{color:#e1cf65}body .container-fluid .content div.col-md-4 .row:hover{border-color:#9fd7db}body .container-fluid #content .col-md-8 div.cottage-number{position:absolute;display:inline-block;top:5%;left:95%;padding:5px;padding-top:13px;width:57px;height:57px;border-radius:50px;background-color:#fd7500;color:#fff;z-index:15;font-weight:700;font-size:18px;text-shadow:2px 2px 2px #2e2e2e;-webkit-box-shadow:5px 5px 3px #2e2e2e;box-shadow:5px 5px 3px #2e2e2e}body .container-fluid #content .col-md-8 h1 span{text-transform:capitalize;font-weight:bolder;font-style:italic;font-size:inherit;text-decoration:underline}body .container-fluid #content .col-md-8 #carouselExampleIndicators{border:5px solid #bfbfbf;border-radius:7px}body .container-fluid #content .col-md-8 #cottage_description table{font-size:16px;color:#404040}body .container-fluid #content .col-md-8 #cottage_description table tbody tr th{width:40%}body .container-fluid #content .col-md-8 #cottage_description table tbody tr td{width:60%}body .container-fluid #content .col-md-8 #cottage_description table tbody tr td i.fa-star{color:#e1cf65}body .container-fluid #content .col-md-8 #cottage_description table tbody tr td span{font-family:Raleway,sans-serif;font-size:16px;line-height:1.6}body .container-fluid #content .col-md-8 div.reservation-section{padding:0 15px}@font-face{font-family:Glyphicons Halflings}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls{display:inline-block;width:100%;position:relative;margin-bottom:5px}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .month{float:left;width:33%;text-align:center;text-transform:capitalize;font-size:16px;font-weight:700;text-shadow:1px 1px 2px #2e2e2e}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button{float:left;width:33%;text-transform:capitalize;font-weight:700}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button.rightalign{text-align:right;width:34%}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-next-button{cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-next-button:after{content:"\F138";font-family:FontAwesome;margin-left:5px}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-previous-button{cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-previous-button:before{content:"\F137";font-family:FontAwesome;margin-right:5px}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table{table-layout:fixed;width:100%;border:7px solid #bfbfbf;-webkit-box-shadow:7px 7px 5px #2e2e2e;box-shadow:7px 7px 5px #2e2e2e}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table .header-days{height:30px;font-size:14px;font-weight:700;background-color:#f99418;text-shadow:1px 1px 2px #2e2e2e;text-transform:capitalize}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table .header-days .header-day{vertical-align:middle;text-align:center;color:#fff}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr{height:85px}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr td{vertical-align:top;color:#000}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day{width:100%;height:inherit}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day:hover{background:#eee}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.my-today,body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.today{background:#9ad6e3}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.my-today:hover,body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.today:hover{background:#72c6d8}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.my-today.event,body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.today.event{background:#a7dbc1}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.event,body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.my-event{background:#b4e09f}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.event:hover,body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.my-event:hover{background:#96d478}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.inactive,body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.my-inactive{background:#ddd}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day .day-contents{-webkit-box-sizing:border-box;box-sizing:border-box;padding:8px;font-size:12px;text-align:right}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .adjacent-month,body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .empty,body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .my-adjacent-month,body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .my-empty{width:100%;height:inherit;background:#eee}body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .adjacent-month:hover,body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .empty:hover,body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .my-adjacent-month:hover,body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .my-empty:hover{background:#ddd}body .container-fluid #content .col-md-8 div.reservation-section div .clndr-next-button,body .container-fluid #content .col-md-8 div.reservation-section div .clndr-next-year-button,body .container-fluid #content .col-md-8 div.reservation-section div .clndr-previous-button,body .container-fluid #content .col-md-8 div.reservation-section div .clndr-previous-year-button{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none}body .container-fluid #content .col-md-8 div.reservation-section div .clndr-next-button.inactive,body .container-fluid #content .col-md-8 div.reservation-section div .clndr-next-year-button.inactive,body .container-fluid #content .col-md-8 div.reservation-section div .clndr-previous-button.inactive,body .container-fluid #content .col-md-8 div.reservation-section div .clndr-previous-year-button.inactive{opacity:.5;cursor:default}
+/******************************************************
+* Colores
+*****************************/
+/******************************************************
+* Clases
+*****************************/
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+.clearfix {
+  display: inline-block;
+}
+.noselect {
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+}
+body .container-fluid #header div.col-8:after {
+  content: url(/images/logo-cabanas-wanda-190x185.png?445edc0bee5fd4d72105572d6aa58159);
+}
+body .container-fluid .content div.col-md-4 .row {
+  -webkit-box-shadow: 3px 3px 7px #000000;
+          box-shadow: 3px 3px 7px #000000;
+  border: 5px solid #bfbfbf;
+}
+body .container-fluid .content div.col-md-4 .row div.cottage-number {
+  position: absolute;
+  display: inline-block;
+  top: -1%;
+  left: 90%;
+  padding: 5px;
+  padding-top: 13px;
+  width: 57px;
+  height: 57px;
+  border-radius: 50px;
+  background-color: #fd7500;
+  color: #ffffff;
+  z-index: 15;
+  font-weight: bold;
+  font-size: 18px;
+  text-shadow: 2px 2px 2px #2e2e2e;
+  -webkit-box-shadow: 5px 5px 3px #2e2e2e;
+          box-shadow: 5px 5px 3px #2e2e2e;
+}
+body .container-fluid .content div.col-md-4 .row div.col-12 img {
+  width: 100%;
+  height: 100%;
+  border: 2px solid #999;
+  cursor: pointer;
+}
+body .container-fluid .content div.col-md-4 .row div.col-12 table tbody tr td {
+  text-transform: capitalize;
+}
+body .container-fluid .content div.col-md-4 .row div.col-12 table tbody tr td i.fa-star {
+  color: #e1cf65;
+}
+body .container-fluid .content div.col-md-4 .row:hover {
+  border-color: #9fd7db;
+}
+body .container-fluid #content .col-md-8 div.cottage-number {
+  position: absolute;
+  display: inline-block;
+  top: 5%;
+  left: 95%;
+  padding: 5px;
+  padding-top: 13px;
+  width: 57px;
+  height: 57px;
+  border-radius: 50px;
+  background-color: #fd7500;
+  color: #ffffff;
+  z-index: 15;
+  font-weight: bold;
+  font-size: 18px;
+  text-shadow: 2px 2px 2px #2e2e2e;
+  -webkit-box-shadow: 5px 5px 3px #2e2e2e;
+          box-shadow: 5px 5px 3px #2e2e2e;
+}
+body .container-fluid #content .col-md-8 h1 span {
+  text-transform: capitalize;
+  font-weight: bolder;
+  font-style: italic;
+  font-size: inherit;
+  text-decoration: underline;
+}
+body .container-fluid #content .col-md-8 #carouselExampleIndicators {
+  border: 5px solid #bfbfbf;
+  border-radius: 7px;
+}
+body .container-fluid #content .col-md-8 #cottage_description table {
+  font-size: 16px;
+  color: #404040;
+}
+body .container-fluid #content .col-md-8 #cottage_description table tbody tr th {
+  width: 40%;
+}
+body .container-fluid #content .col-md-8 #cottage_description table tbody tr td {
+  width: 60%;
+}
+body .container-fluid #content .col-md-8 #cottage_description table tbody tr td i.fa-star {
+  color: #e1cf65;
+}
+body .container-fluid #content .col-md-8 #cottage_description table tbody tr td span {
+  font-family: "Raleway", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+body .container-fluid #content .col-md-8 div.reservation-section {
+  padding: 0 15px;
+}
+@font-face {
+  font-family: 'Glyphicons Halflings';
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  margin-bottom: 5px;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .month {
+  float: left;
+  width: 33%;
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 16px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px #2e2e2e;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button {
+  float: left;
+  width: 33%;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button.rightalign {
+  text-align: right;
+  width: 34%;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-next-button {
+  cursor: pointer;
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-next-button:after {
+  content: '\F138';
+  font-family: 'FontAwesome';
+  margin-left: 5px;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-previous-button {
+  cursor: pointer;
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-controls .clndr-control-button .clndr-previous-button:before {
+  content: '\F137';
+  font-family: 'FontAwesome';
+  margin-right: 5px;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table {
+  table-layout: fixed;
+  width: 100%;
+  border: 7px solid #bfbfbf;
+  -webkit-box-shadow: 7px 7px 5px #2e2e2e;
+  box-shadow: 7px 7px 5px #2e2e2e;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table .header-days {
+  height: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #f99418;
+  text-shadow: 1px 1px 2px #2e2e2e;
+  text-transform: capitalize;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table .header-days .header-day {
+  vertical-align: middle;
+  text-align: center;
+  color: #fff;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr {
+  height: 85px;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr td {
+  vertical-align: top;
+  color: #000000;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day {
+  width: 100%;
+  height: inherit;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day:hover {
+  background: #eee;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.today,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.my-today {
+  background: #9AD6E3;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.today:hover,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.my-today:hover {
+  background: #72c6d8;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.today.event,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.my-today.event {
+  background: #a7dbc1;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.event,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.my-event {
+  background: #B4E09F;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.event:hover,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.my-event:hover {
+  background: #96d478;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.inactive,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day.my-inactive {
+  background: #ddd;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .day .day-contents {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 8px;
+  font-size: 12px;
+  text-align: right;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .empty,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .adjacent-month,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .my-empty,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .my-adjacent-month {
+  width: 100%;
+  height: inherit;
+  background: #eee;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .empty:hover,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .adjacent-month:hover,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .my-empty:hover,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr .clndr-table tr .my-adjacent-month:hover {
+  background: #ddd;
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr-next-button,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr-previous-button,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr-next-year-button,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr-previous-year-button {
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+}
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr-next-button.inactive,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr-previous-button.inactive,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr-next-year-button.inactive,
+body .container-fluid #content .col-md-8 div.reservation-section div .clndr-previous-year-button.inactive {
+  opacity: 0.5;
+  cursor: default;
+}

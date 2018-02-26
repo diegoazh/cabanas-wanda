@@ -27,7 +27,9 @@
                             <span class="badge badge-primary text-capitalize"><b>{{ comida.type }}</b></span>
                         </td>
                         <td>
-                            <span class="badge badge-info text-capitalize"><b>{{ comida.available ? 'Si' : 'No' }}</b></span>
+                            <span :class="['badge', 'text-capitalize',
+                                {'badge-info': comida.available,
+                                'badge-danger':  !comida.available}]"><b>{{ comida.available ? 'Si' : 'No' }}</b></span>
                         </td>
                         <td>
                             <b><icon-app iconImage="dollar"></icon-app> {{ comida.price }}</b>
@@ -113,6 +115,14 @@
             fiftheenElements() {
                 let pageTo = this.page * this.itemsPerPage; // quince debería ser una variable
                 let pageFrom = (this.page === 1) ? 0 : (this.page - 1) * this.itemsPerPage;
+
+                if (this.search) {
+                    let reg = new RegExp(this.search, 'i');
+                    return this.food.filter((ele, ind, arr) => {
+                        return reg.test(ele.name);
+                    });
+                }
+
                 return this.food.filter(function (element, index, array) {
                     return index >= pageFrom && index < pageTo;
                 });
@@ -131,17 +141,18 @@
             ...mapState('auth', {
                 queryFinished: state => state.xhr.queryFinished
             }),
+            ...mapState('food', {
+                search: state => state.search
+            }),
         },
         methods: {
             getFoodFromBackend() {
                 this.getAllFood()
-                    .then(response => {})
+                    .then(response => {
+
+                    })
                     .catch(error => {
-                        VueNoti.error({
-                            title: error.title,
-                            message: error.message,
-                            useSwal: false
-                        });
+                        VueNoti.error(error);
                     });
             },
             showDescription(comida) {
@@ -160,12 +171,12 @@
                 this.setQueryFinished(false);
                 this.deleteFood(this.idToDelete)
                     .then(response => {
-                        VueNoti.success(response);
-                        this.food.map(function (element, index, array) {
-                            if (index === this.idToDelete) {
+                        this.food.map((element, index, array) => {
+                            if (element.id === this.idToDelete) {
                                 array.splice(index, 1);
                             }
                         });
+                        VueNoti.success(response);
                         this.setQueryFinished(true);
                     })
                     .catch(error => {
@@ -174,7 +185,7 @@
                     });
                 window.jQuery('#ModalDeleteFood').modal('hide');
             },
-            ...mapActions('food', ['getAllFood', 'deleteFood', 'setCreate', 'setItemToUpdate']),
+            ...mapActions('food', ['getAllFood', 'deleteFood', 'setCreate', 'setItemToUpdate', 'setSearch']),
             ...mapActions('auth', ['setQueryFinished']),
         }
     }

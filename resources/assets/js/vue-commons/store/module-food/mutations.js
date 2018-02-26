@@ -11,6 +11,9 @@ export default {
     setItemsPerPage(state, items) {
         state.itemsPerPage = items;
     },
+    setSearch(state, search) {
+        state.search = search;
+    },
     PAGINATE(state, page) {
         state.page = page
     }

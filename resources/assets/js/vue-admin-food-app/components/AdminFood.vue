@@ -7,17 +7,22 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 col-md-12">
-                        <transition name="quantity-animation"
+                        <transition-group name="quantity-animation"
                             enter-active-class="animated bounceIn"
                             leave-active-class="animated bounceOut">
-                            <div class="col-12 offset-md-9 col-md-3" v-if="!create">
-                                <div class="form-group">
-                                    <label class="col-form-label" for="perPage" role="button">Por página</label>
-                                    <input id="perPage" type="number" class="form-control-sm" v-model="userItemsPerPage" @change="refreshItemsPerPage">
-                                    <small class="text-muted">Presiona <kbd>Enter ↵</kbd></small>
-                                </div>
+                            <div class="form-group float-left" v-if="!create" key="quantity">
+                                <label class="col-form-label" for="perPage" role="button">Por página</label>
+                                <input id="perPage" type="number" class="form-control-sm" v-model="userItemsPerPage" @change="refreshItemsPerPage">
+                                <small class="text-muted">Presiona <kbd>Enter ↵</kbd></small>
                             </div>
-                        </transition>
+                            <div class="form-group float-right" v-if="!create" key="search">
+                                <label class="col-form-label" for="search" role="button">Buscar</label>
+                                <input id="search" type="text" class="form-control-sm" v-model="userSearch" @change="refreshSearch">
+                                <small class="text-muted">Presiona <kbd>Enter ↵</kbd></small>
+                            </div>
+                        </transition-group>
+                    </div>
+                    <div class="col-12 col-md-12">
                         <div class="text-center">
                             <ul class="nav nav-tabs">
                                 <li role="presentation" class="nav-item"><a href="#" @click="toogleCreate" role="button" :class="['nav-link', {'active': !create}]">Lista de platos</a></li>
@@ -46,6 +51,7 @@
         data() {
             return {
                 userItemsPerPage: 15,
+                userSearch: '',
             }
         },
         components: {
@@ -86,7 +92,22 @@
                         console.log(error);
                     });
             },
-            ...mapActions(['setXhrToken', 'setCreate', 'setItemsPerPage', 'pagination'])
+            refreshSearch() {
+                this.pagination(1)
+                    .then(response => {
+                        let bool = true;
+                        while (bool) {
+                            if (this.page === 1) {
+                                this.setSearch(this.userSearch);
+                                bool = false;
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            },
+            ...mapActions(['setXhrToken', 'setCreate', 'setItemsPerPage', 'setSearch', 'pagination'])
         }
     }
 </script>

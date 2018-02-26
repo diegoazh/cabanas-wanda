@@ -28,11 +28,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="available" class="sr-only">
-                            Precio: <input id="available" name="available" type="checkbox" v-model="available">
+                        <label for="available" class="">
+                            ¿Disponible?: <input id="available" name="available" type="checkbox" v-model="available">
                         </label>
                     </div>
                 </div>
+                <div class="w-100"></div>
                 <div class="col-12 col-md-12">
                     <div class="form-group">
                         <label for="description" class="sr-only">Descripión:</label>
@@ -180,6 +181,7 @@
                     this.name = this.itemToUpdate.name;
                     this.price = this.itemToUpdate.price;
                     this.type = this.itemToUpdate.type;
+                    this.available = this.itemToUpdate.available;
                     this.description = this.itemToUpdate.description;
                     this.setItemToUpdate(null);
                     this.isUpdate = true;

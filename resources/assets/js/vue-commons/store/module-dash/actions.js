@@ -7,7 +7,9 @@ export default {
             http.get(url + payload.state + '/' + cntx.state.per_page, {
                 params: {
                     page: payload.query || 1,
-                    token: payload.token || ''
+                    token: payload.token || '',
+                    order: payload.order.for,
+                    sent: payload.order.sent
                 }
             }).then(response => {
                 cntx.dispatch('auth/setToken', response, {root: true});

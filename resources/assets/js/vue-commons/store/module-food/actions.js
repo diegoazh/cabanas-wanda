@@ -16,6 +16,9 @@ export default {
     setItemsPerPage({commit}, items) {
         commit('setItemsPerPage', items);
     },
+    setSearch({commit}, search) {
+        commit('setSearch', search);
+    },
     pagination({commit}, page) {
         commit('PAGINATE', page);
     },

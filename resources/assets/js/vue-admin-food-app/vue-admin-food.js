@@ -9,6 +9,8 @@ import 'vue-directive-tooltip/css/index.css'
 
 Vue.use(VueNotifications, optionsIzi).use(VueCookies).use(Tooltip);
 
+window.EventBus = new Vue();
+
 const adminFoodApp = new Vue({
     el: '.card',
     store,

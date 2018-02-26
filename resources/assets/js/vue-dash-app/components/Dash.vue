@@ -5,6 +5,56 @@
         </div>
         <div class="card-body">
             <btn-switch-app :initLeft="seeRentals" textLeft="Reservas" iconTextLeft="handshake" textRight="Pedidos" iconTextRight="utensils" classOnActive="text-primary" classOnInactive="text-muted" :textDeleted="true"></btn-switch-app>
+            <div class="col-12 mb-3" v-if="seeRentals">
+                <ul class="nav nav-pills">
+                  <li class="nav-item m-1">
+                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateFrom'; order.sent = 'asc'; fireQuery();">Fecha desde ascendente</a>
+                  </li>
+                  <li class="nav-item m-1">
+                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateFrom'; order.sent = 'desc'; fireQuery();">Fecha desde descendente</a>
+                  </li>
+                  <li class="nav-item m-1">
+                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateTo'; order.sent = 'asc'; fireQuery();">Fecha hasta ascendente</a>
+                  </li>
+                  <li class="nav-item m-1">
+                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateTo'; order.sent = 'desc'; fireQuery();">Fecha hasta descendente</a>
+                  </li>
+                  <li class="nav-item m-1">
+                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'total_days'; order.sent = 'asc'; fireQuery();">Dias ascendente</a>
+                  </li>
+                  <li class="nav-item m-1">
+                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'total_days'; order.sent = 'desc'; fireQuery();">Dias descendente</a>
+                  </li>
+                  <li class="nav-item m-1">
+                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateReservationPayment'; order.sent = 'asc'; fireQuery();">Vto ascendente</a>
+                  </li>
+                  <li class="nav-item m-1">
+                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateReservationPayment'; order.sent = 'desc'; fireQuery();">Vto descendente</a>
+                  </li>
+                </ul>
+            </div>
+            <div class="col-12 mb-3" v-if="!seeRentals">
+                <ul class="nav nav-pills">
+                  <li class="nav-item m-1">
+                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'cottages'; order.sent = true; fireQuery();">Cabaña ascendente</a>
+                  </li>
+                  <li class="nav-item m-1">
+                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'cottages'; order.sent = false; fireQuery();">Cabaña descendente</a>
+                  </li>
+                  <li class="nav-item m-1">
+                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'senia'; order.sent = true; fireQuery();">Seña ascendente</a>
+                  </li>
+                  <li class="nav-item m-1">
+                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'senia'; order.sent = false; fireQuery();">Seña descendente</a>
+                  </li>
+                  <li class="nav-item m-1">
+                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateSenia'; order.sent = true; fireQuery();">Fecha ascendente</a>
+                  </li>
+                  <li class="nav-item m-1">
+                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateSenia'; order.sent = false; fireQuery();">Fecha descendente</a>
+                  </li>
+                </ul>
+            </div>
             <div>
                 <template v-if="seeRentals">
                     <!-- Nav tabs -->
@@ -89,6 +139,10 @@
                 pagChunk: 7,
                 seeRentals: true,
                 type: 'pendiente',
+                order: {
+                    for: 'dateFrom',
+                    sent: 'asc'
+                },
                 trash: {
                     rentals: 'pendiente',
                     orders: 'pendiente',
@@ -172,6 +226,23 @@
                 this.type = newType;
                 this.setNewPage();
             },
+            fireQuery(page = 1) {
+                this.rentalsOrOrdersForState({
+                isRentals: this.seeRentals,
+                state: this.type,
+                token: this.token,
+                query: page,
+                order: this.order
+                }).then(() => {
+                    VueNoti.success({
+                        title: 'OK!',
+                        message: 'Data loaded correctly.',
+                        timeout: 3000
+                    });
+                }).catch(error => {
+                    VueNoti.error(error);
+                });
+            },
             ...mapMutations('auth', ['setToken']),
             ...mapMutations('dash', ['PAGINATE', 'setPagination']),
             ...mapActions('dash', ['rentalsOrOrdersForState']),
@@ -191,37 +262,11 @@
                 }
             });
 
-            this.rentalsOrOrdersForState({
-                isRentals: this.seeRentals,
-                state: this.type,
-                token: this.token,
-                query: this.page
-            }).then(() => {
-                VueNoti.success({
-                    title: 'OK!',
-                    message: 'Data loaded correctly.',
-                    timeout: 3000
-                });
-            }).catch(error => {
-                VueNoti.error(error);
-            });
+             this.fireQuery(this.page);
         },
         mounted() {
             window.EventBus.$on('page-change', (page) => {
-                this.rentalsOrOrdersForState({
-                    isRentals: this.seeRentals,
-                    state: this.type,
-                    token: this.token,
-                    query: page
-                }).then(() => {
-                    VueNoti.success({
-                        title: 'OK!',
-                        message: 'Data loaded correctly.',
-                        timeout: 3000
-                    });
-                }).catch(error => {
-                    VueNoti.error(error);
-                });
+                this.fireQuery(page);
             });
         }
     }

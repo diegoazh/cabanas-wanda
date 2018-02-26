@@ -1,1 +1,443 @@
-!function(e){var t={};function a(n){if(t[n])return t[n].exports;var o=t[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,a),o.l=!0,o.exports}a.m=e,a.c=t,a.d=function(e,t,n){a.o(e,t)||Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:n})},a.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return a.d(t,"a",t),t},a.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},a.p="",a(a.s=0)}({0:function(e,t,a){a("PTWx"),a("6RRz"),a("a/b4"),a("GDM1"),a("Uj42"),a("F57h"),e.exports=a("xZZD")},"6RRz":function(e,t,a){"use strict";$(document).ready(function(e){function t(e,t,a){var n=t.val();(n=n.split("|")).pop();for(var o=n.length-1;o>=0;o--)if(n[o]===e.attr("alt")){n.splice(o--,1);break}n.length>0&&(n=n.join("|")+"|"),t.val(n),a.val(a.val()+e.attr("alt")+"|")}function a(e,t,a,n,o,i,l){var s=e.parents("tr"),r=s.data("object"),d=e.data("objectValue"),c=e.data("objectDisplay"),u=$("#submit_form"),m=$(".modal-footer > button.btn-secondary"),p=""!==l&&null!=l?l:$("#modalFormId");if(!Object.isObject(o)){var f="El quinto parametro de la función debe ser un array de objetos y debe contener las siguientes propiedades:\nname - boolean -> indica si se mostrara en el título el nombre del objeto a modificar o el atributo que se modificará.\ntile - string -> El texto que se mostrará en el título del modal.\ninfoText - string -> Texto que se mostrará en la etiqueta small dentro del titulo del modal.\nlabel - string -> Texto que se mostrará en la etiqueta label y en el div con clase input-group-addon.\ntextBtn string -> Texto que se mostrará en el boton que envía el formulario.\ninputType - string -> Texto que define el atributo type del input del formulario.\noptions - Array de Objects -> Array que se utilizará para crear las etiquetas options si el input es de\ntipo select debe definir las propiedades value y text. Por ejemplo:\noptions: [                                                         \n            {value: 'valueOption', text: 'textOption'},        \n            {value: 'valueOption', text: 'textOption'},        \n            ...                                                    \n         ]                                                         \n";return console.log(f),void window.alert("Ver mensaje en consola")}Object.isObject(o)&&($("#modalForms .modal-title").html("¿ "+o.title+' <span class="span-display badge"></span> ? <br /> <small>'+o.infoText+"</small>"),$(".sr-only, .input-group-text").text(o.label)),""!==i&&null!=i&&$(".modal-dialog").addClass(i),$(".span-display").html(c),"select"===o.inputType.toLowerCase()?($("#inputFormId").remove(),$("#container_input.input-group").append($("<select>").attr("id","inputFormId").attr("name","inputFormId").addClass("form-control")),Array.isArray(o.options)?($.each(o.options,function(e,t){$("#inputFormId").append($("<option>",{value:t.value,text:t.text}))}),$("#inputFormId").val(d)):console.log(f)):($("#inputFormId").remove(),$("#container_input.input-group").append($("<input>").attr("id","inputFormId").attr("name","inputFormId").addClass("form-control")),$("#inputFormId").attr("type",o.inputType).val(d)),"DELETE"===t.toUpperCase()?($("#inputFormId").attr("disabled",!0).addClass("disabled"),$(".span-display").addClass("badge-danger"),$(".modal-title > small").addClass("text-danger"),u.removeClass("btn-primary").addClass("btn-danger"),u.html('<i class="fas fa-trash" aria-hidden="true"></i> '+o.textBtn),m.html('<i class="fas fa-times" aria-hidden="true"></i> Cerrar')):($("#inputFormId").removeAttr("disabled"),$(".span-display").addClass("badge-warning"),$(".modal-title > small").addClass("text-warning"),u.removeClass("btn-primary btn-danger").addClass("btn-warning"),u.html('<i class="fas fa-sync" aria-hidden="true"></i> '+o.textBtn),m.html('<i class="fas fa-times" aria-hidden="true"></i> Cerrar')),$("input[name=_method]").val(t.toUpperCase()),"boolean"==typeof a?a&&p.attr("enctype","multipart/form-data"):p.attr("enctype",a);var b=p.attr("action"),v=b.replace("subdir",n).replace("{id}",r);p.attr("action",v),u.click(function(){var e=p.serialize(),a=p.attr("action");$("#modalForms").modal("hide"),"delete"===t.toLowerCase()?($("#inputFormId").removeAttr("disabled"),$.post(a,e,function(e){s.fadeOut(),$("#modalForms").on("hide.bs.modal",function(e){p.attr("action",b)})})):p.submit()})}Object.isObject||(Object.isObject=function(e){return"[object Object]"===Object.prototype.toString.call(e)}),Array.isArray||(Array.isArray=function(e){return"[object Array]"===Object.prototype.toString.call(e)});var n=$(".help-info > .help-icon"),o=$(".help-info > .help-text");if(o.hide(),n.click(function(e){e.preventDefault(),$(this).next().fadeToggle("slow","linear")}),""!==$("#removedImages").val()&&void 0!==$("#removedImages").val()){var i=$("#removedImages").val();""!==i&&(i=i.split("|")),i.pop();for(var l=$(".img-clickable"),s=l.length-1;s>=0;s--)for(var r=i.length-1;r>=0;r--)l[s]===i[r]&&l[s].addClass("img-clicked")}$(".img-clickable").click(function(e){e.preventDefault(),$(this).hasClass("img-clicked")?($(this).removeClass("img-clicked"),t($(this),$("#removedImages"),$("#actualImages"))):($(this).addClass("img-clicked"),t($(this),$("#actualImages"),$("#removedImages")))}),$(".delete-cottage").click(function(e){o={name:!1,title:"Esta seguro que desea eliminar la cabaña",infoText:"Esto eliminará permanentemente la cabaña de la base de datos.",label:"Eliminar cabaña",textBtn:"Eliminar cabaña",inputType:"number",options:""},a($(this),"DELETE",!1,"cottages",o)}),$(".btn-edit-type").click(function(e){o={name:!0,title:"Esta seguro que desea cambiar el rol del usuario",infoText:"Esto pude dar mayor acceso al sistema a dicho usuario.",label:"Roles",textBtn:"Actualizar rol",inputType:"select",options:[{value:"frecuente",text:"Frecuente"},{value:"empleado",text:"Empleado"},{value:"administrador",text:"Administrador"},{value:"sysadmin",text:"Sysadmin"}]},a($(this),"PUT",!1,"users",o)}),$(".btn-delete-user").click(function(e){o={name:!0,title:"Esta seguro que desea eliminar al usuario",infoText:"Esto eliminará permanentemente el usuario de la base de datos.",label:"Eliminar a",textBtn:"Eliminar usuario",inputType:"text",options:""},a($(this),"DELETE",!1,"users",o)})})},F57h:function(e,t){},GDM1:function(e,t){},PTWx:function(e,t,a){"use strict";$(document).ready(function(e){var t=$(".menu > li > ul"),a=$(".menu > li > a");function n(e,t){for(var a=t.length-1;a>=0;a--){var n=t[a],o=t[a].text;e.test(o.toLowerCase())&&$(n).addClass("active").next().stop(!0,!0).slideDown("normal")}}var o=window.location.pathname;(o=o.split("/")).shift(),t.hide();var i=$("#main_content");/cottages/.test(o)?(n(/cabañas/,a),o[2]?i.removeClass("col-md-4").addClass("col-md-6"):i.removeClass("col-md-4").addClass("col-md-8")):/users/.test(o)?(n(/usuarios/,a),i.removeClass("col-md-4").addClass("col-md-8")):/frontend/.test(o)?(n(/página principal/,a),i.removeClass("col-md-4").addClass("col-md-6 offset-md-1")):/food/.test(o)?i.removeClass("col-md-4").addClass("col-md-8"):/reports/.test(o)?i.removeClass("col-md-4").addClass("col-md-12"):(n(/panel/,a),i.removeClass("col-md-4").addClass("col-md-8")),a.click(function(e){e.preventDefault(),$(this).hasClass("active")?($(this).removeClass("active"),$(this).next().stop(!0,!0).slideUp("normal")):(a.removeClass("active"),t.filter(":visible").slideUp("normal"),$(this).addClass("active").next().stop(!0,!0).slideDown("normal"))})})},Uj42:function(e,t){},"a/b4":function(e,t){},xZZD:function(e,t){}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./resources/assets/js/backend/backend.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+$(document).ready(function (e) {
+    /***********************************************************************************
+    * Funciones útiles para trabajar con JavaScript
+    * ---------------------------------------------------------------
+    *
+    *  Si no existe crea una funcion para determinar si es un Objeto.
+    **/
+    if (!Object.isObject) {
+        Object.isObject = function (arg) {
+            return Object.prototype.toString.call(arg) === '[object Object]';
+        };
+    }
+    /**
+     *  Si no existe crea una funcion para determinar si es un Array.
+     **/
+    if (!Array.isArray) {
+        Array.isArray = function (arg) {
+            return Object.prototype.toString.call(arg) === '[object Array]';
+        };
+    }
+
+    /***********************************************************************************
+     * Funciones necesarias la funcionalidad del backend siguiendo el principio DRY
+     * ------------------------------------------------------------------------------
+     *
+     *  This function remove image from input value
+     *  @param $this - jQuery element - Element that will be removed and added.
+     *  @param $removeTo - jQuery element - Element of which $this will be removed.
+     *  @param $addTo - jQuery element - Element in which $this will be added.
+     * *********************************************************************************/
+    function removeAddFromInputValue($this, $removeTo, $addTo) {
+        // elimina la imagen de $removeTo
+        var images = $removeTo.val();
+        images = images.split('|');
+        images.pop();
+        for (var i = images.length - 1; i >= 0; i--) {
+            if (images[i] === $this.attr('alt')) {
+                images.splice(i--, 1);
+                break;
+            }
+        }
+        if (images.length > 0) {
+            images = images.join('|') + '|';
+        }
+        $removeTo.val(images);
+        // agrega la imagen a $addTo
+        $addTo.val($addTo.val() + $this.attr('alt') + '|');
+    }
+    /*****************************************************************************************************************
+     *  Function to set modals with forms
+     *  ---------------------------------
+     *  @param $this Objec jQuery - Boton que llama al modal y del cual se toma la clase.
+     *  @param method - string - El metodo del formulario POST, PUT, etc.
+     *  @param files - boolean or string - Indica si el form sube archivos, pude contener 'multipart/form-data'
+     *  @param replaceInAction - string - String con que se reemplazará el texto subdir en el atributo action del form.
+     *  @param textsToDisplay - Object - Debe contener los textos a cargar en el modal.
+     *         Con los siguientes atributos:
+     *         name - boolean -> indica si se mostrara en el título el nombre del objeto a modificar o el atributo que se modificará.
+     *         tile - string -> El texto que se mostrará en el título del modal.
+     *         infoText - string -> Texto que se mostrará en la etiqueta small dentro del titulo del modal.
+     *         label - string -> Texto que se mostrará en la etiqueta label y en el div con clase input-group-addon.
+     *         textBtn string -> Texto que se mostrará en el boton que envía el formulario.
+     *         inputType - string -> Texto que define el atributo type del input del formulario.
+     *         options - Array de Objects -> Array que se utilizará para crear las etiquetas options si el input es de
+     *                   tipo select debe definir las propiedades value y text. Por ejemplo:
+     *                   options: [
+     *                              {value: 'valueOption', text: 'textOption'},
+     *                              {value: 'valueOption', text: 'textOption'},
+     *                              ...
+     *                            ]
+     *  @param modalSize - string - Clase para el tamaño del modal, modal-sm o modal-lg.
+     *  @param $formOptional - Object jQuery or string - Objeto jQuery que contiene el form a configurar o texto que
+     *         define el id del form a configurar.
+     * ****************************************************************************************************************/
+    function setModalForms($this, method, files, replaceInAction, textsToDisplay, modalSize, $formOptional) {
+        var $row = $this.parents('tr');
+        var id = $row.data('object');
+        var inputValue = $this.data('objectValue');
+        var name = $this.data('objectDisplay');
+        var $btnSubmit = $('#submit_form');
+        var $btnClose = $('.modal-footer > button.btn-secondary');
+        var $form = $formOptional !== '' && $formOptional !== undefined && $formOptional !== null ? $formOptional : $('#modalFormId');
+        if (!Object.isObject(textsToDisplay)) {
+            var message = '' + 'El quinto parametro de la función debe ser un array de objetos y debe contener las siguientes propiedades:\n' + 'name - boolean -> indica si se mostrara en el título el nombre del objeto a modificar o el atributo que se modificará.\n' + 'tile - string -> El texto que se mostrará en el título del modal.\n' + 'infoText - string -> Texto que se mostrará en la etiqueta small dentro del titulo del modal.\n' + 'label - string -> Texto que se mostrará en la etiqueta label y en el div con clase input-group-addon.\n' + 'textBtn string -> Texto que se mostrará en el boton que envía el formulario.\n' + 'inputType - string -> Texto que define el atributo type del input del formulario.\n' + 'options - Array de Objects -> Array que se utilizará para crear las etiquetas options si el input es de\n' + 'tipo select debe definir las propiedades value y text. Por ejemplo:\n' + 'options: [                                                         \n' + '            {value: \'valueOption\', text: \'textOption\'},        \n' + '            {value: \'valueOption\', text: \'textOption\'},        \n' + '            ...                                                    \n' + '         ]                                                         \n';
+            console.log(message);
+            window.alert('Ver mensaje en consola');
+            return;
+        }
+        if (Object.isObject(textsToDisplay)) {
+            $('#modalForms .modal-title').html('¿ ' + textsToDisplay.title + ' <span class="span-display badge"></span> ? <br /> <small>' + textsToDisplay.infoText + '</small>');
+            $('.sr-only, .input-group-text').text(textsToDisplay.label);
+        }
+        if (modalSize !== '' && modalSize !== undefined && modalSize !== null) {
+            $('.modal-dialog').addClass(modalSize);
+        }
+        $('.span-display').html( true ? name : inputValue);
+        if (textsToDisplay.inputType.toLowerCase() === 'select') {
+            $('#inputFormId').remove();
+            $('#container_input.input-group').append($('<select>').attr('id', 'inputFormId').attr('name', 'inputFormId').addClass('form-control'));
+            if (Array.isArray(textsToDisplay.options)) {
+                $.each(textsToDisplay.options, function (i, item) {
+                    $('#inputFormId').append($('<option>', {
+                        value: item.value,
+                        text: item.text
+                    }));
+                });
+                $('#inputFormId').val(inputValue);
+            } else {
+                console.log(message);
+            }
+        } else {
+            $('#inputFormId').remove();
+            $('#container_input.input-group').append($('<input>').attr('id', 'inputFormId').attr('name', 'inputFormId').addClass('form-control'));
+            $('#inputFormId').attr('type', textsToDisplay.inputType).val(inputValue);
+        }
+        if (method.toUpperCase() === 'DELETE') {
+            $('#inputFormId').attr('disabled', true).addClass('disabled');
+            $('.span-display').addClass('badge-danger');
+            $('.modal-title > small').addClass('text-danger');
+            $btnSubmit.removeClass('btn-primary').addClass('btn-danger');
+            $btnSubmit.html('<i class="fas fa-trash" aria-hidden="true"></i> ' + textsToDisplay.textBtn);
+            $btnClose.html('<i class="fas fa-times" aria-hidden="true"></i> ' + 'Cerrar');
+        } else {
+            $('#inputFormId').removeAttr('disabled');
+            $('.span-display').addClass('badge-warning');
+            $('.modal-title > small').addClass('text-warning');
+            $btnSubmit.removeClass('btn-primary btn-danger').addClass('btn-warning');
+            $btnSubmit.html('<i class="fas fa-sync" aria-hidden="true"></i> ' + textsToDisplay.textBtn);
+            $btnClose.html('<i class="fas fa-times" aria-hidden="true"></i> ' + 'Cerrar');
+        }
+        $('input[name=_method]').val(method.toUpperCase());
+        typeof files === "boolean" ? files ? $form.attr('enctype', 'multipart/form-data') : null : $form.attr('enctype', files);
+        var oldAction = $form.attr('action');
+        var action = oldAction.replace('subdir', replaceInAction).replace('{id}', id);
+        $form.attr('action', action);
+        $btnSubmit.click(function () {
+            var data = $form.serialize();
+            var url = $form.attr('action');
+            $('#modalForms').modal('hide');
+            if (method.toLowerCase() === 'delete') {
+                $('#inputFormId').removeAttr('disabled');
+                $.post(url, data, function (response) {
+                    $row.fadeOut();
+                    $('#modalForms').on('hide.bs.modal', function (e) {
+                        $form.attr('action', oldAction);
+                    });
+                });
+            } else {
+                $form.submit();
+            }
+        });
+    }
+
+    /*********************************************************************
+     * Funcionalidad y comportamientos del Backend del sitio.
+     * --------------------------------------------------------
+     *
+     * Info helpers in forms
+     *
+     *******************************************/
+    var icons = $('.help-info > .help-icon');
+    var texts = $('.help-info > .help-text');
+
+    texts.hide();
+
+    icons.click(function (event) {
+        event.preventDefault();
+        $(this).next().fadeToggle('slow', 'linear');
+    });
+
+    /************************************************************************************
+     *  Detecta si hay algo en el input hiden de imagenes que se eliminarán y agrega
+     *  la clase correspondiente.
+     * **********************************************************************************/
+    if ($('#removedImages').val() !== '' && $('#removedImages').val() !== undefined) {
+        var removed = $('#removedImages').val();
+        if (removed !== '') {
+            removed = removed.split('|');
+        }
+        removed.pop();
+        var images = $('.img-clickable');
+        for (var i = images.length - 1; i >= 0; i--) {
+            for (var j = removed.length - 1; j >= 0; j--) {
+                if (images[i] === removed[j]) {
+                    images[i].addClass('img-clicked');
+                }
+            }
+        }
+    }
+
+    /**************************************************************************
+     *  Añade la clase img-clicked a las imágenes seleccionadas y agrega el
+     *  nombre de la imágen al input removedImages para ser eliminadas al
+     *  enviar el form.
+     * *************************************************************************/
+    $('.img-clickable').click(function (event) {
+        event.preventDefault();
+        if ($(this).hasClass('img-clicked')) {
+            $(this).removeClass('img-clicked');
+            removeAddFromInputValue($(this), $('#removedImages'), $('#actualImages'));
+        } else {
+            $(this).addClass('img-clicked');
+            removeAddFromInputValue($(this), $('#actualImages'), $('#removedImages'));
+        }
+    });
+
+    /******************************************************************
+     *  Button delete Cottage
+     * *****************************************************************/
+    $('.delete-cottage').click(function (event) {
+        texts = {
+            name: false,
+            title: 'Esta seguro que desea eliminar la cabaña',
+            infoText: 'Esto eliminará permanentemente la cabaña de la base de datos.',
+            label: 'Eliminar cabaña',
+            textBtn: 'Eliminar cabaña',
+            inputType: 'number',
+            options: ''
+        };
+        setModalForms($(this), 'DELETE', false, 'cottages', texts);
+    });
+
+    /******************************************************************
+     *  Button edit type User
+     * *****************************************************************/
+    $('.btn-edit-type').click(function (event) {
+        texts = {
+            name: true,
+            title: 'Esta seguro que desea cambiar el rol del usuario',
+            infoText: 'Esto pude dar mayor acceso al sistema a dicho usuario.',
+            label: 'Roles',
+            textBtn: 'Actualizar rol',
+            inputType: 'select',
+            options: [{ value: 'frecuente', text: 'Frecuente' }, { value: 'empleado', text: 'Empleado' }, { value: 'administrador', text: 'Administrador' }, { value: 'sysadmin', text: 'Sysadmin' }]
+        };
+        setModalForms($(this), 'PUT', false, 'users', texts);
+    });
+
+    /******************************************************************
+     *  Button delete User
+     * *****************************************************************/
+    $('.btn-delete-user').click(function (event) {
+        texts = {
+            name: true,
+            title: 'Esta seguro que desea eliminar al usuario',
+            infoText: 'Esto eliminará permanentemente el usuario de la base de datos.',
+            label: 'Eliminar a',
+            textBtn: 'Eliminar usuario',
+            inputType: 'text',
+            options: ''
+        };
+        setModalForms($(this), 'DELETE', false, 'users', texts);
+    });
+});
+
+/***/ }),
+
+/***/ "./resources/assets/js/backend/main-menu-backend.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// Fuente: https://webdesign.tutsplus.com/tutorials/orman-clarks-vertical-navigation-menu-the-css3-version--webdesign-5944
+
+$(document).ready(function (e) {
+    var menu_ul = $('.menu > li > ul'),
+        menu_a = $('.menu > li > a');
+
+    function activeMenu(regExp, findIn) {
+        for (var i = findIn.length - 1; i >= 0; i--) {
+            var a = findIn[i];
+            var t = findIn[i].text;
+            if (regExp.test(t.toLowerCase())) {
+                $(a).addClass('active').next().stop(true, true).slideDown('normal');
+            }
+        }
+    }
+
+    var path = window.location.pathname;
+    path = path.split('/');
+    path.shift();
+
+    menu_ul.hide();
+
+    var $menu = $('#main_content');
+
+    if (/cottages/.test(path)) {
+        activeMenu(/cabañas/, menu_a);
+        if (path[2]) $menu.removeClass('col-md-4').addClass('col-md-6');else $menu.removeClass('col-md-4').addClass('col-md-8');
+    } else if (/users/.test(path)) {
+        activeMenu(/usuarios/, menu_a);
+        $menu.removeClass('col-md-4').addClass('col-md-8');
+    } else if (/frontend/.test(path)) {
+        activeMenu(/página principal/, menu_a);
+        $menu.removeClass('col-md-4').addClass('col-md-6 offset-md-1');
+    } else if (/food/.test(path)) {
+        $menu.removeClass('col-md-4').addClass('col-md-8');
+    } else if (/reports/.test(path)) {
+        $menu.removeClass('col-md-4').addClass('col-md-12');
+    } else {
+        activeMenu(/panel/, menu_a);
+        $menu.removeClass('col-md-4').addClass('col-md-8');
+    }
+
+    menu_a.click(function (e) {
+        e.preventDefault();
+        if (!$(this).hasClass('active')) {
+            menu_a.removeClass('active');
+            menu_ul.filter(':visible').slideUp('normal');
+            $(this).addClass('active').next().stop(true, true).slideDown('normal');
+        } else {
+            $(this).removeClass('active');
+            $(this).next().stop(true, true).slideUp('normal');
+        }
+    });
+});
+
+/***/ }),
+
+/***/ "./resources/assets/less/backend/backend.less":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./resources/assets/less/frontend/cottages.less":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./resources/assets/less/frontend/frontend.less":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./resources/assets/less/frontend/profile.less":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./resources/assets/sass/app.scss":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 0:
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__("./resources/assets/js/backend/main-menu-backend.js");
+__webpack_require__("./resources/assets/js/backend/backend.js");
+__webpack_require__("./resources/assets/less/frontend/frontend.less");
+__webpack_require__("./resources/assets/less/frontend/cottages.less");
+__webpack_require__("./resources/assets/less/frontend/profile.less");
+__webpack_require__("./resources/assets/less/backend/backend.less");
+module.exports = __webpack_require__("./resources/assets/sass/app.scss");
+
+
+/***/ })
+
+/******/ });

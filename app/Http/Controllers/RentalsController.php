@@ -451,12 +451,12 @@ class RentalsController extends Controller
         return response()->json(compact('cottages'), 200);
     }
 
-    public function rentalsForState($state, $results)
+    public function rentalsForState(Request $request, $state, $results)
     {
         $quantity = $results > 100 ? 100 : $results;
 
         if (!$rentals = DB::table('rentals')->select('id', 'dateFrom', 'dateTo', 'cottage_price', 'total_days', 'dateReservationPayment', 'state')
-            ->where('state', $state)->orderBy('dateFrom', 'asc')->paginate($quantity)) {
+            ->where('state', $state)->orderBy($request->order, $request->sent)->paginate($quantity)) {
 
             return response()->json(['error' => 'No hay reservas en estado: ' . $state], 404);
 
