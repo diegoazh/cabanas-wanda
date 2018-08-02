@@ -291,11 +291,18 @@ class OrdersController extends Controller
         return response()->json(['message' => 'El pedido fue eliminado correctamente.'], 200);
     }
 
-    public function ordersForState($state, $results)
+    public function ordersForState(Request $request, $state, $results)
     {
         $quantity = $results > 100 ? 100 : $results;
 
-        if (!$orders = Order::where('state', $state)->orderBy('created_at', 'desc')->paginate($quantity)) {
+        if (!$orders = DB::table('orders')
+                ->join('rentals', 'orders.rental_id', '=', 'rentals.id')
+                ->join('cottages', 'rentals.cottage_id', '=', 'cottages.id')
+                ->select('orders.id', 'orders.rental_id', 'orders.state', 'orders.senia', 'orders.senia_date', 'orders.closed_for', 'orders.created_at','orders.deleted_at', 'rentals.id', 'rentals.cottage_id', 'cottages.id', 'cottages.number', 'cottages.name')
+                ->where('orders.state', $state)
+                ->where('orders.deleted_at', null)
+                ->orderBy($request->order, $request->sent)
+                ->paginate($quantity)) {
 
             return response()->json(['error' => 'No hemos encontrado resultados con el estado seleccionado.'], 404);
 
@@ -304,11 +311,6 @@ class OrdersController extends Controller
         foreach ($orders as $order) {
 
             $order->edit = false;
-            $order->rental->cottage;
-
-            foreach ($order->ordersDetail as $detail) {
-                $detail->food;
-            }
 
         }
 

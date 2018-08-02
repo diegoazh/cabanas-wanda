@@ -13,7 +13,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(rental, index) in pagination.data">
+            <tr v-for="(rental, index) in pagination.data" :key="index">
                 <td><icon-app iconImage="hashtag"></icon-app> {{ rowNumber(index) }}</td>
                 <td><span class="text-to-14px badge badge-secondary">{{ rental.dateFrom | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span></td>
                 <td><span class="text-to-14px badge badge-secondary">{{ rental.dateTo | DateArg('YYYY-MM-DD', 'DD/MM/YYYY') }}</span></td>
@@ -55,7 +55,7 @@
                                         <icon-app iconImage="edit"></icon-app>
                                     </a>
                                 </sup>
-                                <form @submit.prevent="" class="form-inline justify-content-center" v-if="editState">
+                                <form class="form-inline justify-content-center" v-if="editState">
                                     <div :class="['alert', setClassPenalty(rental.dateFrom)]" role="alert">
                                         <h5 v-html="setMsgPenalty(rental.dateFrom, setSenia(+rental.cottage_price))"></h5>
                                     </div>
@@ -149,6 +149,7 @@
                             <div class="form-group">
                                 <label for="description" class="sr-only">Descripión:</label>
                                 <div id="editormd">
+                                    <!-- TODO (Diego): Verificar si funciona correctamente con v-model en lugar de mustache -->
                                     <textarea id="description" name="description" class="form-control">{{ rental.description }}</textarea>
                                 </div>
                             </div>

@@ -18,7 +18,7 @@ class OrdersTableSeeder extends Seeder
 
         foreach ($rentals as $rental) {
 
-            for ($i = 8; $i >= 0; $i--) {
+            for ($i = 4; $i >= 0; $i--) {
 
                 $order = new \App\Order([
                     'senia' => $faker->numberBetween(5, 25),
@@ -27,7 +27,7 @@ class OrdersTableSeeder extends Seeder
 
                 $rental->orders()->save($order);
 
-                for ($j = 15; $j >= 0; $j--) {
+                for ($j = 7; $j >= 0; $j--) {
 
                     $detail = new \App\OrdersDetail([
                         'delivery' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $faker->dateTimeBetween(\Carbon\Carbon::createFromFormat('Y-m-d', $rental->dateFrom)->toDateTimeString(), \Carbon\Carbon::createFromFormat('Y-m-d', $rental->dateTo)->toDateTimeString())->format('Y-m-d H:i:s'))->toDateString(),

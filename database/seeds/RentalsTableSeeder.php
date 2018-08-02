@@ -26,7 +26,7 @@ class RentalsTableSeeder extends Seeder
 
 
 
-        for ($i = 720; $i >= 0; $i--) {
+        for ($i = 100; $i >= 0; $i--) {
 
             $user = $faker->randomElement(User::all()->toArray());
             $totalDays = $faker->numberBetween(1, 30);

@@ -5,54 +5,31 @@
         </div>
         <div class="card-body">
             <btn-switch-app :initLeft="seeRentals" textLeft="Reservas" iconTextLeft="handshake" textRight="Pedidos" iconTextRight="utensils" classOnActive="text-primary" classOnInactive="text-muted" :textDeleted="true"></btn-switch-app>
-            <div class="col-12 mb-3" v-if="seeRentals">
+            <div class="col-12 mb-3">
                 <ul class="nav nav-pills">
-                  <li class="nav-item m-1">
-                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateFrom'; order.sent = 'asc'; fireQuery();">Fecha desde ascendente</a>
-                  </li>
-                  <li class="nav-item m-1">
-                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateFrom'; order.sent = 'desc'; fireQuery();">Fecha desde descendente</a>
-                  </li>
-                  <li class="nav-item m-1">
-                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateTo'; order.sent = 'asc'; fireQuery();">Fecha hasta ascendente</a>
-                  </li>
-                  <li class="nav-item m-1">
-                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateTo'; order.sent = 'desc'; fireQuery();">Fecha hasta descendente</a>
-                  </li>
-                  <li class="nav-item m-1">
-                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'total_days'; order.sent = 'asc'; fireQuery();">Dias ascendente</a>
-                  </li>
-                  <li class="nav-item m-1">
-                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'total_days'; order.sent = 'desc'; fireQuery();">Dias descendente</a>
-                  </li>
-                  <li class="nav-item m-1">
-                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateReservationPayment'; order.sent = 'asc'; fireQuery();">Vto ascendente</a>
-                  </li>
-                  <li class="nav-item m-1">
-                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateReservationPayment'; order.sent = 'desc'; fireQuery();">Vto descendente</a>
-                  </li>
-                </ul>
-            </div>
-            <div class="col-12 mb-3" v-if="!seeRentals">
-                <ul class="nav nav-pills">
-                  <li class="nav-item m-1">
-                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'cottages'; order.sent = true; fireQuery();">Cabaña ascendente</a>
-                  </li>
-                  <li class="nav-item m-1">
-                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'cottages'; order.sent = false; fireQuery();">Cabaña descendente</a>
-                  </li>
-                  <li class="nav-item m-1">
-                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'senia'; order.sent = true; fireQuery();">Seña ascendente</a>
-                  </li>
-                  <li class="nav-item m-1">
-                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'senia'; order.sent = false; fireQuery();">Seña descendente</a>
-                  </li>
-                  <li class="nav-item m-1">
-                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateSenia'; order.sent = true; fireQuery();">Fecha ascendente</a>
-                  </li>
-                  <li class="nav-item m-1">
-                    <a class="nav-link active" href="#" @click.stop.prevent="order.for = 'dateSenia'; order.sent = false; fireQuery();">Fecha descendente</a>
-                  </li>
+                    <li class="nav-item m-1">
+                        <b-form-group>
+                            <h5><icon-app iconImage="filter"/> Ordenar por:</h5>
+                            <b-form-radio-group id="radioOptions" v-model="order.for" name="radioOptions" buttons button-variant="outline-info">
+                                <b-form-radio v-if="seeRentals" value="dateFrom" @change="fireQuery">Fecha desde</b-form-radio>
+                                <b-form-radio v-if="seeRentals" value="dateTo" @change="fireQuery">Fecha hasta</b-form-radio>
+                                <b-form-radio v-if="seeRentals" value="total_days" @change="fireQuery">Días</b-form-radio>
+                                <b-form-radio v-if="seeRentals" value="dateReservationPayment" @change="fireQuery">Vencimiento</b-form-radio>
+                                <b-form-radio v-if="!seeRentals" value="cottages.name" @change="fireQuery">Cabaña</b-form-radio>
+                                <b-form-radio v-if="!seeRentals" value="orders.senia" @change="fireQuery">Seña</b-form-radio>
+                                <b-form-radio v-if="!seeRentals" value="orders.senia_date" @change="fireQuery">Fecha de seña</b-form-radio>
+                            </b-form-radio-group>
+                        </b-form-group>
+                    </li>
+                    <li class="nav-item m-1">
+                        <b-form-group>
+                            <h5><icon-app :iconImage="order.sent === 'asc' ? 'sort-amount-up' : 'sort-amount-down'" /> Sentido:</h5>
+                            <b-form-radio-group id="radioSent" v-model="order.sent" name="radioSent" buttons button-variant="outline-warning">
+                                <b-form-radio value="asc" @change="fireQuery"><icon-app :iconImage="'sort-amount-up'"/></b-form-radio>
+                                <b-form-radio value="desc" @change="fireQuery"><icon-app :iconImage="'sort-amount-down'"/></b-form-radio>
+                            </b-form-radio-group>
+                        </b-form-group>
+                    </li>
                 </ul>
             </div>
             <div>
@@ -154,7 +131,17 @@
                     pendiente2: 1,
                     seniado: 1,
                     pagado: 1,
-                    cancelado: 1
+                    cancelado: 1,
+                    order: {
+                        rentals: {
+                            for: 'dateFrom',
+                            sent: 'asc'
+                        },
+                        orders: {
+                            for: 'cottages.name',
+                            sent: 'asc'
+                        }
+                    }
                 }
             }
         },
@@ -215,10 +202,26 @@
                 }
             },
             savePreviousType() {
-                this.seeRentals ? this.trash.rentals = this.type : this.trash.orders = this.type;
+                if (this.seeRentals) {
+                    this.trash.rentals = this.type;
+                    this.trash.order.rentals.for = this.order.for;
+                    this.trash.order.rentals.sent = this.order.sent;
+                } else {
+                    this.trash.orders = this.type;
+                    this.trash.order.orders.for = this.order.for;
+                    this.trash.order.orders.sent = this.order.sent;
+                }
             },
             setNewType(){
-                this.seeRentals ? this.type = this.trash.rentals : this.type = this.trash.orders;
+                if (this.seeRentals) {
+                    this.type = this.trash.rentals;
+                    this.order.for = this.trash.order.rentals.for;
+                    this.order.sent = this.trash.order.rentals.sent;
+                 } else {
+                    this.type = this.trash.orders;
+                    this.order.for = this.trash.order.orders.for;
+                    this.order.sent = this.trash.order.orders.sent;                   
+                 }
             },
             setTypeofQuery(newType) {
                 this.setPagination(null);
@@ -227,21 +230,26 @@
                 this.setNewPage();
             },
             fireQuery(page = 1) {
-                this.rentalsOrOrdersForState({
-                isRentals: this.seeRentals,
-                state: this.type,
-                token: this.token,
-                query: page,
-                order: this.order
-                }).then(() => {
-                    VueNoti.success({
-                        title: 'OK!',
-                        message: 'Data loaded correctly.',
-                        timeout: 3000
-                    });
-                }).catch(error => {
-                    VueNoti.error(error);
-                });
+                this.$nextTick(() => {
+                    this.rentalsOrOrdersForState({
+                        isRentals: this.seeRentals,
+                        state: this.type,
+                        token: this.token,
+                        query: page,
+                        order: this.order
+                        }).then(() => {
+                            VueNoti.success({
+                                title: 'OK!',
+                                message: 'Data loaded correctly.',
+                                timeout: 3000
+                            });
+                        }).catch(error => {
+                            VueNoti.error(error);
+                        });
+                })
+            },
+            difineOrderSent() {
+                this.order.sent = this.order.sent === 'asc' ? 'desc' : 'asc';
             },
             ...mapMutations('auth', ['setToken']),
             ...mapMutations('dash', ['PAGINATE', 'setPagination']),

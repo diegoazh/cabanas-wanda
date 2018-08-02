@@ -14,7 +14,7 @@ class FoodsTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 150; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $plato = new \App\Food();
             $plato->name = $faker->unique()->name;
             $plato->type = $faker->randomElement(['desayuno', 'almuerzo', 'merienda', 'cena']);

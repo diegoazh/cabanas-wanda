@@ -11,9 +11,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(orders, index) in pagination.data">
+            <tr v-for="(orders, index) in pagination.data" :key="index">
                 <td><icon-app iconImage="hashtag"></icon-app> {{ rowNumber(index) }}</td>
-                <td><span class="text-to-14px badge badge-warning"><icon-app iconImage="home"></icon-app> {{ orders.rental.cottage.name }}</span></td>
+                <td><span class="text-to-14px badge badge-warning"><icon-app iconImage="home"></icon-app> {{ orders.name }}</span></td>
                 <td>
                     <span class="text-to-14px badge badge-primary" v-if="!orders.edit">
                         <icon-app iconImage="dollar"></icon-app> {{ orders.senia }}
@@ -23,7 +23,7 @@
                             <icon-app iconImage="edit"></icon-app>
                         </a>
                     </sup>
-                    <form @submit.prevent="" class="form-inline" v-if="orders.edit">
+                    <form class="form-inline" v-if="orders.edit">
                         <div class="form-group">
                             <label for="seniaOrder" class="sr-only">Se&ntilde;a: </label>
                             <div class="input-group input-group-sm">
@@ -41,7 +41,7 @@
                 <td>
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <button class="btn btn-info" v-tooltip.left="'Ver pedido ' + rowNumber(index) + ' cabaña ' + orders.rental.cottage.name" data-toggle="modal" data-target="#b3-modal-id" @click.prevent="findOrder(orders.id)">
+                            <button class="btn btn-info" v-tooltip.left="'Ver pedido ' + rowNumber(index) + ' cabaña ' + orders.name" data-toggle="modal" data-target="#b3-modal-id" @click.prevent="findOrder(orders.id)">
                                 <icon-app iconImage="eye"></icon-app>
                             </button>
                         </div>
@@ -69,7 +69,7 @@
                                         <icon-app iconImage="edit"></icon-app>
                                     </a>
                                 </sup>
-                                <form @submit.prevent="" class="form-inline justify-content-center" v-if="editState">
+                                <form class="form-inline justify-content-center" v-if="editState">
                                     <div class="form-group">
                                         <label for="state" class="sr-only">Estado: </label>
                                         <div class="input-group">
@@ -108,7 +108,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="(detail, index) in order.orders_detail">
+                                <tr v-for="(detail, index) in order.orders_detail" :key="index">
                                     <td>
                                         <icon-app iconImage="hashtag"></icon-app> {{ index + 1 }}
                                     </td>
@@ -139,7 +139,7 @@
                                                 <icon-app iconImage="edit"></icon-app>
                                             </a>
                                         </sup>
-                                        <form @submit.prevent="" class="form-inline" v-if="detail.edit">
+                                        <form class="form-inline" v-if="detail.edit">
                                             <div class="form-group">
                                                 <label for="stateFood" class="sr-only">Estado: </label>
                                                 <div class="input-group input-group-sm">
