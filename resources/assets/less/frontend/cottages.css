@@ -24,7 +24,7 @@
   /* IE10+ */
 }
 body .container-fluid #header div.col-8:after {
-  content: url('../../../../public/images/logos/logo-cabanas-wanda-190x185.png');
+  content: url('/public/images/logos/logo-cabanas-wanda-190x185.png');
 }
 body .container-fluid .content div.col-md-4 .row {
   box-shadow: 3px 3px 7px #000000;
@@ -266,3 +266,4 @@ body .container-fluid #content .col-md-8 div.reservation-section div .clndr-prev
   opacity: 0.5;
   cursor: default;
 }
+/*# sourceMappingURL=cottages.css.map */

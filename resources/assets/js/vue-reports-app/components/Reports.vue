@@ -254,7 +254,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <button class="btn btn-success" @click="btnUpateRp">
+                            <button class="btn btn-success" @click="btnUpdateRp">
                                 <icon-app icon-type="r" iconImage="sync-alt" :aditionalClasses="(!queryFinished || !queryEnd) ? 'fa-spin fa-fw': ''"></icon-app> Actualizar
                             </button>
                         </div>
@@ -313,7 +313,7 @@
                 cnfgPeriod: {
                     locale: 'es',
                     format: 'MMMM YYYY',
-                }
+                },
             }
         },
         computed: {
@@ -359,6 +359,7 @@
                     set.backgroundColor ? dataset.backgroundColor = set.backgroundColor : null;
                     set.borderColor ? dataset.borderColor = set.borderColor : null;
                 });
+                
                 chart.update();
             },
             updateChartAddInfo(chart, set) {
@@ -744,7 +745,7 @@
                     foodData.backgroundColor[i] = textColor + ', 0.2)';
                     foodData.borderColor[i] = textColor + ', 1)';
                 }
-
+                
                 return foodData;
             },
             reportsFilter() {
@@ -760,9 +761,11 @@
                     return this.rpFoodDate();
                 }
             },
-            btnUpateRp() {
+            btnUpdateRp() {
                 this.delaySeconds();
-                this.updateChartNewInfo(this.myChart, this.reportsFilter());
+                this.$nextTick(() => {
+                    this.updateChartNewInfo(this.myChart, this.reportsFilter());
+                })
             },
             ...mapMutations('auth', ['setToken', 'setQueryFinished']),
             ...mapMutations('reports', ['setRentals', 'setExecutingOrdersQuery', 'setLastQueryOrders']),

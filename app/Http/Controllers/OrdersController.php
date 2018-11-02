@@ -129,18 +129,22 @@ class OrdersController extends Controller
 
                 }
 
-                foreach ($order->ordersDetail as $detail) {
+                if (isset($info['orders_detail'])) {
 
-                    foreach ($info['orders_detail'] as $newDetail) {
+                    foreach ($order->ordersDetail as $detail) {
 
-                        if ($detail->id === $newDetail['id'] && $detail->state !== $newDetail['state']) {
-
-                            $detail->state = $newDetail['state'];
-                            $detail->save();
-                            $hasChanges = true;
-
+                        foreach ($info['orders_detail'] as $newDetail) {
+    
+                            if ($detail->id === $newDetail['id'] && $detail->state !== $newDetail['state']) {
+    
+                                $detail->state = $newDetail['state'];
+                                $detail->save();
+                                $hasChanges = true;
+    
+                            }
+    
                         }
-
+    
                     }
 
                 }
@@ -298,7 +302,7 @@ class OrdersController extends Controller
         if (!$orders = DB::table('orders')
                 ->join('rentals', 'orders.rental_id', '=', 'rentals.id')
                 ->join('cottages', 'rentals.cottage_id', '=', 'cottages.id')
-                ->select('orders.id', 'orders.rental_id', 'orders.state', 'orders.senia', 'orders.senia_date', 'orders.closed_for', 'orders.created_at','orders.deleted_at', 'rentals.id', 'rentals.cottage_id', 'cottages.id', 'cottages.number', 'cottages.name')
+                ->select('orders.id as id', 'orders.rental_id', 'orders.state', 'orders.senia', 'orders.senia_date', 'orders.closed_for', 'orders.created_at as oCreated_at','orders.deleted_at', 'rentals.id as rId', 'rentals.cottage_id', 'cottages.id as cId', 'cottages.number', 'cottages.name')
                 ->where('orders.state', $state)
                 ->where('orders.deleted_at', null)
                 ->orderBy($request->order, $request->sent)
