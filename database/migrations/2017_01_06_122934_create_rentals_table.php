@@ -19,7 +19,7 @@ class CreateRentalsTable extends Migration
             $table->integer('cottage_id')->unsigned();
             $table->date('dateFrom');
             $table->date('dateTo');
-            $table->string('description', 200)->nullable();
+            $table->mediumText('description')->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->bigInteger('promotion_id')->unsigned()->nullable();
             $table->double('cottage_price', 8, 2);
