@@ -6,7 +6,7 @@ use App\Frontend;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 
-class FooterFrontViewComposer
+class FooterViewComposer
 {
     public function compose(View $view)
     {

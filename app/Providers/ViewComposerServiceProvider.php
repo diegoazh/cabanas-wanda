@@ -25,7 +25,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                 'backend.users',
             ],
             'App\Http\ViewComposers\RegisterViewComposer' => 'auth.register',
-            'App\Http\ViewComposers\FooterFrontViewComposer' => [
+            'App\Http\ViewComposers\FooterViewComposer' => [
                 'auth.login',
                 'auth.register',
                 'auth.registered',
@@ -41,6 +41,14 @@ class ViewComposerServiceProvider extends ServiceProvider
                 'frontend.rentals-index',
                 'frontend.rentals-liquidation',
                 'frontend.tourist-attractions',
+                'backend.cottage-create',
+                'backend.cottages',
+                'backend.foods',
+                'backend.frontend',
+                'backend.panel',
+                'backend.promotions-create',
+                'backend.reports',
+                'backend.users',
             ]
         ]);
     }
