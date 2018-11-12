@@ -52,7 +52,7 @@
                 @endif
             </ul>
             <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav mr-0">
+            <ul class="navbar-nav mr-0" style="width: 230px">
                 <!-- Authentication Links -->
                 @if (Auth::guest())
                     <li class="nav-item"><a class="nav-link" href="{{ url('/login') }}">Ingresar <i class="fas fa-sign-in-alt" aria-hidden="true"></i></a></li>
@@ -60,7 +60,7 @@
                 @else
                     <li class="nav-item dropdown pull-right text-right">
                         <a href="#" class="nav-link dropdown-toggle img-user-profile" data-toggle="dropdown" role="button" aria-expanded="false">
-                            <img class="img-fluid rounded-circle" src="@if(!empty(Auth::user()->imageProfile)) {{ asset('images/profiles/' . Auth::user()->imageProfile) }} @elseif(Auth::user()->genre === 'm') {{ asset('images/profiles/chico-jopo.png') }} @else {{ asset('images/profiles/chica-rodete.png') }} @endif" alt="{{ Auth::user()->formalFullname }}" alt="{{ Auth::user()->imageProfile }}" width="8%" style="display: inline-block"> {{ Auth::user()->name }}
+                            <img class="img-fluid rounded-circle" src="@if(!empty(Auth::user()->imageProfile)) {{ asset('images/profiles/' . Auth::user()->imageProfile) }} @elseif(Auth::user()->genre === 'm') {{ asset('images/profiles/chico-jopo.png') }} @else {{ asset('images/profiles/chica-rodete.png') }} @endif" alt="{{ Auth::user()->formalFullname }}" alt="{{ Auth::user()->imageProfile }}" width="35px" style="display: inline-block"> {{ Auth::user()->name }}
                         </a>
 
                         <div class="dropdown-menu" role="menu">
