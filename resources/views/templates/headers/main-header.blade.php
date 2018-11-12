@@ -58,7 +58,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url('/login') }}">Ingresar <i class="fas fa-sign-in-alt" aria-hidden="true"></i></a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('/register') }}">Registrarse <i class="fas fa-address-book" aria-hidden="true"></i></a></li>
                 @else
-                    <li class="nav-item dropdown pull-right">
+                    <li class="nav-item dropdown pull-right text-right">
                         <a href="#" class="nav-link dropdown-toggle img-user-profile" data-toggle="dropdown" role="button" aria-expanded="false">
                             <img class="img-fluid rounded-circle" src="@if(!empty(Auth::user()->imageProfile)) {{ asset('images/profiles/' . Auth::user()->imageProfile) }} @elseif(Auth::user()->genre === 'm') {{ asset('images/profiles/chico-jopo.png') }} @else {{ asset('images/profiles/chica-rodete.png') }} @endif" alt="{{ Auth::user()->formalFullname }}" alt="{{ Auth::user()->imageProfile }}" width="8%" style="display: inline-block"> {{ Auth::user()->name }}
                         </a>
