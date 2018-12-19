@@ -55,7 +55,7 @@
                                 <div class="row" v-if="toRentals.length">
                                     <div class="col-12 col-md-6 py-5" v-for="cottage in toRentals">
                                         <div class="card box-shadow border-light">
-                                            <img :src="regexp.test(cottage.images) ? cottage.images : cottage.images.split('|')[0]" alt="Imagen de la cabaña" class="card-img-top">
+                                            <img :src="seleccionarFoto(cottage.images)" alt="Imagen de la cabaña" class="card-img-top">
                                             <div class="card-body">
                                                 <h4 class="card-title text-capitalize bg-dark text-light py-2 px-3 rounded">{{ cottage.name }}</h4>
                                                 <ul class="card-text">
@@ -173,6 +173,12 @@
         methods: {
             clearRental() {
                 this.setRental(null);
+            },
+            seleccionarFoto(images) {
+                if (!/lorempixel/.test(images)) {
+                    return 'images/cabanias/' + images.split('|').shift();
+                }
+                return images;
             },
             validateTypeOfDate(date) {
                 if (!date) return;
