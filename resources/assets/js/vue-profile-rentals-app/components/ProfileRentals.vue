@@ -12,10 +12,10 @@
                 </tr>
                 </thead>
                 <tbody v-if="rentals.length > 0">
-                <tr v-for="rental in rentals">
+                <tr v-for="(rental, index) in rentals" :key="index">
                     <td>
                         <span class="badge badge-success">{{ rental.dateFrom.format('DD/MM/YYYY') }}</span>
-                        <sup class="badge badge-info font-italic" v-if="isCurrent(rental.dateFrom, rental.dateTo)">{{'En curso'}}</sup>
+                        <sup class="badge badge-info font-italic" v-if="isCurrent(rental.state)">{{'En curso'}}</sup>
                     </td>
                     <td><span class="badge badge-danger">{{ rental.dateTo.format('DD/MM/YYYY') }}</span></td>
                     <td><span class="badge badge-secondary">{{ rental.cottage.name.toUpperCase() }}</span></td>
@@ -90,8 +90,8 @@
             })
         },
         methods: {
-            isCurrent(dateFrom, dateTo) {
-                return moment().isBetween(dateFrom, dateTo, null, '[]')
+            isCurrent(state) {
+              return state === 'en_curso'
             },
             setIconOnBtn(rental) {
                 if (rental && this.rentalModal) {
