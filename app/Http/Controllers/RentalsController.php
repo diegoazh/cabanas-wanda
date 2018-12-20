@@ -419,8 +419,8 @@ class RentalsController extends Controller
         $cottages = null;
 
         // cambiamos las fechas con Carbon ya que sino nos da error al consultar en la DB.
-        $dateFrom = Carbon::createFromFormat('d/m/Y', $info['dateFrom']);
-        $dateTo = Carbon::createFromFormat('d/m/Y', $info['dateTo']);
+        $dateFrom = Carbon::createFromFormat('d/m/Y', $info['dateFrom'], 'America/Buenos_Aires');
+        $dateTo = Carbon::createFromFormat('d/m/Y', $info['dateTo'], 'America/Buenos_Aires');
 
         if ($dateTo->lt($dateFrom)) {
 
