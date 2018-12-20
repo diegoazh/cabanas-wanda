@@ -176,7 +176,7 @@
             },
             seleccionarFoto(images) {
                 if (!/lorempixel/.test(images)) {
-                    return 'images/cabanias/' + images.split('|').shift();
+                    return '/images/cabanias/' + images.split('|').shift();
                 }
                 return images;
             },
