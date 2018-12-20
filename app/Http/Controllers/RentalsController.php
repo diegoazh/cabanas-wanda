@@ -430,7 +430,7 @@ class RentalsController extends Controller
 
         if ($info['update']) {
 
-            if (!$rentals = Rental::checkForExtendsDate($dateFrom->toDateString(), $dateTo->toDateString(), $info['cottage_id'], $info['rental_id'])) {
+            if (!empty($rentals = Rental::checkForExtendsDate($dateFrom->toDateString(), $dateTo->toDateString(), $info['cottage_id'], $info['rental_id']))) {
 
                 $cottage = Cottage::find($info['cottage_id']);
 
@@ -440,7 +440,7 @@ class RentalsController extends Controller
 
         }
 
-        if (!$cottages = Rental::availables($dateFrom->toDateString(), $dateTo->toDateString())) {
+        if (!empty($cottages = Rental::availables($dateFrom->toDateString(), $dateTo->toDateString()))) {
 
             $message = 'Lo sentimos mucho pero no tenemos cabañas disponibles en esas fechas.';
 
@@ -455,8 +455,8 @@ class RentalsController extends Controller
     {
         $quantity = $results > 100 ? 100 : $results;
 
-        if (!$rentals = DB::table('rentals')->select('id', 'dateFrom', 'dateTo', 'cottage_price', 'total_days', 'dateReservationPayment', 'state')
-            ->where('state', $state)->orderBy($request->order, $request->sent)->paginate($quantity)) {
+        if (!empty($rentals = DB::table('rentals')->select('id', 'dateFrom', 'dateTo', 'cottage_price', 'total_days', 'dateReservationPayment', 'state')
+            ->where('state', $state)->orderBy($request->order, $request->sent)->paginate($quantity))) {
 
             return response()->json(['error' => 'No hay reservas en estado: ' . $state], 404);
 
