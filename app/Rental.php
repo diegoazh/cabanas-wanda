@@ -75,6 +75,9 @@ class Rental extends Model
         $cottages = Cottage::whereNotIn('id', function ($query) use ($dateFrom, $dateTo) { // pedimos ids que no esten dentro de la subconsulta.
             $query->select('cottage_id')// subconsulta: pedimos ids de cabañas que han sido reservadas entre las fechas elegidas por el usuario
             ->from(with(new Rental)->getTable())
+                ->where('state', '=', 'pendiente')
+                ->where('state', '=', 'confirmada')
+                ->where('state', '=', 'en_curso')
                 ->whereBetween('dateFrom', [$dateFrom, $dateTo])
                 ->orWhere(function ($query) use ($dateFrom, $dateTo) {
                     $query->whereBetween('dateTo', [$dateFrom, $dateTo]);
@@ -91,6 +94,9 @@ class Rental extends Model
         $cottages = Cottage::where('number', $number)->whereIn('id', function ($query) use ($dateFrom, $dateTo) { // pedimos ids que no esten dentro de la subconsulta.
             $query->select('cottage_id')// subconsulta: pedimos ids de cabañas que han sido reservadas entre las fechas elegidas por el usuario
             ->from(with(new Rental)->getTable())
+                ->where('state', '=', 'pendiente')
+                ->where('state', '=', 'confirmada')
+                ->where('state', '=', 'en_curso')
                 ->whereBetween('dateFrom', [$dateFrom, $dateTo])
                 ->orWhere(function ($query) use ($dateFrom, $dateTo) {
                     $query->whereBetween('dateTo', [$dateFrom, $dateTo]);
